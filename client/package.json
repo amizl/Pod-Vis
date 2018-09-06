@@ -35,7 +35,9 @@
       "plugin:vue/essential",
       "@vue/airbnb"
     ],
-    "rules": {},
+    "rules": {
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
