@@ -22,6 +22,6 @@ export default {
 
 <style scoped>
 .v-content {
-  background-color: #f3f3f3
+  background-color: #f3f3f3;
 }
 </style>
