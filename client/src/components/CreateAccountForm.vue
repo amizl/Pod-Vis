@@ -72,8 +72,8 @@ export default {
       confirmPassword: null,
       errorMessages: '',
       formHasErrors: false,
-    }
-  }
+    };
+  },
 };
 </script>
 
