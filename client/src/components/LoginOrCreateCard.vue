@@ -22,7 +22,7 @@ TOOD:
 
 <script>
 import LoginForm from './LoginForm.vue';
-import CreateAccountForm from '../CreateAccountForm.vue';
+import CreateAccountForm from './CreateAccountForm.vue';
 
 export default {
   components: {
