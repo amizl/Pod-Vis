@@ -1,5 +1,5 @@
 <template lang='pug'>
-  v-toolbar(app dense flat color='white')
+  v-toolbar(app dense color='white')
     v-toolbar-title(left v-text='title')
     v-spacer
     v-toolbar-items
@@ -7,7 +7,6 @@
         flat v-for='item in menuItems'
         :key='item.name'
         :to='item.path'
-        active-class='default-class lightGrey'
       )
         v-icon(left) {{ item.icon }}
         | {{ item.name }}
@@ -53,8 +52,5 @@ export default {
 </script>
 
 <style scoped>
-.lightGrey {
-  background-color: #f3f3f3;
-}
 </style>
 

@@ -1,7 +1,7 @@
 <template lang="pug">
   v-app
     app-header
-    v-content
+    v-content(color='secondary')
       router-view
 </template>
 
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style scoped>
-.v-content {
+/* .v-content {
   background-color: #f3f3f3;
-}
+} */
 </style>
