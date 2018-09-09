@@ -38,5 +38,11 @@ export default new Router({
       component: () =>
         import('../views/DatasetManager.vue'),
     },
+    {
+      path: '/signin',
+      name: 'signIn',
+      component: () =>
+        import('../views/SignIn.vue'),
+    },
   ],
 });

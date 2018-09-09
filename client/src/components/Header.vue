@@ -11,11 +11,8 @@
         v-icon(left) {{ item.icon }}
         | {{ item.name }}
     v-spacer
-    // TODO:
-    // Check if user is logged in and either show this or their username
-    v-toolbar-items
-      v-btn(flat to='/login') LOG IN
-      v-btn(flat to='/signup') SIGN UP
+    v-btn(flat @click='signUserOut') Sign Out
+
 </template>
 
 <script>
@@ -48,6 +45,11 @@ export default {
       ],
     };
   },
+  methods: {
+    signUserOut() {
+      this.$store.dispatch('signUserOut');
+    }
+  }
 };
 </script>
 
