@@ -29,9 +29,9 @@ export default {
   methods: {
     redirectUserIfNotAuth() {
       if (this.user === null || this.user === undefined) {
-          this.$router.push('/signin');
-        }
-    }
+        this.$router.push('/signin');
+      }
+    },
   },
   beforeUpdate() {
     this.redirectUserIfNotAuth();
@@ -40,7 +40,5 @@ export default {
 </script>
 
 <style scoped>
-/* .v-content {
-  background-color: #f3f3f3;
-} */
+
 </style>

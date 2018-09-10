@@ -1,13 +1,15 @@
 <template lang='pug'>
   v-card
     v-card-text
-      v-form(@submit.prevent='onSignIn').ma-4
+      v-form(ref='form' v-model='valid' @submit.prevent='onSignIn' lazy-validation).ma-4
         v-text-field(
           v-model='email'
           prepend-icon="person"
           name="email"
           label="Email"
           type="text"
+          :rules="[() => !!email || 'This field is required']"
+          required
         )
         v-text-field(
           v-model='password'
@@ -15,12 +17,15 @@
           name="password"
           label="Password"
           type="password"
+          :rules="[() => !!password || 'This field is required']"
+          required
         )
         v-card-actions
           v-spacer
           v-btn(
             type='submit'
             color='primary'
+            disabled=true
             :disabled='loading'
             :loading='loading'
           ) Sign In
@@ -31,6 +36,7 @@
 export default {
   data() {
     return {
+      valid: true,
       email: null,
       password: null,
       signInError: false,
@@ -43,12 +49,14 @@ export default {
   },
   methods: {
     onSignIn() {
-      this
-        .$store
-        .dispatch('signUserIn', {
-          email: this.email,
-          password: this.password,
-        });
+      if (this.$refs.form.validate()) {
+        this
+          .$store
+          .dispatch('signUserIn', {
+            email: this.email,
+            password: this.password,
+          });
+      }
     },
   },
 };

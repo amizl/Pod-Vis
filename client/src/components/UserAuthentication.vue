@@ -5,11 +5,7 @@ TOOD:
 -->
 <template lang='pug'>
   v-flex(xs12 sm8 md4).elevation-3
-    v-tabs(
-      color='white'
-      slider-color="secondary"
-      grow
-    )
+    v-tabs(slider-color="secondary" grow)
       v-tab(key='login') SIGN IN
       v-tab(key='createAccount') CREATE ACCOUNT
       v-tabs-items.white
