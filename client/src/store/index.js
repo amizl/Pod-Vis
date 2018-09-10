@@ -89,5 +89,8 @@ export default new Vuex.Store({
           commit('setUser', null);
         });
     },
+    autoSignIn({ commit }, payload) {
+      commit('setUser', payload.uid);
+    },
   },
 });

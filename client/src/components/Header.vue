@@ -48,8 +48,8 @@ export default {
   methods: {
     signUserOut() {
       this.$store.dispatch('signUserOut');
-    }
-  }
+    },
+  },
 };
 </script>
 

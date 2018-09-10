@@ -20,5 +20,15 @@ new Vue({
       projectId: 'cliovis-cb0c9',
       storageBucket: 'cliovis-cb0c9.appspot.com',
     });
+
+    firebase
+      .auth()
+      .onAuthStateChanged((user) => {
+        if (user) {
+          this
+            .$store
+            .dispatch('autoSignIn', user);
+        }
+      });
   },
 }).$mount('#app');

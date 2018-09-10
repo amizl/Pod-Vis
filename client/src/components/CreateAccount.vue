@@ -77,9 +77,9 @@ export default {
     // comparePasswords() {
     //   return this.password !== this.confirmPassword ? 'Passwords do not match.': '';
     // },
-      loading() {
-        return this.$store.getters.loading;
-      },
+    loading() {
+      return this.$store.getters.loading;
+    },
   },
   methods: {
     onCreateAccount() {
@@ -94,9 +94,9 @@ export default {
         .dispatch('createUserAccount', {
           email: this.email,
           password: this.password,
-        })
-    }
-  }
+        });
+    },
+  },
 };
 </script>
 

@@ -33,9 +33,6 @@ export default {
         }
     }
   },
-  beforeMount() {
-    this.redirectUserIfNotAuth();
-  },
   beforeUpdate() {
     this.redirectUserIfNotAuth();
   },
