@@ -9,6 +9,7 @@ export default new Vuex.Store({
     user: null,
     loading: false,
     authError: null,
+    browserDatasets: null,
   },
   getters: {
     user(state) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     loading(state) {
       return state.loading;
+    },
+    browserDatasets(state) {
+      return state.browserDatasets;
     },
   },
   mutations: {
@@ -33,6 +37,9 @@ export default new Vuex.Store({
     },
     clearAuthError(state) {
       state.authError = null;
+    },
+    setBrowserDatasets(state, payload) {
+      state.browserDatasets = payload;
     },
   },
   actions: {
@@ -52,9 +59,6 @@ export default new Vuex.Store({
         .catch((error) => {
           commit('setLoading', false);
           commit('setAuthError', error.message);
-          // For development, will handle this later.
-          /* eslint-disable-next-line no-console */
-          console.log(error);
         });
     },
     signUserIn({ commit }, payload) {
@@ -70,27 +74,49 @@ export default new Vuex.Store({
             id: user.uid,
             username: user.email,
           });
+          // user
+          //   .getIdToken(/* forceRefresh */ true)
+          //   .then((idToken) => {
+          //     console.log(idToken);
+          //   });
         })
         .catch((error) => {
           commit('setLoading', false);
           commit('setAuthError', error.message);
-          // For development, will handle this later.
-          /* eslint-disable-next-line no-console */
-          // console.log(error);
         });
     },
     signUserOut({ commit }) {
-      // commit('settingLoading', true);
+      commit('setLoading', true);
       firebase
         .auth()
         .signOut()
         .then(() => {
-          // commit('settingLoading', false);
           commit('setUser', null);
+          commit('setLoading', false);
         });
     },
     autoSignIn({ commit }, payload) {
       commit('setUser', payload.uid);
+    },
+    fetchBrowserDatasets({ commit }) {
+      commit('setLoading', true);
+
+      firebase
+        .firestore()
+        .collection('datasets')
+        .get()
+        .then((querySnapshot) => {
+          const datasets = querySnapshot
+            .docs
+            .map(doc => doc.data());
+
+          commit('setBrowserDatasets', datasets);
+          commit('setLoading', false);
+        })
+        /* eslint-disable-next-line */
+        .catch((error) => {
+          // TODO
+        });
     },
   },
 });
