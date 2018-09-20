@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
-import colors from 'vuetify/es5/util/colors';
+// import colors from 'vuetify/es5/util/colors';
 
 Vue.use(Vuetify, {
   theme: {
     primary: '#282F3C',
     secondary: '#ECEFF1',
-    accent: colors.lime.lighten3,
+    accent: '#282F3C',
   },
 });
