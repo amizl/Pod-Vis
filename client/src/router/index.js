@@ -46,5 +46,34 @@ export default new Router({
       component: () =>
         import('../views/SignIn.vue'),
     },
+    // Routes for testing componenets
+    {
+      path: '/test',
+      name: 'test',
+      component: () =>
+        import('../views/Test.vue'),
+      children: [
+        {
+          path: 'auth',
+          component: () =>
+            import('../components/UserAuthentication.vue'),
+        },
+        {
+          path: 'table',
+          component: () =>
+            import('../components/DatasetTable.vue'),
+        },
+        {
+          path: 'bar',
+          component: () =>
+            import('../components/charts/BarChart.vue'),
+        },
+        {
+          path: 'stackedbar',
+          component: () =>
+            import('../components/charts/StackedBarChart.vue'),
+        },
+      ],
+    },
   ],
 });
