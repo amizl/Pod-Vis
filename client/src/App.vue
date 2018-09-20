@@ -1,8 +1,9 @@
 <template lang="pug">
   v-app
-    app-header(v-if='user')
+    app-header(v-if='isUserAuthenicated')
     v-content(color='secondary')
-      router-view
+        router-view
+    //- v-footer(app dense dark).primary
 </template>
 
 <script>
@@ -22,6 +23,10 @@ export default {
   computed: {
     user() {
       return this.$store.getters.user;
+    },
+    isUserAuthenicated() {
+      return this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined;
     },
   },
   watch: {

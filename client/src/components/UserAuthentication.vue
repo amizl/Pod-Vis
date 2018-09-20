@@ -4,20 +4,19 @@ TOOD:
   2. Form validation in login/create account
 -->
 <template lang='pug'>
-  v-flex(xs12 sm8 md4).elevation-3
-    v-tabs(slider-color="secondary" grow)
-      v-tab(key='login') SIGN IN
-      v-tab(key='createAccount') CREATE ACCOUNT
-      v-tabs-items.white
-        v-alert(
-        :value='authError'
-        type='error'
-        transition='fade-transition'
-        ) {{ authError }}
-        v-tab-item
-          sign-in-form
-        v-tab-item
-          create-account-form
+  v-tabs(slider-color="secondary" grow)
+    v-tab(key='login') SIGN IN
+    v-tab(key='createAccount') CREATE ACCOUNT
+    v-tabs-items
+      v-alert(
+      :value='authError'
+      type='error'
+      transition='fade-transition'
+      ) {{ authError }}
+      v-tab-item
+        sign-in-form
+      v-tab-item
+        create-account-form
 
 </template>
 
