@@ -21,8 +21,12 @@ TOOD:
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+import { GETTERS, ACTIONS } from '@/store/modules/auth/types';
 import SignIn from './SignIn.vue';
 import CreateAccount from './CreateAccount.vue';
+
+const { mapGetters } = createNamespacedHelpers('auth');
 
 export default {
   data() {
@@ -30,12 +34,10 @@ export default {
     };
   },
   computed: {
-    user() {
-      return this.$store.getters.user;
-    },
-    authError() {
-      return this.$store.getters.authError;
-    },
+    ...mapGetters({
+      user: GETTERS.USER,
+      authError: GETTERS.AUTH_ERROR,
+    }),
   },
   watch: {
     user(value) {

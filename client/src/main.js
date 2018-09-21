@@ -1,10 +1,14 @@
 import '@babel/polyfill';
 import Vue from 'vue';
 import * as firebase from 'firebase';
+import { createNamespacedHelpers } from 'vuex';
 import './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import { ACTIONS as AUTH_ACTIONS } from './store/modules/auth/types';
+
+const { mapActions } = createNamespacedHelpers('auth');
 
 Vue.config.productionTip = false;
 
@@ -21,14 +25,19 @@ new Vue({
       storageBucket: 'cliovis-cb0c9.appspot.com',
     });
 
+    // Check if user session is still cached
+    // and proceed to auto sign in
     firebase
       .auth()
       .onAuthStateChanged((user) => {
         if (user) {
-          this
-            .$store
-            .dispatch('autoSignIn', user);
+          this.autoSignIn(user);
         }
       });
+  },
+  methods: {
+    ...mapActions({
+      autoSignIn: AUTH_ACTIONS.AUTO_SIGN_IN,
+    }),
   },
 }).$mount('#app');

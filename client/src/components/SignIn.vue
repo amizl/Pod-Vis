@@ -33,6 +33,11 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+import { GETTERS, ACTIONS } from '@/store/modules/auth/types';
+
+const { mapGetters, mapActions } = createNamespacedHelpers('auth');
+
 export default {
   data() {
     return {
@@ -43,19 +48,20 @@ export default {
     };
   },
   computed: {
-    loading() {
-      return this.$store.getters.loading;
-    },
+    ...mapGetters({
+      loading: GETTERS.LOADING,
+    }),
   },
   methods: {
+    ...mapActions({
+      signUserIn: ACTIONS.SIGN_USER_IN,
+    }),
     onSignIn() {
       if (this.$refs.form.validate()) {
-        this
-          .$store
-          .dispatch('signUserIn', {
-            email: this.email,
-            password: this.password,
-          });
+        this.signUserIn({
+          email: this.email,
+          password: this.password,
+        });
       }
     },
   },

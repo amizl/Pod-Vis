@@ -7,8 +7,12 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
 import Header from './components/Header.vue';
 import SignIn from './views/SignIn.vue';
+import { GETTERS } from '@/store/modules/auth/types';
+
+const { mapGetters } = createNamespacedHelpers('auth');
 
 export default {
   components: {
@@ -21,12 +25,11 @@ export default {
     };
   },
   computed: {
-    user() {
-      return this.$store.getters.user;
-    },
+    ...mapGetters({
+      user: GETTERS.USER,
+    }),
     isUserAuthenicated() {
-      return this.$store.getters.user !== null &&
-        this.$store.getters.user !== undefined;
+      return this.user !== null && this.user !== undefined;
     },
   },
   watch: {
