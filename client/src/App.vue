@@ -8,9 +8,9 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
+import { getters } from '@/store/modules/auth/types';
 import Header from './components/Header.vue';
 import SignIn from './views/SignIn.vue';
-import { getters } from '@/store/modules/auth/types';
 
 const { mapGetters } = createNamespacedHelpers('auth');
 
@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     redirectUserIfNotAuth() {
-      if (this.user === null || this.user === undefined) {
+      if (!this.isUserAuthenicated) {
         this.$router.push('/signin');
       }
     },

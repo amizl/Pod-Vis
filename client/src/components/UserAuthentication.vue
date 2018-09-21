@@ -22,7 +22,7 @@ TOOD:
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import { getters, actions } from '@/store/modules/auth/types';
+import { getters } from '@/store/modules/auth/types';
 import SignIn from './SignIn.vue';
 import CreateAccount from './CreateAccount.vue';
 

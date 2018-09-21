@@ -24,6 +24,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import { actions } from '@/store/modules/auth/types';
+
 const { mapActions } = createNamespacedHelpers('auth');
 
 export default {
