@@ -62,6 +62,12 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+import { getters, actions } from '@/store/modules/auth/types';
+
+const { mapGetters, mapActions } = createNamespacedHelpers('auth');
+
+
 export default {
   data() {
     return {
@@ -77,24 +83,19 @@ export default {
     // comparePasswords() {
     //   return this.password !== this.confirmPassword ? 'Passwords do not match.': '';
     // },
-    loading() {
-      return this.$store.getters.loading;
-    },
+    ...mapGetters({
+      loading: getters.LOADING,
+    }),
   },
   methods: {
+    ...mapActions({
+      createUserAccount: actions.CREATE_USER_ACCOUNT,
+    }),
     onCreateAccount() {
-      // console.log({
-      //   fn: this.fullName,
-      //   int: this.institution,
-      //   email: this.email,
-      //   pw: this.password,
-      // });
-      this
-        .$store
-        .dispatch('createUserAccount', {
-          email: this.email,
-          password: this.password,
-        });
+      this.createUserAccount({
+        email: this.email,
+        password: this.password,
+      });
     },
   },
 };

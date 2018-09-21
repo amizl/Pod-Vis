@@ -23,7 +23,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import { ACTIONS } from '@/store/modules/auth/types';
+import { actions } from '@/store/modules/auth/types';
 const { mapActions } = createNamespacedHelpers('auth');
 
 export default {
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      signUserOut: ACTIONS.SIGN_USER_OUT,
+      signUserOut: actions.SIGN_USER_OUT,
     }),
   },
 };

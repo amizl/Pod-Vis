@@ -1,7 +1,7 @@
-import { GETTERS } from './types';
+import { getters } from './types';
 
 export default {
-  [GETTERS.USER]: state => state.user,
-  [GETTERS.AUTH_ERROR]: state => state.authError,
-  [GETTERS.LOADING]: state => state.loading,
+  [getters.USER]: state => state.user,
+  [getters.AUTH_ERROR]: state => state.authError,
+  [getters.LOADING]: state => state.loading,
 };

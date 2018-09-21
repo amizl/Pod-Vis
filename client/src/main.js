@@ -6,7 +6,7 @@ import './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import { ACTIONS as AUTH_ACTIONS } from './store/modules/auth/types';
+import { actions } from './store/modules/auth/types';
 
 const { mapActions } = createNamespacedHelpers('auth');
 
@@ -37,7 +37,7 @@ new Vue({
   },
   methods: {
     ...mapActions({
-      autoSignIn: AUTH_ACTIONS.AUTO_SIGN_IN,
+      autoSignIn: actions.AUTO_SIGN_IN,
     }),
   },
 }).$mount('#app');

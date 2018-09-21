@@ -1,12 +1,12 @@
 // Getters
-export const GETTERS = {
+export const getters = {
   USER: 'USER',
   ERROR: 'AUTH_ERROR',
   LOADING: 'LOADING',
 };
 
 // Mutations
-export const MUTATIONS = {
+export const mutations = {
   MUTATE_USER: 'MUTATE_USER',
   MUTATE_LOADING: 'MUTATE_LOADING',
   MUTATE_AUTH_ERROR: 'MUTATE_AUTH_ERROR',
@@ -15,8 +15,8 @@ export const MUTATIONS = {
 };
 
 // Actions
-export const ACTIONS = {
-  CREATE_USER: 'CREATE_USER',
+export const actions = {
+  CREATE_USER_ACCOUNT: 'CREATE_USER_ACCOUNT',
   SIGN_USER_IN: 'SIGN_USER_IN',
   SIGN_USER_OUT: 'SIGN_USER_OUT',
   AUTO_SIGN_IN: 'AUTO_SIGN_IN',

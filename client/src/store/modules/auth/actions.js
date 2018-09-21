@@ -1,17 +1,17 @@
 import * as firebase from 'firebase';
-import { ACTIONS, MUTATIONS } from './types';
+import { actions, mutations } from './types';
 
 export default {
-  [ACTIONS.CREATE_USER]({ commit }, payload) {
-    commit(MUTATIONS.MUTATE_LOADING, true);
-    commit(MUTATIONS.CLEAR_AUTH_ERROR);
+  [actions.CREATE_USER_ACCOUNT]({ commit }, payload) {
+    commit(mutations.MUTATE_LOADING, true);
+    commit(mutations.CLEAR_AUTH_ERROR);
 
     firebase
       .auth()
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then(({ user }) => {
-        commit(MUTATIONS.MUTATE_LOADING, false);
-        commit(MUTATIONS.MUTATE_USER, {
+        commit(mutations.MUTATE_LOADING, false);
+        commit(mutations.MUTATE_USER, {
           id: user.uid,
         });
       })
@@ -20,19 +20,19 @@ export default {
         commit('setAuthError', error.message);
       });
   },
-  [ACTIONS.SIGN_USER_IN]({ commit }, payload) {
-    commit(MUTATIONS.MUTATE_LOADING, true);
-    commit(MUTATIONS.CLEAR_AUTH_ERROR);
+  [actions.SIGN_USER_IN]({ commit }, payload) {
+    commit(mutations.MUTATE_LOADING, true);
+    commit(mutations.CLEAR_AUTH_ERROR);
 
     firebase
       .auth()
       .signInWithEmailAndPassword(payload.email, payload.password)
       .then(({ user }) => {
-        commit(MUTATIONS.MUTATE_USER, {
+        commit(mutations.MUTATE_USER, {
           id: user.uid,
           username: user.email,
         });
-        commit(MUTATIONS.MUTATE_LOADING, false);
+        commit(mutations.MUTATE_LOADING, false);
         // user
         //   .getIdToken(/* forceRefresh */ true)
         //   .then((idToken) => {
@@ -40,21 +40,21 @@ export default {
         //   });
       })
       .catch((error) => {
-        commit(MUTATIONS.MUTATE_LOADING, false);
-        commit(MUTATIONS.MUTATE_AUTH_ERROR, error.message);
+        commit(mutations.MUTATE_LOADING, false);
+        commit(mutations.MUTATE_AUTH_ERROR, error.message);
       });
   },
-  [ACTIONS.SIGN_USER_OUT]({ commit }) {
-    commit(MUTATIONS.MUTATE_LOADING, true);
+  [actions.SIGN_USER_OUT]({ commit }) {
+    commit(mutations.MUTATE_LOADING, true);
     firebase
       .auth()
       .signOut()
       .then(() => {
-        commit(MUTATIONS.CLEAR_USER);
-        commit(MUTATIONS.MUTATE_LOADING, false);
+        commit(mutations.CLEAR_USER);
+        commit(mutations.MUTATE_LOADING, false);
       });
   },
-  [ACTIONS.AUTO_SIGN_IN]({ commit }, payload) {
-    commit(MUTATIONS.MUTATE_USER, payload.uid);
+  [actions.AUTO_SIGN_IN]({ commit }, payload) {
+    commit(mutations.MUTATE_USER, payload.uid);
   },
 };

@@ -34,7 +34,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import { GETTERS, ACTIONS } from '@/store/modules/auth/types';
+import { getters, actions } from '@/store/modules/auth/types';
 
 const { mapGetters, mapActions } = createNamespacedHelpers('auth');
 
@@ -49,12 +49,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      loading: GETTERS.LOADING,
+      loading: getters.LOADING,
     }),
   },
   methods: {
     ...mapActions({
-      signUserIn: ACTIONS.SIGN_USER_IN,
+      signUserIn: actions.SIGN_USER_IN,
     }),
     onSignIn() {
       if (this.$refs.form.validate()) {

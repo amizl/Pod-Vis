@@ -10,7 +10,7 @@
 import { createNamespacedHelpers } from 'vuex';
 import Header from './components/Header.vue';
 import SignIn from './views/SignIn.vue';
-import { GETTERS } from '@/store/modules/auth/types';
+import { getters } from '@/store/modules/auth/types';
 
 const { mapGetters } = createNamespacedHelpers('auth');
 
@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: GETTERS.USER,
+      user: getters.USER,
     }),
     isUserAuthenicated() {
       return this.user !== null && this.user !== undefined;
