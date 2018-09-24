@@ -3,36 +3,36 @@ import { actions, mutations } from './types';
 
 export default {
   [actions.CREATE_USER_ACCOUNT]({ commit }, payload) {
-    commit(mutations.MUTATE_LOADING, true);
+    commit(mutations.SET_LOADING, true);
     commit(mutations.CLEAR_AUTH_ERROR);
 
     firebase
       .auth()
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then(({ user }) => {
-        commit(mutations.MUTATE_LOADING, false);
-        commit(mutations.MUTATE_USER, {
+        commit(mutations.SET_LOADING, false);
+        commit(mutations.SET_USER, {
           id: user.uid,
         });
       })
       .catch((error) => {
-        commit('setLoading', false);
-        commit('setAuthError', error.message);
+        commit(mutations.SET_USER, false);
+        commit(mutations.SET_AUTH_ERROR, error.message);
       });
   },
   [actions.SIGN_USER_IN]({ commit }, payload) {
-    commit(mutations.MUTATE_LOADING, true);
+    commit(mutations.SET_LOADING, true);
     commit(mutations.CLEAR_AUTH_ERROR);
 
     firebase
       .auth()
       .signInWithEmailAndPassword(payload.email, payload.password)
       .then(({ user }) => {
-        commit(mutations.MUTATE_USER, {
+        commit(mutations.SET_USER, {
           id: user.uid,
           username: user.email,
         });
-        commit(mutations.MUTATE_LOADING, false);
+        commit(mutations.SET_LOADING, false);
         // user
         //   .getIdToken(/* forceRefresh */ true)
         //   .then((idToken) => {
@@ -40,21 +40,21 @@ export default {
         //   });
       })
       .catch((error) => {
-        commit(mutations.MUTATE_LOADING, false);
-        commit(mutations.MUTATE_AUTH_ERROR, error.message);
+        commit(mutations.SET_LOADING, false);
+        commit(mutations.SET_AUTH_ERROR, error.message);
       });
   },
   [actions.SIGN_USER_OUT]({ commit }) {
-    commit(mutations.MUTATE_LOADING, true);
+    commit(mutations.SET_LOADING, true);
     firebase
       .auth()
       .signOut()
       .then(() => {
         commit(mutations.CLEAR_USER);
-        commit(mutations.MUTATE_LOADING, false);
+        commit(mutations.SET_LOADING, false);
       });
   },
   [actions.AUTO_SIGN_IN]({ commit }, payload) {
-    commit(mutations.MUTATE_USER, payload.uid);
+    commit(mutations.SET_USER, payload.uid);
   },
 };

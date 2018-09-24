@@ -9,6 +9,10 @@ export default new Router({
   routes: [
     {
       path: '/',
+      redirect: '/dashboard',
+    },
+    {
+      path: '/',
       name: 'home',
       component: Home,
       beforeEnter: AuthGuard,
@@ -56,7 +60,7 @@ export default new Router({
         {
           path: 'auth',
           component: () =>
-            import('../components/UserAuthentication.vue'),
+            import('../components/auth/UserAuthentication.vue'),
         },
         {
           path: 'table',

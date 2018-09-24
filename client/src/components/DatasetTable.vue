@@ -12,15 +12,6 @@ v-card(
     :color="'#ff1d5e'"
   )
 v-card(v-else).elevation-4
-  v-card-title
-    v-spacer
-      v-text-field(
-        v-model="search"
-        append-icon="search"
-        label="Search for Dataset"
-        single-line
-        hide-details
-      ).ma-1
   v-data-table(
     v-model='selected'
     :search='search'
@@ -58,15 +49,19 @@ v-card(v-else).elevation-4
 
 <script>
 import { HalfCircleSpinner } from 'epic-spinners';
+import { createNamespacedHelpers } from 'vuex';
+import { getters, actions } from '@/store/modules/datasetManager/types';
+
+const { mapGetters, mapActions } = createNamespacedHelpers('datasetManager');
 
 /*eslint-disable*/
 export default {
   components: {
     HalfCircleSpinner
   },
+  props: ['search'],
   data () {
     return {
-      search: '',
       selected: [],
       headers: [
         {
@@ -100,26 +95,40 @@ export default {
     };
   },
   computed: {
-    loading() {
-      return this.$store.getters.loading;
-    },
-    datasets() {
-      return this.$store.getters.browserDatasets;
-    },
+    ...mapGetters({
+      loading: getters.LOADING,
+      datasets: getters.DATASETS,
+      selected_datasets: getters.SELECTED_DATASETS,
+    }),
+    // TODO: Look at making this work.
+    // selected ends up being specific selected element
+    // rather than current list of selected elements.
+    // Using watch in the mean time to update store state.
+    // selected: {
+    //   set(selected) {
+    //     console.log(selected);
+    //     this.selectDatasets(selected);
+    //   },
+    //   get() {
+    //     this.selected_datasets;
+    //   },
+    // },
   },
   watch: {
     selected() {
-      this.$emit('dataSelected', this.selected);
+      this.selectDatasets(this.selected);
     },
   },
   methods: {
+    ...mapActions({
+      fetchDatasets: actions.FETCH_DATASETS,
+      selectDatasets: actions.SELECT_DATASETS,
+    })
   },
   created() {
     if (!this.datasets) {
-        this
-          .$store
-          .dispatch('fetchBrowserDatasets');
-      }
+        this.fetchDatasets();
+    }
   },
 }
 </script>

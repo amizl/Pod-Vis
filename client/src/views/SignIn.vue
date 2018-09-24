@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import UserAuthentication from '../components/UserAuthentication.vue';
+import UserAuthentication from '../components/auth/UserAuthentication.vue';
 
 export default {
   components: {

@@ -9,9 +9,9 @@ TOOD:
     v-tab(key='createAccount') CREATE ACCOUNT
     v-tabs-items
       v-alert(
-      :value='authError'
-      type='error'
-      transition='fade-transition'
+        :value='authError'
+        type='error'
+        transition='fade-transition'
       ) {{ authError }}
       v-tab-item
         sign-in-form

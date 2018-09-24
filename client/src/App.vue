@@ -1,23 +1,25 @@
 <template lang="pug">
   v-app
-    app-header(v-if='isUserAuthenicated')
+    app-side-bar(v-if='isUserAuthenicated')
     v-content(color='secondary')
         router-view
-    //- v-footer(app dense dark).primary
+    app-footer
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import { getters } from '@/store/modules/auth/types';
-import Header from './components/Header.vue';
+import Footer from './components/layout/Footer.vue';
+import SideBar from './components/layout/Sidebar.vue';
 import SignIn from './views/SignIn.vue';
 
 const { mapGetters } = createNamespacedHelpers('auth');
 
 export default {
   components: {
-    appHeader: Header,
+    appFooter: Footer,
     signInForm: SignIn,
+    appSideBar: SideBar,
   },
   name: 'App',
   data() {
