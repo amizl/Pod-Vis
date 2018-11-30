@@ -1,8 +1,6 @@
-<template lang='pug'>
+<template lang="pug">
 v-container(fluid fill-height grid-list-xl)
-  v-toolbar(
-    app
-  ).primary
+  v-toolbar(app).primary
     v-layout
       v-flex(xs6)
         v-text-field(
@@ -11,43 +9,261 @@ v-container(fluid fill-height grid-list-xl)
           label="Search for Dataset"
           single-line
           hide-details
-          dark
-        )
+          dark)
+      v-flex(xs6)
+    v-toolbar-items
+      v-btn(
+        append
+        :to='selectedDatasets | buildPath'
+        flat
+        dark
+        :disabled='selectedDatasets === null')
+        v-icon(left) build
+        | BUILD DATASET
+      v-btn(
+        @click.native.stop='createCohortSheet = !createCohortSheet'
+        flat
+        dark
+        :disabled='selectedDatasets === null')
+        v-icon(left) group_add
+        | ADD TO PROFILE
   v-layout(row wrap)
-    v-flex(xs6)
+    v-flex(xs4)
+      filter-tree
+    v-flex(xs8)
       dataset-table(:search='search')
-    v-flex(xs6 fill-height)
-      donut-chart(v-if='selected_datasets', :data='selected_datasets')
+    //- v-flex(xs6 fill-height)
+      donut-chart(v-if='selectedDatasets', :data='selectedDatasets')
+  // Bottom sheets triggered by toolbar
+  v-bottom-sheet(v-model="createCohortSheet" inset style='overflow:scroll;')
+    v-layout
+      v-flex(xs12)
+        v-card
+          v-card-title(style='color:white' primary-title).primary
+            h2 CREATE COHORT
+          v-card-text.pa-4
+            p Selected Datasets:
+            v-chip(
+              v-if='selectedDatasets'
+              close
+              v-for='dataset in selectedDatasets') {{ dataset.dataset }}
+          v-card-text.pa-4
+            p Outcome Measures
+            outcome-table
+          v-card-text.pa-4
+            p Demographics
+            demographics-table
+            //- p Outcome Measures:
+            //- v-treeview(:items='outcomes.PPMI')
+            //- div(v-for='outcome in outcomes.PPMI')
+            //-   p {{ outcome.name }}:
+            //-     v-chip(v-for='child in outcome.children') {{ child.name}}
+          //- v-card-text.pa-4
+            p Variables:
+            v-chip(v-if='selectedDatasets' v-for='outcome in outcomeMeasures') {{ outcome }}
+          v-card-actions.pa-4
+            v-text-field(
+              prepend-icon='create'
+              label="Synthetic Cohort Name"
+              single-line
+              hide-details)
+            v-spacer
+            v-btn(dark).primary
+              v-icon(left) add_box
+              | ADD TO COHORTS
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-import { getters } from '@/store/modules/datasetManager/types';
-import Header from '../components/layout/Header.vue';
-import DatasetTable from '../components/DatasetTable.vue';
-import DonutChart from '../components/charts/DonutChart.vue';
-
-const { mapGetters } = createNamespacedHelpers('datasetManager');
+import { mapState, mapActions } from 'vuex';
+import { state, actions } from '@/store/modules/datasetManager/types';
+import Header from '@/components/layout/Header.vue';
+import DatasetTable from '@/components/DatasetManager/DatasetTable.vue';
+import OutcomeTable from '@/components/DatasetManager/OutcomeTable.vue';
+import DemographicsTable from '@/components/DatasetManager/DemographicsTable.vue';
+import FilterTree from '@/components/DatasetManager/FilterTree.vue';
+//  import DonutChart from '@/components/charts/DonutChart.vue';
 
 export default {
   components: {
     datasetTable: DatasetTable,
-    donutChart: DonutChart,
+    // donutChart: DonutChart,
     contentHeader: Header,
+    filterTree: FilterTree,
+    OutcomeTable,
+    DemographicsTable,
   },
+
   data() {
     return {
+      createCohortSheet: false,
+      addDataSheet: false,
       search: '',
-      radioGroup: [{ samples: 10 }, { samples: 6 }, { samples: 9 }],
+      outcomes: {
+        'UMD': [
+          {
+            name: 'Motor',
+            children: [
+              {
+                name: 'UPDRS Part I'
+              },
+              {
+                name: 'UDPRS Part II'
+              },
+              {
+                name: 'UPDRS Part III',
+              },
+              {
+                name: 'UPDRS PART IV',
+              },
+              {
+                name: 'UPDRS Total'
+              },
+            ],
+          },
+        ],
+        'PPMI': [
+          {
+            name: 'General Disease Severity Measures',
+            children: [
+              {
+                name: 'MDS-UPDRS Part I'
+              },
+              {
+                name: 'MDS-UDPRS Part II'
+              },
+              {
+                name: 'MDS-UPDRS Part III',
+              },
+              {
+                name: 'MDS-UPDRS Part IV',
+              },
+              {
+                name: 'MDS-UPDRS Total'
+              },
+              {
+                name: 'Hoehn and Yahr Stages'
+              }
+            ],
+          },
+          {
+            name: 'Autonomic',
+            children: [
+              {
+                name: 'SCOPA - Autonomic Dysfunction'
+              }
+            ]
+          },
+          {
+            name: 'Cognitive',
+            children: [
+              {
+                name: 'Benton Judgment of Line Orientation',
+              },
+              {
+                name: 'Hopkins Verbal Learning Test'
+              },
+              {
+                name: 'Letter Number Sequencing'
+              },
+              {
+                name: 'Montreal Cognitive Assessment',
+              },
+              {
+                name: 'Semantic Fluency'
+              },
+              {
+                name: 'Symbol Digit Modalities',
+              },
+            ]
+          },
+          {
+            name: 'Sleep',
+            children: [
+              {
+                name: 'Epworth Sleepiness Scale'
+              },
+              {
+                name: 'REM Sleep Behavior Questionnaire'
+              }
+            ]
+          },
+          {
+            name: 'Mental Health',
+            children: [
+              {
+                name: 'Geriatric Depression Scale'
+              },
+              {
+                name: 'State-Trait Anxiety Inventory'
+              }
+            ]
+          },
+          {
+            name: 'Disability',
+            children: [
+              {
+                name: 'Modified Schwab & England ADL'
+              }
+            ]
+          },
+          {
+            name: 'Medical Comorbidities',
+            children: [
+              {
+                name: 'Cumulative Illness Rating Scale'
+              }
+            ]
+          }
+]
+      }
     };
   },
+  filters: {
+    buildPath(datasets) {
+      // This constructs the build path with selected dataset ids
+      if (!datasets) return 'build'
+
+      const idParams = datasets
+        .map(dataset => dataset.id)
+        .map(id => 'id=' + id)
+        .join('&');
+
+      return 'build?' + idParams;
+    }
+  },
   computed: {
-    ...mapGetters({
-      selected_datasets: getters.SELECTED_DATASETS,
+    ...mapState('datasetManager', {
+      selectedDatasets: state.SELECTED_DATASETS,
+    }),
+    buildPathWithParams() {
+      if (!this.selectedDatasets) return 'build';
+      const idParams = this.selectedDatasets
+        .map(dataset => dataset.id)
+        .map(id => 'id=' + id)
+        .join('&');
+
+      return 'build?' + idParams;
+    },
+    outcomeMeasures() {
+      // Flatten array of outcome measures
+      if (!this.selectedDatasets) return [];
+
+      return this.selectedDatasets
+        .map(d => d.variables) // get outcome measures
+        .reduce((prev, curr) => prev.concat(curr)) // flatten
+        .map(v => v.name); // get outcome measure name
+    },
+  },
+  methods: {
+    ...mapActions('datasetManager', {
+      addSelectedDatasetsToCohorts: actions.ADD_SELECTED_DATASETS_TO_COHORTS,
     }),
   },
 };
 </script>
 
 <style scoped>
+div.v-dialog.v-bottom-sheet.v-bottom-sheet--inset.v-dialog--active {
+  overflow: scroll;
+}
 </style>
