@@ -34,9 +34,9 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import { getters, actions } from '@/store/modules/auth/types';
+import { state, actions } from '@/store/modules/auth/types';
 
-const { mapGetters, mapActions } = createNamespacedHelpers('auth');
+const { mapState, mapActions } = createNamespacedHelpers('auth');
 
 export default {
   data() {
@@ -48,8 +48,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      loading: getters.LOADING,
+    ...mapState({
+      loading: state.IS_LOADING,
     }),
   },
   methods: {

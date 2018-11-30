@@ -10,13 +10,26 @@ export default {
       .auth()
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then(({ user }) => {
-        commit(mutations.SET_LOADING, false);
         commit(mutations.SET_USER, {
           id: user.uid,
+          email: user.email,
         });
+
+        delete payload.password;
+
+        firebase
+          .firestore()
+          .collection('users')
+          .doc(user.uid)
+          .set({
+            ...payload,
+          })
+          .then(() => {
+            commit(mutations.SET_LOADING, false);
+          });
       })
       .catch((error) => {
-        commit(mutations.SET_USER, false);
+        commit(mutations.SET_LOADING, false);
         commit(mutations.SET_AUTH_ERROR, error.message);
       });
   },

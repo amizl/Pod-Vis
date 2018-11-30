@@ -2,7 +2,7 @@
   v-card
     v-card-text
       v-form(@submit.prevent='onCreateAccount').ma-4
-        // v-text-field(
+        v-text-field(
           prepend-icon="person"
           v-model='fullName'
           name="fullName"
@@ -23,7 +23,7 @@
           :error-messages="errorMessages"
           required
         )
-        // v-text-field(
+        v-text-field(
           prepend-icon="business_center"
           v-model='institution'
           name="institution"
@@ -41,7 +41,7 @@
           :error-messages="errorMessages"
           required
         )
-        // v-text-field(
+        v-text-field(
           v-model='confirmPassword'
           prepend-icon=" "
           name="confirmPassword"
@@ -62,38 +62,37 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-import { getters, actions } from '@/store/modules/auth/types';
-
-const { mapGetters, mapActions } = createNamespacedHelpers('auth');
-
+import { mapState, mapActions } from 'vuex';
+import { state, actions } from '@/store/modules/auth/types';
 
 export default {
   data() {
     return {
-      // fullName: '',
-      // institution: '',
+      fullName: '',
       email: '',
+      institution: '',
       password: '',
-      // confirmPassword: '',
+      confirmPassword: '',
       errorMessages: '',
     };
   },
   computed: {
-    // comparePasswords() {
-    //   return this.password !== this.confirmPassword ? 'Passwords do not match.': '';
-    // },
-    ...mapGetters({
-      loading: getters.LOADING,
+    comparePasswords() {
+      return this.password !== this.confirmPassword ? 'Passwords do not match.' : '';
+    },
+    ...mapState('auth', {
+      loading: state.IS_LOADING,
     }),
   },
   methods: {
-    ...mapActions({
+    ...mapActions('auth', {
       createUserAccount: actions.CREATE_USER_ACCOUNT,
     }),
     onCreateAccount() {
       this.createUserAccount({
+        fullName: this.fullName,
         email: this.email,
+        institution: this.institution,
         password: this.password,
       });
     },

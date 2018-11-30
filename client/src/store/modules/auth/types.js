@@ -1,23 +1,27 @@
+// State
+export const state = {
+  USER: 'user',
+  AUTH_ERROR: 'authError',
+  IS_LOADING: 'isLoading',
+};
+
 // Getters
 export const getters = {
-  USER: 'USER',
-  ERROR: 'AUTH_ERROR',
-  LOADING: 'LOADING',
 };
 
 // Mutations
 export const mutations = {
-  SET_USER: 'SET_USER',
-  SET_LOADING: 'SET_LOADING',
-  SET_AUTH_ERROR: 'SET_AUTH_ERROR',
-  CLEAR_AUTH_ERROR: 'CLEAR_AUTH_ERROR',
-  CLEAR_USER: 'CLEAR_USER',
+  SET_USER: 'setUser',
+  SET_LOADING: 'setLoading',
+  SET_AUTH_ERROR: 'setAuthError',
+  CLEAR_AUTH_ERROR: 'clearAuthError',
+  CLEAR_USER: 'clearUser',
 };
 
 // Actions
 export const actions = {
-  CREATE_USER_ACCOUNT: 'CREATE_USER_ACCOUNT',
-  SIGN_USER_IN: 'SIGN_USER_IN',
-  SIGN_USER_OUT: 'SIGN_USER_OUT',
-  AUTO_SIGN_IN: 'AUTO_SIGN_IN',
+  CREATE_USER_ACCOUNT: 'createUserAccount',
+  SIGN_USER_IN: 'signUserIn',
+  SIGN_USER_OUT: 'signUserOut',
+  AUTO_SIGN_IN: 'autoSignIn',
 };

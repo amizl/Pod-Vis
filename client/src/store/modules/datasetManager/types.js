@@ -1,16 +1,20 @@
+export const state = {
+  DATASETS: 'datasets',
+  IS_LOADING: 'isLoading',
+  SELECTED_DATASETS: 'selectedDatasets',
+};
+
 export const getters = {
-  DATASETS: 'DATASETS',
-  LOADING: 'LOADING',
-  SELECTED_DATASETS: 'SELECTED_DATASETS',
 };
 
 export const mutations = {
-  SET_DATASETS: 'SET_DATASETS',
-  SET_LOADING: 'SET_LOADING',
-  SET_SELECTED_DATASETS: 'SET_SELECTED_DATASETS',
+  SET_DATASETS: 'setDatasets',
+  SET_LOADING: 'setLoading',
+  SET_SELECTED_DATASETS: 'setSelectedDatasets',
 };
 
 export const actions = {
-  FETCH_DATASETS: 'FETCH_DATASETS',
-  SELECT_DATASETS: 'SELECT_DATASETS',
+  FETCH_DATASETS: 'fetchDatasets',
+  SELECT_DATASETS: 'selectDatasets',
+  ADD_SELECTED_DATASETS_TO_COHORTS: 'addToCohorts',
 };

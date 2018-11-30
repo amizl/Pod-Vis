@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import store from '../../../store/';
 import { actions, mutations } from './types';
 
 export default {
@@ -12,7 +13,13 @@ export default {
       .then((querySnapshot) => {
         const datasets = querySnapshot
           .docs
-          .map(doc => doc.data());
+          .map((doc) => {
+            const dataset = doc.data();
+            return {
+              id: doc.id,
+              ...dataset,
+            };
+          });
 
         commit(mutations.SET_DATASETS, datasets);
         commit(mutations.SET_LOADING, false);
@@ -23,7 +30,22 @@ export default {
       });
   },
   [actions.SELECT_DATASETS]({ commit }, payload) {
-    console.log(payload);
     commit(mutations.SET_SELECTED_DATASETS, payload);
   },
+  [actions.ADD_SELECTED_DATASETS_TO_COHORTS]({ commit }, payload) {
+    commit(mutations.SET_LOADING, true);
+
+    payload.forEach((dataset) => {
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(store.state.auth.user)
+        .collection('cohorts')
+        .add(dataset)
+        .then(() => {
+          commit(mutations.SET_LOADING, false);
+        });
+    });
+  },
+
 };

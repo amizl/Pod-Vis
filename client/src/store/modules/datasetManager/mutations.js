@@ -1,17 +1,17 @@
-import { mutations } from './types';
+import { mutations, state as stateTypes } from './types';
 
 export default {
   [mutations.SET_DATASETS](state, payload) {
-    state.datasets = payload;
+    state[stateTypes.DATASETS] = payload;
   },
   [mutations.SET_LOADING](state, payload) {
-    state.loading = payload;
+    state[stateTypes.IS_LOADING] = payload;
   },
   [mutations.SET_SELECTED_DATASETS](state, payload) {
     if (payload.length) {
-      state.selected_datasets = payload;
+      state[stateTypes.SELECTED_DATASETS] = payload;
     } else {
-      state.selected_datasets = null;
+      state[stateTypes.SELECTED_DATASETS] = null;
     }
   },
 };

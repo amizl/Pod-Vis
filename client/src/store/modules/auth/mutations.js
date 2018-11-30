@@ -1,19 +1,19 @@
-import { mutations } from './types';
+import { mutations, state as stateTypes } from './types';
 
 export default {
   [mutations.SET_USER](state, payload) {
-    state.user = payload;
+    state[stateTypes.USER] = payload;
   },
   [mutations.CLEAR_USER](state) {
-    state.user = null;
+    state[stateTypes.USER] = null;
   },
   [mutations.SET_LOADING](state, payload) {
-    state.loading = payload;
+    state[stateTypes.IS_LOADING] = payload;
   },
   [mutations.SET_AUTH_ERROR](state, payload) {
-    state.authError = payload;
+    state[stateTypes.AUTH_ERROR] = payload;
   },
   [mutations.CLEAR_AUTH_ERROR](state) {
-    state.authError = null;
+    state[stateTypes.AUTH_ERROR] = null;
   },
 };
