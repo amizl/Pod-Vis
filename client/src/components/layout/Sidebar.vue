@@ -12,19 +12,19 @@
       v-toolbar(flat)
         v-list
           v-list-tile
-            v-list-tile-title LOGO
-      v-list(three-line)
+            v-list-tile-title CliO-Vis
+      v-list(two-line)
           v-list-tile(
             v-for="item in menuItems"
             :key="item.title"
             :to='item.path'
           )
             v-list-tile-action
-              v-icon(x-large) {{ item.icon }}
+              v-icon(large) {{ item.icon }}
             v-list-tile-content(v-if='expand')
               v-list-tile-title {{ item.name }}
       v-spacer
-      v-list(three-line)
+      v-list(two-line)
         v-dialog(
           v-model='dialog'
           width='500'
@@ -33,7 +33,7 @@
           // TODO: fix width for this tile
           v-list-tile(slot='activator' @click='')
             v-list-tile-action
-              v-icon(large) power_settings_new
+              v-icon(large) exit_to_app
             v-list-tile-content(v-if='expand')
               v-list-tile-title SIGN OUT
           v-card
@@ -53,15 +53,29 @@
         )
           v-list-tile-action
             v-icon(
+              small
               v-if='!expand'
             ) keyboard_arrow_right
             v-icon(
+              small
               v-else
-
             ) keyboard_arrow_left
+      v-list.pb-5
+        v-list-tile
+          v-list-tile-action
+            img(
+              v-if='expand'
+              src='@/assets/som_igs_logo.svg'
+            )
+            img(
+              v-else
+              src='@/assets/som_igs_icon.svg'
+              width='20px'
+            )
 </template>
 
 <script>
+
 import { createNamespacedHelpers } from 'vuex';
 import { actions } from '@/store/modules/auth/types';
 
@@ -71,7 +85,7 @@ export default {
   data() {
     return {
       dialog: false,
-      expand: false,
+      expand: true,
       menuItems: [
         {
           name: 'DASHBOARD',
