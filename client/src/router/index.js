@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '../views/Home.vue';
-import AuthGuard from './auth-guard';
+import Dashboard from '../views/Dashboard.vue';
+import AuthGuard from './authGuard';
 
 Vue.use(Router);
 
@@ -10,11 +10,12 @@ export default new Router({
     {
       path: '/',
       redirect: '/dashboard',
+      beforeEnter: AuthGuard,
     },
     {
-      path: '/',
+      path: '/dashboard',
       name: 'home',
-      component: Home,
+      component: Dashboard,
       beforeEnter: AuthGuard,
     },
     {
@@ -23,59 +24,91 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () =>
-        import('../views/CohortManager.vue'),
+      component: () => import('../views/CohortManager.vue'),
+      beforeEnter: AuthGuard,
     },
     {
       path: '/dataExplorer',
       name: 'dataExplorer',
-      component: () =>
-        import('../views/DataExplorer.vue'),
+      component: () => import('../views/DataExplorer.vue'),
+      beforeEnter: AuthGuard,
     },
     {
       path: '/analysisTool',
       name: 'analysisTool',
-      component: () =>
-        import('../views/AnalysisTool.vue'),
+      component: () => import('../views/AnalysisTool.vue'),
+      beforeEnter: AuthGuard,
     },
     {
       path: '/datasetManager',
       name: 'datasetManager',
-      component: () =>
-        import('../views/DatasetManager.vue'),
+      component: () => import('../views/DatasetManager.vue'),
+      beforeEnter: AuthGuard,
+      // children: [
+      //   {
+      //     path: 'build',
+      //     component: () => import('@/views/BuildDataset.vue'),
+      //   },
+      // ],
+    },
+    {
+      path: '/datasetManager/build',
+      name: 'buildDataset',
+      component: () => import('@/views/BuildDataset.vue'),
+      props: route => ({
+        id: route.query.id,
+      }),
+    },
+    {
+      path: '/datasetManager/dataset/:id',
+      name: 'dataset',
+      component: () => import('@/views/Dataset.vue'),
+      props: route => ({
+        id: route.params.id,
+      }),
     },
     {
       path: '/signin',
       name: 'signIn',
-      component: () =>
-        import('../views/SignIn.vue'),
+      component: () => import('../views/SignIn.vue'),
     },
     // Routes for testing componenets
     {
       path: '/test',
       name: 'test',
-      component: () =>
-        import('../views/Test.vue'),
+      component: () => import('../views/Test.vue'),
       children: [
         {
           path: 'auth',
-          component: () =>
-            import('../components/auth/UserAuthentication.vue'),
+          component: () => import('../components/auth/UserAuthentication.vue'),
         },
         {
           path: 'table',
-          component: () =>
-            import('../components/DatasetTable.vue'),
+          component: () => import('../components/DatasetManager/DatasetTable.vue'),
         },
         {
           path: 'bar',
-          component: () =>
-            import('../components/charts/BarChart.vue'),
+          // component: () => import('../components/charts/BarChart.vue'),
         },
         {
           path: 'stackedbar',
-          component: () =>
-            import('../components/charts/StackedBarChart.vue'),
+          // component: () => import('../components/charts/StackedBarChart.vue'),
+        },
+        {
+          path: 'loading',
+          component: () => import('../components/common/LoadingSpinner.vue'),
+        },
+        {
+          path: 'cohortCard',
+          component: () => import('@/components/CohortManager/CohortCard.vue'),
+        },
+        {
+          path: 'categoricalCard',
+          component: () => import('@/components/CohortManager/CategoricalCard.vue'),
+        },
+        {
+          path: 'testCharts',
+          component: () => import('@/views/TestCharts.vue'),
         },
       ],
     },

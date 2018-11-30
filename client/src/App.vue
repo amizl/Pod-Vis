@@ -2,18 +2,22 @@
   v-app
     app-side-bar(v-if='isUserAuthenicated')
     v-content(color='secondary')
+      transition(
+        name="fade"
+        mode="out-in"
+      )
         router-view
-    app-footer
+    //- app-footer
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import { getters } from '@/store/modules/auth/types';
+import { state } from '@/store/modules/auth/types';
 import Footer from './components/layout/Footer.vue';
 import SideBar from './components/layout/Sidebar.vue';
 import SignIn from './views/SignIn.vue';
 
-const { mapGetters } = createNamespacedHelpers('auth');
+const { mapState } = createNamespacedHelpers('auth');
 
 export default {
   components: {
@@ -27,8 +31,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      user: getters.USER,
+    ...mapState({
+      user: state.USER,
     }),
     isUserAuthenicated() {
       return this.user !== null && this.user !== undefined;
@@ -50,5 +54,16 @@ export default {
 </script>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
+}
 
 </style>

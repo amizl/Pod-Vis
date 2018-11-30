@@ -25,6 +25,12 @@ new Vue({
       storageBucket: 'cliovis-cb0c9.appspot.com',
     });
 
+    firebase
+      .firestore()
+      .settings({
+        timestampsInSnapshots: true,
+      });
+
     // Check if user session is still cached
     // and proceed to auto sign in
     firebase

@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import header from '../components/layout/Header.vue';
+import ContentHeader from '../components/layout/Header.vue';
 
 export default {
   components: {
-    contentHeader: header
-  }
+    ContentHeader,
+  },
 };
 </script>
 

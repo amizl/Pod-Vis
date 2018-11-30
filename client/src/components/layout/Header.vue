@@ -3,7 +3,7 @@
     fixed
     dense
   ).primary
-    v-toolbar-title(left) Foo
+    //- v-toolbar-title(left)
     //-   v-spacer
     //-   v-btn(
     //-     flat v-for='item in menuItems'

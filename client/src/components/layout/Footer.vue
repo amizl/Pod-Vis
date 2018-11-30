@@ -1,7 +1,8 @@
 <template lang="pug">
   v-footer(app dense dark).primary
     v-spacer
-    h3.pa-3 {{ title }} &copy; {{ copy }}
+    //- img(src='./assets/gray-som-logo.svg')
+    //- h3.pa-3 {{ title }} &copy; {{ copy }}
     v-spacer
 </template>
 
