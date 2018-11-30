@@ -1,5 +1,5 @@
-S<template lang="pug">
-  svg
+<template>
+  <svg></svg>
 </template>
 
 <script>
