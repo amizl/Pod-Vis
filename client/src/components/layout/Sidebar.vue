@@ -9,10 +9,10 @@
       column
       fill-height
     )
-      v-toolbar(flat)
+      v-toolbar(flat).white
         v-list
           v-list-tile
-            v-list-tile-title CliO-Vis
+            v-list-tile-title LOGO
       v-list(two-line)
           v-list-tile(
             v-for="item in menuItems"
@@ -97,16 +97,16 @@ export default {
           icon: 'group',
           path: '/cohortManager',
         },
-        {
-          name: 'DATA EXPLORER',
-          icon: 'explore',
-          path: '/dataExplorer',
-        },
-        {
-          name: 'ANALYSIS TOOL',
-          icon: 'bar_chart',
-          path: '/analysisTool',
-        },
+        // {
+        //   name: 'DATA EXPLORER',
+        //   icon: 'explore',
+        //   path: '/dataExplorer',
+        // },
+        // {
+        //   name: 'ANALYSIS TOOL',
+        //   icon: 'bar_chart',
+        //   path: '/analysisTool',
+        // },
         {
           name: 'DATASET MANAGER',
           icon: 'table_chart',

@@ -1,6 +1,6 @@
 <template lang='pug'>
   v-container(fluid)
-    v-toolbar(app dense).primary
+    v-toolbar(app).white
     v-layout(v-if='cohorts' align-center justify-start row fill-height)
       v-flex(v-for='cohort in cohorts' v-key='cohort.code' md3).pa-3
         cohort-card(

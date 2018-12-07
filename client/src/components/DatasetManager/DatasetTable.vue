@@ -1,6 +1,5 @@
 <template lang='pug'>
 v-card.elevation-3
-  loading-spinner(v-if='isLoading')
   v-toolbar(
     card
     color="grey lighten-3"
@@ -8,63 +7,52 @@ v-card.elevation-3
   )
     v-icon table_chart
     v-toolbar-title Available Datasets
-  v-data-table(
-    v-if='datasets'
-    v-model='selected'
-    :search='search'
-    :headers='headers'
-    :items='datasets'
-    hide-actions
-    item-key='dataset'
+  v-layout(
+    row
+    justify-center
+    align-center
   )
-    //- template(
-    //-   slot="expand"
-    //-   slot-scope="props"
-    //- )
-    //-   v-card(flat)
-    //-     v-card-title.ml-3.mt-3(primary-title)
-    //-       h1 {{ props.item.dataset }}
-    //-     v-card-text.pl-5.pr-5
-    //-       v-layout
-    //-         v-flex(xs6)
-    //-           p {{ props.item.description}}
-    //-         v-flex(xs6)
-    //-           p.text-xs-center SUNBURST CHART HERE (Breakdown of Study Groups)
-    //-     v-data-table(
-    //-       :headers='subheaders'
-    //-       :items='props.item.variables'
-    //-     )
-    //-       template(slot="items" slot-scope="props")
-    //-         tr
-    //-           td {{ props.item.name }}
-    //-           td {{ props.item.type }}
-    //-           td {{ props.item.description }}
-    template(
-      slot="items"
-      slot-scope="props"
-    )
-      tr
-        td(@click.stop)
-          v-checkbox(
-            v-model='props.selected'
-            primary
-            hide-details
-          )
-        td {{ props.item.dataset }}
-        td {{ props.item.n_samples }}
-        td {{ props.item.variables.length }}
-        td
-          v-tooltip(
-            left
-            color='primary'
-          )
-            v-icon(
-              @click='stepIntoDataset(props.item.id)'
-              slot="activator"
-            ) info
-            span More Info
-        //- td {{ probs.item.n_variables }}
-        //- td {{ props.item.code }}
+    v-flex(v-if='isLoading')
+      loading-spinner(medium).ma-5
+    v-flex(v-else)
+      v-data-table(
+        v-if='datasets'
+        v-model='selected'
+        :search='search'
+        :headers='headers'
+        :items='datasets'
+        hide-actions
+        item-key='dataset'
+      )
+        template(
+          slot="items"
+          slot-scope="props"
+        )
+          tr
+            td(@click.stop)
+              v-checkbox(
+                v-model='props.selected'
+                primary
+                hide-details
+              )
+            td {{ props.item.dataset }}
+            td {{ props.item.n_samples }}
+            td {{ props.item.outcome_categories }}
+            td {{ props.item.outcome_measures }}
+            td {{ props.item.demographics.length }}
+            td {{ props.item.variables.length }}
+            td
+              v-tooltip(
+                left
+                color='primary'
+              )
+                v-icon(
+                  @click='stepIntoDataset(props.item.id)'
+                  slot="activator"
+                ) info
+                span More Info
+            //- td {{ probs.item.n_variables }}
+            //- td {{ props.item.code }}
 </template>
 
 <script>
@@ -95,6 +83,18 @@ export default {
         {
           text: 'Subject Count',
           value: 'subject count',
+        },
+        {
+          text: 'Outcome Categories',
+          value: 'categories',
+        },
+        {
+          text: 'Outcome Measures',
+          value: 'measure',
+        },
+        {
+          text: 'Demographics',
+          value: 'demographics',
         },
         {
           text: 'Variables',

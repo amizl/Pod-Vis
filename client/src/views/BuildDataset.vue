@@ -6,11 +6,22 @@
   >
     <v-toolbar
       app
-      class="primary"
+      class='white'
     >
+      <v-toolbar-items>
+        <v-btn
+          flat
+          @click='goBack'
+        >
+          <v-icon left>
+            arrow_back
+          </v-icon>
+          BACK TO DATASET MANAGER
+        </v-btn>
+      </v-toolbar-items>
     </v-toolbar>
     <v-layout justify-center>
-      <v-flex xs10>
+      <v-flex xs12>
         <build-dataset-stepper></build-dataset-stepper>
       </v-flex>
     </v-layout>
@@ -65,6 +76,9 @@ export default {
     ...mapActions('datasetManager', {
       addSelectedDatasetsToCohorts: actions.ADD_SELECTED_DATASETS_TO_COHORTS,
     }),
+    goBack() {
+      this.$router.go(-1);
+    },
   },
 };
 </script>

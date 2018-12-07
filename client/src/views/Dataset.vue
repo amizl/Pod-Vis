@@ -6,12 +6,11 @@
   >
     <v-toolbar
       app
-      class="primary"
+      class='white'
     >
       <v-toolbar-items>
         <v-btn
           flat
-          dark
           @click='goBack'
         >
           <v-icon left>
@@ -20,17 +19,28 @@
           BACK TO DATASET MANAGER
         </v-btn>
       </v-toolbar-items>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <!-- <v-btn flat>
+          <v-icon left> group_add </v-icon>
+          ADD TO SELECTION
+        </v-btn> -->
+        <v-btn flat>
+          <v-icon left> group_add </v-icon>
+          ADD TO PROFILE
+        </v-btn>
+      </v-toolbar-items>
     </v-toolbar>
     <v-layout
       row
       wrap
       justify-center
     >
-      <v-flex xs4>
+      <v-flex xs6>
         <v-card>
           <v-toolbar card dense>
             <v-toolbar-title>
-              DATASET DESCRIPTION
+              Dataset
             </v-toolbar-title>
           </v-toolbar>
           <div class='ma-2'>
@@ -45,24 +55,82 @@
             >
               <p>{{ dataset.description }}</p>
             </v-card-text>
+            <v-card-actions v-if='dataset.sourceURL'>
+              <v-spacer></v-spacer>
+              <v-btn
+                flat
+                :href='dataset.sourceURL'
+              >Link to Study</v-btn>
+            </v-card-actions>
           </div>
         </v-card>
       </v-flex>
-      <v-flex xs4>
+      <v-flex xs6>
         <v-card>
           <v-toolbar card dense>
             <v-toolbar-title>
-              SUBJECT SUMMARY
+              Subject Summary
             </v-toolbar-title>
           </v-toolbar>
-          <v-card-title></v-card-title>
+          <!-- <v-card-title>DONUT CHART HERE</v-card-title> -->
+          <v-card-text>
+            <sunburst-chart
+              v-if='dataset.cohort_summary'
+              :data='JSON.parse(dataset.cohort_summary)'
+            >
+              <sunburst-legend
+                slot='legend'
+                :items='JSON.parse(dataset.cohort_summary).children'>
+              </sunburst-legend>
+            </sunburst-chart>
+          </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs8>
+    </v-layout>
+    <v-layout
+      row
+      wrap
+      justify-center
+    >
+      <v-flex xs6>
         <v-card>
           <v-toolbar card dense>
             <v-toolbar-title>
-              VARIABLES
+              Outcome Categories
+            </v-toolbar-title>
+          </v-toolbar>
+          <v-card-text>
+            <v-chip v-for='outcome in dataset.outcomes' :key='outcome.category'>
+              {{ outcome.category }}
+            </v-chip>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs6>
+        <v-card>
+          <v-toolbar card dense>
+            <v-toolbar-title>
+              Demographics
+            </v-toolbar-title>
+          </v-toolbar>
+          <v-card-text>
+            <v-chip v-for='demographic in dataset.demographics' :key='demographic.name'>
+              {{ demographic.name }}
+            </v-chip>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <v-layout
+      row
+      wrap
+      justify-center
+    >
+      <v-flex xs12>
+        <v-card>
+          <v-toolbar card dense>
+            <v-toolbar-title>
+              Variables
             </v-toolbar-title>
           </v-toolbar>
           <variable-table v-if='dataset' :variables='dataset.variables'></variable-table>
@@ -78,13 +146,17 @@ import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
 import * as firebase from 'firebase';
 import VariableTable from '@/components/DatasetManager/VariableTable.vue';
-
+// Import these into a Subject Summary Component?
+import SunburstChart from '@/components/charts/sunburst/SunburstChart.vue';
+import SunburstLegend from '@/components/charts/sunburst/SunburstLegend.vue';
 export default {
   props: {
     id: String,
   },
   components: {
     VariableTable,
+    SunburstChart,
+    SunburstLegend,
   },
   data() {
     return {

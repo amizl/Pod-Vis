@@ -1,36 +1,46 @@
 <template lang="pug">
-v-container(fluid fill-height grid-list-xl)
-  v-toolbar(app).primary
+v-container(
+  fluid
+  fill-height
+  grid-list-xl)
+  v-toolbar(app).white
     v-layout
       v-flex(xs6)
         v-text-field(
           v-model="search"
-          prepend-icon="search"
+          prepend-inner-icon="search"
           label="Search for Dataset"
-          single-line
-          hide-details
-          dark)
+          solo
+          flat
+          background-color='secondary'
+          ).mt-2
       v-flex(xs6)
     v-toolbar-items
       v-btn(
         append
         :to='selectedDatasets | buildPath'
         flat
-        dark
+
         :disabled='selectedDatasets === null')
         v-icon(left) build
         | BUILD DATASET
       v-btn(
         @click.native.stop='createCohortSheet = !createCohortSheet'
         flat
-        dark
+
         :disabled='selectedDatasets === null')
         v-icon(left) group_add
         | ADD TO PROFILE
+      //- v-avatar(
+      //-     :tile="tile"
+      //-     :size="avatarSize"
+      //-     color="grey lighten-4"
+      //-  ).mt-2.ml-4
+      //-   v-img(src='https://s.gravatar.com/avatar/368de2b2d2cf606aa1253cb8ce2d6c3a?s=80')
   v-layout(row wrap)
-    v-flex(xs4)
-      filter-tree
-    v-flex(xs8)
+    //- v-flex(xs4)
+    //-   filter-tree
+    v-flex(xs12)
       dataset-table(:search='search')
     //- v-flex(xs6 fill-height)
       donut-chart(v-if='selectedDatasets', :data='selectedDatasets')

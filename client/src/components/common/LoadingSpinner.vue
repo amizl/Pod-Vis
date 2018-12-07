@@ -15,7 +15,7 @@ c<template lang='pug'>
 import { HalfCircleSpinner } from 'epic-spinners';
 
 const SMALL = 25;
-const MEDIUM = 75;
+const MEDIUM = 50;
 const LARGE = 125;
 
 export default {

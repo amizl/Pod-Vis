@@ -1,8 +1,5 @@
 <template lang='pug'>
-  v-toolbar(
-    fixed
-    dense
-  ).primary
+  v-toolbar.white
     //- v-toolbar-title(left)
     //-   v-spacer
     //-   v-btn(

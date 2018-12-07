@@ -70,31 +70,21 @@ export default {
       steps: [
         {
           step: 1,
-          title: 'Disease of Interest',
+          title: 'Compare Outcome Meaures',
           component: '',
         },
         {
           step: 2,
-          title: 'Outcome Measures & Demographics of Interest',
-          component: '',
-        },
-        {
-          step: 3,
-          title: 'Datasets',
-          component: '',
-        },
-        {
-          step: 4,
-          title: 'Overview',
+          title: 'Compare Variables',
           component: 'div',
         },
         {
-          step: 5,
+          step: 3,
           title: 'Transform',
           component: 'div',
         },
         {
-          step: 6,
+          step: 4,
           title: 'Save to Dashboard',
           component: 'div',
         },
