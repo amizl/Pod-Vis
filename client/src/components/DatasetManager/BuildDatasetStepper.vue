@@ -21,17 +21,15 @@
         </v-stepper-header>
         <v-stepper-items>
           <v-stepper-content
-            v-for='({step, component}, index) in steps'
+            v-for='({step, component, data}, index) in steps'
             :step='step'
             :key='index'
           >
             <v-card
               class='mb-5'
-              color='grey ligthen-1'
-              height='200px'
             >
             <v-card-text>
-              <component :is='component'></component>
+              <component :is='component' :data='data'></component>
             </v-card-text>
             </v-card>
           </v-stepper-content>
@@ -62,8 +60,15 @@
 
 <script>
 import FilterTree from '@/components/DatasetManager/FilterTree.vue';
+import HierarchicalHeatmap from '@/components/charts/HierarchicalHeatmap.vue';
 
 export default {
+  props: {
+    outcomeMeasures: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       currentStep: 1,
@@ -71,7 +76,8 @@ export default {
         {
           step: 1,
           title: 'Compare Outcome Meaures',
-          component: '',
+          component: HierarchicalHeatmap,
+          data: this.outcomeMeasures,
         },
         {
           step: 2,

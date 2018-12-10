@@ -22,7 +22,9 @@
     </v-toolbar>
     <v-layout justify-center>
       <v-flex xs12>
-        <build-dataset-stepper></build-dataset-stepper>
+        <build-dataset-stepper
+          :outcomeMeasures='outcomeMeasures'
+        ></build-dataset-stepper>
       </v-flex>
     </v-layout>
   </v-container>
@@ -62,14 +64,26 @@ export default {
     ...mapState('datasetManager', {
       selectedDatasets: state.SELECTED_DATASETS,
     }),
-    outcomeMeasures() {
-      // Flatten array of outcome measures
-      if (!this.selectedDatasets) return [];
+    // outcomeMeasures() {
+    //   // Flatten array of outcome measures
+    //   if (!this.selectedDatasets) return [];
 
-      return this.selectedDatasets
-        .map(d => d.variables) // get outcome measures
-        .reduce((prev, curr) => prev.concat(curr)) // flatten
-        .map(v => v.name); // get outcome measure name
+    //   return this.selectedDatasets
+    //     .map(d => d.variables) // get outcome measures
+    //     .reduce((prev, curr) => prev.concat(curr)) // flatten
+    //     .map(v => v.name); // get outcome measure name
+    // },
+    outcomeMeasures() {
+      return this.selectedDatasets ? this.selectedDatasets
+        .map(dataset => {
+          return dataset.outcomes.map(outcome => {
+              return {
+                dataset: dataset.code,
+                category: outcome.category,
+                measures: outcome.children.length,
+              };
+          });
+        }).flat() : [];
     },
   },
   methods: {
