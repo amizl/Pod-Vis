@@ -80,8 +80,12 @@
             >
               <sunburst-legend
                 slot='legend'
-                :items='JSON.parse(dataset.cohort_summary).children'>
-              </sunburst-legend>
+                slot-scope='{ data, color, actions, nodes }'
+                :data='data'
+                :color='color'
+                :actions='actions'
+                :nodes='nodes'
+              ></sunburst-legend>
             </sunburst-chart>
           </v-card-text>
         </v-card>
@@ -147,8 +151,10 @@ import { state, actions } from '@/store/modules/datasetManager/types';
 import * as firebase from 'firebase';
 import VariableTable from '@/components/DatasetManager/VariableTable.vue';
 // Import these into a Subject Summary Component?
+
 import SunburstChart from '@/components/charts/sunburst/SunburstChart.vue';
 import SunburstLegend from '@/components/charts/sunburst/SunburstLegend.vue';
+
 export default {
   props: {
     id: String,

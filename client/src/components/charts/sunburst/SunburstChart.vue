@@ -1,10 +1,20 @@
 <template>
   <v-layout class="graph">
     <v-flex xs6>
-      <slot name="legend"></slot>
+      <slot
+        name='legend'
+        :data='data'
+        :color='color'
+        :actions='actions'
+        :nodes='nodes'
+      ></slot>
     </v-flex>
     <v-flex xs6>
       <div id='chart'></div>
+    </v-flex>
+    <v-flex xs2>
+      <p class="mb-0 display-1 font-weight-bold text-xs-right">{{ (100 * current.value) / root.value | toPrecision3 }}%</p>
+      <p class='caption text-xs-right'>{{ current.value }}/{{ root.value }}</p>
     </v-flex>
   </v-layout>
 </template>
@@ -22,8 +32,16 @@ import { path as d3Path } from 'd3-path';
 import { interpolate as d3Interpolate } from 'd3-interpolate';
 import { transition as d3Transition } from 'd3-transition';
 import { schemeCategory10 as d3SchemeCategory10 } from 'd3-scale-chromatic';
+import { schemePaired as d3SchemePaired} from 'd3-scale-chromatic';
 import { schemeSpectral as d3SchemeSpectral } from 'd3-scale-chromatic';
 import { format as d3Format } from 'd3-format';
+
+function getUniqueNodeId(node) {
+  return node
+    .ancestors()
+    .map(node => node.data.name)
+    .join("-");
+}
 
 export default {
   props: {
@@ -32,100 +50,221 @@ export default {
   components: {
 
   },
+  filters: {
+    toPrecision3(value) {
+      if (value) {
+        return value.toPrecision(3);
+      }
+    },
+  },
+  data() {
+    return {
+      width: 200,
+      height: 200,
+      svg: undefined,
+      current: {},
+    };
+  },
+  computed: {
+    partition() {
+      return d3Partition();
+    },
+    root() {
+      return d3Hierarchy(this.data)
+        .sum(d => d.size)
+        .sort((a, b) => b.value - a.value);
+    },
+    nodes() {
+      return this.partition(this.root)
+      .descendants()
+      .filter(node => node.data.name !== '');
+    },
+    radius() {
+      return (Math.min(this.width, this.height) / 2) - 10;
+    },
+    x() {
+      return d3ScaleLinear().range([0, 2 * Math.PI]);
+    },
+    y() {
+      return d3ScaleSqrt().range([0, this.radius]);
+    },
+    arc() {
+      return d3Arc()
+        .startAngle((d) => Math.max(0, Math.min(2 * Math.PI, this.x(d.x0))))
+        .endAngle((d) => Math.max(0, Math.min(2 * Math.PI, this.x(d.x1))))
+        .innerRadius((d) => Math.max(0, this.y(d.y0)))
+        .outerRadius((d) => Math.max(0, this.y(d.y1)));
+    },
+    colorDomain() {
+      const nodeNames = this.nodes
+        .map(({ data }) => data.name)
+        .filter(el => el !== '');
+      return [...new Set(nodeNames)];
+    },
+    color() {
+      let color = d3ScaleOrdinal(d3SchemeCategory10)
+      .domain(this.colorDomain)
+      // .range([
+      //         "#5254a3",
+      //         "#6b6ecf",
+      //         "#9c9ede",
+      //         "#637939",
+      //         "#8ca252",
+      //         "#b5cf6b",
+      //         "#cedb9c",
+      //         "#8c6d31",
+      //         "#bd9e39",
+      //         "#e7ba52",
+      //         "#e7cb94",
+      //         "#843c39",
+      //         "#ad494a",
+      //         "#d6616b",
+      //         "#e7969c",
+      //         "#7b4173",
+      //         "#a55194",
+      //         "#ce6dbd",
+      //         "#de9ed6"]);
+      return color;
+    },
+    actions() {
+      return {
+        zoomToNode: this.zoomToNode.bind(this),
+        highlightPath: this.highlightPath.bind(this),
+        updateCurrent: this.updateCurrent.bind(this),
+      };
+    },
+  },
+  methods: {
+    updateCurrent(node) {
+      this.current = node;
+    },
+    getNodeById(id) {
+      if (id === undefined) id = 1;
+
+      const path = this.pathes
+        .nodes()
+        .find(({ __data__: data }) => data.data.id == id);
+      if (path) {
+        return path.__data__;
+      } else {
+        return null;
+      }
+    },
+    highlightPath(node, opacity = 0.3) {
+      const sequenceArray = node.ancestors();
+      this.svg
+        .selectAll("path")
+        .filter(d => sequenceArray.indexOf(d) === -1)
+        .transition()
+        .duration(750)
+        .style("opacity", opacity);
+      this.svg
+        .selectAll("path")
+        .filter(d => sequenceArray.indexOf(d) >= 0)
+        .style("opacity", 1);
+    },
+    zoomToNode(node) {
+      const t = d3Transition()
+        .duration(750)
+        .tween("scale", () => {
+          const xd = d3Interpolate(this.x.domain(), [node.x0, node.x1]),
+            yd = d3Interpolate(this.y.domain(), [node.y0, 1]),
+            yr = d3Interpolate(this.y.range(), [node.y0 ? 20 : 0, this.radius]);
+          return (t) => {
+            this.x.domain(xd(t));
+            this.y.domain(yd(t)).range(yr(t));
+          };
+        });
+
+      this.svg
+        .selectAll('path')
+        .transition(t)
+        .attrTween("d", (node) => () => this.arc(node))
+        .style('opacity', (node) => {
+          // If node is current node, let's keep its opacity at 1,
+          // that way we can easily visualize the parent ring
+          if (this.current.data.id === node.data.id) return 1;
+          // Keep leaf nodes' opacity at 1
+          if (!this.current.children) return 1;
+
+          const childrenIds = this.current
+            .children
+            .map(node => node.data.id);
+
+          if (childrenIds.includes(node.data.id)) {
+            return 1;
+          } else {
+            return .2;
+          }
+        });
+    }
+  },
   mounted() {
-    // console.log(d3SchemeSpectral);
-    let width = 200,
-        height = 200,
-        radius = (Math.min(width, height) / 2) - 10;
-    let formatNumber = d3Format(",d");
-    let x = d3ScaleLinear()
-      .range([0, 2 * Math.PI]);
-    let y = d3ScaleSqrt()
-      .range([0, radius]);
+    let width = this.width,
+        height = this.height,
+        radius = this.radius,
+        x = this.x,
+        y = this.y,
+        partition = this.partition,
+        arc = this.arc,
+        root = this.root,
+        nodes = this.nodes,
+        formatNumber = d3Format(",d");
 
-    let partition = d3Partition();
-
-    let arc = d3Arc()
-      .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x0))); })
-      .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x1))); })
-      .innerRadius(function(d) { return Math.max(0, y(d.y0)); })
-      .outerRadius(function(d) { return Math.max(0, y(d.y1)); });
-
-    let svg = d3Select("#chart").append("svg")
+    let svg = d3Select("#chart")
+      .append("svg")
         .attr("width", width)
         .attr("height", height)
       .append("g")
         .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
-    console.log(this.data);
+    this.svg = svg;
 
-    const root = d3Hierarchy(this.data);
-    const nodes = partition(root).descendants();
+    let color = this.color;
+    this.current = this.root;
 
-    const nodeNames = nodes
-      .map(({ data }) => data.name)
-      .filter(el => el !== 'root' && el !== '');
-
-    const colorDomain = [...new Set(nodeNames)];
-
-    console.log(colorDomain);
-    let color = d3ScaleOrdinal() // (d3SchemeCategory10)
-      .domain(colorDomain)
-      .range(["#393b79",
-              "#5254a3",
-              "#6b6ecf",
-              "#9c9ede",
-              "#637939",
-              "#8ca252",
-              "#b5cf6b",
-              "#cedb9c",
-              "#8c6d31",
-              "#bd9e39",
-              "#e7ba52",
-              "#e7cb94",
-              "#843c39",
-              "#ad494a",
-              "#d6616b",
-              "#e7969c",
-              "#7b4173",
-              "#a55194",
-              "#ce6dbd",
-              "#de9ed6"]);
-
-    root.sum(function(d) { return d.size; });
-    console.log(partition(root).descendants());
-    const children = partition(root)
-      .descendants()
-      .filter(node => node.data.name !== '')
-
-    svg.selectAll("path")
-      .data(children)
-      .enter().append("path")
+    const foo = svg.selectAll("path")
+      .data(nodes, getUniqueNodeId)
+      .enter()
+      .append("path")
+      // the display attribute of the <path> element for our root node to "none".
+      // (display="none" tells SVG that this element will not be rendered.)
+      .attr("display", (d) => d.depth ? null : "none")
+      // fills in all the "d" attributes of each <path>
+      // element with the values from our arc variable
       .attr("d", arc)
+      // with a fill-rule of evenodd, the inside/outside state changes
+      // every time you cross a path edge
       .attr("fill-rule", "evenodd")
+      // add a stroke to each path
+      .style('stroke', '#fff')
+      .style('opacity', (d) => {
+        const childrenIds = this.current
+          .children
+          .map(node => node.data.id);
+
+        if (childrenIds.includes(d.data.id)) {
+          return 1;
+        } else {
+          return .2;
+        }
+      })
       .style("fill", function(d) {
-        console.log(d.data.name);
-        console.log(color(d.data.name));
         // return color((d.children ? d : d.parent).data.name);
         return color(d.data.name);
-      })
-      // .style("fill", function(d) { return this.colors[d.data.name]; })
-      .on("click", click)
-      .on('mouseover', ({data}) => console.log(data.name))
-      .append("title")
-      .text(function(d) { return d.data.name + "\n" + formatNumber(d.value); })
+      });
 
-    function click(d) {
-      d3Transition()
-        .duration(750)
-        .tween("scale", function() {
-          var xd = d3Interpolate(x.domain(), [d.x0, d.x1]),
-              yd = d3Interpolate(y.domain(), [d.y0, 1]),
-              yr = d3Interpolate(y.range(), [d.y0 ? 20 : 0, radius]);
-          return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
-        })
+
+      // .on("click", this.click)
+      // .on('mouseover', (d) => console.log(d))
+      // .append("title")
+      // .text(function(d) { return d.data.name + "\n" + formatNumber(d.value); });
+  },
+  getPathes() {
+      return this.svg
         .selectAll("path")
-        .attrTween("d", function(d) { return function() { return arc(d); }; });
-}
+        .data(this.nodes, getUniqueNodeId);
+    },
+  created() {
   },
 }
 </script>
