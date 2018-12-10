@@ -79,6 +79,10 @@ export default new Router({
       component: () => import('../views/Test.vue'),
       children: [
         {
+          path: 'heatmap',
+          component: () => import('@/components/charts/HierarchicalHeatmap.vue'),
+        },
+        {
           path: 'auth',
           component: () => import('../components/auth/UserAuthentication.vue'),
         },
