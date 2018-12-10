@@ -13,8 +13,14 @@
       <div id='chart'></div>
     </v-flex>
     <v-flex xs2>
-      <p class="mb-0 display-1 font-weight-bold text-xs-right">{{ (100 * current.value) / root.value | toPrecision3 }}%</p>
-      <p class='caption text-xs-right'>{{ current.value }}/{{ root.value }}</p>
+      <p
+        class="mb-0 display-1 font-weight-bold text-xs-right"
+      >{{ (100 * current.value) / root.value | toPrecision3 }}%
+      </p>
+      <p
+        class='caption text-xs-right'
+      >{{ current.value }}/{{ root.value }}
+      </p>
     </v-flex>
   </v-layout>
 </template>
