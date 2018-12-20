@@ -49,8 +49,19 @@ v-card.elevation-3
                 v-icon(
                   @click='stepIntoDataset(props.item.id)'
                   slot="activator"
+                  color='primary'
                 ) info
-                span More Info
+                span Learn more about this dataset
+              v-tooltip(
+                top
+                color='primary'
+              )
+                v-icon(
+                  @click='stepIntoDataset(props.item.id)'
+                  slot="activator"
+                  color='primary'
+                ) add_circle
+                span Add dataset to profile
             //- td {{ probs.item.n_variables }}
             //- td {{ props.item.code }}
 </template>
@@ -101,10 +112,10 @@ export default {
           value: 'variables',
         },
         {
-          // text: 'More Info',
-          value: 'moreInfo',
+          text: 'Actions',
+          value: 'actions',
           sortable: false,
-        }
+        },
       ],
       subheaders: [
         {
@@ -155,7 +166,7 @@ export default {
     stepIntoDataset(datasetId) {
       // Route to view for dataset information
       // const currentPath = this.$router.currentPath.fullPath;
-      this.$router.push('datasetManager/dataset/' + datasetId)
+      this.$router.push(`datasetManager/dataset/${datasetId}`);
     },
   },
   created() {
