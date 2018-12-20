@@ -18,26 +18,20 @@
           </v-icon>
           BACK TO DATASET MANAGER
         </v-btn>
-      </v-toolbar-items>
+        </v-toolbar-items>
       <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <!-- <v-btn flat>
-          <v-icon left> group_add </v-icon>
-          ADD TO SELECTION
-        </v-btn> -->
-        <v-btn flat>
-          <v-icon left> group_add </v-icon>
+        <v-btn class='primary'>
+          <v-icon left> add_circle </v-icon>
           ADD TO PROFILE
         </v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+      </v-toolbar>
     <v-layout
       row
       wrap
       justify-center
     >
       <v-flex xs6>
-        <v-card>
+        <v-card class='elevation-5'>
           <v-toolbar card dense>
             <v-toolbar-title>
               Dataset
@@ -66,7 +60,7 @@
         </v-card>
       </v-flex>
       <v-flex xs6>
-        <v-card>
+        <v-card class='elevation-5'>
           <v-toolbar card dense>
             <v-toolbar-title>
               Subject Summary
@@ -97,7 +91,7 @@
       justify-center
     >
       <v-flex xs6>
-        <v-card>
+        <v-card class='elevation-5'>
           <v-toolbar card dense>
             <v-toolbar-title>
               Outcome Categories
@@ -111,7 +105,7 @@
         </v-card>
       </v-flex>
       <v-flex xs6>
-        <v-card>
+        <v-card class='elevation-5'>
           <v-toolbar card dense>
             <v-toolbar-title>
               Demographics
@@ -131,7 +125,7 @@
       justify-center
     >
       <v-flex xs12>
-        <v-card>
+        <v-card class='elevation-5'>
           <v-toolbar card dense>
             <v-toolbar-title>
               Variables
@@ -151,7 +145,6 @@ import { state, actions } from '@/store/modules/datasetManager/types';
 import * as firebase from 'firebase';
 import VariableTable from '@/components/DatasetManager/VariableTable.vue';
 // Import these into a Subject Summary Component?
-
 import SunburstChart from '@/components/charts/sunburst/SunburstChart.vue';
 import SunburstLegend from '@/components/charts/sunburst/SunburstLegend.vue';
 

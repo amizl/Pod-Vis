@@ -65,8 +65,8 @@ export default {
   },
   data() {
     return {
-      width: 200,
-      height: 200,
+      width: 250,
+      height: 250,
       svg: undefined,
       current: {},
     };
