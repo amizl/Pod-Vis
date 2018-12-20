@@ -64,26 +64,19 @@ export default {
     ...mapState('datasetManager', {
       selectedDatasets: state.SELECTED_DATASETS,
     }),
-    // outcomeMeasures() {
-    //   // Flatten array of outcome measures
-    //   if (!this.selectedDatasets) return [];
-
-    //   return this.selectedDatasets
-    //     .map(d => d.variables) // get outcome measures
-    //     .reduce((prev, curr) => prev.concat(curr)) // flatten
-    //     .map(v => v.name); // get outcome measure name
-    // },
     outcomeMeasures() {
       return this.selectedDatasets ? this.selectedDatasets
-        .map(dataset => {
-          return dataset.outcomes.map(outcome => {
-              return {
+        .map(dataset => dataset.outcomes
+          .map(outcome => ({
+            name: outcome.category,
+            dataset: dataset.code,
+            outcomeMeasures: outcome.children.map(name => ({
+                name,
                 dataset: dataset.code,
-                category: outcome.category,
-                measures: outcome.children.length,
-              };
-          });
-        }).flat() : [];
+              })
+            ),
+          })))
+        .flat() : [];
     },
   },
   methods: {
