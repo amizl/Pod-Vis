@@ -75,7 +75,7 @@ export default {
       steps: [
         {
           step: 1,
-          title: 'Compare Outcome Meaures',
+          title: 'Compare Outcome Measures',
           component: HierarchicalHeatmap,
           data: this.outcomeMeasures,
         },
