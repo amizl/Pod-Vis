@@ -1,7 +1,7 @@
 <template lang="pug">
   v-app
     app-side-bar(v-if='isUserAuthenicated')
-    v-content(color='secondary')
+    v-content
       transition(
         name="fade"
         mode="out-in"
