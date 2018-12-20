@@ -4,12 +4,13 @@
     permanent
     fixed
     :mini-variant='!expand'
-  )
+    dark
+  ).primary
     v-layout(
       column
       fill-height
     )
-      v-toolbar(flat).white
+      v-toolbar(flat).primary
         v-list
           v-list-tile
             v-list-tile-title LOGO
@@ -18,9 +19,10 @@
             v-for="item in menuItems"
             :key="item.title"
             :to='item.path'
+            active-class='secondary--text'
           )
             v-list-tile-action
-              v-icon(large) {{ item.icon }}
+              v-icon {{ item.icon }}
             v-list-tile-content(v-if='expand')
               v-list-tile-title {{ item.name }}
       v-spacer
@@ -33,7 +35,7 @@
           // TODO: fix width for this tile
           v-list-tile(slot='activator' @click='')
             v-list-tile-action
-              v-icon(large) exit_to_app
+              v-icon exit_to_app
             v-list-tile-content(v-if='expand')
               v-list-tile-title SIGN OUT
           v-card
@@ -122,3 +124,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

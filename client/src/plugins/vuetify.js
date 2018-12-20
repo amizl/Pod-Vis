@@ -5,10 +5,10 @@ import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#282F3C',
-    // secondary: '#ECEFF1',
-    secondary: '#f5f7f7',
+    primary: '#212B3A',
+    // primary: '#2C384A',
+    secondary: '#038ccf',
     accent: '#282F3C',
-    bgColor: '#f5f5f5',
+    bgColor: '#f5f7f7',
   },
 });
