@@ -1,96 +1,412 @@
-<template>
-  <svg>
-  </svg>
-</template>
-
 <script>
 import { select } from 'd3-selection';
+import { nest } from 'd3-collection';
 import { axisTop, axisLeft } from 'd3-axis';
 import { scaleBand, scaleLinear, scaleOrdinal, } from 'd3-scale';
 import { stack, stackOffsetExpand } from 'd3-shape';
 import { schemeGreys } from 'd3-scale-chromatic';
 import { max } from 'd3-array';
 
-export default {
+const Axes = {
+  name: 'Axes',
+  render(h) { // eslint-disable-line no-unused-vars
+    return (
+      <g>
+        <g ref='xAxis'/>;
+        <g ref='yAxis'/>;
+      </g>
+    );
+  },
   props: {
-    data: {
-      type: Array,
+    scope: {
+      required: true,
+    },
+    xScale: {
+      type: Function,
+      required: true,
+    },
+    yScale: {
+      type: Function,
       required: true,
     },
   },
   data() {
     return {
-      width: 1000, // Should be prop
-      height: 500, // Should be prop
-      margin: {
-        top: 50,
-        right: 50,
-        bottom: 50,
-        left: 50,
+      key: this.scope,
+    };
+  },
+  computed: {
+      xAxis() {
+        return axisTop(this.xScale)
+          .tickSize(0)
+          .tickPadding(10);
       },
+      yAxis() {
+        return axisLeft(this.yScale)
+          .tickSize(0)
+          .tickPadding(10);
+      },
+  },
+  methods: {
+    drawAxes() {
+      // Axes are complicated, so we let D3 handle this...
+      select(this.$refs.xAxis)
+        .call(this.xAxis)
+        // For aesthetic reasons, lets remove the line
+        .call(g => g.select(".domain").remove());
+      select(this.$refs.yAxis)
+        .call(this.yAxis)
+        // For aesthetic reasons, lets remove the line
+        .call(g => g.select(".domain").remove());
+    },
+  },
+  watch: {
+    scope() {
+      // If column has been zoomed in on, we need to
+      // update the axes.
+      this.drawAxes();
     }
   },
   mounted() {
-    const width = this.width
-      - this.margin.left
-      - this.margin.right;
-    const height = this.height
-      - this.margin.top
-      - this.margin.bottom;
-
-    const svg = select(this.$el)
-      .attr("width", this.width)
-      .attr("height", this.height)
-      .append("g")
-      .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
-      .attr('height', height)
-      .attr('width', width);
-    const categorys = [
-      ...new Set(this.data.map(d => d.category))
-    ];
-    const datasets = [
-      ...new Set(this.data.map(d => d.dataset))
-    ]
-
-    const xGridSize = Math.floor(width / categorys.length);
-    const yGridSize = Math.floor(height / datasets.length);
-
-    const xScale = scaleBand()
-      .domain(categorys)
-      .range([0, width]);
-
-    const yScale = scaleBand()
-      .domain(datasets)
-      .range([height, 0]);
-
-    const zScale = scaleLinear()
-      .domain([0, max(this.data, d => d.measures)])
-      .range(["white", "steelblue"]);
-
-    const xAxis = axisTop(xScale);
-    const yAxis = axisLeft(yScale);
-
-    svg
-      .append('g')
-      .call(xAxis);
-    svg
-      .append('g')
-      .call(yAxis);
-
-    svg.selectAll(".tile")
-      .data(this.data)
-      .enter()
-      .append("rect")
-      .attr("class", "tile")
-      .attr("x", d => xScale(d.category))
-      .attr("y", d => yScale(d.dataset))
-      .attr("width", xGridSize)
-      .attr("height",  yGridSize)
-      .style("fill", d => zScale(d.measures));
+    this.drawAxes();
   },
 };
+
+const Grid = {
+  name: 'Grid',
+  render(h) {
+    return (
+      <g>
+        {
+          this.gridColumns.map(
+            colData => <GridColumn
+              on-gridColClick= { (data) => this.$emit('zoomIn', data) }
+              on-gridColEnter={ (data) => this.active = data }
+              on-gridColLeave={ () => this.active = null }
+              isActive={ !this.active || this.active === colData.key }
+              data={ colData }
+              xScale={ this.xScale }
+              yScale={ this.yScale }
+              colorScale={ this.colorScale }
+              tileHeight={ this.tileHeight }
+              tileWidth={ this.tileWidth}
+            ></GridColumn>
+          )
+        }
+      </g>
+    );
+  },
+  data() {
+    return {
+      active: null,
+    }
+  },
+  props: {
+    data: {
+      type: Array,
+      required: true,
+    },
+    xScale: {
+      type: Function,
+      required: true,
+    },
+    yScale: {
+      type: Function,
+      required: true,
+    },
+    colorScale: {
+      type: Function,
+      required: true,
+    },
+    tileHeight: {
+      type: Number,
+      required: true,
+    },
+    tileWidth: {
+      type: Number,
+      required: true,
+    },
+  },
+  computed: {
+    gridColumns() {
+      return nest()
+        .key(d => d.name) // TODO: Make this a prop
+        .entries(this.data);
+    },
+  },
+  methods: {
+    zoomIntoColumn(data) {
+
+      this.data = [
+        {
+          name: 'Foo',
+          dataset: 'PPMI',
+          measures: 3,
+        },
+        {
+          name: 'Bar',
+          dataset: 'HOME',
+          measures: 1,
+        },
+        {
+          name: 'Quz',
+          dataset: 'PPMI',
+          measures: 2,
+        },
+        {
+          name: 'Quz',
+          dataset: 'HOME',
+          measures: 4,
+        },
+      ]
+    }
+  }
+};
+const GridColumn = {
+  name: 'GridColumn',
+  render(h) {
+    return (
+      <g
+        onClick={ () => this.$emit('gridColClick', this.data.key) }
+        onMouseenter={ () => this.$emit('gridColEnter', this.data.key) }
+        onMouseleave={ () => this.$emit('gridColLeave', this.data.key) }
+        class={ this.isActive ? "active" : "dim" }
+      >
+        {
+          this.data.values.map(d => {
+            return (
+              <GridTile
+                x={ this.xScale(d.name) }
+                y={ this.yScale(d.dataset) }
+                fill={ this.colorScale(d.outcomeMeasures.length) }
+                width={ this.tileWidth }
+                height={ this.tileHeight }
+              ></GridTile>
+            )
+          })
+        }
+      </g>
+    )
+  },
+  props: {
+    isActive: {
+      type: Boolean,
+      required: true,
+    },
+    data: {
+      type: Object,
+      required: true,
+    },
+    xScale: {
+      type: Function,
+      required: true,
+    },
+    yScale: {
+      type: Function,
+      required: true,
+    },
+    colorScale: {
+      type: Function,
+      type: true,
+    },
+    tileWidth: {
+      type: Number,
+      required: true,
+    },
+    tileHeight: {
+      type: Number,
+      required: true,
+    },
+  },
+};
+
+const GridTile = {
+  name: 'GridTile',
+  render(h) {
+    return (
+      <rect
+        class='tile'
+        x={ this.x }
+        y={ this.y }
+        fill={ this.fill }
+        width={ this.width }
+        height={ this.height }
+      >
+      </rect>
+    );
+  },
+  props: {
+    x: {
+      type: Number,
+      required: true,
+    },
+    y: {
+      type: Number,
+      required: true,
+    },
+    fill: {
+      type: String,
+      required: true,
+    },
+    width: {
+      type: Number,
+      required: true,
+    },
+    height: {
+      type: Number,
+      required: true,
+    },
+  }
+};
+
+export default {
+  render(h) {
+    const { width, height } = this.layout;
+    // const viewBox = `0 0 ${width} ${height}`;
+    return (
+      <svg
+        ref='chart'
+        width={ this.layout.width }
+        height={ this.layout.height }
+        // viewBox={ viewBox }
+        // preserveAspectRatio=""
+      >
+        <g transform={ this.translateMargin }>
+          <Axes
+            xScale={ this.xScale }
+            yScale={ this.yScale }
+            scope={ this.scope }
+          >
+          </Axes>
+          <Grid
+            on-zoomIn={ this.zoomInHandler }
+            data={ this.scopedData }
+            xScale={ this.xScale }
+            yScale={ this.yScale }
+            colorScale={ this.colorScale }
+            tileHeight={ this.tileHeight }
+            tileWidth={ this.tileWidth }
+          >
+          </Grid>
+        </g>
+      </svg>
+    )
+  },
+  props: {
+    data: {
+      type: Array,
+      required: true,
+    },
+    layout: {
+      type: Object,
+      default: () => {
+        return {
+          width: 1200,
+          height: 250,
+          margin: {
+            top: 50,
+            right: 50,
+            bottom: 50,
+            left: 50,
+          }
+        };
+      },
+    },
+  },
+  data() {
+    return {
+      // Initially clone property. This will be updated
+      // as user interacts with the grid an zoom into
+      // a particular child of the heatmap.
+      scopedData: [...this.data],
+      zoomed: false,
+      scope: null,
+    };
+  },
+  computed: {
+    translateMargin() {
+      const { left, top } = this.layout.margin;
+      return "translate(" + left + "," + top + ")";
+    },
+    height() {
+      const { height } = this.layout;
+      const { top, bottom } = this.layout.margin;
+      return height - top - bottom;
+    },
+    width() {
+      const { width } = this.layout;
+      const { left, right } = this.layout.margin;
+      return width - left - right;
+    },
+    categories() {
+      return [...new Set(this.scopedData.map(d => d.name))];
+    },
+    datasets () {
+      return [...new Set(this.scopedData.map(d => d.dataset))];
+    },
+    tileWidth() {
+      return Math.floor(this.width / this.categories.length);
+    },
+    tileHeight() {
+      return Math.floor(this.height / this.datasets.length);
+    },
+    xScale() {
+      return scaleBand()
+        .domain(this.categories)
+        .range([0, this.width]);
+    },
+    yScale() {
+      return scaleBand()
+        .domain(this.datasets)
+        .range([this.height, 0]);
+    },
+    colorScale() {
+      return scaleLinear()
+        .domain([0, max(this.scopedData, d => d.outcomeMeasures.length)])
+        .range(['white', '#2C384A']);
+    },
+  },
+  methods: {
+    zoomInHandler(data) {
+      const gridCol = this.data.filter(d=> d.name === data);
+      const outcomeMeasures = gridCol.map(dataset => ({
+        dataset:dataset.dataset,
+        name: dataset.name,
+        outcomeMeasures: dataset.outcomeMeasures.map(m => ({
+          ...m,
+          outcomeMeasures: [1],
+        }))
+      }));
+      const newScopedData = outcomeMeasures
+        .reduce((acc, {outcomeMeasures: curr}) => [...acc,...curr], []);
+      this.scope = data;
+      this.scopedData = newScopedData;
+    }
+  },
+  mounted() {
+    // TODO: Dynamically set width based on parent
+  }
+}
 </script>
 
-<style scoped>
+<style>
+rect.tile {
+  stroke: white;
+  stroke-width: 3px;
+  stroke-opacity: .6;
+}
 
+.dim {
+  opacity: .25;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
+}
+.active {
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
+}
 </style>
