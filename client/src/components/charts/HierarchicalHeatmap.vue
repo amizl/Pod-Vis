@@ -2,18 +2,18 @@
 import { select } from 'd3-selection';
 import { nest } from 'd3-collection';
 import { axisTop, axisLeft } from 'd3-axis';
-import { scaleBand, scaleLinear, scaleOrdinal, } from 'd3-scale';
-import { stack, stackOffsetExpand } from 'd3-shape';
-import { schemeGreys } from 'd3-scale-chromatic';
+import { scaleBand, scaleLinear } from 'd3-scale';
+// import { schemeGreys } from 'd3-scale-chromatic';
 import { max } from 'd3-array';
 
 const Axes = {
   name: 'Axes',
-  render(h) { // eslint-disable-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
+  render(h) {
     return (
       <g>
-        <g ref='xAxis'/>;
-        <g ref='yAxis'/>;
+        <g ref="xAxis" />
+        <g ref="yAxis" />;
       </g>
     );
   },
@@ -36,16 +36,16 @@ const Axes = {
     };
   },
   computed: {
-      xAxis() {
-        return axisTop(this.xScale)
-          .tickSize(0)
-          .tickPadding(10);
-      },
-      yAxis() {
-        return axisLeft(this.yScale)
-          .tickSize(0)
-          .tickPadding(10);
-      },
+    xAxis() {
+      return axisTop(this.xScale)
+        .tickSize(0)
+        .tickPadding(10);
+    },
+    yAxis() {
+      return axisLeft(this.yScale)
+        .tickSize(0)
+        .tickPadding(10);
+    },
   },
   methods: {
     drawAxes() {
@@ -53,11 +53,11 @@ const Axes = {
       select(this.$refs.xAxis)
         .call(this.xAxis)
         // For aesthetic reasons, lets remove the line
-        .call(g => g.select(".domain").remove());
+        .call(g => g.select('.domain').remove());
       select(this.$refs.yAxis)
         .call(this.yAxis)
         // For aesthetic reasons, lets remove the line
-        .call(g => g.select(".domain").remove());
+        .call(g => g.select('.domain').remove());
     },
   },
   watch: {
@@ -65,7 +65,7 @@ const Axes = {
       // If column has been zoomed in on, we need to
       // update the axes.
       this.drawAxes();
-    }
+    },
   },
   mounted() {
     this.drawAxes();
@@ -74,32 +74,31 @@ const Axes = {
 
 const Grid = {
   name: 'Grid',
+  // eslint-disable-next-line no-unused-vars
   render(h) {
     return (
       <g>
-        {
-          this.gridColumns.map(
-            colData => <GridColumn
-              on-gridColClick= { (data) => this.$emit('zoomIn', data) }
-              on-gridColEnter={ (data) => this.active = data }
-              on-gridColLeave={ () => this.active = null }
-              isActive={ !this.active || this.active === colData.key }
-              data={ colData }
-              xScale={ this.xScale }
-              yScale={ this.yScale }
-              colorScale={ this.colorScale }
-              tileHeight={ this.tileHeight }
-              tileWidth={ this.tileWidth}
-            ></GridColumn>
-          )
-        }
+        {this.gridColumns.map(colData => (
+          <GridColumn
+            on-gridColClick={data => this.$emit('zoomIn', data)}
+            on-gridColEnter={data => (this.active = data)}
+            on-gridColLeave={() => (this.active = null)}
+            isActive={!this.active || this.active === colData.key}
+            data={colData}
+            xScale={this.xScale}
+            yScale={this.yScale}
+            colorScale={this.colorScale}
+            tileHeight={this.tileHeight}
+            tileWidth={this.tileWidth}
+          />
+        ))}
       </g>
     );
   },
   data() {
     return {
       active: null,
-    }
+    };
   },
   props: {
     data: {
@@ -136,7 +135,6 @@ const Grid = {
   },
   methods: {
     zoomIntoColumn(data) {
-
       this.data = [
         {
           name: 'Foo',
@@ -158,35 +156,32 @@ const Grid = {
           dataset: 'HOME',
           measures: 4,
         },
-      ]
-    }
-  }
+      ];
+    },
+  },
 };
 const GridColumn = {
   name: 'GridColumn',
+  // eslint-disable-next-line no-unused-vars
   render(h) {
     return (
       <g
-        onClick={ () => this.$emit('gridColClick', this.data.key) }
-        onMouseenter={ () => this.$emit('gridColEnter', this.data.key) }
-        onMouseleave={ () => this.$emit('gridColLeave', this.data.key) }
-        class={ this.isActive ? "active" : "dim" }
+        onClick={() => this.$emit('gridColClick', this.data.key)}
+        onMouseenter={() => this.$emit('gridColEnter', this.data.key)}
+        onMouseleave={() => this.$emit('gridColLeave', this.data.key)}
+        className={this.isActive ? 'active' : 'dim'}
       >
-        {
-          this.data.values.map(d => {
-            return (
-              <GridTile
-                x={ this.xScale(d.name) }
-                y={ this.yScale(d.dataset) }
-                fill={ this.colorScale(d.outcomeMeasures.length) }
-                width={ this.tileWidth }
-                height={ this.tileHeight }
-              ></GridTile>
-            )
-          })
-        }
+        {this.data.values.map(d => (
+          <GridTile
+            x={this.xScale(d.name)}
+            y={this.yScale(d.dataset)}
+            fill={this.colorScale(d.outcomeMeasures.length)}
+            width={this.tileWidth}
+            height={this.tileHeight}
+          />
+        ))}
       </g>
-    )
+    );
   },
   props: {
     isActive: {
@@ -207,7 +202,7 @@ const GridColumn = {
     },
     colorScale: {
       type: Function,
-      type: true,
+      required: true,
     },
     tileWidth: {
       type: Number,
@@ -222,17 +217,17 @@ const GridColumn = {
 
 const GridTile = {
   name: 'GridTile',
+  // eslint-disable-next-line no-unused-vars
   render(h) {
     return (
       <rect
-        class='tile'
-        x={ this.x }
-        y={ this.y }
-        fill={ this.fill }
-        width={ this.width }
-        height={ this.height }
-      >
-      </rect>
+        className="tile"
+        x={this.x}
+        y={this.y}
+        fill={this.fill}
+        width={this.width}
+        height={this.height}
+      />
     );
   },
   props: {
@@ -256,42 +251,10 @@ const GridTile = {
       type: Number,
       required: true,
     },
-  }
+  },
 };
 
 export default {
-  render(h) {
-    const { width, height } = this.layout;
-    // const viewBox = `0 0 ${width} ${height}`;
-    return (
-      <svg
-        ref='chart'
-        width={ this.layout.width }
-        height={ this.layout.height }
-        // viewBox={ viewBox }
-        // preserveAspectRatio=""
-      >
-        <g transform={ this.translateMargin }>
-          <Axes
-            xScale={ this.xScale }
-            yScale={ this.yScale }
-            scope={ this.scope }
-          >
-          </Axes>
-          <Grid
-            on-zoomIn={ this.zoomInHandler }
-            data={ this.scopedData }
-            xScale={ this.xScale }
-            yScale={ this.yScale }
-            colorScale={ this.colorScale }
-            tileHeight={ this.tileHeight }
-            tileWidth={ this.tileWidth }
-          >
-          </Grid>
-        </g>
-      </svg>
-    )
-  },
   props: {
     data: {
       type: Array,
@@ -299,18 +262,16 @@ export default {
     },
     layout: {
       type: Object,
-      default: () => {
-        return {
-          width: 1200,
-          height: 250,
-          margin: {
-            top: 50,
-            right: 50,
-            bottom: 50,
-            left: 50,
-          }
-        };
-      },
+      default: () => ({
+        width: 1200,
+        height: 250,
+        margin: {
+          top: 50,
+          right: 50,
+          bottom: 50,
+          left: 50,
+        },
+      }),
     },
   },
   data() {
@@ -326,7 +287,7 @@ export default {
   computed: {
     translateMargin() {
       const { left, top } = this.layout.margin;
-      return "translate(" + left + "," + top + ")";
+      return `translate(${left},${top})`;
     },
     height() {
       const { height } = this.layout;
@@ -341,7 +302,7 @@ export default {
     categories() {
       return [...new Set(this.scopedData.map(d => d.name))];
     },
-    datasets () {
+    datasets() {
       return [...new Set(this.scopedData.map(d => d.dataset))];
     },
     tileWidth() {
@@ -363,50 +324,79 @@ export default {
     colorScale() {
       return scaleLinear()
         .domain([0, max(this.scopedData, d => d.outcomeMeasures.length)])
-        .range(['white', '#2C384A']);
+        .range(['white', '#2196F3']);
     },
+  },
+  mounted() {
+    // TODO: Dynamically set width based on parent
   },
   methods: {
     zoomInHandler(data) {
-      const gridCol = this.data.filter(d=> d.name === data);
+      const gridCol = this.data.filter(d => d.name === data);
       const outcomeMeasures = gridCol.map(dataset => ({
-        dataset:dataset.dataset,
+        dataset: dataset.dataset,
         name: dataset.name,
         outcomeMeasures: dataset.outcomeMeasures.map(m => ({
           ...m,
           outcomeMeasures: [1],
-        }))
+        })),
       }));
-      const newScopedData = outcomeMeasures
-        .reduce((acc, {outcomeMeasures: curr}) => [...acc,...curr], []);
+      const newScopedData = outcomeMeasures.reduce(
+        (acc, { outcomeMeasures: curr }) => [...acc, ...curr],
+        []
+      );
       this.scope = data;
       this.scopedData = newScopedData;
-    }
+    },
   },
-  mounted() {
-    // TODO: Dynamically set width based on parent
-  }
-}
+  // eslint-disable-next-line no-unused-vars
+  render(h) {
+    // const { width, height } = this.layout;
+    // const viewBox = `0 0 ${width} ${height}`;
+    return (
+      <svg
+        ref="chart"
+        width={this.layout.width}
+        height={this.layout.height}
+        // viewBox={ viewBox }
+        // preserveAspectRatio=""
+      >
+        <g transform={this.translateMargin}>
+          <Axes xScale={this.xScale} yScale={this.yScale} scope={this.scope} />
+          <Grid
+            on-zoomIn={this.zoomInHandler}
+            data={this.scopedData}
+            xScale={this.xScale}
+            yScale={this.yScale}
+            colorScale={this.colorScale}
+            tileHeight={this.tileHeight}
+            tileWidth={this.tileWidth}
+          />
+        </g>
+      </svg>
+    );
+  },
+};
 </script>
 
 <style>
 rect.tile {
   stroke: white;
   stroke-width: 3px;
-  stroke-opacity: .6;
+  stroke-opacity: 0.6;
 }
 
 .dim {
-  opacity: .25;
-  transition: opacity .25s ease-in-out;
-  -moz-transition: opacity .25s ease-in-out;
-  -webkit-transition: opacity .25s ease-in-out;
+  opacity: 0.25;
+  transition: opacity 0.25s ease-in-out;
+  -moz-transition: opacity 0.25s ease-in-out;
+  -webkit-transition: opacity 0.25s ease-in-out;
 }
 .active {
   cursor: pointer;
   opacity: 1;
-  transition: opacity .25s ease-in-out;
-  -moz-transition: opacity .25s ease-in-out;
-  -webkit-transition: opacity .25s ease-in-out;
+  transition: opacity 0.25s ease-in-out;
+  -moz-transition: opacity 0.25s ease-in-out;
+  -webkit-transition: opacity 0.25s ease-in-out;
 }
 </style>

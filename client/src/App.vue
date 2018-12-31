@@ -1,15 +1,14 @@
-<template lang="pug">
-  v-app
-    app-side-bar(v-if='isUserAuthenicated')
-    v-content
-      transition(
-        name="fade"
-        mode="out-in"
-      )
-        router-view
-    //- app-footer
+<template>
+  <v-app>
+    <app-side-bar v-if="isUserAuthenicated">
+      <v-content>
+        <transition name="fade" mode="out-in">
+          <router-view></router-view>
+        </transition>
+      </v-content>
+    </app-side-bar>
+  </v-app>
 </template>
-
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import { state } from '@/store/modules/auth/types';
@@ -20,15 +19,14 @@ import SignIn from './views/SignIn.vue';
 const { mapState } = createNamespacedHelpers('auth');
 
 export default {
+  name: 'App',
   components: {
     appFooter: Footer,
     signInForm: SignIn,
     appSideBar: SideBar,
   },
-  name: 'App',
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapState({
@@ -38,7 +36,9 @@ export default {
       return this.user !== null && this.user !== undefined;
     },
   },
-  watch: {
+  watch: {},
+  beforeUpdate() {
+    this.redirectUserIfNotAuth();
   },
   methods: {
     redirectUserIfNotAuth() {
@@ -46,9 +46,6 @@ export default {
         this.$router.push('/signin');
       }
     },
-  },
-  beforeUpdate() {
-    this.redirectUserIfNotAuth();
   },
 };
 </script>
@@ -63,7 +60,6 @@ export default {
 
 .fade-enter,
 .fade-leave-active {
-  opacity: 0
+  opacity: 0;
 }
-
 </style>

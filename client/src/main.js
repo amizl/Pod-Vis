@@ -8,6 +8,8 @@ import router from './router';
 import store from './store';
 import { actions } from './store/modules/auth/types';
 
+require('./assets/css/main.css');
+
 const { mapActions } = createNamespacedHelpers('auth');
 
 Vue.config.productionTip = false;
@@ -15,7 +17,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: h => h(App),
   created() {
     firebase.initializeApp({
       apiKey: 'AIzaSyCgV1G2UfTJ1-O0KeM677Uy93znHEesl2g',
@@ -25,25 +26,22 @@ new Vue({
       storageBucket: 'cliovis-cb0c9.appspot.com',
     });
 
-    firebase
-      .firestore()
-      .settings({
-        timestampsInSnapshots: true,
-      });
+    firebase.firestore().settings({
+      timestampsInSnapshots: true,
+    });
 
     // Check if user session is still cached
     // and proceed to auto sign in
-    firebase
-      .auth()
-      .onAuthStateChanged((user) => {
-        if (user) {
-          this.autoSignIn(user);
-        }
-      });
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.autoSignIn(user);
+      }
+    });
   },
   methods: {
     ...mapActions({
       autoSignIn: actions.AUTO_SIGN_IN,
     }),
   },
+  render: h => h(App),
 }).$mount('#app');
