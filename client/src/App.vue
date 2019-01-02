@@ -1,12 +1,11 @@
 <template>
   <v-app>
-    <app-side-bar v-if="isUserAuthenicated">
-      <v-content>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </v-content>
-    </app-side-bar>
+    <app-side-bar v-if="isUserAuthenicated"></app-side-bar>
+    <v-content>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </v-content>
   </v-app>
 </template>
 <script>
