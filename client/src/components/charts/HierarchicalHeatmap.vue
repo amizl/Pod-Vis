@@ -1,4 +1,8 @@
 <script>
+/**
+ * TODO:
+ *  Make responsive to window resizing.
+ */
 import { select } from 'd3-selection';
 import { nest } from 'd3-collection';
 import { axisTop, axisLeft } from 'd3-axis';
@@ -64,6 +68,12 @@ const Axes = {
     scope() {
       // If column has been zoomed in on, we need to
       // update the axes.
+      this.drawAxes();
+    },
+    xAxis() {
+      this.drawAxes();
+    },
+    yAxis() {
       this.drawAxes();
     },
   },
@@ -169,7 +179,7 @@ const GridColumn = {
         onClick={() => this.$emit('gridColClick', this.data.key)}
         onMouseenter={() => this.$emit('gridColEnter', this.data.key)}
         onMouseleave={() => this.$emit('gridColLeave', this.data.key)}
-        className={this.isActive ? 'active' : 'dim'}
+        class={this.isActive ? 'active' : 'dim'}
       >
         {this.data.values.map(d => (
           <GridTile
@@ -221,7 +231,7 @@ const GridTile = {
   render(h) {
     return (
       <rect
-        className="tile"
+        class="tile"
         x={this.x}
         y={this.y}
         fill={this.fill}
@@ -282,6 +292,8 @@ export default {
       scopedData: [...this.data],
       zoomed: false,
       scope: null,
+      outerWidth: this.layout.width,
+      outerHeight: this.layout.height,
     };
   },
   computed: {
@@ -290,14 +302,12 @@ export default {
       return `translate(${left},${top})`;
     },
     height() {
-      const { height } = this.layout;
       const { top, bottom } = this.layout.margin;
-      return height - top - bottom;
+      return this.outerHeight - top - bottom;
     },
     width() {
-      const { width } = this.layout;
       const { left, right } = this.layout.margin;
-      return width - left - right;
+      return this.outerWidth - left - right;
     },
     categories() {
       return [...new Set(this.scopedData.map(d => d.name))];
@@ -328,7 +338,11 @@ export default {
     },
   },
   mounted() {
-    // TODO: Dynamically set width based on parent
+    this.$nextTick(() => {
+      const { height, width } = this.$el.getBoundingClientRect();
+      this.outerWidth = width;
+      this.outerHeight = height;
+    });
   },
   methods: {
     zoomInHandler(data) {
@@ -354,26 +368,26 @@ export default {
     // const { width, height } = this.layout;
     // const viewBox = `0 0 ${width} ${height}`;
     return (
-      <svg
-        ref="chart"
-        width={this.layout.width}
-        height={this.layout.height}
-        // viewBox={ viewBox }
-        // preserveAspectRatio=""
-      >
-        <g transform={this.translateMargin}>
-          <Axes xScale={this.xScale} yScale={this.yScale} scope={this.scope} />
-          <Grid
-            on-zoomIn={this.zoomInHandler}
-            data={this.scopedData}
-            xScale={this.xScale}
-            yScale={this.yScale}
-            colorScale={this.colorScale}
-            tileHeight={this.tileHeight}
-            tileWidth={this.tileWidth}
-          />
-        </g>
-      </svg>
+      <div>
+        <svg ref="chart" width={this.layout.width} height={this.layout.height}>
+          <g transform={this.translateMargin}>
+            <Axes
+              xScale={this.xScale}
+              yScale={this.yScale}
+              scope={this.scope}
+            />
+            <Grid
+              on-zoomIn={this.zoomInHandler}
+              data={this.scopedData}
+              xScale={this.xScale}
+              yScale={this.yScale}
+              colorScale={this.colorScale}
+              tileHeight={this.tileHeight}
+              tileWidth={this.tileWidth}
+            />
+          </g>
+        </svg>
+      </div>
     );
   },
 };
