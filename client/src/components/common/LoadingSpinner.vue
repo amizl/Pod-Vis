@@ -1,19 +1,17 @@
-c<template lang='pug'>
+c<template lang="pug">
   v-layout(
     align-center
     justify-center
     fill-height
   )
-    half-circle-spinner(
-      :animation-duration="1000"
-      :size="size"
-      :color='color'
+    v-progress-circular(
+      indeterminate
+      :size='size'
+      color="color"
     )
 </template>
 
 <script>
-import { HalfCircleSpinner } from 'epic-spinners';
-
 const SMALL = 25;
 const MEDIUM = 50;
 const LARGE = 125;
@@ -32,9 +30,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  components: {
-    HalfCircleSpinner,
   },
   computed: {
     color() {
@@ -55,5 +50,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
