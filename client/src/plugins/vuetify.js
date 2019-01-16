@@ -5,13 +5,18 @@ import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#212B3A',
+    // primary: '#212B3A',
+    primary: '#035388',
     // primary: '#2c3e50',
     // primary: '#013852',
     // primary: '#2C384A',
-    secondary: '#038ccf',
+    secondary: '#2BB0ED',
     accent: '#282F3C',
-    bgColor: '#f5f7f7',
+    background: '#F0F4F8',
+    // background: '#F5F7FA',
+    // background: '#E4E7EB',
     iconColor: '#99a4ae',
+    foo: '#9FB3C8',
+    fooo: '#9AA5B1',
   },
 });
