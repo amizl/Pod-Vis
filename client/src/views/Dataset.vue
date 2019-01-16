@@ -8,7 +8,7 @@
         </v-btn>
       </v-toolbar-items>
       <v-spacer></v-spacer>
-      <v-btn class="primary">
+      <v-btn class="primary" @click="addToProfile">
         <v-icon circle small color="iconColor" left> add </v-icon>
         ADD TO PROFILE
       </v-btn>
@@ -29,8 +29,8 @@
         </v-layout>
       </v-container>
     </div>
-    <v-container v-if="dataset" fluid grid-list-lg>
-      <v-layout row wrap justify-center>
+    <v-container v-if="dataset" fluid grid-list-xl>
+      <v-layout row wrap>
         <v-flex xs6>
           <v-card class="elevation-5">
             <v-toolbar card dense>
@@ -124,6 +124,10 @@
         </v-flex>
       </v-layout>
     </v-container>
+    <!-- SNACKBARS -->
+    <v-snackbar v-model="addToProfileSuccess" color="success" top>
+      Dataset was successfully added to your profile.
+    </v-snackbar>
   </div>
 </template>
 
@@ -143,11 +147,15 @@ export default {
     SunburstLegend,
   },
   props: {
-    id: String,
+    id: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
       dataset: null,
+      addToProfileSuccess: false,
     };
   },
   computed: {
@@ -163,6 +171,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions('dashboard', {
+      _addToProfile: actions.ADD_DATASET_TO_PROFILE,
+    }),
+    addToProfile() {
+      const payload = {
+        dataset: this.dataset.dataset,
+        id: this.id,
+      };
+      this._addToProfile(payload).then(() => (this.addToProfileSuccess = true));
+    },
     goBack() {
       this.$router.go(-1);
     },

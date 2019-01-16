@@ -19,7 +19,7 @@ export default new Router({
       beforeEnter: AuthGuard,
     },
     {
-      path: '/cohortManager',
+      path: '/cohorts/',
       name: 'cohortManager',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
@@ -28,19 +28,37 @@ export default new Router({
       beforeEnter: AuthGuard,
     },
     {
-      path: '/dataExplorer',
+      path: '/cohorts/build',
+      name: 'buildCohort',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/BuildCohort.vue'),
+      beforeEnter: AuthGuard,
+      props: route => ({
+        id: route.query.id,
+      }),
+    },
+    {
+      path: '/:user/explore/:dataset/:analysis',
       name: 'dataExplorer',
       component: () => import('../views/DataExplorer.vue'),
       beforeEnter: AuthGuard,
     },
     {
-      path: '/analysisTool',
-      name: 'analysisTool',
+      path: '/analysis',
+      // path: '/:user/analysis/:dataset/:analysis',
+      name: 'analysis',
       component: () => import('../views/AnalysisTool.vue'),
       beforeEnter: AuthGuard,
+      props: route => ({
+        user: route.params.user,
+        dataset: route.params.dataset,
+        analysis: route.params.analysis,
+      }),
     },
     {
-      path: '/datasetManager',
+      path: '/datasets',
       name: 'datasetManager',
       component: () => import('../views/DatasetManager.vue'),
       beforeEnter: AuthGuard,
@@ -52,7 +70,7 @@ export default new Router({
       // ],
     },
     {
-      path: '/datasetManager/build',
+      path: '/datasets/build',
       name: 'buildDataset',
       component: () => import('@/views/BuildDataset.vue'),
       props: route => ({
@@ -60,7 +78,7 @@ export default new Router({
       }),
     },
     {
-      path: '/datasetManager/dataset/:id',
+      path: '/datasets/:id',
       name: 'dataset',
       component: () => import('@/views/Dataset.vue'),
       props: route => ({
@@ -80,7 +98,8 @@ export default new Router({
       children: [
         {
           path: 'heatmap',
-          component: () => import('@/components/charts/HierarchicalHeatmap.vue'),
+          component: () =>
+            import('@/components/charts/HierarchicalHeatmap.vue'),
         },
         {
           path: 'auth',
@@ -88,7 +107,8 @@ export default new Router({
         },
         {
           path: 'table',
-          component: () => import('../components/DatasetManager/DatasetTable.vue'),
+          component: () =>
+            import('../components/DatasetManager/DatasetTable.vue'),
         },
         {
           path: 'bar',
@@ -108,7 +128,8 @@ export default new Router({
         },
         {
           path: 'categoricalCard',
-          component: () => import('@/components/CohortManager/CategoricalCard.vue'),
+          component: () =>
+            import('@/components/CohortManager/CategoricalCard.vue'),
         },
         {
           path: 'testCharts',

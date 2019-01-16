@@ -9,7 +9,7 @@
             label="Search for Dataset"
             solo
             flat
-            background-color="bgColor"
+            background-color="background"
             class="mt-2"
           >
           </v-text-field>
@@ -44,7 +44,10 @@
     </div>
     <v-container fluid>
       <v-layout row justify-center>
-        <v-flex xs12> <dataset-table :search="search"></dataset-table> </v-flex>
+        <v-flex xs8>
+          <p class="headline">Available Datasets</p>
+          <dataset-table :search="search"></dataset-table>
+        </v-flex>
       </v-layout>
       <!-- <v-snackbar
         v-model='snackbar'
