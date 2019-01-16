@@ -1,20 +1,22 @@
-<template lang='pug'>
+<template lang="pug">
   v-navigation-drawer(
     app
     permanent
     fixed
     :mini-variant='!expand'
-    dark
-  ).primary
+    flat
+    floating
+  )
     v-layout(
       column
       fill-height
+      align-space-around
     )
-      v-toolbar(flat).primary
+      v-toolbar(flat).white
         v-list
           v-list-tile
-            v-list-tile-title LOGO
-      v-list(two-line)
+            v-list-tile-title
+      v-list(two-line )
           v-list-tile(
             v-for="item in menuItems"
             :key="item.title"
@@ -37,7 +39,7 @@
             v-list-tile-action
               v-icon exit_to_app
             v-list-tile-content(v-if='expand')
-              v-list-tile-title SIGN OUT
+              v-list-tile-title Sign Out
           v-card
             v-card-text Are you sure you would like to sign out?
             v-divider
@@ -77,7 +79,6 @@
 </template>
 
 <script>
-
 import { createNamespacedHelpers } from 'vuex';
 import { actions } from '@/store/modules/auth/types';
 
@@ -87,32 +88,32 @@ export default {
   data() {
     return {
       dialog: false,
-      expand: true,
+      expand: false,
       menuItems: [
         {
-          name: 'DASHBOARD',
+          name: 'Dashboard',
           icon: 'dashboard',
           path: '/dashboard',
         },
         {
-          name: 'COHORT MANAGER',
+          name: 'Dataset Manager',
+          icon: 'table_chart',
+          path: '/datasets',
+        },
+        {
+          name: 'Cohort Manager',
           icon: 'group',
-          path: '/cohortManager',
+          path: '/cohorts',
         },
         // {
-        //   name: 'DATA EXPLORER',
+        //   name: 'Data Explorer',
         //   icon: 'explore',
-        //   path: '/dataExplorer',
-        // },
-        // {
-        //   name: 'ANALYSIS TOOL',
-        //   icon: 'bar_chart',
-        //   path: '/analysisTool',
+        //   path: '/explore',
         // },
         {
-          name: 'DATASET MANAGER',
-          icon: 'table_chart',
-          path: '/datasetManager',
+          name: 'Analysis Tool',
+          icon: 'bar_chart',
+          path: '/analysis',
         },
       ],
     };
@@ -126,4 +127,5 @@ export default {
 </script>
 
 <style scoped>
+/* Need to modify vuetify's stylus variables */
 </style>
