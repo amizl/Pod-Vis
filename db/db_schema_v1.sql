@@ -98,6 +98,20 @@ CREATE TABLE IF NOT EXISTS `cliovis`.`observations` (
   UNIQUE INDEX `subject_visit_id_UNIQUE` (`subject_visit_id` ASC, `item` ASC))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `cliovis`.`user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`user` ;
+
+CREATE TABLE IF NOT EXISTS `cliovis`.`user` (
+  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(120) NOT NULL UNIQUE,
+  `name` VARCHAR(120) NOT NULL,
+  `institution` VARCHAR(120) NULL,
+  `password_hash` VARCHAR(128) NOT NULL,
+  PRIMARY KEY (`user_id`))
+ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
