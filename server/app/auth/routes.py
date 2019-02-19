@@ -24,7 +24,7 @@ from ..models import db, User
 
 @auth.route('/signin', methods=['POST'])
 def sign_user_in():
-    """Signs the user in and returns JWT access/refresh tokens.
+    """Signs the user in.
 
     Form Args:
         email: The user's email.
@@ -41,7 +41,7 @@ def sign_user_in():
         pw = request_data.get('password')
         if user.verify_password(pw):
             response = jsonify({
-                "message": "Successfully signed in."
+                "msg": "Successfully signed in."
             })
             # TODO respond with other user info here...
 
@@ -68,7 +68,7 @@ def sign_user_out():
     jti = get_raw_jwt()['jti']
     revoke_token(jti, 'access')
 
-    response = jsonify({"message": "Access token revoked."})
+    response = jsonify({"msg": "Access token revoked."})
     unset_jwt_cookies(response)
 
     return response
@@ -101,7 +101,7 @@ def sign_user_up():
         new_user.save_to_db()
 
         response = jsonify({
-            "message": "Successfully signed in."
+            "msg": "Successfully signed in."
             # TODO respond with other user info here...
         })
 
@@ -125,7 +125,7 @@ def refresh():
     access_jti = get_jti(encoded_token=access_token)
     register_token(access_jti, "access")
 
-    response = jsonify({"access_token": access_token})
+    response = jsonify({"msg": "Access token refreshed."})
     set_access_cookies(response, access_token)
     return response, 201
 
@@ -136,6 +136,6 @@ def sign_out_refresh():
     jti = get_raw_jwt()['jti']
     revoke_token(jti, 'refresh')
 
-    response = jsonify({"message": "Refresh token revoked."})
+    response = jsonify({"msg": "Refresh token revoked."})
     unset_jwt_cookies(response)
     return response
