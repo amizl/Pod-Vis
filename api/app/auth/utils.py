@@ -45,9 +45,9 @@ def create_and_register_tokens(identity):
         Dict with access and refresh tokens.
     """
     access_token = create_access_token(identity=identity, fresh=True)
-
     access_jti = get_jti(encoded_token=access_token)
     register_token(access_jti, 'access')
+
     refresh_token = create_refresh_token(identity=identity)
     refresh_jti = get_jti(encoded_token=refresh_token)
     register_token(refresh_jti, 'refresh')

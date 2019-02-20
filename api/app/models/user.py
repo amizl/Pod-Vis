@@ -68,3 +68,16 @@ class User(db.Model):
         """Save the user to the database."""
         db.session.add(self)
         db.session.commit()
+
+    def to_dict(self):
+        """Return attributes as a dict.
+
+        This easily allows for serializing the user object and
+        sending over http.
+        """
+        return dict(
+            user_id=self.user_id,
+            email=self.email,
+            name=self.name,
+            institution=self.institution
+        )

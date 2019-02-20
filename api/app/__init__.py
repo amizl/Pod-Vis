@@ -1,6 +1,6 @@
 from flask import Flask
+from flask_cors import CORS
 from config import config
-
 # http://flask.pocoo.org/docs/1.0/patterns/appfactories/#app-factories
 def create_app(config_name):
     """Application Factory function to kickstart the Flask app
@@ -14,6 +14,10 @@ def create_app(config_name):
         api blueprints (routes/endpoints) initialized.
     """
     app = Flask(__name__)
+    # If we want to access API from different host.
+    # May not be necessary if we host client and API
+    # on same host.
+    # CORS(app)
 
     # Set up configuration (production, development, or testing)...
     app.config.from_object(config[config_name])
