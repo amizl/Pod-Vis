@@ -15,9 +15,7 @@ def create_app(config_name):
     """
     app = Flask(__name__)
     # If we want to access API from different host.
-    # May not be necessary if we host client and API
-    # on same host.
-    # CORS(app)
+    CORS(app)
 
     # Set up configuration (production, development, or testing)...
     app.config.from_object(config[config_name])
