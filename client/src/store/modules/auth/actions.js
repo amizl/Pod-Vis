@@ -1,3 +1,4 @@
+import router from '@/router';
 import axios from 'axios';
 import { actions, mutations } from './types';
 
@@ -62,6 +63,7 @@ export default {
     try {
       await axios.delete('/auth/signout');
       commit(mutations.CLEAR_USER);
+      router.push('/signin');
     } catch (err) {
       // what should we do when this errors?
     }
