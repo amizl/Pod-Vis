@@ -6,8 +6,7 @@ export const state = {
 };
 
 // Getters
-export const getters = {
-};
+export const getters = {};
 
 // Mutations
 export const mutations = {
@@ -23,5 +22,5 @@ export const actions = {
   CREATE_USER_ACCOUNT: 'createUserAccount',
   SIGN_USER_IN: 'signUserIn',
   SIGN_USER_OUT: 'signUserOut',
-  AUTO_SIGN_IN: 'autoSignIn',
+  GET_USER_FROM_SESSION: 'getUserFromSession',
 };

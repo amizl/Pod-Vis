@@ -29,7 +29,7 @@ def check_if_token_is_revoked(decrypted_token):
 
 
 def create_and_register_tokens(identity):
-    """Create access and refresh tokens and register them to our Redis cache.
+    """Create access and refresh tokens and register them to our Redis store.
 
     Store the tokens in redis with a status of not currently revoked. We
     can use the `get_jti()` method to get the unique identifier string for
