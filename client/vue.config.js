@@ -3,10 +3,10 @@ const webpack = require('webpack');
 module.exports = {
   devServer: {
     proxy: {
-      '^/api': {
+      '^/auth': {
         target: 'http://localhost:5000',
       },
-      '^/auth': {
+      '^/api': {
         target: 'http://localhost:5000',
       },
     },

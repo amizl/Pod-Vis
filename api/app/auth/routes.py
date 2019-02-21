@@ -41,14 +41,12 @@ def sign_user_in():
         pw = request_data.get('password')
         if user.verify_password(pw):
             response = jsonify({
-                "msg": "Successfully signed in."
+                "user": dict(**user.to_dict())
             })
-            # TODO respond with other user info here...
 
             jwt_tokens = create_and_register_tokens(user.user_id)
             set_access_cookies(response, jwt_tokens['access_token'])
             set_refresh_cookies(response, jwt_tokens['refresh_token'])
-
             return response
         else:
             raise AuthFailure('Password is incorrect.')
