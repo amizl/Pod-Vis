@@ -10,16 +10,14 @@ export default {
       .firestore()
       .collection('datasets')
       .get()
-      .then((querySnapshot) => {
-        const datasets = querySnapshot
-          .docs
-          .map((doc) => {
-            const dataset = doc.data();
-            return {
-              id: doc.id,
-              ...dataset,
-            };
-          });
+      .then(querySnapshot => {
+        const datasets = querySnapshot.docs.map(doc => {
+          const dataset = doc.data();
+          return {
+            id: doc.id,
+            ...dataset,
+          };
+        });
 
         commit(mutations.SET_DATASETS, datasets);
         commit(mutations.SET_LOADING, false);
@@ -35,7 +33,7 @@ export default {
   [actions.ADD_SELECTED_DATASETS_TO_COHORTS]({ commit }, payload) {
     commit(mutations.SET_LOADING, true);
 
-    payload.forEach((dataset) => {
+    payload.forEach(dataset => {
       firebase
         .firestore()
         .collection('users')
@@ -47,5 +45,4 @@ export default {
         });
     });
   },
-
 };

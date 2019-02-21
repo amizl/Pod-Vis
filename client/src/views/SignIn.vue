@@ -1,8 +1,9 @@
-<template lang='pug'>
+<template lang="pug">
   v-container(fluid fill-height)
     v-layout(align-center justify-center)
-      v-flex(xs12 sm8 md4).elevation-3
-        user-authentication
+      v-flex(xs12 sm8 md4)
+        v-card.ui-card.pa-1
+          user-authentication
 </template>
 
 <script>
@@ -15,5 +16,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

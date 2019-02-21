@@ -1,33 +1,52 @@
 <template>
-  <v-container
-    fluid
-    fill-height
-    grid-list-xl
-  >
-    <v-toolbar
-      app
-      class='white'
-    >
+  <div>
+    <v-toolbar app class="white">
       <v-toolbar-items>
-        <v-btn
-          flat
-          @click='goBack'
-        >
-          <v-icon left>
-            arrow_back
-          </v-icon>
+        <v-btn flat @click="goBack">
+          <v-icon left> arrow_back </v-icon>
           BACK TO DATASET MANAGER
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-layout justify-center>
-      <v-flex xs12>
-        <build-dataset-stepper
-          :outcomeMeasures='outcomeMeasures'
-        ></build-dataset-stepper>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <div class="primary white--text blueGradient">
+      <v-container fluid>
+        <v-layout row wrap>
+          <v-flex xs6>
+            <p class="headline font-weight-medium">Build Dataset</p>
+            <!-- <v-chip
+              close
+              v-for='{ id, code } in selectedDatasets'
+              :key='id'>
+              {{ code }}
+            </v-chip> -->
+          </v-flex>
+          <!-- TODO: Info about selected here -->
+          <v-spacer></v-spacer>
+          <v-flex xs6 class="text-xs-right">
+            <p class="subheading">SELECTED DATASETS</p>
+            <v-chip v-for="{ id, code } in selectedDatasets" :key="id" close>
+              {{ code }}
+            </v-chip>
+            <!-- <v-layout row>
+              <v-flex xs6>
+              </v-flex>
+              <v-flex xs6>
+              </v-flex>
+            </v-layout> -->
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </div>
+    <v-container fluid fill-height grid-list-xl>
+      <v-layout justify-center>
+        <v-flex xs12>
+          <build-dataset-stepper
+            :outcome-measures="outcomeMeasures"
+          ></build-dataset-stepper>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -42,11 +61,6 @@ import BuildDatasetStepper from '@/components/DatasetManager/BuildDatasetStepper
 //  import DonutChart from '@/components/charts/DonutChart.vue';
 
 export default {
-  props: {
-    // id is passed in via route parameters
-    // i.e., /build?id=x&id=y
-    id: [String, Array],
-  },
   components: {
     // datasetTable: DatasetTable,
     // donutChart: DonutChart,
@@ -56,27 +70,33 @@ export default {
     // DemographicsTable,
     BuildDatasetStepper,
   },
+  props: {
+    // id is passed in via route parameters
+    // i.e., /build?id=x&id=y
+    id: [String, Array],
+  },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapState('datasetManager', {
       selectedDatasets: state.SELECTED_DATASETS,
     }),
     outcomeMeasures() {
-      return this.selectedDatasets ? this.selectedDatasets
-        .map(dataset => dataset.outcomes
-          .map(outcome => ({
-            name: outcome.category,
-            dataset: dataset.code,
-            outcomeMeasures: outcome.children.map(name => ({
-                name,
+      return this.selectedDatasets
+        ? this.selectedDatasets
+            .map(dataset =>
+              dataset.outcomes.map(outcome => ({
+                name: outcome.category,
                 dataset: dataset.code,
-              })
-            ),
-          })))
-        .flat() : [];
+                outcomeMeasures: outcome.children.map(name => ({
+                  name,
+                  dataset: dataset.code,
+                })),
+              }))
+            )
+            .flat()
+        : [];
     },
   },
   methods: {
@@ -90,6 +110,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

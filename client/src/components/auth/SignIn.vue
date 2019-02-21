@@ -1,5 +1,5 @@
-<template lang='pug'>
-  v-card
+<template lang="pug">
+  v-card(flat)
     v-card-text
       v-form(ref='form' v-model='valid' @submit.prevent='onSignIn' lazy-validation).ma-4
         v-text-field(
@@ -68,5 +68,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,3 +1,6 @@
-// import { state } from './types';
+import { state } from './types';
 
-export default {};
+export default {
+  [state.DATASETS]: [],
+  [state.IS_LOADING]: false,
+};

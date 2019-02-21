@@ -1,12 +1,12 @@
-<template lang='pug'>
-v-card.elevation-3
-  v-toolbar(
-    card
-    color="grey lighten-3"
-    dense
-  )
-    v-icon table_chart
-    v-toolbar-title Available Datasets
+<template lang="pug">
+v-card(flat).pt-2.pb-2.ui-card
+  //- v-toolbar(
+  //-   card
+  //-   color="grey lighten-3"
+  //-   dense
+  //- )
+  //-   v-icon table_chart
+  //-   v-toolbar-title Available Datasets
   v-layout(
     row
     justify-center
@@ -21,37 +21,27 @@ v-card.elevation-3
         :search='search'
         :headers='headers'
         :items='datasets'
-        hide-actions
         item-key='dataset'
+        hide-actions
       )
         template(
           slot="items"
           slot-scope="props"
         )
-          tr
+          tr(style='height:75px')
             td(@click.stop)
               v-checkbox(
                 v-model='props.selected'
                 primary
                 hide-details
               )
-            td {{ props.item.dataset }}
-            td {{ props.item.n_samples }}
-            td {{ props.item.outcome_categories }}
-            td {{ props.item.outcome_measures }}
-            td {{ props.item.demographics.length }}
-            td {{ props.item.variables.length }}
-            td
-              v-tooltip(
-                left
-                color='primary'
-              )
-                v-icon(
-                  @click='stepIntoDataset(props.item.id)'
-                  slot="activator"
-                  color='primary'
-                ) info
-                span Learn more about this dataset
+            td.text-xs-left {{ props.item.dataset }}
+            td.text-xs-right {{ props.item.n_samples }}
+            //- td.text-xs-right {{ props.item.outcome_categories }}
+            td.text-xs-right {{ props.item.outcome_measures }}
+            td.text-xs-right {{ props.item.demographics.length }}
+            //- td.text-xs-right {{ props.item.variables.length }}
+            td.text-xs-right.justify-center.layout.mt-4
               v-tooltip(
                 top
                 color='primary'
@@ -60,26 +50,48 @@ v-card.elevation-3
                   @click='stepIntoDataset(props.item.id)'
                   slot="activator"
                   color='primary'
+                ).mr-1 info
+                span Learn more about this dataset
+              v-tooltip(
+                top
+                color='primary'
+              )
+                v-icon(
+                  @click='addToProfile({ dataset: props.item.dataset, id:props.item.id })'
+                  slot="activator"
+                  color='primary'
                 ) add_circle
                 span Add dataset to profile
             //- td {{ probs.item.n_variables }}
             //- td {{ props.item.code }}
+  v-snackbar(
+      v-model='addToProfileSuccess'
+      color='success'
+      top
+  )
+    | Dataset was successfully added to your profile.
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import { state, actions } from '@/store/modules/datasetManager/types';
-
-const { mapState, mapActions } = createNamespacedHelpers('datasetManager');
+import { actions as dashboardActions } from '@/store/modules/dashboard/types';
 
 export default {
   components: {
     LoadingSpinner,
   },
-  props: ['search'],
+  props: {
+    search: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
+      addToProfileSuccess: false,
+      addToProfileFailure: false,
       selected: [],
       headers: [
         {
@@ -95,10 +107,10 @@ export default {
           text: 'Subject Count',
           value: 'subject count',
         },
-        {
-          text: 'Outcome Categories',
-          value: 'categories',
-        },
+        // {
+        //   text: 'Outcome Categories',
+        //   value: 'categories',
+        // },
         {
           text: 'Outcome Measures',
           value: 'measure',
@@ -107,34 +119,20 @@ export default {
           text: 'Demographics',
           value: 'demographics',
         },
+        // {
+        //   text: 'Variables',
+        //   value: 'variables',
+        // },
         {
-          text: 'Variables',
-          value: 'variables',
-        },
-        {
-          text: 'Actions',
-          value: 'actions',
+          text: '',
+          value: 'name',
           sortable: false,
-        },
-      ],
-      subheaders: [
-        {
-          text: 'Variable',
-          value: 'variable',
-        },
-        {
-          text: 'Type',
-          value: 'type',
-        },
-        {
-          text: 'Description',
-          value: 'description',
         },
       ],
     };
   },
   computed: {
-    ...mapState({
+    ...mapState('datasetManager', {
       isLoading: state.IS_LOADING,
       datasets: state.DATASETS,
       selectedDatasets: state.SELECTED_DATASETS,
@@ -158,24 +156,31 @@ export default {
       this.selectDatasets(this.selected);
     },
   },
-  methods: {
-    ...mapActions({
-      fetchDatasets: actions.FETCH_DATASETS,
-      selectDatasets: actions.SELECT_DATASETS,
-    }),
-    stepIntoDataset(datasetId) {
-      // Route to view for dataset information
-      // const currentPath = this.$router.currentPath.fullPath;
-      this.$router.push(`datasetManager/dataset/${datasetId}`);
-    },
-  },
   created() {
     if (!this.datasets) {
       this.fetchDatasets();
+    } else {
+      this.selected = this.selectedDatasets;
     }
+  },
+  methods: {
+    ...mapActions('datasetManager', {
+      fetchDatasets: actions.FETCH_DATASETS,
+      selectDatasets: actions.SELECT_DATASETS,
+    }),
+    ...mapActions('dashboard', {
+      _addToProfile: dashboardActions.ADD_DATASET_TO_PROFILE,
+    }),
+    addToProfile(payload) {
+      this._addToProfile(payload).then(() => (this.addToProfileSuccess = true));
+    },
+    stepIntoDataset(datasetId) {
+      // Route to view for dataset information
+      // const currentPath = this.$router.currentPath.fullPath;
+      this.$router.push(`datasets/${datasetId}`);
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
