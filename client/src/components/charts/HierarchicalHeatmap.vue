@@ -338,11 +338,13 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(() => {
-      const { height, width } = this.$el.getBoundingClientRect();
-      this.outerWidth = width;
-      this.outerHeight = height;
-    });
+    this.outerWidth = this.layout.width;
+    this.outerheight = this.layout.height;
+    // this.$nextTick(() => {
+    //   const { height, width } = this.$el.getBoundingClientRect();
+    //   this.outerWidth = width;
+    //   this.outerHeight = height;
+    // });
   },
   methods: {
     zoomInHandler(data) {
@@ -365,8 +367,6 @@ export default {
   },
   // eslint-disable-next-line no-unused-vars
   render(h) {
-    // const { width, height } = this.layout;
-    // const viewBox = `0 0 ${width} ${height}`;
     return (
       <div>
         <svg ref="chart" width={this.layout.width} height={this.layout.height}>

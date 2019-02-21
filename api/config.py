@@ -19,14 +19,13 @@ class Config:
     # Set the cookie paths, so that you are only sending your access token
     # cookie to the access endpoints, and only sending your refresh token
     # to the refresh endpoint. Technically this is optional, but it is in
-    # your best interest to not send additional cookies in the request if
+    # our best interest to not send additional cookies in the request if
     # they aren't needed.
     # JWT_ACCESS_COOKIE_PATH = ['/api/', '/auth/']
     JWT_REFRESH_COOKIE_PATH = '/auth/refresh'
     # We blacklist tokens with redis
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
-    # Hurts performance if True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @staticmethod

@@ -74,7 +74,7 @@ $material-light := {
     background: $grey.lighten-2,
     color: rgba(#000, .87)
   },
-  dividers: rgba(#000, .12),
+  dividers: rgba(217, 226, 236, 1),
   text: {
     theme: #fff,
     primary: rgba(#000, .87),

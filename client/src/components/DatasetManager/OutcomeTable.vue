@@ -17,36 +17,35 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        headers: [
-          {
-            text: 'Datasets',
-            align: 'left',
-            sortable: false,
-            value: 'name'
-          },
-          { text: 'General Disease Severity Measures', value: 'calories' },
-          { text: 'Autonomic', value: 'fat' },
-          { text: 'Cognitive', value: 'carbs' },
-          { text: 'Sleep', value: 'protein' },
-          { text: 'Behavior', value: 'iron' },
-          { text: 'Disability', value: 'iron' },
-          { text: 'Medical Comorbidities', value: 'iron' },
-        ],
-        desserts: [
-          {
-            value: false,
-            name: 'PPMI',
-          },
-          {
-            value: false,
-            name: 'HOME',
-
-          },
-        ]
-      };
-    }
-  }
+export default {
+  data() {
+    return {
+      headers: [
+        {
+          text: 'Datasets',
+          align: 'left',
+          sortable: false,
+          value: 'name',
+        },
+        { text: 'General Disease Severity Measures', value: 'calories' },
+        { text: 'Autonomic', value: 'fat' },
+        { text: 'Cognitive', value: 'carbs' },
+        { text: 'Sleep', value: 'protein' },
+        { text: 'Behavior', value: 'iron' },
+        { text: 'Disability', value: 'iron' },
+        { text: 'Medical Comorbidities', value: 'iron' },
+      ],
+      desserts: [
+        {
+          value: false,
+          name: 'PPMI',
+        },
+        {
+          value: false,
+          name: 'HOME',
+        },
+      ],
+    };
+  },
+};
 </script>

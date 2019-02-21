@@ -4,8 +4,7 @@ export const state = {
   SELECTED_DATASETS: 'selectedDatasets',
 };
 
-export const getters = {
-};
+export const getters = {};
 
 export const mutations = {
   SET_DATASETS: 'setDatasets',
@@ -17,4 +16,6 @@ export const actions = {
   FETCH_DATASETS: 'fetchDatasets',
   SELECT_DATASETS: 'selectDatasets',
   ADD_SELECTED_DATASETS_TO_COHORTS: 'addToCohorts',
+  ADD_DATASET_TO_PROFILE: 'addDatasetToProfile',
+  REMOVE_DATASET_FROM_PROFILE: 'removeDatasetFromProfile',
 };

@@ -1,36 +1,29 @@
 <template>
-  <v-card class='elevation-5'>
+  <v-card class="elevation-5">
     <v-card-text>
-      <v-stepper
-        v-model='currentStep'
-        class='elevation-0'
-      >
-        <v-stepper-header class='elevation-0'>
-          <template
-            v-for='({step, title}, index) in steps'
-          >
+      <v-stepper v-model="currentStep" class="elevation-0">
+        <v-stepper-header class="elevation-0">
+          <template v-for="({ step, title }, index) in steps">
             <v-stepper-step
-              :step='step'
-              :complete='currentStep > step'
-              :key='index'
+              :step="step"
+              :complete="currentStep > step"
+              :key="index"
             >
               {{ title }}
             </v-stepper-step>
-            <v-divider v-if='step !== steps.length' :key='index'></v-divider>
+            <v-divider v-if="step !== steps.length" :key="index"></v-divider>
           </template>
         </v-stepper-header>
         <v-stepper-items>
           <v-stepper-content
-            v-for='({step, component, data}, index) in steps'
-            :step='step'
-            :key='index'
+            v-for="({ step, component, data }, index) in steps"
+            :step="step"
+            :key="index"
           >
-            <v-card
-              class='mb-5'
-            >
-            <v-card-text>
-              <component :is='component' :data='data'></component>
-            </v-card-text>
+            <v-card>
+              <v-card-text>
+                <component :is="component" :data="data"></component>
+              </v-card-text>
             </v-card>
           </v-stepper-content>
         </v-stepper-items>
@@ -38,19 +31,11 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn
-        v-if='!isAtBeginning'
-        flat
-        @click='currentStep--;'
-      >
+      <v-btn v-if="!isAtBeginning" flat @click="currentStep--">
         Previous
         <!-- {{ lastStep }} -->
       </v-btn>
-      <v-btn
-        v-if='!isAtEnd'
-        color='primary'
-        @click='currentStep++;'
-      >
+      <v-btn v-if="!isAtEnd" color="primary" @click="currentStep++">
         Next
         <!-- {{ nextStep }} -->
       </v-btn>
@@ -59,7 +44,7 @@
 </template>
 
 <script>
-import FilterTree from '@/components/DatasetManager/FilterTree.vue';
+// import FilterTree from '@/components/DatasetManager/FilterTree.vue';
 import HierarchicalHeatmap from '@/components/charts/HierarchicalHeatmap.vue';
 
 export default {
@@ -108,14 +93,16 @@ export default {
     },
     nextStep() {
       // Return the title of the next step
-      const { title } = this.steps
-        .find(({ step }) => step === this.currentStep + 1);
+      const { title } = this.steps.find(
+        ({ step }) => step === this.currentStep + 1
+      );
       return title;
     },
     lastStep() {
       // Return title of previous step
-      const { title } = this.steps
-        .find(({ step }) => step === this.currentStep - 1);
+      const { title } = this.steps.find(
+        ({ step }) => step === this.currentStep - 1
+      );
 
       return title;
     },
@@ -123,6 +110,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
