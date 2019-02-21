@@ -1,15 +1,15 @@
-<template lang='pug'>
-  v-card
+<template lang="pug">
+  v-card(flat)
     v-card-text
       v-form(@submit.prevent='onCreateAccount').ma-4
         v-text-field(
           prepend-icon="person"
-          v-model='fullName'
-          name="fullName"
+          v-model='name'
+          name="name"
           label="Full Name"
           type="text"
           placeholder="John Doe"
-          :rules="[() => !!fullName || 'This field is required']"
+          :rules="[() => !!name || 'This field is required']"
           :error-messages="errorMessages"
           required)
         v-text-field(
@@ -68,7 +68,7 @@ import { state, actions } from '@/store/modules/auth/types';
 export default {
   data() {
     return {
-      fullName: '',
+      name: '',
       email: '',
       institution: '',
       password: '',
@@ -78,7 +78,9 @@ export default {
   },
   computed: {
     comparePasswords() {
-      return this.password !== this.confirmPassword ? 'Passwords do not match.' : '';
+      return this.password !== this.confirmPassword
+        ? 'Passwords do not match.'
+        : '';
     },
     ...mapState('auth', {
       loading: state.IS_LOADING,
@@ -90,7 +92,7 @@ export default {
     }),
     onCreateAccount() {
       this.createUserAccount({
-        fullName: this.fullName,
+        name: this.name,
         email: this.email,
         institution: this.institution,
         password: this.password,
@@ -100,5 +102,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

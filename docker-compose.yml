@@ -1,18 +1,34 @@
 version: "3"
-
 services:
-  # Flask Application
-  server:
-    build: "./server"
+  client:
+    build: "./client"
+    networks:
+      - backend
+    depends_on:
+      - api
     ports:
+      - 80:80
+  api:
+    build: "./api"
+    ports:
+      # Map gunicorn running on port 8080 inside the container
+      # to 5000 on the localhost. This allows us to proxy
+      # to localhost:5000/ on our nodejs server running development
+      # for Vue. When developing the client, we may not want to have
+      # to rebuild the image every time we want to see changes. So we have
+      # a proxy on the nodejs development server where any /api hits will
+      # goto this container.
       - "5000:8080"
+    expose:
+      # Gunicorn server is running at this port, we expose it so we
+      # can set up reverse proxy on production in Nginx
+      - "8080"
     depends_on:
       - redis
       - mysql
     networks:
       - backend
     restart: always
-  # Datastore for validating API auth tokens
   redis:
     image: redis:3.2-alpine
     command: redis-server --requirepass ${REDIS_PASSWORD}
@@ -23,7 +39,6 @@ services:
     volumes:
       - ./db/data/redis:/data
     restart: always
-  # Database
   mysql:
     image: mysql:5.7
     restart: always

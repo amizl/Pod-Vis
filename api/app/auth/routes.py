@@ -22,16 +22,41 @@ from . import (
 from .exceptions import AuthFailure
 from ..models import db, User
 
+@auth.route('/signin')
+@jwt_required
+def is_user_session_active():
+    """Checks if user session is active.
+
+    If this method gets called, then it made it passed the jwt_required
+    decorator. This means that there was an access token cookie and it is
+    not blacklisted.
+
+    Returns:
+        User information.
+    """
+    user_id = get_jwt_identity()
+    user = User.find_by_user_id(user_id)
+    if user:
+        response = jsonify({
+            "user": dict(**user.to_dict())
+        })
+        return response
+    else:
+        raise AuthFailure('No user by this ID was found.')
+
 @auth.route('/signin', methods=['POST'])
 def sign_user_in():
     """Signs the user in.
+
+    The user does not have an active session, so sign
+    the user in with their credentials.
 
     Form Args:
         email: The user's email.
         password: The user's password.
 
     Returns:
-        User information. (TODO)
+        User information.
     """
     request_data = request.get_json()
 
@@ -41,14 +66,12 @@ def sign_user_in():
         pw = request_data.get('password')
         if user.verify_password(pw):
             response = jsonify({
-                "msg": "Successfully signed in."
+                "user": dict(**user.to_dict())
             })
-            # TODO respond with other user info here...
 
             jwt_tokens = create_and_register_tokens(user.user_id)
             set_access_cookies(response, jwt_tokens['access_token'])
             set_refresh_cookies(response, jwt_tokens['refresh_token'])
-
             return response
         else:
             raise AuthFailure('Password is incorrect.')
@@ -81,13 +104,14 @@ def sign_user_up():
     sign the user up by creating new entry in user table.
 
     Returns:
-        User information. (TODO)
+        User information.
     """
     request_data = request.get_json()
 
     email = request_data.get('email')
     user = User.find_by_email(email)
     if not user:
+        # Email doesn't exist, create new user with their info
         name = request_data.get('name')
         institution = request_data.get('institution')
         password = request_data.get('password')
@@ -97,12 +121,10 @@ def sign_user_up():
             name=name,
             institution=institution,
             password=password)
-        # save new user in the database
         new_user.save_to_db()
 
         response = jsonify({
-            "msg": "Successfully signed in."
-            # TODO respond with other user info here...
+             "user": dict(**new_user.to_dict())
         })
 
         jwt_tokens = create_and_register_tokens(new_user.user_id)

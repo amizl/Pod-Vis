@@ -1,73 +1,88 @@
-import * as firebase from 'firebase';
+import axios from 'axios';
 import { actions, mutations } from './types';
 
 export default {
-  [actions.CREATE_USER_ACCOUNT]({ commit }, payload) {
+  /**
+   *  Create user account.
+   * @param {Object} commit
+   * @param {Object} payload Email, password, name, and institution.
+   */
+  async [actions.CREATE_USER_ACCOUNT]({ commit }, payload) {
     commit(mutations.SET_LOADING, true);
     commit(mutations.CLEAR_AUTH_ERROR);
 
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(payload.email, payload.password)
-      .then(({ user }) => {
-        commit(mutations.SET_USER, {
-          id: user.uid,
-          email: user.email,
-        });
-
-        delete payload.password;
-
-        firebase
-          .firestore()
-          .collection('users')
-          .doc(user.uid)
-          .set({
-            ...payload,
-          })
-          .then(() => {
-            commit(mutations.SET_LOADING, false);
-          });
-      })
-      .catch((error) => {
-        commit(mutations.SET_LOADING, false);
-        commit(mutations.SET_AUTH_ERROR, error.message);
+    const { email, password, name, institution } = payload;
+    try {
+      const { data } = await axios.post('/auth/signup', {
+        email,
+        password,
+        name,
+        institution,
       });
+      commit(mutations.SET_USER, {
+        ...data.user,
+      });
+    } catch (err) {
+      const { error } = err.response.data;
+      commit(mutations.SET_AUTH_ERROR, error);
+    }
+    commit(mutations.SET_LOADING, false);
   },
-  [actions.SIGN_USER_IN]({ commit }, payload) {
+  /**
+   *  Sign the user in.
+   * @param {*} commit
+   * @param {*} payload Email and password
+   */
+  async [actions.SIGN_USER_IN]({ commit }, { email, password }) {
     commit(mutations.SET_LOADING, true);
     commit(mutations.CLEAR_AUTH_ERROR);
 
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(payload.email, payload.password)
-      .then(({ user }) => {
-        commit(mutations.SET_USER, {
-          id: user.uid,
-          username: user.email,
-        });
-        commit(mutations.SET_LOADING, false);
-        // user
-        //   .getIdToken(/* forceRefresh */ true)
-        //   .then((idToken) => {
-        //     console.log(idToken);
-        //   });
-      })
-      .catch((error) => {
-        commit(mutations.SET_LOADING, false);
-        commit(mutations.SET_AUTH_ERROR, error.message);
+    try {
+      const { data } = await axios.post('/auth/signin', {
+        email,
+        password,
       });
+      commit(mutations.SET_USER, {
+        ...data.user,
+      });
+    } catch (err) {
+      const { error } = err.response.data;
+      commit(mutations.SET_AUTH_ERROR, error);
+    }
+
+    commit(mutations.SET_LOADING, false);
   },
-  [actions.SIGN_USER_OUT]({ commit }) {
+  /**
+   * Sign the user out.
+   * @param {Object} commit
+   */
+  async [actions.SIGN_USER_OUT]({ commit }) {
     commit(mutations.SET_LOADING, true);
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        commit(mutations.CLEAR_USER);
-        commit(mutations.SET_LOADING, false);
-      });
+
+    try {
+      await axios.delete('/auth/signout');
+      commit(mutations.CLEAR_USER);
+    } catch (err) {
+      // what should we do when this errors?
+    }
+    commit(mutations.SET_LOADING, false);
   },
-  [actions.AUTO_SIGN_IN]({ commit }, payload) {
-    commit(mutations.SET_USER, payload.uid);
+  /**
+   * Set user if there is an active session.
+   * @param {Object} commit
+   */
+  async [actions.GET_USER_FROM_SESSION]({ commit }) {
+    commit(mutations.SET_LOADING, true);
+
+    try {
+      const { data } = await axios.get('/auth/signin');
+      commit(mutations.SET_USER, {
+        ...data.user,
+      });
+    } catch (err) {
+      // No active session
+    }
+
+    commit(mutations.SET_LOADING, false);
   },
 };

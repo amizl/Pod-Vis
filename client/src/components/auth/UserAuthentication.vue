@@ -1,9 +1,8 @@
 <!--
 TOOD:
-  1. Fix transition/animation resize from login to create account
-  2. Form validation in login/create account
+  1. Form validation in login/create account
 -->
-<template lang='pug'>
+<template lang="pug">
   v-tabs(slider-color="secondary" grow)
     v-tab(key='login') SIGN IN
     v-tab(key='createAccount') CREATE ACCOUNT
@@ -12,6 +11,7 @@ TOOD:
         :value='authError'
         type='error'
         transition='fade-transition'
+        dismissible
       ) {{ authError }}
       v-tab-item
         sign-in-form
@@ -21,20 +21,21 @@ TOOD:
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
+import { mapState } from 'vuex';
 import { state } from '@/store/modules/auth/types';
 import SignIn from './SignIn.vue';
 import CreateAccount from './CreateAccount.vue';
 
-const { mapState } = createNamespacedHelpers('auth');
-
 export default {
+  components: {
+    signInForm: SignIn,
+    createAccountForm: CreateAccount,
+  },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
-    ...mapState({
+    ...mapState('auth', {
       user: state.USER,
       authError: state.AUTH_ERROR,
     }),
@@ -46,14 +47,7 @@ export default {
       }
     },
   },
-  components: {
-    signInForm: SignIn,
-    createAccountForm: CreateAccount,
-  },
-  methods: {
-  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -28,8 +28,8 @@ class User(db.Model):
         return cls.query.filter_by(email=email).first()
 
     @classmethod
-    def find_by_user_id(cls, id):
-        """Find user by their id
+    def find_by_user_id(cls, user_id):
+        """Find user by their id.
 
         Args:
             id: Unique ID of assigned to the user.
@@ -37,7 +37,7 @@ class User(db.Model):
         Returns:
             If exists, the user from the database, else None.
         """
-        return cls.query.filterby(user_id=id).first()
+        return cls.query.filter_by(user_id=user_id).first()
 
     @property
     def password(self):
@@ -68,3 +68,16 @@ class User(db.Model):
         """Save the user to the database."""
         db.session.add(self)
         db.session.commit()
+
+    def to_dict(self):
+        """Return attributes as a dict.
+
+        This easily allows for serializing the user object and
+        sending over http.
+        """
+        return dict(
+            user_id=self.user_id,
+            email=self.email,
+            name=self.name,
+            institution=self.institution
+        )

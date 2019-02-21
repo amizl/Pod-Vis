@@ -1,0 +1,7 @@
+SECRET_KEY=TODO
+JWT_SECRET_KEY=TODO
+FLASK_CONFIG=<can be development OR production>
+MYSQL_DEVELOPMENT_DATABASE_URI=mysql+pymysql://<user from env>:<password from env>@mysql/<database from env>
+MYSQL_PRODUCTION_DATABASE_URI=mysql+pymysql://<user from env>:<password from env>@localhost/<database from env>
+REDIS_DEVELOPMENT_URL=redis://:<redis password from env>r@redis:6379/0
+REDIS_PRODUCTION_URL=redis://:<redis password from env>@localhost:6379/0
