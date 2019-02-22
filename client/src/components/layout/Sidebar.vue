@@ -1,81 +1,73 @@
-<template lang="pug">
-  v-navigation-drawer(
-    app
-    permanent
-    fixed
-    :mini-variant='!expand'
-    flat
-    floating
-  )
-    v-layout(
-      column
-      fill-height
-      align-space-around
-    )
-      v-toolbar(flat).white
-        v-list
-          v-list-tile
-            v-list-tile-title
-      v-list(two-line )
-          v-list-tile(
-            v-for="item in menuItems"
-            :key="item.title"
-            :to='item.path'
-            active-class='secondary--text'
-          )
-            v-list-tile-action
-              v-icon {{ item.icon }}
-            v-list-tile-content(v-if='expand')
-              v-list-tile-title {{ item.name }}
-      v-spacer
-      v-list(two-line)
-        v-dialog(
-          v-model='dialog'
-          width='500'
-          persistent
-        )
-          // TODO: fix width for this tile
-          v-list-tile(slot='activator' @click='')
-            v-list-tile-action
-              v-icon exit_to_app
-            v-list-tile-content(v-if='expand')
-              v-list-tile-title Sign Out
-          v-card
-            v-card-text Are you sure you would like to sign out?
-            v-divider
-            v-card-actions
-              v-spacer
-              v-btn(
-                @click.native='dialog = false'
-              ) CANCEL
-              v-btn(
-                color='primary'
-                @click='signUserOut'
-              ) SIGN OUT
-        v-list-tile(
-          @click='expand = !expand'
-        )
-          v-list-tile-action
-            v-icon(
-              small
-              v-if='!expand'
-            ) keyboard_arrow_right
-            v-icon(
-              small
+<template>
+  <v-navigation-drawer :mini-variant="!expand" app permanent fixed flat>
+    <v-layout column fill-height align-space-around>
+      <v-toolbar flat class="white">
+        <v-list>
+          <v-list-tile> <v-list-tile-title></v-list-tile-title> </v-list-tile>
+        </v-list>
+      </v-toolbar>
+      <v-list two-line>
+        <v-list-tile
+          v-for="item in menuItems"
+          :key="item.title"
+          :to="item.path"
+          active-class="primary--text-darken-4"
+        >
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content v-if="expand">
+            <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+      <v-spacer></v-spacer>
+      <v-list two-line>
+        <v-list-tile @click="signOutDialog = true">
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content v-if="expand">
+            <v-list-tile-title>Sign out</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="expand = !expand">
+          <v-list-tile-action>
+            <v-icon v-if="!expand" small>keyboard_arrow_right</v-icon>
+            <v-icon v-else small>keyboard_arrow_left</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+      </v-list>
+      <v-list class="pb-5">
+        <v-list-tile>
+          <v-list-tile-action>
+            <img v-if="expand" src="@/assets/som_igs_logo.svg" alt="IGS Logo" />
+            <img
               v-else
-            ) keyboard_arrow_left
-      v-list.pb-5
-        v-list-tile
-          v-list-tile-action
-            img(
-              v-if='expand'
-              src='@/assets/som_igs_logo.svg'
-            )
-            img(
-              v-else
-              src='@/assets/som_igs_icon.svg'
-              width='20px'
-            )
+              src="@/assets/som_igs_icon.svg"
+              alt="IGS Logo"
+              width="20px"
+            />
+          </v-list-tile-action>
+        </v-list-tile>
+      </v-list>
+    </v-layout>
+
+    <!-- SIGN OUT DIALOG -->
+    <v-dialog v-model="signOutDialog" width="500" persistent>
+      <v-card>
+        <v-card-text class="pa-4"
+          >Are you sure you'd like to sign out?</v-card-text
+        >
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="signOutDialog = false">Cancel</v-btn>
+          <v-btn color="primary darken-4" @click="signUserOut">Sign out</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-navigation-drawer>
 </template>
 
 <script>
@@ -87,7 +79,7 @@ const { mapActions } = createNamespacedHelpers('auth');
 export default {
   data() {
     return {
-      dialog: false,
+      signOutDialog: false,
       expand: false,
       menuItems: [
         {
