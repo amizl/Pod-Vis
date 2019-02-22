@@ -1,5 +1,5 @@
 <template lang="pug">
-v-card(flat).pt-2.pb-2.ui-card
+v-card.pt-2.pb-2
   //- v-toolbar(
   //-   card
   //-   color="grey lighten-3"
@@ -28,13 +28,13 @@ v-card(flat).pt-2.pb-2.ui-card
           slot="items"
           slot-scope="props"
         )
-          tr(style='height:75px')
-            td(@click.stop)
-              v-checkbox(
-                v-model='props.selected'
-                primary
-                hide-details
-              )
+          tr
+            //- td(@click.stop)
+            //-   v-checkbox(
+            //-     v-model='props.selected'
+            //-     color='primary'
+            //-     hide-details
+            //-   )
             td.text-xs-left {{ props.item.dataset }}
             td.text-xs-right {{ props.item.n_samples }}
             //- td.text-xs-right {{ props.item.outcome_categories }}
@@ -94,11 +94,11 @@ export default {
       addToProfileFailure: false,
       selected: [],
       headers: [
-        {
-          text: 'Selected',
-          value: 'selected',
-          sortable: false,
-        },
+        // {
+        //   text: 'Selected',
+        //   value: 'selected',
+        //   sortable: false,
+        // },
         {
           text: 'Dataset',
           value: 'dataset',

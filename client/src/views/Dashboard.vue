@@ -1,15 +1,15 @@
 <template>
   <v-container fluid>
-    <v-toolbar class="background" flat app></v-toolbar>
-    <v-layout justify-center>
+    <!-- <v-toolbar class="background" flat app></v-toolbar> -->
+    <v-layout class="mt-4" justify-center>
       <v-flex xs10>
-        <p class="display-1 foo--text">Dashboard</p>
+        <p class="headline">Dashboard</p>
         <v-divider></v-divider>
       </v-flex>
     </v-layout>
     <v-layout class="pt-5" align-center justify-center>
       <v-flex xs10>
-        <p class="subheading foo--text">My Datasets</p>
+        <p class="subheading">My Datasets</p>
         <dataset-table></dataset-table>
         <!-- <v-card>
             <v-card-title></v-card-title>

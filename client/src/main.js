@@ -1,4 +1,5 @@
 import '@babel/polyfill';
+import * as firebase from 'firebase';
 import Vue from 'vue';
 import { mapActions } from 'vuex';
 import './plugins/vuetify';
@@ -16,6 +17,17 @@ new Vue({
   router,
   store,
   created() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyCgV1G2UfTJ1-O0KeM677Uy93znHEesl2g',
+      authDomain: 'cliovis-cb0c9.firebaseapp.com',
+      databaseURL: 'https://cliovis-cb0c9.firebaseio.com',
+      projectId: 'cliovis-cb0c9',
+      storageBucket: 'cliovis-cb0c9.appspot.com',
+    });
+
+    firebase.firestore().settings({
+      timestampsInSnapshots: true,
+    });
     // When the app is first loaded, we first want to check if there is an
     // active user session. If so, we can consider the user is still logged
     // in and route the user to their dashboard.

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar class="white" app>
+    <!-- <v-toolbar class="white" app>
       <v-layout>
         <v-flex xs6>
           <v-text-field
@@ -25,14 +25,13 @@
         <v-icon color="iconColor" small fab left> build </v-icon>
         BUILD DATASET
       </v-btn>
-    </v-toolbar>
-    <div class="white--text blueGradient">
+    </v-toolbar> -->
+    <!-- <div class="white--text blueGradient">
       <v-container fluid>
         <v-layout row wrap>
           <v-flex xs6>
             <p class="headline font-weight-medium">Dataset Manager</p>
           </v-flex>
-          <!-- TODO: Info about selected here -->
           <v-flex xs6>
             <v-layout row>
               <v-flex xs6> </v-flex>
@@ -41,11 +40,17 @@
           </v-flex>
         </v-layout>
       </v-container>
-    </div>
+    </div> -->
     <v-container fluid>
-      <v-layout row justify-center>
-        <v-flex xs8>
-          <p class="headline">Available Datasets</p>
+      <v-layout class="mt-4" justify-center>
+        <v-flex xs10>
+          <p class="headline">Dataset Manager</p>
+          <v-divider></v-divider>
+        </v-flex>
+      </v-layout>
+      <v-layout class="pt-5" row justify-center>
+        <v-flex xs10>
+          <p class="subheading foo--text">Available Datasets</p>
           <dataset-table :search="search"></dataset-table>
         </v-flex>
       </v-layout>

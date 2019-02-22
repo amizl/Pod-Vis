@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="datasets"
-    class="ui-card"
+    class="elevation-1"
     hide-actions
     hide-headers
   >

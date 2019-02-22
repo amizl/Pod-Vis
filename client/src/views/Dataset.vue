@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar app class="white">
+    <!-- <v-toolbar app class="white">
       <v-toolbar-items>
         <v-btn flat @click="goBack">
           <v-icon left> arrow_back </v-icon>
@@ -12,14 +12,13 @@
         <v-icon circle small color="iconColor" left> add </v-icon>
         ADD TO PROFILE
       </v-btn>
-    </v-toolbar>
-    <div class="white--text blueGradient">
+    </v-toolbar> -->
+    <!-- <div class="white--text blueGradient">
       <v-container fluid>
         <v-layout row wrap>
           <v-flex xs6>
             <p class="headline font-weight-medium">{{ dataset.dataset }}</p>
           </v-flex>
-          <!-- TODO: Info about selected here -->
           <v-flex xs6>
             <v-layout row>
               <v-flex xs6> </v-flex>
@@ -28,92 +27,100 @@
           </v-flex>
         </v-layout>
       </v-container>
-    </div>
+    </div> -->
     <v-container v-if="dataset" fluid grid-list-xl>
-      <v-layout row wrap>
-        <v-flex xs6>
-          <v-card class="elevation-5">
-            <v-toolbar card dense>
-              <v-toolbar-title> About </v-toolbar-title>
-            </v-toolbar>
-            <div class="ma-2">
-              <!-- <v-card-title
-                primary-title
-              >
-                <h3>
-                  {{ dataset.dataset }}
-                </h3>
-              </v-card-title> -->
-              <v-card-text>
-                <p>{{ dataset.description }}</p>
-              </v-card-text>
-              <v-card-actions v-if="dataset.sourceURL">
-                <v-spacer></v-spacer>
-                <v-btn :href="dataset.sourceURL" flat>Link to Study</v-btn>
-              </v-card-actions>
-            </div>
-          </v-card>
+      <v-layout class="mt-3" justify-center>
+        <v-flex xs10>
+          <p class="headline">{{ dataset.dataset }}</p>
+          <v-divider></v-divider>
         </v-flex>
-        <v-flex xs6>
-          <v-card class="elevation-5">
-            <v-toolbar card dense>
-              <v-toolbar-title> Subject Summary </v-toolbar-title>
-            </v-toolbar>
-            <!-- <v-card-title>DONUT CHART HERE</v-card-title> -->
-            <v-card-text>
-              <sunburst-chart
-                v-if="dataset.cohort_summary"
-                :data="JSON.parse(dataset.cohort_summary)"
-              >
-                <sunburst-legend
-                  slot="legend"
-                  slot-scope="{ data, color, actions, nodes }"
-                  :data="data"
-                  :color="color"
-                  :actions="actions"
-                  :nodes="nodes"
-                ></sunburst-legend>
-              </sunburst-chart>
-            </v-card-text>
-          </v-card>
+      </v-layout>
+      <v-layout class="mt-4" row wrap justify-center>
+        <v-flex xs10>
+          <v-layout row wrap justify-center>
+            <v-flex xs6>
+              <v-card>
+                <v-toolbar card color="white">
+                  <v-toolbar-title>About</v-toolbar-title>
+                </v-toolbar>
+                <div class="ma-2">
+                  <v-card-text>
+                    <p>{{ dataset.description }}</p>
+                  </v-card-text>
+                  <v-card-actions v-if="dataset.sourceURL">
+                    <v-spacer></v-spacer>
+                    <v-btn :href="dataset.sourceURL" flat>Link to Study</v-btn>
+                  </v-card-actions>
+                </div>
+              </v-card>
+            </v-flex>
+            <v-flex xs6>
+              <v-card>
+                <v-toolbar color="white" card>
+                  <v-toolbar-title> Subject Summary </v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                  <sunburst-chart
+                    v-if="dataset.cohort_summary"
+                    :data="JSON.parse(dataset.cohort_summary)"
+                  >
+                    <sunburst-legend
+                      slot="legend"
+                      slot-scope="{ data, color, actions, nodes }"
+                      :data="data"
+                      :color="color"
+                      :actions="actions"
+                      :nodes="nodes"
+                    ></sunburst-legend>
+                  </sunburst-chart>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+          </v-layout>
         </v-flex>
       </v-layout>
       <v-layout row wrap justify-center>
-        <v-flex xs6>
-          <v-card class="elevation-5">
-            <v-toolbar card dense>
-              <v-toolbar-title> Outcome Categories </v-toolbar-title>
-            </v-toolbar>
-            <v-card-text>
-              <v-chip
-                v-for="outcome in dataset.outcomes"
-                :key="outcome.category"
-              >
-                {{ outcome.category }}
-              </v-chip>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-        <v-flex xs6>
-          <v-card class="elevation-5">
-            <v-toolbar card dense>
-              <v-toolbar-title> Demographics </v-toolbar-title>
-            </v-toolbar>
-            <v-card-text>
-              <v-chip
-                v-for="demographic in dataset.demographics"
-                :key="demographic.name"
-              >
-                {{ demographic.name }}
-              </v-chip>
-            </v-card-text>
-          </v-card>
+        <v-flex xs10>
+          <v-layout row wrap justify-center>
+            <v-flex xs6>
+              <v-card>
+                <v-toolbar card color="white">
+                  <v-toolbar-title> Outcome Categories </v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                  <v-chip
+                    v-for="outcome in dataset.outcomes"
+                    :key="outcome.category"
+                  >
+                    {{ outcome.category }}
+                  </v-chip>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs6>
+              <v-card class="ui-card">
+                <v-toolbar color="white" card>
+                  <v-toolbar-title class="foo--text">
+                    Demographics
+                  </v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                  <v-chip
+                    v-for="demographic in dataset.demographics"
+                    :key="demographic.name"
+                  >
+                    {{ demographic.name }}
+                  </v-chip>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+          </v-layout>
         </v-flex>
       </v-layout>
       <v-layout row wrap justify-center>
-        <v-flex xs12>
-          <v-card class="elevation-5">
-            <v-toolbar card dense>
+        <v-flex xs10>
+          <v-card>
+            <v-toolbar color="white" card>
               <v-toolbar-title> Variables </v-toolbar-title>
             </v-toolbar>
             <variable-table
