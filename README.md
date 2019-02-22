@@ -14,6 +14,6 @@ Quick version.
 3. To spin up the containers, in same directory as docker-compose.yml, run `docker-compose build` to build the images. Once built, then run `docker-compose up`.
 4. The next step is to find the MySQL container and import our schema and data.
 - `docker ps` to find the container id of mysql container
-- `cat db/db_schema_v1.sql | docker exec -t -i <mysql container id> mysql -uroot --password=<root mysql password set in .env> <database name from env>`
-- Next we want to first make sure our dump.sql file is in the db directory (not committed), then import that file.`cat db/dump.sql | docker exec -t -i <mysql container id> mysql -uroot --password=<root mysql password set in .env> <database name from env>`
+- ``docker exec -i <mysql container id> mysql -uroot --password=<root mysql password set in .env> <database name from env> < db/db_schema_v1.sql`
+- Next we want to first make sure our dump.sql file is in the db directory (not committed), then import that file. `docker exec -t -i <mysql container id> mysql -uroot --password=<root mysql password set in .env> <database name from env> < db/dump.sql`
 - This container has a volume at db/data/mysql and will persist there.
