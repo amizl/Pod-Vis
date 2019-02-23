@@ -5,3 +5,5 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 
 from .user import User
+from .study import Study
+from .project import Project
