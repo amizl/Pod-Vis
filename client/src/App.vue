@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <notification-center></notification-center>
     <app-side-bar v-if="isUserAuthenicated"></app-side-bar>
     <!-- <v-system-bar
       app
@@ -23,6 +24,7 @@ import Footer from './components/layout/Footer.vue';
 import SideBar from './components/layout/Sidebar.vue';
 import Header from './components/layout/Header.vue';
 import SignIn from './views/SignIn.vue';
+import NotificationCenter from './components/common/notificationCenter.vue';
 
 export default {
   name: 'App',
@@ -31,6 +33,7 @@ export default {
     signInForm: SignIn,
     appSideBar: SideBar,
     appHeader: Header,
+    NotificationCenter,
   },
   data() {
     return {};

@@ -3,7 +3,7 @@ import cohort from './cohort';
 import dashboard from './dashboard';
 import datasetManager from './datasetManager';
 import cohortManager from './cohortManager';
-// import other stores
+import notifications from './notifications';
 
 export default {
   auth,
@@ -11,4 +11,5 @@ export default {
   dashboard,
   datasetManager,
   cohortManager,
+  notifications,
 };

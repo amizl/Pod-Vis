@@ -1,4 +1,9 @@
 import router from '@/router';
+import {
+  SuccessNotification,
+  ErrorNotification,
+} from '@/store/modules/notifications/notifications';
+import { notificationActions } from '@/store/modules/notifications/types';
 import axios from 'axios';
 import { actions, mutations } from './types';
 
@@ -57,13 +62,19 @@ export default {
    * Sign the user out.
    * @param {Object} commit
    */
-  async [actions.SIGN_USER_OUT]({ commit }) {
+  async [actions.SIGN_USER_OUT]({ commit, dispatch }) {
     commit(mutations.SET_LOADING, true);
 
     try {
       await axios.delete('/auth/signout');
       commit(mutations.CLEAR_USER);
       router.push('/signin');
+      const notification = new SuccessNotification(
+        'You have successfully logged out.'
+      );
+      dispatch(notification.dispatch, notification, {
+        root: true,
+      });
     } catch (err) {
       // what should we do when this errors?
     }
@@ -73,7 +84,7 @@ export default {
    * Set user if there is an active session.
    * @param {Object} commit
    */
-  async [actions.GET_USER_FROM_SESSION]({ commit }) {
+  async [actions.GET_USER_FROM_SESSION]({ commit, dispatch }) {
     commit(mutations.SET_LOADING, true);
 
     try {
@@ -82,6 +93,10 @@ export default {
         ...data.user,
       });
     } catch (err) {
+      // const { status } = err.response;
+      const error = new ErrorNotification('Your session has expired.');
+
+      dispatch(error.dispatch, error, { root: true });
       // No active session
     }
 

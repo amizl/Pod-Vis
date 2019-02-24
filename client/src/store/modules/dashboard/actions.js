@@ -1,5 +1,10 @@
 import * as firebase from 'firebase';
 import store from '@/store';
+import {
+  SuccessNotification,
+  ErrorNotification,
+} from '@/store/modules/notifications/notifications';
+
 import { actions, mutations } from './types';
 
 export default {
@@ -20,16 +25,12 @@ export default {
         commit(mutations.SET_LOADING, false);
       });
   },
-  [actions.ADD_DATASET_TO_PROFILE]({ commit }, payload) {
-    return firebase
-      .firestore()
-      .collection('users')
-      .doc(store.state.auth.user)
-      .collection('datasets')
-      .add(payload)
-      .then(() => {
-        commit(mutations.SET_DATASETS, Array(payload));
-      });
+  [actions.ADD_DATASET_TO_PROFILE]({ commit, dispatch }, payload) {
+    const notification = new SuccessNotification(
+      'Successfully added to profile.'
+    );
+    dispatch(notification.dispatch, notification, { root: true });
+    // commit(mutations.SET_DATASETS, Array(payload));
   },
   [actions.REMOVE_DATASET_FROM_PROFILE]({ commit }, payload) {
     // TODO
