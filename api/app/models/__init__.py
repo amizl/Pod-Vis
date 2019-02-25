@@ -7,3 +7,4 @@ bcrypt = Bcrypt()
 from .user import User
 from .study import Study
 from .project import Project
+from .dataset_added import DatasetAdded
