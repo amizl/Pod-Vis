@@ -112,6 +112,34 @@ CREATE TABLE IF NOT EXISTS `cliovis`.`user` (
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `cliovis`.`dataset_added`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`dataset_added` ;
+
+CREATE TABLE IF NOT EXISTS `cliovis`.`dataset_added` (
+  `user_id` INT NOT NULL,
+  `study_id` INT NOT NULL,
+  PRIMARY KEY (`user_id`, `study_id`),
+  FOREIGN KEY (`user_id`)
+    REFERENCES user(`user_id`)
+    ON DELETE CASCADE,
+  FOREIGN KEY (`study_id`)
+    REFERENCES study(`study_id`)
+    ON DELETE CASCADE
+)
+ENGINE = InnoDB;
+
+  CREATE TABLE rooms (
+    room_no INT PRIMARY KEY AUTO_INCREMENT,
+    room_name VARCHAR(255) NOT NULL,
+    building_no INT NOT NULL,
+
+    FOREIGN KEY (building_no)
+        REFERENCES buildings (building_no)
+        ON DELETE CASCADE
+);
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
