@@ -55,7 +55,7 @@
           v-btn(
             type='submit'
             color='primary'
-            :disabled='loading'
+            disabled
             :loading='loading'
           ) Create Account
             span(slot='loader') Creating Account
