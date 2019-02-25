@@ -1,6 +1,5 @@
 <template>
   <v-container fluid>
-    <!-- <v-toolbar class="background" flat app></v-toolbar> -->
     <v-layout class="mt-4" justify-center>
       <v-flex xs10>
         <p class="headline">Dashboard</p>
@@ -11,10 +10,6 @@
       <v-flex xs10>
         <p class="subheading">My Datasets</p>
         <dataset-table></dataset-table>
-        <!-- <v-card>
-            <v-card-title></v-card-title>
-            <v-card-text> </v-card-text>
-          </v-card> -->
       </v-flex>
     </v-layout>
   </v-container>

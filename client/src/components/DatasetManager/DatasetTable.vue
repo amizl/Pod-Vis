@@ -1,5 +1,5 @@
 <template lang="pug">
-v-card.pt-2.pb-2
+v-card
   //- v-toolbar(
   //-   card
   //-   color="grey lighten-3"
@@ -21,7 +21,7 @@ v-card.pt-2.pb-2
         :search='search'
         :headers='headers'
         :items='datasets'
-        item-key='dataset'
+        item-key='study_name'
         hide-actions
       )
         template(
@@ -35,13 +35,14 @@ v-card.pt-2.pb-2
             //-     color='primary'
             //-     hide-details
             //-   )
-            td.text-xs-left {{ props.item.dataset }}
-            td.text-xs-right {{ props.item.n_samples }}
+            td.text-xs-left {{ props.item.study_name }}
+            //- td.text-xs-right {{ props.item.n_samples }}
             //- td.text-xs-right {{ props.item.outcome_categories }}
-            td.text-xs-right {{ props.item.outcome_measures }}
-            td.text-xs-right {{ props.item.demographics.length }}
+            //- td.text-xs-right {{ props.item.outcome_measures }}
+            //- td.text-xs-right {{ props.item.demographics.length }}
             //- td.text-xs-right {{ props.item.variables.length }}
-            td.text-xs-right.justify-center.layout.mt-4
+            //- td.text-xs-right.justify-center.layout.mt-4
+            td.text-xs-right.justify-center
               v-tooltip(
                 top
                 color='primary'
@@ -56,8 +57,9 @@ v-card.pt-2.pb-2
                 top
                 color='primary'
               )
+                //- @click='addToProfile({ dataset: props.item.dataset, id:props.item.id })'
                 v-icon(
-                  @click='addToProfile({ dataset: props.item.dataset, id:props.item.id })'
+                  @click='addToProfile(props.item.study_id)'
                   slot="activator"
                   color='primary'
                 ) add_circle
@@ -103,22 +105,22 @@ export default {
           text: 'Dataset',
           value: 'dataset',
         },
-        {
-          text: 'Subject Count',
-          value: 'subject count',
-        },
+        // {
+        //   text: 'Subject Count',
+        //   value: 'subject count',
+        // },
         // {
         //   text: 'Outcome Categories',
         //   value: 'categories',
         // },
-        {
-          text: 'Outcome Measures',
-          value: 'measure',
-        },
-        {
-          text: 'Demographics',
-          value: 'demographics',
-        },
+        // {
+        //   text: 'Outcome Measures',
+        //   value: 'measure',
+        // },
+        // {
+        //   text: 'Demographics',
+        //   value: 'demographics',
+        // },
         // {
         //   text: 'Variables',
         //   value: 'variables',
@@ -169,11 +171,8 @@ export default {
       selectDatasets: actions.SELECT_DATASETS,
     }),
     ...mapActions('dashboard', {
-      _addToProfile: dashboardActions.ADD_DATASET_TO_PROFILE,
+      addToProfile: dashboardActions.ADD_DATASET_TO_PROFILE,
     }),
-    addToProfile(payload) {
-      this._addToProfile(payload).then(() => (this.addToProfileSuccess = true));
-    },
     stepIntoDataset(datasetId) {
       // Route to view for dataset information
       // const currentPath = this.$router.currentPath.fullPath;

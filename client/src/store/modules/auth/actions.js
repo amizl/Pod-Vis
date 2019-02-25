@@ -93,11 +93,14 @@ export default {
         ...data.user,
       });
     } catch (err) {
-      // const { status } = err.response;
-      const error = new ErrorNotification('Your session has expired.');
-
-      dispatch(error.dispatch, error, { root: true });
-      // No active session
+      const { data } = err.response;
+      // TODO:
+      // Need a nicer way to check for what happened on server
+      // (is there no cookie or has that cookie w/ token expired?)
+      if (data.msg.includes('expired')) {
+        const error = new ErrorNotification('Your session has expired.');
+        dispatch(error.dispatch, error, { root: true });
+      }
     }
 
     commit(mutations.SET_LOADING, false);

@@ -1,5 +1,3 @@
 // import { getters } from './types';
 
-export default {
-
-};
+export default {};
