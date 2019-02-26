@@ -95,7 +95,6 @@ export default {
         email: this.email,
         institution: this.institution,
         password: this.password,
-        confirmPassword: this.confirmPassword,
       });
     },
   },

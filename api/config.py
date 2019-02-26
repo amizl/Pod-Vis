@@ -31,12 +31,6 @@ class Config:
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # This should probably be enabled in production, but still need to
-    # think about how to protect again CSRF when using JWTs. Just
-    # requires a little research
-    WTF_CSRF_ENABLED = False
-    # Possible solution to above is to set this to true
-    JWT_CSRF_IN_COOKIES = False
 
     @staticmethod
     def init_app(app):
