@@ -27,9 +27,8 @@ def create_app(config_name):
     bcrypt.init_app(app)
 
     # use JWTs to authorize protected api endpoints
-    from .auth import jwt, revoked_token_store
+    from .auth import jwt
     jwt.init_app(app)
-    revoked_token_store.init_app(app)
 
     # Register endpoint blueprints...
     from .api import api as api_blueprint

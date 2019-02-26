@@ -11,7 +11,7 @@ class Config:
     """Base configuration"""
     SECRET_KEY = os.environ.get('SECRET_KEY')
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
-    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=60)
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=10)
     JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(days=1)
     # Configures application to store JWTs in cookies
     JWT_TOKEN_LOCATION = ['cookies']
@@ -22,14 +22,6 @@ class Config:
     # they aren't needed
     JWT_ACCESS_COOKIE_PATH = ['/api/', '/auth/']
     JWT_REFRESH_COOKIE_PATH = '/auth/refresh'
-    # We blacklist tokens with redis. We may want to look into only
-    # having expirations on tokens so we don't have to bother with
-    # storing anything on the server (whole point of JWTs). We
-    # could simply delete the cookie with JWT when the user requests
-    # to sign out, but if anyone somehow got access to their access
-    # tokens there is no protection against revoking.
-    JWT_BLACKLIST_ENABLED = True
-    JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @staticmethod
@@ -40,7 +32,6 @@ class Config:
 class ProductionConfig(Config):
     """Production configuration"""
     ENV = 'production'
-    REDIS_URL = os.environ.get('REDIS_PRODUCTION_URL')
     SQLALCHEMY_DATABASE_URI = os.environ.get('MYSQL_PRODUCTION_DATABASE_URI')
     # Only allow JWT cookies to be sent over https
     JWT_COOKIE_SECURE = True
@@ -53,7 +44,6 @@ class DevelopmentConfig(Config):
     # When hitting the datase, print out its queries in console
     # (may not be necessary)
     SQLALCHEMY_ECHO = True
-    REDIS_URL = os.environ.get('REDIS_DEVELOPMENT_URL')
     SQLALCHEMY_DATABASE_URI = os.environ.get('MYSQL_DEVELOPMENT_DATABASE_URI')
     # In dvelopment we dont need JWT cookies to be sent over https
     JWT_COOKIE_SECURE = False

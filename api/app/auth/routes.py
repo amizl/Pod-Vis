@@ -14,10 +14,7 @@ from flask_jwt_extended import (
 from . import (
     auth,
     jwt,
-    revoked_token_store,
-    create_and_register_tokens,
-    register_token,
-    revoke_token
+    create_tokens
 )
 from .exceptions import AuthFailure
 from .validators import validate_sign_in, validate_sign_up
@@ -70,7 +67,7 @@ def sign_user_in():
             response = jsonify({
                 "user": user.to_dict()
             })
-            jwt_tokens = create_and_register_tokens(user.user_id)
+            jwt_tokens = create_tokens(user.user_id)
             set_access_cookies(response, jwt_tokens['access_token'])
             set_refresh_cookies(response, jwt_tokens['refresh_token'])
             return response
@@ -85,15 +82,10 @@ def sign_user_in():
 def sign_user_out():
     """Sign the user out by revoking their access token.
 
-    Revoke the user's token by setting the JWT id in our
-    redis db to "true" and then remove the jwt cookies.
+    Revoke the user's token by removing the jwt cookies.
     """
-    jti = get_raw_jwt()['jti']
-    revoke_token(jti, 'access')
-
     response = jsonify({"msg": "Access token revoked."})
     unset_jwt_cookies(response)
-
     return response
 
 @auth.route('/signup', methods=['POST'])
@@ -128,7 +120,7 @@ def sign_user_up():
              "user": new_user.to_dict()
         })
 
-        jwt_tokens = create_and_register_tokens(new_user.user_id)
+        jwt_tokens = create_tokens(new_user.user_id)
         set_access_cookies(response, jwt_tokens['access_token'])
         set_refresh_cookies(response, jwt_tokens['refresh_token'])
         return response, 201
@@ -145,8 +137,6 @@ def refresh():
     """
     current_user = get_jwt_identity()
     access_token = create_access_token(identity=current_user)
-    access_jti = get_jti(encoded_token=access_token)
-    register_token(access_jti, "access")
 
     response = jsonify({"msg": "Access token refreshed."})
     set_access_cookies(response, access_token)
@@ -156,9 +146,6 @@ def refresh():
 @jwt_refresh_token_required
 def sign_out_refresh():
     """Revoke refresh token and delete cookie."""
-    jti = get_raw_jwt()['jti']
-    revoke_token(jti, 'refresh')
-
     response = jsonify({"msg": "Refresh token revoked."})
     unset_jwt_cookies(response)
     return response
