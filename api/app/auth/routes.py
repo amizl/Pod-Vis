@@ -20,6 +20,7 @@ from . import (
     revoke_token
 )
 from .exceptions import AuthFailure
+from .validators import validate_sign_in, validate_sign_up
 from ..models import db, User
 
 @auth.route('/signin')
@@ -45,6 +46,7 @@ def is_user_session_active():
         raise AuthFailure('No user by this ID was found.')
 
 @auth.route('/signin', methods=['POST'])
+@validate_sign_in
 def sign_user_in():
     """Signs the user in.
 
@@ -66,18 +68,16 @@ def sign_user_in():
         pw = request_data.get('password')
         if user.verify_password(pw):
             response = jsonify({
-                "user": dict(**user.to_dict())
+                "user": user.to_dict()
             })
-
             jwt_tokens = create_and_register_tokens(user.user_id)
             set_access_cookies(response, jwt_tokens['access_token'])
             set_refresh_cookies(response, jwt_tokens['refresh_token'])
             return response
         else:
-            raise AuthFailure('Password is incorrect.')
+            raise AuthFailure('Email or password is incorrect.')
     else:
-        raise AuthFailure('The username does not exist.')
-
+        raise AuthFailure('Email or password is incorrect.')
 
 # Endpoint for revoking the current user's access token
 @auth.route('/signout', methods=['DELETE'])
@@ -97,6 +97,7 @@ def sign_user_out():
     return response
 
 @auth.route('/signup', methods=['POST'])
+@validate_sign_up
 def sign_user_up():
     """Sign the user up.
 
@@ -124,7 +125,7 @@ def sign_user_up():
         new_user.save_to_db()
 
         response = jsonify({
-             "user": dict(**new_user.to_dict())
+             "user": new_user.to_dict()
         })
 
         jwt_tokens = create_and_register_tokens(new_user.user_id)

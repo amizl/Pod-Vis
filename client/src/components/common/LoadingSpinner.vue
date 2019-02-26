@@ -1,4 +1,4 @@
-c<template lang="pug">
+<template lang="pug">
   v-layout(
     align-center
     justify-center

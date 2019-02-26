@@ -3,7 +3,6 @@ import {
   SuccessNotification,
   ErrorNotification,
 } from '@/store/modules/notifications/notifications';
-import { notificationActions } from '@/store/modules/notifications/types';
 import axios from 'axios';
 import { actions, mutations } from './types';
 
@@ -17,11 +16,19 @@ export default {
     commit(mutations.SET_LOADING, true);
     commit(mutations.CLEAR_AUTH_ERROR);
 
-    const { email, password, name, institution } = payload;
+    const {
+      email,
+      password,
+      confirmPassword: confirm_password,
+      name,
+      institution,
+    } = payload;
+
     try {
       const { data } = await axios.post('/auth/signup', {
         email,
         password,
+        confirm_password,
         name,
         institution,
       });

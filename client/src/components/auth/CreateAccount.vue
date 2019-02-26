@@ -55,7 +55,6 @@
           v-btn(
             type='submit'
             color='primary'
-            disabled
             :loading='loading'
           ) Create Account
             span(slot='loader') Creating Account
@@ -96,6 +95,7 @@ export default {
         email: this.email,
         institution: this.institution,
         password: this.password,
+        confirmPassword: this.confirmPassword,
       });
     },
   },
