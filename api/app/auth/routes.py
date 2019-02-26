@@ -13,7 +13,6 @@ from flask_jwt_extended import (
 )
 from . import (
     auth,
-    jwt,
     create_tokens
 )
 from .exceptions import AuthFailure
