@@ -130,17 +130,6 @@ CREATE TABLE IF NOT EXISTS `cliovis`.`dataset_added` (
 )
 ENGINE = InnoDB;
 
-  CREATE TABLE rooms (
-    room_no INT PRIMARY KEY AUTO_INCREMENT,
-    room_name VARCHAR(255) NOT NULL,
-    building_no INT NOT NULL,
-
-    FOREIGN KEY (building_no)
-        REFERENCES buildings (building_no)
-        ON DELETE CASCADE
-);
-ENGINE = InnoDB;
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
