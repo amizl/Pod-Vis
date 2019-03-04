@@ -1,6 +1,5 @@
 from flask import Blueprint
 from flask_jwt_extended import JWTManager
-from flask_redis import FlaskRedis
 
 jwt = JWTManager()
 

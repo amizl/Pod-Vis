@@ -92,21 +92,21 @@ export default {
           icon: 'table_chart',
           path: '/datasets',
         },
-        {
-          name: 'Cohort Manager',
-          icon: 'group',
-          path: '/cohorts',
-        },
         // {
-        //   name: 'Data Explorer',
-        //   icon: 'explore',
-        //   path: '/explore',
+        //   name: 'Cohort Manager',
+        //   icon: 'group',
+        //   path: '/cohorts',
         // },
-        {
-          name: 'Analysis Tool',
-          icon: 'bar_chart',
-          path: '/analysis',
-        },
+        // // {
+        // //   name: 'Data Explorer',
+        // //   icon: 'explore',
+        // //   path: '/explore',
+        // // },
+        // {
+        //   name: 'Analysis Tool',
+        //   icon: 'bar_chart',
+        //   path: '/analysis',
+        // },
       ],
     };
   },

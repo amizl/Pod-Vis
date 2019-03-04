@@ -46,5 +46,6 @@ class Study(db.Model):
             study_id=self.study_id,
             study_name=self.study_name,
             description=self.description,
-            project_id=self.project_id
+            project_id=self.project_id,
+            project=self.project.to_dict(include_studies=False)
         )

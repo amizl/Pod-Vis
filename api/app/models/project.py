@@ -35,7 +35,7 @@ class Project(db.Model):
         """
         return cls.query.filter_by(project_id=project_id).first()
 
-    def to_dict(self):
+    def to_dict(self, include_studies=True):
         """Convert model to dictionary.
 
         This easily allows for serializing the object and sending over http.
@@ -43,9 +43,17 @@ class Project(db.Model):
         Returns:
           Dictionary of the model's attributes.
         """
-        return dict(
-            project_id=self.project_id,
-            project_name=self.project_name,
-            description=self.description,
-            studies=list(map(lambda study: study.to_dict(),self.studies)),
-        )
+        if include_studies:
+            return dict(
+                project_id=self.project_id,
+                project_name=self.project_name,
+                description=self.description,
+                studies=list(map(lambda study: study.to_dict(),self.studies)),
+            )
+        else:
+            return dict(
+                project_id=self.project_id,
+                project_name=self.project_name,
+                description=self.description,
+            )
+

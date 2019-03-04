@@ -21,12 +21,12 @@ from ..models import db, User
 
 @auth.route('/signin')
 @jwt_required
-def is_user_session_active():
-    """Checks if user session is active.
+def is_user_token_expired():
+    """Checks if user's access token is expired.
 
     If this method gets called, then it made it passed the jwt_required
     decorator. This means that there was an access token cookie and it is
-    not blacklisted.
+    not expired.
 
     Returns:
         User information.
@@ -35,7 +35,7 @@ def is_user_session_active():
     user = User.find_by_user_id(user_id)
     if user:
         response = jsonify({
-            "user": dict(**user.to_dict())
+            "user": user.to_dict()
         })
         return response
     else:
@@ -108,11 +108,7 @@ def sign_user_up():
         institution = request_data.get('institution')
         password = request_data.get('password')
 
-        new_user = User(
-            email=email,
-            name=name,
-            institution=institution,
-            password=password)
+        new_user = User(email, name, institution, password)
         new_user.save_to_db()
 
         response = jsonify({

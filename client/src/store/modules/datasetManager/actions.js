@@ -14,8 +14,8 @@ export default {
       const datasets = projects
         .map(project =>
           project.studies.map(study => ({
+            project_name: project.project_name,
             ...study,
-            study_name: `${project.project_name}: ${study.study_name}`,
           }))
         )
         .flat();

@@ -30,11 +30,12 @@ v-card
         )
           tr
             //- td(@click.stop)
-            //-   v-checkbox(
-            //-     v-model='props.selected'
-            //-     color='primary'
-            //-     hide-details
-            //-   )
+              v-checkbox(
+                v-model='props.selected'
+                color='primary'
+                hide-details
+              )
+            td.text-xs-left {{ props.item.project_name }}
             td.text-xs-left {{ props.item.study_name }}
             //- td.text-xs-right {{ props.item.n_samples }}
             //- td.text-xs-right {{ props.item.outcome_categories }}
@@ -48,22 +49,22 @@ v-card
                 color='primary'
               )
                 v-icon(
-                  @click='stepIntoDataset(props.item.id)'
+                  @click='stepIntoDataset(props.item.study_id)'
                   slot="activator"
                   color='primary'
                 ).mr-1 info
-                span Learn more about this dataset
-              v-tooltip(
-                top
-                color='primary'
-              )
-                //- @click='addToProfile({ dataset: props.item.dataset, id:props.item.id })'
-                v-icon(
-                  @click='addToProfile(props.item.study_id)'
-                  slot="activator"
-                  color='primary'
-                ) add_circle
-                span Add dataset to profile
+                span Learn more about this study
+              //- v-tooltip(
+              //-   top
+              //-   color='primary'
+              //- )
+              //-   //- @click='addToProfile({ dataset: props.item.dataset, id:props.item.id })'
+              //-   v-icon(
+              //-     @click='addToProfile(props.item.study_id)'
+              //-     slot="activator"
+              //-     color='primary'
+              //-   ) add_circle
+              //-   span Add dataset to profile
             //- td {{ probs.item.n_variables }}
             //- td {{ props.item.code }}
   v-snackbar(
@@ -102,8 +103,12 @@ export default {
         //   sortable: false,
         // },
         {
-          text: 'Dataset',
-          value: 'dataset',
+          text: 'Project',
+          value: 'project',
+        },
+        {
+          text: 'Study',
+          value: 'study',
         },
         // {
         //   text: 'Subject Count',
@@ -173,10 +178,10 @@ export default {
     ...mapActions('dashboard', {
       addToProfile: dashboardActions.ADD_DATASET_TO_PROFILE,
     }),
-    stepIntoDataset(datasetId) {
+    stepIntoDataset(studyID) {
       // Route to view for dataset information
       // const currentPath = this.$router.currentPath.fullPath;
-      this.$router.push(`datasets/${datasetId}`);
+      this.$router.push(`datasets/${studyID}`);
     },
   },
 };

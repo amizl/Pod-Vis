@@ -44,7 +44,12 @@
     <v-container fluid>
       <v-layout class="mt-4" justify-center>
         <v-flex xs10>
-          <p class="headline">Dataset Manager</p>
+          <v-layout>
+            <v-flex xs6> <p class="headline">Dataset Manager</p> </v-flex>
+            <v-flex xs6 class="text-xs-right">
+              <v-btn flat right disabled>Build Collection</v-btn>
+            </v-flex>
+          </v-layout>
           <v-divider></v-divider>
         </v-flex>
       </v-layout>

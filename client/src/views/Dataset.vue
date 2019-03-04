@@ -31,7 +31,10 @@
     <v-container v-if="dataset" fluid grid-list-xl>
       <v-layout class="mt-3" justify-center>
         <v-flex xs10>
-          <p class="headline">{{ dataset.dataset }}</p>
+          <p class="headline">
+            {{ dataset.study.project.project_name }}:
+            {{ dataset.study.study_name }}
+          </p>
           <v-divider></v-divider>
         </v-flex>
       </v-layout>
@@ -45,7 +48,7 @@
                 </v-toolbar>
                 <div class="ma-2">
                   <v-card-text>
-                    <p>{{ dataset.description }}</p>
+                    <p>{{ descriptions[dataset.study.study_name] }}</p>
                   </v-card-text>
                   <v-card-actions v-if="dataset.sourceURL">
                     <v-spacer></v-spacer>
@@ -141,7 +144,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
-import * as firebase from 'firebase';
+import axios from 'axios';
 import VariableTable from '@/components/DatasetManager/VariableTable.vue';
 // Import these into a Subject Summary Component?
 import SunburstChart from '@/components/charts/sunburst/SunburstChart.vue';
@@ -163,6 +166,24 @@ export default {
     return {
       dataset: null,
       addToProfileSuccess: false,
+      descriptions: {
+        "Parkinson's Disease":
+          'Subjects with a diagnosis of PD for two years or less who are not taking PD medications.',
+        'Healthy Control':
+          'Control Subjects without PD who are 30 years or older and who do not have a first degree blood relative with PD.',
+        SWEDD:
+          'Subjects consented as PD subjects who have DaTscans that do not show evidence of a dopaminergic deficit.',
+        Prodomal:
+          "Subjects without Parkinson's disease who have a diagnosis of hyposmia or REM sleep behavior disorder (RBD).",
+        'Genetic Cohort PD':
+          "Subjects with Parkinson's disease who have a genetic mutation in LRRK2, GBA, or SNCA.",
+        'Genetic Cohort Unaffected':
+          "Subjects without Parkinson's disease who have a genetic mutation in LRRK2, GBA, or SNCA.",
+        'Genetic Registry PD':
+          "Subjects with Parkinson's disease who have a genetic mutation in LRRK2, GBA, or SNCA or a first-degree relative with a LRRK2, GBA, or SNCA mutation who are evaluated at less frequent intervals to augment and broaden the follow-up of PD subjects and family members with PD associated mutations.",
+        'Genetic Registry Unaffected':
+          "Subjects without Parkinson's disease who have a genetic mutation in LRRK2, GBA, or SNCA or a first-degree relative with a LRRK2, GBA, or SNCA mutation who are evaluated at less frequent intervals to augment and broaden the follow-up of PD subjects and family members with PD associated mutations.",
+      },
     };
   },
   computed: {
@@ -172,9 +193,9 @@ export default {
     }),
   },
   async created() {
-    const dataset = await this.fetchDataset(this.id);
-    if (dataset.exists) {
-      this.dataset = dataset.data();
+    const { data } = await this.fetchDataset(this.id);
+    if (data) {
+      this.dataset = data;
     }
   },
   methods: {
@@ -192,11 +213,7 @@ export default {
       this.$router.go(-1);
     },
     fetchDataset() {
-      return firebase
-        .firestore()
-        .collection('datasets')
-        .doc(this.id)
-        .get();
+      return axios.get(`/api/studies/${this.id}`);
     },
   },
 };

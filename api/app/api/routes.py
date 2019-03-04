@@ -5,13 +5,23 @@ from . import api
 from ..models import db, Study, Project, DatasetAdded
 
 @api.route('/studies')
-@jwt_required
+# @jwt_required
 def get_all_studies():
   """Return all studies."""
   studies = Study.get_all_studies()
   return jsonify({
     "studies": list(map(lambda study: study.to_dict(), studies))
   })
+
+@api.route('/studies/<study_id>')
+# @jwt_required
+def get_study(study_id):
+  """Return all studies."""
+  study = Study.find_by_study_id(study_id)
+  if study:
+    return jsonify({
+      "study": study.to_dict()
+    })
 
 @api.route('/projects')
 def get_all_projects():
