@@ -1,13 +1,13 @@
 from . import db
 
 class Project(db.Model):
-    __tablename__ = 'project'
+    __tablename__ = "project"
 
     project_id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
 
-    studies = db.relationship('Study')
+    studies = db.relationship("Study", back_populates="project", lazy="select")
 
     def __init__(self, project_id, project_name, description):
         self.project_id = project_id
@@ -35,7 +35,7 @@ class Project(db.Model):
         """
         return cls.query.filter_by(project_id=project_id).first()
 
-    def to_dict(self, include_studies=True):
+    def to_dict(self, include_studies=False, **kwargs):
         """Convert model to dictionary.
 
         This easily allows for serializing the object and sending over http.
@@ -43,17 +43,14 @@ class Project(db.Model):
         Returns:
           Dictionary of the model's attributes.
         """
+        project = dict(
+            project_id=self.project_id,
+            project_name=self.project_name,
+            description=self.description,
+        )
+
         if include_studies:
-            return dict(
-                project_id=self.project_id,
-                project_name=self.project_name,
-                description=self.description,
-                studies=list(map(lambda study: study.to_dict(),self.studies)),
-            )
-        else:
-            return dict(
-                project_id=self.project_id,
-                project_name=self.project_name,
-                description=self.description,
-            )
+            project["studies"] = [study.to_dict(**kwargs) for study in self.studies]
+
+        return project
 
