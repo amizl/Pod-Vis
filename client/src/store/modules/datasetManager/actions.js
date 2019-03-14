@@ -8,7 +8,7 @@ export default {
     commit(mutations.SET_LOADING, true);
 
     try {
-      const { data } = await axios.get('/api/projects');
+      const { data } = await axios.get('/api/projects?include=studies');
       const projects = data.projects;
 
       const datasets = projects

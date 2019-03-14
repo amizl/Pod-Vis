@@ -76,8 +76,28 @@ def summarize_study_subjects(study_id):
 
 @api.route('/projects')
 def get_all_projects():
-  """Get all projects."""
+  """Get all projects.
+
+  Params:
+    include: Data to include from projects. This can currently be:
+      1. studies
+      2. subjects
+      Including subjects can only be used if studies are included.
+  Example requests:
+    /api/projects
+    /api/projects?include=studies&include=subjects
+  """
   projects = Project.get_all_projects()
+
+  includes = request.args.getlist('include')
+  kwargs = {
+    "include_studies": "studies" in includes,
+    "include_subjects": "subjects" in includes
+  }
+
   return jsonify({
-    "projects": [project.to_dict() for project in projects]
+    "projects": [
+      project.to_dict(**kwargs)
+      for project in projects
+    ]
   })
