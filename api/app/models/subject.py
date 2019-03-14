@@ -56,11 +56,11 @@ class Subject(db.Model):
 
 
     @classmethod
-    def count(cls, study_id, *group_by):
+    def count(cls, study_id, group_by):
         """Aggregate count on subjects.
 
         Args:
-            group_by: Attributes to group on.
+            group_by: List of attributes to group on.
 
         Returns:
             Aggregated counts.

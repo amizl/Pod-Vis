@@ -57,7 +57,7 @@ def summarize_study_subjects(study_id):
     BadRequest: If query parameters cannot be processed.
 
   Example request:
-    /api/studies/10/count?group_by=sex&group_by=race
+    /api/studies/10/subjects/count?group_by=sex&group_by=race
   """
   group_by = request.args.getlist("group_by")
 
@@ -66,7 +66,7 @@ def summarize_study_subjects(study_id):
     raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
 
   try:
-    counts = Subject.count(study_id, *group_by)
+    counts = Subject.count(study_id, group_by)
   except AttributeError:
     raise BadRequest("There is a problem with the request's query parameters.")
 
