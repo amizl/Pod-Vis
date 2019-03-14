@@ -64,8 +64,9 @@
                 </v-toolbar>
                 <v-card-text>
                   <sunburst-chart
-                    v-if="dataset.cohort_summary"
-                    :data="JSON.parse(dataset.cohort_summary)"
+                    v-if="summaryData"
+                    :data="summaryData"
+                    :keyorder="['sex', 'race']"
                   >
                     <sunburst-legend
                       slot="legend"
@@ -166,6 +167,7 @@ export default {
     return {
       dataset: null,
       addToProfileSuccess: false,
+      summaryData: null,
       descriptions: {
         "Parkinson's Disease":
           'Subjects with a diagnosis of PD for two years or less who are not taking PD medications.',
@@ -193,9 +195,14 @@ export default {
     }),
   },
   async created() {
-    const { data } = await this.fetchDataset(this.id);
+    const { data } = await this.fetchDataset();
     if (data) {
       this.dataset = data;
+
+      // Get demographics summary data for sunburst chart
+      const summary = await this.fetchDemographicSummary();
+      const { counts } = summary.data;
+      this.summaryData = counts;
     }
   },
   methods: {
@@ -214,6 +221,11 @@ export default {
     },
     fetchDataset() {
       return axios.get(`/api/studies/${this.id}`);
+    },
+    fetchDemographicSummary() {
+      return axios.get(
+        `/api/studies/${this.id}/subjects/count?group_by=sex&group_by=race`
+      );
     },
   },
 };

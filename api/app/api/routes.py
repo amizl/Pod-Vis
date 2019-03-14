@@ -83,6 +83,7 @@ def get_all_projects():
       1. studies
       2. subjects
       Including subjects can only be used if studies are included.
+
   Example requests:
     /api/projects
     /api/projects?include=studies&include=subjects
