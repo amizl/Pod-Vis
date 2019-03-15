@@ -46,6 +46,14 @@ function getUniqueNodeId(node) {
     .join('-');
 }
 
+/**
+ * Join each entry and its key in data with '-'. We join the keys in a specific order
+ * specified by keyOrder
+ * {param} Array - Array of objects.
+ * {param} Array - Array of keys in specific order to map data to.
+ *
+ * Returns 2-dimensonal array needed to build a hierarchy.
+ */
 function mapWithDash(data, keyOrder) {
   return data.map(d => {
     const values = keyOrder.map(key => d[key]);
@@ -53,6 +61,12 @@ function mapWithDash(data, keyOrder) {
   });
 }
 
+/**
+ * Takes csv-like structure (two-dimensional array) and builds a hierarchical
+ * structure needed to build sunburst chart.
+ *
+ * {param} Array - Two-dimensional array created by mapWithDash
+ */
 function buildHierarchy(csv) {
   let currentId = 0;
   const root = { id: currentId++, name: 'root', children: [] };
