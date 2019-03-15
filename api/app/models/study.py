@@ -1,13 +1,15 @@
 from . import db
 
 class Study(db.Model):
-    __tablename__ = 'study'
+    __tablename__ = "study"
 
     study_id = db.Column(db.Integer, primary_key=True)
     study_name = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.project_id'))
-    project = db.relationship("Project")
+    project_id = db.Column(db.Integer, db.ForeignKey("project.project_id"))
+
+    project = db.relationship("Project", back_populates="studies")
+    subjects = db.relationship("Subject", back_populates="study", lazy="select")
 
     def __init__(self, study_id, study_name, description, project_id):
         self.study_id = study_id
@@ -36,16 +38,21 @@ class Study(db.Model):
         """
         return cls.query.filter_by(study_id=study_id).first()
 
-    def to_dict(self):
+    def to_dict(self, include_subjects=False, **kwargs):
         """Return attributes as a dict.
 
         This easily allows for serializing the study object and
         sending over http.
         """
-        return dict(
+
+        study = dict(
             study_id=self.study_id,
             study_name=self.study_name,
             description=self.description,
             project_id=self.project_id,
-            project=self.project.to_dict(include_studies=False)
+            project=self.project.to_dict(),
         )
+        if include_subjects:
+            study['subjects'] = [subject.to_dict(**kwargs) for subject in self.subjects]
+
+        return study
