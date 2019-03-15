@@ -29,7 +29,7 @@ v-card
           slot-scope="props"
         )
           tr
-            //- td(@click.stop)
+            td
               v-checkbox(
                 v-model='props.selected'
                 color='primary'
@@ -97,11 +97,11 @@ export default {
       addToProfileFailure: false,
       selected: [],
       headers: [
-        // {
-        //   text: 'Selected',
-        //   value: 'selected',
-        //   sortable: false,
-        // },
+        {
+          text: 'Selected',
+          value: 'selected',
+          sortable: false,
+        },
         {
           text: 'Project',
           value: 'project',

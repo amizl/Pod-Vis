@@ -66,7 +66,7 @@
                   <sunburst-chart
                     v-if="summaryData"
                     :data="summaryData"
-                    :keyorder="['sex', 'race']"
+                    :keyorder="groupBy"
                   >
                     <sunburst-legend
                       slot="legend"
@@ -168,6 +168,8 @@ export default {
       dataset: null,
       addToProfileSuccess: false,
       summaryData: null,
+      groupBy: ['sex', 'race'],
+      // TODO: Descriptions need to be loaded into database
       descriptions: {
         "Parkinson's Disease":
           'Subjects with a diagnosis of PD for two years or less who are not taking PD medications.',
@@ -220,12 +222,14 @@ export default {
       this.$router.go(-1);
     },
     fetchDataset() {
-      return axios.get(`/api/studies/${this.id}`);
+      return axios.get(`/api/studies/${this.id}?include=project`);
     },
     fetchDemographicSummary() {
-      return axios.get(
-        `/api/studies/${this.id}/subjects/count?group_by=sex&group_by=race`
-      );
+      const queryParams = this.groupBy
+        .map(group => `group_by=${group}`)
+        .join('&');
+
+      return axios.get(`/api/studies/${this.id}/subjects/count?${queryParams}`);
     },
   },
 };

@@ -38,7 +38,7 @@ class Study(db.Model):
         """
         return cls.query.filter_by(study_id=study_id).first()
 
-    def to_dict(self, include_subjects=False, **kwargs):
+    def to_dict(self, include_subjects=False, include_project=False, **kwargs):
         """Return attributes as a dict.
 
         This easily allows for serializing the study object and
@@ -50,9 +50,10 @@ class Study(db.Model):
             study_name=self.study_name,
             description=self.description,
             project_id=self.project_id,
-            project=self.project.to_dict(),
         )
         if include_subjects:
             study['subjects'] = [subject.to_dict(**kwargs) for subject in self.subjects]
+        if include_project:
+            study['project'] = self.project.to_dict()
 
         return study
