@@ -14,6 +14,7 @@ from mysql.connector import Error
 
 study_map = {}
 patient_map = {}
+subject_attr_map = {}
 project_id = 1
 
 def main():
@@ -112,8 +113,11 @@ def main():
                 if term not in subject_ont:
                     add_subject_ontology_term(cursor, subject_ont, term)
 
-            add_subject_attribute(cursor, subject_id, subject_ont['sex']['id'], sex)
-            add_subject_attribute(cursor, subject_id, subject_ont['race']['id'], race)
+            if subject_id not in subject_attr_map:
+                add_subject_attribute(cursor, subject_id, subject_ont['sex']['id'], sex)
+                add_subject_attribute(cursor, subject_id, subject_ont['race']['id'], race)
+                subject_attr_map[subject_id] = True
+
             conn.commit()
 
 
@@ -126,7 +130,7 @@ def add_subject_ontology_term(cursor, ont, term):
     cursor.execute(query, (term,))
     ont[term] = {'id': cursor.lastrowid, 'parent_id': None}
 
-                    
+
 # Method that inserts the study in the database and returns the study ID
 def create_study_entry(cursor, study_name, project_id):
     study_id = 0
@@ -218,7 +222,7 @@ def get_subject_ontology_index(cursor):
         sys.exit()
 
     return idx
-        
+
 # Method that checks for the visit in the database and returns the visit ID, else zero
 def get_subject_visit(cursor, visit_num, subject_id):
     visit_id = 0
