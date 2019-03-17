@@ -15,6 +15,9 @@ from mysql.connector import Error
 study_map = {}
 patient_map = {}
 project_id = 1
+user = None
+password = None
+# insert into project (project_name, description, owner_id, project_url, is_public) values ("Parkinson’s Progression Markers Initiative", "The Parkinson’s Progression Markers Initiative (PPMI) is a landmark observational clinical study to comprehensively evaluate cohorts of significant interest using advanced imaging, biologic sampling and clinical and behavioral assessments to identify biomarkers of Parkinson’s disease progression.", 1, "http://www.ppmi-info.org/", 1)
 
 def main():
     parser = argparse.ArgumentParser( description='Put a description of your script here')
@@ -23,11 +26,11 @@ def main():
 
     # Establish a connection the database
     try:
-        conn = mysql.connector.connect(user='testuser', password='test@1940!',
+        conn = mysql.connector.connect(user=user, password=password,
                                        host='127.0.0.1',
                                        db='cliovis')
         cursor = conn.cursor()
-        
+
         if conn.is_connected():
             print('Connected to MySQL database')
 
@@ -42,10 +45,11 @@ def main():
         # Process the remaining lines
         for line in ifh:
             line = line.rstrip()
-            subject_num, sex, study_group, race, birth_date, gene_category, disease_status, event_date, score, scale, event, item, category = re.split("\t", line)
+            # from ppmi_derived_visits.tsv
+            subject_num, sex, study_group, race, birth_date, disease_status, event_date, score, scale, event, item, category, age, visit_num = re.split("\t", line)
+            # subject_num, sex, study_group, race, birth_date, gene_category, disease_status, event_date, score, scale, event, item, category = re.split("\t", line)
 
-            # event values are: 
-
+            # event values are:
             print("Patient ID: {} event date {} measure {} value {}".format(subject_num, event_date, item, score))
 
             # Check to see if an entry for this study already exists, if not create one
@@ -76,7 +80,7 @@ def main():
                 subject_id = patient_map[subject_num]['subject_id']
 
             subject_info = patient_map[subject_num]
-            
+
             # If no visits have been processed yet then create a map to hold visits
             if ('visits' not in subject_info):
                 subject_info['visits'] = {}
@@ -102,16 +106,17 @@ def main():
                 observation_id = create_subject_observation(cursor, subject_visit_id, item, score, category, scale)
                 conn.commit()
 
-            
+
 
 # Method that inserts the study in the database and returns the study ID
 def create_study_entry(cursor, study_name, project_id):
     study_id = 0
+    query = "insert into study (study_name, project_id) values ('{}', {})".format(study_name.replace("'", "''"), project_id)
     try:
         print("Executing query: '{}'".format(query))
         cursor.execute(query)
         study_id = cursor.lastrowid
- 
+
     except Error as e:
         print(e)
         sys.exit()
@@ -126,7 +131,7 @@ def create_subject_entry(cursor, subject_num, study_id, birth_date, sex, race):
     try:
         cursor.execute(query)
         subject_id = cursor.lastrowid
- 
+
     except Error as e:
         print(e)
         sys.exit()
@@ -135,13 +140,13 @@ def create_subject_entry(cursor, subject_num, study_id, birth_date, sex, race):
     return subject_id
 
 # Method that inserts the observation in the database and returns the observation ID
-def create_subject_observation(subject_visit_id, item, score, category, scale):
+def create_subject_observation(cursor, subject_visit_id, item, score, category, scale):
     observation_id = 0
-    query = "insert into observations (subject_visit_id, item, value, category, scale) values ({}, '{}', {}, '{}', '{}')".format(subject_visit_id, item, score, category, scale)
+    query = "insert into observation (subject_visit_id, item, value, category, scale) values ({}, '{}', {}, '{}', '{}')".format(subject_visit_id, item, score, category, scale)
     try:
         cursor.execute(query)
         observation_id = cursor.lastrowid
- 
+
     except Error as e:
         print(e)
         sys.exit()
@@ -156,7 +161,7 @@ def create_subject_visit(cursor, visit_num, subject_id, visit_event, event_date,
     try:
         cursor.execute(query)
         visit_id = cursor.lastrowid
- 
+
     except Error as e:
         print(e)
         sys.exit()
@@ -168,10 +173,10 @@ def create_subject_visit(cursor, visit_num, subject_id, visit_event, event_date,
 def get_subject_observation(cursor, subject_visit_id, item):
     observation_id = 0
     # First check if this observation already exists in which case just read the observation ID and return it
-    query = "SELECT id FROM observations where item = '{}' AND subject_visit_id = {}".format(item, subject_visit_id)
+    query = "SELECT id FROM observation where item = '{}' AND subject_visit_id = {}".format(item, subject_visit_id)
     try:
         cursor.execute(query)
- 
+
         row = cursor.fetchone()
         if row is not None:
             observation_id = row[0]
@@ -189,7 +194,7 @@ def get_subject_visit(cursor, visit_num, subject_id):
     query = "SELECT id FROM subject_visit where visit_num = '{}' AND subject_id = {}".format(visit_num, subject_id)
     try:
         cursor.execute(query)
- 
+
         row = cursor.fetchone()
         if row is not None:
             visit_id = row[0]
@@ -206,11 +211,11 @@ def get_study_entry(cursor, study_name, project_id):
     query = "SELECT id FROM study where study_name = '{}' AND project_id = {}".format(study_name.replace("'", "''"), project_id)
     try:
         cursor.execute(query)
- 
+
         row = cursor.fetchone()
         if row is not None:
             study_id = row[0]
-            
+
     except Error as e:
         print(e)
         sys.exit()
@@ -224,11 +229,11 @@ def get_subject_entry(cursor, subject_num, study_id):
     query = "SELECT id FROM subject where subject_num = '{}' AND study_id = {}".format(subject_num, study_id)
     try:
         cursor.execute(query)
- 
+
         row = cursor.fetchone()
         if row is not None:
             subject_id = row[0]
-            
+
     except Error as e:
         print(e)
         sys.exit()
