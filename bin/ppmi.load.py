@@ -15,18 +15,17 @@ from mysql.connector import Error
 study_map = {}
 patient_map = {}
 project_id = 1
-user = None
-password = None
-# insert into project (project_name, description, owner_id, project_url, is_public) values ("Parkinson’s Progression Markers Initiative", "The Parkinson’s Progression Markers Initiative (PPMI) is a landmark observational clinical study to comprehensively evaluate cohorts of significant interest using advanced imaging, biologic sampling and clinical and behavioral assessments to identify biomarkers of Parkinson’s disease progression.", 1, "http://www.ppmi-info.org/", 1)
 
 def main():
     parser = argparse.ArgumentParser( description='Put a description of your script here')
     parser.add_argument('-i', '--input_file', type=str, required=True, help='Path to an input file to be read' )
+    parser.add_argument('-u', '--user', type=str, required=True, help='MySQL user name' )
+    parser.add_argument('-p', '--password', type=str, required=True, help='MySQL password' )
     args = parser.parse_args()
 
     # Establish a connection the database
     try:
-        conn = mysql.connector.connect(user=user, password=password,
+        conn = mysql.connector.connect(user=args.user, password=args.password,
                                        host='127.0.0.1',
                                        db='cliovis')
         cursor = conn.cursor()
@@ -38,6 +37,8 @@ def main():
         print(e)
         sys.exit()
 
+    subject_ont = get_subject_ontology_index(cursor)
+
     # Open the file an iterate over the list
     with open(args.input_file) as ifh:
         line = ifh.readline() # Ignore header line
@@ -47,7 +48,6 @@ def main():
             line = line.rstrip()
             # from ppmi_derived_visits.tsv
             subject_num, sex, study_group, race, birth_date, disease_status, event_date, score, scale, event, item, category, age, visit_num = re.split("\t", line)
-            # subject_num, sex, study_group, race, birth_date, gene_category, disease_status, event_date, score, scale, event, item, category = re.split("\t", line)
 
             # event values are:
             print("Patient ID: {} event date {} measure {} value {}".format(subject_num, event_date, item, score))
@@ -106,8 +106,27 @@ def main():
                 observation_id = create_subject_observation(cursor, subject_visit_id, item, score, category, scale)
                 conn.commit()
 
+            # columns with subject attributes (0-based)
+            #  1:female(gender) 3:hispanic(race)
+            for term in ['sex', 'race']:
+                if term not in subject_ont:
+                    add_subject_ontology_term(cursor, subject_ont, term)
+
+            add_subject_attribute(cursor, subject_id, subject_ont['sex']['id'], sex)
+            add_subject_attribute(cursor, subject_id, subject_ont['race']['id'], race)
+            conn.commit()
 
 
+def add_subject_attribute(cursor, subject_id, ont_id, val):
+    query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value) VALUES (%s, %s, %s)"
+    cursor.execute(query, (subject_id, ont_id, val))
+
+def add_subject_ontology_term(cursor, ont, term):
+    query = "INSERT INTO subject_ontology (label) VALUES (%s)"
+    cursor.execute(query, (term,))
+    ont[term] = {'id': cursor.lastrowid, 'parent_id': None}
+
+                    
 # Method that inserts the study in the database and returns the study ID
 def create_study_entry(cursor, study_name, project_id):
     study_id = 0
@@ -186,7 +205,20 @@ def get_subject_observation(cursor, subject_visit_id, item):
 
     return observation_id
 
+def get_subject_ontology_index(cursor):
+    idx = dict()
+    query = "SELECT id, label, parent_id FROM subject_ontology"
+    try:
+        cursor.execute(query)
+        for row in cursor:
+            idx[row[1]] = {'id': row[0], 'parent_id': row[2]}
 
+    except Error as e:
+        print(e)
+        sys.exit()
+
+    return idx
+        
 # Method that checks for the visit in the database and returns the visit ID, else zero
 def get_subject_visit(cursor, visit_num, subject_id):
     visit_id = 0
