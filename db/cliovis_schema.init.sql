@@ -13,7 +13,7 @@ INSERT INTO user (id, email, name, institution, password_hash)
 DELETE FROM project;
 
 INSERT INTO project (project_name, description, owner_id, project_url, is_public)
-VALUES ("Parkinson’s Progression Markers Initiative", "The Parkinson’s Progression Markers Initiative (PPMI) is a landmark observational clinical study to comprehensively evaluate cohorts of significant interest using advanced imaging, biologic sampling and clinical and behavioral assessments to identify biomarkers of Parkinson’s disease progression.", 1, "http://www.ppmi-info.org/", 1)
+VALUES ("Parkinson’s Progression Markers Initiative", "The Parkinson’s Progression Markers Initiative (PPMI) is a landmark observational clinical study to comprehensively evaluate cohorts of significant interest using advanced imaging, biologic sampling and clinical and behavioral assessments to identify biomarkers of Parkinson’s disease progression.", 1, "http://www.ppmi-info.org/", 1);
 
 ################################################################
 DELETE FROM study;
