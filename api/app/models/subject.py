@@ -78,7 +78,7 @@ class Subject(db.Model):
         # Aggregate and count for each combination of groups.
         # This is similar in SQL as:
         #
-        # SELECT race, sex count(*) as count
+        # SELECT race, sex, count(*) as count
         # FROM subject
         # GROUP BY race, sex
         # WHERE study_id = 1;

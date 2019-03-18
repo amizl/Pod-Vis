@@ -77,6 +77,9 @@ def get_study_subjects(study_id):
       1. study
       2. attributes
 
+  Raises:
+    ResourceNotFound
+
   Example URL:
     /api/studies/1/subjects
     /api/studies/1/subjects?include=study&include=attributes
@@ -111,6 +114,7 @@ def summarize_study_subjects(study_id):
       To incude project and subjects, user must include study.
 
   Raises:
+    ResourceNotFound
     BadRequest: If query parameters cannot be processed.
 
   Example request:
