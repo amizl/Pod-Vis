@@ -70,8 +70,7 @@ class Subject(db.Model):
             AttributeError if attribute in group_by is not a part of the model.
         """
         subjects = cls.find_all_by_study_id(study_id)
-
-        df = pd.DataFrame([
+        subjects_df = pd.DataFrame([
             subject.to_dict(include_attributes=True)
             for subject in subjects
         ])
@@ -82,23 +81,15 @@ class Subject(db.Model):
         # SELECT race, sex count(*) as count
         # FROM subject
         # GROUP BY race, sex
-        # WHERE study_id = 10;
+        # WHERE study_id = 1;
         #
-        # The size() returns a series, so we revert back to
-        # a dataframe and change its value column, 0, to count.
-        df = df.groupby(group_by) \
+        grouped_subjects_counts = subjects_df.groupby(group_by) \
             .size() \
             .reset_index(name="count") \
 
-        # "records" gives us the dictionary shape we need. For example,
+        # "records" gives us the dictionary shape we want. For example,
         # [{"race":"white", "sex":"female", "count": 50}]
-        return df.to_dict("records")
-
-        # group_attributes = [getattr(cls, group) for group in group_by]
-        # return cls.query.filter_by(study_id=study_id) \
-        #     .with_entities(*group_attributes, db.func.count().label("count")) \
-        #     .group_by(*group_attributes) \
-        #     .all()
+        return grouped_subjects_counts.to_dict("records")
 
     def to_dict(self, include_study=False, include_attributes=False, **kwargs):
         """Return attributes as a dict.
@@ -108,9 +99,6 @@ class Subject(db.Model):
         """
         subject = dict(
             id=self.id,
-            # sex=self.sex,
-            # race=self.race,
-            # birth_date=self.birth_date,
             study_id=self.study_id,
             subject_num=self.subject_num,
         )
@@ -134,34 +122,3 @@ class Subject(db.Model):
             # ]
 
         return subject
-
-        # "subjects": [
-        # {
-        #     "attributes": [
-        #         {
-        #             "id": 1,
-        #             "ontology": {
-        #                 "id": 1,
-        #                 "label": "sex",
-        #                 "parent_id": null
-        #             },
-        #             "subject_id": 1,
-        #             "subject_ontology_id": 1,
-        #             "value": "female"
-        #         },
-        #         {
-        #             "id": 2,
-        #             "ontology": {
-        #                 "id": 2,
-        #                 "label": "race",
-        #                 "parent_id": null
-        #             },
-        #             "subject_id": 1,
-        #             "subject_ontology_id": 2,
-        #             "value": "white"
-        #         }
-        #     ],
-        #     "id": 1,
-        #     "study_id": 1,
-        #     "subject_num": "3000"
-        # },
