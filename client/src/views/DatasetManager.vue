@@ -47,7 +47,15 @@
           <v-layout>
             <v-flex xs6> <p class="headline">Dataset Manager</p> </v-flex>
             <v-flex xs6 class="text-xs-right">
-              <v-btn flat right disabled>Build Collection</v-btn>
+              <v-btn
+                :to="selectedDatasets | buildPath"
+                :disabled="selectedDatasets.length === 0"
+                flat
+                right
+              >
+                <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
+                Build Dataset</v-btn
+              >
             </v-flex>
           </v-layout>
           <v-divider></v-divider>
@@ -115,7 +123,7 @@ export default {
         .map(id => `id=${id}`)
         .join('&');
 
-      return `build?${idParams}`;
+      return `datasets/build?${idParams}`;
     },
   },
 
