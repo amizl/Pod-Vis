@@ -49,7 +49,7 @@ v-card
                 color='primary'
               )
                 v-icon(
-                  @click='stepIntoDataset(props.item.study_id)'
+                  @click='stepIntoDataset(props.item.id)'
                   slot="activator"
                   color='primary'
                 ).mr-1 info

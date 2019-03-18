@@ -32,7 +32,7 @@ def is_user_token_expired():
         User information.
     """
     user_id = get_jwt_identity()
-    user = User.find_by_user_id(user_id)
+    user = User.find_by_id(user_id)
     if user:
         response = jsonify({
             "user": user.to_dict()
@@ -66,7 +66,7 @@ def sign_user_in():
             response = jsonify({
                 "user": user.to_dict()
             })
-            jwt_tokens = create_tokens(user.user_id)
+            jwt_tokens = create_tokens(user.id)
             set_access_cookies(response, jwt_tokens['access_token'])
             set_refresh_cookies(response, jwt_tokens['refresh_token'])
             return response
@@ -115,7 +115,7 @@ def sign_user_up():
              "user": new_user.to_dict()
         })
 
-        jwt_tokens = create_tokens(new_user.user_id)
+        jwt_tokens = create_tokens(new_user.id)
         set_access_cookies(response, jwt_tokens['access_token'])
         set_refresh_cookies(response, jwt_tokens['refresh_token'])
         return response, 201

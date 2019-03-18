@@ -53,7 +53,7 @@ def get_study(study_id):
     /api/studies/10
     /api/studies/10?include=project&include=subjects
   """
-  study = Study.find_by_study_id(study_id)
+  study = Study.find_by_id(study_id)
   include = request.args.getlist("include")
 
   if not study:
@@ -70,14 +70,31 @@ def get_study(study_id):
 
 @api.route('/studies/<study_id>/subjects')
 def get_study_subjects(study_id):
-  """Get all subjects participating in a study."""
-  study = Study.find_by_study_id(study_id)
+  """Get all subjects participating in a study.
+
+  Params:
+    include: Other data to include such as :
+      1. study
+      2. attributes
+
+  Example URL:
+    /api/studies/1/subjects
+    /api/studies/1/subjects?include=study&include=attributes
+  """
+  study = Study.find_by_id(study_id)
   if not study:
     raise ResourceNotFound("Study does not exist.")
 
+  include = request.args.getlist('include')
+
+  kwargs = {
+    "include_study": "study" in include,
+    "include_attributes": "attributes" in include
+  }
+
   subjects = Subject.find_all_by_study_id(study_id)
   return jsonify({
-    "subjects": [subject.to_dict() for subject in subjects]
+    "subjects": [subject.to_dict(**kwargs) for subject in subjects]
   })
 
 @api.route('/studies/<study_id>/subjects/count')
@@ -90,6 +107,7 @@ def summarize_study_subjects(study_id):
       1. study
       2. project
       3. subjects
+      4. attributes
       To incude project and subjects, user must include study.
 
   Raises:
@@ -103,24 +121,24 @@ def summarize_study_subjects(study_id):
   group_by = request.args.getlist("group_by")
   include = request.args.getlist("include")
 
-  study = Study.find_by_study_id(study_id)
+  study = Study.find_by_id(study_id)
   if not study:
     raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
 
   try:
     counts = Subject.count(study_id, group_by)
-  except AttributeError:
+  except KeyError:
     raise BadRequest("There is a problem with the request's query parameters.")
-
 
   kwargs = {
     "include_study": "study" in include,
     "include_subjects": "subjects" in include,
     "include_project": "project" in include,
+    "include_attributes": "attributes" in include
   }
 
   response = {
-    "counts": [count._asdict() for count in counts]
+    "counts": counts
   }
 
   if "study" in include:
@@ -155,4 +173,30 @@ def get_all_projects():
       project.to_dict(**kwargs)
       for project in projects
     ]
+  })
+
+@api.route('/projects/<project_id>')
+def get_project(project_id):
+  """Get project data.
+
+  Params:
+    include: Data to include from projects. This can currently be:
+      1. studies
+      2. subjects
+      Including subjects can only be used if studies are included.
+
+  Example requests:
+    /api/projects/1
+    /api/projects/1?include=studies&include=subjects
+  """
+  project = Project.find_by_id(project_id)
+  include = request.args.getlist('include')
+
+  kwargs = {
+    "include_studies": "studies" in include,
+    "include_subjects": "subjects" in include
+  }
+
+  return jsonify({
+    "project": project.to_dict(**kwargs)
   })
