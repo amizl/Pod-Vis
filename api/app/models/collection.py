@@ -1,20 +1,25 @@
 from . import db
+import enum
+class InstantiationType(enum.Enum):
+    static = "static"
+    dynamic = "dynamic"
 
 class Collection(db.Model):
     __tablename__ = "collection"
 
-    collection_id = db.Column(db.Integer, primary_key=True)
-    creator_id = db.Column(db.Integer, db.ForeignKey("user.user_id"))
+    id = db.Column(db.Integer, primary_key=True)
+    creator_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     label = db.Column(db.VARCHAR, nullable=False)
     date_generated = db.Column(db.DATETIME)
     is_public = db.Column(db.SMALLINT, default=0)
+    instantiation_type = db.Column(db.Enum(InstantiationType))
 
-    def __init__(self, collection_id, creator_id, label, date_generated, is_public):
-        self.collection_id = collection_id
+    def __init__(self, creator_id, label, date_generated, is_public, instantiation_type):
         self.creator_id = creator_id
         self.label = label
         self.date_generated = date_generated
         self.is_public = is_public
+        self.instantiation_type = instantiation_type
 
     @classmethod
     def get_all_collections(cls):
@@ -26,16 +31,16 @@ class Collection(db.Model):
         return cls.query.all()
 
     @classmethod
-    def find_by_collection_id(cls, collection_id):
+    def find_by_id(cls, collection_id):
         """Find collection by its id.
 
         Args:
-            collection_id: Collection's ID.
+            id: Collection's ID.
 
         Returns:
             If exists, the collection.
         """
-        return cls.query.filter_by(collection_id=collection_id).first()
+        return cls.query.filter_by(id=collection_id).first()
 
 
     def save_to_db(self):
@@ -50,7 +55,7 @@ class Collection(db.Model):
         sending over http.
         """
         return dict(
-          collection_id=self.collection_id,
+          id=self.id,
           creator_id=self.creator_id,
           label=self.label,
           date_generated=self.date_generated,

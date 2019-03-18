@@ -1,23 +1,24 @@
 from . import db
+import pandas as pd
 
 class Subject(db.Model):
     __tablename__ = "subject"
 
-    subject_id = db.Column(db.Integer, primary_key=True)
-    sex = db.Column(db.String(10))
-    race = db.Column(db.String(45))
-    birth_date = db.Column(db.Date)
-    study_id = db.Column(db.Integer, db.ForeignKey("study.study_id"))
+    id = db.Column(db.Integer, primary_key=True)
+    # sex = db.Column(db.String(10))
+    # race = db.Column(db.String(45))
+    # birth_date = db.Column(db.Date)
+    study_id = db.Column(db.Integer, db.ForeignKey("study.id"))
     subject_num = db.Column(db.Integer)
 
     study = db.relationship("Study", back_populates="subjects", lazy='select')
+    attributes = db.relationship("SubjectAttribute", back_populates="subject", lazy="select")
     # subject_visits = db.relationship("SubjectVisits")
 
-    def __init__(self, subject_id, sex, race, birth_date, study_id, subject_num):
-        self.subject_id = subject_id
-        self.sex = sex
-        self.race = race
-        self.birth_date = birth_date
+    def __init__(self, sex, race, birth_date, study_id, subject_num):
+        # self.sex = sex
+        # self.race = race
+        # self.birth_date = birth_date
         self.study_id = study_id
         self.subject_num = subject_num
 
@@ -31,7 +32,7 @@ class Subject(db.Model):
         return cls.query.all()
 
     @classmethod
-    def find_by_subject_id(cls, subject_id):
+    def find_by_id(cls, subject_id):
         """Find subject by its id.
 
         Args:
@@ -40,7 +41,7 @@ class Subject(db.Model):
         Returns:
             If exists, the subject.
         """
-        return cls.query.filter_by(subject_id=subject_id).first()
+        return cls.query.filter_by(id=subject_id).first()
 
     @classmethod
     def find_all_by_study_id(cls, study_id):

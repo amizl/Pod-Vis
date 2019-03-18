@@ -3,16 +3,15 @@ from . import db
 class Study(db.Model):
     __tablename__ = "study"
 
-    study_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     study_name = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey("project.project_id"))
+    project_id = db.Column(db.Integer, db.ForeignKey("project.id"))
 
     project = db.relationship("Project", back_populates="studies")
     subjects = db.relationship("Subject", back_populates="study", lazy="select")
 
-    def __init__(self, study_id, study_name, description, project_id):
-        self.study_id = study_id
+    def __init__(self, study_name, description, project_id):
         self.study_name = study_name
         self.description = description
         self.project_id = project_id
@@ -27,16 +26,16 @@ class Study(db.Model):
         return cls.query.all()
 
     @classmethod
-    def find_by_study_id(cls, study_id):
+    def find_by_id(cls, study_id):
         """Find study by its id.
 
         Args:
-            study_id: Study's ID.
+            id: Study's ID.
 
         Returns:
             If exists, the study.
         """
-        return cls.query.filter_by(study_id=study_id).first()
+        return cls.query.filter_by(id=study_id).first()
 
     def to_dict(self, include_subjects=False, include_project=False, **kwargs):
         """Return attributes as a dict.
@@ -46,7 +45,7 @@ class Study(db.Model):
         """
 
         study = dict(
-            study_id=self.study_id,
+            id=self.id,
             study_name=self.study_name,
             description=self.description,
             project_id=self.project_id,

@@ -3,14 +3,13 @@ from . import db
 class CollectionQuery(db.Model):
     __tablename__ = "collection_query"
 
-    collection_query_id = db.Column(db.Integer, primary_key=True)
-    collection_id = db.Column(db.Integer, db.ForeignKey("collection.collection_id"))
+    id = db.Column(db.Integer, primary_key=True)
+    collection_id = db.Column(db.Integer, db.ForeignKey("collection.id"))
     param = db.Column(db.VARCHAR, nullable=False)
     operator = db.Column(db.VARCHAR, nullable=False)
     value = db.Column(db.VARCHAR, nullable=False)
 
-    def __init__(self, collection_query_id, collection_id, param, operator, value):
-        self.collection_query_id = collection_query_id
+    def __init__(self, collection_id, param, operator, value):
         self.collection_id = collection_id
         self.param = param
         self.operator = operator
@@ -26,16 +25,16 @@ class CollectionQuery(db.Model):
         return cls.query.all()
 
     @classmethod
-    def find_by_collection_query_id(cls, collection_query_id):
+    def find_by_id(cls, collection_query_id):
         """Find collection query by its id.
 
         Args:
-            collection_query_id: Collection Query's ID.
+            id: Collection Query's ID.
 
         Returns:
             If exists, the collection query.
         """
-        return cls.query.filter_by(collection_query_id=collection_query_id).first()
+        return cls.query.filter_by(id=collection_query_id).first()
 
     @classmethod
     def find_by_collection_id(cls, collection_id):
@@ -56,7 +55,7 @@ class CollectionQuery(db.Model):
         sending over http.
         """
         return dict(
-          collection_query_id=self.collection_study_id,
+          id=self.id,
           collection_id=self.collection_id,
           param=self.param,
           operator=self.operator,

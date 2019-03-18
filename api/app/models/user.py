@@ -3,7 +3,7 @@ from . import db, bcrypt
 class User(db.Model):
     __tablename__ = 'user'
 
-    user_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     name = db.Column(db.String(120), nullable=False)
     institution = db.Column(db.String(120))
@@ -28,16 +28,16 @@ class User(db.Model):
         return cls.query.filter_by(email=email).first()
 
     @classmethod
-    def find_by_user_id(cls, user_id):
+    def find_by_id(cls, user_id):
         """Find user by their id.
 
         Args:
-            id: Unique ID of assigned to the user.
+            user_id: Unique ID of assigned to the user.
 
         Returns:
             If exists, the user from the database, else None.
         """
-        return cls.query.filter_by(user_id=user_id).first()
+        return cls.query.filter_by(id=user_id).first()
 
     @property
     def password(self):
@@ -76,7 +76,7 @@ class User(db.Model):
         sending over http.
         """
         return dict(
-            user_id=self.user_id,
+            id=self.id,
             email=self.email,
             name=self.name,
             institution=self.institution

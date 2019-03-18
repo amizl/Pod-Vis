@@ -3,12 +3,11 @@ from . import db
 class CollectionStudy(db.Model):
     __tablename__ = "collection_study"
 
-    collection_study_id = db.Column(db.Integer, primary_key=True)
-    collection_id = db.Column(db.Integer, db.ForeignKey("collection.collection_id"))
-    study_id = db.Column(db.Integer, db.ForeignKey("study.study_id"))
+    id = db.Column(db.Integer, primary_key=True)
+    collection_id = db.Column(db.Integer, db.ForeignKey("collection.id"))
+    study_id = db.Column(db.Integer, db.ForeignKey("study.id"))
 
-    def __init__(self, collection_study_id, collection_id, study_id):
-        self.collection_study_id = collection_study_id
+    def __init__(self, collection_id, study_id):
         self.collection_id = collection_id
         self.study_id = study_id
 
@@ -22,23 +21,23 @@ class CollectionStudy(db.Model):
         return cls.query.all()
 
     @classmethod
-    def find_by_collection_study_id(cls, collection_study_id):
+    def find_by_id(cls, collection_study_id):
         """Find collection study by its id.
 
         Args:
-            collection_study_id: Collection Study's ID.
+            id: Collection Study's ID.
 
         Returns:
             If exists, the collection study.
         """
-        return cls.query.filter_by(collection_study_id=collection_study_id).first()
+        return cls.query.filter_by(id=collection_study_id).first()
 
     @classmethod
     def find_by_collection_id(cls, collection_id):
         """Find all studies in a collection by collection_id.
 
         Args:
-            collection_study_id: Collection's ID.
+            id: Collection's ID.
 
         Returns:
             If exists, the collection study.
@@ -69,7 +68,7 @@ class CollectionStudy(db.Model):
         sending over http.
         """
         return dict(
-          collection_study_id=self.collection_study_id,
+          id=self.id,
           collection_id=self.collection_id,
           study_id=self.study_id
         )

@@ -7,5 +7,10 @@ bcrypt = Bcrypt()
 from .user import User
 from .study import Study
 from .project import Project
-from .dataset_added import DatasetAdded
 from .subject import Subject
+from .collection import Collection
+from .collection_query import CollectionQuery
+from .collection_study import CollectionStudy
+from .subject_attribute import SubjectAttribute
+from .subject_ontology import SubjectOntology
+from .subject_visit import SubjectVisit
