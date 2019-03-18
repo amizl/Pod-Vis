@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div>
     <v-toolbar app class="white">
       <v-toolbar-items>
         <v-btn flat @click="goBack">
@@ -19,34 +19,75 @@
               :key='id'>
               {{ code }}
             </v-chip> -->
-          </v-flex>
-          <!-- TODO: Info about selected here -->
-          <v-spacer></v-spacer>
-          <v-flex xs6 class="text-xs-right">
+  <!-- </v-flex> -->
+  <!-- TODO: Info about selected here -->
+  <!-- <v-spacer></v-spacer> -->
+  <!-- <v-flex xs6 class="text-xs-right">
             <p class="subheading">SELECTED DATASETS</p>
             <v-chip v-for="{ id, code } in selectedDatasets" :key="id" close>
               {{ code }}
             </v-chip>
-            <!-- <v-layout row>
-              <v-flex xs6>
+            <!-- <v-layout row> -->
+  <!-- <v-flex xs6>
               </v-flex>
               <v-flex xs6>
               </v-flex>
             </v-layout> -->
-          </v-flex>
+  <!-- </v-flex>
         </v-layout>
       </v-container>
-    </div>
-    <v-container fluid fill-height grid-list-xl>
-      <v-layout justify-center>
-        <v-flex xs12>
-          <build-dataset-stepper
+    </div> -->
+  <v-container fluid>
+    <v-layout class="mt-4" justify-center>
+      <v-flex xs10>
+        <v-layout>
+          <v-flex xs6> <p class="headline">Build Dataset</p> </v-flex>
+          <v-flex xs6> <!-- OTHER ACTION ITES HERE --> </v-flex>
+        </v-layout>
+        <v-divider></v-divider>
+        <!-- <build-dataset-stepper
             :outcome-measures="outcomeMeasures"
-          ></build-dataset-stepper>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </div>
+          ></build-dataset-stepper> -->
+      </v-flex>
+    </v-layout>
+    <v-layout class="pt-5" row justify-center>
+      <v-flex xs10>
+        <p class="subheading grey--text ligthen-2">Selected Datasets:</p>
+        <v-container grid-list-lg fluid pt-0 mt-0>
+          <v-layout row wrap>
+            <v-flex v-for="dataset in selectedDatasets" :key="dataset.id" xs3>
+              <v-card>
+                <v-card-title primary-title>
+                  <div>
+                    <div class="subheading">{{ dataset.study_name }}</div>
+                    <span class="caption grey--text lighten-2">{{
+                      dataset.project_name
+                    }}</span>
+                  </div>
+                </v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn :to="`/datasets/${dataset.id}`" flat icon>
+                    <v-tooltip top color="primary">
+                      <v-icon slot="activator"> info </v-icon>
+                      <span>Learn more about this study</span>
+                    </v-tooltip>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-flex>
+    </v-layout>
+    <v-layout class="pt-4" row justify-center>
+      <v-flex xs10>
+        <p class="subheading grey--text ligthen-2">
+          Variables in Selected Datasets:
+        </p>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -82,22 +123,22 @@ export default {
     ...mapState('datasetManager', {
       selectedDatasets: state.SELECTED_DATASETS,
     }),
-    outcomeMeasures() {
-      return this.selectedDatasets
-        ? this.selectedDatasets
-            .map(dataset =>
-              dataset.outcomes.map(outcome => ({
-                name: outcome.category,
-                dataset: dataset.code,
-                outcomeMeasures: outcome.children.map(name => ({
-                  name,
-                  dataset: dataset.code,
-                })),
-              }))
-            )
-            .flat()
-        : [];
-    },
+    // outcomeMeasures() {
+    //   return this.selectedDatasets
+    //     ? this.selectedDatasets
+    //         .map(dataset =>
+    //           dataset.outcomes.map(outcome => ({
+    //             name: outcome.category,
+    //             dataset: dataset.code,
+    //             outcomeMeasures: outcome.children.map(name => ({
+    //               name,
+    //               dataset: dataset.code,
+    //             })),
+    //           }))
+    //         )
+    //         .flat()
+    //     : [];
+    // },
   },
   methods: {
     ...mapActions('datasetManager', {
