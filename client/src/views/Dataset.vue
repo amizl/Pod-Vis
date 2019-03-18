@@ -60,12 +60,8 @@
                 <v-card-title card color="white">
                   <span class="title">Subject Summary</span>
                 </v-card-title>
-                <v-card-text>
-                  <sunburst-chart
-                    v-if="summaryData"
-                    :data="summaryData"
-                    :keyorder="groupBy"
-                  >
+                <v-card-text v-if="summaryData">
+                  <sunburst-chart :data="summaryData" :keyorder="groupBy">
                     <sunburst-legend
                       slot="legend"
                       slot-scope="{ data, color, actions, nodes }"
@@ -76,12 +72,15 @@
                     ></sunburst-legend>
                   </sunburst-chart>
                 </v-card-text>
+                <v-card-text v-else>
+                  <loading-spinner medium class="ma-5" />
+                </v-card-text>
               </v-card>
             </v-flex>
           </v-layout>
         </v-flex>
       </v-layout>
-      <v-layout row wrap justify-center>
+      <!-- <v-layout row wrap justify-center>
         <v-flex xs10>
           <v-layout row wrap justify-center>
             <v-flex xs6>
@@ -116,7 +115,7 @@
             </v-flex>
           </v-layout>
         </v-flex>
-      </v-layout>
+      </v-layout>-->
       <v-layout row wrap justify-center>
         <v-flex xs10>
           <v-card>
@@ -146,12 +145,14 @@ import VariableTable from '@/components/DatasetManager/VariableTable.vue';
 // Import these into a Subject Summary Component?
 import SunburstChart from '@/components/charts/sunburst/SunburstChart.vue';
 import SunburstLegend from '@/components/charts/sunburst/SunburstLegend.vue';
+import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 
 export default {
   components: {
     VariableTable,
     SunburstChart,
     SunburstLegend,
+    LoadingSpinner,
   },
   props: {
     id: {
