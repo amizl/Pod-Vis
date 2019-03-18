@@ -31,9 +31,9 @@
     <v-container v-if="dataset" fluid grid-list-xl>
       <v-layout class="mt-3" justify-center>
         <v-flex xs10>
-          <p class="headline">
-            {{ dataset.study.project.project_name }}:
-            {{ dataset.study.study_name }}
+          <p class="headline mb-0">{{ dataset.study.study_name }}</p>
+          <p class="caption grey--text lighten-2">
+            {{ dataset.study.project.project_name }}
           </p>
           <v-divider></v-divider>
         </v-flex>
@@ -43,25 +43,23 @@
           <v-layout row wrap justify-center>
             <v-flex xs6>
               <v-card>
-                <v-toolbar card color="white">
-                  <v-toolbar-title>About</v-toolbar-title>
-                </v-toolbar>
-                <div class="ma-2">
-                  <v-card-text>
-                    <p>{{ descriptions[dataset.study.study_name] }}</p>
-                  </v-card-text>
-                  <v-card-actions v-if="dataset.sourceURL">
-                    <v-spacer></v-spacer>
-                    <v-btn :href="dataset.sourceURL" flat>Link to Study</v-btn>
-                  </v-card-actions>
-                </div>
+                <v-card-title card color="white">
+                  <span class="title">About</span>
+                </v-card-title>
+                <v-card-text>
+                  <p>{{ descriptions[dataset.study.study_name] }}</p>
+                </v-card-text>
+                <v-card-actions v-if="dataset.sourceURL">
+                  <v-spacer></v-spacer>
+                  <v-btn :href="dataset.sourceURL" flat>Link to Study</v-btn>
+                </v-card-actions>
               </v-card>
             </v-flex>
             <v-flex xs6>
               <v-card>
-                <v-toolbar color="white" card>
-                  <v-toolbar-title> Subject Summary </v-toolbar-title>
-                </v-toolbar>
+                <v-card-title card color="white">
+                  <span class="title">Subject Summary</span>
+                </v-card-title>
                 <v-card-text>
                   <sunburst-chart
                     v-if="summaryData"
@@ -88,9 +86,9 @@
           <v-layout row wrap justify-center>
             <v-flex xs6>
               <v-card>
-                <v-toolbar card color="white">
-                  <v-toolbar-title> Outcome Categories </v-toolbar-title>
-                </v-toolbar>
+                <v-card-title card color="white">
+                  <span class="title">Outcome Categories</span>
+                </v-card-title>
                 <v-card-text>
                   <v-chip
                     v-for="outcome in dataset.outcomes"
@@ -103,11 +101,9 @@
             </v-flex>
             <v-flex xs6>
               <v-card class="ui-card">
-                <v-toolbar color="white" card>
-                  <v-toolbar-title class="foo--text">
-                    Demographics
-                  </v-toolbar-title>
-                </v-toolbar>
+                <v-card-title card color="white">
+                  <span class="title">Demographics</span>
+                </v-card-title>
                 <v-card-text>
                   <v-chip
                     v-for="demographic in dataset.demographics"
@@ -124,9 +120,9 @@
       <v-layout row wrap justify-center>
         <v-flex xs10>
           <v-card>
-            <v-toolbar color="white" card>
-              <v-toolbar-title> Variables </v-toolbar-title>
-            </v-toolbar>
+            <v-card-title card color="white">
+              <span class="title">Variables</span>
+            </v-card-title>
             <variable-table
               v-if="dataset"
               :variables="dataset.variables"
