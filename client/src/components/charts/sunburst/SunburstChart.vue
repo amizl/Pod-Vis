@@ -125,8 +125,8 @@ export default {
   data() {
     return {
       hierachicalData: {},
-      width: 250,
-      height: 250,
+      width: 200,
+      height: 200,
       svg: undefined,
       current: {},
     };
