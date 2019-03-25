@@ -1,4 +1,7 @@
 from . import db
+from . import Subject, SubjectVisit, Observation
+import pandas as pd
+from sqlalchemy import func
 
 class Study(db.Model):
     __tablename__ = "study"
@@ -8,7 +11,7 @@ class Study(db.Model):
     description = db.Column(db.Text, nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"))
 
-    project = db.relationship("Project", back_populates="studies")
+    project = db.relationship("Project", back_populates="studies", lazy="select")
     subjects = db.relationship("Subject", back_populates="study", lazy="select")
 
     def __init__(self, study_name, description, project_id):
@@ -36,6 +39,41 @@ class Study(db.Model):
             If exists, the study.
         """
         return cls.query.filter_by(id=study_id).first()
+
+    def get_variables(self):
+        """Get all variables in a study.
+
+        This is equivalent to the SQL query:
+            SELECT DISTINCT o.category, o.scale
+            FROM study
+            JOIN subject s ON study.id = s.study_id
+            JOIN  subject_visit v ON s.id = v.subject_id
+            JOIN observation o ON v.id = o.subject_visit_id
+            WHERE study.id = %s;
+        """
+        return [
+            dict(category=category, scale=scale)
+            for category, scale in self.query.filter_by(id=self.id) \
+                .join(Subject) \
+                .join(SubjectVisit) \
+                .join(Observation) \
+                .with_entities(Observation.category, Observation.scale) \
+                .distinct() \
+                .all()
+        ]
+
+    def total_scores(self):
+        """TODO"""
+        return [
+                dict(scale=scale, total=total)
+                for _, scale, total in self.query.filter_by(id=self.id) \
+                    .join(Subject) \
+                    .join(SubjectVisit) \
+                    .join(Observation) \
+                    .with_entities(Subject.id, Observation.scale, func.sum(Observation.value)) \
+                    .group_by(Subject.id, Observation.scale) \
+                    .all()
+        ]
 
     def to_dict(self, include_subjects=False, include_project=False, **kwargs):
         """Return attributes as a dict.

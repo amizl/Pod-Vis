@@ -5,20 +5,14 @@ class Subject(db.Model):
     __tablename__ = "subject"
 
     id = db.Column(db.Integer, primary_key=True)
-    # sex = db.Column(db.String(10))
-    # race = db.Column(db.String(45))
-    # birth_date = db.Column(db.Date)
     study_id = db.Column(db.Integer, db.ForeignKey("study.id"))
     subject_num = db.Column(db.Integer)
 
     study = db.relationship("Study", back_populates="subjects", lazy='select')
     attributes = db.relationship("SubjectAttribute", back_populates="subject", lazy="select")
-    # subject_visits = db.relationship("SubjectVisits")
+    subject_visits = db.relationship("SubjectVisit", back_populates="subject", lazy="select")
 
     def __init__(self, sex, race, birth_date, study_id, subject_num):
-        # self.sex = sex
-        # self.race = race
-        # self.birth_date = birth_date
         self.study_id = study_id
         self.subject_num = subject_num
 
@@ -83,15 +77,15 @@ class Subject(db.Model):
         # GROUP BY race, sex
         # WHERE study_id = 1;
         #
-        grouped_subjects_counts = subjects_df.groupby(group_by) \
+        grouped_subject_counts = subjects_df.groupby(group_by) \
             .size() \
-            .reset_index(name="count") \
+            .reset_index(name="count")
 
         # "records" gives us the dictionary shape we want. For example,
         # [{"race":"white", "sex":"female", "count": 50}]
-        return grouped_subjects_counts.to_dict("records")
+        return grouped_subject_counts.to_dict("records")
 
-    def to_dict(self, include_study=False, include_attributes=False, **kwargs):
+    def to_dict(self, include_study=False, include_visits=False, include_attributes=False, **kwargs):
         """Return attributes as a dict.
 
         This easily allows for serializing the study object and
@@ -105,6 +99,12 @@ class Subject(db.Model):
         if include_study:
             subject["study"] = self.study.to_dict(**kwargs)
 
+        if include_visits:
+            subject["visits"] = [
+                subject_visit.to_dict(**kwargs)
+                for subject_visit in self.subject_visits
+            ]
+
         if include_attributes:
             attributes = [attribute.to_dict() for attribute in self.attributes]
 
@@ -115,10 +115,5 @@ class Subject(db.Model):
                 attr_label = attribute["ontology"]["label"]
                 value = attribute["value"]
                 subject[attr_label] = value
-
-            # subject["attributes"] = [
-            #     attribute.to_dict()
-            #     for attribute in self.attributes
-            # ]
 
         return subject

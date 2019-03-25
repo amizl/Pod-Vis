@@ -2,7 +2,8 @@ from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from . import api
 from .exceptions import ResourceNotFound, BadRequest
-from ..models import db, Study, Project, Subject
+from ..models import db, Study, Project, Subject, SubjectVisit, Observation
+import pandas as pd
 
 @api.route('/subjects')
 # @jwt_required
@@ -66,6 +67,50 @@ def get_study(study_id):
 
   return jsonify({
     "study": study.to_dict(**kwargs)
+  })
+
+@api.route("/studies/<study_id>/variables")
+def get_study_variables(study_id):
+  """Get all variables for a particular study.
+
+  Variables here are the distinct category and scale
+  values from the observations tables.
+  """
+
+  study = Study.find_by_id(study_id)
+  if not study:
+    raise ResourceNotFound("Study does not exist.")
+
+  variables = study.get_variables()
+  return jsonify({
+    "variables": variables
+  })
+
+@api.route("/studies/<study_id>/instrument-totals")
+def get_totals(study_id):
+  """TODO"""
+  study = Study.find_by_id(study_id)
+  totals = study.total_scores()
+  return jsonify(totals)
+
+@api.route("/studies/variables")
+def get_intersection_of_variables():
+  """Get the intersection of variables between studies."""
+  from functools import reduce
+  study_ids = request.args.getlist('id')
+
+  studies = [Study.find_by_id(study_id) for study_id in study_ids]
+  variables = [study.get_variables() for study in studies]
+
+  # Convert variables result to df to easily perform join. Ideally
+  # this might want to be done in SQLAlchemy if performance
+  # becomes an issue.
+  dfs = [pd.DataFrame(vrbls) for vrbls in variables]
+  # Inner join dataframes to find all matching variables
+  intersection = reduce((lambda df1, df2: df1.merge(df2)), dfs)
+
+  return jsonify({
+    "intersection_variables": intersection.to_dict('records')
   })
 
 @api.route('/studies/<study_id>/subjects')
