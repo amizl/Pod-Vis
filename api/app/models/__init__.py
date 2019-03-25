@@ -5,12 +5,13 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 
 from .user import User
+from .subject import Subject
+from .subject_visit import SubjectVisit
+from .observation import Observation
 from .study import Study
 from .project import Project
-from .subject import Subject
 from .collection import Collection
 from .collection_query import CollectionQuery
 from .collection_study import CollectionStudy
 from .subject_attribute import SubjectAttribute
 from .subject_ontology import SubjectOntology
-from .subject_visit import SubjectVisit
