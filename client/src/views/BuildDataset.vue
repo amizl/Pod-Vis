@@ -41,7 +41,7 @@
     <v-layout class="mt-4" justify-center>
       <v-flex xs10>
         <v-layout>
-          <v-flex xs6> <p class="headline">Build Dataset</p> </v-flex>
+          <v-flex xs6> <p class="headline">Create Collection</p> </v-flex>
           <v-flex xs6> <!-- OTHER ACTION ITES HERE --> </v-flex>
         </v-layout>
         <v-divider></v-divider>
@@ -83,8 +83,19 @@
     <v-layout class="pt-4" row justify-center>
       <v-flex xs10>
         <p class="subheading grey--text ligthen-2">
-          Variables in Selected Datasets:
+          Shared Variables in Selected Datasets:
         </p>
+        <v-card>
+          <!-- <v-card-title card color="white">
+            <span class="title">Variables</span>
+          </v-card-title> -->
+          <div v-if="variables.length !== 0">
+            <variable-table :variables="variables" :histogram="false" />
+          </div>
+          <div v-else>
+            <v-card-text> <loading-spinner medium class="ma-5" /> </v-card-text>
+          </div>
+        </v-card>
       </v-flex>
     </v-layout>
   </v-container>
@@ -93,6 +104,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
+import axios from 'axios';
 //  import Header from '@/components/layout/Header.vue';
 // import DatasetTable from '@/components/DatasetManager/DatasetTable.vue';
 // import OutcomeTable from '@/components/DatasetManager/OutcomeTable.vue';
@@ -100,6 +112,7 @@ import { state, actions } from '@/store/modules/datasetManager/types';
 // import FilterTree from '@/components/DatasetManager/FilterTree.vue';
 import BuildDatasetStepper from '@/components/DatasetManager/BuildDatasetStepper.vue';
 //  import DonutChart from '@/components/charts/DonutChart.vue';
+import VariableTable from '@/components/DatasetManager/VariableTable.vue';
 
 export default {
   components: {
@@ -110,6 +123,7 @@ export default {
     // OutcomeTable,
     // DemographicsTable,
     BuildDatasetStepper,
+    VariableTable,
   },
   props: {
     // id is passed in via route parameters
@@ -117,7 +131,13 @@ export default {
     id: [String, Array],
   },
   data() {
-    return {};
+    return {
+      variables: [],
+    };
+  },
+  async created() {
+    const { data } = await this.fetchSharedVariables();
+    this.variables = data.variables;
   },
   computed: {
     ...mapState('datasetManager', {
@@ -146,6 +166,15 @@ export default {
     }),
     goBack() {
       this.$router.go(-1);
+    },
+    fetchSharedVariables() {
+      const base = `/api/studies/variables`;
+      const query = this.selectedDatasets
+        .map(d => d.id)
+        .map(id => `id=${id}`)
+        .join('&');
+
+      return axios.get(`${base}?${query}`);
     },
   },
 };

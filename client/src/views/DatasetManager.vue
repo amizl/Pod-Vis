@@ -54,7 +54,7 @@
                 right
               >
                 <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
-                Build Dataset</v-btn
+                Create Collection</v-btn
               >
             </v-flex>
           </v-layout>
@@ -118,11 +118,7 @@ export default {
       // This constructs the build path with selected dataset ids
       if (!datasets) return 'build';
 
-      const idParams = datasets
-        .map(dataset => dataset.id)
-        .map(id => `id=${id}`)
-        .join('&');
-
+      const idParams = datasets.map(dataset => `id=${dataset.id}`).join('&');
       return `datasets/build?${idParams}`;
     },
   },

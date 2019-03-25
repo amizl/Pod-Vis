@@ -110,7 +110,7 @@ def get_intersection_of_variables():
   intersection = reduce((lambda df1, df2: df1.merge(df2)), dfs)
 
   return jsonify({
-    "intersection_variables": intersection.to_dict('records')
+    "variables": intersection.to_dict('records')
   })
 
 @api.route('/studies/<study_id>/subjects')
