@@ -41,7 +41,7 @@
       <v-layout class="mt-4" row wrap justify-center>
         <v-flex xs10>
           <v-layout row wrap justify-center>
-            <v-flex xs6>
+            <v-flex xs8>
               <v-card>
                 <v-card-title card color="white">
                   <span class="title">About</span>
@@ -55,7 +55,7 @@
                 </v-card-actions>
               </v-card>
             </v-flex>
-            <v-flex xs6>
+            <v-flex xs4>
               <v-card>
                 <v-card-title card color="white">
                   <span class="title">Subject Summary</span>
@@ -122,10 +122,14 @@
             <v-card-title card color="white">
               <span class="title">Variables</span>
             </v-card-title>
-            <variable-table
-              v-if="dataset"
-              :variables="dataset.variables"
-            ></variable-table>
+            <div v-if="variables.length">
+              <variable-table :variables="variables" />
+            </div>
+            <div v-else>
+              <v-card-text>
+                <loading-spinner medium class="ma-5" />
+              </v-card-text>
+            </div>
           </v-card>
         </v-flex>
       </v-layout>
@@ -165,6 +169,7 @@ export default {
       dataset: null,
       addToProfileSuccess: false,
       summaryData: null,
+      variables: [],
       groupBy: ['sex', 'race'],
       // TODO: Descriptions need to be loaded into database
       descriptions: {
@@ -194,14 +199,17 @@ export default {
     }),
   },
   async created() {
-    const { data } = await this.fetchDataset();
-    if (data) {
-      this.dataset = data;
+    const { data: dataset } = await this.fetchDataset();
+    if (dataset) {
+      this.dataset = dataset;
 
       // Get demographics summary data for sunburst chart
       const summary = await this.fetchDemographicSummary();
       const { counts } = summary.data;
       this.summaryData = counts;
+
+      const { data } = await this.fetchVariables();
+      this.variables = data.variables;
     }
   },
   methods: {
@@ -222,11 +230,15 @@ export default {
       return axios.get(`/api/studies/${this.id}?include=project`);
     },
     fetchDemographicSummary() {
+      // Forms a query similar to group_by=sex&group_by=race
       const queryParams = this.groupBy
         .map(group => `group_by=${group}`)
         .join('&');
 
       return axios.get(`/api/studies/${this.id}/subjects/count?${queryParams}`);
+    },
+    fetchVariables() {
+      return axios.get(`/api/studies/${this.id}/variables`);
     },
   },
 };
