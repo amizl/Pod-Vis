@@ -31,12 +31,15 @@
             <v-list-tile-title>Sign out</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="expand = !expand">
-          <v-list-tile-action>
-            <v-icon v-if="!expand" small>keyboard_arrow_right</v-icon>
-            <v-icon v-else small>keyboard_arrow_left</v-icon>
-          </v-list-tile-action>
-        </v-list-tile>
+        <v-tooltip right>
+          <v-list-tile slot="activator" @click="expand = !expand">
+            <v-list-tile-action>
+              <v-icon v-if="!expand" small>keyboard_arrow_right</v-icon>
+              <v-icon v-else small>keyboard_arrow_left</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <span v-if="!expand">Expand</span> <span v-else>Collapse</span>
+        </v-tooltip>
       </v-list>
       <v-list class="pb-5">
         <v-list-tile>
