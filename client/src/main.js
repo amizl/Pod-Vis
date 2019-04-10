@@ -1,4 +1,5 @@
 import '@babel/polyfill';
+import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import * as firebase from 'firebase';
 import Vue from 'vue';
 import { mapActions } from 'vuex';
@@ -12,6 +13,9 @@ require('./assets/css/main.css');
 require('parcoord-es/dist/parcoords.css');
 
 Vue.config.productionTip = false;
+// Globally register the loading spinner because we
+// use it in so many components.
+Vue.component('loading-spinner', LoadingSpinner);
 
 new Vue({
   router,

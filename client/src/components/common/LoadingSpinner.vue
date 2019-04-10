@@ -17,6 +17,7 @@ const MEDIUM = 50;
 const LARGE = 125;
 
 export default {
+  name: 'LoadingSpinner',
   props: {
     small: {
       type: Boolean,

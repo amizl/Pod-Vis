@@ -4,7 +4,7 @@
       <tr>
         <td>{{ props.item.category }}</td>
         <td>{{ props.item.scale }}</td>
-        <td v-if="histogram"></td>
+        <!-- <td v-if="histogram"></td> -->
         <!-- <td>{{ props.item.description }}</td> -->
         <!-- <td>{{ props.item.data_range }}</td> -->
         <!-- <td>{{ props.item.missing }}</td> -->
@@ -35,6 +35,7 @@ export default {
         {
           text: 'Scale',
           value: 'scale',
+          sortable: false,
         },
         // {
         //   text: 'Variable',
@@ -56,10 +57,10 @@ export default {
         //   text: 'Missing',
         //   value: 'missing',
         // },
-        {
-          text: 'Histogram',
-          value: 'histogram',
-        },
+        // {
+        //   text: 'Histogram',
+        //   value: 'histogram',
+        // },
       ],
     };
   },

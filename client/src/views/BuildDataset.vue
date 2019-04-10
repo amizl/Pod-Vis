@@ -1,42 +1,4 @@
 <template>
-  <!-- <div>
-    <v-toolbar app class="white">
-      <v-toolbar-items>
-        <v-btn flat @click="goBack">
-          <v-icon left> arrow_back </v-icon>
-          BACK TO DATASET MANAGER
-        </v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
-    <div class="primary white--text blueGradient">
-      <v-container fluid>
-        <v-layout row wrap>
-          <v-flex xs6>
-            <p class="headline font-weight-medium">Build Dataset</p>
-            <!-- <v-chip
-              close
-              v-for='{ id, code } in selectedDatasets'
-              :key='id'>
-              {{ code }}
-            </v-chip> -->
-  <!-- </v-flex> -->
-  <!-- TODO: Info about selected here -->
-  <!-- <v-spacer></v-spacer> -->
-  <!-- <v-flex xs6 class="text-xs-right">
-            <p class="subheading">SELECTED DATASETS</p>
-            <v-chip v-for="{ id, code } in selectedDatasets" :key="id" close>
-              {{ code }}
-            </v-chip>
-            <!-- <v-layout row> -->
-  <!-- <v-flex xs6>
-              </v-flex>
-              <v-flex xs6>
-              </v-flex>
-            </v-layout> -->
-  <!-- </v-flex>
-        </v-layout>
-      </v-container>
-    </div> -->
   <v-container fluid>
     <v-layout class="mt-4" justify-center>
       <v-flex xs10>
@@ -53,9 +15,9 @@
     <v-layout class="pt-5" row justify-center>
       <v-flex xs10>
         <p class="subheading grey--text ligthen-2">Selected Datasets:</p>
-        <v-container grid-list-lg fluid pt-0 mt-0>
+        <v-container grid-list-lg fluid pt-0 mt-0 pl-0 ml-0>
           <v-layout row wrap>
-            <v-flex v-for="dataset in selectedDatasets" :key="dataset.id" xs3>
+            <v-flex v-for="dataset in selectedDatasets" :key="dataset.id" xs4>
               <v-card>
                 <v-card-title primary-title>
                   <div>
@@ -82,14 +44,34 @@
     </v-layout>
     <v-layout class="pt-4" row justify-center>
       <v-flex xs10>
-        <p class="subheading grey--text ligthen-2">
-          Shared Variables in Selected Datasets:
-        </p>
         <v-card>
-          <!-- <v-card-title card color="white">
-            <span class="title">Variables</span>
-          </v-card-title> -->
-          <div v-if="variables.length !== 0">
+          <v-card-title card color="white">
+            <span class="title">Common Variables</span>
+          </v-card-title>
+          <div v-if="variables.length">
+            <variable-table :variables="variables" :histogram="false" />
+          </div>
+          <div v-else>
+            <v-card-text>
+              <loading-spinner medium class="ma-5"></loading-spinner>
+            </v-card-text>
+          </div>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <v-layout
+      v-for="dataset in selectedDatasets"
+      :key="dataset.id"
+      class="pt-4"
+      row
+      justify-center
+    >
+      <v-flex xs10>
+        <v-card>
+          <v-card-title card color="white">
+            <span class="title">{{ dataset.study_name }}</span>
+          </v-card-title>
+          <div v-if="true">
             <variable-table :variables="variables" :histogram="false" />
           </div>
           <div v-else>
@@ -133,11 +115,8 @@ export default {
   data() {
     return {
       variables: [],
+      activeDataset: null,
     };
-  },
-  async created() {
-    const { data } = await this.fetchSharedVariables();
-    this.variables = data.variables;
   },
   computed: {
     ...mapState('datasetManager', {
@@ -160,12 +139,26 @@ export default {
     //     : [];
     // },
   },
+  async created() {
+    // selectedDatasets.forEach(dataset => {
+    //   this.dataset.id;
+    // });
+    const { data } = await this.fetchSharedVariables();
+    this.variables = data.variables;
+  },
   methods: {
     ...mapActions('datasetManager', {
       addSelectedDatasetsToCohorts: actions.ADD_SELECTED_DATASETS_TO_COHORTS,
     }),
     goBack() {
       this.$router.go(-1);
+    },
+    fetchDemographicSummary(id) {
+      // Forms a query similar to group_by=sex&group_by=race
+      const groupBy = ['sex', 'race'];
+      const queryParams = groupBy.map(group => `group_by=${group}`).join('&');
+
+      return axios.get(`/api/studies/${id}/subjects/count?${queryParams}`);
     },
     fetchSharedVariables() {
       const base = `/api/studies/variables`;
