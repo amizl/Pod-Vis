@@ -9,7 +9,7 @@
     @update:open="zoomToNode"
     @update:active="zoomToNode"
   >
-    <template slot="prepend" slot-scope="{ item, open, leaf }">
+    <template slot="prepend" slot-scope="{ item }">
       <v-icon :color="color(item.name)">stop</v-icon>
     </template>
   </v-treeview>

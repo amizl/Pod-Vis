@@ -122,6 +122,7 @@
             <v-card-title card color="white">
               <span class="title">Variables</span>
             </v-card-title>
+            <div></div>
             <div v-if="variables.length">
               <variable-table :variables="variables" />
             </div>
@@ -203,13 +204,12 @@ export default {
     if (dataset) {
       this.dataset = dataset;
 
+      const { data } = await this.fetchVariables();
+      this.variables = data.variables;
       // Get demographics summary data for sunburst chart
       const summary = await this.fetchDemographicSummary();
       const { counts } = summary.data;
       this.summaryData = counts;
-
-      const { data } = await this.fetchVariables();
-      this.variables = data.variables;
     }
   },
   methods: {
