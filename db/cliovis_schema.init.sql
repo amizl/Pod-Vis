@@ -1,4 +1,5 @@
-use cliovis;
+CREATE SCHEMA IF NOT EXISTS `cliovis` DEFAULT CHARACTER SET utf8;
+USE `cliovis` ;
 
 ################################################################
 DELETE FROM user;
