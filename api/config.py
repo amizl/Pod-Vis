@@ -11,7 +11,7 @@ class Config:
     """Base configuration"""
     SECRET_KEY = os.environ.get('SECRET_KEY')
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
-    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=10)
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=60)
     JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(days=1)
     # Configures application to store JWTs in cookies
     JWT_TOKEN_LOCATION = ['cookies']
