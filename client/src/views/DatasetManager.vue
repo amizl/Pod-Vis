@@ -42,54 +42,35 @@
       </v-container>
     </div> -->
     <v-container fluid>
-      <v-layout class="mt-4" justify-center>
-        <v-flex xs10>
-          <v-layout>
-            <v-flex xs6> <p class="headline">Dataset Manager</p> </v-flex>
-            <v-flex xs6 class="text-xs-right">
-              <v-btn
-                :to="selectedDatasets | buildPath"
-                :disabled="selectedDatasets.length === 0"
-                flat
-                right
-              >
-                <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
-                Create Collection</v-btn
-              >
-            </v-flex>
-          </v-layout>
-          <v-divider></v-divider>
-        </v-flex>
-      </v-layout>
-      <v-layout class="pt-5" row justify-center>
-        <v-flex xs10>
-          <p class="subheading foo--text">Available Datasets</p>
-          <dataset-table :search="search"></dataset-table>
-        </v-flex>
-      </v-layout>
-      <!-- <v-snackbar
-        v-model='snackbar'
-        :color="intersectionExists ? 'success' : 'error'"
-        :multi-line="!intersectionExists"
-        :timeout=10000
-      >
-        <v-card
+      <v-toolbar app class="white">
+        <v-toolbar-title>Dataset Manager</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          prepend-inner-icon="search"
+          label="Search for Dataset"
+          solo
           flat
-          :color="intersectionExists ? 'success' : 'error'"
-          class="white--text"
+          background-color="grey lighten-4"
+          class="mt-2"
         >
-          <v-card-text>
-            Selected datasets have no shared outcome measures
-          </v-card-text>
-        </v-card>
-        <v-btn
-          dark
-          flat
-          @click="snackbar = false"
-        >
-          Close
-        </v-btn>
-      </v-snackbar> -->
+        </v-text-field>
+        <v-spacer></v-spacer>
+        <v-toolbar-items class="hidden-sm-and-down">
+          <v-btn
+            :to="selectedDatasets | buildPath"
+            :disabled="selectedDatasets.length === 0"
+            flat
+            right
+          >
+            <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
+            Create Collection</v-btn
+          >
+        </v-toolbar-items>
+      </v-toolbar>
+      <v-layout row justify-center>
+        <v-flex xs12> <dataset-table :search="search" /> </v-flex>
+      </v-layout>
     </v-container>
   </div>
 </template>
@@ -144,17 +125,6 @@ export default {
       );
 
       return outcomeMeasures.reduce((a, b) => a.filter(c => b.includes(c)));
-    },
-    watch: {
-      intersection(matches) {
-        // We want to watch our computed intersection
-        // and check if it is returning matches. If there
-        // are matches then this means they share outcome
-        // measures
-        if (this.selectedDatasets.length > 1) {
-          this.snackbar = true;
-        }
-      },
     },
     intersectionExists() {
       return this.intersection.length > 0;
