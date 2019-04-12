@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Dashboard from '../views/Dashboard.vue';
-import AuthGuard from './authGuard';
+import { requireAuth, requireNotAuth } from './authGuards';
 
 Vue.use(Router);
 
@@ -11,31 +10,24 @@ export default new Router({
     {
       path: '/',
       redirect: '/dashboard',
-      beforeEnter: AuthGuard,
     },
     {
       path: '/dashboard',
-      name: 'home',
-      component: Dashboard,
-      beforeEnter: AuthGuard,
+      name: 'dashboard',
+      component: () => import('@/views/Dashboard.vue'),
+      beforeEnter: requireAuth,
     },
     {
-      path: '/cohorts/',
+      path: '/cohorts',
       name: 'cohortManager',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/CohortManager.vue'),
-      beforeEnter: AuthGuard,
+      component: () => import('@/views/CohortManager.vue'),
+      beforeEnter: requireAuth,
     },
     {
       path: '/cohorts/build',
       name: 'buildCohort',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/BuildCohort.vue'),
-      beforeEnter: AuthGuard,
+      component: () => import('@/views/BuildCohort.vue'),
+      beforeEnter: requireAuth,
       props: route => ({
         id: route.query.id,
       }),
@@ -43,15 +35,15 @@ export default new Router({
     {
       path: '/:user/explore/:dataset/:analysis',
       name: 'dataExplorer',
-      component: () => import('../views/DataExplorer.vue'),
-      beforeEnter: AuthGuard,
+      component: () => import('@/views/DataExplorer.vue'),
+      beforeEnter: requireAuth,
     },
     {
       path: '/analysis',
       // path: '/:user/analysis/:dataset/:analysis',
       name: 'analysis',
-      component: () => import('../views/AnalysisTool.vue'),
-      beforeEnter: AuthGuard,
+      component: () => import('@/views/AnalysisTool.vue'),
+      beforeEnter: requireAuth,
       props: route => ({
         user: route.params.user,
         dataset: route.params.dataset,
@@ -61,8 +53,8 @@ export default new Router({
     {
       path: '/datasets',
       name: 'datasetManager',
-      component: () => import('../views/DatasetManager.vue'),
-      beforeEnter: AuthGuard,
+      component: () => import('@/views/DatasetManager.vue'),
+      beforeEnter: requireAuth,
       // children: [
       //   {
       //     path: 'build',
@@ -89,13 +81,14 @@ export default new Router({
     {
       path: '/signin',
       name: 'signIn',
-      component: () => import('../views/SignIn.vue'),
+      component: () => import('@/views/SignIn.vue'),
+      beforeEnter: requireNotAuth,
     },
     // Routes for testing componenets
     {
       path: '/test',
       name: 'test',
-      component: () => import('../views/Test.vue'),
+      component: () => import('@/views/Test.vue'),
       children: [
         {
           path: 'heatmap',
@@ -104,12 +97,12 @@ export default new Router({
         },
         {
           path: 'auth',
-          component: () => import('../components/auth/UserAuthentication.vue'),
+          component: () => import('@/components/auth/UserAuthentication.vue'),
         },
         {
           path: 'table',
           component: () =>
-            import('../components/DatasetManager/DatasetTable.vue'),
+            import('@/components/DatasetManager/DatasetTable.vue'),
         },
         {
           path: 'bar',
@@ -121,7 +114,7 @@ export default new Router({
         },
         {
           path: 'loading',
-          component: () => import('../components/common/LoadingSpinner.vue'),
+          component: () => import('@/components/common/LoadingSpinner.vue'),
         },
         {
           path: 'cohortCard',
