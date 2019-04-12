@@ -11,6 +11,8 @@ export default {
    *  Create user account.
    * @param {Object} commit
    * @param {Object} payload Email, password, name, and institution.
+   *
+   *  Returns promises to allow caller add logic based on action.
    */
   async [actions.CREATE_USER_ACCOUNT]({ commit }, payload) {
     commit(mutations.SET_LOADING, true);
@@ -28,16 +30,20 @@ export default {
       commit(mutations.SET_USER, {
         ...data.user,
       });
+      commit(mutations.SET_LOADING, false);
+      return new Promise(resolve => resolve());
     } catch (err) {
       const { error } = err.response.data;
       commit(mutations.SET_AUTH_ERROR, error);
+      commit(mutations.SET_LOADING, false);
+      return new Promise((resolve, reject) => reject());
     }
-    commit(mutations.SET_LOADING, false);
   },
   /**
    *  Sign the user in.
    * @param {*} commit
    * @param {*} payload Email and password
+   * Returns promises to allow caller add logic based on action.
    */
   async [actions.SIGN_USER_IN]({ commit }, { email, password }) {
     commit(mutations.SET_LOADING, true);
@@ -48,15 +54,17 @@ export default {
         email,
         password,
       });
-      commit(mutations.SET_USER, {
-        ...data.user,
-      });
+      commit(mutations.SET_USER, data.user);
+      commit(mutations.SET_LOADING, false);
+
+      return new Promise(resolve => resolve());
     } catch (err) {
       const { error } = err.response.data;
       commit(mutations.SET_AUTH_ERROR, error);
-    }
+      commit(mutations.SET_LOADING, false);
 
-    commit(mutations.SET_LOADING, false);
+      return new Promise((resolve, reject) => reject());
+    }
   },
   /**
    * Sign the user out.
@@ -89,9 +97,10 @@ export default {
 
     try {
       const { data } = await axios.get('/auth/signin');
-      commit(mutations.SET_USER, {
-        ...data.user,
-      });
+      commit(mutations.SET_USER, data.user);
+      commit(mutations.SET_LOADING, false);
+
+      return new Promise(resolve => resolve());
     } catch (err) {
       const { data } = err.response;
       // TODO:
@@ -101,8 +110,9 @@ export default {
         const error = new ErrorNotification('Your session has expired.');
         dispatch(error.dispatch, error, { root: true });
       }
-    }
+      commit(mutations.SET_LOADING, false);
 
-    commit(mutations.SET_LOADING, false);
+      return new Promise((resolve, reject) => reject());
+    }
   },
 };

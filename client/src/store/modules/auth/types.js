@@ -6,7 +6,9 @@ export const state = {
 };
 
 // Getters
-export const getters = {};
+export const getters = {
+  IS_USER_AUTHENTICATED: 'isUserAuthenticated',
+};
 
 // Mutations
 export const mutations = {
