@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container v-if="dataset" fluid grid-list-xl>
-      <v-toolbar app dense class="white">
+      <v-toolbar app class="white">
         <v-toolbar-title>Dataset Overview</v-toolbar-title>
       </v-toolbar>
       <v-layout row wrap justify-center>

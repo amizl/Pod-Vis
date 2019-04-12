@@ -6,7 +6,7 @@
     <v-layout align-center justify-center>
       <h1 class="headline text-md-center">
         <v-icon large class="pb-4">build</v-icon><br />
-        Data explorer is currently under development
+        Data Explorer is currently under development
       </h1>
     </v-layout>
   </v-container>

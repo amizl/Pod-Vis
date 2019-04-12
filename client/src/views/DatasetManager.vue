@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-toolbar app class="white">
-      <v-toolbar-title>Datasets</v-toolbar-title>
+      <v-toolbar-title>Dataset Manager</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
