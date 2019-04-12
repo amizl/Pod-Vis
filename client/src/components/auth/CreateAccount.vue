@@ -1,7 +1,7 @@
 <template lang="pug">
   v-card(flat)
     v-card-text
-      v-form(@submit.prevent='onCreateAccount').ma-4
+      v-form(ref='form' @submit.prevent='onCreateAccount').ma-4
         v-text-field(
           prepend-icon="person"
           v-model='name'
@@ -56,13 +56,16 @@
             type='submit'
             color='primary'
             :loading='loading'
+            :disabled='loading'
           ) Create Account
-            span(slot='loader') Creating Account
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import { state, actions } from '@/store/modules/auth/types';
+import {
+  state as authState,
+  actions as authActions,
+} from '@/store/modules/auth/types';
 
 export default {
   data() {
@@ -82,20 +85,31 @@ export default {
         : '';
     },
     ...mapState('auth', {
-      loading: state.IS_LOADING,
+      loading: authState.IS_LOADING,
     }),
   },
   methods: {
     ...mapActions('auth', {
-      createUserAccount: actions.CREATE_USER_ACCOUNT,
+      createUserAccount: authActions.CREATE_USER_ACCOUNT,
     }),
     onCreateAccount() {
-      this.createUserAccount({
-        name: this.name,
-        email: this.email,
-        institution: this.institution,
-        password: this.password,
-      });
+      if (this.$refs.form.validate()) {
+        this.createUserAccount({
+          name: this.name,
+          email: this.email,
+          institution: this.institution,
+          password: this.password,
+        })
+          .then(() => {
+            // If creating account is successful, redirect user to dashboard
+            this.$router.push('/dashboard');
+          })
+          .catch(() => {
+            // Currently do nothing here if creating account is unsuccessful.
+            // The Auth Store will set an error which will be automatically
+            // display on the DOM.
+          });
+      }
     },
   },
 };

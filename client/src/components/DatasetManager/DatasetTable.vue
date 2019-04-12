@@ -1,12 +1,7 @@
 <template lang="pug">
 v-card
-  //- v-toolbar(
-  //-   card
-  //-   color="grey lighten-3"
-  //-   dense
-  //- )
-  //-   v-icon table_chart
-  //-   v-toolbar-title Available Datasets
+  v-card-title.primary-title
+    span.title Available Datasets
   v-layout(
     row
     justify-center
@@ -104,11 +99,11 @@ export default {
         },
         {
           text: 'Project',
-          value: 'project',
+          value: 'project_name',
         },
         {
           text: 'Study',
-          value: 'study',
+          value: 'study_name',
         },
         // {
         //   text: 'Subject Count',

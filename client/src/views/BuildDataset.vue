@@ -1,20 +1,11 @@
 <template>
   <v-container fluid>
-    <v-layout class="mt-4" justify-center>
-      <v-flex xs10>
-        <v-layout>
-          <v-flex xs6> <p class="headline">Create Collection</p> </v-flex>
-          <v-flex xs6> <!-- OTHER ACTION ITES HERE --> </v-flex>
-        </v-layout>
-        <v-divider></v-divider>
-        <!-- <build-dataset-stepper
-            :outcome-measures="outcomeMeasures"
-          ></build-dataset-stepper> -->
-      </v-flex>
-    </v-layout>
-    <v-layout class="pt-5" row justify-center>
-      <v-flex xs10>
-        <p class="subheading grey--text ligthen-2">Selected Datasets:</p>
+    <v-toolbar app class="white">
+      <v-toolbar-title>Create Collection</v-toolbar-title>
+    </v-toolbar>
+    <v-layout row justify-center>
+      <v-flex xs12>
+        <!-- <p class="subheading grey--text ligthen-2">Selected Datasets:</p> -->
         <v-container grid-list-lg fluid pt-0 mt-0 pl-0 ml-0>
           <v-layout row wrap>
             <v-flex v-for="dataset in selectedDatasets" :key="dataset.id" xs4>
@@ -42,8 +33,8 @@
         </v-container>
       </v-flex>
     </v-layout>
-    <v-layout class="pt-4" row justify-center>
-      <v-flex xs10>
+    <v-layout class="pt-2" row justify-center>
+      <v-flex xs12>
         <v-card>
           <v-card-title card color="white">
             <span class="title">Common Variables</span>
@@ -66,7 +57,7 @@
       row
       justify-center
     >
-      <v-flex xs10>
+      <v-flex xs12>
         <v-card>
           <v-card-title card color="white">
             <span class="title">{{ dataset.study_name }}</span>
@@ -110,7 +101,10 @@ export default {
   props: {
     // id is passed in via route parameters
     // i.e., /build?id=x&id=y
-    id: [String, Array],
+    id: {
+      type: [String, Array],
+      default: null,
+    },
   },
   data() {
     return {

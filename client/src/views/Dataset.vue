@@ -1,50 +1,21 @@
 <template>
   <div>
-    <!-- <v-toolbar app class="white">
-      <v-toolbar-items>
-        <v-btn flat @click="goBack">
-          <v-icon left> arrow_back </v-icon>
-          BACK TO DATASET MANAGER
-        </v-btn>
-      </v-toolbar-items>
-      <v-spacer></v-spacer>
-      <v-btn class="primary" @click="addToProfile">
-        <v-icon circle small color="iconColor" left> add </v-icon>
-        ADD TO PROFILE
-      </v-btn>
-    </v-toolbar> -->
-    <!-- <div class="white--text blueGradient">
-      <v-container fluid>
-        <v-layout row wrap>
-          <v-flex xs6>
-            <p class="headline font-weight-medium">{{ dataset.dataset }}</p>
-          </v-flex>
-          <v-flex xs6>
-            <v-layout row>
-              <v-flex xs6> </v-flex>
-              <v-flex xs6> </v-flex>
-            </v-layout>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </div> -->
     <v-container v-if="dataset" fluid grid-list-xl>
-      <v-layout class="mt-3" justify-center>
-        <v-flex xs10>
-          <p class="headline mb-0">{{ dataset.study.study_name }}</p>
-          <p class="caption grey--text lighten-2">
-            {{ dataset.study.project.project_name }}
-          </p>
-          <v-divider></v-divider>
-        </v-flex>
-      </v-layout>
-      <v-layout class="mt-4" row wrap justify-center>
-        <v-flex xs10>
+      <v-toolbar app dense class="white">
+        <v-toolbar-title>Dataset Overview</v-toolbar-title>
+      </v-toolbar>
+      <v-layout row wrap justify-center>
+        <v-flex xs12>
           <v-layout row wrap justify-center>
             <v-flex xs8>
               <v-card>
-                <v-card-title card color="white">
-                  <span class="title">About</span>
+                <v-card-title primary-title card color="white">
+                  <p class="title mb-0 ">
+                    {{ dataset.study.study_name }} <br />
+                    <span class="caption grey--text lighten-2">
+                      {{ dataset.study.project.project_name }}
+                    </span>
+                  </p>
                 </v-card-title>
                 <v-card-text>
                   <p>{{ descriptions[dataset.study.study_name] }}</p>
@@ -57,7 +28,7 @@
             </v-flex>
             <v-flex xs4>
               <v-card>
-                <v-card-title card color="white">
+                <v-card-title primary-title card color="white">
                   <span class="title">Subject Summary</span>
                 </v-card-title>
                 <v-card-text v-if="summaryData">
@@ -117,9 +88,9 @@
         </v-flex>
       </v-layout>-->
       <v-layout row wrap justify-center>
-        <v-flex xs10>
+        <v-flex xs12>
           <v-card>
-            <v-card-title card color="white">
+            <v-card-title primary-title card color="white">
               <span class="title">Variables</span>
             </v-card-title>
             <div></div>

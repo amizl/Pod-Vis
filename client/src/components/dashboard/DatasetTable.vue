@@ -1,29 +1,32 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="datasets"
-    class="elevation-1"
-    hide-actions
-    hide-headers
-  >
-    <template slot="items" slot-scope="props">
-      <td>{{ props.item.dataset }}</td>
-      <td class="text-xs-right px-0">
-        <v-btn flat @click="routeToExplorer(props.item)">
-          <v-icon left small color="secondary">bar_chart</v-icon>
-          Analyze
-        </v-btn>
-        <v-btn flat @click="routeToCohort(props.item)">
-          <v-icon left small color="secondary">group_add</v-icon> Build Cohort
-        </v-btn>
-      </td>
-    </template>
-    <template slot="no-data">
-      <td class="text-xs-center">
-        Add datasets to your profile in the dataset manager.
-      </td>
-    </template>
-  </v-data-table>
+  <v-card>
+    <v-card-title primary-title class="title"> My Datasets </v-card-title>
+    <v-data-table
+      :headers="headers"
+      :items="datasets"
+      hide-actions
+      hide-headers
+    >
+      <template slot="items" slot-scope="props">
+        <td>{{ props.item.dataset }}</td>
+        <td class="text-xs-right px-0">
+          <v-btn flat @click="routeToExplorer(props.item)">
+            <v-icon left small color="secondary">bar_chart</v-icon>
+            Analyze
+          </v-btn>
+          <v-btn flat @click="routeToCohort(props.item)">
+            <v-icon left small color="secondary">group_add</v-icon> Build Cohort
+          </v-btn>
+        </td>
+      </template>
+      <template slot="no-data">
+        <td class="text-xs-center">
+          Your dashboard is empty. Add datasets to your dashboard in the dataset
+          manager.
+        </td>
+      </template>
+    </v-data-table>
+  </v-card>
 </template>
 
 <script>

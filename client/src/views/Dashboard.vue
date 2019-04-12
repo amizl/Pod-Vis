@@ -1,16 +1,10 @@
 <template>
   <v-container fluid>
-    <v-layout class="mt-4" justify-center>
-      <v-flex xs10>
-        <p class="headline">Dashboard</p>
-        <v-divider></v-divider>
-      </v-flex>
-    </v-layout>
-    <v-layout class="pt-5" align-center justify-center>
-      <v-flex xs10>
-        <p class="subheading">My Datasets</p>
-        <dataset-table></dataset-table>
-      </v-flex>
+    <v-toolbar app class="white">
+      <v-toolbar-title>Dashboard</v-toolbar-title>
+    </v-toolbar>
+    <v-layout align-center justify-center>
+      <v-flex xs12> <dataset-table /> </v-flex>
     </v-layout>
   </v-container>
 </template>

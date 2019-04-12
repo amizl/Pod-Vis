@@ -1,6 +1,6 @@
 <template>
   <v-snackbar
-    v-if="notification !== null"
+    v-if="notification"
     v-model="notifyState"
     :color="notification.type"
     top

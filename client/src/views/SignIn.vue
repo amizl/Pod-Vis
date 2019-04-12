@@ -1,13 +1,15 @@
-<template lang="pug">
-  v-container(fluid fill-height)
-    v-layout(align-center justify-center)
-      v-flex(xs12 sm8 md4)
-        v-card.ui-card.pa-1
-          user-authentication
+<template>
+  <v-container fluid fill-height>
+    <v-layout align-center justify-center>
+      <v-flex xs12 sm8 md4>
+        <v-card> <user-authentication /> </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
-import UserAuthentication from '../components/auth/UserAuthentication.vue';
+import UserAuthentication from '@/components/auth/UserAuthentication.vue';
 
 export default {
   components: {

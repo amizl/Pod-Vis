@@ -5,7 +5,12 @@ export default {
     state[stateTypes.USER] = payload;
   },
   [mutations.CLEAR_USER](state) {
-    state[stateTypes.USER] = null;
+    state[stateTypes.USER] = {
+      id: 0,
+      email: '',
+      name: '',
+      institution: '',
+    };
   },
   [mutations.SET_LOADING](state, payload) {
     state[stateTypes.IS_LOADING] = payload;
