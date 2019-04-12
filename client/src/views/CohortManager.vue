@@ -1,43 +1,19 @@
-<template lang="pug">
-  v-container(fluid)
-    v-toolbar(app flat)
-      p.subheading.foo--text.ml-5.mt-5 Create cohort for Parkinson's Disease
-      v-spacer
-      v-btn Foo
-    v-layout(align-center justify-start row fill-height)
-      v-flex(xs12)
-        v-card.ui-card
-          parallel-coordinates
-
+<template>
+  <v-container fluid fill-height>
+    <v-toolbar app class="white">
+      <v-toolbar-title>Cohort Manager</v-toolbar-title>
+    </v-toolbar>
+    <v-layout align-center justify-center>
+      <h1 class="headline text-md-center">
+        <v-icon large class="pb-4">build</v-icon><br />
+        Cohort Manager is currently under development
+      </h1>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { actions, state } from '@/store/modules/cohortManager/types';
-import CohortCard from '@/components/CohortManager/CohortCard.vue';
-import ParallelCoordinates from '@/components/charts/ParallelCoordinates.vue';
-import ContentHeader from '../components/layout/Header.vue';
-
-export default {
-  components: {
-    CohortCard,
-    ContentHeader,
-    ParallelCoordinates,
-  },
-  computed: {
-    ...mapState('cohortManager', {
-      cohorts: state.COHORTS,
-    }),
-  },
-  created() {
-    this.fetchCohorts();
-  },
-  methods: {
-    ...mapActions('cohortManager', {
-      fetchCohorts: actions.FETCH_COHORTS,
-    }),
-  },
-};
+export default {};
 </script>
 
 <style scoped></style>

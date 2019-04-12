@@ -1,10 +1,17 @@
-<template lang="pug">
-  v-container(fluid)
-    v-toolbar(app).white
-    v-layout(align-center justify-start row fill-height)
-      v-img(:src='require("@/assets/slope.png")')
-      v-img(:src='require("@/assets/analysis.png")')
+<template>
+  <v-container fluid fill-height>
+    <v-toolbar app class="white">
+      <v-toolbar-title>Analysis Tool</v-toolbar-title>
+    </v-toolbar>
+    <v-layout align-center justify-center>
+      <h1 class="headline text-md-center">
+        <v-icon large class="pb-4">build</v-icon><br />
+        Analysis Tool is currently under development
+      </h1>
+    </v-layout>
+  </v-container>
 </template>
+
 <script>
 export default {};
 </script>

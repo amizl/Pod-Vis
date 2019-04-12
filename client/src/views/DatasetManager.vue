@@ -1,78 +1,35 @@
 <template>
-  <div>
-    <!-- <v-toolbar class="white" app>
-      <v-layout>
-        <v-flex xs6>
-          <v-text-field
-            v-model="search"
-            prepend-inner-icon="search"
-            label="Search for Dataset"
-            solo
-            flat
-            background-color="background"
-            class="mt-2"
-          >
-          </v-text-field>
-        </v-flex>
-        <v-flex xs6> </v-flex>
-      </v-layout>
-      <v-btn
-        :to="selectedDatasets | buildPath"
-        :disabled="selectedDatasets.length === 0"
-        append
-        class="primary"
+  <v-container fluid>
+    <v-toolbar app class="white">
+      <v-toolbar-title>Datasets</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        prepend-inner-icon="search"
+        label="Search for Dataset"
+        solo
+        flat
+        background-color="grey lighten-4"
+        class="mt-2"
       >
-        <v-icon color="iconColor" small fab left> build </v-icon>
-        BUILD DATASET
-      </v-btn>
-    </v-toolbar> -->
-    <!-- <div class="white--text blueGradient">
-      <v-container fluid>
-        <v-layout row wrap>
-          <v-flex xs6>
-            <p class="headline font-weight-medium">Dataset Manager</p>
-          </v-flex>
-          <v-flex xs6>
-            <v-layout row>
-              <v-flex xs6> </v-flex>
-              <v-flex xs6> </v-flex>
-            </v-layout>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </div> -->
-    <v-container fluid>
-      <v-toolbar app class="white">
-        <v-toolbar-title>Dataset Manager</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          prepend-inner-icon="search"
-          label="Search for Dataset"
-          solo
+      </v-text-field>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn
+          :to="selectedDatasets | buildPath"
+          :disabled="selectedDatasets.length === 0"
           flat
-          background-color="grey lighten-4"
-          class="mt-2"
+          right
         >
-        </v-text-field>
-        <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn
-            :to="selectedDatasets | buildPath"
-            :disabled="selectedDatasets.length === 0"
-            flat
-            right
-          >
-            <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
-            Create Collection</v-btn
-          >
-        </v-toolbar-items>
-      </v-toolbar>
-      <v-layout row justify-center>
-        <v-flex xs12> <dataset-table :search="search" /> </v-flex>
-      </v-layout>
-    </v-container>
-  </div>
+          <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
+          Create Collection</v-btn
+        >
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-layout row justify-center>
+      <v-flex xs12> <dataset-table :search="search" /> </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>

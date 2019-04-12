@@ -33,7 +33,8 @@ export default new Router({
       }),
     },
     {
-      path: '/:user/explore/:dataset/:analysis',
+      path: '/explore',
+      // path: '/:user/explore/:dataset/:analysis',
       name: 'dataExplorer',
       component: () => import('@/views/DataExplorer.vue'),
       beforeEnter: requireAuth,
