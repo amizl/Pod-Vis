@@ -29,14 +29,14 @@
             :disabled='loading'
             :loading='loading'
           ) Sign In
-            span(slot='loader') Signing in
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-import { state, actions } from '@/store/modules/auth/types';
-
-const { mapState, mapActions } = createNamespacedHelpers('auth');
+import { mapState, mapActions } from 'vuex';
+import {
+  state as authState,
+  actions as authActions,
+} from '@/store/modules/auth/types';
 
 export default {
   data() {
@@ -48,20 +48,30 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      loading: state.IS_LOADING,
+    ...mapState('auth', {
+      loading: authState.IS_LOADING,
     }),
   },
   methods: {
-    ...mapActions({
-      signUserIn: actions.SIGN_USER_IN,
+    ...mapActions('auth', {
+      signUserIn: authActions.SIGN_USER_IN,
     }),
+    /**
+     * Sign the user in after form submit.
+     */
     onSignIn() {
+      const { email, password } = this;
       if (this.$refs.form.validate()) {
-        this.signUserIn({
-          email: this.email,
-          password: this.password,
-        });
+        this.signUserIn({ email, password })
+          .then(() => {
+            // If signing in is successful, redirect user to dashboard
+            this.$router.push('/dashboard');
+          })
+          .catch(() => {
+            // Currently do nothing here if sign in is unsuccessful.
+            // The Auth Store will set an error which will be automatically
+            // display on the DOM.
+          });
       }
     },
   },

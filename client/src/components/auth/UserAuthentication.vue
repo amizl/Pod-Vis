@@ -1,7 +1,3 @@
-<!--
-TOOD:
-  1. Form validation in login/create account
--->
 <template lang="pug">
   v-tabs(slider-color="secondary" grow)
     v-tab(key='login') SIGN IN
@@ -17,12 +13,11 @@ TOOD:
         sign-in-form
       v-tab-item
         create-account-form
-
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { state } from '@/store/modules/auth/types';
+import { mapState, mapGetters } from 'vuex';
+import { state, getters } from '@/store/modules/auth/types';
 import SignIn from './SignIn.vue';
 import CreateAccount from './CreateAccount.vue';
 
@@ -36,16 +31,11 @@ export default {
   },
   computed: {
     ...mapState('auth', {
-      user: state.USER,
       authError: state.AUTH_ERROR,
     }),
-  },
-  watch: {
-    user(value) {
-      if (value !== null && value !== undefined) {
-        this.$router.push('/');
-      }
-    },
+    ...mapGetters('auth', {
+      isUserAuthenticated: getters.IS_USER_AUTHENTICATED,
+    }),
   },
 };
 </script>
