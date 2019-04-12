@@ -43,15 +43,12 @@
       </v-list>
       <v-list class="pb-5">
         <v-list-tile>
-          <v-list-tile-action>
-            <img v-if="expand" src="@/assets/som_igs_logo.svg" alt="IGS Logo" />
-            <img
-              v-else
-              src="@/assets/som_igs_icon.svg"
-              alt="IGS Logo"
-              width="20px"
-            />
+          <v-list-tile-action v-if="!expand">
+            <img width="20px" src="@/assets/som_igs_icon.svg" alt="IGS Logo" />
           </v-list-tile-action>
+          <v-list-tile-content v-if="expand">
+            <img src="@/assets/som_igs_logo.svg" alt="IGS Logo" />
+          </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-layout>
@@ -59,9 +56,11 @@
     <!-- SIGN OUT DIALOG -->
     <v-dialog v-model="signOutDialog" width="500" persistent>
       <v-card>
-        <v-card-text class="pa-4"
-          >Are you sure you'd like to sign out?</v-card-text
-        >
+        <v-card-title primary-title>
+          <v-icon>warning</v-icon>
+          <span class="title pl-2">Sign Out</span>
+        </v-card-title>
+        <v-card-text>Are you sure you'd like to sign out?</v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -95,21 +94,21 @@ export default {
           icon: 'table_chart',
           path: '/datasets',
         },
-        // {
-        //   name: 'Cohort Manager',
-        //   icon: 'group',
-        //   path: '/cohorts',
-        // },
-        // // {
-        // //   name: 'Data Explorer',
-        // //   icon: 'explore',
-        // //   path: '/explore',
-        // // },
-        // {
-        //   name: 'Analysis Tool',
-        //   icon: 'bar_chart',
-        //   path: '/analysis',
-        // },
+        {
+          name: 'Cohort Manager',
+          icon: 'group',
+          path: '/cohorts',
+        },
+        {
+          name: 'Data Explorer',
+          icon: 'explore',
+          path: '/explore',
+        },
+        {
+          name: 'Analysis Tool',
+          icon: 'bar_chart',
+          path: '/analysis',
+        },
       ],
     };
   },
