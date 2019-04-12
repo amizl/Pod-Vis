@@ -43,7 +43,7 @@ def is_user_token_expired():
 
 @auth.route('/signin', methods=['POST'])
 @validate_sign_in
-def sign_user_in():
+def sign_user_in(email, password):
     """Signs the user in.
 
     The user does not have an active session, so sign
@@ -56,13 +56,9 @@ def sign_user_in():
     Returns:
         User information.
     """
-    request_data = request.get_json()
-
-    email = request_data.get('email')
     user = User.find_by_email(email)
     if user:
-        pw = request_data.get('password')
-        if user.verify_password(pw):
+        if user.verify_password(password):
             response = jsonify({
                 "user": user.to_dict()
             })
@@ -89,7 +85,7 @@ def sign_user_out():
 
 @auth.route('/signup', methods=['POST'])
 @validate_sign_up
-def sign_user_up():
+def sign_user_up(email, password, institution, name):
     """Sign the user up.
 
     If the email does not currently exist in the database,
@@ -98,16 +94,9 @@ def sign_user_up():
     Returns:
         User information.
     """
-    request_data = request.get_json()
-
-    email = request_data.get('email')
     user = User.find_by_email(email)
     if not user:
         # Email doesn't exist, create new user with their info
-        name = request_data.get('name')
-        institution = request_data.get('institution')
-        password = request_data.get('password')
-
         new_user = User(email, name, institution, password)
         new_user.save_to_db()
 
@@ -115,6 +104,7 @@ def sign_user_up():
              "user": new_user.to_dict()
         })
 
+        # Authenticate user with access token
         jwt_tokens = create_tokens(new_user.id)
         set_access_cookies(response, jwt_tokens['access_token'])
         set_refresh_cookies(response, jwt_tokens['refresh_token'])

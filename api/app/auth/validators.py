@@ -20,11 +20,13 @@ def validate_sign_in(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         request_data = request.get_json()
-        validation = SignInSchema().load(request_data)
-        if validation.errors:
-            raise AuthFailure(validation.errors)
+        data, errors = SignInSchema().load(request_data)
+        if errors:
+            raise AuthFailure(errors)
         else:
-            return func(*args, **kwargs)
+            email = data.get("email")
+            password = data.get("password")
+            return func(email, password)
     return wrapper
 
 def validate_sign_up(func):
@@ -32,9 +34,13 @@ def validate_sign_up(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         request_data = request.get_json()
-        validation = SignUpSchema().load(request_data)
-        if validation.errors:
-            raise AuthFailure(validation.errors)
+        data, errors = SignUpSchema().load(request_data)
+        if errors:
+            raise AuthFailure(errors)
         else:
-            return func(*args, **kwargs)
+            email = data.get("email")
+            password = data.get("password")
+            institution = data.get("institution")
+            name = data.get("name")
+            return func(email, password, institution, name)
     return wrapper
