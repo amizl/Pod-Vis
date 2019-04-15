@@ -3,15 +3,19 @@
     <!-- Notification Center is our global snackbar for error/success messages-->
     <notification-center />
     <side-bar v-if="isUserAuthenicated" />
+    <!-- All of our views will be loaded inside content based on route-->
     <v-content class="background">
-      <transition name="fade" mode="out-in"> <router-view /> </transition>
+      <transition name="fade" mode="out-in">
+        <!-- /dashboard, /datasets, etc. components to be injected here -->
+        <router-view />
+      </transition>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { getters } from '@/store/modules/auth/types';
+import { getters as authGetters } from '@/store/modules/auth/types';
 import SideBar from './components/layout/Sidebar.vue';
 import NotificationCenter from './components/common/notificationCenter.vue';
 
@@ -23,7 +27,7 @@ export default {
   },
   computed: {
     ...mapGetters('auth', {
-      isUserAuthenicated: getters.IS_USER_AUTHENTICATED,
+      isUserAuthenicated: authGetters.IS_USER_AUTHENTICATED,
     }),
   },
 };
