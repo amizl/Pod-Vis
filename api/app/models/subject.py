@@ -12,7 +12,7 @@ class Subject(db.Model):
     attributes = db.relationship("SubjectAttribute", back_populates="subject", lazy="select")
     subject_visits = db.relationship("SubjectVisit", back_populates="subject", lazy="select")
 
-    def __init__(self, sex, race, birth_date, study_id, subject_num):
+    def __init__(self, study_id, subject_num):
         self.study_id = study_id
         self.subject_num = subject_num
 
