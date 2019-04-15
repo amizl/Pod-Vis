@@ -1,15 +1,16 @@
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from functools import reduce
 from . import api
 from .exceptions import ResourceNotFound, BadRequest
-from ..models import db, Study, Project, Subject, SubjectVisit, Observation
+from .. import models
 import pandas as pd
 
 @api.route('/subjects')
 # @jwt_required
 def get_all_subjects():
   """Get all subjects."""
-  subjects = Subject.get_all_subjects()
+  subjects = models.Subject.get_all_subjects()
   return jsonify({
     "subjects": [subject.to_dict() for subject in  subjects]
   })
@@ -28,7 +29,7 @@ def get_all_studies():
     /api/studies
     /api/studies?include=project&include=subjects
   """
-  studies = Study.get_all_studies()
+  studies = models.Study.get_all_studies()
   include = request.args.getlist("include")
 
   kwargs = {
@@ -54,7 +55,7 @@ def get_study(study_id):
     /api/studies/10
     /api/studies/10?include=project&include=subjects
   """
-  study = Study.find_by_id(study_id)
+  study = models.Study.find_by_id(study_id)
   include = request.args.getlist("include")
 
   if not study:
@@ -77,7 +78,7 @@ def get_study_variables(study_id):
   values from the observations tables.
   """
 
-  study = Study.find_by_id(study_id)
+  study = models.Study.find_by_id(study_id)
   if not study:
     raise ResourceNotFound("Study does not exist.")
 
@@ -89,21 +90,24 @@ def get_study_variables(study_id):
 @api.route("/studies/<study_id>/instrument-totals")
 def get_totals(study_id):
   """TODO"""
-  study = Study.find_by_id(study_id)
+  study = models.Study.find_by_id(study_id)
   totals = study.total_scores()
   return jsonify(totals)
 
 @api.route("/studies/variables")
 def get_intersection_of_variables():
-  """Get the intersection of variables between studies."""
-  from functools import reduce
+  """Get the intersection of variables between studies.
+
+  Example URL:
+    /api/studies/variables?id=1&id=2
+  """
   study_ids = request.args.getlist('id')
 
-  studies = [Study.find_by_id(study_id) for study_id in study_ids]
+  studies = [models.Study.find_by_id(study_id) for study_id in study_ids]
   variables = [study.get_variables() for study in studies]
 
-  # Convert variables result to df to easily perform join. Ideally
-  # this might want to be done in SQLAlchemy if performance
+  # Convert variables result to df to easily perform intersection. Ideally
+  # this might want to be done in MySQL/SQLAlchemy if performance
   # becomes an issue.
   dfs = [pd.DataFrame(vrbls) for vrbls in variables]
   # Inner join dataframes to find all matching variables
@@ -129,7 +133,7 @@ def get_study_subjects(study_id):
     /api/studies/1/subjects
     /api/studies/1/subjects?include=study&include=attributes
   """
-  study = Study.find_by_id(study_id)
+  study = models.Study.find_by_id(study_id)
   if not study:
     raise ResourceNotFound("Study does not exist.")
 
@@ -140,9 +144,28 @@ def get_study_subjects(study_id):
     "include_attributes": "attributes" in include
   }
 
-  subjects = Subject.find_all_by_study_id(study_id)
+  subjects = models.Subject.find_all_by_study_id(study_id)
   return jsonify({
     "subjects": [subject.to_dict(**kwargs) for subject in subjects]
+  })
+
+@api.route('/studies/<study_id>/subjects/attributes')
+def get_study_subject_attributes(study_id):
+  """Get all attributes for subjects participating in a study.
+
+  Raises:
+    ResourceNotFound if study does not exist.
+
+  Example URL:
+    /api/studies/1/subjects/attributes
+  """
+  study = models.Study.find_by_id(study_id)
+  if not study:
+    raise ResourceNotFound("Study does not exist.")
+
+  subject = models.Subject.find_first_by_study_id(study_id)
+  return jsonify({
+    "subject_attributes": subject.get_attributes()
   })
 
 @api.route('/studies/<study_id>/subjects/count')
@@ -170,12 +193,12 @@ def summarize_study_subjects(study_id):
   group_by = request.args.getlist("group_by")
   include = request.args.getlist("include")
 
-  study = Study.find_by_id(study_id)
+  study = models.Study.find_by_id(study_id)
   if not study:
     raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
 
   try:
-    counts = Subject.count(study_id, group_by)
+    counts = models.Subject.count(study_id, group_by)
   except KeyError:
     raise BadRequest("There is a problem with the request's query parameters.")
 
@@ -209,7 +232,7 @@ def get_all_projects():
     /api/projects
     /api/projects?include=studies&include=subjects
   """
-  projects = Project.get_all_projects()
+  projects = models.Project.get_all_projects()
 
   include = request.args.getlist('include')
   kwargs = {
@@ -238,7 +261,7 @@ def get_project(project_id):
     /api/projects/1
     /api/projects/1?include=studies&include=subjects
   """
-  project = Project.find_by_id(project_id)
+  project = models.Project.find_by_id(project_id)
   include = request.args.getlist('include')
 
   kwargs = {

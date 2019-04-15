@@ -49,6 +49,17 @@ class Subject(db.Model):
         """
         return cls.query.filter_by(study_id=study_id).all()
 
+    @classmethod
+    def find_first_by_study_id(cls, study_id):
+        """Find the first subject in a study.
+
+        Args:
+            study_id: The study id that the subjects belong.
+
+        Returns:
+            The first subject in a study.
+        """
+        return cls.query.filter_by(study_id=study_id).first()
 
     @classmethod
     def count(cls, study_id, group_by):
@@ -84,6 +95,22 @@ class Subject(db.Model):
         # "records" gives us the dictionary shape we want. For example,
         # [{"race":"white", "sex":"female", "count": 50}]
         return grouped_subject_counts.to_dict("records")
+
+    def get_attributes(self):
+        """Get subject's attribute labels.
+
+
+        Returns:
+            List of subject's attributes.
+            Example: [
+                {"attribute": "race"},
+                {"attribute": "sex"}
+            ]
+        """
+        return [
+            {"attribute": attribute.ontology.label}
+            for attribute in self.attributes
+        ]
 
     def to_dict(self, include_study=False, include_visits=False, include_attributes=False, **kwargs):
         """Return attributes as a dict.
