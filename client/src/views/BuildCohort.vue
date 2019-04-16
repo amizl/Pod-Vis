@@ -61,7 +61,6 @@ import { actions, getters, state } from '@/store/modules/cohort/types';
 import CohortCard from '@/components/CohortManager/CohortCard.vue';
 import ParallelCoordinates from '@/components/charts/ParallelCoordinates.vue';
 import ContentHeader from '../components/layout/Header.vue';
-import * as firebase from 'firebase';
 
 export default {
   components: {
