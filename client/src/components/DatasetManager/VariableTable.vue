@@ -1,7 +1,19 @@
 <template>
-  <v-data-table :headers="headers_" :items="variables">
-    <template slot="items" slot-scope="props">
+  <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
+  <v-data-table
+    v-else
+    :headers="headers"
+    :items="variables"
+    v-model="selected"
+    :select-all="selectable"
+    item-key="scale"
+    must-sort
+  >
+    <template v-slot:items="props">
       <tr>
+        <td v-if="selectable">
+          <v-checkbox v-model="props.selected" color="primary" hide-details />
+        </td>
         <td>{{ props.item.category }}</td>
         <td>{{ props.item.scale }}</td>
         <!-- <td v-if="histogram"></td> -->
@@ -14,28 +26,38 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   props: {
-    variables: {
-      type: Array,
+    value: {
+      type: [Array, null],
       default: () => [],
     },
-    histogram: {
+    datasetId: {
+      type: [Number, Array],
+      default: 0,
+    },
+    selectable: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   data() {
     return {
+      isLoading: true,
+      selected: [],
+      variables: [],
       headers: [
         {
           text: 'Category',
           value: 'category',
+          sortable: true,
         },
         {
           text: 'Scale',
           value: 'scale',
-          sortable: false,
+          sortable: true,
         },
         // {
         //   text: 'Variable',
@@ -64,13 +86,41 @@ export default {
       ],
     };
   },
-  computed: {
-    headers_() {
-      if (!this.histrogram) {
-        return this.headers.filter(header => header.value !== 'histogram');
-      } else {
-        return this.headers;
-      }
+  watch: {
+    /**
+     * When the table updates the selected array,
+     * we want to notify our parent by emitting the
+     * input event. That way its v-model and keep
+     * its prop in sync.
+     */
+    selected(value) {
+      if (this.selectable) this.$emit('input', value);
+    },
+  },
+  async created() {
+    let { data } =
+      this.datasetId instanceof Array
+        ? await this.fetchSharedVariables()
+        : await this.fetchVariables();
+    this.variables = data.variables;
+    this.isLoading = false;
+  },
+  methods: {
+    /**
+     * If dataset id is an array of ids, we want to
+     * call the API endpoint that gets their intersecting
+     * variables.
+     */
+    fetchSharedVariables() {
+      const base = `/api/studies/variables`;
+      const query = this.datasetId.map(id => `id=${id}`).join('&');
+      return axios.get(`${base}?${query}`);
+    },
+    /**
+     * API endpoint for getting a dataset's variables.
+     */
+    fetchVariables() {
+      return axios.get(`/api/studies/${this.datasetId}/variables`);
     },
   },
 };
