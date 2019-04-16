@@ -78,6 +78,7 @@ export default new Router({
       props: route => ({
         id: route.params.id,
       }),
+      beforeEnter: requireAuth,
     },
     {
       path: '/signin',
