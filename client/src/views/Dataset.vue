@@ -51,57 +51,23 @@
           </v-layout>
         </v-flex>
       </v-layout>
-      <!-- <v-layout row wrap justify-center>
-        <v-flex xs10>
-          <v-layout row wrap justify-center>
-            <v-flex xs6>
-              <v-card>
-                <v-card-title card color="white">
-                  <span class="title">Outcome Categories</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-chip
-                    v-for="outcome in dataset.outcomes"
-                    :key="outcome.category"
-                  >
-                    {{ outcome.category }}
-                  </v-chip>
-                </v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs6>
-              <v-card class="ui-card">
-                <v-card-title card color="white">
-                  <span class="title">Demographics</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-chip
-                    v-for="demographic in dataset.demographics"
-                    :key="demographic.name"
-                  >
-                    {{ demographic.name }}
-                  </v-chip>
-                </v-card-text>
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-      </v-layout>-->
       <v-layout row wrap justify-center>
+        <!-- <v-flex xs2>
+          <v-card>
+            <v-card-title primary-title card color="white">
+              <span class="title">
+                <v-icon>settings</v-icon> Filter Variables</span
+              >
+            </v-card-title>
+            <v-treeview :items="items"></v-treeview>
+          </v-card>
+        </v-flex> -->
         <v-flex xs12>
           <v-card>
             <v-card-title primary-title card color="white">
               <span class="title">Variables</span>
             </v-card-title>
-            <div></div>
-            <div v-if="variables.length">
-              <variable-table :variables="variables" />
-            </div>
-            <div v-else>
-              <v-card-text>
-                <loading-spinner medium class="ma-5" />
-              </v-card-text>
-            </div>
+            <variable-table :dataset-id="id" />
           </v-card>
         </v-flex>
       </v-layout>
@@ -139,6 +105,17 @@ export default {
   data() {
     return {
       dataset: null,
+      items: [
+        {
+          id: 1,
+          name: 'Category',
+          children: [
+            { id: 2, name: 'Calendar : app' },
+            { id: 3, name: 'Chrome : app' },
+            { id: 4, name: 'Webstorm : app' },
+          ],
+        },
+      ],
       addToProfileSuccess: false,
       summaryData: null,
       variables: [],
