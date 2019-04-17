@@ -7,6 +7,8 @@ class CollectionStudy(db.Model):
     collection_id = db.Column(db.Integer, db.ForeignKey("collection.id"))
     study_id = db.Column(db.Integer, db.ForeignKey("study.id"))
 
+    study = db.relationship("Study", lazy="select")
+
     def __init__(self, collection_id, study_id):
         self.collection_id = collection_id
         self.study_id = study_id
@@ -61,14 +63,19 @@ class CollectionStudy(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def to_dict(self):
+    def to_dict(self, include_study=False):
         """Return attributes as a dict.
 
         This easily allows for serializing the study object and
         sending over http.
         """
-        return dict(
+        collection_study =  dict(
           id=self.id,
           collection_id=self.collection_id,
           study_id=self.study_id
         )
+
+        if include_study:
+            collection_study["study"] = self.study.to_dict()
+
+        return collection_study
