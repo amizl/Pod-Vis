@@ -19,8 +19,9 @@ class Config:
     # cookie to the access endpoints, and only sending your refresh token
     # to the refresh endpoint. Technically this is optional, but it is in
     # our best interest to not send additional cookies in the request if
-    # they aren't needed
-    JWT_ACCESS_COOKIE_PATH = ['/api/', '/auth/']
+    # they aren't needed...
+    # NOTE: list does not work...for now let it default to "/"
+    # JWT_ACCESS_COOKIE_PATH = ['/api/', '/auth/']
     JWT_REFRESH_COOKIE_PATH = '/auth/refresh'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
