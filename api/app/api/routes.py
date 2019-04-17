@@ -295,12 +295,12 @@ def create_collection():
         {
             "label": "Test",
             "study_ids": [1,2],
-            variables: ['MDS-UPDRS_1]
+            variables: ["MDS-UPDRS_1"]
 
         }
 
     Example requests:
-      /api/collection
+      /api/collections
     """
     request_data = request.get_json()
 
@@ -342,3 +342,34 @@ def create_collection():
             for collection_variable in collection_variables
         ]
     }, 201)
+
+@api.route("/collections")
+@jwt_required
+def get_collections():
+    """Get user's collections.
+
+    Params:
+      include: Data to include from collections. This can currently be:
+        1. studies
+        2. variables
+
+    Example requests:
+      /api/collections
+      /api/collections?include=studies
+      /api/collections?incclude=studies&include=variables
+    """
+    user_id = get_jwt_identity()
+    collections = models.Collection.find_all_by_user_id(user_id)
+
+    include = request.args.getlist('include')
+    kwargs = {
+        "include_studies": "studies" in include,
+        "include_variables": "variables" in include
+    }
+
+    return jsonify({
+        "collections": [
+            collection.to_dict(**kwargs)
+            for collection in collections
+        ]
+    })
