@@ -1,6 +1,8 @@
-import * as firebase from 'firebase';
+import {
+  SuccessNotification,
+  ErrorNotification,
+} from '@/store/modules/notifications/notifications';
 import axios from 'axios';
-import store from '../../../store/';
 import { actions, mutations } from './types';
 
 export default {
@@ -24,43 +26,36 @@ export default {
       // TODO
     }
     commit(mutations.SET_LOADING, false);
-    // firebase
-    //   .firestore()
-    //   .collection('datasets')
-    //   .get()
-    //   .then(querySnapshot => {
-    //     const datasets = querySnapshot.docs.map(doc => {
-    //       const dataset = doc.data();
-    //       return {
-    //         id: doc.id,
-    //         ...dataset,
-    //       };
-    //     });
-
-    //     commit(mutations.SET_DATASETS, datasets);
-    //     commit(mutations.SET_LOADING, false);
-    //   })
-    //   /* eslint-disable-next-line */
-    //   .catch((error) => {
-    //     // TODO
-    //   });
   },
   [actions.SELECT_DATASETS]({ commit }, selectedDatasets) {
     commit(mutations.SET_SELECTED_DATASETS, selectedDatasets);
   },
-  [actions.ADD_SELECTED_DATASETS_TO_COHORTS]({ commit }, payload) {
+  /**
+   * Save collection to the database.
+   * @param {Object} context
+   * @param {Object} payload
+   */
+  async [actions.SAVE_COLLECTION]({ commit, dispatch }, payload) {
     commit(mutations.SET_LOADING, true);
 
-    payload.forEach(dataset => {
-      firebase
-        .firestore()
-        .collection('users')
-        .doc(store.state.auth.user)
-        .collection('cohorts')
-        .add(dataset)
-        .then(() => {
-          commit(mutations.SET_LOADING, false);
-        });
-    });
+    try {
+      await axios.post('/api/collections', {
+        label: payload.collectionName,
+        study_ids: payload.datasetIds,
+        variables: payload.variables,
+      });
+      commit(mutations.SET_LOADING, false);
+      const notification = new SuccessNotification(
+        'Collection successfully saved.'
+      );
+      dispatch(notification.dispatch, notification, { root: true });
+
+      return new Promise(resolve => resolve());
+    } catch (err) {
+      const notification = new ErrorNotification(err);
+      dispatch(notification.dispatch, notification, { root: true });
+      commit(mutations.SET_LOADING, false);
+      return new Promise((resolve, reject) => reject());
+    }
   },
 };

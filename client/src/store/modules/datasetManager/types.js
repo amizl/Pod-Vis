@@ -16,6 +16,5 @@ export const actions = {
   FETCH_DATASETS: 'fetchDatasets',
   SELECT_DATASETS: 'selectDatasets',
   ADD_SELECTED_DATASETS_TO_COHORTS: 'addToCohorts',
-  ADD_DATASET_TO_PROFILE: 'addDatasetToProfile',
-  REMOVE_DATASET_FROM_PROFILE: 'removeDatasetFromProfile',
+  SAVE_COLLECTION: 'saveCollection',
 };

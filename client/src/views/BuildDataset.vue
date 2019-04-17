@@ -3,17 +3,17 @@
     <v-toolbar app class="white">
       <v-toolbar-title>Create Dataset Collection</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn :disabled="!selected.length" flat
-          >SAVE NEW DATASET COLLECTION</v-btn
-        >
-      </v-toolbar-items>
+      <save-collection-form
+        :variables="variables"
+        :dataset-ids="selectedDatasetIDs"
+      />
     </v-toolbar>
     <v-layout row justify-center>
       <v-flex xs12>
         <p class="subheading grey--text ligthen-2">Selected Datasets:</p>
         <v-container grid-list-lg fluid pt-0 mt-0 pl-0 ml-0>
           <v-layout row wrap>
+            <!-- TODO: Possibly strip this card into their own component -->
             <v-flex v-for="dataset in selectedDatasets" :key="dataset.id" xs4>
               <v-card>
                 <v-card-title primary-title>
@@ -35,6 +35,7 @@
                 </v-card-actions>
               </v-card>
             </v-flex>
+            <!-- ^^^^ -->
           </v-layout>
         </v-container>
       </v-flex>
@@ -79,10 +80,12 @@
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
 import VariableTable from '@/components/DatasetManager/VariableTable.vue';
+import SaveCollectionForm from '@/components/BuildDataset/SaveCollectionForm.vue';
 
 export default {
   components: {
     VariableTable,
+    SaveCollectionForm,
   },
   props: {
     // id is passed in via route parameters
@@ -94,6 +97,7 @@ export default {
   },
   data() {
     return {
+      collectionName: '',
       activeDataset: null,
       selected: [],
     };
@@ -102,6 +106,14 @@ export default {
     ...mapState('datasetManager', {
       selectedDatasets: state.SELECTED_DATASETS,
     }),
+    selectedDatasetIDs() {
+      return this.selectedDatasets.map(({ id }) => id);
+    },
+    variables() {
+      // Variable take on the shape of {category, scale}. We
+      // only really need the scale (for now).
+      return this.selected.map(variable => variable.scale);
+    },
   },
   methods: {
     ...mapActions('datasetManager', {
