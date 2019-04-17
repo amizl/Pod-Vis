@@ -14,10 +14,9 @@ class Collection(db.Model):
     is_public = db.Column(db.SMALLINT, default=0)
     instantiation_type = db.Column(db.Enum(InstantiationType))
 
-    def __init__(self, creator_id, label, date_generated, is_public, instantiation_type):
+    def __init__(self, creator_id, label, is_public, instantiation_type):
         self.creator_id = creator_id
         self.label = label
-        self.date_generated = date_generated
         self.is_public = is_public
         self.instantiation_type = instantiation_type
 
