@@ -6,10 +6,10 @@ from flask_jwt_extended import (
     get_jti,
     get_raw_jwt,
     jwt_refresh_token_required,
-    get_jwt_identity,
     set_access_cookies,
     set_refresh_cookies,
-    unset_jwt_cookies
+    unset_jwt_cookies,
+    get_current_user
 )
 from . import (
     auth,
@@ -31,8 +31,7 @@ def is_user_token_expired():
     Returns:
         User information.
     """
-    user_id = get_jwt_identity()
-    user = User.find_by_id(user_id)
+    user = get_current_user()
     if user:
         response = jsonify({
             "user": user.to_dict()
@@ -120,8 +119,8 @@ def refresh():
     Returns:
         Access token.
     """
-    current_user = get_jwt_identity()
-    access_token = create_access_token(identity=current_user)
+    user = get_current_user()
+    access_token = create_access_token(identity=user.id)
 
     response = jsonify({"msg": "Access token refreshed."})
     set_access_cookies(response, access_token)

@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_current_user
 from functools import reduce
 from . import api
 from .exceptions import ResourceNotFound, BadRequest
@@ -304,11 +304,11 @@ def create_collection():
     """
     request_data = request.get_json()
 
-    user_id = get_jwt_identity()
+    user = get_current_user()
     label = request_data.get('label')
 
     # Create Collection
-    collection = models.Collection(user_id, label, 0, 'dynamic')
+    collection = models.Collection(user.id, label, 0, 'dynamic')
     collection.save_to_db()
 
     # Add studies to collection
@@ -358,8 +358,8 @@ def get_collections():
       /api/collections?include=studies
       /api/collections?incclude=studies&include=variables
     """
-    user_id = get_jwt_identity()
-    collections = models.Collection.find_all_by_user_id(user_id)
+    user = get_current_user()
+    collections = models.Collection.find_all_by_user_id(user.id)
 
     include = request.args.getlist('include')
     kwargs = {
