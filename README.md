@@ -49,13 +49,18 @@ After environment variables are setup, in the root directory (with the docker-co
 2. Run `docker-compose up`
   * You may need to change the ports in the dockerfiles if you already applications running on those ports
 
-# How to work on client container without rebuilding for every change
-Building all the containers can impede development if you are only working on a single part of the application. For example, if you are working on the client, you may want hot reloading so you can see your changes in real time with out having to build the containers every time.
+# Actively developing api or client without rebuilding for every change
+Building all the containers can impede development if you are only working on a single part of the application. For example, if you are working on the client, you may want hot reloading so you can see your changes in real time with out having to build all the containers every time.
+
+## client
 1. Run `docker-compose build api`
 2. Run `docker-compose up api`
-This will only build the containers that are in the api docker name and its dependencies. Then, to work on the client, cd in the `client` directory and
+This will only build api and its dependencies. Then, to work on the client, cd in the `client` directory and
 1. Run `npm run serve`
-This will launch your client application on locahost at some port, and it will automatically be communicating with the api docker container. Any changes to client code will hot reload at this port and doesnt require rebuilding.
+This will launch your client application on localhost at some port, and it will automatically be communicating with the api docker container. Any changes to client code will hot reload at this port and doesnt require rebuilding.
+
+## api
+TODO (currently required to build and up api because flask + mysql are coupled)
 
 
 # Quick version.
