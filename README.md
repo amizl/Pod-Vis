@@ -19,7 +19,13 @@ TODO
 # Setting up development
 To start, you will need to fill out environment variables for both Docker and Flask.
 ## Docker
-Docker has 4 environment variables it needs when it builds: `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD`. These environment variables are loaded when docker builds the MySQL container.
+Docker has 4 environment variables it needs when it builds:
+- `MYSQL_ROOT_PASSWORD`
+- `MYSQL_DATABASE`
+- `MYSQL_USER`
+- `MYSQL_PASSWORD`
+
+These environment variables are loaded when docker builds the MySQL container.
 1. See the `example_env` file in the root directory and fill in where it says `TODO`
 2. Save this as a new file named: `.env`
 
@@ -30,13 +36,18 @@ Flask has 5 environment variables it needs when it initializes,
 - `FLASK_CONFIG`- This can be either `development` or `production`. This will enable development/production mode for Flask.
 - `MYSQL_DEVELOPMENT_DATABASE_URI` - Database URI to our development DB.
 - `MYSQL_PRODUCTION_DATABASE_URI` - Database URI to our production DB. This for now can be the same as development. May change later if we want separate setups.
-1. See the `example_env` file in the `api` directory and replace the `TODO` and `<...>` values. The values that start with `<  >` need to be the same as the environment variables you set in the root `.env` file. For example, if this file has `MYSQL_USER=cliovis`, `MYSQL_PASSWORD`, `MYSQL_DATABASE=cliovis` then a URI could be `mysql+pymysql://cliovis:cliovis@mysql/cliovis`
+1. See the `example_env` file in the `api` directory and replace the `TODO` and `<...>` values. The values that start with `<  >` need to be the same as the environment variables you set in the root `.env` file. For example, if this file has
+- `MYSQL_USER=cliovis`
+- `MYSQL_PASSWORD=cliovis`
+- `MYSQL_DATABASE=cliovis`
+then the MYSQL_DEVELOPMENT_DATABASE_URI could be
+- `MYSQL_DEVELOPMENT_DATABASE_URI=mysql+pymysql://cliovis:cliovis@mysql/cliovis`
 
 # Spinning up application
 After environment variables are setup, in the root directory (with the docker-compose.yml file),
 1. Run `docker-compose build`
 2. Run `docker-compose up`
-..* You may need to change the ports in the dockerfiles if you already applications running on those ports
+  * You may need to change the ports in the dockerfiles if you already applications running on those ports
 
 # How to work on client container without rebuilding for every change
 Building all the containers can impede development if you are only working on a single part of the application. For example, if you are working on the client, you may want hot reloading so you can see your changes in real time with out having to build the containers every time.
