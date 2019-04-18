@@ -3,7 +3,7 @@
     <v-toolbar app class="white">
       <v-toolbar-title>Create Dataset Collection</v-toolbar-title>
       <v-spacer></v-spacer>
-      <save-collection-form
+      <save-collection-btn-dialog
         :variables="variables"
         :dataset-ids="selectedDatasetIDs"
       />
@@ -80,12 +80,12 @@
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
 import VariableTable from '@/components/DatasetManager/VariableTable.vue';
-import SaveCollectionForm from '@/components/BuildDataset/SaveCollectionForm.vue';
+import SaveCollectionBtnDialog from '@/components/BuildDataset/SaveCollectionBtnDialog.vue';
 
 export default {
   components: {
     VariableTable,
-    SaveCollectionForm,
+    SaveCollectionBtnDialog,
   },
   props: {
     // id is passed in via route parameters
@@ -95,13 +95,11 @@ export default {
       default: null,
     },
   },
-  data() {
-    return {
-      collectionName: '',
-      activeDataset: null,
-      selected: [],
-    };
-  },
+  data: () => ({
+    collectionName: '',
+    activeDataset: null,
+    selected: [],
+  }),
   computed: {
     ...mapState('datasetManager', {
       selectedDatasets: state.SELECTED_DATASETS,
