@@ -1,85 +1,56 @@
-<template lang="pug">
-v-card
-  v-card-title.primary-title
-    span.title Available Datasets
-  v-layout(
-    row
-    justify-center
-    align-center
-  )
-    v-flex(v-if='isLoading')
-      loading-spinner(medium).ma-5
-    v-flex(v-else)
-      v-data-table(
-        v-if='datasets'
-        v-model='selected'
-        :search='search'
-        :headers='headers'
-        :items='datasets'
-        item-key='study_name'
-        hide-actions
-      )
-        template(
-          slot="items"
-          slot-scope="props"
-        )
-          tr
-            td
-              v-checkbox(
-                v-model='props.selected'
-                color='primary'
-                hide-details
-              )
-            td.text-xs-left {{ props.item.project_name }}
-            td.text-xs-left {{ props.item.study_name }}
-            //- td.text-xs-right {{ props.item.n_samples }}
-            //- td.text-xs-right {{ props.item.outcome_categories }}
-            //- td.text-xs-right {{ props.item.outcome_measures }}
-            //- td.text-xs-right {{ props.item.demographics.length }}
-            //- td.text-xs-right {{ props.item.variables.length }}
-            //- td.text-xs-right.justify-center.layout.mt-4
-            td.text-xs-right.justify-center
-              v-tooltip(
-                top
-                color='primary'
-              )
-                v-icon(
-                  @click='stepIntoDataset(props.item.id)'
-                  slot="activator"
-                  color='primary'
-                ).mr-1 info
-                span Learn more about this study
-              //- v-tooltip(
-              //-   top
-              //-   color='primary'
-              //- )
-              //-   //- @click='addToProfile({ dataset: props.item.dataset, id:props.item.id })'
-              //-   v-icon(
-              //-     @click='addToProfile(props.item.study_id)'
-              //-     slot="activator"
-              //-     color='primary'
-              //-   ) add_circle
-              //-   span Add dataset to profile
-            //- td {{ probs.item.n_variables }}
-            //- td {{ props.item.code }}
-  v-snackbar(
-      v-model='addToProfileSuccess'
-      color='success'
-      top
-  )
-    | Dataset was successfully added to your profile.
+<template>
+  <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
+  <v-data-table
+    v-else
+    v-model="selected"
+    :search="search"
+    :headers="headers"
+    :items="datasets"
+    item-key="study_name"
+  >
+    <template v-slot:items="props">
+      <tr>
+        <td>
+          <v-checkbox
+            v-model="props.selected"
+            color="primary"
+            hide-details
+          ></v-checkbox>
+        </td>
+        <td class="text-xs-left">{{ props.item.project_name }}</td>
+        <td class="text-xs-left">{{ props.item.study_name }}</td>
+        <!-- <td class="text-xs-right">{{ props.item.n_samples }}</td>
+        <td class="text-xs-right">{{ props.item.outcome_categories }}</td>
+        <td class="text-xs-right">{{ props.item.outcome_measures }}</td>
+        <td class="text-xs-right">{{ props.item.demographics.length }}</td>
+        <td class="text-xs-right">{{ props.item.variables.length }}</td> -->
+        <td class="text-xs-right justify-center">
+          <v-tooltip top color="primary">
+            <template v-slot:activator="{ on }">
+              <v-icon
+                color="primary"
+                class="mr-1"
+                @click="stepIntoDataset(props.item.id)"
+                v-on="on"
+                >info</v-icon
+              >
+            </template>
+            <span
+              >Learn more about
+              <strong>{{ props.item.study_name }}</strong></span
+            >
+          </v-tooltip>
+        </td>
+      </tr>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import { state, actions } from '@/store/modules/datasetManager/types';
-import { actions as dashboardActions } from '@/store/modules/dashboard/types';
 
 export default {
-  components: {
-    LoadingSpinner,
-  },
   props: {
     search: {
       type: String,
@@ -88,8 +59,6 @@ export default {
   },
   data() {
     return {
-      addToProfileSuccess: false,
-      addToProfileFailure: false,
       selected: [],
       headers: [
         {
@@ -169,9 +138,6 @@ export default {
     ...mapActions('datasetManager', {
       fetchDatasets: actions.FETCH_DATASETS,
       selectDatasets: actions.SELECT_DATASETS,
-    }),
-    ...mapActions('dashboard', {
-      addToProfile: dashboardActions.ADD_DATASET_TO_PROFILE,
     }),
     stepIntoDataset(studyID) {
       // Route to view for dataset information
