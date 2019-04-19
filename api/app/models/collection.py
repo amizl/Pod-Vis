@@ -17,8 +17,14 @@ class Collection(db.Model):
     is_public = db.Column(db.SMALLINT, default=0)
     instantiation_type = db.Column(db.Enum(InstantiationType))
 
-    studies = db.relationship("CollectionStudy", lazy="select")
-    variables = db.relationship("CollectionObservationVariable", lazy="select")
+    studies = db.relationship(
+        "CollectionStudy",
+        lazy="select",
+        cascade="all, delete-orphan")
+    variables = db.relationship(
+        "CollectionObservationVariable",
+        lazy="select",
+        cascade="all, delete-orphan")
 
     def __init__(self, creator_id, label, is_public, instantiation_type):
         self.creator_id = creator_id
@@ -62,6 +68,11 @@ class Collection(db.Model):
     def save_to_db(self):
         """Save collection to the database."""
         db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self):
+        """Delete collection from the database."""
+        db.session.delete(self)
         db.session.commit()
 
     def to_dict(self,
