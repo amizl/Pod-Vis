@@ -333,16 +333,8 @@ def create_collection():
         collection_variables.append(obs_variable)
 
     return jsonify({
-        "collection": collection.to_dict(),
-        "collection_studies": [
-            collection_study.to_dict()
-            for collection_study in collection_studies
-        ],
-        "collection_variables": [
-            collection_variable.to_dict()
-            for collection_variable in collection_variables
-        ]
-    }, 201)
+        "collection": collection.to_dict(include_studies=True, include_variables=True)
+    }), 201
 
 @api.route("/collections")
 @jwt_required
