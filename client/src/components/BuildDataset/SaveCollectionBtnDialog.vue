@@ -1,23 +1,8 @@
 <template>
   <v-toolbar-items>
-    <!--
-      If there's no variables selected we want to disable
-      button and show tooltip. As soon as variables
-      are selected we want to enable the button but
-      then no longer have this tooltip.
-     -->
-    <v-tooltip v-if="!variables.length" bottom>
-      <span>Select variables to save collection.</span>
-      <template v-slot:activator="{ on }">
-        <v-btn :disabled="!variables.length" flat v-on="on">
-          <v-icon left>save</v-icon> SAVE COLLECTION
-        </v-btn>
-      </template>
-    </v-tooltip>
-    <v-btn v-else :disabled="!variables.length" flat @click="dialog = !dialog">
+    <v-btn :disabled="!areVariablesSelected" flat @click="dialog = !dialog">
       <v-icon left>save</v-icon> SAVE COLLECTION
     </v-btn>
-
     <!-- SAVE COLLECTION FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
       <v-card>
@@ -81,6 +66,11 @@ export default {
     dialog: false,
     loading: false,
   }),
+  computed: {
+    areVariablesSelected() {
+      return this.variables.length > 0;
+    },
+  },
   methods: {
     ...mapActions('datasetManager', {
       saveCollection: actions.SAVE_COLLECTION,
