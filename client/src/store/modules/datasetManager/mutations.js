@@ -4,6 +4,12 @@ export default {
   [mutations.SET_DATASETS](state, datasets) {
     state[stateTypes.DATASETS] = datasets;
   },
+  [mutations.SET_COLLECTIONS](state, collections) {
+    state[stateTypes.COLLECTIONS] = collections;
+  },
+  [mutations.ADD_COLLECTION](state, collection) {
+    state[stateTypes.COLLECTIONS].push(collection);
+  },
   [mutations.SET_LOADING](state, loading) {
     state[stateTypes.IS_LOADING] = loading;
   },
