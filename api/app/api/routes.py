@@ -3,6 +3,7 @@ from flask_jwt_extended import jwt_required, get_current_user
 from functools import reduce
 from . import api
 from .exceptions import ResourceNotFound, BadRequest
+from ..auth.exceptions import AuthFailure
 from .. import models
 import pandas as pd
 
@@ -373,3 +374,34 @@ def get_collections():
             for collection in collections
         ]
     })
+
+@api.route("/collections/<collection_id>", methods=["DELETE"])
+@jwt_required
+def delete_collection(collection_id):
+    """Delete the user's collection."""
+    user = get_current_user()
+    collection = models.Collection.find_by_id(collection_id)
+
+    if not collection:
+        raise ResourceNotFound("Collection not found.")
+    if collection.creator_id != user.id:
+        raise AuthFailure('User not authorized to delete collection.')
+
+    collection.delete_from_db()
+
+    return jsonify(dict(success=True))
+
+@api.route("/collections", methods=["DELETE"])
+@jwt_required
+def delete_all_collections():
+    """Delete all of user's collections."""
+    user = get_current_user()
+    collections = models.Collection.find_all_by_user_id(user.id)
+
+    if not collections:
+        raise ResourceNotFound("No collections for user.")
+
+    for collection in collections:
+        collection.delete_from_db()
+
+    return jsonify(dict(success=True))
