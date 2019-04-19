@@ -27,7 +27,19 @@
       </v-toolbar-items>
     </v-toolbar>
     <v-layout row justify-center>
-      <v-flex xs12> <dataset-table :search="search" /> </v-flex>
+      <v-flex xs12>
+        <v-card>
+          <v-card-title card color="white">
+            <p>
+              <span class="title">Available Datasets</span> <br />
+              <span class="subheading grey--text ligthen-2"
+                >Select those you wish to combine.</span
+              >
+            </p>
+          </v-card-title>
+          <dataset-table :search="search" />
+        </v-card>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
