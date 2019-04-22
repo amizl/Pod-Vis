@@ -22,7 +22,7 @@
           right
         >
           <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
-          Create Dataset Collection</v-btn
+          Create Dataset</v-btn
         >
       </v-toolbar-items>
     </v-toolbar>

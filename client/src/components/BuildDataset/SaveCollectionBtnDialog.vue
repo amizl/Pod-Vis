@@ -1,13 +1,13 @@
 <template>
   <v-toolbar-items>
     <v-btn :disabled="!areVariablesSelected" flat @click="dialog = !dialog">
-      <v-icon left>save</v-icon> SAVE COLLECTION
+      <v-icon left>save</v-icon> SAVE DATASET
     </v-btn>
     <!-- SAVE COLLECTION FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
       <v-card>
         <v-card-title primary-title>
-          <span class="title pl-2">Save Collection</span>
+          <span class="title pl-2">Save Dataset</span>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" v-model="valid" @submit.prevent="onSaveCollection">
@@ -17,7 +17,7 @@
                 () => !!collectionName || 'Collection name is required.',
               ]"
               prepend-inner-icon="table_chart"
-              label="Please name your collection."
+              label="Please name your dataset."
               box
               flat
               background-color="grey lighten-4"
