@@ -1,6 +1,6 @@
 import { state } from './types';
 
 export default {
-  [state.COHORTS]: null,
+  [state.COHORTS]: [],
   [state.IS_LOADING]: false,
 };

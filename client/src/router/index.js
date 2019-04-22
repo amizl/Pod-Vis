@@ -70,6 +70,7 @@ export default new Router({
       props: route => ({
         id: route.query.id,
       }),
+      beforeEnter: requireAuth,
     },
     {
       path: '/datasets/:id',

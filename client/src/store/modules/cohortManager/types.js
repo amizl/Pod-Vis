@@ -5,8 +5,7 @@ export const state = {
 };
 
 // Getters
-export const getters = {
-};
+export const getters = {};
 
 // Mutations
 export const mutations = {
@@ -16,5 +15,5 @@ export const mutations = {
 
 // Actions
 export const actions = {
-  FETCH_COHORTS: 'createUserAccount',
+  FETCH_COHORTS: 'fetchCohorts',
 };

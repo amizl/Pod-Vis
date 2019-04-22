@@ -8,7 +8,7 @@
     </template>
     <template v-slot:no-data>
       <v-alert :value="true" color="info" icon="info">
-        You have no saved cohorts.
+        You have no saved collections.
       </v-alert>
     </template>
   </v-data-table>
