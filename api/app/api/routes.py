@@ -13,6 +13,7 @@ def get_all_subjects():
     """Get all subjects."""
     subjects = models.Subject.get_all_subjects()
     return jsonify({
+        "success": True,
         "subjects": [subject.to_dict() for subject in subjects]
     })
 
@@ -39,6 +40,7 @@ def get_all_studies():
     }
 
     return jsonify({
+        "success": True,
         "studies": [study.to_dict(**kwargs) for study in studies]
     })
 
@@ -68,6 +70,7 @@ def get_study(study_id):
     }
 
     return jsonify({
+        "success": True,
         "study": study.to_dict(**kwargs)
     })
 
@@ -90,12 +93,12 @@ def get_study_variables(study_id):
     })
 
 
-@api.route("/studies/<study_id>/instrument-totals")
-def get_totals(study_id):
-    """TODO"""
-    study = models.Study.find_by_id(study_id)
-    totals = study.total_scores()
-    return jsonify(totals)
+# @api.route("/studies/<study_id>/instrument-totals")
+# def get_totals(study_id):
+#     """TODO"""
+#     study = models.Study.find_by_id(study_id)
+#     totals = study.total_scores()
+#     return jsonify(totals)
 
 
 @api.route("/studies/variables")
@@ -118,6 +121,7 @@ def get_intersection_of_variables():
     intersection = reduce((lambda df1, df2: df1.merge(df2)), dfs)
 
     return jsonify({
+        "success": True,
         "variables": intersection.to_dict('records')
     })
 
@@ -151,6 +155,7 @@ def get_study_subjects(study_id):
 
     subjects = models.Subject.find_all_by_study_id(study_id)
     return jsonify({
+        "success": True,
         "subjects": [subject.to_dict(**kwargs) for subject in subjects]
     })
 
@@ -171,6 +176,7 @@ def get_study_subject_attributes(study_id):
 
     subject = models.Subject.find_first_by_study_id(study_id)
     return jsonify({
+        "success": True,
         "subject_attributes": subject.get_attributes()
     })
 
@@ -218,6 +224,7 @@ def summarize_study_subjects(study_id):
     }
 
     response = {
+        "success": True,
         "counts": counts
     }
 
@@ -250,6 +257,7 @@ def get_all_projects():
     }
 
     return jsonify({
+        "success": True,
         "projects": [
             project.to_dict(**kwargs)
             for project in projects
@@ -280,6 +288,7 @@ def get_project(project_id):
     }
 
     return jsonify({
+        "success": True,
         "project": project.to_dict(**kwargs)
     })
 
@@ -304,16 +313,22 @@ def create_collection():
       /api/collections
     """
     request_data = request.get_json()
+    label = request_data.get('label')
+    study_ids = request_data.get('study_ids')
+    variables = request_data.get('variables')
+
+    if not study_ids:
+        raise BadRequest("A collection must have studies.")
+    if not variables:
+        raise BadRequest("A collection must have variables.")
 
     user = get_current_user()
-    label = request_data.get('label')
 
     # Create Collection
     collection = models.Collection(user.id, label, 0, 'dynamic')
     collection.save_to_db()
 
     # Add studies to collection
-    study_ids = request_data.get('study_ids')
     collection_studies = []
     for study_id in study_ids:
         study = models.Study.find_by_id(study_id)
@@ -325,7 +340,6 @@ def create_collection():
         collection_studies.append(collection_study)
 
     # Add variables to collection
-    variables = request_data.get('variables')
     collection_variables = []
     for variable in variables:
         obs_variable = models.CollectionObservationVariable(collection.id, variable)
@@ -333,6 +347,7 @@ def create_collection():
         collection_variables.append(obs_variable)
 
     return jsonify({
+        "success": True,
         "collection": collection.to_dict(include_studies=True, include_variables=True)
     }), 201
 
@@ -361,6 +376,7 @@ def get_collections():
     }
 
     return jsonify({
+        "success": True,
         "collections": [
             collection.to_dict(**kwargs)
             for collection in collections
@@ -391,9 +407,134 @@ def delete_all_collections():
     collections = models.Collection.find_all_by_user_id(user.id)
 
     if not collections:
-        raise ResourceNotFound("No collections for user.")
+        raise ResourceNotFound("No collections to delete for user.")
 
     for collection in collections:
         collection.delete_from_db()
 
     return jsonify(dict(success=True))
+
+@api.route("/cohorts")
+@jwt_required
+def get_all_cohorts():
+    """Get all of user's cohorts.
+
+    Example URL:
+    /api/cohorts
+    /api/cohorts?include=subjects
+    """
+    user = get_current_user()
+    cohorts = models.Cohort.find_all_by_user_id(user.id)
+
+    include = request.args.getlist('include')
+    kwargs = {
+        "include_subjects": "subjects" in include,
+    }
+
+    return jsonify({
+        "success": True,
+        "cohorts": [
+            cohort.to_dict(**kwargs)
+            for cohort in cohorts
+        ]
+    })
+
+@api.route("/cohorts/<cohort_id>")
+@jwt_required
+def get_cohort(cohort_id):
+    """Get a user's cohort.
+
+    Params:
+        subjects
+
+    Example URL:
+    /api/cohorts/1
+    /api/cohorts/1?include=subjects
+    """
+    user = get_current_user()
+    cohort = models.Cohort.find_by_id(cohort_id)
+
+    if user.id != cohort.user_id:
+        raise AuthFailure("User does not own this cohort.")
+
+    include = request.args.getlist('include')
+    kwargs = {
+        "include_subjects": "subjects" in include,
+    }
+
+    return jsonify({
+        "success": True,
+        "cohort": cohort.to_dict(**kwargs)
+    })
+
+
+@api.route('/cohorts', methods=["POST"])
+@jwt_required
+def create_cohort():
+    """Create new cohort.
+
+    Example requests:
+      /api/cohorts
+    """
+    request_data = request.get_json()
+
+    user = get_current_user()
+    label = request_data.get('label')
+
+    # Create Collection
+    cohort = models.Cohort(user.id, label, 'dynamic')
+    cohort.save_to_db()
+
+    # Add subjects to cohort
+    # TODO
+
+    # Add queries to cohort
+    # TODO
+    return jsonify({
+        "success": True,
+        "cohort": cohort.to_dict()
+    }), 201
+
+@api.route('/cohorts', methods=["DELETE"])
+@jwt_required
+def delete_all_cohorts():
+    """Delete all of user's cohorts.
+
+    Example requests:
+      /api/cohorts
+    """
+    user = get_current_user()
+    cohorts = models.Cohort.find_all_by_user_id(user.id)
+
+    if not cohorts:
+        ResourceNotFound("This user has no cohorts to delete.")
+
+    for cohort in cohorts:
+        cohort.delete_from_db()
+
+    return jsonify({
+        "success": True,
+    })
+
+@api.route('/cohorts/<cohort_id>', methods=["DELETE"])
+@jwt_required
+def delete_cohort(cohort_id):
+    """Delete user's cohort.
+
+    Example requests:
+      /api/cohorts
+    """
+    user = get_current_user()
+    cohort = models.Cohort.find_by_id(cohort_id)
+
+    if not cohort:
+        ResourceNotFound("Cohort does not exist.")
+
+    if user.id != cohort.user_id:
+        raise AuthFailure("Not authorizaed to delete this cohort.")
+
+    cohort.delete_from_db()
+
+    return jsonify({
+        "success": True,
+    })
