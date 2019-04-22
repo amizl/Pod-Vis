@@ -1,11 +1,17 @@
 <template>
-  <v-container fluid>
+  <v-container fluid fill-height>
     <v-toolbar app class="white">
       <v-toolbar-title>Dashboard</v-toolbar-title>
     </v-toolbar>
     <v-layout align-center justify-center>
-      <v-flex xs12> <dataset-table /> </v-flex>
+      <h1 class="headline text-md-center">
+        <v-icon large class="pb-4">build</v-icon><br />
+        Dashboard is currently under development
+      </h1>
     </v-layout>
+    <!-- <v-layout align-center justify-center>
+      <v-flex xs12> <dataset-table /> </v-flex>
+    </v-layout> -->
   </v-container>
 </template>
 
