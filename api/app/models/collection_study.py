@@ -66,7 +66,7 @@ class CollectionStudy(db.Model):
     def to_dict(self, include_study=False):
         """Return attributes as a dict.
 
-        This easily allows for serializing the study object and
+        This easily allows for serializing the object and
         sending over http.
         """
         collection_study =  dict(

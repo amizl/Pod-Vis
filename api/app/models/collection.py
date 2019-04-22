@@ -81,7 +81,7 @@ class Collection(db.Model):
                 include_variables=False):
         """Return attributes as a dict.
 
-        This easily allows for serializing the study object and
+        This easily allows for serializing the collection object and
         sending over http.
         """
         collection = dict(
