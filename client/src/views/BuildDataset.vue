@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-toolbar app class="white">
-      <v-toolbar-title>Create Dataset Collection</v-toolbar-title>
+      <v-toolbar-title>Create Dataset</v-toolbar-title>
       <v-spacer></v-spacer>
       <save-collection-btn-dialog
         :variables="variables"
@@ -15,25 +15,11 @@
           <v-layout row wrap>
             <!-- TODO: Possibly strip this card into their own component -->
             <v-flex v-for="dataset in selectedDatasets" :key="dataset.id" xs4>
-              <v-card>
-                <v-card-title primary-title>
-                  <span class="subheading">
-                    {{ dataset.study_name }} <br />
-                    <span class="caption grey--text lighten-2">
-                      {{ dataset.project_name }}
-                    </span>
-                  </span>
-                </v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn :to="`/datasets/${dataset.id}`" flat icon>
-                    <v-tooltip top color="primary">
-                      <v-icon slot="activator"> info </v-icon>
-                      <span>Learn more about this study</span>
-                    </v-tooltip>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
+              <sunburst-card
+                :id="dataset.id"
+                :project-name="dataset.project_name"
+                :study-name="dataset.study_name"
+              />
             </v-flex>
             <!-- ^^^^ -->
           </v-layout>
@@ -81,11 +67,13 @@ import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
 import VariableTable from '@/components/DatasetManager/VariableTable.vue';
 import SaveCollectionBtnDialog from '@/components/BuildDataset/SaveCollectionBtnDialog.vue';
+import SunburstCard from '@/components/BuildDataset/SunburstCard.vue';
 
 export default {
   components: {
     VariableTable,
     SaveCollectionBtnDialog,
+    SunburstCard,
   },
   props: {
     // id is passed in via route parameters
