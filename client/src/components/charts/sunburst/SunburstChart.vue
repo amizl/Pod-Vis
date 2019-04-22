@@ -9,7 +9,7 @@
           {{ current.value }}/{{ root.value }}
         </p>
       </v-flex>
-      <div id="chart"></div>
+      <div ref="chart"></div>
     </v-flex>
     <v-flex xs6>
       <slot
@@ -215,7 +215,7 @@ export default {
       nodes = this.nodes,
       formatNumber = d3Format(',d');
 
-    let svg = d3Select('#chart')
+    let svg = d3Select(this.$refs.chart)
       .append('svg')
       .attr('width', width)
       .attr('height', height)
