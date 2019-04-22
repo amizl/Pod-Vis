@@ -152,12 +152,14 @@ export default {
     if (dataset) {
       this.dataset = dataset;
 
-      const { data } = await this.fetchVariables();
-      this.variables = data.variables;
-      // Get demographics summary data for sunburst chart
-      const summary = await this.fetchDemographicSummary();
-      const { counts } = summary.data;
-      this.summaryData = counts;
+      this.fetchVariables().then(({ data }) => {
+        this.variables = data.variables;
+      });
+
+      this.fetchDemographicSummary().then(({ data }) => {
+        const { counts } = data;
+        this.summaryData = counts;
+      });
     }
   },
   methods: {
