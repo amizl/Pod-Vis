@@ -41,6 +41,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - ./db/data/mysql:/var/lib/mysql
+      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     networks:
       - backend
 networks:

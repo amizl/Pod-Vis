@@ -319,23 +319,6 @@ CREATE TABLE IF NOT EXISTS `cliovis`.`collection_observation_variable` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `cliovis`.`observation_ontology`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cliovis`.`observation_ontology` (
-  `id` INT NOT NULL,
-  `label` VARCHAR(255) NULL,
-  `parent_id` INT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `parent_id`
-    FOREIGN KEY (`id`)
-    REFERENCES `cliovis`.`observation_ontology` (`parent_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
