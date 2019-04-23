@@ -108,14 +108,17 @@ class Subject(db.Model):
             ]
         """
         return [
-            {"attribute": attribute.ontology.label}
+            {
+                "category": attribute.ontology.parent.label if attribute.ontology.parent else None,
+                "scale": attribute.ontology.label
+            }
             for attribute in self.attributes
         ]
 
     def to_dict(self, include_study=False, include_visits=False, include_attributes=False, **kwargs):
         """Return attributes as a dict.
 
-        This easily allows for serializing the study object and
+        This easily allows for serializing the object and
         sending over http.
         """
         subject = dict(
