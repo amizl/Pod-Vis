@@ -1,6 +1,12 @@
 ## TODO
 Improve this.
 
+# Pre-reqs
+
+Instructions are for Debian-based systems, but substitute for your platform.
+
+$ sudo apt install mysql-server
+
 # CliO
 CliO-Vis is broken up into three parts.
 1. API
@@ -19,11 +25,11 @@ TODO
 # Setting up development
 To start, you will need to fill out environment variables for both Docker and Flask.
 ## Docker
-Docker has 4 environment variables it needs when it builds:
-- `MYSQL_ROOT_PASSWORD`
-- `MYSQL_DATABASE`
-- `MYSQL_USER`
-- `MYSQL_PASSWORD`
+Docker has 4 environment variables it needs when it builds.  Only the root password needs to exist already - the rest will be created automatically.
+- `MYSQL_ROOT_PASSWORD` 
+- `MYSQL_DATABASE` 
+- `MYSQL_USER` 
+- `MYSQL_PASSWORD` 
 
 These environment variables are loaded when docker builds the MySQL container.
 1. See the `example_env` file in the root directory and fill in where it says `TODO`
