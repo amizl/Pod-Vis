@@ -507,7 +507,7 @@ def delete_all_cohorts():
     cohorts = models.Cohort.find_all_by_user_id(user.id)
 
     if not cohorts:
-        ResourceNotFound("This user has no cohorts to delete.")
+        raise ResourceNotFound("This user has no cohorts to delete.")
 
     for cohort in cohorts:
         cohort.delete_from_db()
@@ -528,7 +528,7 @@ def delete_cohort(cohort_id):
     cohort = models.Cohort.find_by_id(cohort_id)
 
     if not cohort:
-        ResourceNotFound("Cohort does not exist.")
+        raise ResourceNotFound("Cohort does not exist.")
 
     if user.id != cohort.user_id:
         raise AuthFailure("Not authorizaed to delete this cohort.")
