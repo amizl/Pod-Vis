@@ -25,4 +25,5 @@ export const actions = {
   SIGN_USER_IN: 'signUserIn',
   SIGN_USER_OUT: 'signUserOut',
   GET_USER_FROM_SESSION: 'getUserFromSession',
+  VALIDATE_TOKEN: 'getUserFromSession',
 };
