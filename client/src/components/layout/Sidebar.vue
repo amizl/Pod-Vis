@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       signOutDialog: false,
-      expand: false,
+      expand: true,
       menuItems: [
         {
           name: 'Dashboard',
@@ -111,6 +111,21 @@ export default {
         },
       ],
     };
+  },
+  watch: {
+    expand(value) {
+      // cache if sidebar is toggled
+      window.localStorage['expand'] = value;
+    },
+  },
+  created() {
+    // Check if we have cached if the sidebar is toggled
+    if ('expand' in window.localStorage) {
+      let expand = window.localStorage['expand'];
+      this.expand = eval(expand); // evaluate 'false' or 'true' strings
+    } else {
+      this.expand = true;
+    }
   },
   methods: {
     ...mapActions({

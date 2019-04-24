@@ -7,6 +7,8 @@ class SubjectOntology(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey("subject_ontology.id"))
     label = db.Column(db.VARCHAR, nullable=False)
 
+    parent = db.relationship("SubjectOntology", remote_side=[id])
+
     def __init__(self,  parent_id, label):
         self.parent_id = parent_id
         self.label= label
@@ -37,14 +39,19 @@ class SubjectOntology(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def to_dict(self):
+    def to_dict(self, include_parent=False):
         """Return attributes as a dict.
 
-        This easily allows for serializing the study object and
+        This easily allows for serializing the object and
         sending over http.
         """
-        return dict(
+        ontology = dict(
           id=self.id,
           parent_id=self.parent_id,
           label=self.label
         )
+
+        if include_parent:
+            ontology['parent'] = self.parent.to_dict()
+
+        return ontology

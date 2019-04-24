@@ -1,5 +1,5 @@
 SECRET_KEY=TODO
 JWT_SECRET_KEY=TODO
 FLASK_CONFIG=<can be development OR production>
-MYSQL_DEVELOPMENT_DATABASE_URI=mysql+pymysql://<user from env>:<password from env>@mysql/<database from env>
-MYSQL_PRODUCTION_DATABASE_URI=mysql+pymysql://<user from env>:<password from env>@localhost/<database from env>
+MYSQL_DEVELOPMENT_DATABASE_URI=mysql+pymysql://<user from CliO/.env>:<password from env>@mysql/cliovis
+MYSQL_PRODUCTION_DATABASE_URI=mysql+pymysql://<user from CliO/,env>:<password from env>@localhost/cliovis
