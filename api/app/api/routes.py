@@ -109,20 +109,20 @@ def get_intersection_of_variables():
       /api/studies/variables?id=1&id=2
     """
     study_ids = request.args.getlist('id')
-
     studies = [models.Study.find_by_id(study_id) for study_id in study_ids]
-    variables = [study.get_variables() for study in studies]
 
-    # Convert variables result to df to easily perform intersection. Ideally
-    # this might want to be done in MySQL/SQLAlchemy if performance
-    # becomes an issue.
-    dfs = [pd.DataFrame(vrbls) for vrbls in variables]
-    # Inner join dataframes to find all matching variables
-    intersection = reduce((lambda df1, df2: df1.merge(df2)), dfs)
+    variables = list()
+
+    for study in studies:
+        variables.extend(study.get_variables())
+
+    # convert to list of tuples and uniquify with set comprehension
+    reduced_vars = [dict(t) for t in {tuple(d.items()) for d in variables}]
 
     return jsonify({
         "success": True,
-        "variables": intersection.to_dict('records')
+        # keys here are 'category', 'scale'
+        "variables": reduced_vars
     })
 
 
