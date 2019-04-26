@@ -5,9 +5,9 @@
         <v-toolbar-title>Dataset Overview</v-toolbar-title>
       </v-toolbar>
       <v-layout row wrap justify-center>
-        <v-flex xs12>
+        <v-flex xs8>
           <v-layout row wrap justify-center>
-            <v-flex xs8>
+            <v-flex xs12>
               <v-card>
                 <v-card-title primary-title card color="white">
                   <p class="title mb-0 ">
@@ -26,33 +26,9 @@
                 </v-card-actions>
               </v-card>
             </v-flex>
-            <v-flex xs4>
-              <v-card>
-                <v-card-title primary-title card color="white">
-                  <span class="title">Subject Summary</span>
-                </v-card-title>
-                <v-card-text v-if="summaryData">
-                  <sunburst-chart :data="summaryData" :keyorder="groupBy">
-                    <sunburst-legend
-                      slot="legend"
-                      slot-scope="{ data, color, actions, nodes }"
-                      :data="data"
-                      :color="color"
-                      :actions="actions"
-                      :nodes="nodes"
-                    ></sunburst-legend>
-                  </sunburst-chart>
-                </v-card-text>
-                <v-card-text v-else>
-                  <loading-spinner medium class="ma-5" />
-                </v-card-text>
-              </v-card>
-            </v-flex>
           </v-layout>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap justify-center>
-        <!-- <v-flex xs2>
+          <v-layout row wrap justify-center>
+            <!-- <v-flex xs2>
           <v-card>
             <v-card-title primary-title card color="white">
               <span class="title">
@@ -62,12 +38,36 @@
             <v-treeview :items="items"></v-treeview>
           </v-card>
         </v-flex> -->
-        <v-flex xs12>
+            <v-flex xs12>
+              <v-card>
+                <v-card-title primary-title card color="white">
+                  <span class="title">Variables</span>
+                </v-card-title>
+                <variable-table :dataset-id="id" />
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex xs4>
           <v-card>
             <v-card-title primary-title card color="white">
-              <span class="title">Variables</span>
+              <span class="title">Subject Summary</span>
             </v-card-title>
-            <variable-table :dataset-id="id" />
+            <v-card-text v-if="summaryData">
+              <sunburst-chart :data="summaryData" :keyorder="groupBy">
+                <sunburst-legend
+                  slot="legend"
+                  slot-scope="{ data, color, actions, nodes }"
+                  :data="data"
+                  :color="color"
+                  :actions="actions"
+                  :nodes="nodes"
+                ></sunburst-legend>
+              </sunburst-chart>
+            </v-card-text>
+            <v-card-text v-else>
+              <loading-spinner medium class="ma-5" />
+            </v-card-text>
           </v-card>
         </v-flex>
       </v-layout>
