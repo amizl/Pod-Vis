@@ -54,11 +54,16 @@
               <span class="title">Subject Summary</span>
             </v-card-title>
             <v-card-text v-if="summaryData">
-              <sunburst-chart :data="summaryData" :keyorder="groupBy">
+              <sunburst-chart
+                :data="summaryData"
+                :keyorder="groupBy"
+                :color="{ male: '#3498DB', female: '#FFC0CB' }"
+              >
                 <sunburst-legend
                   slot="legend"
-                  slot-scope="{ data, color, actions, nodes }"
+                  slot-scope="{ data, color, colorScale, actions, nodes }"
                   :data="data"
+                  :color-scale="colorScale"
                   :color="color"
                   :actions="actions"
                   :nodes="nodes"

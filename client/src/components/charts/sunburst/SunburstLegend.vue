@@ -10,7 +10,10 @@
     @update:active="zoomToNode"
   >
     <template slot="prepend" slot-scope="{ item }">
-      <v-icon :color="color(item.name)">stop</v-icon>
+      <v-icon
+        :color="item.name in color ? color[item.name] : colorScale(item.name)"
+        >stop</v-icon
+      >
     </template>
   </v-treeview>
 </template>
@@ -30,9 +33,14 @@ export default {
       type: Array,
       required: true,
     },
-    color: {
+    colorScale: {
       type: Function,
       required: true,
+    },
+    color: {
+      type: Object,
+      required: false,
+      default: () => {},
     },
     actions: {
       type: Object,

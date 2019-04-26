@@ -125,6 +125,7 @@ export default {
   props: {
     data: Array,
     keyorder: Array,
+    color: Object,
   },
   data() {
     return {
@@ -171,7 +172,7 @@ export default {
         .filter(el => el !== '');
       return [...new Set(nodeNames)];
     },
-    color() {
+    colorScale() {
       let color = d3ScaleOrdinal(d3SchemeCategory10).domain(this.colorDomain);
       // .range([
       //         "#5254a3",
@@ -223,7 +224,7 @@ export default {
       .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
     this.svg = svg;
 
-    let color = this.color;
+    let color = this.colorScale;
     this.current = this.root;
 
     const foo = svg
@@ -251,9 +252,13 @@ export default {
           return 0.2;
         }
       })
-      .style('fill', function(d) {
-        // return color((d.children ? d : d.parent).data.name);
-        return color(d.data.name);
+      .style('fill', d => {
+        if (d.data.name in this.color) {
+          return this.color[d.data.name];
+        } else {
+          // return color((d.children ? d : d.parent).data.name);
+          return color(d.data.name);
+        }
       });
 
     // .on("click", this.click)
