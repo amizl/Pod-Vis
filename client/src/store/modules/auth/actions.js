@@ -110,6 +110,7 @@ export default {
         const error = new ErrorNotification('Your session has expired.');
         dispatch(error.dispatch, error, { root: true });
       }
+      commit(mutations.CLEAR_USER);
       commit(mutations.SET_LOADING, false);
 
       return new Promise((resolve, reject) => reject());
