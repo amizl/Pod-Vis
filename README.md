@@ -17,7 +17,7 @@ CliO-Vis is broken up into three parts.
 The **api** directory is our backend code that serves our python Flask (restful-ish) API. When a request is sent to http://cliovis.io/api or http://cliovis.io/auth, our web server will [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy) the request to the [GUnicorn](https://gunicorn.org/) WSGI HTTP server that is running our Flask applicaton. Actions such as authenticating a user, or retreiving/processing data from the database is handled here.
 
 ## Client
-The **client** directory is our front-end code that serves our SPA. All requests, aside from **/api** and **/auth**, i.e, http://cliovis.io/dashboard, will be handled by our web server / Vue application.
+The **ui** directory is our front-end code that serves our SPA. All requests, aside from **/api** and **/auth**, i.e, http://cliovis.io/dashboard, will be handled by our web server / Vue application.
 
 ## DB
 TODO
@@ -26,10 +26,10 @@ TODO
 To start, you will need to fill out environment variables for both Docker and Flask.
 ## Docker
 Docker has 4 environment variables it needs when it builds.  Only the root password needs to exist already - the rest will be created automatically.
-- `MYSQL_ROOT_PASSWORD` 
-- `MYSQL_DATABASE` 
-- `MYSQL_USER` 
-- `MYSQL_PASSWORD` 
+- `MYSQL_ROOT_PASSWORD`
+- `MYSQL_DATABASE`
+- `MYSQL_USER`
+- `MYSQL_PASSWORD`
 
 These environment variables are loaded when docker builds the MySQL container.
 1. See the `example_env` file in the root directory and fill in where it says `TODO`
@@ -55,15 +55,15 @@ After environment variables are setup, in the root directory (with the docker-co
 2. Run `docker-compose up`
   * You may need to change the ports in the dockerfiles if you already applications running on those ports
 
-# Actively developing api or client without rebuilding for every change
-Building all the containers can impede development if you are only working on a single part of the application. For example, if you are working on the client, you may want hot reloading so you can see your changes in real time with out having to build all the containers every time.
+# Actively developing api or ui without rebuilding for every change
+Building all the containers can impede development if you are only working on a single part of the application. For example, if you are working on the ui, you may want hot reloading so you can see your changes in real time with out having to build all the containers every time.
 
-## client
+## ui
 1. Run `docker-compose build api`
 2. Run `docker-compose up api`
-This will only build api and its dependencies. Then, to work on the client, cd in the `client` directory and
+This will only build api and its dependencies. Then, to work on the ui, cd in the `ui` directory and
 1. Run `npm run serve`
-This will launch your client application on localhost at some port, and it will automatically be communicating with the api docker container. Any changes to client code will hot reload at this port and doesnt require rebuilding.
+This will launch your ui application on localhost at some port, and it will automatically be communicating with the api docker container. Any changes to ui code will hot reload at this port and doesnt require rebuilding.
 
 ## api
 TODO (currently required to build and up api because flask + mysql are coupled)
