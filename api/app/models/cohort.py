@@ -13,6 +13,7 @@ class Cohort(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     label = db.Column(db.VARCHAR, nullable=False)
     instantiation_type = db.Column(db.Enum(InstantiationType))
+    last_modified = db.Column(db.TIMESTAMP)
 
     subjects = db.relationship(
         "CohortSubject",

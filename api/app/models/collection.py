@@ -16,6 +16,7 @@ class Collection(db.Model):
     date_generated = db.Column(db.DATETIME)
     is_public = db.Column(db.SMALLINT, default=0)
     instantiation_type = db.Column(db.Enum(InstantiationType))
+    last_modified = db.Column(db.TIMESTAMP)
 
     studies = db.relationship(
         "CollectionStudy",
