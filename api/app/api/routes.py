@@ -180,6 +180,44 @@ def get_study_subject_attributes(study_id):
         "subject_attributes": subject.get_attributes()
     })
 
+@api.route('/studies/<study_id>/observations')
+def get_study_observations(study_id):
+    """Get all observations for a study.
+
+    Example URL:
+        /api/studies/1/observations
+    """
+    study = models.Study.find_by_id(study_id)
+    if not study:
+        raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
+
+    observations = study.get_observations()
+    return jsonify({
+        "success": True,
+        "observations": observations
+    })
+
+@api.route('/studies/<study_id>/variables/<scale>/distribution')
+def get_study_variable_distribution(study_id, scale):
+    """Get distribution of a scale for a study.
+
+    Example URL:
+        /api/studies/1/variables/MDS-UPDRS_1/distribution
+    """
+    study = models.Study.find_by_id(study_id)
+    if not study:
+        raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
+
+    observations = study.find_observations_by_scale(scale)
+
+    df_value_counts = pd.DataFrame(observations)
+    # # TODO... only do this if type is int but saved as string
+    df_value_counts['value'] = df_value_counts['value'].apply(int)
+
+    return jsonify({
+        "success": True,
+        "observations": df_value_counts.sort_values(by="value").to_dict("records")
+    })
 
 @api.route('/studies/<study_id>/subjects/count')
 def summarize_study_subjects(study_id):

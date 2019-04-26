@@ -13,55 +13,46 @@ class Observation(db.Model):
 
     subject_visit = db.relationship("SubjectVisit", back_populates="observations")
 
-    def __init__(self,  subject_id, subject_ontology_id, value):
-        self.subject_id = subject_id
-        self.subject_ontology_id = subject_ontology_id
+    def __init__(self,  subject_visit_id, item, scale, value, category, item_type):
+        self.subject_visit_id = subject_visit_id
+        self.item = item
+        self.scale = scale
         self.value = value
+        self.category = category
+        self.item_type = item_type
 
     @classmethod
-    def get_all_subject_attributes(cls):
-        """Get all subject attributes.
+    def get_all_observations(cls):
+        """Get all observations.
 
         Returns:
-            All subject attributes.
+            All observations.
         """
         return cls.query.all()
 
     @classmethod
-    def find_by_id(cls, subject_attribute_id):
-        """Find subject attribute by id.
+    def find_by_id(cls, observation_id):
+        """Find observation by id.
 
         Args:
             id: Subject attribute ID.
 
         Returns:
-           Subject attribute.
+
         """
-        return cls.query.filter_by(id=subject_attribute_id).first()
+        return cls.query.filter_by(id=observation_id).first()
 
     @classmethod
-    def find_by_subject_id(cls, subject_id):
-        """Find all attributes by subject id.
-
+    def find_all_by_subject_visit_id(cls, subject_visit_id):
+        """Find all observations by subject visit id
         Args:
-            id: Subject's ID.
+            id: Subject visit ID.
 
         Returns:
-            The attributes for a subject.
+            Observations for a visit.
         """
-        return cls.query.filter_by(subject_id=subject_id).all()
+        return cls.query.filter_by(subject_visit_id=subject_visit_id).all()
 
-    @classmethod
-    def find_by_subject_ontology_id(cls, subject_ontology_id):
-        """Find all attributes by subject ontology id.
-
-        Args:
-          subject_ontology_id: Subject ontology ID
-
-        Returns:
-            All attributes with subject ontology id.
-        """
-        return cls.query.filter_by(subject_ontology_id=subject_ontology_id).all()
 
     def save_to_db(self):
         """Save to database."""
@@ -81,5 +72,5 @@ class Observation(db.Model):
           scale=self.scale,
           value=self.value,
           category=self.category,
-          item_type=self.category
+          item_type=self.item_type
         )

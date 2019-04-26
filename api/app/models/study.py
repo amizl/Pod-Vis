@@ -62,6 +62,50 @@ class Study(db.Model):
                 .all()
         ]
 
+    def get_observations(self):
+        """Get all variables in a study.
+
+        This is equivalent to the SQL query:
+            SELECT o.category, o.scale, o.value
+            FROM study
+            JOIN subject s ON study.id = s.study_id
+            JOIN  subject_visit v ON s.id = v.subject_id
+            JOIN observation o ON v.id = o.subject_visit_id
+            WHERE study.id = %s;
+        """
+        return [
+            dict(category=category, scale=scale, value=value)
+            for category, scale, value in self.query.filter_by(id=self.id) \
+                .join(Subject) \
+                .join(SubjectVisit) \
+                .join(Observation) \
+                .with_entities(Observation.category, Observation.scale, Observation.value) \
+                .all()
+        ]
+
+    def find_observations_by_scale(self, scale):
+        """Get all observations in a study by scale.
+
+        This is equivalent to the SQL query:
+            SELECT o.value
+            FROM study
+            JOIN subject s ON study.id = s.study_id
+            JOIN  subject_visit v ON s.id = v.subject_id
+            JOIN observation o ON v.id = o.subject_visit_id
+            WHERE study.id = %s and o.scale = %s;
+        """
+        return [
+            dict(value=value, count=count)
+            for value, count in self.query.filter_by(id=self.id) \
+                .join(Subject) \
+                .join(SubjectVisit) \
+                .join(Observation) \
+                .with_entities(Observation.value, func.count(Observation.value).label('count')) \
+                .filter(Observation.scale == scale) \
+                .group_by(Observation.value) \
+                .all()
+        ]
+
     def total_scores(self):
         """TODO"""
         return [
