@@ -5,7 +5,7 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -23,6 +23,8 @@ USE `cliovis` ;
 -- -----------------------------------------------------
 -- Table `cliovis`.`user`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`user` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(120) NOT NULL,
@@ -38,6 +40,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `cliovis`.`project`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`project` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`project` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `project_name` VARCHAR(45) NULL DEFAULT NULL,
@@ -60,6 +64,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `cliovis`.`study`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`study` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`study` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `study_name` VARCHAR(45) NULL DEFAULT NULL,
@@ -80,6 +86,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `cliovis`.`subject`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`subject` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`subject` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `study_id` INT NOT NULL,
@@ -99,6 +107,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `cliovis`.`subject_visit`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`subject_visit` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`subject_visit` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `visit_event` VARCHAR(45) NULL DEFAULT NULL,
@@ -121,6 +131,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `cliovis`.`observation`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`observation` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`observation` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `item` VARCHAR(45) NOT NULL,
@@ -131,6 +143,7 @@ CREATE TABLE IF NOT EXISTS `cliovis`.`observation` (
   `item_type` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `subject_visit_id_UNIQUE` (`subject_visit_id` ASC, `item` ASC),
+  INDEX `fk_observation__subject_visit_id_idx` (`subject_visit_id` ASC),
   CONSTRAINT `fk_observations_subject_visit1`
     FOREIGN KEY (`subject_visit_id`)
     REFERENCES `cliovis`.`subject_visit` (`id`)
@@ -143,6 +156,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `cliovis`.`subject_ontology`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`subject_ontology` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`subject_ontology` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `label` VARCHAR(255) NOT NULL,
@@ -160,6 +175,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cliovis`.`subject_attribute`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`subject_attribute` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`subject_attribute` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `subject_id` INT NOT NULL,
@@ -184,6 +201,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cliovis`.`collection`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`collection` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`collection` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `creator_id` INT NOT NULL,
@@ -205,6 +224,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cliovis`.`collection_study`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`collection_study` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`collection_study` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `collection_id` INT NOT NULL,
@@ -228,6 +249,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cliovis`.`collection_query`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`collection_query` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`collection_query` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `collection_id` INT NOT NULL,
@@ -247,6 +270,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cliovis`.`cohort`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`cohort` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`cohort` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
@@ -266,6 +291,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cliovis`.`cohort_subject`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`cohort_subject` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`cohort_subject` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cohort_id` INT NOT NULL,
@@ -289,6 +316,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cliovis`.`cohort_query`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`cohort_query` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`cohort_query` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cohort_id` INT NOT NULL,
@@ -308,6 +337,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cliovis`.`collection_observation_variable`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`collection_observation_variable` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`collection_observation_variable` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `collection_id` INT NOT NULL,
@@ -325,6 +356,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `cliovis`.`observation_ontology`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `cliovis`.`observation_ontology` ;
+
 CREATE TABLE IF NOT EXISTS `cliovis`.`observation_ontology` (
   `id` INT NOT NULL,
   `label` VARCHAR(255) NULL,
