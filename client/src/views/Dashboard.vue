@@ -1,13 +1,17 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container fluid>
     <v-toolbar app class="white">
       <v-toolbar-title>Dashboard</v-toolbar-title>
     </v-toolbar>
     <v-layout align-center justify-center>
-      <h1 class="headline text-md-center">
+      <v-flex xs12>
+        <v-card> <collection-table></collection-table> </v-card>
+      </v-flex>
+
+      <!-- <h1 class="headline text-md-center">
         <v-icon large class="pb-4">build</v-icon><br />
         Dashboard is currently under development
-      </h1>
+      </h1> -->
     </v-layout>
     <!-- <v-layout align-center justify-center>
       <v-flex xs12> <dataset-table /> </v-flex>
@@ -18,12 +22,13 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/dashboard/types';
-import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
+
+import CollectionTable from '@/components/common/CollectionTable.vue';
 import DatasetTable from '@/components/dashboard/DatasetTable.vue';
 
 export default {
   components: {
-    LoadingSpinner,
+    CollectionTable,
     DatasetTable,
   },
   computed: {

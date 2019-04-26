@@ -103,6 +103,14 @@ export default {
         ? await this.fetchSharedVariables()
         : await this.fetchVariables();
     this.variables = data.variables;
+    this.variables.forEach(v => (v['type'] = 'observation'));
+
+    let res = await axios.get(
+      `/api/studies/${this.datasetId}/subjects/attributes`
+    );
+    let attrs = res.data.subject_attributes;
+    attrs.forEach(a => (a['type'] = 'subject'));
+    this.variables = [...this.variables, ...res.data.subject_attributes];
     this.isLoading = false;
   },
   methods: {

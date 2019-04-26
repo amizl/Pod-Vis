@@ -8,12 +8,11 @@
         :dataset-ids="selectedDatasetIDs"
       />
     </v-toolbar>
-    <v-layout row justify-center>
+    <!-- <v-layout row justify-center>
       <v-flex xs12>
         <p class="subheading grey--text ligthen-2">Selected Datasets:</p>
         <v-container grid-list-lg fluid pt-0 mt-0 pl-0 ml-0>
           <v-layout row wrap>
-            <!-- TODO: Possibly strip this card into their own component -->
             <v-flex v-for="dataset in selectedDatasets" :key="dataset.id" xs4>
               <sunburst-card
                 :id="dataset.id"
@@ -21,39 +20,50 @@
                 :study-name="dataset.study_name"
               />
             </v-flex>
-            <!-- ^^^^ -->
           </v-layout>
         </v-container>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
     <v-layout class="pt-2" row justify-center>
       <v-flex xs12>
         <v-card>
           <v-card-title card color="white">
             <p>
-              <span class="title"
-                >Shared Outcome Measures in Selected Datasets</span
-              >
-              <br />
+              <span class="title">Shared Variables</span> <br />
               <span class="subheading grey--text ligthen-2"
                 >Select the variables to include in the new dataset
                 collection.</span
               >
             </p>
           </v-card-title>
-          <variable-table v-model="selected" :dataset-id="id" selectable />
+          <shared-variable-table
+            v-model="selected"
+            :datasets="selectedDatasets"
+            selectable
+          />
         </v-card>
       </v-flex>
     </v-layout>
     <v-layout class="pt-4" row justify-center>
       <v-flex xs12>
         <v-card>
+          <v-card-title card color="white">
+            <p>
+              <span class="title">Unshared Variables</span> <br />
+              <span class="subheading grey--text ligthen-2"
+                >These variables are not shared amongst selected datasets.
+              </span>
+            </p>
+          </v-card-title>
           <v-tabs v-model="activeDataset" slider-color="primary">
             <v-tab v-for="dataset in selectedDatasets" :key="dataset.id">
               {{ dataset.study_name }}
             </v-tab>
             <v-tab-item v-for="dataset in selectedDatasets" :key="dataset.id">
-              <variable-table :dataset-id="dataset.id" />
+              <unshared-variable-table
+                :selected-ids="selectedDatasets.map(d => d.id)"
+                :dataset-id="dataset.id"
+              />
             </v-tab-item>
           </v-tabs>
         </v-card>
@@ -65,13 +75,15 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
-import VariableTable from '@/components/DatasetManager/VariableTable.vue';
+import SharedVariableTable from '@/components/DatasetManager/SharedVariableTable.vue';
+import UnsharedVariableTable from '@/components/DatasetManager/UnsharedVariableTable.vue';
 import SaveCollectionBtnDialog from '@/components/BuildDataset/SaveCollectionBtnDialog.vue';
 import SunburstCard from '@/components/BuildDataset/SunburstCard.vue';
 
 export default {
   components: {
-    VariableTable,
+    SharedVariableTable,
+    UnsharedVariableTable,
     SaveCollectionBtnDialog,
     SunburstCard,
   },
