@@ -15,6 +15,7 @@
       <slot
         :data="data"
         :color="color"
+        :colorScale="colorScale"
         :actions="actions"
         :nodes="nodes"
         name="legend"

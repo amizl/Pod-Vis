@@ -59,15 +59,17 @@
                 :keyorder="groupBy"
                 :color="{ male: '#3498DB', female: '#FFC0CB' }"
               >
-                <sunburst-legend
-                  slot="legend"
-                  slot-scope="{ data, color, colorScale, actions, nodes }"
-                  :data="data"
-                  :color-scale="colorScale"
-                  :color="color"
-                  :actions="actions"
-                  :nodes="nodes"
-                ></sunburst-legend>
+                <template
+                  v-slot:legend="{ data, color, colorScale, actions, nodes }"
+                >
+                  <sunburst-legend
+                    :data="data"
+                    :color-scale="colorScale"
+                    :color="color"
+                    :actions="actions"
+                    :nodes="nodes"
+                  ></sunburst-legend>
+                </template>
               </sunburst-chart>
             </v-card-text>
             <v-card-text v-else>
