@@ -126,7 +126,7 @@ export default {
       addToProfileSuccess: false,
       summaryData: null,
       variables: [],
-      groupBy: ['sex', 'race'],
+      groupBy: ['Sex', 'Race'],
       // TODO: Descriptions need to be loaded into database
       descriptions: {
         "Parkinson's Disease":

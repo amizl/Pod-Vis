@@ -3,7 +3,7 @@ Flask-Bcrypt
 Flask-Cors
 Flask-JWT-Extended
 Flask-SQLAlchemy
-gunicorn
+gunicorn3
 marshmallow
 PyMySQL
 pandas
