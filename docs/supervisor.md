@@ -1,9 +1,16 @@
+# Supervisor
+Controls and monitors the Flask process.
+Configuration file located at .../config/supervisor.conf
+
 ## Commands
+
+Install.
+`sudo apt install supervisor`
 
 Reread configuration file at /etc/supervisor/conf.d/cliovis.conf
 `sudo supervisorctl reread`
 
-Restart supervisor (and hence our Flask+Gunicorn server)
+Restart supervisor (and hence our Flask+Gunicorn server).
 `sudo service supervisor restart`
 
 Check status of Flask app

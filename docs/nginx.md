@@ -1,5 +1,6 @@
 # Nginx
 Web server that serves our client-side SPA  via `/` and reverse proxies to our Flask server on `/api` and `/auth` endpoints.
+Configuration file located at ../config/nginx.conf
 
 ## Commands
 
