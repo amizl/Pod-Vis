@@ -83,8 +83,31 @@ class Study(db.Model):
                 .all()
         ]
 
-    def find_observations_by_scale(self, scale):
-        """Get all observations in a study by scale.
+    def find_observation_value_counts_by_scale(self, scale):
+        """Get all value counts for an observation in a study by scale.
+
+        This is equivalent to the SQL query:
+            SELECT o.value, count(o.value) as count
+            FROM study
+            JOIN subject s ON study.id = s.study_id
+            JOIN  subject_visit v ON s.id = v.subject_id
+            JOIN observation o ON v.id = o.subject_visit_id
+            GROUP BY (o.value)
+            WHERE study.id = %s and o.scale = %s;
+        """
+        return [
+            dict(value=value)
+            for value, in self.query.filter_by(id=self.id) \
+                .join(Subject) \
+                .join(SubjectVisit) \
+                .join(Observation) \
+                .with_entities(Observation.value) \
+                .filter(Observation.scale == scale) \
+                .all()
+        ]
+
+    def find_subject_attribute_counts_by_scale(self, scale):
+        """Get all value counts for a subject attributes in a study by scale.
 
         This is equivalent to the SQL query:
             SELECT o.value

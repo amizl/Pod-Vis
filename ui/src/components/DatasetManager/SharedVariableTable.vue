@@ -17,15 +17,17 @@
         <td>{{ props.item.category }}</td>
         <td>{{ props.item.scale }}</td>
         <td v-for="dataset in datasets" :key="dataset.id">
-          <variable-sparkline
+          <!-- <variable-sparkline
             :dataset-id="dataset.id"
+            :type="props.item.type"
+            :scale="props.item.scale"
+          /> -->
+          <histogram-sparkline
+            :dataset-id="dataset.id"
+            :type="props.item.type"
             :scale="props.item.scale"
           />
         </td>
-        <!-- <td v-if="histogram"></td> -->
-        <!-- <td>{{ props.item.description }}</td> -->
-        <!-- <td>{{ props.item.data_range }}</td> -->
-        <!-- <td>{{ props.item.missing }}</td> -->
       </tr>
     </template>
   </v-data-table>
@@ -34,10 +36,12 @@
 <script>
 import axios from 'axios';
 import VariableSparkline from '@/components/DatasetManager/VariableSparkline.vue';
+import HistogramSparkline from '@/components/DatasetManager/HistogramSparkline.vue';
 
 export default {
   components: {
     VariableSparkline,
+    HistogramSparkline,
   },
   props: {
     value: {
@@ -110,25 +114,33 @@ export default {
   async created() {
     this.headers = [
       ...this.headers,
+      // append the dataset study names as headers so
+      // we can see study variable distributions as
+      // columns
       ...this.datasets.map(dataset => ({
         text: dataset.study_name,
         value: dataset.study_name,
         sortable: false,
       })),
     ];
+
     const {
       data: { variables },
     } = await this.fetchSharedVariables();
+    // add type key to variables to distinguish that these variables
+    // are relating to the observations
+    variables.forEach(variable => (variable['type'] = 'observation'));
     this.variables = variables;
 
     const {
-      data: { subject_attributes: attrs },
+      data: { subject_attributes: subjectVariables },
     } = await axios.get(
       `/api/studies/${this.datasets[0].id}/subjects/attributes`
     );
-
-    attrs.forEach(a => (a['type'] = 'subject'));
-    this.variables = [...this.variables, ...attrs];
+    // add type key to subject variables to distinguish that these variables
+    // are relating to the subejcts
+    subjectVariables.forEach(variable => (variable['type'] = 'subject'));
+    this.variables = [...this.variables, ...subjectVariables];
 
     this.isLoading = false;
   },

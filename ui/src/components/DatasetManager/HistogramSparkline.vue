@@ -1,12 +1,23 @@
 <template>
   <loading-spinner v-if="isLoading" small />
-  <v-sparkline v-else :value="value" :label="count" />
+  <histogram-sparkline
+    v-else-if="type === 'observation'"
+    :data="data"
+    value="value"
+  />
+  <column-chart v-else :data="data" />
 </template>
 
 <script>
 import axios from 'axios';
+import HistogramSparkline from '@/components/charts/HistogramSparkline.vue';
+import ColumnChart from '@/components/charts/ColumnChart.vue';
 
 export default {
+  components: {
+    HistogramSparkline,
+    ColumnChart,
+  },
   props: {
     type: {
       type: String,
@@ -24,22 +35,18 @@ export default {
   data() {
     return {
       isLoading: true,
-      value: [],
-      count: [],
+      data: [],
     };
   },
   async created() {
-    let counts;
+    this.isLoading = true;
     if (this.type === 'observation') {
       const { data } = await this.fetchObservationVariableCounts();
-      counts = data.counts;
+      this.data = data.counts; // COUNTS NEED TO BE CHANGED...
     } else {
       const { data } = await this.fetchSubjectVariableCounts();
-      counts = data.counts;
+      this.data = data.counts;
     }
-
-    this.value = counts.map(obsv => obsv.count);
-    this.label = counts.map(obsv => obsv.value);
     this.isLoading = false;
   },
   methods: {

@@ -208,15 +208,45 @@ def get_study_variable_distribution(study_id, scale):
     if not study:
         raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
 
-    observations = study.find_observations_by_scale(scale)
+    observation_counts = study.find_observation_value_counts_by_scale(scale)
 
-    df_value_counts = pd.DataFrame(observations)
+    df_value_counts = pd.DataFrame(observation_counts)
     # # TODO... only do this if type is int but saved as string
     df_value_counts['value'] = df_value_counts['value'].apply(int)
 
     return jsonify({
         "success": True,
-        "observations": df_value_counts.sort_values(by="value").to_dict("records")
+        "counts": df_value_counts.sort_values(by="value").to_dict("records"),
+        "scale": scale
+    })
+
+@api.route('/studies/<study_id>/subjects/variables/<scale>/distribution')
+def get_subject_variable_counts(study_id, scale):
+    """Get distribution of a subject variable for a study.
+
+    Example URL:
+        /api/studies/1/subject/variables/sex/distribution
+    """
+    study = models.Study.find_by_id(study_id)
+    if not study:
+        raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
+
+    subjects = models.Subject.find_all_by_study_id(study_id)
+    subjects = [subject.to_dict(include_attributes=True) for subject in subjects]
+
+    rename_idx = dict()
+    rename_idx[scale] = 'value'
+    df = pd.DataFrame(subjects) \
+        .groupby(scale) \
+        .size() \
+        .to_frame('count') \
+        .reset_index() \
+        .rename(columns=rename_idx)
+
+    return jsonify({
+        "success": True,
+        "counts": df.to_dict("records"),
+        "scale": scale
     })
 
 @api.route('/studies/<study_id>/subjects/count')
