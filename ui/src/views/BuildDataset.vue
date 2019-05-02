@@ -51,7 +51,7 @@
             <p>
               <span class="title">Unshared Variables</span> <br />
               <span class="subheading grey--text ligthen-2"
-                >These variables are not shared amongst selected datasets.
+                >These variables are not shared within selected datasets.
               </span>
             </p>
           </v-card-title>

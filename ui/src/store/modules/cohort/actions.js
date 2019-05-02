@@ -6,6 +6,6 @@ export default {
     // commit(mutations.SET_LOADING, true);
   },
   [actions.SET_COHORT_SELECTION]({ commit }, payload) {
-    commit(mutations.SET_COHORT_SELECTION, payload);
+    // commit(mutations.SET_COHORT_SELECTION, payload);
   },
 };
