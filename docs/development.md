@@ -1,7 +1,10 @@
-# Building and Deploying for Development (Docker)
+# Setup and Development (Docker)
 
-## Mac
-### TODO
+# First-time setup
+TODO
 
-# Linux
-### TODO
+# Installation
+TODO
+
+# Dev server
+TODO
