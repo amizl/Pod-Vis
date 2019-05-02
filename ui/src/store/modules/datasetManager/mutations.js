@@ -22,4 +22,7 @@ export default {
       state[stateTypes.SELECTED_DATASETS] = [];
     }
   },
+  [mutations.CLEAR_SELECTED_DATASETS](state) {
+    state[stateTypes.SELECTED_DATASETS] = [];
+  },
 };

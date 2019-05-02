@@ -55,6 +55,8 @@ export default {
       const notification = new SuccessNotification(
         'Collection successfully saved.'
       );
+
+      commit(mutations.CLEAR_SELECTED_DATASETS);
       dispatch(notification.dispatch, notification, { root: true });
 
       return new Promise(resolve => resolve());

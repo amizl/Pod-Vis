@@ -13,6 +13,7 @@ export const mutations = {
   ADD_COLLECTION: 'addCollection',
   SET_LOADING: 'setLoading',
   SET_SELECTED_DATASETS: 'setSelectedDatasets',
+  CLEAR_SELECTED_DATASETS: 'clearSelectedDatasets',
 };
 
 export const actions = {
