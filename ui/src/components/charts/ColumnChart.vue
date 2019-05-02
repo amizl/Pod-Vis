@@ -8,7 +8,7 @@
           :x="xScale(d.value)"
           :y="yScale(d.count)"
           :width="xScale.bandwidth()"
-          :height="height - yScale(d.count)"
+          :height="h - yScale(d.count)"
           :key="i"
         />
         <!-- TODO: Key needs to be random to fix pagination bug on table... -->
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { extent } from 'd3-array';
+import { max } from 'd3-array';
 // import { nest } from 'd3-collection';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { uniqueId } from 'lodash';
@@ -63,11 +63,12 @@ export default {
     xScale() {
       return scaleBand()
         .domain(this.data.map(d => d.value))
-        .range([0, this.w]);
+        .range([0, this.w])
+        .padding(0.05);
     },
     yScale() {
       return scaleLinear()
-        .domain([extent(this.data, d => d.count)])
+        .domain([0, max(this.data, d => d.count)])
         .range([this.h, 0]);
     },
   },
