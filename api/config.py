@@ -34,9 +34,8 @@ class ProductionConfig(Config):
     """Production configuration"""
     ENV = 'production'
     SQLALCHEMY_DATABASE_URI = os.environ.get('MYSQL_PRODUCTION_DATABASE_URI')
-    # Only allow JWT cookies to be sent over https
-    JWT_COOKIE_SECURE = True
-    JWT_COOKIE_CSRF_PROTECT = True
+    JWT_COOKIE_SECURE = False
+    JWT_COOKIE_CSRF_PROTECT = False
 
 class DevelopmentConfig(Config):
     """Development configuration"""
