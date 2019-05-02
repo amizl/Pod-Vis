@@ -1,6 +1,8 @@
 ## TODO
 Improve this.
 
+## [Wireframes](https://www.lucidchart.com/invitations/accept/d22966aa-8d94-4445-b73d-d7023388035a)
+
 # Pre-reqs
 
 Instructions are for Debian-based systems, but substitute for your platform.
