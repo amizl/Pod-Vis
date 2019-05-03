@@ -1,11 +1,13 @@
 <template>
-  <loading-spinner v-if="isLoading" small />
-  <histogram-sparkline
-    v-else-if="type === 'observation'"
-    :data="data"
-    value="value"
-  />
-  <column-chart v-else :data="data" />
+  <transition name="fade" mode="out-in">
+    <loading-spinner v-if="isLoading" small />
+    <histogram-sparkline
+      v-else-if="type === 'observation'"
+      :data="data"
+      value="value"
+    />
+    <column-chart v-else :data="data" />
+  </transition>
 </template>
 
 <script>
