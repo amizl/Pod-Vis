@@ -58,7 +58,8 @@ export default {
     }),
   },
   methods: {
-    routeToExplorer({ dataset, id }) {
+    // routeToExplorer({ dataset, id }) {
+    routeToExplorer() {
       // Route to view for dataset information
       // const currentPath = this.$router.currentPath.fullPath;
       // this.$router.push(`analysis/${id}/`);

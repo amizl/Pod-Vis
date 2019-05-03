@@ -21,14 +21,8 @@
 
 <script>
 import axios from 'axios';
-import SunburstChart from '@/components/charts/sunburst/SunburstChart.vue';
-import SunburstLegend from '@/components/charts/sunburst/SunburstLegend.vue';
 
 export default {
-  components: {
-    SunburstChart,
-    SunburstLegend,
-  },
   props: {
     id: {
       type: Number,

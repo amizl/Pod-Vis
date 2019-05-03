@@ -12,7 +12,10 @@ import * as d3 from 'd3';
 
 export default {
   props: {
-    data: Array,
+    data: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -26,13 +29,17 @@ export default {
       return Math.min(this.width, this.height) / 2;
     },
     translate() {
-      return `translate(${(this.width / 2)}, ${(this.height / 2)})`;
+      return `translate(${this.width / 2}, ${this.height / 2})`;
     },
   },
   watch: {
     data() {
       this.update();
     },
+  },
+  mounted() {
+    this.g = d3.select(this.$el.firstChild);
+    this.drawChart();
   },
   methods: {
     update() {
@@ -50,9 +57,7 @@ export default {
         .innerRadius(this.radius - 30)
         .outerRadius(this.radius - 5);
 
-      const arcs = this.g
-        .selectAll('g')
-        .data(pie(this.data));
+      const arcs = this.g.selectAll('g').data(pie(this.data));
 
       arcs.exit().remove();
 
@@ -62,7 +67,7 @@ export default {
         .append('path')
         .attr('fill', d => color(d.code))
         .attr('d', arc)
-        .each(function (d) {
+        .each(function(d) {
           this._current = d;
         });
 
@@ -98,12 +103,11 @@ export default {
         .append('path')
         .attr('fill', d => color(d.code))
         .attr('d', arc)
-        .each(function (d) {
+        .each(function(d) {
           this._current = d;
         });
 
-      const totalSamples = this
-        .data
+      const totalSamples = this.data
         .map(d => d.n_samples)
         .reduce((acc, curr) => acc + curr);
 
@@ -114,11 +118,6 @@ export default {
         .text(`${totalSamples} Samples Selected`);
     },
   },
-  mounted() {
-    this.g = d3.select(this.$el.firstChild);
-    this.drawChart();
-  },
 };
 </script>
-<style>
-</style>
+<style></style>

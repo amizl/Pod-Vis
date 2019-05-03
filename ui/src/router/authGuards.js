@@ -17,9 +17,8 @@ const authModule = 'auth';
 /**
  * Lazy evaluated function to determine if user is authenticated.
  */
-const isUserAuthenticated = () => {
-  return store.getters[`${authModule}/${authGetters.IS_USER_AUTHENTICATED}`];
-};
+const isUserAuthenticated = () =>
+  store.getters[`${authModule}/${authGetters.IS_USER_AUTHENTICATED}`];
 
 export const requireAuth = async (to, from, next) => {
   try {

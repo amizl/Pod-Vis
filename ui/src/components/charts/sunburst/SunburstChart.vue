@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { select as d3Select, event as d3Event } from 'd3-selection';
+import { select as d3Select } from 'd3-selection';
 import {
   scaleLinear as d3ScaleLinear,
   scaleSqrt as d3ScaleSqrt,
@@ -36,13 +36,9 @@ import {
   partition as d3Partition,
 } from 'd3-hierarchy';
 import { arc as d3Arc } from 'd3-shape';
-import { path as d3Path } from 'd3-path';
 import { interpolate as d3Interpolate } from 'd3-interpolate';
 import { transition as d3Transition } from 'd3-transition';
 import { schemeCategory10 as d3SchemeCategory10 } from 'd3-scale-chromatic';
-import { schemePaired as d3SchemePaired } from 'd3-scale-chromatic';
-import { schemeSpectral as d3SchemeSpectral } from 'd3-scale-chromatic';
-import { format as d3Format } from 'd3-format';
 
 function getUniqueNodeId(node) {
   return node
@@ -76,17 +72,17 @@ function buildHierarchy(csv) {
   let currentId = 0;
   const root = { id: currentId++, name: 'root', children: [] };
   for (let i = 0; i < csv.length; i++) {
-    let sequence = csv[i][0];
-    let size = +csv[i][1];
+    const sequence = csv[i][0];
+    const size = +csv[i][1];
     if (isNaN(size)) {
       // e.g. if this is a header row
       continue;
     }
-    let parts = sequence.split('-');
+    const parts = sequence.split('-');
     let currentNode = root;
     for (var j = 0; j < parts.length; j++) {
-      let children = currentNode['children'];
-      let nodeName = parts[j];
+      const children = currentNode['children'];
+      const nodeName = parts[j];
       let childNode;
       if (j + 1 < parts.length) {
         // Not yet at the end of the sequence; move down the tree.
@@ -124,9 +120,18 @@ export default {
     },
   },
   props: {
-    data: Array,
-    keyorder: Array,
-    color: Object,
+    data: {
+      type: Array,
+      default: () => [],
+    },
+    keyorder: {
+      type: Array,
+      default: () => [],
+    },
+    color: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -174,7 +179,7 @@ export default {
       return [...new Set(nodeNames)];
     },
     colorScale() {
-      let color = d3ScaleOrdinal(d3SchemeCategory10).domain(this.colorDomain);
+      const color = d3ScaleOrdinal(d3SchemeCategory10).domain(this.colorDomain);
       // .range([
       //         "#5254a3",
       //         "#6b6ecf",
@@ -206,18 +211,18 @@ export default {
     },
   },
   mounted() {
-    let width = this.width,
+    const width = this.width,
       height = this.height,
-      radius = this.radius,
-      x = this.x,
-      y = this.y,
-      partition = this.partition,
+      // radius = this.radius,
+      // x = this.x,
+      // y = this.y,
+      // partition = this.partition,
       arc = this.arc,
-      root = this.root,
-      nodes = this.nodes,
-      formatNumber = d3Format(',d');
+      // root = this.root,
+      nodes = this.nodes;
+    // formatNumber = d3Format(',d');
 
-    let svg = d3Select(this.$refs.chart)
+    const svg = d3Select(this.$refs.chart)
       .append('svg')
       .attr('width', width)
       .attr('height', height)
@@ -225,10 +230,10 @@ export default {
       .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
     this.svg = svg;
 
-    let color = this.colorScale;
+    const color = this.colorScale;
     this.current = this.root;
 
-    const foo = svg
+    svg
       .selectAll('path')
       .data(nodes, getUniqueNodeId)
       .enter()
@@ -275,8 +280,8 @@ export default {
     updateCurrent(node) {
       this.current = node;
     },
-    getNodeById(id) {
-      if (id === undefined) id = 1;
+    getNodeById(nodeId) {
+      let id = nodeId || 1;
 
       const path = this.pathes
         .nodes()

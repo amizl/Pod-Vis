@@ -5,10 +5,10 @@
       <g>
         <rect
           v-for="(bin, i) in bins"
+          :key="i"
           :transform="`translate(${xScale(bin.x0)}, ${yScale(bin.length)})`"
           :width="xScale(bin.x1) - xScale(bin.x0) - 1"
           :height="height - yScale(bin.length)"
-          :key="i"
         />
         <!-- TODO: Key needs to be random to fix pagination bug on table... -->
       </g>
@@ -67,13 +67,13 @@ export default {
         .domain(extent(this.data, d => +d[this.value]))
         .range([0, this.w]);
     },
-    bin() {
+    binData() {
       return histogram()
         .value(d => d[this.value])
         .domain(this.xScale.domain());
     },
     bins() {
-      return this.bin(this.data);
+      return this.binData(this.data);
     },
     yScale() {
       return scaleLinear()

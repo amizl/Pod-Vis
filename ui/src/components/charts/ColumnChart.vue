@@ -5,11 +5,11 @@
       <g>
         <rect
           v-for="(d, i) in data"
+          :key="i"
           :x="xScale(d.value)"
           :y="yScale(d.count)"
           :width="xScale.bandwidth()"
           :height="h - yScale(d.count)"
-          :key="i"
         />
         <!-- TODO: Key needs to be random to fix pagination bug on table... -->
       </g>

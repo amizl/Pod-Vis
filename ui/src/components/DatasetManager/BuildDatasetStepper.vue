@@ -5,9 +5,9 @@
         <v-stepper-header class="elevation-0">
           <template v-for="({ step, title }, index) in steps">
             <v-stepper-step
+              :key="index"
               :step="step"
               :complete="currentStep > step"
-              :key="index"
             >
               {{ title }}
             </v-stepper-step>
@@ -17,8 +17,8 @@
         <v-stepper-items>
           <v-stepper-content
             v-for="({ step, component, data }, index) in steps"
-            :step="step"
             :key="index"
+            :step="step"
           >
             <v-card>
               <v-card-text>

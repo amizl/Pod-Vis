@@ -78,14 +78,12 @@ import { state, actions } from '@/store/modules/datasetManager/types';
 import SharedVariableTable from '@/components/DatasetManager/SharedVariableTable.vue';
 import UnsharedVariableTable from '@/components/DatasetManager/UnsharedVariableTable.vue';
 import SaveCollectionBtnDialog from '@/components/BuildDataset/SaveCollectionBtnDialog.vue';
-import SunburstCard from '@/components/BuildDataset/SunburstCard.vue';
 
 export default {
   components: {
     SharedVariableTable,
     UnsharedVariableTable,
     SaveCollectionBtnDialog,
-    SunburstCard,
   },
   props: {
     // id is passed in via route parameters

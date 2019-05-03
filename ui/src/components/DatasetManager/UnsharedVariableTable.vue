@@ -3,9 +3,9 @@
     <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
     <v-data-table
       v-else
+      v-model="selected"
       :headers="headers"
       :items="variables"
-      v-model="selected"
       :select-all="selectable"
       item-key="scale"
       must-sort
@@ -77,10 +77,10 @@ export default {
     },
   },
   async created() {
-    let {
+    const {
       data: { variables: sharedVariables },
     } = await this.fetchSharedVariables();
-    let {
+    const {
       data: { variables },
     } = await this.fetchVariables();
 

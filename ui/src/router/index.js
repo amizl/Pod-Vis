@@ -87,52 +87,5 @@ export default new Router({
       component: () => import('@/views/SignIn.vue'),
       beforeEnter: requireNotAuth,
     },
-    // Routes for testing componenets
-    {
-      path: '/test',
-      name: 'test',
-      component: () => import('@/views/Test.vue'),
-      children: [
-        {
-          path: 'heatmap',
-          component: () =>
-            import('@/components/charts/HierarchicalHeatmap.vue'),
-        },
-        {
-          path: 'auth',
-          component: () => import('@/components/auth/UserAuthentication.vue'),
-        },
-        {
-          path: 'table',
-          component: () =>
-            import('@/components/DatasetManager/DatasetTable.vue'),
-        },
-        {
-          path: 'bar',
-          // component: () => import('../components/charts/BarChart.vue'),
-        },
-        {
-          path: 'stackedbar',
-          // component: () => import('../components/charts/StackedBarChart.vue'),
-        },
-        {
-          path: 'loading',
-          component: () => import('@/components/common/LoadingSpinner.vue'),
-        },
-        {
-          path: 'cohortCard',
-          component: () => import('@/components/CohortManager/CohortCard.vue'),
-        },
-        {
-          path: 'categoricalCard',
-          component: () =>
-            import('@/components/CohortManager/CategoricalCard.vue'),
-        },
-        {
-          path: 'testCharts',
-          component: () => import('@/views/TestCharts.vue'),
-        },
-      ],
-    },
   ],
 });

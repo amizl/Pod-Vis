@@ -4,11 +4,7 @@
 
 <script>
 // TODO
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

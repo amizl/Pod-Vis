@@ -144,7 +144,7 @@ const Grid = {
     },
   },
   methods: {
-    zoomIntoColumn(data) {
+    zoomIntoColumn() {
       this.data = [
         {
           name: 'Foo',

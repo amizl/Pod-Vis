@@ -2,9 +2,9 @@
   <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
   <v-data-table
     v-else
+    v-model="selected"
     :headers="headers"
     :items="variables"
-    v-model="selected"
     :select-all="selectable"
     item-key="scale"
     must-sort
@@ -98,17 +98,17 @@ export default {
     },
   },
   async created() {
-    let { data } =
+    const { data } =
       this.datasetId instanceof Array
         ? await this.fetchSharedVariables()
         : await this.fetchVariables();
     this.variables = data.variables;
     this.variables.forEach(v => (v['type'] = 'observation'));
 
-    let res = await axios.get(
+    const res = await axios.get(
       `/api/studies/${this.datasetId}/subjects/attributes`
     );
-    let attrs = res.data.subject_attributes;
+    const attrs = res.data.subject_attributes;
     attrs.forEach(a => (a['type'] = 'subject'));
     this.variables = [...this.variables, ...res.data.subject_attributes];
     this.isLoading = false;

@@ -48,7 +48,7 @@ export default {
         study_ids: payload.datasetIds,
         variables: payload.variables,
       });
-      console.log(data);
+
       commit(mutations.ADD_COLLECTION, data.collection);
       commit(mutations.SET_LOADING, false);
 

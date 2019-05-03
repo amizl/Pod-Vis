@@ -19,13 +19,13 @@
 </template>
 
 <script>
-function getUniqueNodeId(node) {
-  return node
-    .ancestors()
-    .map(node => node.data.name)
-    .reverse()
-    .join('-');
-}
+// function getUniqueNodeId(node) {
+//   return node
+//     .ancestors()
+//     .map(node => node.data.name)
+//     .reverse()
+//     .join('-');
+// }
 
 export default {
   props: {
@@ -74,8 +74,9 @@ export default {
     /**
      * Given node id, find node.
      */
-    getNodeById(id) {
-      if (id === undefined) id = 0;
+    getNodeById(nodeId) {
+      let id = nodeId || 0;
+
       const node = this.nodes.find(node => node.data.id == id);
       if (node) {
         return node;

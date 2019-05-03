@@ -3,9 +3,9 @@
     <loading-spinner v-if="isLoading" medium class="pb-5" />
     <v-data-table
       v-else
+      v-model="selected"
       :headers="headers"
       :items="variables"
-      v-model="selected"
       :select-all="selectable"
       item-key="scale"
       must-sort
@@ -37,12 +37,10 @@
 
 <script>
 import axios from 'axios';
-import VariableSparkline from '@/components/DatasetManager/VariableSparkline.vue';
 import HistogramSparkline from '@/components/DatasetManager/HistogramSparkline.vue';
 
 export default {
   components: {
-    VariableSparkline,
     HistogramSparkline,
   },
   props: {

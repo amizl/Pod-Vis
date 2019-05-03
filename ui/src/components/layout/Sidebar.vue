@@ -121,7 +121,7 @@ export default {
   created() {
     // Check if we have cached if the sidebar is toggled
     if ('expand' in window.localStorage) {
-      let expand = window.localStorage['expand'];
+      const expand = window.localStorage['expand'];
       this.expand = eval(expand); // evaluate 'false' or 'true' strings
     } else {
       this.expand = true;

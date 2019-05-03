@@ -47,21 +47,11 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
-import Header from '@/components/layout/Header.vue';
 import DatasetTable from '@/components/DatasetManager/DatasetTable.vue';
-import OutcomeTable from '@/components/DatasetManager/OutcomeTable.vue';
-import DemographicsTable from '@/components/DatasetManager/DemographicsTable.vue';
-import FilterTree from '@/components/DatasetManager/FilterTree.vue';
-//  import DonutChart from '@/components/charts/DonutChart.vue';
 
 export default {
   components: {
     datasetTable: DatasetTable,
-    // donutChart: DonutChart,
-    contentHeader: Header,
-    filterTree: FilterTree,
-    OutcomeTable,
-    DemographicsTable,
   },
   filters: {
     buildPath(datasets) {

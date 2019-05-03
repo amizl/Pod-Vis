@@ -24,12 +24,10 @@ import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/dashboard/types';
 
 import CollectionTable from '@/components/common/CollectionTable.vue';
-import DatasetTable from '@/components/dashboard/DatasetTable.vue';
 
 export default {
   components: {
     CollectionTable,
-    DatasetTable,
   },
   computed: {
     ...mapState('dashboard', {
