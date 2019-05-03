@@ -17,10 +17,6 @@
           </td>
           <td>{{ props.item.category }}</td>
           <td>{{ props.item.scale }}</td>
-          <!-- <td v-if="histogram"></td> -->
-          <!-- <td>{{ props.item.description }}</td> -->
-          <!-- <td>{{ props.item.data_range }}</td> -->
-          <!-- <td>{{ props.item.missing }}</td> -->
         </tr>
       </template>
       <template v-slot:no-data>
@@ -66,30 +62,6 @@ export default {
           value: 'scale',
           sortable: true,
         },
-        // {
-        //   text: 'Variable',
-        //   value: 'variable',
-        // },
-        // {
-        //   text: 'Type',
-        //   value: 'type',
-        // },
-        // {
-        //   text: 'Description',
-        //   value: 'description',
-        // },
-        // {
-        //   text: 'Data Range',
-        //   value: 'data_range',
-        // },
-        // {
-        //   text: 'Missing',
-        //   value: 'missing',
-        // },
-        // {
-        //   text: 'Histogram',
-        //   value: 'histogram',
-        // },
       ],
     };
   },

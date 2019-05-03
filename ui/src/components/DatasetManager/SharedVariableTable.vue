@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
-    <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
+    <loading-spinner v-if="isLoading" medium class="pb-5" />
     <v-data-table
       v-else
       :headers="headers"
@@ -17,6 +17,7 @@
           </td>
           <td>{{ props.item.category }}</td>
           <td>{{ props.item.scale }}</td>
+          <!-- Study columns with distribution visualizations -->
           <td
             v-for="dataset in datasets"
             :key="dataset.id"
@@ -74,30 +75,6 @@ export default {
           value: 'scale',
           sortable: true,
         },
-        // {
-        //   text: 'Variable',
-        //   value: 'variable',
-        // },
-        // {
-        //   text: 'Type',
-        //   value: 'type',
-        // },
-        // {
-        //   text: 'Description',
-        //   value: 'description',
-        // },
-        // {
-        //   text: 'Data Range',
-        //   value: 'data_range',
-        // },
-        // {
-        //   text: 'Missing',
-        //   value: 'missing',
-        // },
-        // {
-        //   text: 'Histogram',
-        //   value: 'histogram',
-        // },
       ],
     };
   },

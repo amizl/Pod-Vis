@@ -7,12 +7,9 @@ import App from './App.vue';
 import store from './store';
 import router from './router';
 
-require('./assets/css/main.css');
-require('parcoord-es/dist/parcoords.css');
-
 // Globally register the loading spinner because we
 // use it in so many components.
-Vue.component('loading-spinner', LoadingSpinner);
+Vue.component('LoadingSpinner', LoadingSpinner);
 
 const authModule = 'auth';
 const getUserFromSession = authActions.GET_USER_FROM_SESSION;
@@ -25,9 +22,10 @@ const getUserFromSession = authActions.GET_USER_FROM_SESSION;
   try {
     await store.dispatch(`${authModule}/${getUserFromSession}`);
   } catch (err) {
-    // No active user token
+    // No active user token. We don't do anything here because router
+    // will deal with sending user to sign in page.
   } finally {
-    // Init app and mount to the DOM
+    // Initialize...
     new Vue({
       store,
       router,
