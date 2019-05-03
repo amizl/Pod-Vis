@@ -1,36 +1,37 @@
 <template>
-  <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
-  <v-data-table
-    v-else
-    :headers="headers"
-    :items="variables"
-    v-model="selected"
-    :select-all="selectable"
-    item-key="scale"
-    must-sort
-  >
-    <template v-slot:items="props">
-      <tr>
-        <td v-if="selectable">
-          <v-checkbox v-model="props.selected" color="primary" hide-details />
-        </td>
-        <td>{{ props.item.category }}</td>
-        <td>{{ props.item.scale }}</td>
-        <td v-for="dataset in datasets" :key="dataset.id">
-          <!-- <variable-sparkline
-            :dataset-id="dataset.id"
-            :type="props.item.type"
-            :scale="props.item.scale"
-          /> -->
-          <histogram-sparkline
-            :dataset-id="dataset.id"
-            :type="props.item.type"
-            :scale="props.item.scale"
-          />
-        </td>
-      </tr>
-    </template>
-  </v-data-table>
+  <transition name="fade" mode="out-in">
+    <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
+    <v-data-table
+      v-else
+      :headers="headers"
+      :items="variables"
+      v-model="selected"
+      :select-all="selectable"
+      item-key="scale"
+      must-sort
+    >
+      <template v-slot:items="props">
+        <tr>
+          <td v-if="selectable">
+            <v-checkbox v-model="props.selected" color="primary" hide-details />
+          </td>
+          <td>{{ props.item.category }}</td>
+          <td>{{ props.item.scale }}</td>
+          <td
+            v-for="dataset in datasets"
+            :key="dataset.id"
+            class="text-xs-center"
+          >
+            <histogram-sparkline
+              :dataset-id="dataset.id"
+              :type="props.item.type"
+              :scale="props.item.scale"
+            />
+          </td>
+        </tr>
+      </template>
+    </v-data-table>
+  </transition>
 </template>
 
 <script>
