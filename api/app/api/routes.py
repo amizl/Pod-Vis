@@ -451,6 +451,26 @@ def get_collections():
         ]
     })
 
+@api.route("/collections/<collection_id>")
+@jwt_required
+def get_collection(collection_id):
+    """Get the user's collection."""
+    user = get_current_user()
+    collection = models.Collection.find_by_id(collection_id)
+
+    if not collection:
+        raise ResourceNotFound("Collection not found.")
+    if collection.creator_id != user.id:
+        raise AuthFailure('User not authorized to retrieve collection.')
+
+    include = request.args.getlist('include')
+    kwargs = {
+        "include_studies": "studies" in include,
+        "include_variables": "variables" in include
+    }
+
+    return jsonify(dict(success=True, collection=collection.to_dict(**kwargs)))
+
 @api.route("/collections/<collection_id>", methods=["DELETE"])
 @jwt_required
 def delete_collection(collection_id):

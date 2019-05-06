@@ -1,7 +1,7 @@
-version: "3"
+version: '3'
 services:
   ui:
-    build: "./ui"
+    build: './ui'
     networks:
       - backend
     depends_on:
@@ -9,7 +9,7 @@ services:
     ports:
       - 80:80
   api:
-    build: "./api"
+    build: './api'
     ports:
       # Map gunicorn running on port 8080 inside the container
       # to 5000 on the localhost. This allows us to proxy
@@ -18,11 +18,11 @@ services:
       # to rebuild the image every time we want to see changes. So we have
       # a proxy on the nodejs development server where any /api hits will
       # goto this container.
-      - "5000:8080"
+      - '5000:8080'
     expose:
       # Gunicorn server is running at this port, we expose it so we
       # can set up reverse proxy on production in Nginx
-      - "8080"
+      - '8080'
     depends_on:
       - mysql
     networks:
@@ -32,11 +32,11 @@ services:
     image: mysql:5.7
     restart: always
     ports:
-      - "3307:3307"
+      - '3307:3307'
     command: --disable-partition-engine-check
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: "cliovis"
+      MYSQL_DATABASE: 'cliovis'
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
