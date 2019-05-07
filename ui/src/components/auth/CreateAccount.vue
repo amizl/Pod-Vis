@@ -9,7 +9,7 @@
           label="Full Name"
           type="text"
           placeholder="John Doe"
-          :rules="[() => !!name || 'This field is required']"
+          :rules="[rules.required]"
           :error-messages="errorMessages"
           required)
         v-text-field(
@@ -19,7 +19,7 @@
           label="Email"
           type="text"
           placeholder='john.doe@gmail.com'
-          :rules="[() => !!email || 'This field is required']"
+          :rules="[rules.required]"
           :error-messages="errorMessages"
           required
         )
@@ -37,7 +37,7 @@
           name="password"
           label="Password"
           type="password"
-          :rules="[() => !!password || 'This field is required']"
+          :rules="[rules.required]"
           :error-messages="errorMessages"
           required
         )
@@ -47,7 +47,7 @@
           name="confirmPassword"
           label="Confirm Password"
           type="password"
-          :rules="[() => !!confirmPassword || 'Please confirm password', comparePasswords]"
+          :rules="[rules.required, rules.comparePassword]"
           :error-messages="errorMessages"
           required)
         v-card-actions
@@ -62,6 +62,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+
 import {
   state as authState,
   actions as authActions,
@@ -76,6 +77,11 @@ export default {
       password: '',
       confirmPassword: '',
       errorMessages: '',
+      rules: {
+        required: value => !!value || 'This field is required.',
+        comparePassword: value =>
+          value == this.password || "Passwords don't match.",
+      },
     };
   },
   computed: {
