@@ -61,9 +61,11 @@ After environment variables are setup, in the root directory (with the docker-co
 # Actively developing api or ui without rebuilding for every change
 Building all the containers can impede development if you are only working on a single part of the application. For example, if you are working on the ui, you may want hot reloading so you can see your changes in real time with out having to build all the containers every time.  Do this by:
 
+```
 $ cd ui
 $ npm install
 $ npm run serve
+```
 
 ## ui
 1. Run `docker-compose build api`
