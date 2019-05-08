@@ -50,6 +50,8 @@ Flask has 5 environment variables it needs when it initializes,
 then the MYSQL_DEVELOPMENT_DATABASE_URI could be
 - `MYSQL_DEVELOPMENT_DATABASE_URI=mysql+pymysql://cliovis:cliovis@mysql/cliovis`
 
+The schema will be auto-initialized next, but if there are any custom SQL files (such as a db dump) you want included you should now place them under db/docker-entrypoint-initdb.d/
+
 # Spinning up application
 After environment variables are setup, in the root directory (with the docker-compose.yml file),
 1. Run `docker-compose build`
@@ -57,7 +59,11 @@ After environment variables are setup, in the root directory (with the docker-co
   * You may need to change the ports in the dockerfiles if you already applications running on those ports
 
 # Actively developing api or ui without rebuilding for every change
-Building all the containers can impede development if you are only working on a single part of the application. For example, if you are working on the ui, you may want hot reloading so you can see your changes in real time with out having to build all the containers every time.
+Building all the containers can impede development if you are only working on a single part of the application. For example, if you are working on the ui, you may want hot reloading so you can see your changes in real time with out having to build all the containers every time.  Do this by:
+
+$ cd api
+$ npm install
+$ npm run serve
 
 ## ui
 1. Run `docker-compose build api`
@@ -75,8 +81,5 @@ TODO (currently required to build and up api because flask + mysql are coupled)
 2. Fill out the fields in api/example_env and save this file as .env
 - There are fields in this file that should map to some fields from /example_env you filled out above. (mysql user, password, etc.)
 3. To spin up the containers, in same directory as docker-compose.yml, run `docker-compose build` to build the images. Once built, then run `docker-compose up`.
-4. The next step is to find the MySQL container and import our schema and data.
-- `docker ps` to find the container id of mysql container
-- ``docker exec -i <mysql container id> mysql -uroot --password=<root mysql password set in .env> <database name from env> < db/db_schema_v1.sql`
-- Next we want to first make sure our dump.sql file is in the db directory (not committed), then import that file. `docker exec -t -i <mysql container id> mysql -uroot --password=<root mysql password set in .env> <database name from env> < db/dump.sql`
+4. Optional.  The db will automatically be initialized with an empty schema.  Place any other files here: db/docker-entrypoint-initdb.d/
 - This container has a volume at db/data/mysql and will persist there.
