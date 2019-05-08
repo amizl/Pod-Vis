@@ -27,9 +27,8 @@ TODO
 # Setting up development
 To start, you will need to fill out environment variables for both Docker and Flask.
 ## Docker
-Docker has 4 environment variables it needs when it builds.  Only the root password needs to exist already - the rest will be created automatically.
+Docker has 3 environment variables it needs when it builds.  Only the root password needs to exist already - the rest will be created automatically.
 - `MYSQL_ROOT_PASSWORD`
-- `MYSQL_DATABASE`
 - `MYSQL_USER`
 - `MYSQL_PASSWORD`
 
