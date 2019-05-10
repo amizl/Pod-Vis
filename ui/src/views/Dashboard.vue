@@ -4,9 +4,10 @@
       <v-toolbar-title>Dashboard</v-toolbar-title>
     </v-toolbar>
     <v-layout align-center justify-center>
-      <v-flex xs12>
+      <v-flex xs4>
         <v-card> <collection-table></collection-table> </v-card>
       </v-flex>
+      <v-flex xs8> <v-card> </v-card> </v-flex>
 
       <!-- <h1 class="headline text-md-center">
         <v-icon large class="pb-4">build</v-icon><br />
@@ -23,7 +24,7 @@
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/dashboard/types';
 
-import CollectionTable from '@/components/common/CollectionTable.vue';
+import CollectionTable from '@/components/dashboard/CollectionTable.vue';
 
 export default {
   components: {
