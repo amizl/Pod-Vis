@@ -11,9 +11,9 @@ class Collection(db.Model):
     __tablename__ = "collection"
 
     id = db.Column(db.Integer, primary_key=True)
-    creator_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     label = db.Column(db.VARCHAR, nullable=False)
-    date_generated = db.Column(db.DATETIME)
+    date_generated = db.Column(db.TIMESTAMP)
     is_public = db.Column(db.SMALLINT, default=0)
     instantiation_type = db.Column(db.Enum(InstantiationType))
     last_modified = db.Column(db.TIMESTAMP)
@@ -22,13 +22,19 @@ class Collection(db.Model):
         "CollectionStudy",
         lazy="select",
         cascade="all, delete-orphan")
-    variables = db.relationship(
+    observation_variables = db.relationship(
         "CollectionObservationVariable",
         lazy="select",
         cascade="all, delete-orphan")
+    subject_variables = db.relationship(
+        "CollectionSubjectVariable",
+        lazy="select",
+        cascade="all, delete-orphan")
 
-    def __init__(self, creator_id, label, is_public, instantiation_type):
-        self.creator_id = creator_id
+    # TODO SUBJECT VARIABLES
+
+    def __init__(self, user_id, label, is_public, instantiation_type):
+        self.user_id = user_id
         self.label = label
         self.is_public = is_public
         self.instantiation_type = instantiation_type
@@ -64,7 +70,7 @@ class Collection(db.Model):
         Returns:
             If exists, the collections.
         """
-        return cls.query.filter_by(creator_id=user_id).all()
+        return cls.query.filter_by(user_id=user_id).all()
 
     def save_to_db(self):
         """Save collection to the database."""
@@ -87,7 +93,7 @@ class Collection(db.Model):
         """
         collection = dict(
             id=self.id,
-            creator_id=self.creator_id,
+            user_id=self.user_id,
             label=self.label,
             date_generated=self.date_generated,
             is_public=self.is_public,
@@ -98,7 +104,8 @@ class Collection(db.Model):
                 include_study=True) for study in self.studies]
 
         if include_variables:
-            collection['variables'] = [var.to_dict() for var in self.variables]
+            collection['observation_variables'] = [var.to_dict() for var in self.observation_variables]
+            collection['subject_variables'] = [var.to_dict() for var in self.subject_variables]
 
         if include_queries:
             # TODO

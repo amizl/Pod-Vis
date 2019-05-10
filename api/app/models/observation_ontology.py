@@ -1,38 +1,38 @@
 from . import db
 
-class SubjectOntology(db.Model):
-    __tablename__ = "subject_ontology"
+class ObservationOntology(db.Model):
+    __tablename__ = "observation_ontology"
 
     id = db.Column(db.Integer, primary_key=True)
-    parent_id = db.Column(db.Integer, db.ForeignKey("subject_ontology.id"))
+    parent_id = db.Column(db.Integer, db.ForeignKey("observation_ontology.id"))
     label = db.Column(db.VARCHAR, nullable=False)
 
-    parent = db.relationship("SubjectOntology", remote_side=[id])
+    parent = db.relationship("ObservationOntology", remote_side=[id])
 
     def __init__(self,  parent_id, label):
         self.parent_id = parent_id
         self.label= label
 
     @classmethod
-    def get_all_subject_ontology(cls):
-        """Get all subject ontology.
+    def get_all_observation_ontology(cls):
+        """Get all observation ontology.
 
         Returns:
-            All subject ontology.
+            All observation ontology.
         """
         return cls.query.all()
 
     @classmethod
-    def find_by_id(cls, subject_ontology_id):
-        """Find subject ontology by id.
+    def find_by_id(cls, observation_ontology_id):
+        """Find observation ontology by id.
 
         Args:
-            id: Subject ontology ID.
+            id: Observation ontology ID.
 
         Returns:
-           Subject ontology.
+           Observation ontology.
         """
-        return cls.query.filter_by(id=subject_ontology_id).first()
+        return cls.query.filter_by(id=observation_ontology_id).first()
 
     def save_to_db(self):
         """Save to database."""

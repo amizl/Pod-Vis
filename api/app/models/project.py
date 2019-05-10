@@ -4,7 +4,7 @@ class Project(db.Model):
     __tablename__ = "project"
 
     id = db.Column(db.Integer, primary_key=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     project_name = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     project_url = db.Column(db.Text(1000))
@@ -12,8 +12,8 @@ class Project(db.Model):
 
     studies = db.relationship("Study", back_populates="project", lazy="select")
 
-    def __init__(self, owner_id, project_name, description, project_url, is_public):
-        self.owner_id = owner_id
+    def __init__(self, user_id, project_name, description, project_url, is_public):
+        self.user_id = user_id
         self.project_name = project_name
         self.description = description
         self.project_url = project_url
@@ -58,4 +58,3 @@ class Project(db.Model):
             project["studies"] = [study.to_dict(**kwargs) for study in self.studies]
 
         return project
-

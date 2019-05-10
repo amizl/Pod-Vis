@@ -110,7 +110,8 @@ class Subject(db.Model):
         return [
             {
                 "category": attribute.ontology.parent.label if attribute.ontology.parent else None,
-                "scale": attribute.ontology.label
+                "scale": attribute.ontology.label,
+                "id": attribute.ontology.id
             }
             for attribute in self.attributes
         ]

@@ -11,6 +11,7 @@ class Cohort(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    date_generated = db.Column(db.TIMESTAMP)
     label = db.Column(db.VARCHAR, nullable=False)
     instantiation_type = db.Column(db.Enum(InstantiationType))
     last_modified = db.Column(db.TIMESTAMP)

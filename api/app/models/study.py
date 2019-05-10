@@ -1,7 +1,8 @@
 from . import db
-from . import Subject, SubjectVisit, Observation
+from . import Subject, SubjectVisit, Observation, ObservationOntology
 import pandas as pd
 from sqlalchemy import func
+from sqlalchemy.sql import text
 
 class Study(db.Model):
     __tablename__ = "study"
@@ -41,29 +42,42 @@ class Study(db.Model):
         return cls.query.filter_by(id=study_id).first()
 
     def get_variables(self):
-        """Get all variables in a study.
+        """Get all variables in a study."""
+        connection = db.engine.connect()
 
-        This is equivalent to the SQL query:
-            SELECT DISTINCT o.category, o.scale
-            FROM study
-            JOIN subject s ON study.id = s.study_id
-            JOIN  subject_visit v ON s.id = v.subject_id
-            JOIN observation o ON v.id = o.subject_visit_id
-            WHERE study.id = %s;
-        """
-        return [
-            dict(category=category, scale=scale)
-            for category, scale in self.query.filter_by(id=self.id) \
-                .join(Subject) \
-                .join(SubjectVisit) \
-                .join(Observation) \
-                .with_entities(Observation.category, Observation.scale) \
-                .distinct() \
-                .all()
+        query = text("""
+            SELECT distinct o.label as category, t.label as scale, t.id
+                FROM observation_ontology o
+                JOIN (
+                    SELECT *
+                    FROM observation_ontology
+                    WHERE id
+                    IN (
+                        SELECT distinct oo.parent_id
+                        FROM study
+                        JOIN subject s ON study.id = s.study_id
+                        JOIN  subject_visit v ON s.id = v.subject_id
+                        JOIN observation o ON v.id = o.subject_visit_id
+                        JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
+                        WHERE study.id = :id
+                    )
+                ) t
+                ON t.parent_id = o.id
+        """)
+
+        result = [
+            dict(category=category, scale=scale, id=scale_id)
+            for category, scale, scale_id in
+            connection.execute(query, id=self.id).fetchall()
         ]
+
+        connection.close()
+        return result
 
     def get_observations(self):
         """Get all variables in a study.
+
+        NOTE: DEPRECATED.
 
         This is equivalent to the SQL query:
             SELECT o.category, o.scale, o.value
@@ -74,37 +88,38 @@ class Study(db.Model):
             WHERE study.id = %s;
         """
         return [
-            dict(category=category, scale=scale, value=value)
-            for category, scale, value in self.query.filter_by(id=self.id) \
+            dict(scale=scale, value=value)
+            for scale, value in self.query.filter_by(id=self.id) \
                 .join(Subject) \
                 .join(SubjectVisit) \
                 .join(Observation) \
-                .with_entities(Observation.category, Observation.scale, Observation.value) \
+                .join(ObservationOntology)
+                .with_entities(ObservationOntology.label, Observation.value) \
                 .all()
         ]
 
-    def find_observation_value_counts_by_scale(self, scale):
-        """Get all value counts for an observation in a study by scale.
-
-        This is equivalent to the SQL query:
-            SELECT o.value, count(o.value) as count
+    def find_observation_value_counts_by_scale(self, observation_ontology_id):
+        """Get all value counts for an observation in a study by scale."""
+        connection = db.engine.connect()
+        query = text("""
+            SELECT CAST(o.value AS SIGNED) as value
             FROM study
             JOIN subject s ON study.id = s.study_id
             JOIN  subject_visit v ON s.id = v.subject_id
             JOIN observation o ON v.id = o.subject_visit_id
-            GROUP BY (o.value)
-            WHERE study.id = %s and o.scale = %s;
-        """
-        return [
-            dict(value=value)
-            for value, in self.query.filter_by(id=self.id) \
-                .join(Subject) \
-                .join(SubjectVisit) \
-                .join(Observation) \
-                .with_entities(Observation.value) \
-                .filter(Observation.scale == scale) \
-                .all()
-        ]
+            JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
+            WHERE study.id = 1 and o.observation_ontology_id in (
+                SELECT id
+                FROM observation_ontology
+                WHERE parent_id = :parent_id
+            )
+            ORDER BY value
+        """)
+        values = connection.execute(query, parent_id=observation_ontology_id).fetchall()
+        result = [dict(value=value) for value, in values]
+
+        connection.close()
+        return result
 
     def find_subject_attribute_counts_by_scale(self, scale):
         """Get all value counts for a subject attributes in a study by scale.
@@ -117,6 +132,28 @@ class Study(db.Model):
             JOIN observation o ON v.id = o.subject_visit_id
             WHERE study.id = %s and o.scale = %s;
         """
+        query = text("""
+            SELECT o.value
+            FROM study
+            JOIN subject s ON study.id = s.study_id
+            JOIN  subject_visit v ON s.id = v.subject_id
+            JOIN observation o ON v.id = o.subject_visit_id
+            WHERE study.id = %s and o.scale = %s;
+        """)
+        # query = text("""
+        #     SELECT CAST(o.value AS SIGNED) as value
+        #     FROM study
+        #     JOIN subject s ON study.id = s.study_id
+        #     JOIN  subject_visit v ON s.id = v.subject_id
+        #     JOIN observation o ON v.id = o.subject_visit_id
+        #     JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
+        #     WHERE study.id = 1 and o.observation_ontology_id in (
+        #         SELECT id
+        #         FROM observation_ontology
+        #         WHERE parent_id = :parent_id
+        #     )
+        #     ORDER BY value
+        # """)
         return [
             dict(value=value, count=count)
             for value, count in self.query.filter_by(id=self.id) \

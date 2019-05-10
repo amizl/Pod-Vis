@@ -1,22 +1,22 @@
 from . import db
 
-class CollectionObservationVariable(db.Model):
-    __tablename__ = "collection_observation_variable"
+class CollectionSubjectVariable(db.Model):
+    __tablename__ = "collection_subject_variable"
 
     id = db.Column(db.Integer, primary_key=True)
     collection_id = db.Column(db.Integer, db.ForeignKey("collection.id"))
-    observation_ontology_id = db.Column(db.Integer, db.ForeignKey("observation_ontology.id"))
+    subject_ontology_id = db.Column(db.Integer, db.ForeignKey("subject_ontology.id"))
 
-    def __init__(self, collection_id, observation_ontology_id):
+    def __init__(self, collection_id, subject_ontology_id):
         self.collection_id = collection_id
-        self.observation_ontology_id = observation_ontology_id
+        self.subject_ontology_id = subject_ontology_id
 
     @classmethod
-    def get_all_observation_variables(cls):
-        """Get all variables (outcome measures / scales).
+    def get_all_subject_variables(cls):
+        """Get all subject variables.
 
         Returns:
-            All collection variables.
+            All subject variables within collection.
         """
         return cls.query.all()
 
@@ -46,6 +46,5 @@ class CollectionObservationVariable(db.Model):
         return dict(
           id=self.id,
           collection_id=self.collection_id,
-          # TODO... get
-          observation_ontology_id=self.observation_ontology_id
+          subject_ontology_id=self.subject_ontology_id
         )

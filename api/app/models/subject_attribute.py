@@ -1,4 +1,10 @@
 from . import db
+import enum
+
+class ValueType(enum.Enum):
+    int = "int"
+    string = "string"
+    date = "date"
 
 class SubjectAttribute(db.Model):
     __tablename__ = "subject_attribute"
@@ -7,14 +13,16 @@ class SubjectAttribute(db.Model):
     subject_id = db.Column(db.Integer, db.ForeignKey("subject.id"))
     subject_ontology_id = db.Column(db.Integer, db.ForeignKey("subject_ontology.id"))
     value = db.Column(db.VARCHAR, nullable=False)
+    value_type = db.Column(db.Enum(ValueType))
 
     subject = db.relationship("Subject", back_populates="attributes")
     ontology = db.relationship("SubjectOntology")
 
-    def __init__(self,  subject_id, subject_ontology_id, value):
+    def __init__(self,  subject_id, subject_ontology_id, value, value_type):
         self.subject_id = subject_id
         self.subject_ontology_id = subject_ontology_id
         self.value = value
+        self.value_type = value_type
 
     @classmethod
     def get_all_subject_attributes(cls):
@@ -72,10 +80,18 @@ class SubjectAttribute(db.Model):
         This easily allows for serializing the object and
         sending over http.
         """
-        return dict(
+
+        response = dict(
           id=self.id,
           subject_id=self.subject_id,
           subject_ontology_id=self.subject_ontology_id,
-          value=self.value,
           ontology=self.ontology.to_dict()
         )
+
+        if self.value_type is ValueType.int:
+            response['value'] = int(self.value)
+        else:
+            response['value'] = str(self.value)
+        # TODO... date
+
+        return response
