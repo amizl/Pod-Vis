@@ -17,7 +17,6 @@ def get_all_subjects():
         "subjects": [subject.to_dict() for subject in subjects]
     })
 
-
 @api.route('/studies')
 def get_all_studies():
     """Get all studies.
@@ -197,47 +196,66 @@ def get_study_observations(study_id):
         "observations": observations
     })
 
-@api.route('/studies/<study_id>/variables/<scale>/distribution')
-def get_study_variable_distribution(study_id, scale):
-    """Get distribution of a scale for a study.
+@api.route('/observations')
+def get_all_observations():
+    """Get all observations for a study.
 
     Example URL:
-        /api/studies/1/variables/MDS-UPDRS_1/distribution
+        /api/studies/1/observations
     """
-    study = models.Study.find_by_id(study_id)
-    if not study:
-        raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
-
-    observation_counts = study.find_observation_value_counts_by_scale(scale)
-
-    df_value_counts = pd.DataFrame(observation_counts)
-    # # TODO... only do this if type is int but saved as string
-    df_value_counts['value'] = df_value_counts['value'].apply(int)
+    observations = models.Observation.get_all_observations()
 
     return jsonify({
         "success": True,
-        "counts": df_value_counts.sort_values(by="value").to_dict("records"),
-        "scale": scale
+        "observations": observations[0].to_dict()
     })
 
-@api.route('/studies/<study_id>/subjects/variables/<scale>/distribution')
-def get_subject_variable_counts(study_id, scale):
-    """Get distribution of a subject variable for a study.
+@api.route('/studies/<study_id>/variables/<observation_ontology_id>/distribution')
+def get_study_variable_distribution(study_id, observation_ontology_id):
+    """Get distribution of a scale for a study.
 
     Example URL:
-        /api/studies/1/subject/variables/sex/distribution
+        /api/studies/1/variables/43/distribution
     """
     study = models.Study.find_by_id(study_id)
     if not study:
         raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
 
-    subjects = models.Subject.find_all_by_study_id(study_id)
-    subjects = [subject.to_dict(include_attributes=True) for subject in subjects]
+    observation_counts = study.find_observation_value_counts_by_scale(observation_ontology_id)
+    # df_value_counts = pd.DataFrame(observation_counts)
+    # # TODO... only do this if type is int but saved as string
+    # df_value_counts['value'] = df_value_counts['value'].apply(int)
+
+    return jsonify({
+        "success": True,
+        "counts": observation_counts,
+        # "counts": df_value_counts.sort_values(by="value").to_dict("records"),
+        "scale": observation_ontology_id
+    })
+
+@api.route('/studies/<study_id>/subjects/variables/<subject_ontology_id>/distribution')
+def get_subject_variable_counts(study_id, subject_ontology_id):
+    """Get distribution of a subject variable for a study.
+
+    Example URL:
+        /api/studies/1/subject/variables/1/distribution
+    """
+    study = models.Study.find_by_id(study_id)
+    if not study:
+        raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
+    subject_attribute = models.SubjectOntology.find_by_id(subject_ontology_id)
+    if not subject_attribute:
+        raise ResourceNotFound(f"The subject attribute with ID {subject_ontology_id} does not exist.")
+
+    subjects = [
+        subject.to_dict(include_attributes=True)
+        for subject in models.Subject.find_all_by_study_id(study_id)
+    ]
 
     rename_idx = dict()
-    rename_idx[scale] = 'value'
+    rename_idx[subject_attribute.label] = 'value'
     df = pd.DataFrame(subjects) \
-        .groupby(scale) \
+        .groupby(subject_attribute.label) \
         .size() \
         .to_frame('count') \
         .reset_index() \
@@ -246,7 +264,8 @@ def get_subject_variable_counts(study_id, scale):
     return jsonify({
         "success": True,
         "counts": df.to_dict("records"),
-        "scale": scale
+        "scale": subject_attribute.label,
+        "subject_ontology_id": subject_attribute.label
     })
 
 @api.route('/studies/<study_id>/subjects/count')
@@ -397,7 +416,6 @@ def create_collection():
     collection.save_to_db()
 
     # Add studies to collection
-    collection_studies = []
     for study_id in study_ids:
         study = models.Study.find_by_id(study_id)
         if not study:
@@ -405,14 +423,18 @@ def create_collection():
                 f"The study with ID {study_id} does not exist.")
         collection_study = models.CollectionStudy(collection.id, study.id)
         collection_study.save_to_db()
-        collection_studies.append(collection_study)
 
-    # Add variables to collection
-    collection_variables = []
+    # Add variables to appropriate collection table
     for variable in variables:
-        obs_variable = models.CollectionObservationVariable(collection.id, variable)
-        obs_variable.save_to_db()
-        collection_variables.append(obs_variable)
+        if variable["type"] == "observation":
+            obs_variable = models.CollectionObservationVariable(collection.id, variable["id"])
+            obs_variable.save_to_db()
+        elif variable["type"] == "subject":
+            subject_variable = models.CollectionSubjectVariable(collection.id, variable["id"])
+            subject_variable.save_to_db()
+        else:
+            # This should never happen but just in case it does...
+            raise BadRequest("Variable has unsupported type.")
 
     return jsonify({
         "success": True,
@@ -460,7 +482,7 @@ def get_collection(collection_id):
 
     if not collection:
         raise ResourceNotFound("Collection not found.")
-    if collection.creator_id != user.id:
+    if collection.user_id != user.id:
         raise AuthFailure('User not authorized to retrieve collection.')
 
     include = request.args.getlist('include')
@@ -480,7 +502,7 @@ def delete_collection(collection_id):
 
     if not collection:
         raise ResourceNotFound("Collection not found.")
-    if collection.creator_id != user.id:
+    if collection.user_id != user.id:
         raise AuthFailure('User not authorized to delete collection.')
 
     collection.delete_from_db()
