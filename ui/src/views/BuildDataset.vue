@@ -106,9 +106,7 @@ export default {
       return this.selectedDatasets.map(({ id }) => id);
     },
     variables() {
-      // Variable take on the shape of {category, scale}. We
-      // only really need the scale (for now).
-      return this.selected.map(variable => variable.scale);
+      return this.selected;
     },
   },
   methods: {

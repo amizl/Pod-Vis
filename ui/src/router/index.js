@@ -22,6 +22,9 @@ export default new Router({
       name: 'cohortManager',
       component: () => import('@/views/CohortManager.vue'),
       beforeEnter: requireAuth,
+      props: route => ({
+        collectionId: +route.query.collection,
+      }),
     },
     {
       path: '/cohorts/build',

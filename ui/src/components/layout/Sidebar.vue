@@ -94,11 +94,11 @@ export default {
           icon: 'table_chart',
           path: '/datasets',
         },
-        {
-          name: 'Cohort Manager',
-          icon: 'group',
-          path: '/cohorts',
-        },
+        // {
+        //   name: 'Cohort Manager',
+        //   icon: 'group',
+        //   path: '/cohorts',
+        // },
         {
           name: 'Data Explorer',
           icon: 'explore',

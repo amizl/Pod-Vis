@@ -1,18 +1,22 @@
-<template lang="pug">
-  v-tabs(slider-color="secondary" grow)
-    v-tab(key='login') SIGN IN
-    v-tab(key='createAccount') CREATE ACCOUNT
-    v-tabs-items
-      v-alert(
-        :value='authError'
-        type='error'
-        transition='fade-transition'
-        dismissible
-      ) {{ authError }}
-      v-tab-item
-        sign-in-form
-      v-tab-item
-        create-account-form
+<template>
+  <div>
+    <v-tabs slider-color="secondary" grow>
+      <v-tab>SIGN IN</v-tab>
+      <v-tab>CREATE ACCOUNT</v-tab>
+      <v-tabs-items>
+        <v-alert
+          :value="authError"
+          type="error"
+          transition="fade-transition"
+          dismissable
+        >
+          {{ authError }}
+        </v-alert>
+        <v-tab-item> <sign-in-form /> </v-tab-item>
+        <v-tab-item> <create-account-form /> </v-tab-item>
+      </v-tabs-items>
+    </v-tabs>
+  </div>
 </template>
 
 <script>

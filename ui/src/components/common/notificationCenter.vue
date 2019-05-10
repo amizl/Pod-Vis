@@ -3,7 +3,8 @@
     v-if="notification"
     v-model="notifyState"
     :color="notification.type"
-    top
+    bottom
+    right
   >
     {{ notification.message }}
     <!-- <v-btn color="white" flat @click="notify"> Close </v-btn> -->
