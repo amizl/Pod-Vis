@@ -18,7 +18,7 @@
                   </p>
                 </v-card-title>
                 <v-card-text>
-                  <p>{{ descriptions[dataset.study.study_name] }}</p>
+                  <p>{{ dataset.study.description }}</p>
                 </v-card-text>
                 <v-card-actions v-if="dataset.sourceURL">
                   <v-spacer></v-spacer>
@@ -128,24 +128,6 @@ export default {
       variables: [],
       groupBy: ['Sex', 'Race'],
       // TODO: Descriptions need to be loaded into database
-      descriptions: {
-        "Parkinson's Disease":
-          'Subjects with a diagnosis of PD for two years or less who are not taking PD medications.',
-        'Healthy Control':
-          'Control Subjects without PD who are 30 years or older and who do not have a first degree blood relative with PD.',
-        SWEDD:
-          'Subjects consented as PD subjects who have DaTscans that do not show evidence of a dopaminergic deficit.',
-        Prodomal:
-          "Subjects without Parkinson's disease who have a diagnosis of hyposmia or REM sleep behavior disorder (RBD).",
-        'Genetic Cohort PD':
-          "Subjects with Parkinson's disease who have a genetic mutation in LRRK2, GBA, or SNCA.",
-        'Genetic Cohort Unaffected':
-          "Subjects without Parkinson's disease who have a genetic mutation in LRRK2, GBA, or SNCA.",
-        'Genetic Registry PD':
-          "Subjects with Parkinson's disease who have a genetic mutation in LRRK2, GBA, or SNCA or a first-degree relative with a LRRK2, GBA, or SNCA mutation who are evaluated at less frequent intervals to augment and broaden the follow-up of PD subjects and family members with PD associated mutations.",
-        'Genetic Registry Unaffected':
-          "Subjects without Parkinson's disease who have a genetic mutation in LRRK2, GBA, or SNCA or a first-degree relative with a LRRK2, GBA, or SNCA mutation who are evaluated at less frequent intervals to augment and broaden the follow-up of PD subjects and family members with PD associated mutations.",
-      },
     };
   },
   computed: {
