@@ -25,8 +25,8 @@ export default {
       type: String,
       required: true,
     },
-    scale: {
-      type: String,
+    scaleId: {
+      type: Number,
       required: true,
     },
     datasetId: {
@@ -54,14 +54,14 @@ export default {
   methods: {
     fetchObservationVariableCounts() {
       return axios.get(
-        `/api/studies/${this.datasetId}/variables/${this.scale}/distribution`
+        `/api/studies/${this.datasetId}/variables/${this.scaleId}/distribution`
       );
     },
     fetchSubjectVariableCounts() {
       // TODO: Write subject variable counts
       return axios.get(
         `/api/studies/${this.datasetId}/subjects/variables/${
-          this.scale
+          this.scaleId
         }/distribution`
       );
     },

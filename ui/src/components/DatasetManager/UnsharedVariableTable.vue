@@ -45,6 +45,10 @@ export default {
       type: [Number, Array],
       default: 0,
     },
+    selectable: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {

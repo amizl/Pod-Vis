@@ -26,7 +26,7 @@
             <histogram-sparkline
               :dataset-id="dataset.id"
               :type="props.item.type"
-              :scale="props.item.scale"
+              :scale-id="props.item.id"
             />
           </td>
         </tr>
@@ -108,6 +108,7 @@ export default {
     variables.forEach(variable => (variable['type'] = 'observation'));
     this.variables = variables;
 
+    // TODO...fetch shared subject attributes
     const {
       data: { subject_attributes: subjectVariables },
     } = await axios.get(
