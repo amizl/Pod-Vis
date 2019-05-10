@@ -2,7 +2,7 @@
 export const state = {
   COHORTS: 'cohorts',
   IS_LOADING: 'isLoading',
-  COLLECTION_ID: 'collectionId',
+  COLLECTION: 'collection',
 };
 
 // Getters
@@ -11,11 +11,12 @@ export const getters = {};
 // Mutations
 export const mutations = {
   SET_COHORTS: 'setCohorts',
-  SET_COLLECTION_ID: 'setCollectionId',
+  SET_COLLECTION: 'setCollection',
   SET_LOADING: 'setLoading',
 };
 
 // Actions
 export const actions = {
   FETCH_COHORTS: 'fetchCohorts',
+  FETCH_COLLECTION: 'fetchCollection',
 };

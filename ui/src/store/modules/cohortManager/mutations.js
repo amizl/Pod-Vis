@@ -7,7 +7,7 @@ export default {
   [mutations.SET_LOADING](state, isLoading) {
     state[stateTypes.IS_LOADING] = isLoading;
   },
-  [mutations.SET_COLLECTION_ID](state, collectionId) {
-    state[stateTypes.COLLECTION_ID] = collectionId;
+  [mutations.SET_COLLECTION](state, collection) {
+    state[stateTypes.COLLECTION] = collection;
   },
 };
