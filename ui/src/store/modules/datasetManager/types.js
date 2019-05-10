@@ -14,6 +14,7 @@ export const mutations = {
   SET_LOADING: 'setLoading',
   SET_SELECTED_DATASETS: 'setSelectedDatasets',
   CLEAR_SELECTED_DATASETS: 'clearSelectedDatasets',
+  DELETE_COLLECTION: 'deleteCollection',
 };
 
 export const actions = {
@@ -22,4 +23,5 @@ export const actions = {
   SELECT_DATASETS: 'selectDatasets',
   ADD_SELECTED_DATASETS_TO_COHORTS: 'addToCohorts',
   SAVE_COLLECTION: 'saveCollection',
+  DELETE_COLLECTION: 'deleteCollection',
 };

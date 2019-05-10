@@ -25,4 +25,10 @@ export default {
   [mutations.CLEAR_SELECTED_DATASETS](state) {
     state[stateTypes.SELECTED_DATASETS] = [];
   },
+  [mutations.DELETE_COLLECTION](state, collectionId) {
+    const collections = state[stateTypes.COLLECTIONS];
+    state[stateTypes.COLLECTIONS] = collections.filter(
+      collection => collection.id != collectionId
+    );
+  },
 };

@@ -84,4 +84,21 @@ export default {
 
     commit(mutations.SET_LOADING, false);
   },
+  async [actions.DELETE_COLLECTION]({ commit, dispatch }, collectionId) {
+    commit(mutations.SET_LOADING, true);
+
+    try {
+      await axios.delete(`/api/collections/${collectionId}`);
+      commit(mutations.DELETE_COLLECTION, collectionId);
+      const notification = new SuccessNotification(
+        'Collection successfully deleted.'
+      );
+      dispatch(notification.dispatch, notification, { root: true });
+    } catch (err) {
+      const notification = new ErrorNotification(err);
+      dispatch(notification.dispatch, notification, { root: true });
+    } finally {
+      commit(mutations.SET_LOADING, false);
+    }
+  },
 };

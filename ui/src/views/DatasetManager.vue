@@ -29,15 +29,17 @@
     <v-layout row justify-center>
       <v-flex xs12>
         <v-card>
-          <v-card-title card color="white">
-            <p>
-              <span class="title">Available Datasets</span> <br />
-              <span class="subheading grey--text ligthen-2"
-                >Select those you wish to combine.</span
-              >
-            </p>
-          </v-card-title>
-          <dataset-table :search="search" />
+          <v-tabs slider-color="secondary" grow>
+            <v-tab>
+              <span class="">Available Datasets</span>
+              <!-- <span class="subheading grey--text ligthen-2"
+                  >Select those you wish to combine.</span
+                > -->
+            </v-tab>
+            <v-tab> <span class="">My Collections</span> </v-tab>
+            <v-tab-item> <dataset-table :search="search" /> </v-tab-item>
+            <v-tab-item> <collection-table></collection-table></v-tab-item>
+          </v-tabs>
         </v-card>
       </v-flex>
     </v-layout>
@@ -48,10 +50,12 @@
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
 import DatasetTable from '@/components/DatasetManager/DatasetTable.vue';
+import CollectionTable from '@/components/DatasetManager/CollectionTable.vue';
 
 export default {
   components: {
-    datasetTable: DatasetTable,
+    DatasetTable,
+    CollectionTable,
   },
   filters: {
     buildPath(datasets) {
