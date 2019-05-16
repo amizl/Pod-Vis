@@ -1,19 +1,41 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container fluid>
     <v-toolbar app class="white">
       <v-toolbar-title>Data Explorer</v-toolbar-title>
     </v-toolbar>
-    <v-layout align-center justify-center>
-      <h1 class="headline text-md-center">
-        <v-icon large class="pb-4">build</v-icon><br />
-        Data Explorer is currently under development
-      </h1>
+    <v-layout row wrap>
+      <v-flex xs12>
+        <v-card color="blue-grey darken-2" class="white--text">
+          DatasetSummaryCard here
+          <!-- Import DataExplorer/DatasetSummaryCard.vue -->
+        </v-card>
+      </v-flex>
+      <v-flex xs12>
+        <v-card color="green darken-2" class="white--text">
+          <SummaryViewCard></SummaryViewCard>
+          <!-- Import DataExplorer/SummaryViewCard.vue -->
+        </v-card>
+      </v-flex>
+      <v-flex xs12>
+        <v-card color="blue darken-2" class="white--text">
+          DetailedViewCard here
+          <!-- Import DataExplorer/DetailedViewCard.vue -->
+        </v-card>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-export default {};
+import DatasetSummaryCard from '@/components/DataExplorer/DatasetSummaryCard.vue';
+import DetailedViewCard from '@/components/DataExplorer/DetailedViewCard.vue';
+import SummaryViewCard from '@/components/DataExplorer/SummaryViewCard.vue';
+
+export default {
+    components: {
+        SummaryViewCard, DetailedViewCard, DatasetSummaryCard
+    }
+};
 </script>
 
 <style scoped></style>
