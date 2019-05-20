@@ -44,7 +44,7 @@ def get_all_studies():
     })
 
 
-@api.route('/studies/<study_id>')
+@api.route('/studies/<int:study_id>')
 def get_study(study_id):
     """Get study by its ID.
 
@@ -74,7 +74,7 @@ def get_study(study_id):
     })
 
 
-@api.route("/studies/<study_id>/variables")
+@api.route("/studies/<int:study_id>/variables")
 def get_study_variables(study_id):
     """Get all variables for a particular study.
 
@@ -125,7 +125,7 @@ def get_intersection_of_variables():
     })
 
 
-@api.route('/studies/<study_id>/subjects')
+@api.route('/studies/<int:study_id>/subjects')
 def get_study_subjects(study_id):
     """Get all subjects participating in a study.
 
@@ -159,7 +159,7 @@ def get_study_subjects(study_id):
     })
 
 
-@api.route('/studies/<study_id>/subjects/attributes')
+@api.route('/studies/<int:study_id>/subjects/attributes')
 def get_study_subject_attributes(study_id):
     """Get all attributes for subjects participating in a study.
 
@@ -179,7 +179,7 @@ def get_study_subject_attributes(study_id):
         "subject_attributes": subject.get_attributes()
     })
 
-@api.route('/studies/<study_id>/observations')
+@api.route('/studies/<int:study_id>/observations')
 def get_study_observations(study_id):
     """Get all observations for a study.
 
@@ -210,18 +210,26 @@ def get_all_observations():
         "observations": observations[0].to_dict()
     })
 
-@api.route('/studies/<study_id>/variables/<observation_ontology_id>/distribution')
+# @api.route('/studies/<int:study_id>/observations/<int:observation_ontology_id>')
+@api.route('/studies/<int:study_id>/variables/<int:observation_ontology_id>/distribution')
 def get_study_variable_distribution(study_id, observation_ontology_id):
-    """Get distribution of a scale for a study.
+    """Get observations for a study.
+
+    Aggregates totals for observation.
 
     Example URL:
-        /api/studies/1/variables/43/distribution
+        /api/studies/1/observations/43
     """
     study = models.Study.find_by_id(study_id)
+    observation = models.ObservationOntology.find_by_id(observation_ontology_id)
+
     if not study:
         raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
+    if not observation:
+        raise ResourceNotFound("Observation variable does not exist.")
 
     observation_counts = study.find_observation_value_counts_by_scale(observation_ontology_id)
+
     # df_value_counts = pd.DataFrame(observation_counts)
     # # TODO... only do this if type is int but saved as string
     # df_value_counts['value'] = df_value_counts['value'].apply(int)
@@ -233,7 +241,7 @@ def get_study_variable_distribution(study_id, observation_ontology_id):
         "scale": observation_ontology_id
     })
 
-@api.route('/studies/<study_id>/subjects/variables/<subject_ontology_id>/distribution')
+@api.route('/studies/<int:study_id>/subjects/variables/<int:subject_ontology_id>/distribution')
 def get_subject_variable_counts(study_id, subject_ontology_id):
     """Get distribution of a subject variable for a study.
 
@@ -268,7 +276,7 @@ def get_subject_variable_counts(study_id, subject_ontology_id):
         "subject_ontology_id": subject_attribute.label
     })
 
-@api.route('/studies/<study_id>/subjects/count')
+@api.route('/studies/<int:study_id>/subjects/count')
 def summarize_study_subjects(study_id):
     """Get summarized counts from subjects.
 
@@ -352,7 +360,7 @@ def get_all_projects():
     })
 
 
-@api.route('/projects/<project_id>')
+@api.route('/projects/<int:project_id>')
 def get_project(project_id):
     """Get project data.
 
@@ -473,7 +481,7 @@ def get_collections():
         ]
     })
 
-@api.route("/collections/<collection_id>")
+@api.route("/collections/<int:collection_id>")
 @jwt_required
 def get_collection(collection_id):
     """Get the user's collection."""
@@ -493,7 +501,7 @@ def get_collection(collection_id):
 
     return jsonify(dict(success=True, collection=collection.to_dict(**kwargs)))
 
-@api.route("/collections/<collection_id>", methods=["DELETE"])
+@api.route("/collections/<int:collection_id>", methods=["DELETE"])
 @jwt_required
 def delete_collection(collection_id):
     """Delete the user's collection."""
@@ -549,7 +557,7 @@ def get_all_cohorts():
         ]
     })
 
-@api.route("/cohorts/<cohort_id>")
+@api.route("/cohorts/<int:cohort_id>")
 @jwt_required
 def get_cohort(cohort_id):
     """Get a user's cohort.
@@ -626,7 +634,7 @@ def delete_all_cohorts():
         "success": True,
     })
 
-@api.route('/cohorts/<cohort_id>', methods=["DELETE"])
+@api.route('/cohorts/<int:cohort_id>', methods=["DELETE"])
 @jwt_required
 def delete_cohort(cohort_id):
     """Delete user's cohort.
@@ -641,10 +649,53 @@ def delete_cohort(cohort_id):
         raise ResourceNotFound("Cohort does not exist.")
 
     if user.id != cohort.user_id:
-        raise AuthFailure("Not authorizaed to delete this cohort.")
+        raise AuthFailure("Not authorized to delete this cohort.")
 
     cohort.delete_from_db()
 
     return jsonify({
         "success": True,
+    })
+
+@api.route('/collections/<int:collection_id>/observations/<int:observation_id>/roc')
+@jwt_required
+def compute_roc_for_observation(collection_id, observation_id):
+    user = get_current_user()
+    collection = models.Collection.find_by_id(collection_id)
+    observation = models.ObservationOntology.find_by_id(observation_id)
+
+    if not collection:
+        raise ResourceNotFound("Collection does not exist.")
+    if not observation:
+        raise ResourceNotFound("Observation variable does not exist.")
+    if user.id != collection.user_id:
+        raise AuthFailure('Not authorized to use this collection.')
+    if not collection.contains_observation(observation_id):
+        raise ResourceNotFound("Collection does not contain this observation.")
+
+    ROC = collection.compute_roc_across_visits_for_scale(observation_id)
+
+    return jsonify({
+        "success": True
+    })
+
+
+@api.route('/cohort-manager')
+@jwt_required
+def fetch_data_for_cohort_manager():
+    """Fetch data from studies and variables included in a collection"""
+    user = get_current_user()
+    request_data = request.get_json()
+    collection_id = request.args.get("collection")
+    collection = models.Collection.find_by_id(collection_id)
+
+    if not collection:
+        raise ResourceNotFound("Collection does not exist.")
+    if user.id != collection.user_id:
+        raise AuthFailure("Not authorized to use this collection.")
+
+    data = collection.get_data_for_cohort_manager()
+    return jsonify({
+        "success": True,
+        "data": data.to_dict("records")
     })
