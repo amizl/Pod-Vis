@@ -5,8 +5,10 @@ import colors from 'vuetify/es5/util/colors';
 
 Vue.use(Vuetify, {
   theme: {
-    primary: colors.grey.darken4,
-    background: colors.grey.lighten5,
+    primary: colors.indigo,
+    accent: colors.indigo,
+    background: colors.indigo.lighten5,
+    'v-divider': colors.indigo.lighten5,
   },
   // theme: {
   //   // primary: '#212B3A',
