@@ -1,15 +1,19 @@
 <template>
-  <v-container fluid grid-list-md>
-    <v-toolbar app class="white">
-      <v-toolbar-title>Cohort Manager</v-toolbar-title>
+  <v-container v-if="isLoading" fluid fill-height>
+    <loading-spinner />
+  </v-container>
+  <v-container v-else fluid grid-list-md fill-height>
+    <v-toolbar extended app class="primary shadow send-to-back">
+      <v-toolbar-title class="white--text">Cohort Manager</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items> <CohortSelection class="mt-3" /> </v-toolbar-items>
+      <v-spacer></v-spacer>
+      <v-btn color="primary--text">Save Cohort</v-btn>
     </v-toolbar>
-    <v-layout row>
-      <v-flex xs3> <variable-tree /> </v-flex>
-      <v-flex xs9>
-        <v-layout row>
+    <v-layout d-block class="translate-up" fill-height>
+      <v-flex fill-height xs-12>
+        <v-layout column fill-height>
           <v-flex> <input-variables /> </v-flex>
-        </v-layout>
-        <v-layout row>
           <v-flex> <output-variables /> </v-flex>
         </v-layout>
       </v-flex>
@@ -21,16 +25,16 @@
 import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/cohortManager/types';
 
+import CohortSelection from '@/components/CohortManager/CohortSelection.vue';
 import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
-import VariableTree from '@/components/CohortManager/VariableTree.vue';
 
 export default {
   name: 'CohortManager',
   components: {
+    CohortSelection,
     InputVariables,
     OutputVariables,
-    VariableTree,
   },
   props: {
     collectionId: {
@@ -38,17 +42,26 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
   computed: {
     ...mapState('cohortManager', {
       collection: state.COLLECTION,
     }),
   },
-  created() {
-    this.fetchCollection(this.collectionId);
+  async created() {
+    // this.isLoading = true;
+    await this.fetchCollection(this.collectionId);
+    await this.fetchData();
+    // this.isLoading = false;
   },
   methods: {
     ...mapActions('cohortManager', {
       fetchCollection: actions.FETCH_COLLECTION,
+      fetchData: actions.FETCH_DATA,
     }),
   },
 };

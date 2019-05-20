@@ -9,4 +9,3 @@ export default {
   // commit(mutations.SET_COHORT_SELECTION, payload);
   // },
 };
-
