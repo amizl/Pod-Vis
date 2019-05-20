@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-card(flat)
+  v-card(flat).rounded-lg
     v-card-text
       v-form(ref='form' @submit.prevent='onCreateAccount').ma-4
         v-text-field(

@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid>
-    <v-toolbar app class="white">
-      <v-toolbar-title>Create Dataset</v-toolbar-title>
+  <v-container fluid grid-list-md>
+    <v-toolbar extended app class="primary shadow send-to-back">
+      <v-toolbar-title class="white--text">Create Dataset</v-toolbar-title>
       <v-spacer></v-spacer>
       <save-collection-btn-dialog
         :variables="variables"
@@ -24,49 +24,59 @@
         </v-container>
       </v-flex>
     </v-layout> -->
-    <v-layout class="pt-2" row justify-center>
-      <v-flex xs12>
-        <v-card>
-          <v-card-title card color="white">
-            <p>
-              <span class="title">Shared Variables</span> <br />
-              <span class="subheading grey--text ligthen-2"
-                >Select the variables to include in the new dataset
-                collection.</span
-              >
-            </p>
-          </v-card-title>
-          <shared-variable-table
-            v-model="selected"
-            :datasets="selectedDatasets"
-            selectable
-          />
-        </v-card>
-      </v-flex>
-    </v-layout>
-    <v-layout class="pt-4" row justify-center>
-      <v-flex xs12>
-        <v-card>
-          <v-card-title card color="white">
-            <p>
-              <span class="title">Unshared Variables</span> <br />
-              <span class="subheading grey--text ligthen-2"
-                >These variables are not shared within selected datasets.
-              </span>
-            </p>
-          </v-card-title>
-          <v-tabs v-model="activeDataset" slider-color="primary">
-            <v-tab v-for="dataset in selectedDatasets" :key="dataset.id">
-              {{ dataset.study_name }}
-            </v-tab>
-            <v-tab-item v-for="dataset in selectedDatasets" :key="dataset.id">
-              <unshared-variable-table
-                :selected-ids="selectedDatasets.map(d => d.id)"
-                :dataset-id="dataset.id"
+
+    <v-layout column class="translate-up">
+      <v-flex>
+        <v-layout>
+          <v-flex xs12>
+            <v-card flat class="shadow rounded-lg">
+              <v-card-title card color="white">
+                <p>
+                  <span class="title">Shared Variables</span> <br />
+                  <span class="subheading grey--text ligthen-2"
+                    >Select the variables to include in the new dataset
+                    collection.</span
+                  >
+                </p>
+              </v-card-title>
+              <shared-variable-table
+                v-model="selected"
+                :datasets="selectedDatasets"
+                selectable
               />
-            </v-tab-item>
-          </v-tabs>
-        </v-card>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex>
+        <v-layout row justify-center>
+          <v-flex xs12>
+            <v-card flat class="shadow rounded-lg">
+              <v-card-title card color="white">
+                <p>
+                  <span class="title">Unshared Variables</span> <br />
+                  <span class="subheading grey--text ligthen-2"
+                    >These variables are not shared within selected datasets.
+                  </span>
+                </p>
+              </v-card-title>
+              <v-tabs v-model="activeDataset" slider-color="primary">
+                <v-tab v-for="dataset in selectedDatasets" :key="dataset.id">
+                  {{ dataset.study_name }}
+                </v-tab>
+                <v-tab-item
+                  v-for="dataset in selectedDatasets"
+                  :key="dataset.id"
+                >
+                  <unshared-variable-table
+                    :selected-ids="selectedDatasets.map(d => d.id)"
+                    :dataset-id="dataset.id"
+                  />
+                </v-tab-item>
+              </v-tabs>
+            </v-card>
+          </v-flex>
+        </v-layout>
       </v-flex>
     </v-layout>
   </v-container>

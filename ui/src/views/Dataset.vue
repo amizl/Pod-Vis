@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-container v-if="dataset" fluid grid-list-xl>
-      <v-toolbar app class="white">
-        <v-toolbar-title>Dataset Overview</v-toolbar-title>
+      <v-toolbar extended app class="primary shadow send-to-back">
+        <v-toolbar-title class="white--text">Dataset Overview</v-toolbar-title>
       </v-toolbar>
-      <v-layout row wrap justify-center>
+      <v-layout row wrap justify-center class="translate-up">
         <v-flex xs8>
           <v-layout row wrap justify-center>
             <v-flex xs12>
-              <v-card>
+              <v-card flat class="rounded-lg shadow">
                 <v-card-title primary-title card color="white">
                   <p class="title mb-0 ">
                     {{ dataset.study.study_name }} <br />
@@ -28,18 +28,8 @@
             </v-flex>
           </v-layout>
           <v-layout row wrap justify-center>
-            <!-- <v-flex xs2>
-          <v-card>
-            <v-card-title primary-title card color="white">
-              <span class="title">
-                <v-icon>settings</v-icon> Filter Variables</span
-              >
-            </v-card-title>
-            <v-treeview :items="items"></v-treeview>
-          </v-card>
-        </v-flex> -->
             <v-flex xs12>
-              <v-card>
+              <v-card flat class="rounded-lg shadow">
                 <v-card-title primary-title card color="white">
                   <span class="title">Variables</span>
                 </v-card-title>
@@ -49,7 +39,7 @@
           </v-layout>
         </v-flex>
         <v-flex xs4>
-          <v-card>
+          <v-card flat class="rounded-lg shadow">
             <v-card-title primary-title card color="white">
               <span class="title">Subject Summary</span>
             </v-card-title>

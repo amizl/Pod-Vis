@@ -1,13 +1,14 @@
 <template>
   <v-container fluid>
-    <v-toolbar app class="white">
-      <v-toolbar-title>Dashboard</v-toolbar-title>
+    <v-toolbar extended app class="primary shadow send-to-back">
+      <v-toolbar-title class="white--text">Dashboard</v-toolbar-title>
     </v-toolbar>
-    <v-layout align-center justify-center>
-      <v-flex xs4>
+    <v-layout class="translate-up" fill-height>
+      <!-- <v-layout align-center justify-center> -->
+      <v-flex xs12>
         <v-card> <collection-table></collection-table> </v-card>
       </v-flex>
-      <v-flex xs8> <v-card> </v-card> </v-flex>
+      <!-- <v-flex xs8> <v-card> </v-card> </v-flex> -->
 
       <!-- <h1 class="headline text-md-center">
         <v-icon large class="pb-4">build</v-icon><br />

@@ -1,9 +1,9 @@
 <template>
   <v-container fluid>
-    <v-toolbar app class="white">
-      <v-toolbar-title>Dataset Manager</v-toolbar-title>
+    <v-toolbar extended app class="primary shadow send-to-back">
+      <v-toolbar-title class="white--text">Dataset Manager</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-text-field
+      <!-- <v-text-field
         v-model="search"
         prepend-inner-icon="search"
         label="Search for Dataset"
@@ -12,24 +12,24 @@
         background-color="grey lighten-4"
         class="mt-2"
       >
-      </v-text-field>
+      </v-text-field> -->
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn
-          :to="selectedDatasets | buildPath"
-          :disabled="selectedDatasets.length === 0"
-          flat
-          right
-        >
-          <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
-          Create Dataset</v-btn
-        >
-      </v-toolbar-items>
+      <!-- <v-toolbar-items class="hidden-sm-and-down"> -->
+      <v-btn
+        color="primary--text"
+        :to="selectedDatasets | buildPath"
+        :disabled="selectedDatasets.length === 0"
+        right
+      >
+        <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
+        Create Dataset</v-btn
+      >
+      <!-- </v-toolbar-items> -->
     </v-toolbar>
-    <v-layout row justify-center>
+    <v-layout class="translate-up" fill-height justify-center>
       <v-flex xs12>
-        <v-card>
-          <v-tabs slider-color="secondary" grow>
+        <v-card class="shadow rounded-lg">
+          <v-tabs slider-color="primary" grow>
             <v-tab>
               <span class="">Available Datasets</span>
               <!-- <span class="subheading grey--text ligthen-2"
@@ -71,6 +71,7 @@ export default {
     return {
       snackbar: false,
       search: '',
+      activeTab: '',
     };
   },
   computed: {

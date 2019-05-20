@@ -1,6 +1,10 @@
 <template>
-  <v-toolbar-items>
-    <v-btn :disabled="!areVariablesSelected" flat @click="dialog = !dialog">
+  <div>
+    <v-btn
+      :disabled="!areVariablesSelected"
+      color="primary--text"
+      @click="dialog = !dialog"
+    >
       <v-icon left>save</v-icon> SAVE DATASET
     </v-btn>
     <!-- SAVE COLLECTION FORM DIALOG -->
@@ -41,7 +45,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-toolbar-items>
+  </div>
 </template>
 
 <script>

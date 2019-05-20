@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-tabs slider-color="secondary" grow>
-      <v-tab>SIGN IN</v-tab>
-      <v-tab>CREATE ACCOUNT</v-tab>
+    <v-tabs slider-color="primary" grow class="rounded-lg">
+      <v-tab class="primary--text">SIGN IN</v-tab>
+      <v-tab class="primary--text">CREATE ACCOUNT</v-tab>
       <v-tabs-items>
         <v-alert
           :value="authError"

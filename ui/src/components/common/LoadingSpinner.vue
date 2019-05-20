@@ -7,7 +7,7 @@
     v-progress-circular(
       indeterminate
       :size='size'
-      color="color"
+      color="primary"
     )
 </template>
 

@@ -4,7 +4,6 @@
     v-model="notifyState"
     :color="notification.type"
     bottom
-    right
   >
     {{ notification.message }}
     <!-- <v-btn color="white" flat @click="notify"> Close </v-btn> -->

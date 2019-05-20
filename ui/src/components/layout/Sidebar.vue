@@ -1,47 +1,68 @@
 <template>
-  <v-navigation-drawer :mini-variant="!expand" app permanent fixed flat>
+  <v-navigation-drawer :mini-variant="!expand" app permanent fixed class="">
     <v-layout column fill-height align-space-around>
-      <v-toolbar flat class="white">
+      <v-toolbar extended flat color="white">
         <v-list>
-          <v-list-tile> <v-list-tile-title></v-list-tile-title> </v-list-tile>
+          <v-list-tile>
+            <v-list-tile-action v-if="!expand">
+              <img
+                width="55px"
+                src="@/assets/C-2.png"
+                alt="IGS Logo"
+                class="rounded-lg mt-3"
+              />
+              <!-- <img width="100px" src="@/assets/Clio-Vis-1.png" alt="IGS Logo" /> -->
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <img width="100%" src="@/assets/Clio-Vis-1.png" alt="IGS Logo" />
+            </v-list-tile-content>
+          </v-list-tile>
         </v-list>
       </v-toolbar>
-      <v-list two-line>
+      <v-list three-line class="pt-0">
         <v-list-tile
           v-for="item in menuItems"
           :key="item.title"
           :to="item.path"
-          active-class="primary--text-darken-4"
+          active-class="primary text--lighten-4"
         >
           <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon color="primary lighten-4">{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content v-if="expand">
-            <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+            <v-list-tile-title>
+              <span class="primary--text text--lighten-3">
+                {{ item.name }}
+              </span>
+            </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
       <v-spacer></v-spacer>
-      <v-list two-line>
+      <v-list one-line>
         <v-list-tile @click="signOutDialog = true">
           <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
+            <v-icon color="primary">exit_to_app</v-icon>
           </v-list-tile-action>
           <v-list-tile-content v-if="expand">
-            <v-list-tile-title>Sign out</v-list-tile-title>
+            <v-list-tile-title>
+              <span class="primary--text"> Sign out </span>
+            </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-tooltip right>
+        <v-tooltip color="primary" right>
           <v-list-tile slot="activator" @click="expand = !expand">
             <v-list-tile-action>
-              <v-icon v-if="!expand" small>keyboard_arrow_right</v-icon>
-              <v-icon v-else small>keyboard_arrow_left</v-icon>
+              <v-icon v-if="!expand" color="primary" small
+                >keyboard_arrow_right</v-icon
+              >
+              <v-icon v-else color="primary" small>keyboard_arrow_left</v-icon>
             </v-list-tile-action>
           </v-list-tile>
           <span v-if="!expand">Expand</span> <span v-else>Collapse</span>
         </v-tooltip>
       </v-list>
-      <v-list class="pb-5">
+      <!-- <v-list class="pb-5">
         <v-list-tile>
           <v-list-tile-action v-if="!expand">
             <img width="20px" src="@/assets/som_igs_icon.svg" alt="IGS Logo" />
@@ -50,22 +71,26 @@
             <img src="@/assets/som_igs_logo.svg" alt="IGS Logo" />
           </v-list-tile-content>
         </v-list-tile>
-      </v-list>
+      </v-list> -->
     </v-layout>
 
     <!-- SIGN OUT DIALOG -->
     <v-dialog v-model="signOutDialog" width="500" persistent>
       <v-card>
-        <v-card-title primary-title>
-          <v-icon>warning</v-icon>
-          <span class="title pl-2">Sign Out</span>
+        <v-card-title color="white" primary-title>
+          <v-icon color="primary darken-3">warning</v-icon>
+          <span class="primary--text text--darken-3 title pl-2">Sign Out</span>
         </v-card-title>
-        <v-card-text>Are you sure you'd like to sign out?</v-card-text>
+        <v-card-text class="primary primary--text text--lighten-4"
+          >Are you sure you'd like to sign out?</v-card-text
+        >
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="signOutDialog = false">Cancel</v-btn>
-          <v-btn color="primary darken-4" @click="signUserOut">Sign out</v-btn>
+          <v-btn flat color="primary lighten-3" @click="signOutDialog = false"
+            >Cancel</v-btn
+          >
+          <v-btn color="primary" @click="signUserOut">Sign Out</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -94,11 +119,11 @@ export default {
           icon: 'table_chart',
           path: '/datasets',
         },
-        // {
-        //   name: 'Cohort Manager',
-        //   icon: 'group',
-        //   path: '/cohorts',
-        // },
+        {
+          name: 'Cohort Manager',
+          icon: 'group',
+          path: '/cohorts',
+        },
         {
           name: 'Data Explorer',
           icon: 'explore',
@@ -136,5 +161,9 @@ export default {
 </script>
 
 <style scoped>
+.foo {
+  background-color: #54d1db;
+}
+
 /* Need to modify vuetify's stylus variables */
 </style>

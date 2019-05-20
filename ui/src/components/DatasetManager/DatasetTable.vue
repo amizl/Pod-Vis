@@ -7,6 +7,7 @@
     :headers="headers"
     :items="datasets"
     item-key="study_name"
+    class="ml-1 mr-1"
   >
     <template v-slot:items="props">
       <tr>

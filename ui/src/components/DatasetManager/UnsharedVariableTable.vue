@@ -9,6 +9,7 @@
       :select-all="selectable"
       item-key="scale"
       must-sort
+      class="ml-1 mr-1"
     >
       <template v-slot:items="props">
         <tr>
