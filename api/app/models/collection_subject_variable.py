@@ -7,6 +7,8 @@ class CollectionSubjectVariable(db.Model):
     collection_id = db.Column(db.Integer, db.ForeignKey("collection.id"))
     subject_ontology_id = db.Column(db.Integer, db.ForeignKey("subject_ontology.id"))
 
+    ontology = db.relationship("SubjectOntology")
+
     def __init__(self, collection_id, subject_ontology_id):
         self.collection_id = collection_id
         self.subject_ontology_id = subject_ontology_id
@@ -46,5 +48,5 @@ class CollectionSubjectVariable(db.Model):
         return dict(
           id=self.id,
           collection_id=self.collection_id,
-          subject_ontology_id=self.subject_ontology_id
+          ontology=self.ontology.to_dict(include_parent=True)
         )

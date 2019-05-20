@@ -59,7 +59,7 @@ class Study(db.Model):
                         JOIN  subject_visit v ON s.id = v.subject_id
                         JOIN observation o ON v.id = o.subject_visit_id
                         JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-                        WHERE study.id = :id
+                        WHERE study.id = :study_id
                     )
                 ) t
                 ON t.parent_id = o.id
@@ -68,7 +68,7 @@ class Study(db.Model):
         result = [
             dict(category=category, scale=scale, id=scale_id)
             for category, scale, scale_id in
-            connection.execute(query, id=self.id).fetchall()
+            connection.execute(query, study_id=self.id).fetchall()
         ]
 
         connection.close()
@@ -98,25 +98,36 @@ class Study(db.Model):
                 .all()
         ]
 
-    def find_observation_value_counts_by_scale(self, observation_ontology_id):
-        """Get all value counts for an observation in a study by scale."""
+    def find_all_observations_by_id(self, observation_ontology_id):
+        """Get all observations for a study."""
+        # compute totals...
         connection = db.engine.connect()
         query = text("""
-            SELECT CAST(o.value AS SIGNED) as value
+
+        """)
+
+
+    def find_observation_value_counts_by_scale(self, observation_ontology_id):
+        """Compute totals for each patient on each visit for scale (observaton id)."""
+        connection = db.engine.connect()
+        query = text("""
+            SELECT CAST(sum(CAST(o.value AS SIGNED)) as SIGNED) as value
             FROM study
             JOIN subject s ON study.id = s.study_id
             JOIN  subject_visit v ON s.id = v.subject_id
             JOIN observation o ON v.id = o.subject_visit_id
             JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-            WHERE study.id = 1 and o.observation_ontology_id in (
+            WHERE study.id = :study_id and o.observation_ontology_id in (
                 SELECT id
                 FROM observation_ontology
                 WHERE parent_id = :parent_id
             )
+            GROUP BY s.id, v.id
             ORDER BY value
         """)
-        values = connection.execute(query, parent_id=observation_ontology_id).fetchall()
-        result = [dict(value=value) for value, in values]
+        result_proxy = connection.execute(query, study_id=self.id,
+            parent_id=observation_ontology_id).fetchall()
+        result = [dict(row) for row in result_proxy]
 
         connection.close()
         return result

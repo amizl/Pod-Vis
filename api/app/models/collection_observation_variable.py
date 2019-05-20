@@ -7,6 +7,8 @@ class CollectionObservationVariable(db.Model):
     collection_id = db.Column(db.Integer, db.ForeignKey("collection.id"))
     observation_ontology_id = db.Column(db.Integer, db.ForeignKey("observation_ontology.id"))
 
+    ontology = db.relationship("ObservationOntology")
+
     def __init__(self, collection_id, observation_ontology_id):
         self.collection_id = collection_id
         self.observation_ontology_id = observation_ontology_id
@@ -46,6 +48,5 @@ class CollectionObservationVariable(db.Model):
         return dict(
           id=self.id,
           collection_id=self.collection_id,
-          # TODO... get
-          observation_ontology_id=self.observation_ontology_id
+          ontology=self.ontology.to_dict(include_parent=True)
         )

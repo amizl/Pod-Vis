@@ -50,6 +50,18 @@ class Subject(db.Model):
         return cls.query.filter_by(study_id=study_id).all()
 
     @classmethod
+    def find_all_by_study_ids(cls, study_ids):
+        """Find all subjects by study ids.
+
+        Args:
+            study_ids: List of study ids.
+
+        Returns:
+            All subjects within studies.
+        """
+        return cls.query.filter(cls.study_id.in_(study_ids))
+
+    @classmethod
     def find_first_by_study_id(cls, study_id):
         """Find the first subject in a study.
 
