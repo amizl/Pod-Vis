@@ -695,6 +695,7 @@ def fetch_data_for_cohort_manager():
         raise AuthFailure("Not authorized to use this collection.")
 
     data = collection.get_data_for_cohort_manager()
+
     return jsonify({
         "success": True,
         "data": data.to_dict("records")

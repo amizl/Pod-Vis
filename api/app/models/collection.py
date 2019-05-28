@@ -141,6 +141,9 @@ class Collection(db.Model):
         Returns
             Pandas dataframe of observation data need to draw charts.
         """
+        # TODO: REFACTOR
+        # This is very inefficient/conoluted. Need to refactor...
+
         connection = db.engine.connect()
         study_ids = [study.study_id for study in self.studies]
         # Get all subjects that are part of the studies included in
@@ -151,7 +154,7 @@ class Collection(db.Model):
         subjects_df = pd.DataFrame([
             subject.to_dict(include_attributes=True)
             for subject in Subject.find_all_by_study_ids(study_ids)
-        ])
+        ]).set_index('id')
         # Convert to datetime
         if "Birthdate" in subjects_df.columns:
             subjects_df['Birthdate'] = pd.to_datetime(subjects_df['Birthdate'])
@@ -169,39 +172,45 @@ class Collection(db.Model):
             JOIN  subject_visit v ON s.id = v.subject_id
             JOIN observation o ON v.id = o.subject_visit_id
             JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-            WHERE study.id in (:ids) and o.observation_ontology_id in (
+            WHERE study.id in :study_ids and o.observation_ontology_id in (
                 SELECT id
                 FROM observation_ontology
-                WHERE parent_id in (:parent_ids)
+                WHERE parent_id in :parent_ids
             )
-            GROUP BY study.id, s.id, oo.parent_id, v.event_date
-            ORDER BY study_id, subject_id, parent_id, event_date, total
+            GROUP BY study.id, s.id, v.event_date, oo.parent_id
+            ORDER BY study_id, subject_id, observation_ontology_id, event_date, total
         """)
 
         result_proxy = connection.execute(
             query,
-            ids=','.join(str(study_id) for study_id in study_ids),
-            parent_ids=','.join(str(parent_id) for parent_id in observation_variable_ids)) \
+            study_ids=study_ids,
+            parent_ids=observation_variable_ids) \
             .fetchall()
         result = [dict(row) for row in result_proxy]
         result_df = pd.DataFrame(result)
-
-        # Join with our subjects dataframe so we can include demographic variables
-        data = pd.merge(result_df, subjects_df, left_on='subject_id', right_on='id')
-
         # Compute ROC for each patient and each scale from their first and last visit
-        for (subject_id, obs_id), df in data.groupby(['subject_id', 'observation_ontology_id']):
+        observations = []
+        for (subject_id, obs_id), df in result_df.groupby(['subject_id', 'observation_ontology_id']):
             totals = df.set_index('event_date')['total']
+            first_date = totals.index.min()
+            last_date = totals.index.max()
+
             # http://www.andrewshamlet.net/2017/07/07/python-tutorial-roc/
             n = len(totals)
             M = totals.diff(n-1)
             N = totals.shift(n-1)
             roc = (M / N) * 100
 
-            data.loc[(data.subject_id == subject_id)
-                &  (data.observation_ontology_id == obs_id), 'roc'] = roc.values[-1]
+            observations.append(
+                dict(
+                    subject_id=subject_id,
+                    observation=obs_id,
+                    roc=roc.values[-1],
+                    min=totals.loc[first_date],
+                    max=totals.loc[last_date]
+                ))
 
-        return data
+        return pd.merge(pd.DataFrame(observations), subjects_df, left_on='subject_id', right_on='id')
 
     def save_to_db(self):
         """Save collection to the database."""
