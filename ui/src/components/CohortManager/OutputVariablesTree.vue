@@ -1,24 +1,13 @@
 <template>
-  <div>
-    <v-treeview
-      v-model="selectedSubjectVariables"
-      color="primary"
-      return-object
-      selectable
-      :search="search"
-      :items="subjectVariables"
-      item-text="label"
-    ></v-treeview>
-    <v-treeview
-      v-model="selectedObservationVariables"
-      color="primary"
-      selectable
-      return-object
-      :items="observationVariables"
-      :search="search"
-      item-text="label"
-    ></v-treeview>
-  </div>
+  <v-treeview
+    v-model="selectedObservationVariables"
+    color="primary"
+    selectable
+    return-object
+    :items="observationVariables"
+    :search="search"
+    item-text="label"
+  ></v-treeview>
 </template>
 
 <script>
@@ -34,12 +23,10 @@ export default {
     },
   },
   data: () => ({
-    selectedSubjectVariables: [],
     selectedObservationVariables: [],
     dragging: false,
     hovering: false,
     observationVariables: [],
-    subjectVariables: [],
   }),
   computed: {
     ...mapState('cohortManager', {
@@ -47,29 +34,13 @@ export default {
     }),
   },
   watch: {
-    selectedSubjectVariables(newSubjectVariables) {
-      this.setInputVariables([
-        // Filter parent nodes because we don't want them added to our list,
-        // i.e, 'Demographics'
-        ...newSubjectVariables.filter(variable => !variable.children),
-        ...this.selectedObservationVariables,
-      ]);
-    },
     selectedObservationVariables(newObservationVariable) {
-      this.setInputVariables([
-        ...this.selectedSubjectVariables,
-        ...newObservationVariable.filter(variable => !variable.children),
-      ]);
+      this.setOutputVariables(
+        newObservationVariable.filter(variable => !variable.children)
+      );
     },
   },
   async created() {
-    const subjectVariables = this.makeHierarchy(
-      this.collection.subject_variables
-    );
-    subjectVariables.forEach(subjectVariable => {
-      subjectVariable.children.forEach(child => (child['type'] = 'subject'));
-    });
-
     const observationVariables = this.makeHierarchy(
       this.collection.observation_variables
     );
@@ -80,12 +51,11 @@ export default {
       );
     });
 
-    this.subjectVariables = subjectVariables;
     this.observationVariables = observationVariables;
   },
   methods: {
     ...mapActions('cohortManager', {
-      setInputVariables: actions.SET_INPUT_VARIABLES,
+      setOutputVariables: actions.SET_OUTPUT_VARIABLES,
     }),
     makeHierarchy(data) {
       const ontologies = data.map(obs => obs.ontology);

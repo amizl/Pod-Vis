@@ -7,9 +7,9 @@
       </v-btn>
     </template>
     <v-card max-height="500px">
-      <v-card-title class="title primary--text text--darken-3"
-        >Input Variables</v-card-title
-      >
+      <v-card-title class="title primary--text text--darken-3">
+        Output Variables
+      </v-card-title>
       <v-sheet class="pa-3 background">
         <v-text-field
           v-model="searchVariable"
@@ -23,7 +23,7 @@
         ></v-text-field>
       </v-sheet>
       <v-card-text>
-        <!-- <input-variables-tree :search="searchVariable" /> -->
+        <output-variables-tree :search="searchVariable" />
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
@@ -37,11 +37,11 @@
 </template>
 
 <script>
-// import InputVariablesTree from "@/components/CohortManager/InputVariablesTree.vue";
+import OutputVariablesTree from '@/components/CohortManager/OutputVariablesTree.vue';
 
 export default {
   components: {
-    // InputVariablesTree
+    OutputVariablesTree,
   },
   data: () => ({
     searchVariable: '',

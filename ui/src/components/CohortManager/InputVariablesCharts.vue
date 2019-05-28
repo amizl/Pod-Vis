@@ -6,16 +6,7 @@
     >
       <v-layout fill-height>
         <v-flex fill-height>
-          <v-sheet color="white" height="100%" min-width="200px">
-            <v-layout column fill-height>
-              <v-card-title class="title primary--text text--darken-4">
-                {{ inputVariable.label }}
-              </v-card-title>
-              <v-layout fill-height>
-                <input-variable-chart :variable="inputVariable" />
-              </v-layout>
-            </v-layout>
-          </v-sheet>
+          <input-variable-chart :variable="inputVariable" />
         </v-flex>
         <v-flex v-if="index < inputVariables.length - 1" shrink>
           <v-divider vertical></v-divider>

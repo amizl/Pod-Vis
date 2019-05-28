@@ -53,10 +53,10 @@ export default {
     }),
   },
   async created() {
-    // this.isLoading = true;
+    this.isLoading = true;
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
-    // this.isLoading = false;
+    this.isLoading = false;
   },
   methods: {
     ...mapActions('cohortManager', {
