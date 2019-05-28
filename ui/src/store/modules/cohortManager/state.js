@@ -4,6 +4,10 @@ export default {
   [state.COHORTS]: [],
   [state.IS_LOADING]: false,
   [state.COLLECTION]: {},
-  [state.DATA]: [],
+  [state.UNFILTERED_DATA]: [],
+  [state.FILTERED_DATA]: [],
   [state.INPUT_VARIABLES]: [],
+  [state.OUTPUT_VARIABLES]: [],
+  [state.CROSS_FILTER]: null,
+  [state.DIMENSIONS]: {},
 };

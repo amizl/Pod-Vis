@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { nest } from 'd3-collection';
 import { ErrorNotification } from '@/store/modules/notifications/notifications';
 import { actions, mutations, state as stateTypes } from './types';
 
@@ -44,7 +45,55 @@ export default {
       const { data } = await axios.get(
         `/api/cohort-manager?collection=${collection.id}`
       );
-      commit(mutations.SET_DATA, data.data);
+
+      // Massage data into a format we will use...
+      // [{
+      //     Sex: 'male',
+      //     Race: 'white',
+      //     ...
+      //     1: {
+      //       "roc": ...,
+      //       "firstVisit": ...,
+      //       "lastVisit": ...
+      //     }
+      // }]
+      let wideData = nest()
+        // Group by subject ID
+        .key(d => d.subject_id)
+        // This is very convoluted...ideally we want the
+        // server to massage the data into the format we need
+        // and send it back...however there was issues using pandas
+        // and getting nested data for the observations. May need to
+        // revisit later on. Here we are are tranforming each subject
+        // record so that we nest its outcome measure with firstVisit,
+        // lastVisit, and rate of change. We then want to reduce this
+        // so we have a single object with keys of all its outcome measures.
+        // This can be considered moving from "long to wide".
+        .rollup(values => {
+          return values
+            .map(d => {
+              const { observation, roc, min, max, ...rest } = d;
+              return {
+                [observation]: {
+                  roc,
+                  firstVisit: min,
+                  lastVisit: max,
+                },
+                ...rest,
+              };
+            })
+            .reduce((prev, curr) => {
+              return { ...prev, ...curr };
+            }, {});
+        })
+        .entries(data.data) // tell it what data to process
+        .map(d => {
+          // pull out only the values
+          return d.value;
+        });
+
+      commit(mutations.INITIALIZE_CROSS_FILTER, wideData);
+      commit(mutations.UPDATE_FILTERED_DATA);
     } catch ({ response }) {
       const notification = new ErrorNotification(response.data.error);
       dispatch(notification.dispatch, notification, { root: true });
@@ -60,5 +109,25 @@ export default {
   },
   [actions.SET_INPUT_VARIABLES]({ commit }, newInputVariables) {
     commit(mutations.SET_INPUT_VARIABLES, newInputVariables);
+  },
+  [actions.REMOVE_OUTPUT_VARIABLE]({ commit }, outputVariable) {
+    commit(mutations.REMOVE_OUTPUT_VARIABLE, outputVariable);
+  },
+  [actions.ADD_OUTPUT_VARIABLE]({ commit }, inputVariable) {
+    commit(mutations.ADD_OUTPUT_VARIABLE, inputVariable);
+  },
+  [actions.SET_OUTPUT_VARIABLES]({ commit }, newOutputVariables) {
+    commit(mutations.SET_OUTPUT_VARIABLES, newOutputVariables);
+  },
+  [actions.ADD_DIMENSION]({ commit }, dimensionName) {
+    commit(mutations.ADD_DIMENSION, dimensionName);
+  },
+  [actions.ADD_FILTER]({ commit }, { dimension, filter }) {
+    commit(mutations.ADD_FILTER, { dimension, filter });
+    commit(mutations.UPDATE_FILTERED_DATA);
+  },
+  [actions.CLEAR_FILTER]({ commit }, { dimension }) {
+    commit(mutations.CLEAR_FILTER, { dimension });
+    commit(mutations.UPDATE_FILTERED_DATA);
   },
 };

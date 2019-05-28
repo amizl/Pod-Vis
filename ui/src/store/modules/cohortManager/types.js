@@ -3,8 +3,12 @@ export const state = {
   COHORTS: 'cohorts',
   IS_LOADING: 'isLoading',
   COLLECTION: 'collection',
-  DATA: 'data',
+  UNFILTERED_DATA: 'unfilteredData',
+  FILTERED_DATA: 'filteredData',
   INPUT_VARIABLES: 'inputVariables',
+  OUTPUT_VARIABLES: 'outputVariables',
+  CROSS_FILTER: 'crossFilter',
+  DIMENSIONS: 'dimensions',
 };
 
 // Getters
@@ -19,6 +23,14 @@ export const mutations = {
   ADD_INPUT_VARIABLE: 'addInputVariable',
   REMOVE_INPUT_VARIABLE: 'removeInputVariable',
   SET_INPUT_VARIABLES: 'setInputVariables',
+  REMOVE_OUTPUT_VARIABLE: 'removeOutputVariable',
+  SET_OUTPUT_VARIABLES: 'setOutputVariables',
+  INITIALIZE_CROSS_FILTER: 'initializeCrossFilter',
+  UPDATE_FILTERED_DATA: 'updateDataFromFilters',
+  ADD_DIMENSION: 'addDimension',
+  REMOVE_DIMENSION: 'removeDimension',
+  ADD_FILTER: 'addFilter',
+  CLEAR_FILTER: 'clearFilter',
 };
 
 // Actions
@@ -29,4 +41,10 @@ export const actions = {
   ADD_INPUT_VARIABLE: 'addInputVariable',
   REMOVE_INPUT_VARIABLE: 'removeInputVariable',
   SET_INPUT_VARIABLES: 'setInputVariables',
+  REMOVE_OUTPUT_VARIABLE: 'removeOutputVariable',
+  SET_OUTPUT_VARIABLSE: 'setOutputVariables',
+  ADD_OUTPUT_VARIABLE: 'addOutputVariable',
+  ADD_DIMENSION: 'addDimension',
+  ADD_FILTER: 'addFilter',
+  CLEAR_FILTER: 'clearFilter',
 };
