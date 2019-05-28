@@ -5,13 +5,13 @@
         <v-list>
           <v-list-tile>
             <v-list-tile-action v-if="!expand">
-              <img
+              <!-- <img
                 width="55px"
                 src="@/assets/C-2.png"
                 alt="IGS Logo"
                 class="rounded-lg mt-3"
-              />
-              <!-- <img width="100px" src="@/assets/Clio-Vis-1.png" alt="IGS Logo" /> -->
+              /> -->
+              <img width="100px" src="@/assets/Clio-Vis-1.png" alt="IGS Logo" />
             </v-list-tile-action>
             <v-list-tile-content>
               <img width="100%" src="@/assets/Clio-Vis-1.png" alt="IGS Logo" />
@@ -119,11 +119,11 @@ export default {
           icon: 'table_chart',
           path: '/datasets',
         },
-        {
-          name: 'Cohort Manager',
-          icon: 'group',
-          path: '/cohorts',
-        },
+        // {
+        //   name: 'Cohort Manager',
+        //   icon: 'group',
+        //   path: '/cohorts',
+        // },
         {
           name: 'Data Explorer',
           icon: 'explore',
