@@ -40,11 +40,12 @@ export default {
   async [actions.FETCH_DATA]({ commit, dispatch, state }) {
     commit(mutations.SET_LOADING, true);
     const collection = state[stateTypes.COLLECTION];
-
     try {
-      const { data } = await axios.get(
+      let response = await axios.get(
         `/api/cohort-manager?collection=${collection.id}`
       );
+
+      const data = JSON.parse(response.data.data);
 
       // Massage data into a format we will use...
       // [{
@@ -86,7 +87,7 @@ export default {
               return { ...prev, ...curr };
             }, {});
         })
-        .entries(data.data) // tell it what data to process
+        .entries(data) // tell it what data to process
         .map(d => {
           // pull out only the values
           return d.value;
