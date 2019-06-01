@@ -2,6 +2,7 @@ import axios from 'axios';
 import { nest } from 'd3-collection';
 import { ErrorNotification } from '@/store/modules/notifications/notifications';
 import { actions, mutations, state as stateTypes } from './types';
+import { makeHierarchy } from './helpers';
 
 export default {
   async [actions.FETCH_COHORTS]({ commit }) {
@@ -23,6 +24,48 @@ export default {
       const { data } = await axios.get(
         `/api/collections/${collectionId}?include=studies&include=variables`
       );
+      // massage collection data... here
+
+      const subjectVariables = makeHierarchy(data.collection.subject_variables);
+
+      subjectVariables.forEach(subjectVariable => {
+        subjectVariable.children.forEach(child => (child['type'] = 'subject'));
+      });
+
+      const observationVariables = makeHierarchy(
+        data.collection.observation_variables
+      );
+      observationVariables.forEach(observationVariable => {
+        observationVariable.children.forEach(child => {
+          child['type'] = 'observation';
+          child['children'] = [
+            {
+              ...child,
+              id: `firstVisit-${child.id}`,
+              parentID: child.id,
+              parentLabel: child.label,
+              label: 'First Visit',
+            },
+            {
+              ...child,
+              id: `lastVisit-${child.id}`,
+              parentID: child.id,
+              parentLabel: child.label,
+              label: 'Last Visit',
+            },
+            {
+              ...child,
+              id: `roc-${child.id}`,
+              parentID: child.id,
+              parentLabel: child.label,
+              label: 'Rate of Change',
+            },
+          ];
+        });
+      });
+
+      data.collection.subject_variables = subjectVariables;
+      data.collection.observation_variables = observationVariables;
       commit(mutations.SET_COLLECTION, data.collection);
     } catch ({ response }) {
       // Something went wrong...
@@ -120,8 +163,8 @@ export default {
   [actions.SET_OUTPUT_VARIABLES]({ commit }, newOutputVariables) {
     commit(mutations.SET_OUTPUT_VARIABLES, newOutputVariables);
   },
-  [actions.ADD_DIMENSION]({ commit }, dimensionName) {
-    commit(mutations.ADD_DIMENSION, dimensionName);
+  [actions.ADD_DIMENSION]({ commit }, dimension) {
+    commit(mutations.ADD_DIMENSION, dimension);
   },
   [actions.ADD_FILTER]({ commit }, { dimension, filter }) {
     commit(mutations.ADD_FILTER, { dimension, filter });

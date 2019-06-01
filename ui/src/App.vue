@@ -14,22 +14,24 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { getters as authGetters } from '@/store/modules/auth/types';
-import SideBar from './components/layout/Sidebar.vue';
-import NotificationCenter from './components/common/notificationCenter.vue';
+import { mapGetters } from "vuex";
+import { getters as authGetters } from "@/store/modules/auth/types";
+import SideBar from "./components/layout/Sidebar.vue";
+import AppHeader from "./components/layout/Header.vue";
+import NotificationCenter from "./components/common/notificationCenter.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     SideBar,
-    NotificationCenter,
+    AppHeader,
+    NotificationCenter
   },
   computed: {
-    ...mapGetters('auth', {
-      isUserAuthenicated: authGetters.IS_USER_AUTHENTICATED,
-    }),
-  },
+    ...mapGetters("auth", {
+      isUserAuthenicated: authGetters.IS_USER_AUTHENTICATED
+    })
+  }
 };
 </script>
 

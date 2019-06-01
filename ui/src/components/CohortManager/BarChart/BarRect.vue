@@ -22,11 +22,11 @@ export default {
       required: true,
       default: 0,
     },
-    ystart: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
+    // ystart: {
+    //   type: Number,
+    //   required: true,
+    //   default: 0,
+    // },
     width: {
       type: Number,
       required: true,

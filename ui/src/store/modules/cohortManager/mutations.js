@@ -101,12 +101,20 @@ export default {
     state[stateTypes.FILTERED_DATA] = xf.allFiltered();
   },
   /**
-   *
+   * Set input variables.
    * @param {*} state
    * @param {*} newInputVariables
    */
   [mutations.SET_INPUT_VARIABLES](state, newInputVariables) {
     state[stateTypes.INPUT_VARIABLES] = newInputVariables;
+  },
+  /**
+   * Set output variables.
+   * @param {*} state
+   * @param {*} newOutputVariables
+   */
+  [mutations.SET_OUTPUT_VARIABLES](state, newOutputVariables) {
+    state[stateTypes.OUTPUT_VARIABLES] = newOutputVariables;
   },
   /**
    * Add a dimension to crossfilter.
@@ -115,14 +123,14 @@ export default {
    * @param {Object} state Global cohort manager state.
    * @param {String} dimensionName The name of our dimension. ("Sex")
    */
-  [mutations.ADD_DIMENSION](state, dimensionName) {
+  [mutations.ADD_DIMENSION](state, { dimensionName, accessor }) {
     const xf = state[stateTypes.CROSS_FILTER];
     const dimensions = state[stateTypes.DIMENSIONS];
     // Dimensions are stateful and we want to make sure we are not initializing
     // dims that have been already initialized.
     // https://github.com/crossfilter/crossfilter/wiki/API-Reference#Dimension
     if (!(dimensionName in dimensions)) {
-      const dimension = xf.dimension(d => d[dimensionName]);
+      const dimension = xf.dimension(accessor);
       Vue.set(dimensions, dimensionName, dimension);
     }
   },

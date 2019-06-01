@@ -2,7 +2,11 @@
   <v-sheet color="white" height="100%" min-width="200px">
     <v-layout column fill-height>
       <v-card-title class="title primary--text text--darken-4">
-        {{ dimension }}
+        {{
+          variable.type == 'observation'
+            ? `${variable.parentLabel} - ${variable.label}`
+            : variable.label
+        }}
         <v-spacer />
         <v-btn
           flat
@@ -18,7 +22,7 @@
           :id="variable.id"
           :dimension-name="dimension"
         />
-        <div v-else></div>
+        <HistogramChart v-else :id="variable.id" :dimension-name="dimension" />
       </v-layout>
     </v-layout>
   </v-sheet>
@@ -26,12 +30,14 @@
 
 <script>
 import ColumnChart from '@/components/CohortManager/BarChart/BarChart.vue';
+import HistogramChart from '@/components/CohortManager/HistogramChart/HistogramChart.vue';
 import { mapActions } from 'vuex';
 import { actions } from '@/store/modules/cohortManager/types';
 
 export default {
   components: {
     ColumnChart,
+    HistogramChart,
   },
   props: {
     variable: {
@@ -43,8 +49,38 @@ export default {
     return { dimension: null };
   },
   created() {
-    this.dimension = this.variable.label;
-    this.addDimension(this.dimension);
+    if (this.variable.type === 'observation') {
+      const [measure, id] = this.variable.id.split('-');
+
+      const dimensionName = `${this.variable.parentLabel} - ${
+        this.variable.label
+      }`;
+
+      this.dimension = dimensionName;
+      const dimensionId = this.variable.parentID;
+
+      const payload = {
+        dimensionName: dimensionName,
+        accessor: d => {
+          let dimName = dimensionId;
+          return d[dimName][measure];
+        },
+      };
+      this.addDimension(payload);
+    } else {
+      let dimension = this.variable.label;
+      this.dimension = dimension;
+
+      const payload = {
+        dimensionName: this.dimension,
+        accessor: d => {
+          let dimName = dimension;
+          return d[dimName];
+        },
+      };
+
+      this.addDimension(payload);
+    }
   },
   methods: {
     ...mapActions('cohortManager', {

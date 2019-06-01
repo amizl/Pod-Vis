@@ -63,25 +63,8 @@ export default {
     },
   },
   async created() {
-    const subjectVariables = this.makeHierarchy(
-      this.collection.subject_variables
-    );
-    subjectVariables.forEach(subjectVariable => {
-      subjectVariable.children.forEach(child => (child['type'] = 'subject'));
-    });
-
-    const observationVariables = this.makeHierarchy(
-      this.collection.observation_variables
-    );
-
-    observationVariables.forEach(observationVariable => {
-      observationVariable.children.forEach(
-        child => (child['type'] = 'observation')
-      );
-    });
-
-    this.subjectVariables = subjectVariables;
-    this.observationVariables = observationVariables;
+    this.subjectVariables = this.collection.subject_variables;
+    this.observationVariables = this.collection.observation_variables;
   },
   methods: {
     ...mapActions('cohortManager', {

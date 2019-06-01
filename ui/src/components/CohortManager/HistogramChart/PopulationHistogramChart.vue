@@ -6,15 +6,13 @@
         ref="bars"
         :transform="`translate(${margin.left}, ${margin.top})`"
       >
-        <bar-rect
-          v-for="d in data"
-          :key="d.key"
-          :x="xScale(d.key)"
-          :y="yScale(d.value)"
-          :width="xScale.bandwidth()"
-          :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
-          :fill="getFill(d.key)"
-          @click.native="userClickedBar(d.key)"
+        <rect
+          v-for="(bin, i) in bins"
+          :key="i"
+          :transform="`translate(${xScale(bin.x0)}, ${yScale(bin.length)})`"
+          :width="xScale(bin.x1) - xScale(bin.x0) - 1"
+          :height="h - yScale(bin.length)"
+          fill="#33d8ff"
         />
       </g>
       <g
@@ -34,23 +32,38 @@
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
 // D3 Modules
-import { max } from 'd3-array';
+import { extent, max, histogram } from 'd3-array';
 import { select } from 'd3-selection';
-import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale';
+import { scaleLinear } from 'd3-scale';
 import 'd3-transition';
 import { axisBottom, axisLeft } from 'd3-axis';
-import { schemeCategory10 } from 'd3-scale-chromatic';
+// import { schemeCategory10 } from 'd3-scale-chromatic';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
-import BarRect from './BarRect.vue';
+// import BarRect from './BarRect.vue';
+
+/**
+ * Takes an array of key, value counts from crossfilter groups
+ * and expands then flattens them. For example, [{key:5, value: 3}, {key:2, value: 2}]
+ * would be flattened to [5,5,5,2,2]. This allows us to leverage d3's
+ * histrogram/binning abilities.
+ */
+const flattenGroupCounts = data =>
+  data.reduce((acc, curr) => {
+    const { key: value, value: length } = curr;
+    const arr = Array.from([].fill.call({ length }, value));
+    return [...acc, ...arr];
+  }, []);
 
 export default {
   directives: {
     resize,
     xaxis(el, binding) {
       const axisMethod = binding.value;
-      select(el).call(axisMethod);
+      select(el)
+        .transition()
+        .call(axisMethod);
     },
     yaxis(el, binding) {
       const axisMethod = binding.value;
@@ -59,17 +72,19 @@ export default {
         .call(axisMethod);
     },
   },
-  components: {
-    BarRect,
-  },
+  components: {},
   props: {
     id: {
-      type: Number,
+      type: [Number, String],
       required: true,
     },
     dimensionName: {
       type: String,
       required: true,
+    },
+    population: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -107,55 +122,52 @@ export default {
       const { height } = this;
       return height - top - bottom;
     },
-    colorScale() {
-      return scaleOrdinal()
-        .domain(this.data.map(c => c.key))
-        .range(schemeCategory10);
-    },
+    // colorScale() {
+    //   return scaleOrdinal()
+    //     .domain(this.data.map(c => c.key))
+    //     .range(schemeCategory10);
+    // },
     xScale() {
-      return scaleBand()
-        .domain(this.data.map(d => d.key))
-        .range([0, this.w])
-        .padding(0.05);
+      return scaleLinear()
+        .domain(extent(this.data))
+        .range([0, this.w]);
+    },
+    bins() {
+      return histogram()
+        .domain(this.xScale.domain())
+        .thresholds(this.xScale.ticks(30))(this.data);
     },
     yScale() {
-      return scaleLinear()
-        .domain([0, max(this.data, d => d.value)])
+      const yScale = scaleLinear()
+        .domain([0, max(this.bins, d => d.length)])
         .range([this.h, 0]);
+      return yScale;
     },
     xAxis() {
       return axisBottom(this.xScale);
     },
     yAxis() {
-      return axisLeft(this.yScale).ticks(5);
+      return axisLeft(this.yScale).ticks(3);
     },
   },
   watch: {
     filteredData() {
-      this.data = this.group.all();
-
-      if (this.selected.length && !this.dimension.currentFilter()) {
-        this.selected = [];
-      }
+      // this.data = flattenGroupCounts(this.group.all());
+      // if (this.selected.length && !this.dimension.currentFilter()) {
+      // this.selected = [];
+      // }
     },
-    // data() {
-    //   console.log('foooooo');
-    //   this.updateBars();
-    // },
   },
   created() {
     const dimension = this.dimensions[this.dimensionName];
     this.dimension = dimension;
-    this.group = dimension.group();
-    this.data = this.group.all();
+    this.data = this.unfilteredData.map(dimension.accessor);
   },
   mounted() {
     this.container = this.$refs.container;
-    // this.bars = select(this.$refs.bars).selectAll('.bar');
 
     // Resize chart so we have parent dimensions (width/height)
     this.resizeChart();
-    // this.drawBars();
   },
   methods: {
     ...mapActions('cohortManager', {
@@ -164,13 +176,7 @@ export default {
     }),
     getFill(key) {
       if (!this.selected.length || this.selected.includes(key)) {
-        if (key == 'female') {
-          return '#FFC0CB';
-        } else if (key == 'male') {
-          return '#3498DB';
-        } else {
-          return this.colorScale(key);
-        }
+        return this.colorScale(key);
       } else {
         return '#E8EAF6';
       }
@@ -192,41 +198,6 @@ export default {
           dimension: this.dimensionName,
         });
       }
-    },
-    updateBars() {
-      this.bars
-        .data(this.data, d => d.key)
-        .enter()
-        .style('cursor', 'pointer')
-        .on('click', d => this.userClickedBar(d.key))
-        .attr('x', d => this.xScale(d.key))
-        .attr('width', () => this.xScale.bandwidth())
-        .attr('fill', d => this.getFill(d.key))
-        .transition()
-        .duration(1000)
-        .attr('y', d => this.yScale(d.value))
-        .attr('height', d =>
-          this.h - this.yScale(d.value) > 0 ? this.h - this.yScale(d.value) : 0
-        );
-    },
-    drawBars() {
-      this.bars
-        .data(this.data, d => d.key)
-        .enter()
-        .append('rect')
-        .style('cursor', 'pointer')
-        .on('click', d => this.userClickedBar(d.key))
-        .attr('x', d => this.xScale(d.key))
-        .attr('y', () => this.yScale(0))
-        .attr('width', () => this.xScale.bandwidth())
-        .attr('height', 0)
-        .attr('fill', d => this.getFill(d.key))
-        .transition()
-        .duration(1000)
-        .attr('y', d => this.yScale(d.value))
-        .attr('height', d =>
-          this.h - this.yScale(d.value) > 0 ? this.h - this.yScale(d.value) : 0
-        );
     },
     resizeChart() {
       const { width, height } = this.container.getBoundingClientRect();

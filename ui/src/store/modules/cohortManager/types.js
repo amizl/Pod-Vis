@@ -42,7 +42,7 @@ export const actions = {
   REMOVE_INPUT_VARIABLE: 'removeInputVariable',
   SET_INPUT_VARIABLES: 'setInputVariables',
   REMOVE_OUTPUT_VARIABLE: 'removeOutputVariable',
-  SET_OUTPUT_VARIABLSE: 'setOutputVariables',
+  SET_OUTPUT_VARIABLES: 'setOutputVariables',
   ADD_OUTPUT_VARIABLE: 'addOutputVariable',
   ADD_DIMENSION: 'addDimension',
   ADD_FILTER: 'addFilter',

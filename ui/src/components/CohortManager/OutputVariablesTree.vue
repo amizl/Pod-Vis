@@ -13,7 +13,6 @@
 <script>
 import { actions, state } from '@/store/modules/cohortManager/types';
 import { mapActions, mapState } from 'vuex';
-import { uniqBy } from 'lodash';
 
 export default {
   props: {
@@ -41,35 +40,12 @@ export default {
     },
   },
   async created() {
-    const observationVariables = this.makeHierarchy(
-      this.collection.observation_variables
-    );
-
-    observationVariables.forEach(observationVariable => {
-      observationVariable.children.forEach(
-        child => (child['type'] = 'observation')
-      );
-    });
-
-    this.observationVariables = observationVariables;
+    this.observationVariables = this.collection.observation_variables;
   },
   methods: {
     ...mapActions('cohortManager', {
       setOutputVariables: actions.SET_OUTPUT_VARIABLES,
     }),
-    makeHierarchy(data) {
-      const ontologies = data.map(obs => obs.ontology);
-      const parents = uniqBy(
-        ontologies.map(ontology => ontology.parent),
-        'label'
-      ).map(parent => ({
-        ...parent,
-        children: ontologies.filter(
-          ontology => ontology.parent.label === parent.label
-        ),
-      }));
-      return parents;
-    },
   },
 };
 </script>

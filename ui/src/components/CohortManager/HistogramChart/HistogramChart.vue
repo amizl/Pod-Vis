@@ -6,17 +6,37 @@
         ref="bars"
         :transform="`translate(${margin.left}, ${margin.top})`"
       >
-        <bar-rect
-          v-for="d in data"
-          :key="d.key"
-          :x="xScale(d.key)"
-          :y="yScale(d.value)"
-          :width="xScale.bandwidth()"
-          :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
-          :fill="getFill(d.key)"
-          @click.native="userClickedBar(d.key)"
+        <rect
+          v-for="(bin, i) in bins"
+          :key="i"
+          :transform="`translate(${xScale(bin.x0)}, ${yScale(bin.length)})`"
+          :width="xScale(bin.x1) - xScale(bin.x0) - 1"
+          :height="h - yScale(bin.length)"
+          fill="#3F51B5"
+        />
+
+        <!-- Cohort Mean -->
+        <circle
+          r="5"
+          :cx="mean"
+          :cy="h"
+          fill="#ffa632"
+          stroke="#ffa632"
+          stroke-width="2"
+          fill-opacity=".5"
+        />
+        <!-- Population Mean -->
+        <circle
+          r="5"
+          :cx="populationMean"
+          :cy="h"
+          fill="#33d8ff"
+          stroke="#33d8ff"
+          stroke-width="2"
+          fill-opacity=".5"
         />
       </g>
+
       <g
         v-xaxis="xAxis"
         :transform="`translate(${margin.left},${h + margin.top})`"
@@ -25,6 +45,7 @@
         v-yaxis="yAxis"
         :transform="`translate(${margin.left}, ${margin.top})`"
       ></g>
+      <g v-brush="{ brush, xScale }" class="brush"></g>
     </svg>
   </v-flex>
 </template>
@@ -34,23 +55,44 @@
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
 // D3 Modules
-import { max } from 'd3-array';
-import { select } from 'd3-selection';
-import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale';
+import { extent, max, mean, histogram } from 'd3-array';
+import { brushX } from 'd3-brush';
+import { select, event } from 'd3-selection';
+import { scaleLinear } from 'd3-scale';
 import 'd3-transition';
 import { axisBottom, axisLeft } from 'd3-axis';
-import { schemeCategory10 } from 'd3-scale-chromatic';
+// import { schemeCategory10 } from 'd3-scale-chromatic';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
-import BarRect from './BarRect.vue';
+// import BarRect from './BarRect.vue';
+
+/**
+ * Takes an array of key, value counts from crossfilter groups
+ * and expands then flattens them. For example, [{key:5, value: 3}, {key:2, value: 2}]
+ * would be flattened to [5,5,5,2,2]. This allows us to leverage d3's
+ * histrogram/binning abilities.
+ */
+const flattenGroupCounts = data =>
+  data.reduce((acc, curr) => {
+    const { key: value, value: length } = curr;
+    const arr = Array.from([].fill.call({ length }, value));
+    return [...acc, ...arr];
+  }, []);
 
 export default {
   directives: {
     resize,
+    brush(el, binding) {
+      const { brush, xScale } = binding.value;
+      select(el).call(brush);
+      // .call(brush.move, xScale.range());
+    },
     xaxis(el, binding) {
       const axisMethod = binding.value;
-      select(el).call(axisMethod);
+      select(el)
+        .transition()
+        .call(axisMethod);
     },
     yaxis(el, binding) {
       const axisMethod = binding.value;
@@ -59,17 +101,19 @@ export default {
         .call(axisMethod);
     },
   },
-  components: {
-    BarRect,
-  },
+  components: {},
   props: {
     id: {
-      type: Number,
+      type: [Number, String],
       required: true,
     },
     dimensionName: {
       type: String,
       required: true,
+    },
+    population: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -89,6 +133,7 @@ export default {
       dimension: null,
       group: [],
       data: [],
+      populationData: [],
     };
   },
   computed: {
@@ -107,47 +152,66 @@ export default {
       const { height } = this;
       return height - top - bottom;
     },
-    colorScale() {
-      return scaleOrdinal()
-        .domain(this.data.map(c => c.key))
-        .range(schemeCategory10);
-    },
+    // colorScale() {
+    //   return scaleOrdinal()
+    //     .domain(this.data.map(c => c.key))
+    //     .range(schemeCategory10);
+    // },
     xScale() {
-      return scaleBand()
-        .domain(this.data.map(d => d.key))
-        .range([0, this.w])
-        .padding(0.05);
+      return scaleLinear()
+        .domain(extent(this.data))
+        .range([0, this.w]);
+    },
+    bins() {
+      return histogram()
+        .domain(this.xScale.domain())
+        .thresholds(this.xScale.ticks(30))(this.data);
+    },
+    mean() {
+      return this.xScale(mean(this.data));
+    },
+    populationMean() {
+      return this.xScale(mean(this.populationData));
     },
     yScale() {
-      return scaleLinear()
-        .domain([0, max(this.data, d => d.value)])
+      const yScale = scaleLinear()
+        .domain([0, max(this.bins, d => d.length)])
         .range([this.h, 0]);
+      return yScale;
     },
     xAxis() {
       return axisBottom(this.xScale);
     },
     yAxis() {
-      return axisLeft(this.yScale).ticks(5);
+      return axisLeft(this.yScale).ticks(3);
+    },
+    brush() {
+      return brushX()
+        .extent([[0, 0], [this.width, this.height]])
+        .on('start brush end', this.brushed);
     },
   },
   watch: {
     filteredData() {
-      this.data = this.group.all();
+      this.data = flattenGroupCounts(this.group.all());
 
       if (this.selected.length && !this.dimension.currentFilter()) {
         this.selected = [];
       }
     },
-    // data() {
-    //   console.log('foooooo');
-    //   this.updateBars();
-    // },
   },
   created() {
     const dimension = this.dimensions[this.dimensionName];
     this.dimension = dimension;
+    this.populationData = this.unfilteredData.map(dimension.accessor);
+    // Similar to winnow.js
+    // const [maxRecord] = dimension.top(1);
+    // const maxValue = maxRecord[this.id].roc;
+    // const [minRecord] = dimension.bottom(1);
+    // const minValue = minRecord[this.id].roc;
+    // const binWidth = (maxValue - minValue) / 30;
     this.group = dimension.group();
-    this.data = this.group.all();
+    this.data = flattenGroupCounts(this.group.all());
   },
   mounted() {
     this.container = this.$refs.container;
@@ -155,22 +219,19 @@ export default {
 
     // Resize chart so we have parent dimensions (width/height)
     this.resizeChart();
-    // this.drawBars();
   },
   methods: {
     ...mapActions('cohortManager', {
       addFilter: actions.ADD_FILTER,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    brushed() {
+      const selection = event.selection;
+      console.log(selection);
+    },
     getFill(key) {
       if (!this.selected.length || this.selected.includes(key)) {
-        if (key == 'female') {
-          return '#FFC0CB';
-        } else if (key == 'male') {
-          return '#3498DB';
-        } else {
-          return this.colorScale(key);
-        }
+        return this.colorScale(key);
       } else {
         return '#E8EAF6';
       }

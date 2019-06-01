@@ -3,8 +3,8 @@
     <v-layout column fill-height class="ma-1">
       <output-variables-toolbar />
       <v-container fluid fill-height>
-        <!-- <input-variables-charts v-if="hasUserAddedOutputVariables" /> -->
-        <v-layout column align-center justify-center fill-height>
+        <output-variables-charts v-if="hasUserAddedOutputVariables" />
+        <v-layout v-else column align-center justify-center fill-height>
           <v-subheader class="display-1 primary--text text--lighten-5">
             ADD OUTPUT VARIABLES
           </v-subheader>
@@ -16,12 +16,14 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex';
-import { mutations, state } from '@/store/modules/cohortManager/types';
+import { state } from '@/store/modules/cohortManager/types';
 import OutputVariablesToolbar from '@/components/CohortManager/OutputVariablesToolbar.vue';
+import OutputVariablesCharts from '@/components/CohortManager/OutputVariablesCharts.vue';
 
 export default {
   components: {
     OutputVariablesToolbar,
+    OutputVariablesCharts,
   },
   data() {
     return {
@@ -30,12 +32,11 @@ export default {
     };
   },
   computed: {
-    // ...mapState('cohortManager', {
-    // outputVariables: state.OUTPUT_VARIABLES,
-    // }),
-    hasUserAddedOutVariables() {
-      return false;
-      // return this.outputVariables.length > 0;
+    ...mapState('cohortManager', {
+      outputVariables: state.OUTPUT_VARIABLES,
+    }),
+    hasUserAddedOutputVariables() {
+      return this.outputVariables.length > 0;
     },
   },
   methods: {
