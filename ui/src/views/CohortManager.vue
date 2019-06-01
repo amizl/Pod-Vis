@@ -11,9 +11,14 @@
       <v-btn color="primary--text">Save Cohort</v-btn>
     </v-toolbar>
     <v-layout d-block class="translate-up" fill-height>
-      <v-flex fill-height xs-12>
+      <v-flex fill-height xs12>
         <v-layout column fill-height>
-          <v-flex> <input-variables /> </v-flex>
+          <v-flex xs5 fill-height>
+            <v-layout row fill-height>
+              <v-flex xs8> <input-variables /> </v-flex>
+              <v-flex xs4> <analytics-table /> </v-flex>
+            </v-layout>
+          </v-flex>
           <v-flex> <output-variables /> </v-flex>
         </v-layout>
       </v-flex>
@@ -26,6 +31,7 @@ import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/cohortManager/types';
 
 import CohortSelection from '@/components/CohortManager/CohortSelection.vue';
+import AnalyticsTable from '@/components/CohortManager/AnalyticsTable.vue';
 import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
 
@@ -35,6 +41,7 @@ export default {
     CohortSelection,
     InputVariables,
     OutputVariables,
+    AnalyticsTable,
   },
   props: {
     collectionId: {
