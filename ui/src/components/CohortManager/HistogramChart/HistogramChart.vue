@@ -38,7 +38,7 @@
       </g>
 
       <g
-        v-xaxis="xAxis"
+        v-xaxis="populationXAxis"
         :transform="`translate(${margin.left},${h + margin.top})`"
       ></g>
       <g
@@ -157,6 +157,11 @@ export default {
     //     .domain(this.data.map(c => c.key))
     //     .range(schemeCategory10);
     // },
+    populationXScale() {
+      return scaleLinear()
+        .domain(extent(this.populationData))
+        .range([0, this.w]);
+    },
     xScale() {
       return scaleLinear()
         .domain(extent(this.data))
@@ -181,6 +186,9 @@ export default {
     },
     xAxis() {
       return axisBottom(this.xScale);
+    },
+    populationXAxis() {
+      return axisBottom(this.populationXScale);
     },
     yAxis() {
       return axisLeft(this.yScale).ticks(3);
