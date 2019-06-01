@@ -157,26 +157,26 @@ export default {
     //     .domain(this.data.map(c => c.key))
     //     .range(schemeCategory10);
     // },
-    populationXScale() {
+    xScale() {
       return scaleLinear()
         .domain(extent(this.populationData))
         .range([0, this.w]);
     },
-    xScale() {
+    cohortXScale() {
       return scaleLinear()
         .domain(extent(this.data))
         .range([0, this.w]);
     },
     bins() {
       return histogram()
-        .domain(this.xScale.domain())
-        .thresholds(this.xScale.ticks(30))(this.data);
+        .domain(this.cohortXScale.domain())
+        .thresholds(this.cohortXScale.ticks(30))(this.data);
     },
     mean() {
-      return this.populationXScale(mean(this.data));
+      return this.xScale(mean(this.data));
     },
     populationMean() {
-      return this.populationXScale(mean(this.populationData));
+      return this.xScale(mean(this.populationData));
     },
     yScale() {
       const yScale = scaleLinear()
@@ -188,7 +188,7 @@ export default {
       return axisBottom(this.xScale);
     },
     populationXAxis() {
-      return axisBottom(this.populationXScale);
+      return axisBottom(this.xScale);
     },
     yAxis() {
       return axisLeft(this.yScale).ticks(3);
