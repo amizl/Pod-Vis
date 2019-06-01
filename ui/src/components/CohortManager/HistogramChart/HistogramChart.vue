@@ -173,10 +173,10 @@ export default {
         .thresholds(this.xScale.ticks(30))(this.data);
     },
     mean() {
-      return this.xScale(mean(this.data));
+      return this.populationXScale(mean(this.data));
     },
     populationMean() {
-      return this.xScale(mean(this.populationData));
+      return this.populationXScale(mean(this.populationData));
     },
     yScale() {
       const yScale = scaleLinear()

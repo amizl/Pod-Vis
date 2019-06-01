@@ -1,7 +1,7 @@
 <template>
   <v-sheet color="white" height="100%" min-width="200px">
     <v-layout column fill-height>
-      <v-card-title class="title primary--text text--darken-4">
+      <v-card-title class="subheading primary--text text--darken-4">
         {{
           variable.type == 'observation'
             ? `${variable.parentLabel} - ${variable.label}`
