@@ -55,6 +55,13 @@ export default {
             },
             {
               ...child,
+              id: `change-${child.id}`,
+              parentID: child.id,
+              parentLabel: child.label,
+              label: 'Change',
+            },
+            {
+              ...child,
               id: `roc-${child.id}`,
               parentID: child.id,
               parentLabel: child.label,
@@ -116,9 +123,10 @@ export default {
         .rollup(values => {
           return values
             .map(d => {
-              const { observation, roc, min, max, ...rest } = d;
+              const { observation, change, roc, min, max, ...rest } = d;
               return {
                 [observation]: {
+                  change,
                   roc,
                   firstVisit: min,
                   lastVisit: max,
