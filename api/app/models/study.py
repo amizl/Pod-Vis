@@ -45,24 +45,35 @@ class Study(db.Model):
         """Get all variables in a study."""
         connection = db.engine.connect()
 
+        # Convoluted query. The IF statement is handling the edge case
+        # where the observation_ontology_id is already computed, thus
+        # we do not want the parent_id because this will be a cateogory
+        # such as 'Genereal Disease Severity Measures'.
         query = text("""
             SELECT distinct o.label as category, t.label as scale, t.id
-                FROM observation_ontology o
-                JOIN (
-                    SELECT *
-                    FROM observation_ontology
-                    WHERE id
-                    IN (
-                        SELECT distinct oo.parent_id
-                        FROM study
-                        JOIN subject s ON study.id = s.study_id
-                        JOIN  subject_visit v ON s.id = v.subject_id
-                        JOIN observation o ON v.id = o.subject_visit_id
-                        JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-                        WHERE study.id = :study_id
-                    )
-                ) t
-                ON t.parent_id = o.id
+            FROM observation_ontology o
+            JOIN (
+                SELECT *
+                FROM observation_ontology
+                WHERE id
+                IN (
+                    SELECT distinct IF(
+                        oo.parent_id IN (
+                            SELECT id
+                            FROM observation_ontology
+                            WHERE parent_id = 1
+                        ),
+                        oo.id,
+                        oo.parent_id)
+                    FROM study
+                    JOIN subject s ON study.id = s.study_id
+                    JOIN  subject_visit v ON s.id = v.subject_id
+                    JOIN observation o ON v.id = o.subject_visit_id
+                    JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
+                    WHERE study.id = :study_id
+                )
+            ) t
+            ON t.parent_id = o.id
         """)
 
         result = [
@@ -110,21 +121,40 @@ class Study(db.Model):
     def find_observation_value_counts_by_scale(self, observation_ontology_id):
         """Compute totals for each patient on each visit for scale (observaton id)."""
         connection = db.engine.connect()
-        query = text("""
-            SELECT CAST(sum(CAST(o.value AS SIGNED)) as SIGNED) as value
-            FROM study
-            JOIN subject s ON study.id = s.study_id
-            JOIN  subject_visit v ON s.id = v.subject_id
-            JOIN observation o ON v.id = o.subject_visit_id
-            JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-            WHERE study.id = :study_id and o.observation_ontology_id in (
-                SELECT id
-                FROM observation_ontology
-                WHERE parent_id = :parent_id
-            )
-            GROUP BY s.id, v.id
-            ORDER BY value
-        """)
+
+        # Check if any ontologies exist with observation_ontology_id as parent.
+        # If there are no parent, this should be a computed measure. Computed measures are measures
+        # such as "MDS-UPDRS Total (Part I-III)". This means we do not need to aggregate
+        # outcome measures in observation table.
+        observation_ontologies = ObservationOntology.find_by_parent_id(observation_ontology_id)
+        if not observation_ontologies:
+            query = text("""
+                SELECT CAST(o.value AS SIGNED) as value
+                FROM study
+                JOIN subject s ON study.id = s.study_id
+                JOIN  subject_visit v ON s.id = v.subject_id
+                JOIN observation o ON v.id = o.subject_visit_id
+                JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
+                WHERE study.id = :study_id and o.observation_ontology_id = :parent_id
+                GROUP BY s.id, v.id
+                ORDER BY value
+            """)
+        else:
+            query = text("""
+                SELECT CAST(sum(CAST(o.value AS SIGNED)) as SIGNED) as value
+                FROM study
+                JOIN subject s ON study.id = s.study_id
+                JOIN  subject_visit v ON s.id = v.subject_id
+                JOIN observation o ON v.id = o.subject_visit_id
+                JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
+                WHERE study.id = :study_id and o.observation_ontology_id in (
+                    SELECT id
+                    FROM observation_ontology
+                    WHERE parent_id = :parent_id
+                )
+                GROUP BY s.id, v.id
+                ORDER BY value
+            """)
         result_proxy = connection.execute(query, study_id=self.id,
             parent_id=observation_ontology_id).fetchall()
         result = [dict(row) for row in result_proxy]

@@ -1,5 +1,5 @@
 from . import db
-from . import Subject
+from . import Subject, ObservationOntology
 import enum
 from sqlalchemy.sql import text
 import pandas as pd
@@ -142,7 +142,7 @@ class Collection(db.Model):
             Pandas dataframe of observation data need to draw charts.
         """
         # TODO: REFACTOR
-        # This is very inefficient/conoluted. Need to refactor...
+        # This is very inefficient/conoluted. Really need to refactor...
 
         connection = db.engine.connect()
         study_ids = [study.study_id for study in self.studies]
@@ -152,7 +152,7 @@ class Collection(db.Model):
         # into columns and join this table with our observation data
         # is easiest.
         subjects_df = pd.DataFrame([
-            subject.to_dict(include_attributes=True)
+            subject.to_dict(include_attributes=True, include_study=True)
             for subject in Subject.find_all_by_study_ids(study_ids)
         ]).set_index('id')
         # Convert to datetime
@@ -171,42 +171,74 @@ class Collection(db.Model):
             subjects_df['first_visit'] = pd.to_datetime(subjects_df['first_visit'])
             # subjects_df['age'] = subjects_df['first_visit'] - subjects_df['Birthdate'].year
             # return subjects_df
-
-        observation_variable_ids = [obs_var.ontology.id for obs_var in self.observation_variables]
-
         subject_variable_ids = [subject_var.id for subject_var in self.subject_variables]
+
+        # Separate measures that are precomputed. Currently, a measure is precomputed
+        # if there are no item measures pointing to it.
+        observation_variable_ids = [obs_var.ontology.id for obs_var in self.observation_variables]
+        obs_ids = []
+        obs_parent_ids = []
+        for obs_id in observation_variable_ids:
+            result = ObservationOntology.find_by_parent_id(obs_id)
+            if result:
+                obs_parent_ids.append(obs_id)
+            else:
+                obs_ids.append(obs_id)
 
         # Query for getting observation totals for patients across all
         # their visits.
-        query = text("""
-            SELECT
-                s.id as subject_id, oo.parent_id as observation_ontology_id,
-                v.event_date, CAST(sum(CAST(o.value AS SIGNED)) as SIGNED) as total
-            FROM study
-            JOIN subject s ON study.id = s.study_id
-            JOIN  subject_visit v ON s.id = v.subject_id
-            JOIN observation o ON v.id = o.subject_visit_id
-            JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-            WHERE study.id in :study_ids and o.observation_ontology_id in (
-                SELECT id
-                FROM observation_ontology
-                WHERE parent_id in :parent_ids
-            )
-            GROUP BY study.id, s.id, v.event_date, oo.parent_id
-            ORDER BY study_id, subject_id, observation_ontology_id, event_date, total
-        """)
+        if obs_parent_ids:
+            query = text("""
+                SELECT
+                    s.id as subject_id, oo.parent_id as observation_ontology_id,
+                    v.event_date, CAST(sum(CAST(o.value AS SIGNED)) as SIGNED) as total
+                FROM study
+                JOIN subject s ON study.id = s.study_id
+                JOIN  subject_visit v ON s.id = v.subject_id
+                JOIN observation o ON v.id = o.subject_visit_id
+                JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
+                WHERE study.id in :study_ids and o.observation_ontology_id in (
+                    SELECT id
+                    FROM observation_ontology
+                    WHERE parent_id in :parent_ids
+                )
+                GROUP BY study.id, s.id, v.event_date, oo.parent_id
+                ORDER BY study_id, subject_id, observation_ontology_id, event_date, total
+            """)
+            result_proxy = connection.execute(
+                query,
+                study_ids=study_ids,
+                parent_ids=obs_parent_ids) \
+                .fetchall()
+            result = [dict(row) for row in result_proxy]
+            result_df = pd.DataFrame(result)
 
-        result_proxy = connection.execute(
-            query,
-            study_ids=study_ids,
-            parent_ids=observation_variable_ids) \
-            .fetchall()
-        result = [dict(row) for row in result_proxy]
-        result_df = pd.DataFrame(result)
+        if obs_ids:
+            # Now query for precomputed
+            query_for_precomputed_totals = text("""
+                SELECT
+                    s.id as subject_id, oo.id as observation_ontology_id,
+                    v.event_date, CAST(o.value AS SIGNED) as total
+                FROM study
+                JOIN subject s ON study.id = s.study_id
+                JOIN  subject_visit v ON s.id = v.subject_id
+                JOIN observation o ON v.id = o.subject_visit_id
+                JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
+                WHERE study.id in :study_ids and o.observation_ontology_id in :ids
+                ORDER BY study_id, subject_id, observation_ontology_id, event_date, total
+            """)
+            result_proxy_for_precompute_totals = connection.execute(
+                query_for_precomputed_totals,
+                study_ids=study_ids,
+                ids=obs_ids) \
+                .fetchall()
+            result_for_precompute_totals = [dict(row) for row in result_proxy_for_precompute_totals]
+            result_df_for_precompute_totals = pd.DataFrame(result_for_precompute_totals)
 
-        # first_events = dict()
-        # for subject_id, first_event in result_proxy:
-        #     first_events[subject_id] = first_event
+        if obs_parent_ids and obs_ids:
+            result_df = pd.concat([result_df, result_df_for_precompute_totals])
+        elif not obs_parent_ids and obs_ids:
+            result_df = result_df_for_precompute_totals
 
         # Compute ROC for each patient and each scale from their first and last visit
         observations = []
@@ -221,12 +253,13 @@ class Collection(db.Model):
             N = totals.shift(n-1)
             # normalize by both minimum visit and duration
             roc = ((M / N) * 100) / ((last_date.year - first_date.year)) # / 365.25)
-
+            change = totals[-1] - totals[0]
             observations.append(
                 dict(
                     subject_id=subject_id,
                     observation=obs_id,
                     roc=roc.values[-1],
+                    change=change,
                     min=totals.loc[first_date],
                     max=totals.loc[last_date]
                 ))

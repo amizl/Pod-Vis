@@ -34,6 +34,18 @@ class ObservationOntology(db.Model):
         """
         return cls.query.filter_by(id=observation_ontology_id).first()
 
+    @classmethod
+    def find_by_parent_id(cls, observation_ontology_id):
+        """Find observation ontology by id.
+
+        Args:
+            id: Observation ontology ID.
+
+        Returns:
+           Observation ontology.
+        """
+        return cls.query.filter_by(parent_id=observation_ontology_id).all()
+
     def save_to_db(self):
         """Save to database."""
         db.session.add(self)
