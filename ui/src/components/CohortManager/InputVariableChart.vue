@@ -1,5 +1,5 @@
 <template>
-  <v-sheet color="white" height="100%" min-width="200px">
+  <v-sheet color="white" height="100%" min-width="300px">
     <v-layout column fill-height>
       <v-card-title class="subheading primary--text text--darken-4">
         {{
@@ -18,7 +18,10 @@
       </v-card-title>
       <v-layout fill-height>
         <ColumnChart
-          v-if="variable.type === 'subject'"
+          v-if="
+            variable.type === 'subject' &&
+              typeof unfilteredData[0][dimension] != 'number'
+          "
           :id="variable.id"
           :dimension-name="dimension"
         />
@@ -31,8 +34,8 @@
 <script>
 import ColumnChart from '@/components/CohortManager/BarChart/BarChart.vue';
 import HistogramChart from '@/components/CohortManager/HistogramChart/HistogramChart.vue';
-import { mapActions } from 'vuex';
-import { actions } from '@/store/modules/cohortManager/types';
+import { mapActions, mapState } from 'vuex';
+import { actions, state } from '@/store/modules/cohortManager/types';
 
 export default {
   components: {
@@ -47,6 +50,12 @@ export default {
   },
   data() {
     return { dimension: null };
+  },
+  computed: {
+    ...mapState('cohortManager', {
+      collection: state.COLLECTION,
+      unfilteredData: state.UNFILTERED_DATA,
+    }),
   },
   created() {
     if (this.variable.type === 'observation') {

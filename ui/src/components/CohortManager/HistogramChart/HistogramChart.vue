@@ -1,11 +1,7 @@
 <template>
   <v-flex ref="container" fill-height>
     <svg ref="chart" :width="width" :height="height">
-      <g
-        v-if="width && height"
-        ref="bars"
-        :transform="`translate(${margin.left}, ${margin.top})`"
-      >
+      <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
         <rect
           v-for="(bin, i) in bins"
           :key="i"
@@ -35,6 +31,7 @@
           stroke-width="2"
           fill-opacity=".5"
         />
+        <g ref="brush" class="brush"></g>
       </g>
 
       <g
@@ -45,7 +42,6 @@
         v-yaxis="yAxis"
         :transform="`translate(${margin.left}, ${margin.top})`"
       ></g>
-      <g v-brush="{ brush, xScale }" class="brush"></g>
     </svg>
   </v-flex>
 </template>
@@ -58,6 +54,7 @@ import { state, actions } from '@/store/modules/cohortManager/types';
 import { extent, max, mean, histogram } from 'd3-array';
 import { brushX } from 'd3-brush';
 import { select, event } from 'd3-selection';
+import { arc } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import 'd3-transition';
 import { axisBottom, axisLeft } from 'd3-axis';
@@ -65,7 +62,7 @@ import { axisBottom, axisLeft } from 'd3-axis';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
-// import BarRect from './BarRect.vue';
+import BarRect from '../BarChart/BarRect.vue';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -83,11 +80,6 @@ const flattenGroupCounts = data =>
 export default {
   directives: {
     resize,
-    brush(el, binding) {
-      const { brush, xScale } = binding.value;
-      select(el).call(brush);
-      // .call(brush.move, xScale.range());
-    },
     xaxis(el, binding) {
       const axisMethod = binding.value;
       select(el)
@@ -101,7 +93,9 @@ export default {
         .call(axisMethod);
     },
   },
-  components: {},
+  components: {
+    BarRect,
+  },
   props: {
     id: {
       type: [Number, String],
@@ -169,8 +163,10 @@ export default {
     },
     bins() {
       return histogram()
-        .domain(this.cohortXScale.domain())
-        .thresholds(this.cohortXScale.ticks(30))(this.data);
+        .domain(this.xScale.domain())
+        .thresholds(this.xScale.ticks(30))(this.data);
+      // .domain(this.cohortXScale.domain())
+      // .thresholds(this.cohortXScale.ticks(30))(this.data);
     },
     mean() {
       return this.xScale(mean(this.data));
@@ -195,7 +191,7 @@ export default {
     },
     brush() {
       return brushX()
-        .extent([[0, 0], [this.width, this.height]])
+        .extent([[0, 0], [this.w, this.h]])
         .on('start brush end', this.brushed);
     },
   },
@@ -223,19 +219,64 @@ export default {
   },
   mounted() {
     this.container = this.$refs.container;
-    // this.bars = select(this.$refs.bars).selectAll('.bar');
-
     // Resize chart so we have parent dimensions (width/height)
     this.resizeChart();
+    this.initializeBrush();
   },
   methods: {
     ...mapActions('cohortManager', {
       addFilter: actions.ADD_FILTER,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    initializeBrush() {
+      const brushEl = this.$refs.brush;
+
+      const brush = select(brushEl).call(this.brush);
+      select(brushEl)
+        .select('.selection')
+        .attr('fill', '#9FA8DA');
+
+      const handlePath = d => {
+        const e = +(d.type == 'e'),
+          x = e ? 1 : -1,
+          y = this.h / 2;
+        return `M${0.5 * x},${y}A6,6 0 0 ${e} ${6.5 * x},${y + 6}V${2 * y -
+          6}A6,6 0 0 ${e} ${0.5 * x},${2 * y}ZM${2.5 * x},${y + 8}V${2 * y -
+          8}M${4.5 * x},${y + 8}V${2 * y - 8}`;
+      };
+
+      const handle = brush
+        .selectAll('.handle--custom')
+        .data([{ type: 'w' }, { type: 'e' }])
+        .enter()
+        .append('path')
+        .attr('class', 'handle--custom')
+        .attr('fill', '#3F51B5')
+        .attr('fill-opacity', 0.8)
+        .attr('stroke', '#FFF')
+        .attr('stroke-width', 1)
+        .attr('cursor', 'ew-resize')
+        .attr('d', handlePath)
+        .attr('display', 'none');
+      this.handle = handle;
+    },
     brushed() {
       const selection = event.selection;
-      console.log(selection);
+      if (selection) {
+        const [low, high] = selection.map(this.xScale.invert);
+        this.handle.attr('display', null).attr('transform', (d, i) => {
+          return 'translate(' + selection[i] + ',' + -this.h / 4 + ')';
+        });
+        this.addFilter({
+          dimension: this.dimensionName,
+          filter: d => d >= low && d < high,
+        });
+      } else {
+        this.handle.attr('display', 'none');
+        this.clearFilter({
+          dimension: this.dimensionName,
+        });
+      }
     },
     getFill(key) {
       if (!this.selected.length || this.selected.includes(key)) {
@@ -306,4 +347,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

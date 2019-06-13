@@ -64,7 +64,7 @@ export default {
   },
   props: {
     id: {
-      type: Number,
+      type: [Number, String],
       required: true,
     },
     dimensionName: {
@@ -138,10 +138,6 @@ export default {
         this.selected = [];
       }
     },
-    // data() {
-    //   console.log('foooooo');
-    //   this.updateBars();
-    // },
   },
   created() {
     const dimension = this.dimensions[this.dimensionName];

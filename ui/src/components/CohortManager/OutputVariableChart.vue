@@ -14,12 +14,14 @@
       </v-card-title>
       <v-layout column fill-height>
         <v-flex>
+          <span class="primary--text text--darken-4 ml-3">Population</span>
           <PopulationHistogramChart
             :id="variable.id"
             :dimension-name="dimension"
           />
         </v-flex>
         <v-flex>
+          <span class="primary--text text--darken-4 ml-3">Selected Cohort</span>
           <HistogramChart :id="variable.id" :dimension-name="dimension" />
         </v-flex>
       </v-layout>
