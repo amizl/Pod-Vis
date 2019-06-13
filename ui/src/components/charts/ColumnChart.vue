@@ -10,6 +10,7 @@
           :y="yScale(d.count)"
           :width="xScale.bandwidth()"
           :height="h - yScale(d.count)"
+          fill="#3F51B5"
         />
         <!-- TODO: Key needs to be random to fix pagination bug on table... -->
       </g>

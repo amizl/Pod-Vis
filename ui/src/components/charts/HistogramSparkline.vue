@@ -9,6 +9,7 @@
           :transform="`translate(${xScale(bin.x0)}, ${yScale(bin.length)})`"
           :width="xScale(bin.x1) - xScale(bin.x0) - 1"
           :height="height - yScale(bin.length)"
+          fill="#3F51B5"
         />
         <!-- TODO: Key needs to be random to fix pagination bug on table... -->
       </g>
