@@ -1,12 +1,15 @@
 <template>
   <v-container fluid>
-    <v-toolbar extended app class="primary shadow send-to-back">
+    <v-toolbar app class="primary">
       <v-toolbar-title class="white--text">Dashboard</v-toolbar-title>
     </v-toolbar>
-    <v-layout class="translate-up" fill-height>
+    <v-layout fill-height>
       <!-- <v-layout align-center justify-center> -->
       <v-flex xs12>
-        <v-card> <collection-table></collection-table> </v-card>
+        <v-card flat class="rounded-lg shadow">
+          <v-card-title class="title primary--text">Collections</v-card-title>
+          <collection-table class="pb-1"></collection-table>
+        </v-card>
       </v-flex>
       <!-- <v-flex xs8> <v-card> </v-card> </v-flex> -->
 

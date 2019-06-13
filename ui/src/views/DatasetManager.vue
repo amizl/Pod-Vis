@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-toolbar extended app class="primary shadow send-to-back">
+    <v-toolbar app class="primary">
       <v-toolbar-title class="white--text">Dataset Manager</v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- <v-text-field
@@ -26,7 +26,7 @@
       >
       <!-- </v-toolbar-items> -->
     </v-toolbar>
-    <v-layout class="translate-up" fill-height justify-center>
+    <v-layout fill-height justify-center>
       <v-flex xs12>
         <v-card class="shadow rounded-lg">
           <v-tabs slider-color="primary" grow>

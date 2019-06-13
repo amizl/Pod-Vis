@@ -1,6 +1,6 @@
 <template>
   <v-container fluid grid-list-md>
-    <v-toolbar extended app class="primary shadow send-to-back">
+    <v-toolbar app class="primary">
       <v-toolbar-title class="white--text">Create Dataset</v-toolbar-title>
       <v-spacer></v-spacer>
       <save-collection-btn-dialog
@@ -25,14 +25,15 @@
       </v-flex>
     </v-layout> -->
 
-    <v-layout column class="translate-up">
+    <v-layout column>
       <v-flex>
         <v-layout>
           <v-flex xs12>
             <v-card flat class="shadow rounded-lg">
               <v-card-title card color="white">
                 <p>
-                  <span class="title">Shared Variables</span> <br />
+                  <span class="title primary--text">Shared Variables</span>
+                  <br />
                   <span class="subheading grey--text ligthen-2"
                     >Select the variables to include in the new dataset
                     collection.</span
@@ -54,7 +55,8 @@
             <v-card flat class="shadow rounded-lg">
               <v-card-title card color="white">
                 <p>
-                  <span class="title">Unshared Variables</span> <br />
+                  <span class="title primary--text">Unshared Variables</span>
+                  <br />
                   <span class="subheading grey--text ligthen-2"
                     >These variables are not shared within selected datasets.
                   </span>

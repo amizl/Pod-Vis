@@ -3,23 +3,23 @@
     <loading-spinner />
   </v-container>
   <v-container v-else fluid grid-list-md fill-height>
-    <v-toolbar extended app class="primary shadow send-to-back">
+    <v-toolbar app class="primary">
       <v-toolbar-title class="white--text">Cohort Manager</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items> <CohortSelection class="mt-3" /> </v-toolbar-items>
+      <v-toolbar-items> <CohortSelection class="mt-2" /> </v-toolbar-items>
       <v-spacer></v-spacer>
       <v-btn color="primary--text">Save Cohort</v-btn>
     </v-toolbar>
-    <v-layout d-block class="translate-up" fill-height>
+    <v-layout class="translate-" fill-height>
       <v-flex fill-height xs12>
         <v-layout column fill-height>
-          <v-flex xs5 fill-height>
+          <v-flex xs6 fill-height>
             <v-layout row fill-height>
               <v-flex xs8> <input-variables /> </v-flex>
               <v-flex xs4> <analytics-table /> </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex> <output-variables /> </v-flex>
+          <v-flex xs8 fill-height> <output-variables /> </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>

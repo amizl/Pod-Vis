@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-container v-if="dataset" fluid grid-list-xl>
-      <v-toolbar extended app class="primary shadow send-to-back">
+      <v-toolbar app class="primary">
         <v-toolbar-title class="white--text">Dataset Overview</v-toolbar-title>
       </v-toolbar>
-      <v-layout row wrap justify-center class="translate-up">
+      <v-layout row wrap justify-center>
         <v-flex xs8>
           <v-layout row wrap justify-center>
             <v-flex xs12>
