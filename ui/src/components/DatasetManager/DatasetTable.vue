@@ -1,5 +1,5 @@
 <template>
-  <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
+  <loading-spinner v-if="!datasets" medium class="pb-5"></loading-spinner>
   <v-data-table
     v-else
     v-model="selected"
@@ -7,7 +7,8 @@
     :headers="headers"
     :items="datasets"
     item-key="study_name"
-    class="ml-1 mr-1"
+    class="pb-1"
+    hide-actions
   >
     <template v-slot:items="props">
       <tr>

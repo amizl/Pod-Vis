@@ -10,6 +10,7 @@
       item-key="scale"
       must-sort
       class="ml-1 mr-1"
+      hide-actions
     >
       <template v-slot:items="props">
         <tr>

@@ -1,6 +1,12 @@
 <template>
   <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
-  <v-data-table v-else :headers="headers" :items="collections" item-key="label">
+  <v-data-table
+    v-else
+    :headers="headers"
+    :items="collections"
+    item-key="label"
+    class="pb-1"
+  >
     <template v-slot:items="props">
       <tr>
         <td class="text-xs-left">{{ props.item.label }}</td>
@@ -21,7 +27,7 @@
       </tr>
     </template>
     <template v-slot:no-data>
-      <v-alert :value="true" color="info" icon="info">
+      <v-alert :value="true" color="primary" icon="info">
         You have no saved collections.
       </v-alert>
     </template>

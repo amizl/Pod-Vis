@@ -8,6 +8,8 @@
     :select-all="selectable"
     item-key="scale"
     must-sort
+    hide-actions
+    class="pb-1"
   >
     <template v-slot:items="props">
       <tr>

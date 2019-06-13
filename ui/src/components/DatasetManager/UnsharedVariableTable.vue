@@ -21,7 +21,7 @@
         </tr>
       </template>
       <template v-slot:no-data>
-        <v-alert :value="true" color="info" icon="info">
+        <v-alert :value="true" color="primary" icon="info">
           No missing variables.
         </v-alert>
       </template>
