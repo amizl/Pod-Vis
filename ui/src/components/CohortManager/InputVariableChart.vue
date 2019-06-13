@@ -68,17 +68,24 @@ export default {
       };
       this.addDimension(payload);
     } else {
-      let dimension = this.variable.label;
+      let dimension, payload;
+      if (this.variable.label == 'Study') {
+        dimension = 'Study';
+        payload = {
+          dimensionName: dimension, // GET STUDY NAME HERE...
+          accessor: d => d.study.study_name,
+        };
+      } else {
+        dimension = this.variable.label;
+        payload = {
+          dimensionName: dimension,
+          accessor: d => {
+            let dimName = dimension;
+            return d[dimName];
+          },
+        };
+      }
       this.dimension = dimension;
-
-      const payload = {
-        dimensionName: this.dimension,
-        accessor: d => {
-          let dimName = dimension;
-          return d[dimName];
-        },
-      };
-
       this.addDimension(payload);
     }
   },

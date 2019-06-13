@@ -6,7 +6,10 @@
       return-object
       selectable
       :search="search"
-      :items="subjectVariables"
+      :items="[
+        { type: 'subject', id: 'study_id', label: 'Study' },
+        ...subjectVariables,
+      ]"
       item-text="label"
     ></v-treeview>
     <v-treeview
@@ -52,12 +55,14 @@ export default {
         // Filter parent nodes because we don't want them added to our list,
         // i.e, 'Demographics'
         ...newSubjectVariables.filter(variable => !variable.children),
-        ...this.selectedObservationVariables,
+        ...this.selectedObservationVariables.filter(
+          variable => !variable.children
+        ),
       ]);
     },
     selectedObservationVariables(newObservationVariable) {
       this.setInputVariables([
-        ...this.selectedSubjectVariables,
+        ...this.selectedSubjectVariables.filter(variable => !variable.children),
         ...newObservationVariable.filter(variable => !variable.children),
       ]);
     },
