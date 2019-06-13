@@ -9,3 +9,5 @@ PyMySQL
 pandas
 pytest
 python-dotenv
+scipy
+scikit_learn
