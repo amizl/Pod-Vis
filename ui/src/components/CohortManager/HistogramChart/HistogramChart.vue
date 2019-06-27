@@ -58,6 +58,7 @@ import { arc } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import 'd3-transition';
 import { axisBottom, axisLeft } from 'd3-axis';
+import { debounce } from 'lodash';
 // import { schemeCategory10 } from 'd3-scale-chromatic';
 // Directives
 import resize from 'vue-resize-directive';
@@ -192,7 +193,8 @@ export default {
     brush() {
       return brushX()
         .extent([[0, 0], [this.w, this.h]])
-        .on('start brush end', this.brushed);
+        .on('start brush', this.brushed)
+        .on('end', this.brushedData);
     },
   },
   watch: {
@@ -260,22 +262,36 @@ export default {
         .attr('display', 'none');
       this.handle = handle;
     },
-    brushed() {
+    brushedData() {
       const selection = event.selection;
       if (selection) {
         const [low, high] = selection.map(this.xScale.invert);
-        this.handle.attr('display', null).attr('transform', (d, i) => {
-          return 'translate(' + selection[i] + ',' + -this.h / 4 + ')';
-        });
         this.addFilter({
           dimension: this.dimensionName,
           filter: d => d >= low && d < high,
         });
       } else {
-        this.handle.attr('display', 'none');
         this.clearFilter({
           dimension: this.dimensionName,
         });
+      }
+    },
+    brushed() {
+      const selection = event.selection;
+      if (selection) {
+        // const [low, high] = selection.map(this.xScale.invert);
+        this.handle.attr('display', null).attr('transform', (d, i) => {
+          return 'translate(' + selection[i] + ',' + -this.h / 4 + ')';
+        });
+        // this.addFilter({
+        //   dimension: this.dimensionName,
+        //   filter: d => d >= low && d < high,
+        // });
+      } else {
+        this.handle.attr('display', 'none');
+        // this.clearFilter({
+        //   dimension: this.dimensionName,
+        // });
       }
     },
     getFill(key) {
