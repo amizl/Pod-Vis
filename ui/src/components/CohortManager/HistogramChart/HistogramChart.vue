@@ -2,35 +2,46 @@
   <v-flex ref="container" fill-height>
     <svg ref="chart" :width="width" :height="height">
       <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
+        <!-- Population bars are first so they will hide under cohort bars -->
         <rect
-          v-for="(bin, i) in bins"
-          :key="i"
-          :transform="`translate(${xScale(bin.x0)}, ${yScale(bin.length)})`"
+          v-for="(bin, i) in popBins"
+          :key="`population-${i}`"
+          :x="xScale(bin.x0)"
+          :y="yScale(bin.length)"
           :width="xScale(bin.x1) - xScale(bin.x0) - 1"
           :height="h - yScale(bin.length)"
-          fill="#3F51B5"
+          fill="#E8EAF6"
         />
 
+        <animated-rect
+          v-for="(bin, i) in bins"
+          :key="`cohort-${i}`"
+          :x="xScale(bin.x0)"
+          :y="yScale(bin.length)"
+          :width="xScale(bin.x1) - xScale(bin.x0) - 1"
+          :height="h - yScale(bin.length)"
+          :fill="selection.length ? getFill(bin) : '#3F51B5'"
+        />
         <!-- Cohort Mean -->
-        <circle
-          r="5"
+        <!-- <circle
+          r="15"
           :cx="mean"
           :cy="h"
-          fill="#ffa632"
-          stroke="#ffa632"
-          stroke-width="2"
-          fill-opacity=".5"
-        />
+          fill="#3F51B5"
+          stroke="#E8EAF6"
+          stroke-width="5"
+          fill-opacity=".9"
+        /> -->
         <!-- Population Mean -->
-        <circle
-          r="5"
+        <!-- <circle
+          r="15"
           :cx="populationMean"
           :cy="h"
-          fill="#33d8ff"
-          stroke="#33d8ff"
-          stroke-width="2"
-          fill-opacity=".5"
-        />
+          stroke="#3F51B5"
+          fill="#E8EAF6"
+          stroke-width="5"
+          fill-opacity=".9"
+        /> -->
         <g ref="brush" class="brush"></g>
       </g>
 
@@ -54,16 +65,13 @@ import { state, actions } from '@/store/modules/cohortManager/types';
 import { extent, max, mean, histogram } from 'd3-array';
 import { brushX } from 'd3-brush';
 import { select, event } from 'd3-selection';
-import { arc } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import 'd3-transition';
 import { axisBottom, axisLeft } from 'd3-axis';
-import { debounce } from 'lodash';
-// import { schemeCategory10 } from 'd3-scale-chromatic';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
-import BarRect from '../BarChart/BarRect.vue';
+import AnimatedRect from './HistogramBar.vue';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -95,7 +103,7 @@ export default {
     },
   },
   components: {
-    BarRect,
+    AnimatedRect,
   },
   props: {
     id: {
@@ -129,6 +137,7 @@ export default {
       group: [],
       data: [],
       populationData: [],
+      selection: [],
     };
   },
   computed: {
@@ -162,10 +171,20 @@ export default {
         .domain(extent(this.data))
         .range([0, this.w]);
     },
-    bins() {
+    hist() {
       return histogram()
+        .value(d => +d)
         .domain(this.xScale.domain())
-        .thresholds(this.xScale.ticks(30))(this.data);
+        .thresholds(this.xScale.ticks(30));
+    },
+    popBins() {
+      return this.hist(this.populationData);
+    },
+    bins() {
+      return this.hist(this.data);
+      // return histogram()
+      //   .domain(this.xScale.domain())
+      //   .thresholds(this.xScale.ticks(30))(this.data);
       // .domain(this.cohortXScale.domain())
       // .thresholds(this.cohortXScale.ticks(30))(this.data);
     },
@@ -177,7 +196,7 @@ export default {
     },
     yScale() {
       const yScale = scaleLinear()
-        .domain([0, max(this.bins, d => d.length)])
+        .domain([0, max(this.popBins, d => d.length)])
         .range([this.h, 0]);
       return yScale;
     },
@@ -210,12 +229,7 @@ export default {
     const dimension = this.dimensions[this.dimensionName];
     this.dimension = dimension;
     this.populationData = this.unfilteredData.map(dimension.accessor);
-    // Similar to winnow.js
-    // const [maxRecord] = dimension.top(1);
-    // const maxValue = maxRecord[this.id].roc;
-    // const [minRecord] = dimension.bottom(1);
-    // const minValue = minRecord[this.id].roc;
-    // const binWidth = (maxValue - minValue) / 30;
+
     this.group = dimension.group();
     this.data = flattenGroupCounts(this.group.all());
   },
@@ -236,8 +250,10 @@ export default {
       const brush = select(brushEl).call(this.brush);
       select(brushEl)
         .select('.selection')
-        .attr('fill', '#9FA8DA');
+        .attr('fill', '#3F51B5')
+        .attr('fill-opacity', 0.1);
 
+      // This provides the shape of our handles on the brush
       const handlePath = d => {
         const e = +(d.type == 'e'),
           x = e ? 1 : -1,
@@ -262,97 +278,96 @@ export default {
         .attr('display', 'none');
       this.handle = handle;
     },
-    brushedData() {
+    /**
+     * Gets the closest cohort bins to a selection so brush can appropriately
+     * snap to the correct locations.
+     */
+    getClosestBins() {
       const selection = event.selection;
-      if (selection) {
-        const [low, high] = selection.map(this.xScale.invert);
-        this.addFilter({
-          dimension: this.dimensionName,
-          filter: d => d >= low && d < high,
-        });
-      } else {
+      const [low, high] = selection.map(this.xScale.invert);
+
+      // Get closest bin to our lower selection
+      const closestBinToLow = this.bins
+        .map(bin => bin.x0)
+        .map(x0 => Math.abs(x0 - low))
+        .reduce((acc, currVal) => Math.min(acc, currVal));
+      const newLowIdx = this.bins.findIndex(
+        bin => Math.abs(bin.x0 - low) === closestBinToLow
+      );
+      const newLow = this.bins[newLowIdx].x0;
+      // Get closest bin to our higher selection
+      const closestBinToHigh = this.bins
+        .map(bin => bin.x1)
+        .map(x1 => Math.abs(x1 - high))
+        .reduce((acc, currVal) => Math.min(acc, currVal));
+      const newHighIdx = this.bins.findIndex(
+        bin => Math.abs(bin.x1 - high) === closestBinToHigh
+      );
+      const newHigh = this.bins[newHighIdx].x1;
+
+      return [newLow, newHigh].map(this.xScale);
+    },
+    brushedData() {
+      // Only transition after input.
+      if (!event.sourceEvent) return;
+      // Ignore empty selections.
+      if (!event.selection) {
         this.clearFilter({
           dimension: this.dimensionName,
         });
       }
+
+      const [low, high] = this.getClosestBins();
+
+      // Snap selections to closest bins
+      select(this.$refs.brush)
+        .transition()
+        .call(event.target.move, [low, high]);
+
+      const [invertedLow, invertedHigh] = [low, high].map(this.xScale.invert);
+      // Filter dimension to be within snapped selection
+      this.addFilter({
+        dimension: this.dimensionName,
+        filter: d => d >= invertedLow && d < invertedHigh,
+      });
     },
     brushed() {
       const selection = event.selection;
-      if (selection) {
-        // const [low, high] = selection.map(this.xScale.invert);
-        this.handle.attr('display', null).attr('transform', (d, i) => {
-          return 'translate(' + selection[i] + ',' + -this.h / 4 + ')';
-        });
-        // this.addFilter({
-        //   dimension: this.dimensionName,
-        //   filter: d => d >= low && d < high,
-        // });
-      } else {
-        this.handle.attr('display', 'none');
-        // this.clearFilter({
-        //   dimension: this.dimensionName,
-        // });
-      }
-    },
-    getFill(key) {
-      if (!this.selected.length || this.selected.includes(key)) {
-        return this.colorScale(key);
-      } else {
-        return '#E8EAF6';
-      }
-    },
-    userClickedBar(key) {
-      if (this.selected.includes(key)) {
-        this.selected = this.selected.filter(d => d != key);
-      } else {
-        this.selected.push(key);
+      if (!selection) {
+        this.selection = [];
+        return; // Ignore empty selections
       }
 
-      if (this.selected.length) {
-        this.addFilter({
-          dimension: this.dimensionName,
-          filter: d => this.selected.includes(d),
-        });
-      } else {
-        this.clearFilter({
-          dimension: this.dimensionName,
-        });
+      const [low, high] = selection;
+      // Ignore selections with no range
+      if (high - low === 0) {
+        this.handle.attr('display', 'none');
+        select(this.$refs.brush).call(this.brush.move, null);
+        this.selection = [];
+        return;
       }
+
+      // Appropriately place brush handles
+      this.handle.attr('display', null).attr('transform', (d, i) => {
+        return 'translate(' + selection[i] + ',' + -this.h / 4 + ')';
+      });
+
+      // Set remap our selection to snap to closest bins
+      this.selection = this.getClosestBins();
     },
-    updateBars() {
-      this.bars
-        .data(this.data, d => d.key)
-        .enter()
-        .style('cursor', 'pointer')
-        .on('click', d => this.userClickedBar(d.key))
-        .attr('x', d => this.xScale(d.key))
-        .attr('width', () => this.xScale.bandwidth())
-        .attr('fill', d => this.getFill(d.key))
-        .transition()
-        .duration(1000)
-        .attr('y', d => this.yScale(d.value))
-        .attr('height', d =>
-          this.h - this.yScale(d.value) > 0 ? this.h - this.yScale(d.value) : 0
-        );
-    },
-    drawBars() {
-      this.bars
-        .data(this.data, d => d.key)
-        .enter()
-        .append('rect')
-        .style('cursor', 'pointer')
-        .on('click', d => this.userClickedBar(d.key))
-        .attr('x', d => this.xScale(d.key))
-        .attr('y', () => this.yScale(0))
-        .attr('width', () => this.xScale.bandwidth())
-        .attr('height', 0)
-        .attr('fill', d => this.getFill(d.key))
-        .transition()
-        .duration(1000)
-        .attr('y', d => this.yScale(d.value))
-        .attr('height', d =>
-          this.h - this.yScale(d.value) > 0 ? this.h - this.yScale(d.value) : 0
-        );
+    getFill(bin) {
+      if (this.selection) {
+        let [low, high] = this.selection.map(this.xScale.invert);
+        let { x0, x1 } = bin;
+        // Check that bin is within selection range
+        if (low <= x0 && low <= x1 && high >= x0 && high >= x1) {
+          return '#3F51B5';
+        } else {
+          return '#E8EAF6';
+        }
+      } else {
+        return '#3F51B5';
+      }
     },
     resizeChart() {
       const { width, height } = this.container.getBoundingClientRect();

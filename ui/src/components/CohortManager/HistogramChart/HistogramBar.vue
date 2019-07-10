@@ -7,10 +7,9 @@
     :fill="fill"
   ></rect> -->
   <rect
-    :transform="`translate(${xScale(bin.x0)}, ${yScale(bin.length)})`"
-    :width="xScale(bin.x1) - xScale(bin.x0) - 1"
-    :height="h - yScale(bin.length)"
-    fill="#3F51B5"
+    v-bind="$attrs"
+    :y="useTweeningYIfNotFalsy"
+    :height="useTweeningHeightIfNotFalsy"
   />
 </template>
 
@@ -19,31 +18,13 @@ import TWEEN from '@tweenjs/tween.js';
 
 export default {
   props: {
-    x: {
-      type: Number,
-      required: true,
-    },
-    y: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    // ystart: {
-    //   type: Number,
-    //   required: true,
-    //   default: 0,
-    // },
-    width: {
-      type: Number,
-      required: true,
-    },
     height: {
       type: Number,
       required: true,
       default: 0,
     },
-    fill: {
-      type: String,
+    y: {
+      type: Number,
       required: true,
     },
   },
@@ -84,20 +65,13 @@ export default {
      * Method to tween from one value to another
      */
     tween(startValue, endValue, prop) {
-      var vm = this;
-      function animate() {
-        if (TWEEN.update()) {
-          requestAnimationFrame(animate);
-        }
-      }
       new TWEEN.Tween({ tweeningValue: startValue })
         .to({ tweeningValue: endValue }, 500)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(({ tweeningValue }) => {
-          vm[prop] = tweeningValue;
+          this[prop] = tweeningValue;
         })
         .start();
-      animate();
     },
   },
 };
