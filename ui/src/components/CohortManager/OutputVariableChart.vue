@@ -1,44 +1,46 @@
 <template>
-  <v-sheet color="white" height="100%" min-width="200px">
+  <v-sheet color="white" height="100%" min-width="400px">
     <v-layout column fill-height>
-      <v-card-title class="subheading primary--text text--darken-4">
-        {{ variable.parentLabel }} - {{ variable.label }}
-        <v-spacer />
-        <v-btn
+      <v-card-title class="subheading primary--text text--darken-4 pb-0">
+        <span v-if="variable.parentLabel">
+          {{ variable.parentLabel }} - {{ variable.label }}
+        </span>
+        <span v-else> {{ variable.label }} </span>
+
+        <!-- <v-btn
           flat
           class="subheading primary--text text--lighten-4"
           @click="clearFilter({ dimension })"
         >
           Reset
-        </v-btn>
+        </v-btn> -->
       </v-card-title>
-      <v-layout column fill-height>
-        <v-flex>
-          <span class="primary--text text--darken-4 ml-3">Population</span>
-          <PopulationHistogramChart
-            :id="variable.id"
-            :dimension-name="dimension"
-          />
-        </v-flex>
-        <v-flex>
-          <span class="primary--text text--darken-4 ml-3">Selected Cohort</span>
-          <HistogramChart :id="variable.id" :dimension-name="dimension" />
-        </v-flex>
-      </v-layout>
+      <MultiChart
+        v-if="variable.children"
+        :key="resetCount"
+        :variable="variable"
+        :dimension-name="dimension"
+      />
+      <HistogramChart
+        v-else
+        :id="variable.id"
+        :key="resetCount"
+        :dimension-name="dimension"
+      />
     </v-layout>
   </v-sheet>
 </template>
 
 <script>
 import HistogramChart from '@/components/CohortManager/HistogramChart/HistogramChart.vue';
-import PopulationHistogramChart from '@/components/CohortManager/HistogramChart/PopulationHistogramChart.vue';
+import MultiChart from '@/components/CohortManager/MultiChart.vue';
 import { mapActions } from 'vuex';
 import { actions } from '@/store/modules/cohortManager/types';
 
 export default {
   components: {
     HistogramChart,
-    PopulationHistogramChart,
+    MultiChart,
   },
   props: {
     variable: {
@@ -47,32 +49,39 @@ export default {
     },
   },
   data() {
-    return { dimension: null };
+    return { dimension: null, resetCount: 0 };
   },
   created() {
-    const [measure, id] = this.variable.id.split('-');
-
-    const dimensionName = `${this.variable.parentLabel} - ${
-      this.variable.label
-    }`;
-
-    this.dimension = dimensionName;
-    const dimensionId = this.variable.parentID;
-
-    const payload = {
-      dimensionName: dimensionName,
-      accessor: d => {
-        let dimName = dimensionId;
-        return d[dimName][measure];
-      },
-    };
-    this.addDimension(payload);
+    if (this.variable.children) {
+      this.variable.children.forEach(childVariable => {
+        this.addDimensionHelper(childVariable);
+      });
+      this.dimension = this.variable.id;
+    } else {
+      this.addDimensionHelper(this.variable);
+    }
   },
   methods: {
     ...mapActions('cohortManager', {
       addDimension: actions.ADD_DIMENSION,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    addDimensionHelper(variable) {
+      const [measure, id] = variable.id.split('-');
+      const dimensionName = `${variable.parentLabel} - ${variable.label}`;
+
+      this.dimension = dimensionName;
+      const dimensionId = variable.parentID;
+
+      const payload = {
+        dimensionName: dimensionName,
+        accessor: d => {
+          let dimName = dimensionId;
+          return d[dimName][measure];
+        },
+      };
+      this.addDimension(payload);
+    },
   },
 };
 </script>

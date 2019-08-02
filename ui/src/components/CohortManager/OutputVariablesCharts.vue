@@ -8,9 +8,9 @@
         <v-flex fill-height>
           <output-variable-chart :variable="outputVariable" />
         </v-flex>
-        <v-flex v-if="index < outputVariables.length - 1" shrink>
+        <!-- <v-flex v-if="index < outputVariables.length - 1" shrink>
           <v-divider vertical></v-divider>
-        </v-flex>
+        </v-flex> -->
       </v-layout>
     </v-flex>
   </v-layout>

@@ -33,9 +33,30 @@ export default {
     }),
   },
   watch: {
-    selectedObservationVariables(newObservationVariable) {
+    selectedObservationVariables(newObservationVariables) {
+      // SCOPA, UPDRS, etc
+      const outcomeMeasures = newObservationVariables.filter(
+        variable =>
+          variable.children &&
+          variable.children.length &&
+          variable.parent_id != 1
+      );
+      // Fist Visit, Change, etc
+      const dimensions = newObservationVariables.filter(
+        variable => !variable.children
+      );
+
+      // If a user selected a study with all of its dimensions,
+      // we want add just the one study and remove dimensions
+      // so we can draw a parallel coordinates plot
+      const parentIDs = outcomeMeasures.map(m => m.id);
+      let dimensionsNotInParentIDs = dimensions.filter(
+        obs => !parentIDs.includes(obs.parentID)
+      );
+
       this.setOutputVariables(
-        newObservationVariable.filter(variable => !variable.children)
+        [...outcomeMeasures, ...dimensionsNotInParentIDs]
+        // newObservationVariables.filter(variable => !variable.children)
       );
     },
   },
