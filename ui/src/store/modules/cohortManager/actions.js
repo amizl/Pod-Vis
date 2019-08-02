@@ -165,21 +165,48 @@ export default {
   [actions.REMOVE_OUTPUT_VARIABLE]({ commit }, outputVariable) {
     commit(mutations.REMOVE_OUTPUT_VARIABLE, outputVariable);
   },
-  [actions.ADD_OUTPUT_VARIABLE]({ commit }, inputVariable) {
-    commit(mutations.ADD_OUTPUT_VARIABLE, inputVariable);
+  [actions.ADD_OUTPUT_VARIABLE]({ commit }, outputVariable) {
+    commit(mutations.ADD_OUTPUT_VARIABLE, outputVariable);
   },
-  [actions.SET_OUTPUT_VARIABLES]({ commit }, newOutputVariables) {
+  [actions.SET_OUTPUT_VARIABLES]({ commit, dispatch }, newOutputVariables) {
     commit(mutations.SET_OUTPUT_VARIABLES, newOutputVariables);
+    dispatch(actions.ANALYZE_FILTERED);
   },
   [actions.ADD_DIMENSION]({ commit }, dimension) {
     commit(mutations.ADD_DIMENSION, dimension);
   },
-  [actions.ADD_FILTER]({ commit }, { dimension, filter }) {
+  [actions.ADD_FILTER]({ commit, dispatch }, { dimension, filter }) {
     commit(mutations.ADD_FILTER, { dimension, filter });
     commit(mutations.UPDATE_FILTERED_DATA);
+
+    dispatch(actions.ANALYZE_FILTERED);
   },
-  [actions.CLEAR_FILTER]({ commit }, { dimension }) {
+  [actions.CLEAR_FILTER]({ commit, dispatch }, { dimension }) {
     commit(mutations.CLEAR_FILTER, { dimension });
     commit(mutations.UPDATE_FILTERED_DATA);
+
+    dispatch(actions.ANALYZE_FILTERED);
+  },
+  async [actions.ANALYZE_FILTERED]({ commit, state }) {
+    let { filteredData, unfilteredData, outputVariables } = state;
+    if (filteredData.length == unfilteredData.length) {
+      commit(mutations.SET_PVALS, []);
+    } else {
+      // Remove subjects within our filtered data sets from our unfiltered so
+      // we can have separate samples
+      unfilteredData = unfilteredData.filter(data => {
+        return !filteredData
+          .map(({ subject_id }) => subject_id)
+          .includes(data.subject_id);
+      });
+
+      const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
+        filteredData,
+        unfilteredData,
+        outputVariables,
+      });
+
+      commit(mutations.SET_PVALS, data.pvals);
+    }
   },
 };

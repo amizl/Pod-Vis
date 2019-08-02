@@ -9,6 +9,7 @@ export const state = {
   OUTPUT_VARIABLES: 'outputVariables',
   CROSS_FILTER: 'crossFilter',
   DIMENSIONS: 'dimensions',
+  PVALS: 'pvals',
 };
 
 // Getters
@@ -31,6 +32,7 @@ export const mutations = {
   REMOVE_DIMENSION: 'removeDimension',
   ADD_FILTER: 'addFilter',
   CLEAR_FILTER: 'clearFilter',
+  SET_PVALS: 'setPvals',
 };
 
 // Actions
@@ -47,4 +49,5 @@ export const actions = {
   ADD_DIMENSION: 'addDimension',
   ADD_FILTER: 'addFilter',
   CLEAR_FILTER: 'clearFilter',
+  ANALYZE_FILTERED: 'analyzeFilterd',
 };

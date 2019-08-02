@@ -165,4 +165,12 @@ export default {
     const dim = dimensions[dimension];
     dim.filterAll();
   },
+  /**
+   * Set pvals
+   * @param {Object} state
+   * @param {Array} pvals Array of objects with a pval and its corresponding outcome measure.
+   */
+  [mutations.SET_PVALS](state, pvals) {
+    state[stateTypes.PVALS] = pvals;
+  },
 };

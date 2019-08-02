@@ -10,4 +10,5 @@ export default {
   [state.OUTPUT_VARIABLES]: [],
   [state.CROSS_FILTER]: null,
   [state.DIMENSIONS]: {},
+  [state.PVALS]: [],
 };
