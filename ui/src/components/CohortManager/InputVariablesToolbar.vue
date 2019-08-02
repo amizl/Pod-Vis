@@ -3,7 +3,26 @@
     <v-toolbar card dense flat color="white rounded-lg">
       <v-toolbar-items> <input-variables-dialog /> </v-toolbar-items>
       <v-divider vertical class="ml-4"></v-divider>
-      <v-spacer></v-spacer>
+      <v-spacer />
+      <v-toolbar-items>
+        <v-chip disabled label color="primary" class="white--text"
+          >Cohort</v-chip
+        >
+        <v-chip disabled label color="primary lighten-5" class="primary--text"
+          >Population</v-chip
+        >
+      </v-toolbar-items>
+      <!-- <v-spacer></v-spacer>
+      <v-select
+        :items="['Cohort']"
+        menu-props="auto"
+        label="Select"
+        hide-details
+        append-icon="format_color_fill"
+        color="primary"
+      ></v-select> -->
+      <!-- <v-spacer></v-spacer> -->
+      <v-divider vertical class="mr-4"></v-divider>
       <v-toolbar-items class="scrollable">
         <v-tooltip color="primary" top>
           <template v-slot:activator="{ on }">
