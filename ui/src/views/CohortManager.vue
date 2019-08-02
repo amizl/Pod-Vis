@@ -10,18 +10,14 @@
       <v-spacer></v-spacer>
       <v-btn color="primary--text">Save Cohort</v-btn>
     </v-toolbar>
-    <v-layout class="translate-" fill-height>
-      <v-flex fill-height xs12>
-        <v-layout column fill-height>
-          <v-flex xs6 fill-height>
-            <v-layout row fill-height>
-              <v-flex xs8> <input-variables /> </v-flex>
-              <v-flex xs4> <analytics-table /> </v-flex>
-            </v-layout>
-          </v-flex>
-          <v-flex xs8 fill-height> <output-variables /> </v-flex>
+    <v-layout column fill-height>
+      <v-flex xs7>
+        <v-layout fill-height>
+          <v-flex xs8> <input-variables /> </v-flex>
+          <v-flex xs4> <analytics-table /> </v-flex>
         </v-layout>
       </v-flex>
+      <v-flex xs8> <output-variables /> </v-flex>
     </v-layout>
   </v-container>
 </template>
