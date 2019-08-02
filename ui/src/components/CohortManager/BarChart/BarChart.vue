@@ -7,8 +7,18 @@
         :transform="`translate(${margin.left}, ${margin.top})`"
       >
         <bar-rect
+          v-for="d in populationData"
+          :key="`population-${d.key}`"
+          :x="xScale(d.key)"
+          :y="yScale(d.value)"
+          :width="xScale.bandwidth()"
+          :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
+          fill="#E8EAF6"
+          @click.native="userClickedBar(d.key)"
+        />
+        <bar-rect
           v-for="d in data"
-          :key="d.key"
+          :key="`cohort-${d.key}`"
           :x="xScale(d.key)"
           :y="yScale(d.value)"
           :width="xScale.bandwidth()"
@@ -51,12 +61,18 @@ export default {
     xaxis(el, binding) {
       const axisMethod = binding.value;
       select(el).call(axisMethod);
+      // .selectAll('path')
+      // .attr('stroke', '#E8EAF6')
+      // .attr('stroke-width', 3);
     },
     yaxis(el, binding) {
       const axisMethod = binding.value;
       select(el)
         .transition()
         .call(axisMethod);
+      // .selectAll('path')
+      // .attr('stroke', '#E8EAF6')
+      // .attr('stroke-width', 3);
     },
   },
   components: {
@@ -114,13 +130,13 @@ export default {
     },
     xScale() {
       return scaleBand()
-        .domain(this.data.map(d => d.key))
+        .domain(this.populationData.map(d => d.key))
         .range([0, this.w])
         .padding(0.05);
     },
     yScale() {
       return scaleLinear()
-        .domain([0, max(this.data, d => d.value)])
+        .domain([0, max(this.populationData, d => d.value)])
         .range([this.h, 0]);
     },
     xAxis() {
@@ -144,6 +160,7 @@ export default {
     this.dimension = dimension;
     this.group = dimension.group();
     this.data = this.group.all();
+    this.populationData = this.data.map(d => ({ ...d }));
   },
   mounted() {
     this.container = this.$refs.container;
@@ -160,13 +177,14 @@ export default {
     }),
     getFill(key) {
       if (!this.selected.length || this.selected.includes(key)) {
-        if (key == 'female') {
-          return '#FFC0CB';
-        } else if (key == 'male') {
-          return '#3498DB';
-        } else {
-          return this.colorScale(key);
-        }
+        // if (key == 'female') {
+        //   return '#FFC0CB';
+        // } else if (key == 'male') {
+        //   return '#3498DB';
+        // } else {
+        //   return this.colorScale(key);
+        // }
+        return '#3F51B5';
       } else {
         return '#E8EAF6';
       }

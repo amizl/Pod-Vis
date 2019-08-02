@@ -8,8 +8,8 @@
   ></rect> -->
   <rect
     v-bind="$attrs"
-    :y="useTweeningYIfNotFalsy"
-    :height="useTweeningHeightIfNotFalsy"
+    :x="useTweeningXIfNotFalsy"
+    :width="useTweeningWidthIfNotFalsy"
   />
 </template>
 
@@ -18,20 +18,20 @@ import TWEEN from '@tweenjs/tween.js';
 
 export default {
   props: {
-    height: {
+    width: {
       type: Number,
       required: true,
       default: 0,
     },
-    y: {
+    x: {
       type: Number,
       required: true,
     },
   },
   data() {
     return {
-      tweeningHeight: 0,
-      tweeningY: 0,
+      tweeningWidth: 0,
+      tweeningX: 0,
     };
   },
   computed: {
@@ -39,25 +39,25 @@ export default {
      * We only want to use tweening variable after the bar is already
      * drawn with the Y variable
      */
-    useTweeningYIfNotFalsy() {
-      return this.tweeningY ? this.tweeningY : this.y;
+    useTweeningXIfNotFalsy() {
+      return this.tweeningX ? this.tweeningX : this.x;
     },
     /**
      * We only want to use tweening variable after the bar is already
      * drawn with the Y variable
      */
-    useTweeningHeightIfNotFalsy() {
-      return this.tweeningHeight ? this.tweeningHeight : this.height;
+    useTweeningWidthIfNotFalsy() {
+      return this.tweeningWidth ? this.tweeningWidth : this.width;
     },
   },
   watch: {
-    height(newValue, oldValue) {
+    width(newValue, oldValue) {
       // When the height changes, tween from the old value to the new
-      this.tween(oldValue, newValue, 'tweeningHeight');
+      this.tween(oldValue, newValue, 'tweeningWidth');
     },
-    y(newValue, oldValue) {
+    x(newValue, oldValue) {
       // When the Y changes, tween from the old value to the new
-      this.tween(oldValue, newValue, 'tweeningY');
+      this.tween(oldValue, newValue, 'tweeningX');
     },
   },
   methods: {
@@ -67,7 +67,7 @@ export default {
     tween(startValue, endValue, prop) {
       // let frameHandler;
 
-      // // Handles updating the tween on each frame.
+      // Handles updating the tween on each frame.
       // const animate = function(currentTime) {
       //   TWEEN.update(currentTime);
       //   frameHandler = requestAnimationFrame(animate);

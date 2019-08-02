@@ -77,21 +77,29 @@ export default {
     /**
      * Method to tween from one value to another
      */
+
     tween(startValue, endValue, prop) {
-      var vm = this;
-      function animate() {
-        if (TWEEN.update()) {
-          requestAnimationFrame(animate);
-        }
-      }
+      // let frameHandler;
+
+      // // Handles updating the tween on each frame.
+      // const animate = function() {
+      //   if (TWEEN.update()) {
+      //     frameHandler = requestAnimationFrame(animate);
+      //   }
+      // };
+
       new TWEEN.Tween({ tweeningValue: startValue })
         .to({ tweeningValue: endValue }, 500)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(({ tweeningValue }) => {
-          vm[prop] = tweeningValue;
+          this[prop] = tweeningValue;
+        })
+        .onComplete(() => {
+          // Make sure to clean up after ourselves.
+          // cancelAnimationFrame(frameHandler);
         })
         .start();
-      animate();
+      // frameHandler = requestAnimationFrame(animate);
     },
   },
 };

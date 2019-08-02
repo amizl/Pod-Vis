@@ -1,25 +1,30 @@
 <template>
-  <v-flex ref="container" fill-height>
+  <v-flex ref="container" fill-height style="display: inline-block">
     <svg ref="chart" :width="width" :height="height">
       <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
         <!-- Population bars are first so they will hide under cohort bars -->
         <rect
           v-for="(bin, i) in popBins"
           :key="`population-${i}`"
-          :x="xScale(bin.x0)"
-          :y="yScale(bin.length)"
-          :width="xScale(bin.x1) - xScale(bin.x0) - 1"
-          :height="h - yScale(bin.length)"
+          :x="left ? xScale(bin.length) : 0"
+          :y="yScale(bin.x1)"
+          :height="yScale(bin.x0) - yScale(bin.x1) - 1"
+          :width="left ? w - xScale(bin.length) : xScale(bin.length)"
           fill="#E8EAF6"
         />
+        <!-- .append('rect')
+        .attr('x', bin => x(bin.length))
+        .attr('y', bin => y(bin.x1))
+        .attr('height', d => y(d.x0) - y(d.x1) - .5)
+        .attr('width', d => width-x(d.length)) -->
 
         <animated-rect
           v-for="(bin, i) in bins"
           :key="`cohort-${i}`"
-          :x="xScale(bin.x0)"
-          :y="yScale(bin.length)"
-          :width="xScale(bin.x1) - xScale(bin.x0) - 1"
-          :height="h - yScale(bin.length)"
+          :x="left ? xScale(bin.length) : 0"
+          :y="yScale(bin.x1)"
+          :height="yScale(bin.x0) - yScale(bin.x1) - 1"
+          :width="left ? w - xScale(bin.length) : xScale(bin.length)"
           :fill="selection.length ? getFill(bin) : '#3F51B5'"
         />
         <!-- Cohort Mean -->
@@ -47,11 +52,15 @@
 
       <g
         v-xaxis="populationXAxis"
-        :transform="`translate(${margin.left},${h + margin.top})`"
+        :transform="`translate(${margin.left}, ${margin.top})`"
       ></g>
       <g
         v-yaxis="yAxis"
-        :transform="`translate(${margin.left}, ${margin.top})`"
+        :transform="
+          `translate(${left ? width - margin.right : margin.left}, ${
+            margin.top
+          })`
+        "
       ></g>
     </svg>
   </v-flex>
@@ -63,11 +72,11 @@ import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
 // D3 Modules
 import { extent, max, mean, histogram } from 'd3-array';
-import { brushX } from 'd3-brush';
+import { brushY } from 'd3-brush';
 import { select, event } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import 'd3-transition';
-import { axisBottom, axisLeft } from 'd3-axis';
+import { axisTop, axisLeft, axisRight } from 'd3-axis';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
@@ -116,9 +125,13 @@ export default {
       type: String,
       required: true,
     },
-    population: {
+    left: {
       type: Boolean,
       default: false,
+    },
+    yDomain: {
+      type: Number,
+      required: true,
     },
   },
   data() {
@@ -128,10 +141,10 @@ export default {
       width: 0,
       height: 0,
       margin: {
-        top: 10,
-        right: 30,
-        bottom: 20,
-        left: 50,
+        top: 20,
+        right: 25,
+        bottom: 10,
+        left: 25,
       },
       selected: [],
       container: null,
@@ -163,10 +176,10 @@ export default {
     //     .domain(this.data.map(c => c.key))
     //     .range(schemeCategory10);
     // },
-    xScale() {
+    yScale() {
       return scaleLinear()
-        .domain(extent(this.populationData))
-        .range([0, this.w]);
+        .domain([0, this.yDomain])
+        .range([this.h, 0]);
     },
     cohortXScale() {
       return scaleLinear()
@@ -176,8 +189,8 @@ export default {
     hist() {
       return histogram()
         .value(d => +d)
-        .domain(this.xScale.domain())
-        .thresholds(this.xScale.ticks(30));
+        .domain(this.yScale.domain())
+        .thresholds(this.yScale.ticks(30));
     },
     popBins() {
       return this.hist(this.populationData);
@@ -196,26 +209,32 @@ export default {
     populationMean() {
       return this.xScale(mean(this.populationData));
     },
-    yScale() {
+    xScale() {
       const yScale = scaleLinear()
         .domain([0, max(this.popBins, d => d.length)])
-        .range([this.h, 0]);
+        .range(this.left ? [this.w, 0] : [0, this.w]);
       return yScale;
     },
     xAxis() {
-      return axisBottom(this.xScale);
+      return axisTop(this.xScale);
     },
     populationXAxis() {
-      return axisBottom(this.xScale);
+      return axisTop(this.xScale).ticks(3);
     },
     yAxis() {
-      return axisLeft(this.yScale);
+      const axis = this.left ? axisRight : axisLeft;
+      return axis(this.yScale);
     },
     brush() {
-      return brushX()
+      return brushY()
         .extent([[0, 0], [this.w, this.h]])
         .on('start brush', this.brushed)
         .on('end', this.brushedData);
+    },
+    maxValueBetweenDimensions() {
+      const firstMax = max(this.unfilteredData, d => d.firstVisit);
+      const lastMax = max(this.unfilteredData, d => d.lastVisit);
+      return Math.max(firstMax, lastMax);
     },
   },
   watch: {
@@ -286,7 +305,7 @@ export default {
      */
     getClosestBins() {
       const selection = event.selection;
-      const [low, high] = selection.map(this.xScale.invert);
+      const [low, high] = selection.map(this.yScale.invert);
 
       // Get closest bin to our lower selection
       const closestBinToLow = this.bins
@@ -307,7 +326,7 @@ export default {
       );
       const newHigh = this.bins[newHighIdx].x1;
 
-      return [newLow, newHigh].map(this.xScale);
+      return [newLow, newHigh].map(this.yScale);
     },
     brushedData() {
       // Only transition after input.
@@ -319,14 +338,15 @@ export default {
         });
       }
 
-      const [low, high] = this.getClosestBins();
+      const [high, low] = this.getClosestBins();
 
       // Snap selections to closest bins
       select(this.$refs.brush)
         .transition()
-        .call(event.target.move, [low, high]);
+        .call(event.target.move, [high, low]);
 
-      const [invertedLow, invertedHigh] = [low, high].map(this.xScale.invert);
+      const [invertedHigh, invertedLow] = [high, low].map(this.yScale.invert);
+
       // Filter dimension to be within snapped selection
       this.addFilter({
         dimension: this.dimensionName,
@@ -350,16 +370,16 @@ export default {
       }
 
       // Appropriately place brush handles
-      this.handle.attr('display', null).attr('transform', (d, i) => {
-        return 'translate(' + selection[i] + ',' + -this.h / 4 + ')';
-      });
+      // this.handle.attr('display', null).attr('transform', (d, i) => {
+      //   return 'translate(' + selection[i] + ',' + -this.h / 8 + ')';
+      // });
 
       // Set remap our selection to snap to closest bins
       this.selection = this.getClosestBins();
     },
     getFill(bin) {
       if (this.selection) {
-        let [low, high] = this.selection.map(this.xScale.invert);
+        let [high, low] = this.selection.map(this.yScale.invert);
         let { x0, x1 } = bin;
 
         // Pad the high number as this might be a decimal
@@ -381,9 +401,9 @@ export default {
       }
     },
     resizeChart() {
-      const { width, height } = this.container.getBoundingClientRect();
-      this.width = width;
+      const { height } = this.container.getBoundingClientRect();
       this.height = height;
+      this.width = height / 3;
     },
   },
 };
