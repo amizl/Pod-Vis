@@ -739,10 +739,11 @@ def compute_mannwhitneyu():
         # use the correct id
         if isinstance(output_variable.get("id"), str) and "-" in output_variable.get("id"):
             variable_id = str(output_variable.get("parentID"))
+            variable_label = output_variable.get("parentLabel")
         else:
             variable_id = str(output_variable.get("id"))
+            variable_label = output_variable.get("label")
 
-        variable_label = output_variable.get("label")
         filtered_first_visit_sample = [data.get(variable_id).get('change') for data in filtered_data]
         unfiltered_last_visit_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
         stats, pval = mannwhitneyu(filtered_first_visit_sample, unfiltered_last_visit_sample)
