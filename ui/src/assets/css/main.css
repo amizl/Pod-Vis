@@ -20,6 +20,7 @@
 }
 
 /* Used for moving layout above extended toolbar */
+
 .translate-up {
   transform: translateY(-76px);
   z-index: 1;

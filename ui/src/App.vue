@@ -3,6 +3,7 @@
     <!-- Notification Center is our global snackbar for error/success messages-->
     <notification-center />
     <side-bar v-if="isUserAuthenicated" />
+    <!-- <app-header v-if="isUserAuthenicated" /> -->
     <!-- All of our views will be loaded inside content based on route-->
     <v-content class="indigo lighten-5">
       <transition name="fade" mode="out-in">
@@ -14,24 +15,24 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { getters as authGetters } from "@/store/modules/auth/types";
-import SideBar from "./components/layout/Sidebar.vue";
-import AppHeader from "./components/layout/Header.vue";
-import NotificationCenter from "./components/common/notificationCenter.vue";
+import { mapGetters } from 'vuex';
+import { getters as authGetters } from '@/store/modules/auth/types';
+import SideBar from './components/layout/Sidebar.vue';
+import AppHeader from './components/layout/Header.vue';
+import NotificationCenter from './components/common/notificationCenter.vue';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     SideBar,
     AppHeader,
-    NotificationCenter
+    NotificationCenter,
   },
   computed: {
-    ...mapGetters("auth", {
-      isUserAuthenicated: authGetters.IS_USER_AUTHENTICATED
-    })
-  }
+    ...mapGetters('auth', {
+      isUserAuthenicated: authGetters.IS_USER_AUTHENTICATED,
+    }),
+  },
 };
 </script>
 
