@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_current_user
+from scipy.stats import mannwhitneyu
 from functools import reduce
 from . import api
 from .exceptions import ResourceNotFound, BadRequest
@@ -699,4 +700,55 @@ def fetch_data_for_cohort_manager():
     return jsonify({
         "success": True,
         "data": data.to_json(orient="records", date_format='iso')
+    })
+
+
+@api.route('/demo-parcoords')
+@jwt_required
+def demo_parcoords():
+    """Fetch data from studies and variables included in a collection"""
+    user = get_current_user()
+    request_data = request.get_json()
+    collection_id = request.args.get("collection")
+    collection = models.Collection.find_by_id(collection_id)
+
+    if not collection:
+        raise ResourceNotFound("Collection does not exist.")
+    if user.id != collection.user_id:
+        raise AuthFailure("Not authorized to use this collection.")
+
+    data = collection.proof_of_concept_parcoords()
+
+    return jsonify({
+        "success": True,
+        "data": data
+#        "data": data.to_json(orient="records", date_format='iso')
+    })
+
+@api.route('/compute-mannwhitneyu', methods=['POST'])
+def compute_mannwhitneyu():
+    request_data = request.get_json()
+    filtered_data = request_data.get("filteredData")
+    unfiltered_data = request_data.get("unfilteredData")
+    output_variables = request_data.get("outputVariables")
+
+    pvals = []
+    for output_variable in output_variables:
+        # Output variables that are simply "change" or "firstVisit" will have the
+        # id of "change-208" or "firstVisit-208". We want to detect this so we can
+        # use the correct id
+        if isinstance(output_variable.get("id"), str) and "-" in output_variable.get("id"):
+            variable_id = str(output_variable.get("parentID"))
+        else:
+            variable_id = str(output_variable.get("id"))
+
+        variable_label = output_variable.get("label")
+        filtered_first_visit_sample = [data.get(variable_id).get('change') for data in filtered_data]
+        unfiltered_last_visit_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
+        stats, pval = mannwhitneyu(filtered_first_visit_sample, unfiltered_last_visit_sample)
+        pvals.append(dict(label=variable_label, pval=pval))
+
+    return jsonify({
+        "success": True,
+        "pvals": pvals,
     })
