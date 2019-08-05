@@ -190,6 +190,7 @@ export default {
   async [actions.ANALYZE_FILTERED]({ commit, state }) {
     let { filteredData, unfilteredData, outputVariables } = state;
     if (filteredData.length == unfilteredData.length) {
+      // Nothing is filtered
       commit(mutations.SET_PVALS, []);
     } else {
       // Remove subjects within our filtered data sets from our unfiltered so
@@ -208,5 +209,21 @@ export default {
 
       commit(mutations.SET_PVALS, data.pvals);
     }
+  },
+  [actions.ADD_QUERY]({ commit }, query) {
+    commit(mutations.SET_QUERY, query);
+  },
+  [actions.RESET_ALL_STORE_DATA]({ commit }) {
+    commit(mutations.RESET_COHORTS);
+    commit(mutations.RESET_IS_LOADING);
+    commit(mutations.RESET_COLLECTION);
+    commit(mutations.RESET_UNFILTERED_DATA);
+    commit(mutations.RESET_FILTERED_DATA);
+    commit(mutations.RESET_INPUT_VARIABLES);
+    commit(mutations.RESET_OUTPUT_VARIABLES);
+    commit(mutations.RESET_CROSS_FILTER);
+    commit(mutations.RESET_DIMENSIONS);
+    commit(mutations.RESET_PVALS);
+    commit(mutations.RESET_QUERIES);
   },
 };

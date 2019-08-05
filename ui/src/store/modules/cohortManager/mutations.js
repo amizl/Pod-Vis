@@ -173,4 +173,46 @@ export default {
   [mutations.SET_PVALS](state, pvals) {
     state[stateTypes.PVALS] = pvals;
   },
+  [mutations.SET_QUERY](state, query) {
+    const { param } = query;
+    const queries = state[stateTypes.QUERIES];
+    if (!(param in queries)) {
+      Vue.set(queries, param, [query]);
+    } else {
+      queries[param] = [...queries[param], query];
+    }
+  },
+  [mutations.RESET_COHORTS](state) {
+    state[stateTypes.COHORTS] = [];
+  },
+  [mutations.RESET_IS_LOADING](state) {
+    state[stateTypes.IS_LOADING] = false;
+  },
+  [mutations.RESET_COLLECTION](state) {
+    state[stateTypes.COLLECTION] = {};
+  },
+  [mutations.RESET_UNFILTERED_DATA](state) {
+    state[stateTypes.UNFILTERED_DATA] = [];
+  },
+  [mutations.RESET_FILTERED_DATA](state) {
+    state[stateTypes.FILTERED_DATA] = [];
+  },
+  [mutations.RESET_INPUT_VARIABLES](state) {
+    state[stateTypes.INPUT_VARIABLES] = [];
+  },
+  [mutations.RESET_OUTPUT_VARIABLES](state) {
+    state[stateTypes.OUTPUT_VARIABLES] = [];
+  },
+  [mutations.RESET_CROSS_FILTER](state) {
+    state[stateTypes.CROSS_FILTER] = null;
+  },
+  [mutations.RESET_DIMENSIONS](state) {
+    state[stateTypes.DIMENSIONS] = {};
+  },
+  [mutations.RESET_PVALS](state) {
+    state[stateTypes.PVALS] = [];
+  },
+  [mutations.RESET_QUERIES](state) {
+    state[stateTypes.QUERIES] = {};
+  },
 };

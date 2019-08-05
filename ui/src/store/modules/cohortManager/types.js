@@ -10,6 +10,7 @@ export const state = {
   CROSS_FILTER: 'crossFilter',
   DIMENSIONS: 'dimensions',
   PVALS: 'pvals',
+  QUERIES: 'queries',
 };
 
 // Getters
@@ -33,6 +34,18 @@ export const mutations = {
   ADD_FILTER: 'addFilter',
   CLEAR_FILTER: 'clearFilter',
   SET_PVALS: 'setPvals',
+  SET_QUERY: 'setQuery',
+  RESET_COHORTS: 'resetCohorts',
+  RESET_IS_LOADING: 'resetIsLoading',
+  RESET_COLLECTION: 'resetCollection',
+  RESET_UNFILTERED_DATA: 'resetUnfilteredData',
+  RESET_FILTERED_DATA: 'resetFilteredData',
+  RESET_INPUT_VARIABLES: 'resetInputVariables',
+  RESET_OUTPUT_VARIABLES: 'resetOutputVariables',
+  RESET_CROSS_FILTER: 'resetCrossfilter',
+  RESET_DIMENSIONS: 'resetDimensions',
+  RESET_PVALS: 'resetPvals',
+  RESET_QUERIES: 'resetQueries',
 };
 
 // Actions
@@ -50,4 +63,6 @@ export const actions = {
   ADD_FILTER: 'addFilter',
   CLEAR_FILTER: 'clearFilter',
   ANALYZE_FILTERED: 'analyzeFilterd',
+  ADD_QUERY: 'addQuery',
+  RESET_ALL_STORE_DATA: 'resetAllStoreData',
 };

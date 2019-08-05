@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-items> <CohortSelection class="mt-2" /> </v-toolbar-items>
       <v-spacer></v-spacer>
-      <v-btn color="primary--text">Save Cohort</v-btn>
+      <save-cohort-button />
     </v-toolbar>
     <v-layout column fill-height>
       <v-flex xs7>
@@ -30,6 +30,7 @@ import CohortSelection from '@/components/CohortManager/CohortSelection.vue';
 import AnalyticsTable from '@/components/CohortManager/AnalyticsTable.vue';
 import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
+import SaveCohortButton from '@/components/CohortManager/SaveCohortBtnDialog';
 
 export default {
   name: 'CohortManager',
@@ -38,6 +39,7 @@ export default {
     InputVariables,
     OutputVariables,
     AnalyticsTable,
+    SaveCohortButton,
   },
   props: {
     collectionId: {
@@ -56,6 +58,8 @@ export default {
     }),
   },
   async created() {
+    this.resetAllStoreData();
+
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
@@ -65,6 +69,7 @@ export default {
     ...mapActions('cohortManager', {
       fetchCollection: actions.FETCH_COLLECTION,
       fetchData: actions.FETCH_DATA,
+      resetAllStoreData: actions.RESET_ALL_STORE_DATA,
     }),
   },
 };
