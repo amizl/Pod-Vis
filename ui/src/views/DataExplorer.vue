@@ -9,40 +9,14 @@
     <v-layout column fill-height>
       <v-flex>
         <v-layout fill-height>
-          <v-flex xs3>
-            <v-sheet color="white" height="100%" class="rounded-lg shadow">
-              <v-card-title class="title primary--text">
-                Outcome Variables
-              </v-card-title>
-              <v-divider></v-divider>
-            </v-sheet>
-          </v-flex>
-          <v-flex xs9>
-            <v-sheet color="white" height="100%" class="rounded-lg shadow">
-              <v-card-title class="title primary--text"
-                >Summary View</v-card-title
-              >
-              <v-divider></v-divider>
-            </v-sheet>
-          </v-flex>
+          <v-flex xs3> <outcome-variables /></v-flex>
+          <v-flex xs9> <summary-view /> </v-flex>
         </v-layout>
       </v-flex>
       <v-flex>
         <v-layout fill-height>
-          <v-flex xs3>
-            <v-sheet color="white" height="100%" class="rounded-lg shadow">
-              <v-card-title class="title primary--text">Cohorts</v-card-title>
-              <v-divider></v-divider>
-            </v-sheet>
-          </v-flex>
-          <v-flex>
-            <v-sheet color="white" height="100%" class="rounded-lg shadow">
-              <v-card-title class="title primary--text"
-                >Detailed View</v-card-title
-              >
-              <v-divider></v-divider>
-            </v-sheet>
-          </v-flex>
+          <v-flex xs3> <cohorts /> </v-flex>
+          <v-flex xs9> <detailed-view /> </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -50,15 +24,17 @@
 </template>
 
 <script>
-import DatasetSummaryCard from '@/components/DataExplorer/DatasetSummaryCard.vue';
-import DetailedViewCard from '@/components/DataExplorer/DetailedViewCard.vue';
-import SummaryViewCard from '@/components/DataExplorer/SummaryViewCard.vue';
+import OutcomeVariables from '@/components/DataExplorer/OutcomeVariables.vue';
+import SummaryView from '@/components/DataExplorer/SummaryView.vue';
+import Cohorts from '@/components/DataExplorer/Cohorts.vue';
+import DetailedView from '@/components/DataExplorer/DetailedView.vue';
 
 export default {
   components: {
-    SummaryViewCard,
-    DetailedViewCard,
-    DatasetSummaryCard,
+    OutcomeVariables,
+    SummaryView,
+    Cohorts,
+    DetailedView,
   },
   data() {
     return {
