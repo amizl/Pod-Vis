@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { actions } from '@/store/modules/dataExplorer/types';
 import OutcomeVariables from '@/components/DataExplorer/OutcomeVariables.vue';
 import SummaryView from '@/components/DataExplorer/SummaryView.vue';
 import Cohorts from '@/components/DataExplorer/Cohorts.vue';
@@ -36,12 +38,28 @@ export default {
     Cohorts,
     DetailedView,
   },
+  props: {
+    collectionId: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {
       isLoading: false,
     };
   },
-  created() {},
+  async created() {
+    // this.resetAllStoreData();
+    this.isLoading = true;
+    await this.fetchCollection(this.collectionId);
+    this.isLoading = false;
+  },
+  methods: {
+    ...mapActions('dataExplorer', {
+      fetchCollection: actions.FETCH_COLLECTION,
+    }),
+  },
 };
 </script>
 

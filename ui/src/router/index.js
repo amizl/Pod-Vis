@@ -41,6 +41,9 @@ export default new Router({
       name: 'dataExplorer',
       component: () => import('@/views/DataExplorer.vue'),
       beforeEnter: requireAuth,
+      props: route => ({
+        collectionId: +route.query.collection,
+      }),
     },
     {
       path: '/analysis',

@@ -3,6 +3,7 @@ import cohort from './cohort';
 import dashboard from './dashboard';
 import datasetManager from './datasetManager';
 import cohortManager from './cohortManager';
+import dataExplorer from './dataExplorer';
 import notifications from './notifications';
 
 export default {
@@ -11,5 +12,6 @@ export default {
   dashboard,
   datasetManager,
   cohortManager,
+  dataExplorer,
   notifications,
 };
