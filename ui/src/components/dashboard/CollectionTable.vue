@@ -12,9 +12,11 @@
       <tr>
         <td class="text-xs-left">{{ props.item.label }}</td>
         <td class="text-xs-right px-0">
-          <v-btn flat @click="routeToCohort(props.item)">
-            <v-icon left small color="secondary">group_add</v-icon> Create
-            Cohort
+          <v-btn flat @click="routeToCohortManager(props.item)">
+            <v-icon left small color="secondary">group_add</v-icon> Cohorts
+          </v-btn>
+          <v-btn flat @click="routeToDataExplorer(props.item)">
+            <v-icon left small color="secondary">explore</v-icon> Explore
           </v-btn>
         </td>
       </tr>
@@ -59,11 +61,17 @@ export default {
     ...mapActions('datasetManager', {
       fetchDatasets: actions.FETCH_COLLECTIONS,
     }),
-    routeToCohort({ id }) {
+    routeToCohortManager({ id }) {
       // Route to view for dataset information
       // const currentPath = this.$router.currentPath.fullPath;
       // this.$router.push(`analysis/${id}/`);
       this.$router.push(`cohorts?collection=${id}`);
+    },
+    routeToDataExplorer({ id }) {
+      // Route to view for dataset information
+      // const currentPath = this.$router.currentPath.fullPath;
+      // this.$router.push(`analysis/${id}/`);
+      this.$router.push(`explore?collection=${id}`);
     },
   },
 };
