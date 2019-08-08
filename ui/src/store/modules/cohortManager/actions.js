@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { nest } from 'd3-collection';
 import { ErrorNotification } from '@/store/modules/notifications/notifications';
+import { makeHierarchy } from '@/utils/helpers';
 import { actions, mutations, state as stateTypes } from './types';
-import { makeHierarchy } from './helpers';
 
 export default {
   async [actions.FETCH_COHORTS]({ commit }) {
