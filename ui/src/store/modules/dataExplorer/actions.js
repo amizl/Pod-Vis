@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { nest } from 'd3-collection';
 import { ErrorNotification } from '@/store/modules/notifications/notifications';
 import { makeHierarchy } from '@/utils/helpers';
-import { actions, mutations } from './types';
+import { actions, mutations, state as stateTypes } from './types';
 
 export default {
   async [actions.FETCH_COLLECTION]({ commit, dispatch }, collectionId) {
@@ -38,5 +39,73 @@ export default {
     } finally {
       commit(mutations.SET_LOADING, false);
     }
+  },
+  async [actions.FETCH_DATA]({ commit, dispatch, state }) {
+    commit(mutations.SET_LOADING, true);
+    const collection = state[stateTypes.COLLECTION];
+    try {
+      let response = await axios.get(
+        `/api/cohort-manager?collection=${collection.id}`
+      );
+
+      const data = JSON.parse(response.data.data);
+
+      // Massage data into a format we will use...
+      // [{
+      //     Sex: 'male',
+      //     Race: 'white',
+      //     ...
+      //     1: {
+      //       "roc": ...,
+      //       "firstVisit": ...,
+      //       "lastVisit": ...
+      //     }
+      // }]
+      let wideData = nest()
+        // Group by subject ID
+        .key(d => d.subject_id)
+        // This is very convoluted...ideally we want the
+        // server to massage the data into the format we need
+        // and send it back...however there was issues using pandas
+        // and getting nested data for the observations. May need to
+        // revisit later on. Here we are are tranforming each subject
+        // record so that we nest its outcome measure with firstVisit,
+        // lastVisit, and rate of change. We then want to reduce this
+        // so we have a single object with keys of all its outcome measures.
+        // This can be considered moving from "long to wide".
+        .rollup(values => {
+          return values
+            .map(d => {
+              const { observation, change, roc, min, max, ...rest } = d;
+              return {
+                [observation]: {
+                  change,
+                  roc,
+                  firstVisit: min,
+                  lastVisit: max,
+                },
+                ...rest,
+              };
+            })
+            .reduce((prev, curr) => {
+              return { ...prev, ...curr };
+            }, {});
+        })
+        .entries(data) // tell it what data to process
+        .map(d => {
+          // pull out only the values
+          return d.value;
+        });
+
+      commit(mutations.SET_DATA, wideData);
+    } catch ({ response }) {
+      const notification = new ErrorNotification(response.data.error);
+      dispatch(notification.dispatch, notification, { root: true });
+    } finally {
+      commit(mutations.SET_LOADING, false);
+    }
+  },
+  [actions.SET_OUTCOME_VARIABLES]({ commit }, outcomeVariables) {
+    commit(mutations.SET_OUTCOME_VARIABLES, outcomeVariables);
   },
 };
