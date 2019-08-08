@@ -209,7 +209,7 @@ export default {
       return axisBottom(this.xScale);
     },
     yAxis() {
-      return axisLeft(this.yScale);
+      return axisLeft(this.yScale).ticks(3);
     },
     brush() {
       return brushX()
