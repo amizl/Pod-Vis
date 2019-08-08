@@ -1,7 +1,7 @@
 <template>
   <v-flex fill-height>
     <v-layout column fill-height>
-      <v-flex>
+      <v-flex xs4>
         <v-layout fill-height>
           <ParallelCoordinates
             :dimension-name="dimensionName"
@@ -9,7 +9,7 @@
           />
         </v-layout>
       </v-flex>
-      <!-- <v-flex xs4>
+      <v-flex xs8>
         <v-layout column fill-height>
           <v-flex xs6 class="pb-0">
             Change
@@ -26,7 +26,7 @@
             />
           </v-flex>
         </v-layout>
-      </v-flex> -->
+      </v-flex>
       <!-- <v-flex xs2> </v-flex> -->
     </v-layout>
   </v-flex>

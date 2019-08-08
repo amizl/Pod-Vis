@@ -1,12 +1,11 @@
 <template>
-  <v-sheet color="white" height="100%" min-width="400px">
+  <v-sheet color="white" height="100%" min-width="350px" max-width="350px">
     <v-layout column fill-height>
       <v-card-title class="subheading primary--text text--darken-4 pb-0">
         <span v-if="variable.parentLabel">
           {{ variable.parentLabel }} - {{ variable.label }}
         </span>
         <span v-else> {{ variable.label }} </span>
-
         <!-- <v-btn
           flat
           class="subheading primary--text text--lighten-4"
