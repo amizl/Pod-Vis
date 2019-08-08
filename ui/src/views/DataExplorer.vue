@@ -7,16 +7,27 @@
       <v-toolbar-title class="white--text">Data Explorer</v-toolbar-title>
     </v-toolbar>
     <v-layout column fill-height>
-      <v-flex>
+      <v-flex xs5>
         <v-layout fill-height>
-          <v-flex xs3> <outcome-variables /></v-flex>
-          <v-flex xs9> <summary-view /> </v-flex>
+          <!-- <v-flex xs3> <outcome-variables /></v-flex> -->
+          <v-flex xs12> <summary-view /> </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex>
+      <v-flex xs7>
         <v-layout fill-height>
-          <v-flex xs3> <cohorts /> </v-flex>
+          <v-flex xs3 fill-height>
+            <v-layout column fill-height>
+              <v-flex fill-height> <cohorts /> </v-flex>
+              <!-- <v-flex> <analytics /> </v-flex> -->
+            </v-layout>
+          </v-flex>
           <v-flex xs9> <detailed-view /> </v-flex>
+          <v-flex xs3>
+            <v-layout column fill-height>
+              <!-- <v-flex> <cohorts /> </v-flex> -->
+              <v-flex> <analytics /> </v-flex>
+            </v-layout>
+          </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -26,14 +37,14 @@
 <script>
 import { mapActions } from 'vuex';
 import { actions } from '@/store/modules/dataExplorer/types';
-import OutcomeVariables from '@/components/DataExplorer/OutcomeVariables.vue';
 import SummaryView from '@/components/DataExplorer/SummaryView.vue';
 import Cohorts from '@/components/DataExplorer/Cohorts.vue';
+import Analytics from '@/components/DataExplorer/Analytics.vue';
 import DetailedView from '@/components/DataExplorer/DetailedView.vue';
 
 export default {
   components: {
-    OutcomeVariables,
+    Analytics,
     SummaryView,
     Cohorts,
     DetailedView,
@@ -53,11 +64,13 @@ export default {
     // this.resetAllStoreData();
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
+    await this.fetchData();
     this.isLoading = false;
   },
   methods: {
     ...mapActions('dataExplorer', {
       fetchCollection: actions.FETCH_COLLECTION,
+      fetchData: actions.FETCH_DATA,
     }),
   },
 };
