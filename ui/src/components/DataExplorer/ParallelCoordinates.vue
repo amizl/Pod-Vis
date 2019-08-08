@@ -4,7 +4,7 @@
     height="100%"
     min-width="200px"
     :class="classed"
-    @click="toggled = !toggled"
+    @click="selectForDetailedView"
   >
     <v-layout column fill-height>
       <v-card-title class="subheading primary--text text--darken-4">
@@ -25,7 +25,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import { actions, state } from '@/store/modules/cohortManager/types';
+import { actions, state } from '@/store/modules/dataExplorer/types';
 import ParallelCoordinatesChart from '@/components/DataExplorer/ParallelCoordinatesChart.vue';
 
 export default {
@@ -44,17 +44,41 @@ export default {
     };
   },
   computed: {
+    ...mapState('dataExplorer', {
+      detailedView: state.DETAILED_VIEW,
+    }),
+    /**
+     * A chart is toggled if there is currently an item toggled and that
+     * item's id is equal to this component's.
+     */
+    isToggled() {
+      return this.detailedView && this.detailedView.id === this.variable.id;
+    },
     classed() {
       return {
-        'elevation-4': this.toggled,
-        'pa-1': this.toggled,
-        'zoom-in': !this.toggled,
-        'zoom-out': this.toggled,
+        'elevation-4': this.isToggled,
+        'pa-1': this.isToggled,
+        'zoom-in': !this.isToggled,
+        'zoom-out': this.isToggled,
+        // We want to fade elements that are not selected
+        // only when there is currently an element selected.
+        fade: this.detailedView && !this.isToggled,
       };
     },
   },
   created() {},
-  methods: {},
+  methods: {
+    ...mapActions('dataExplorer', {
+      setDetailedView: actions.SET_DETAILED_VIEW,
+    }),
+    selectForDetailedView() {
+      if (this.isToggled) {
+        this.setDetailedView(null);
+      } else {
+        this.setDetailedView(this.variable);
+      }
+    },
+  },
 };
 </script>
 
@@ -64,5 +88,8 @@ export default {
 }
 .zoom-out {
   cursor: zoom-out;
+}
+.fade {
+  opacity: 0.5;
 }
 </style>
