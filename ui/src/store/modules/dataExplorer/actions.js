@@ -108,4 +108,7 @@ export default {
   [actions.SET_OUTCOME_VARIABLES]({ commit }, outcomeVariables) {
     commit(mutations.SET_OUTCOME_VARIABLES, outcomeVariables);
   },
+  [actions.SET_DETAILED_VIEW]({ commit }, detailedView) {
+    commit(mutations.SET_DETAILED_VIEW, detailedView);
+  },
 };

@@ -5,4 +5,5 @@ export default {
   [state.DATA]: [],
   [state.OUTCOME_VARIABLES]: [],
   [state.IS_LOADING]: false,
+  [state.DETAILED_VIEW]: null,
 };

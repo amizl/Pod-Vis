@@ -28,4 +28,7 @@ export default {
   [mutations.SET_DATA](state, data) {
     state[stateTypes.DATA] = data;
   },
+  [mutations.SET_DETAILED_VIEW](state, detailedView) {
+    state[stateTypes.DETAILED_VIEW] = detailedView;
+  },
 };
