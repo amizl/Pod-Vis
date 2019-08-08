@@ -402,8 +402,10 @@ export default {
     },
     resizeChart() {
       const { height } = this.container.getBoundingClientRect();
-      this.height = height;
-      this.width = height / 3;
+      this.height = 200;
+      this.width = 100;
+      // this.height = height;
+      // this.width = height / 3;
     },
   },
 };

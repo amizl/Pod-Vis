@@ -1,41 +1,23 @@
 <template>
   <v-flex ref="container" fill-height style="display: inline-block">
+    <!-- First Visit histogram -->
     <VerticalHistogram
       :id="`firstVisit-${dimensionName}`"
       left
       :dimension-name="`${variable.label} - First Visit`"
       :y-domain="maxValueBetweenDimensions"
     />
-    <!-- <svg>
-      <g
-        v-yaxis="yAxis"
-        :transform="
-          `translate(${left ? width - margin.right : margin.left}, ${
-            margin.top
-          })`
-        "
-      ></g>
-    </svg> -->
+    <!-- Parallel Coordinates -->
     <canvas ref="canvas" :width="computedWidth" :height="computedHeight">
     </canvas>
-    <!-- <svg>
-      <g
-        v-yaxis="yAxis"
-        :transform="
-          `translate(${left ? width - margin.right : margin.left}, ${
-            margin.top
-          })`
-        "
-      ></g>
-    </svg> -->
-
+    <!-- Last visit histogram -->
     <VerticalHistogram
       :id="`lastVisit-${dimensionName}`"
       :dimension-name="`${variable.label} - Last Visit`"
       :y-domain="maxValueBetweenDimensions"
     />
 
-    <!-- PARACOORDS S  -->
+    <!-- PARACOORDS: SVG edition (slower since each line will live on the DOM) -->
     <!-- <svg ref="chart" :width="width" :height="height">
       <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
         <text
@@ -99,13 +81,6 @@ export default {
       select(el)
         .transition()
         .call(axisMethod);
-    },
-    yaxis(el, binding) {
-      const axisMethod = binding.value;
-      select(el)
-        .transition()
-        .call(axisMethod);
-      // .call(g => g.select('.domain').remove());
     },
   },
   components: {
@@ -234,9 +209,8 @@ export default {
     }),
     resizeChart() {
       const { width, height } = this.container.getBoundingClientRect();
-      this.height = height;
-      // this.width = width;
-      this.width = height / 2;
+      this.height = 200;
+      this.width = 150;
     },
     drawCurve({ firstVisitCoordinates, lastVisitCoordinates }, color, alpha) {
       const { context } = this;
