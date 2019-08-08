@@ -37,7 +37,7 @@ export default {
       devicePixelRatio: 1,
       width: 0,
       height: 0,
-      margin: { top: 15, right: 25, bottom: 15, left: 25 },
+      margin: { top: 20, right: 25, bottom: 15, left: 25 },
     };
   },
   computed: {
