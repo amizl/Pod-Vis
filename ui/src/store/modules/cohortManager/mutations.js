@@ -4,7 +4,7 @@ import { mutations, state as stateTypes } from './types';
 
 export default {
   /**
-   * TODO
+   * Set cohorts mutation.
    * @param {*} state
    * @param {*} cohorts
    */
@@ -173,6 +173,11 @@ export default {
   [mutations.SET_PVALS](state, pvals) {
     state[stateTypes.PVALS] = pvals;
   },
+  /**
+   * Set query for particular dimension.
+   * @param {Object} state
+   * @param {Object} query Object with the keys, param, operator, value that represents a filter
+   */
   [mutations.SET_QUERY](state, query) {
     const { param } = query;
     const queries = state[stateTypes.QUERIES];
@@ -182,36 +187,80 @@ export default {
       queries[param] = [...queries[param], query];
     }
   },
+  /**
+   * Reset cohort data back to orignal state.
+   * @param {Object} state
+   */
   [mutations.RESET_COHORTS](state) {
     state[stateTypes.COHORTS] = [];
   },
+  /**
+   * Reset is loading back to original state.
+   * @param {Object} state
+   */
   [mutations.RESET_IS_LOADING](state) {
     state[stateTypes.IS_LOADING] = false;
   },
+  /**
+   * Reset collection back to original state.
+   * @param {Object} state
+   */
   [mutations.RESET_COLLECTION](state) {
     state[stateTypes.COLLECTION] = {};
   },
+  /**
+   * Reset unfiltered data back to original state.
+   * @param {Object} state
+   */
   [mutations.RESET_UNFILTERED_DATA](state) {
     state[stateTypes.UNFILTERED_DATA] = [];
   },
+  /**
+   * Reset filtered data back to original state.
+   * @param {Object} state
+   */
   [mutations.RESET_FILTERED_DATA](state) {
     state[stateTypes.FILTERED_DATA] = [];
   },
+  /**
+   * Reset input variables back to original state;
+   * @param {Object} state
+   */
   [mutations.RESET_INPUT_VARIABLES](state) {
     state[stateTypes.INPUT_VARIABLES] = [];
   },
+  /**
+   * Reset output variables back to original state.
+   * @param {Object} state
+   */
   [mutations.RESET_OUTPUT_VARIABLES](state) {
     state[stateTypes.OUTPUT_VARIABLES] = [];
   },
+  /**
+   * Reset crossfilter back to original state.
+   * @param {Object} state
+   */
   [mutations.RESET_CROSS_FILTER](state) {
     state[stateTypes.CROSS_FILTER] = null;
   },
+  /**
+   * Reset dimensions back to original state.
+   * @param {Object} state
+   */
   [mutations.RESET_DIMENSIONS](state) {
     state[stateTypes.DIMENSIONS] = {};
   },
+  /**
+   * Reset pvals back to original state.
+   * @param {Object} state
+   */
   [mutations.RESET_PVALS](state) {
     state[stateTypes.PVALS] = [];
   },
+  /**
+   * Reset queries back to original state.
+   * @param {Object} state
+   */
   [mutations.RESET_QUERIES](state) {
     state[stateTypes.QUERIES] = {};
   },
