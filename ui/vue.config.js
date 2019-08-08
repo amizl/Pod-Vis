@@ -20,36 +20,9 @@ module.exports = {
               test: /\.styl$/,
               loader: ['style-loader', 'css-loader', 'stylus-loader'],
             },
-            // rules: [
-            //   {
-            //     use: [
-            //       {
-            //         loader: 'postcss-loader',
-            //         options: {
-            //           ident: 'postcss',
-            //           plugins: [require('tailwindcss'), require('autoprefixer')],
-            //         },
-            //       },
-            //     ],
-            //   },
           ],
         },
       }),
     ],
-    // module: {
-    //   rules: [
-    //     {
-    //       use: [
-    //         {
-    //           loader: 'postcss-loader',
-    //           options: {
-    //             ident: 'postcss',
-    //             plugins: [require('tailwindcss'), require('autoprefixer')],
-    //           },
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
   },
 };
