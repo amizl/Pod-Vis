@@ -19,7 +19,7 @@
       <v-layout fill-height>
         <ColumnChart
           v-if="
-            variable.type === 'subject' &&
+            (variable.type === 'subject' || variable.type === 'study') &&
               typeof unfilteredData[0][dimension] != 'number'
           "
           :id="variable.id"
@@ -78,8 +78,8 @@ export default {
       this.addDimension(payload);
     } else {
       let dimension, payload;
-      if (this.variable.label == 'Study') {
-        dimension = 'Study';
+      if (this.variable.type == 'study') {
+        dimension = this.variable.label;
         payload = {
           dimensionName: dimension, // GET STUDY NAME HERE...
           accessor: d => d.study.study_name,

@@ -7,7 +7,7 @@
       selectable
       :search="search"
       :items="[
-        { type: 'subject', id: 'study_id', label: 'Study' },
+        { type: 'study', id: 'study_id', label: 'Study' },
         ...subjectVariables,
       ]"
       item-text="label"
@@ -47,6 +47,7 @@ export default {
   computed: {
     ...mapState('cohortManager', {
       collection: state.COLLECTION,
+      vars: state.INPUT_VARIABLES,
     }),
   },
   watch: {
