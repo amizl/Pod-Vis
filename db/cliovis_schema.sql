@@ -195,6 +195,7 @@ DROP TABLE IF EXISTS cliovis.cohort ;
 CREATE TABLE IF NOT EXISTS cliovis.cohort (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
+  collection_id INT NOT NULL,
   date_generated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   label VARCHAR(255) NOT NULL,
   instantiation_type ENUM('static', 'dynamic') NOT NULL,
@@ -203,6 +204,11 @@ CREATE TABLE IF NOT EXISTS cliovis.cohort (
   CONSTRAINT fk_cohort_user1
     FOREIGN KEY (user_id)
     REFERENCES cliovis.user (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_cohort_collection1
+    FOREIGN KEY (collection_id)
+    REFERENCES cliovis.collection (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -231,20 +237,89 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS cliovis.cohort_query ;
 
+-- CREATE TABLE IF NOT EXISTS cliovis.cohort_query (
+--   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+--   cohort_id INT NOT NULL,
+--   observation_ontology_id INT,
+--   dimension_label VARCHAR(255) NOT NULL,
+--   subject_ontology_id INT,
+--   min_value INT,
+--   max_value INT,
+--   value VARCHAR(255),
+--   INDEX fk_cohort_query_cohort1_idx (cohort_id ASC),
+--   CONSTRAINT fk_cohort_query_cohort1
+--     FOREIGN KEY (cohort_id)
+--     REFERENCES cliovis.cohort (id)
+--     ON DELETE CASCADE
+--     ON UPDATE CASCADE,
+--   CONSTRAINT fk_cohort_query_observation_ontology1
+--     FOREIGN KEY (observation_ontology_id)
+--     REFERENCES cliovis.observation_ontology (id)
+--     ON DELETE CASCADE
+--     ON UPDATE CASCADE,
+--   CONSTRAINT fk_cohort_query_subject_ontology1
+--     FOREIGN KEY (subject_ontology_id)
+--     REFERENCES cliovis.subject_ontology (id)
+--     ON DELETE CASCADE
+--     ON UPDATE CASCADE)
+-- ENGINE = InnoDB;
+
 CREATE TABLE IF NOT EXISTS cliovis.cohort_query (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   cohort_id INT NOT NULL,
-  param VARCHAR(255) NOT NULL,
-  operator VARCHAR(10) NOT NULL,
-  value VARCHAR(255) NOT NULL,
+  input_variable_id INT NOT NULL,
+  min_value INT,
+  max_value INT,
+  value VARCHAR(255),
   INDEX fk_cohort_query_cohort1_idx (cohort_id ASC),
+  INDEX fk_cohort_query_input_variable_idx (input_variable_id ASC),
   CONSTRAINT fk_cohort_query_cohort1
     FOREIGN KEY (cohort_id)
     REFERENCES cliovis.cohort (id)
     ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_cohort_query_input_variable
+    FOREIGN KEY (input_variable_id)
+    REFERENCES cliovis.cohort_input_variable (id)
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+
+DROP TABLE IF EXISTS cliovis.cohort_input_variable;
+
+CREATE TABLE IF NOT EXISTS cliovis.cohort_input_variable (
+  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  cohort_id INT NOT NULL,
+  study_id INT,
+  observation_ontology_id INT,
+  subject_ontology_id INT,
+  dimension_label ENUM ('left_y_axis', 'right_y_axis', 'roc', 'change'),
+  INDEX fk_cohort_input_cohort_idx (cohort_id ASC),
+  CONSTRAINT fk_cohort_input_cohort1
+    FOREIGN KEY (cohort_id)
+    REFERENCES cliovis.cohort (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_cohort_input_study1
+    FOREIGN KEY (study_id)
+    REFERENCES cliovis.study (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_cohort_input_observation_ontology1
+    FOREIGN KEY (observation_ontology_id)
+    REFERENCES cliovis.observation_ontology (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_cohort_input_subject_ontology1
+    FOREIGN KEY (subject_ontology_id)
+    REFERENCES cliovis.subject_ontology (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+)
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS cliovis.cohort_output_variables;
 
 
 DROP TABLE IF EXISTS cliovis.collection_subject_variable ;

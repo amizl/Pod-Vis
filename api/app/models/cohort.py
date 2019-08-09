@@ -11,6 +11,7 @@ class Cohort(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    collection_id = db.Column(db.Integer, db.ForeignKey("collection.id"))
     date_generated = db.Column(db.TIMESTAMP)
     label = db.Column(db.VARCHAR, nullable=False)
     instantiation_type = db.Column(db.Enum(InstantiationType))
@@ -20,9 +21,15 @@ class Cohort(db.Model):
         "CohortSubject",
         lazy="select",
         cascade="all, delete-orphan")
+    queries = db.relationship(
+        "CohortQuery",
+        lazy="select",
+        cascade="all, delete-orphan"
+    )
 
-    def __init__(self, user_id, label,instantiation_type):
+    def __init__(self, user_id, label, collection_id, instantiation_type):
         self.user_id = user_id
+        self.collection_id = collection_id
         self.label = label
         self.instantiation_type = instantiation_type
 
@@ -34,6 +41,18 @@ class Cohort(db.Model):
             All cohorts.
         """
         return cls.query.all()
+
+    @classmethod
+    def find_all_by_collection_id(cls, collection_id):
+        """Find all cohorts by collection ID.
+
+        Args:
+            collection_id: Collection's ID.
+
+        Returns:
+            List of cohorts for collection.
+        """
+        return cls.query.filter_by(collection_id=collection_id).all()
 
     @classmethod
     def find_by_id(cls, cohort_id):
@@ -78,6 +97,7 @@ class Cohort(db.Model):
         cohort = dict(
             id=self.id,
             user_id=self.user_id,
+            collection_id=self.collection_id,
             label=self.label,
             # instantiation_type=str(self.instantiation_type)
         )
