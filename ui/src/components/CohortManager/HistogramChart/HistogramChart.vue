@@ -8,8 +8,12 @@
           :key="`population-${i}`"
           :x="xScale(bin.x0)"
           :y="yScale(bin.length)"
-          :width="xScale(bin.x1) - xScale(bin.x0) - 1"
-          :height="h - yScale(bin.length)"
+          :width="
+            xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+              ? xScale(bin.x1) - xScale(bin.x0) - 1
+              : 0
+          "
+          :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
           fill="#E8EAF6"
         />
 
@@ -18,8 +22,12 @@
           :key="`cohort-${i}`"
           :x="xScale(bin.x0)"
           :y="yScale(bin.length)"
-          :width="xScale(bin.x1) - xScale(bin.x0) - 1"
-          :height="h - yScale(bin.length)"
+          :width="
+            xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+              ? xScale(bin.x1) - xScale(bin.x0) - 1
+              : 0
+          "
+          :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
           :fill="selection.length ? getFill(bin) : '#3F51B5'"
         />
         <!-- Cohort Mean -->
@@ -317,6 +325,7 @@ export default {
         this.clearFilter({
           dimension: this.dimensionName,
         });
+        return;
       }
 
       const [low, high] = this.getClosestBins();

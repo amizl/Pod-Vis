@@ -26,6 +26,7 @@ export default {
     y: {
       type: Number,
       required: true,
+      default: 0,
     },
   },
   data() {
