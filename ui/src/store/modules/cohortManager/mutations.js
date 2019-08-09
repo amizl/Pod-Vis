@@ -178,13 +178,27 @@ export default {
    * @param {Object} state
    * @param {Object} query Object with the keys, param, operator, value that represents a filter
    */
-  [mutations.SET_QUERY](state, query) {
-    const { param } = query;
+  [mutations.SET_QUERY](state, { dimension, query }) {
     const queries = state[stateTypes.QUERIES];
-    if (!(param in queries)) {
-      Vue.set(queries, param, [query]);
-    } else {
-      queries[param] = [...queries[param], query];
+
+    if (!(dimension in queries)) {
+      Vue.set(queries, dimension, []);
+    }
+    // Bar charts can have multiple queries (more than one study selected)
+    // while histograms will just have a single range query.
+    const dimensionQueries = Array.isArray(query) ? query : [query];
+    queries[dimension] = dimensionQueries;
+  },
+  /**
+   * Clear query for particular dimension.
+   * @param {Object} state
+   * @param {String} dimension
+   */
+  [mutations.CLEAR_QUERY](state, dimension) {
+    const queries = state[stateTypes.QUERIES];
+
+    if (dimension in queries) {
+      Vue.delete(queries, dimension);
     }
   },
   /**

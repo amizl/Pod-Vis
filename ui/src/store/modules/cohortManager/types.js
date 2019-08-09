@@ -14,7 +14,9 @@ export const state = {
 };
 
 // Getters
-export const getters = {};
+export const getters = {
+  HAS_USER_FILTERED_INPUT_VARIABLES: 'hasUserFilteredInputVariables',
+};
 
 // Mutations
 export const mutations = {
@@ -35,6 +37,7 @@ export const mutations = {
   CLEAR_FILTER: 'clearFilter',
   SET_PVALS: 'setPvals',
   SET_QUERY: 'setQuery',
+  CLEAR_QUERY: 'clearQuery',
   RESET_COHORTS: 'resetCohorts',
   RESET_IS_LOADING: 'resetIsLoading',
   RESET_COLLECTION: 'resetCollection',

@@ -175,13 +175,15 @@ export default {
   [actions.ADD_DIMENSION]({ commit }, dimension) {
     commit(mutations.ADD_DIMENSION, dimension);
   },
-  [actions.ADD_FILTER]({ commit, dispatch }, { dimension, filter }) {
+  [actions.ADD_FILTER]({ commit, dispatch }, { dimension, filter, query }) {
+    commit(mutations.SET_QUERY, { dimension, query });
     commit(mutations.ADD_FILTER, { dimension, filter });
     commit(mutations.UPDATE_FILTERED_DATA);
 
     dispatch(actions.ANALYZE_FILTERED);
   },
   [actions.CLEAR_FILTER]({ commit, dispatch }, { dimension }) {
+    commit(mutations.CLEAR_QUERY, dimension);
     commit(mutations.CLEAR_FILTER, { dimension });
     commit(mutations.UPDATE_FILTERED_DATA);
 
@@ -209,9 +211,6 @@ export default {
 
       commit(mutations.SET_PVALS, data.pvals);
     }
-  },
-  [actions.ADD_QUERY]({ commit }, query) {
-    commit(mutations.SET_QUERY, query);
   },
   [actions.RESET_ALL_STORE_DATA]({ commit }) {
     commit(mutations.RESET_COHORTS);
