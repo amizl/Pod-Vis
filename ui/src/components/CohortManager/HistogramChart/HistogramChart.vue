@@ -327,10 +327,15 @@ export default {
         .call(event.target.move, [low, high]);
 
       const [invertedLow, invertedHigh] = [low, high].map(this.xScale.invert);
+
       // Filter dimension to be within snapped selection
       this.addFilter({
         dimension: this.dimensionName,
         filter: d => d >= invertedLow && d < invertedHigh,
+        query: {
+          minValue: invertedLow,
+          maxValue: invertedHigh,
+        },
       });
     },
     brushed() {

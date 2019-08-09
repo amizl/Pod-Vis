@@ -164,11 +164,7 @@ export default {
   },
   mounted() {
     this.container = this.$refs.container;
-    // this.bars = select(this.$refs.bars).selectAll('.bar');
-
-    // Resize chart so we have parent dimensions (width/height)
     this.resizeChart();
-    // this.drawBars();
   },
   methods: {
     ...mapActions('cohortManager', {
@@ -196,51 +192,25 @@ export default {
         this.selected.push(key);
       }
 
-      if (this.selected.length) {
+      const allBarsSelected =
+        this.selected.length == this.xScale.domain().length;
+      if (!allBarsSelected && this.selected.length) {
         this.addFilter({
           dimension: this.dimensionName,
           filter: d => this.selected.includes(d),
+          query: this.selected.map(key => {
+            return {
+              value: key,
+            };
+          }),
         });
       } else {
+        // We want to clear our filter if all the bars are selected or if
+        // no bars are selected.
         this.clearFilter({
           dimension: this.dimensionName,
         });
       }
-    },
-    updateBars() {
-      this.bars
-        .data(this.data, d => d.key)
-        .enter()
-        .style('cursor', 'pointer')
-        .on('click', d => this.userClickedBar(d.key))
-        .attr('x', d => this.xScale(d.key))
-        .attr('width', () => this.xScale.bandwidth())
-        .attr('fill', d => this.getFill(d.key))
-        .transition()
-        .duration(1000)
-        .attr('y', d => this.yScale(d.value))
-        .attr('height', d =>
-          this.h - this.yScale(d.value) > 0 ? this.h - this.yScale(d.value) : 0
-        );
-    },
-    drawBars() {
-      this.bars
-        .data(this.data, d => d.key)
-        .enter()
-        .append('rect')
-        .style('cursor', 'pointer')
-        .on('click', d => this.userClickedBar(d.key))
-        .attr('x', d => this.xScale(d.key))
-        .attr('y', () => this.yScale(0))
-        .attr('width', () => this.xScale.bandwidth())
-        .attr('height', 0)
-        .attr('fill', d => this.getFill(d.key))
-        .transition()
-        .duration(1000)
-        .attr('y', d => this.yScale(d.value))
-        .attr('height', d =>
-          this.h - this.yScale(d.value) > 0 ? this.h - this.yScale(d.value) : 0
-        );
     },
     resizeChart() {
       const { width, height } = this.container.getBoundingClientRect();
