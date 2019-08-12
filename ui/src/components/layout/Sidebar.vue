@@ -124,16 +124,16 @@ export default {
         //   icon: 'group',
         //   path: '/cohorts',
         // },
-        {
-          name: 'Data Explorer',
-          icon: 'explore',
-          path: '/explore',
-        },
-        {
-          name: 'Analysis Tool',
-          icon: 'bar_chart',
-          path: '/analysis',
-        },
+        // {
+        //   name: 'Data Explorer',
+        //   icon: 'explore',
+        //   path: '/explore',
+        // },
+        // {
+        //   name: 'Analysis Tool',
+        //   icon: 'bar_chart',
+        //   path: '/analysis',
+        // },
       ],
     };
   },
