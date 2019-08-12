@@ -13,3 +13,22 @@ export function makeHierarchy(data) {
   }));
   return parents;
 }
+
+export function getInputVariablesFromQueries(queries, inputVariables) {
+  return Object.keys(queries).map(variable => {
+    return {
+      query: queries[variable],
+      variable: inputVariables.find(inputVar => {
+        const { label, type } = inputVar;
+        if (type === 'study' || type === 'subject') {
+          return label === variable;
+        } else {
+          // type is 'observation'
+          const { parentLabel } = inputVar;
+          const obsLabel = `${parentLabel} - ${label}`;
+          return obsLabel === variable;
+        }
+      }),
+    };
+  });
+}
