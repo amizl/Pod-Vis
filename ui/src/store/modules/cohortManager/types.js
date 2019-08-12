@@ -68,4 +68,5 @@ export const actions = {
   ANALYZE_FILTERED: 'analyzeFilterd',
   ADD_QUERY: 'addQuery',
   RESET_ALL_STORE_DATA: 'resetAllStoreData',
+  SAVE_COHORT: 'saveCohort',
 };

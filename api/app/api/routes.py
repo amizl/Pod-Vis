@@ -587,32 +587,32 @@ def get_cohort(cohort_id):
     })
 
 
-@api.route('/cohorts', methods=["POST"])
-@jwt_required
-def create_cohort():
-    """Create new cohort.
+# @api.route('/cohorts', methods=["POST"])
+# @jwt_required
+# def create_cohort():
+#     """Create new cohort.
 
-    Example requests:
-      /api/cohorts
-    """
-    request_data = request.get_json()
+#     Example requests:
+#       /api/cohorts
+#     """
+#     request_data = request.get_json()
 
-    user = get_current_user()
-    label = request_data.get('label')
+#     user = get_current_user()
+#     label = request_data.get('label')
 
-    # Create Collection
-    cohort = models.Cohort(user.id, label, 'dynamic')
-    cohort.save_to_db()
+#     # Create Collection
+#     cohort = models.Cohort(user.id, label, 'dynamic')
+#     cohort.save_to_db()
 
-    # Add subjects to cohort
-    # TODO
+#     # Add subjects to cohort
+#     # TODO
 
-    # Add queries to cohort
-    # TODO
-    return jsonify({
-        "success": True,
-        "cohort": cohort.to_dict()
-    }), 201
+#     # Add queries to cohort
+#     # TODO
+#     return jsonify({
+#         "success": True,
+#         "cohort": cohort.to_dict()
+#     }), 201
 
 @api.route('/cohorts', methods=["DELETE"])
 @jwt_required
@@ -727,6 +727,7 @@ def demo_parcoords():
 
 @api.route('/compute-mannwhitneyu', methods=['POST'])
 def compute_mannwhitneyu():
+    """Compute Mann-Whitney rank test"""
     request_data = request.get_json()
     filtered_data = request_data.get("filteredData")
     unfiltered_data = request_data.get("unfilteredData")
@@ -753,3 +754,44 @@ def compute_mannwhitneyu():
         "success": True,
         "pvals": pvals,
     })
+
+@api.route('/cohorts', methods=['POST'])
+@jwt_required
+def create_cohort():
+    """Create cohort"""
+    request_data = request.get_json()
+    queries = request_data.get("queries")
+    cohort_subjects = request_data.get("cohort_subjects")
+    cohort_name = request_data.get("cohort_name")
+    collection_id = request_data.get("collection_id")
+    instantiation_type = 'dynamic'
+
+    if not queries or not cohort_subjects or not cohort_name or not collection_id:
+        raise BadRequest("Missing payload data to complete request.")
+
+    user = get_current_user()
+
+    collection = models.Collection.find_by_id(collection_id)
+    if not collection:
+        raise ResourceNotFound("Collection does not exist.")
+    if user.id != collection.user_id:
+        raise AuthFailure("Not authorized to use this collection.")
+
+    # create cohort
+    cohort = models.Cohort(user.id, cohort_name, collection.id, instantiation_type)
+    cohort.save_to_db()
+
+    # for query in queries:
+
+    #     query = models.CohortQuery(cohort.id, )
+
+    return jsonify({
+        "success": True,
+        "cohort": cohort.to_dict()
+    }), 201
+    # creat query
+    # create subjects
+
+
+
+    # Add studies to collection

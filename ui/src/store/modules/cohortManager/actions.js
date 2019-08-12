@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { nest } from 'd3-collection';
 import { ErrorNotification } from '@/store/modules/notifications/notifications';
-import { makeHierarchy } from '@/utils/helpers';
+import { makeHierarchy, getInputVariablesFromQueries } from '@/utils/helpers';
 import { actions, mutations, state as stateTypes } from './types';
 
 export default {
@@ -189,7 +189,7 @@ export default {
 
     dispatch(actions.ANALYZE_FILTERED);
   },
-  async [actions.ANALYZE_FILTERED]({ commit, state }) {
+  async [actions.ANALYZE_FILTERED]({ commit, dispatch, state }) {
     let { filteredData, unfilteredData, outputVariables } = state;
     if (filteredData.length == unfilteredData.length) {
       // Nothing is filtered
@@ -203,14 +203,39 @@ export default {
           .includes(data.subject_id);
       });
 
-      const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
-        filteredData,
-        unfilteredData,
-        outputVariables,
-      });
+      try {
+        const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
+          filteredData,
+          unfilteredData,
+          outputVariables,
+        });
 
-      commit(mutations.SET_PVALS, data.pvals);
+        commit(mutations.SET_PVALS, data.pvals);
+      } catch ({ response }) {
+        const notification = new ErrorNotification(response.data.error);
+        dispatch(notification.dispatch, notification, { root: true });
+      }
     }
+  },
+  async [actions.SAVE_COHORT]({ commit, state }, { cohortName }) {
+    const { collection, queries, inputVariables, filteredData } = state;
+
+    const subjectsInCohort = filteredData.map(subject => subject.subject_id);
+
+    const queriesMappedToVariables = getInputVariablesFromQueries(
+      queries,
+      inputVariables
+    );
+
+    try {
+      const response = await axios.post('/api/cohorts', {
+        queries: queriesMappedToVariables,
+        cohort_subjects: subjectsInCohort,
+        cohort_name: cohortName,
+        collection_id: collection.id,
+      });
+      console.log(response);
+    } catch (error) {}
   },
   [actions.RESET_ALL_STORE_DATA]({ commit }) {
     commit(mutations.RESET_COHORTS);

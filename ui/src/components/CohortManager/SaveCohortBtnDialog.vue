@@ -44,14 +44,12 @@
         <v-card-title primary-title>
           <span class="primary--text title pl-2">Save Cohort</span>
         </v-card-title>
-        <v-sheet class="pa-3 background"> </v-sheet>
+        <!-- <v-sheet class="pa-3 background"> </v-sheet> -->
         <v-card-text>
           <v-form ref="form" v-model="valid" @submit.prevent="onSaveCollection">
             <v-text-field
-              v-model="collectionName"
-              :rules="[
-                () => !!collectionName || 'Collection name is required.',
-              ]"
+              v-model="cohortName"
+              :rules="[() => !!cohortName || 'Cohort name is required.']"
               prepend-inner-icon="table_chart"
               label="Please name your cohort."
               box
@@ -69,7 +67,7 @@
           <v-btn flat color="red lighten-2" @click="dialog = false">
             <v-icon left>close</v-icon> Cancel
           </v-btn>
-          <v-btn :loading="loading" color="primary" @click="onSaveCollection">
+          <v-btn :loading="loading" color="primary" @click="onSaveCohort">
             <v-icon left>save</v-icon> Save Cohort</v-btn
           >
         </v-card-actions>
@@ -95,7 +93,7 @@ export default {
     },
   },
   data: () => ({
-    collectionName: '',
+    cohortName: '',
     valid: true,
     dialog: false,
     loading: false,
@@ -104,22 +102,19 @@ export default {
     ...mapGetters('cohortManager', {
       hasUserFilteredInputVariables: getters.HAS_USER_FILTERED_INPUT_VARIABLES,
     }),
-    areVariablesSelected() {
-      return this.variables.length > 0;
-    },
   },
   methods: {
-    ...mapActions('datasetManager', {
-      saveCollection: actions.SAVE_COLLECTION,
+    ...mapActions('cohortManager', {
+      saveCohort: actions.SAVE_COHORT,
     }),
-    async onSaveCollection() {
-      const { collectionName, variables, datasetIds } = this;
+    async onSaveCohort() {
+      const { cohortName } = this;
       if (this.$refs.form.validate()) {
         this.loading = true;
         try {
-          await this.saveCollection({ collectionName, variables, datasetIds });
+          await this.saveCohort({ cohortName });
           this.loading = false;
-          this.$router.push('/datasets');
+          this.dialog = false;
         } catch (err) {
           this.loading = false;
         }

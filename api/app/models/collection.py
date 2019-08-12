@@ -135,8 +135,7 @@ class Collection(db.Model):
         return result
 
     def get_data_for_cohort_manager(self):
-        """Get all the data from a collection that a cohort manager
-        needs to draw charts.
+        """Get all the data from a collection that a cohort manager needs to draw charts.
 
         Returns
             Pandas dataframe of observation data need to draw charts.
@@ -264,7 +263,11 @@ class Collection(db.Model):
                     max=totals.loc[last_date]
                 ))
 
-        return pd.merge(pd.DataFrame(observations), subjects_df, left_on='subject_id', right_on='subject_id')
+        result = pd.merge(pd.DataFrame(observations), subjects_df, left_on='subject_id', right_on='subject_id')
+        return result
+        # need to some how group by subject id and observation and count the number of distinct observation and see
+        # if this number matches...
+        # return result.groupby(['subject_id', 'observation'])['observation'].count()
 
     def proof_of_concept_parcoords(self):
         """Endpoint that gets data for proof of concept for drawing parcoords."""
