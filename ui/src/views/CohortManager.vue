@@ -11,13 +11,13 @@
       <save-cohort-button />
     </v-toolbar>
     <v-layout column fill-height>
-      <v-flex xs7>
+      <v-flex xs6>
         <v-layout fill-height>
           <v-flex xs8> <input-variables /> </v-flex>
           <v-flex xs4> <analytics-table /> </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs8> <output-variables /> </v-flex>
+      <v-flex xs6> <output-variables /> </v-flex>
     </v-layout>
   </v-container>
 </template>
