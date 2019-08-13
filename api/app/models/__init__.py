@@ -18,6 +18,8 @@ from .collection_query import CollectionQuery
 from .collection_study import CollectionStudy
 from .subject_attribute import SubjectAttribute
 from .subject_ontology import SubjectOntology
+from .cohort_input_variable import CohortInputVariable
+from .cohort_output_variable import CohortOutputVariable
 from .cohort_query import CohortQuery
 from .cohort import Cohort
 from .cohort_subject import CohortSubject

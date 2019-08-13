@@ -759,8 +759,12 @@ def compute_mannwhitneyu():
 @jwt_required
 def create_cohort():
     """Create cohort"""
+
+    # TODO: Break this function up to follow SOLID principles
+
     request_data = request.get_json()
     queries = request_data.get("queries")
+    output_variables = request_data.get("output_variables", [])
     cohort_subjects = request_data.get("cohort_subjects")
     cohort_name = request_data.get("cohort_name")
     collection_id = request_data.get("collection_id")
@@ -781,16 +785,93 @@ def create_cohort():
     cohort = models.Cohort(user.id, cohort_name, collection.id, instantiation_type)
     cohort.save_to_db()
 
-    # for query in queries:
+    # Label checks need to be refactored into their own method
+    for output_variable in output_variables:
+        # If an output variable has children, then the entire outcome
+        # variable was selected and need to be unrolled
+        if "children" in output_variable:
+            for child_output_variable in output_variable['children']:
+                # Needs to be refactored. The labels being hard coded to 'First Visit", etc,
+                # mismatches our schema's enums.
+                if child_output_variable['label'] == 'First Visit':
+                    dimension_label = 'left_y_axis'
+                elif child_output_variable['label'] == 'Last Visit':
+                    dimension_label = 'right_y_axis'
+                elif child_output_variable['label'] == 'Rate of Change':
+                    dimension_label = 'roc'
+                elif child_output_variable['label'] == 'Change':
+                    dimension_label = 'change'
+                new_output_variable = models.CohortOutputVariable(
+                    cohort.id,
+                    observation_ontology_id = child_output_variable['parentID'],
+                    dimension_label = dimension_label)
+                new_output_variable.save_to_db()
+        else:
+            if output_variable['label'] == 'First Visit':
+                dimension_label = 'left_y_axis'
+            elif output_variable['label'] == 'Last Visit':
+                dimension_label = 'right_y_axis'
+            elif output_variable['label'] == 'Rate of Change':
+                dimension_label = 'roc'
+            elif output_variable['label'] == 'Change':
+                dimension_label = 'change'
+            new_output_variable = models.CohortOutputVariable(
+                cohort.id,
+                observation_ontology_id = output_variable['parentID'],
+                dimension_label = dimension_label)
+            new_output_variable.save_to_db()
 
-    #     query = models.CohortQuery(cohort.id, )
+    for query in queries:
+        variable = query['variable']
+        variable_type = variable['type']
+
+        if variable_type == 'subject':
+            input_variable = models.CohortInputVariable(cohort.id, subject_ontology_id = variable['id'])
+        elif variable_type == 'study':
+            input_variable = models.CohortInputVariable(cohort.id, study_id = variable['id'])
+        else:
+            # type is observation
+
+            # Needs to be refactored. The labels being hard coded to 'First Visit", etc,
+            # mismatches our schema's enums.
+            if variable['label'] == 'First Visit':
+                dimension_label = 'left_y_axis'
+            elif variable['label'] == 'Last Visit':
+                dimension_label = 'right_y_axis'
+            elif variable['label'] == 'Rate of Change':
+                dimension_label = 'roc'
+            elif variable['label'] == 'Change':
+                dimension_label = 'change'
+
+            input_variable = models.CohortInputVariable(
+                cohort.id,
+                observation_ontology_id = variable['parentID'],
+                dimension_label = dimension_label)
+        input_variable.save_to_db()
+
+        variable_queries = query['query']
+        for variable_query in variable_queries:
+            if "value" in variable_query:
+                query = models.CohortQuery(
+                    cohort.id,
+                    input_variable.id,
+                    value = variable_query["value"])
+                query.save_to_db()
+            elif "minValue" in variable_query and "maxValue" in variable_query:
+                query = models.CohortQuery(
+                    cohort.id,
+                    input_variable.id,
+                    min_value = variable_query["minValue"],
+                    max_value = variable_query["maxValue"])
+                query.save_to_db()
+
+    # TODO: Save cohort subjects to cohort_subject table
 
     return jsonify({
         "success": True,
         "cohort": cohort.to_dict()
     }), 201
-    # creat query
-    # create subjects
+
 
 
 

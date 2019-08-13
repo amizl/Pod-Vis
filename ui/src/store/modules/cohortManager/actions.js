@@ -218,7 +218,13 @@ export default {
     }
   },
   async [actions.SAVE_COHORT]({ commit, state }, { cohortName }) {
-    const { collection, queries, inputVariables, filteredData } = state;
+    const {
+      collection,
+      queries,
+      inputVariables,
+      outputVariables,
+      filteredData,
+    } = state;
 
     const subjectsInCohort = filteredData.map(subject => subject.subject_id);
 
@@ -230,10 +236,12 @@ export default {
     try {
       const response = await axios.post('/api/cohorts', {
         queries: queriesMappedToVariables,
+        output_variables: outputVariables,
         cohort_subjects: subjectsInCohort,
         cohort_name: cohortName,
         collection_id: collection.id,
       });
+
       console.log(response);
     } catch (error) {}
   },
