@@ -6,7 +6,7 @@
         <output-variables-charts v-if="hasUserAddedOutputVariables" />
         <v-layout v-else column align-center justify-center fill-height>
           <v-subheader class="display-1 primary--text text--lighten-5">
-            ADD OUTPUT VARIABLES
+            ADD OUTCOME VARIABLES
           </v-subheader>
         </v-layout>
       </v-container>

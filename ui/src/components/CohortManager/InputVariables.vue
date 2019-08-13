@@ -6,7 +6,7 @@
         <input-variables-charts v-if="hasUserAddedInputVariables" />
         <v-layout v-else column align-center justify-center fill-height>
           <v-subheader class="display-1 primary--text text--lighten-5">
-            ADD INPUT VARIABLES
+            ADD PREDICTOR VARIABLES
           </v-subheader>
         </v-layout>
       </v-container>

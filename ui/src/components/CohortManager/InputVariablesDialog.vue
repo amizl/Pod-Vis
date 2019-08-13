@@ -3,12 +3,12 @@
     <template v-slot:activator="{ on }">
       <v-btn flat color="primary" v-on="on">
         <v-icon left dark>add_box</v-icon>
-        Input Variables
+        Predictor Variables
       </v-btn>
     </template>
     <v-card max-height="500px" class="rounded-lg">
       <v-card-title class="title primary--text text--darken-3">
-        Input Variables
+        Predictor Variables
       </v-card-title>
       <v-sheet class="pa-3 background">
         <v-text-field
