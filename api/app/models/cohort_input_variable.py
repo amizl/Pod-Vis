@@ -15,14 +15,14 @@ class CohortInputVariable(db.Model):
     study_id = db.Column(db.Integer, db.ForeignKey("study.id"))
     observation_ontology_id = db.Column(db.Integer, db.ForeignKey("observation_ontology.id"))
     subject_ontology_id = db.Column(db.Integer, db.ForeignKey("subject_ontology.id"))
-    observation_dimension = db.Column(db.Enum(ObservationDimension))
+    dimension_label = db.Column(db.Enum(ObservationDimension))
 
-    def __init__(self, cohort_id, study_id=None, observation_ontology_id=None, subject_ontology_id=None, observation_dimension=None):
+    def __init__(self, cohort_id, study_id=None, observation_ontology_id=None, subject_ontology_id=None, dimension_label=None):
         self.cohort_id = cohort_id
         self.study_id = study_id
         self.observation_ontology_id = observation_ontology_id
         self.subject_ontology_id = subject_ontology_id
-        self.observation_dimension = observation_dimension
+        self.dimension_label = dimension_label
 
     @classmethod
     def get_all_queries(cls):
