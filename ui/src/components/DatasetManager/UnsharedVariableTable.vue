@@ -16,7 +16,16 @@
           <td v-if="selectable">
             <v-checkbox v-model="props.selected" color="primary" hide-details />
           </td>
-          <td><v-layout align-center><span style='padding:0em 0.5em 0em 0em'><img v-bind:src="'/images/' + props.item.category + '-icon-64.png'" style='height:2em' /></span> {{ props.item.category }}</v-layout></td>
+          <td>
+            <v-layout align-center
+              ><span style="padding:0em 0.5em 0em 0em"
+                ><img
+                  :src="'/images/' + props.item.category + '-icon-64.png'"
+                  style="height:2em"
+              /></span>
+              {{ props.item.category }}</v-layout
+            >
+          </td>
           <td>{{ props.item.scale }}</td>
         </tr>
       </template>
@@ -97,7 +106,7 @@ export default {
       );
 
     this.variables = missingVariables;
-    this.variables.forEach(v => (v['type'] = 'observation'));
+    this.variables.forEach(v => (v.type = 'observation'));
 
     // TODO: Check subject variables are missing from shared subject variables
     // const {

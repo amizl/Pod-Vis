@@ -17,7 +17,16 @@
           <td v-if="selectable">
             <v-checkbox v-model="props.selected" color="primary" hide-details />
           </td>
-          <td><v-layout align-center><span style='padding:0em 0.5em 0em 0em'><img v-bind:src="'/images/' + props.item.category + '-icon-64.png'" style='height:2em' /></span> {{ props.item.category }}</v-layout></td>
+          <td>
+            <v-layout align-center
+              ><span style="padding:0em 0.5em 0em 0em"
+                ><img
+                  :src="'/images/' + props.item.category + '-icon-64.png'"
+                  style="height:2em"
+              /></span>
+              {{ props.item.category }}</v-layout
+            >
+          </td>
           <td>{{ props.item.scale }}</td>
           <!-- Study columns with distribution visualizations -->
           <td
@@ -107,7 +116,7 @@ export default {
     } = await this.fetchSharedVariables();
     // add type key to variables to distinguish that these variables
     // are relating to the observations
-    variables.forEach(variable => (variable['type'] = 'observation'));
+    variables.forEach(variable => (variable.type = 'observation'));
     this.variables = variables;
 
     // TODO...fetch shared subject attributes
@@ -118,7 +127,7 @@ export default {
     );
     // add type key to subject variables to distinguish that these variables
     // are relating to the subejcts
-    subjectVariables.forEach(variable => (variable['type'] = 'subject'));
+    subjectVariables.forEach(variable => (variable.type = 'subject'));
     this.variables = [...this.variables, ...subjectVariables];
 
     this.isLoading = false;
