@@ -108,9 +108,9 @@ class CohortOutputVariable(db.Model):
             output_variable['dimension_label']  = "roc"
 
         if self.observation_ontology_id:
-            output_variable['observaton_ontology'] = self.observation_ontology.to_dict()
+            output_variable['observation_ontology'] = self.observation_ontology.to_dict(include_parent=True)
         if self.subject_ontology_id:
-            output_variable['subject_ontology'] = self.subject_ontology.to_dict()
+            output_variable['subject_ontology'] = self.subject_ontology.to_dict(include_parent=True)
         if self.study_id:
             output_variable['study'] = self.study.to_dict()
 

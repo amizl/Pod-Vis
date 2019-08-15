@@ -98,21 +98,21 @@ class CohortInputVariable(db.Model):
             # dimension_label = str(self.dimension_label)
             )
 
-        # Hack around ObservatonDimension not being JSON serializ
-        #
+        # Hack around ObservatonDimension not being JSON serializable.
+        # May want to clean this up.
         if self.dimension_label is ObservationDimension.left_y_axis:
-            input_variable['dimension_label']  = str(ObservationDimension.left_y_axis)
+            input_variable['dimension_label']  = "left_y_axis"
         elif self.dimension_label is ObservationDimension.right_y_axis:
-            input_variable['dimension_label']  = str(ObservationDimension.right_y_axis)
+            input_variable['dimension_label']  = "right_y_axis"
         elif self.dimension_label is ObservationDimension.change:
-            input_variable['dimension_label']  = str(ObservationDimension.change)
+            input_variable['dimension_label']  = "change"
         elif self.dimension_label is ObservationDimension.roc:
-            input_variable['dimension_label']  = str(ObservationDimension.roc)
+            input_variable['dimension_label']  = "roc"
 
         if self.observation_ontology_id:
-            input_variable['observaton_ontology'] = self.observation_ontology.to_dict()
+            input_variable['observation_ontology'] = self.observation_ontology.to_dict(include_parent=True)
         if self.subject_ontology_id:
-            input_variable['subject_ontology'] = self.subject_ontology.to_dict()
+            input_variable['subject_ontology'] = self.subject_ontology.to_dict(include_parent=True)
         if self.study_id:
             input_variable['study'] = self.study.to_dict()
 
