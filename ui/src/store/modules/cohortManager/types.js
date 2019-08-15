@@ -1,6 +1,7 @@
 // State
 export const state = {
   COHORTS: 'cohorts',
+  COHORT: 'cohort',
   IS_LOADING: 'isLoading',
   COLLECTION: 'collection',
   UNFILTERED_DATA: 'unfilteredData',
@@ -16,11 +17,21 @@ export const state = {
 // Getters
 export const getters = {
   HAS_USER_FILTERED_INPUT_VARIABLES: 'hasUserFilteredInputVariables',
+  HAS_USER_SELECTED_COHORT: 'hasUserSelectedCohort',
+  FIND_COHORT_QUERY: 'findCohortQuery',
+  FIND_COHORT_STUDY_INPUT_VARIABLES: 'findCohortStudyInputVariables',
+  FIND_COHORT_SUBJECT_INPUT_VARIABLES: 'findCohortSubjectInputVariables',
+  FIND_COHORT_OBSERVATION_INPUT_VARIABLES:
+    'findCohortObservationInputVariables',
+  FIND_COHORT_OBSERVATION_OUTPUT_VARIABLES:
+    'findCohortObservationOutputVariables',
 };
 
 // Mutations
 export const mutations = {
   SET_COHORTS: 'setCohorts',
+  SET_COHORT: 'setCohort',
+  ADD_COHORT: 'addCohort',
   SET_COLLECTION: 'setCollection',
   SET_LOADING: 'setLoading',
   SET_DATA: 'setData',
@@ -49,11 +60,13 @@ export const mutations = {
   RESET_DIMENSIONS: 'resetDimensions',
   RESET_PVALS: 'resetPvals',
   RESET_QUERIES: 'resetQueries',
+  REMOVE_COHORT: 'removeCohort',
 };
 
 // Actions
 export const actions = {
   FETCH_COHORTS: 'fetchCohorts',
+  SET_COHORT: 'setCohort',
   FETCH_COLLECTION: 'fetchCollection',
   FETCH_DATA: 'fetchData',
   ADD_INPUT_VARIABLE: 'addInputVariable',
@@ -69,4 +82,7 @@ export const actions = {
   ADD_QUERY: 'addQuery',
   RESET_ALL_STORE_DATA: 'resetAllStoreData',
   SAVE_COHORT: 'saveCohort',
+  CLEAR_ALL_FILTERS: 'clearAllFilters',
+  DELETE_SELECTED_COHORT: 'deleteSelectedCohort',
+  REMOVE_COHORT: 'removeCohort',
 };

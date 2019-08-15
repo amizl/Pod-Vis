@@ -12,6 +12,32 @@ export default {
     state[stateTypes.COHORTS] = cohorts;
   },
   /**
+   * Set cohort mutation.
+   * @param {*} state
+   * @param {*} cohort
+   */
+  [mutations.SET_COHORT](state, cohort) {
+    state[stateTypes.COHORT] = cohort;
+  },
+  /**
+   * Add cohort to cohorts.
+   * @param {*} state
+   * @param {*} cohort
+   */
+  [mutations.ADD_COHORT](state, cohort) {
+    state[stateTypes.COHORTS] = [...state[stateTypes.COHORTS], cohort];
+  },
+  /**
+   * Remove cohort from cohorts.
+   * @param {*} state
+   * @param {*} cohortID
+   */
+  [mutations.REMOVE_COHORT](state, cohortID) {
+    state[stateTypes.COHORTS] = state[stateTypes.COHORTS].filter(
+      cohort => cohort.id !== cohortID
+    );
+  },
+  /**
    * Set loading mutation.
    * @param {Object} state
    * @param {Boolean} isLoading Flag whether or not we are waiting on data.

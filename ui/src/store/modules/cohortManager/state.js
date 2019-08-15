@@ -2,6 +2,7 @@ import { state } from './types';
 
 export default {
   [state.COHORTS]: [],
+  [state.COHORT]: { id: null },
   [state.IS_LOADING]: false,
   [state.COLLECTION]: {},
   [state.UNFILTERED_DATA]: [],

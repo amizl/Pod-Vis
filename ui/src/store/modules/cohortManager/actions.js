@@ -1,8 +1,16 @@
 import axios from 'axios';
 import { nest } from 'd3-collection';
-import { ErrorNotification } from '@/store/modules/notifications/notifications';
+import {
+  ErrorNotification,
+  SuccessNotification,
+} from '@/store/modules/notifications/notifications';
 import { makeHierarchy, getInputVariablesFromQueries } from '@/utils/helpers';
-import { actions, mutations, state as stateTypes } from './types';
+import {
+  actions,
+  getters as getterTypes,
+  mutations,
+  state as stateTypes,
+} from './types';
 
 export default {
   async [actions.FETCH_COHORTS]({ commit }) {
@@ -35,6 +43,12 @@ export default {
       const observationVariables = makeHierarchy(
         data.collection.observation_variables
       );
+      // TODO:
+      // These fields are hard-coded and will invetiably need to be changed.
+      // For example, firstVisit and lastVisit are stored in the database as
+      //  left_y_axis and right_y_axis when queries are saved. This is because
+      //  eventually we want to allow the user to specify the visit number rather
+      //  than hard-coding first and last.
       observationVariables.forEach(observationVariable => {
         observationVariable.children.forEach(child => {
           child['type'] = 'observation';
@@ -189,6 +203,11 @@ export default {
 
     dispatch(actions.ANALYZE_FILTERED);
   },
+  [actions.CLEAR_ALL_FILTERS]({ dispatch, state }) {
+    Object.keys(state[stateTypes.DIMENSIONS]).forEach(dimension => {
+      dispatch(actions.CLEAR_FILTER, { dimension });
+    });
+  },
   async [actions.ANALYZE_FILTERED]({ commit, dispatch, state }) {
     let { filteredData, unfilteredData, outputVariables } = state;
     if (filteredData.length == unfilteredData.length) {
@@ -217,7 +236,7 @@ export default {
       }
     }
   },
-  async [actions.SAVE_COHORT]({ commit, state }, { cohortName }) {
+  async [actions.SAVE_COHORT]({ commit, dispatch, state }, { cohortName }) {
     const {
       collection,
       queries,
@@ -233,17 +252,77 @@ export default {
       inputVariables
     );
 
+    // queriesMappedToVariables
+    //   .filter(query => query.variable.type === 'study')
+    //   .forEach(query => {
+    //     console.log(query);
+    //     const { studies } = collection;
+    //     const queryStudies = query.query.map(({ value }) => {
+    //       const study = studies.find(({ study }) => study.study_name === value);
+    //       return study;
+    //     });
+
+    //     query.variable.id = study.study.id;
+    //   });
+
+    // console.log(queriesMappedToVariables);
+    console.log(outputVariables);
     try {
-      const response = await axios.post('/api/cohorts', {
+      const { data } = await axios.post('/api/cohorts', {
         queries: queriesMappedToVariables,
         output_variables: outputVariables,
         cohort_subjects: subjectsInCohort,
         cohort_name: cohortName,
         collection_id: collection.id,
       });
+      commit(mutations.ADD_COHORT, data.cohort);
 
-      console.log(response);
-    } catch (error) {}
+      dispatch(actions.SET_COHORT, { id: null });
+      dispatch(actions.CLEAR_ALL_FILTERS);
+      const notification = new SuccessNotification(`Cohort saved`);
+      dispatch(notification.dispatch, notification, { root: true });
+    } catch ({ response }) {
+      const notification = new ErrorNotification(response.data.error);
+      dispatch(notification.dispatch, notification, { root: true });
+    }
+  },
+  async [actions.SET_COHORT]({ commit, dispatch, getters }, cohort) {
+    commit(mutations.SET_COHORT, cohort);
+
+    const studyInputVariables =
+      getters[getterTypes.FIND_COHORT_STUDY_INPUT_VARIABLES];
+    const subjectInputVariables =
+      getters[getterTypes.FIND_COHORT_SUBJECT_INPUT_VARIABLES];
+    const observationInputVariables =
+      getters[getterTypes.FIND_COHORT_OBSERVATION_INPUT_VARIABLES];
+    const outputVariables =
+      getters[getterTypes.FIND_COHORT_OBSERVATION_OUTPUT_VARIABLES];
+
+    dispatch(actions.CLEAR_ALL_FILTERS);
+    dispatch(actions.SET_INPUT_VARIABLES, [
+      ...studyInputVariables,
+      ...subjectInputVariables,
+      ...observationInputVariables,
+    ]);
+    dispatch(actions.SET_OUTPUT_VARIABLES, outputVariables);
+  },
+  async [actions.DELETE_SELECTED_COHORT]({ state, dispatch }) {
+    try {
+      const { cohort } = state;
+      await axios.delete(`/api/cohorts/${cohort.id}`);
+
+      dispatch(actions.SET_COHORT, { id: null });
+      dispatch(actions.REMOVE_COHORT, cohort.id);
+
+      const notification = new SuccessNotification(`Successfully deleted`);
+      dispatch(notification.dispatch, notification, { root: true });
+    } catch ({ response }) {
+      const notification = new ErrorNotification(response.data.error);
+      dispatch(notification.dispatch, notification, { root: true });
+    }
+  },
+  async [actions.REMOVE_COHORT]({ commit }, cohortID) {
+    commit(mutations.REMOVE_COHORT, cohortID);
   },
   [actions.RESET_ALL_STORE_DATA]({ commit }) {
     commit(mutations.RESET_COHORTS);
