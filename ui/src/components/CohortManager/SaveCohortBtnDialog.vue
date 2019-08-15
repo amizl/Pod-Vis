@@ -9,37 +9,6 @@
     </v-btn>
     <!-- SAVE COLLECTION FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
-      <!-- <v-card max-height="500px" class="rounded-lg">
-        <v-card-title class="title primary--text text--darken-3">
-          Save Cohort
-        </v-card-title>
-        <v-sheet class="pa-3 background"> </v-sheet>
-        <v-card-text>
-          <v-form ref="form" v-model="valid" @submit.prevent="onSaveCollection">
-            <v-text-field
-              v-model="collectionName"
-              :rules="[
-                () => !!collectionName || 'Collection name is required.',
-              ]"
-              prepend-inner-icon="table_chart"
-              label="Please name your cohort."
-              box
-              flat
-              background-color="grey lighten-4"
-              class="mt-2"
-              hide-details
-            >
-            </v-text-field>
-          </v-form>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" flat @click="dialog = false"
-            ><v-icon left dark>close</v-icon>Close</v-btn
-          >
-        </v-card-actions>
-      </v-card> -->
       <v-card class="rounded-lg">
         <v-card-title primary-title>
           <span class="primary--text title pl-2">Save Cohort</span>
@@ -77,8 +46,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import { actions, getters } from '@/store/modules/cohortManager/types';
+import { mapActions, mapGetters, mapState } from 'vuex';
+import { actions, getters, state } from '@/store/modules/cohortManager/types';
 
 // which store?
 export default {
@@ -99,9 +68,17 @@ export default {
     loading: false,
   }),
   computed: {
+    ...mapState('cohortManager', {
+      cohort: state.COHORT,
+    }),
     ...mapGetters('cohortManager', {
       hasUserFilteredInputVariables: getters.HAS_USER_FILTERED_INPUT_VARIABLES,
     }),
+  },
+  watch: {
+    cohort(newCohort) {
+      this.cohortName = newCohort.label;
+    },
   },
   methods: {
     ...mapActions('cohortManager', {
