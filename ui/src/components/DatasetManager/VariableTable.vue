@@ -16,7 +16,16 @@
         <td v-if="selectable">
           <v-checkbox v-model="props.selected" color="primary" hide-details />
         </td>
-        <td>{{ props.item.category }}</td>
+        <td>
+          <v-layout align-center
+            ><span style="padding:0em 0.5em 0em 0em"
+              ><img
+                :src="'/images/' + props.item.category + '-icon-64.png'"
+                style="height:2em"
+            /></span>
+            {{ props.item.category }}</v-layout
+          >
+        </td>
         <td>{{ props.item.scale }}</td>
         <!-- <td v-if="histogram"></td> -->
         <!-- <td>{{ props.item.description }}</td> -->
@@ -105,13 +114,13 @@ export default {
         ? await this.fetchSharedVariables()
         : await this.fetchVariables();
     this.variables = data.variables;
-    this.variables.forEach(v => (v['type'] = 'observation'));
+    this.variables.forEach(v => (v.type = 'observation'));
 
     const res = await axios.get(
       `/api/studies/${this.datasetId}/subjects/attributes`
     );
     const attrs = res.data.subject_attributes;
-    attrs.forEach(a => (a['type'] = 'subject'));
+    attrs.forEach(a => (a.type = 'subject'));
     this.variables = [...this.variables, ...res.data.subject_attributes];
     this.isLoading = false;
   },
