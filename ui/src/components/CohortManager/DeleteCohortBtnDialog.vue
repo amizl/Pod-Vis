@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn
-      :disabled="!hasUserFilteredInputVariables"
+      :disabled="!hasUserSelectedCohort"
       flat
       outline
       color="error"
@@ -56,7 +56,7 @@ export default {
   }),
   computed: {
     ...mapGetters('cohortManager', {
-      hasUserFilteredInputVariables: getters.HAS_USER_FILTERED_INPUT_VARIABLES,
+      hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
     }),
   },
   methods: {

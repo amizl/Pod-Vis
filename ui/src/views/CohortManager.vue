@@ -11,7 +11,7 @@
       </v-toolbar-items>
       <v-spacer></v-spacer>
 
-      <delete-cohort-button v-if="hasUserSelectedCohort" />
+      <delete-cohort-button />
       <save-cohort-button />
     </v-toolbar>
     <v-layout column fill-height>
