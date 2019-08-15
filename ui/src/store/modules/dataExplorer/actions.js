@@ -111,4 +111,16 @@ export default {
   [actions.SET_DETAILED_VIEW]({ commit }, detailedView) {
     commit(mutations.SET_DETAILED_VIEW, detailedView);
   },
+  async [actions.FETCH_COHORTS]({ commit }) {
+    commit(mutations.SET_LOADING, true);
+
+    try {
+      const { data } = await axios.get('/api/cohorts');
+      commit(mutations.SET_COHORTS, data.cohorts);
+    } catch (err) {
+      // TODO
+    } finally {
+      commit(mutations.SET_LOADING, false);
+    }
+  },
 };

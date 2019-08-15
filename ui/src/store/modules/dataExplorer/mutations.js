@@ -2,6 +2,14 @@ import { mutations, state as stateTypes } from './types';
 
 export default {
   /**
+   * Set cohorts mutation.
+   * @param {*} state
+   * @param {*} cohorts
+   */
+  [mutations.SET_COHORTS](state, cohorts) {
+    state[stateTypes.COHORTS] = cohorts;
+  },
+  /**
    * Set loading mutation.
    * @param {Object} state
    * @param {Boolean} isLoading Flag whether or not we are waiting on data.

@@ -1,6 +1,7 @@
 // State
 export const state = {
   COLLECTION: 'collection',
+  COHORTS: 'cohorts',
   IS_LOADING: 'isLoading',
   OUTCOME_VARIABLES: 'outcomeVariables',
   DATA: 'data',
@@ -12,6 +13,7 @@ export const getters = {};
 
 // Mutations
 export const mutations = {
+  SET_COHORTS: 'setCohorts',
   SET_LOADING: 'setLoading',
   SET_COLLECTION: 'setCollection',
   SET_OUTCOME_VARIABLES: 'setOutcomeVariables',
@@ -22,6 +24,7 @@ export const mutations = {
 // Actions
 export const actions = {
   FETCH_COLLECTION: 'fetchCollection',
+  FETCH_COHORTS: 'fetchCohort',
   SET_OUTCOME_VARIABLES: 'setOutcomeVariables',
   FETCH_DATA: 'fetchData',
   SET_DETAILED_VIEW: 'setDetailedView',
