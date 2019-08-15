@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import { actions, state } from '@/store/modules/cohortManager/types';
-import { mapActions, mapState } from 'vuex';
+import { actions, state, getters } from '@/store/modules/cohortManager/types';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import { uniqBy } from 'lodash';
 
 export default {
@@ -45,27 +45,50 @@ export default {
     subjectVariables: [],
   }),
   computed: {
+    ...mapGetters('cohortManager', {
+      hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
+    }),
     ...mapState('cohortManager', {
       collection: state.COLLECTION,
       vars: state.INPUT_VARIABLES,
+      cohort: state.COHORT,
     }),
   },
   watch: {
+    cohort() {
+      if (this.hasUserSelectedCohort) {
+        this.selectedSubjectVariables = this.vars.filter(
+          variable => variable.type === 'subject'
+        );
+        this.selectedObservationVariables = this.vars.filter(
+          variable => variable.type === 'observation'
+        );
+      }
+      // const observationVariables = newCohort.input_variables
+      //   .filter(variable => variable.observation_ontology !== null)
+      //   .map(variable => variable.observation_ontology.id);
+    },
     selectedSubjectVariables(newSubjectVariables) {
-      this.setInputVariables([
-        // Filter parent nodes because we don't want them added to our list,
-        // i.e, 'Demographics'
-        ...newSubjectVariables.filter(variable => !variable.children),
-        ...this.selectedObservationVariables.filter(
-          variable => !variable.children
-        ),
-      ]);
+      if (!this.hasUserSelectedCohort) {
+        this.setInputVariables([
+          // Filter parent nodes because we don't want them added to our list,
+          // i.e, 'Demographics'
+          ...newSubjectVariables.filter(variable => !variable.children),
+          ...this.selectedObservationVariables.filter(
+            variable => !variable.children
+          ),
+        ]);
+      }
     },
     selectedObservationVariables(newObservationVariable) {
-      this.setInputVariables([
-        ...this.selectedSubjectVariables.filter(variable => !variable.children),
-        ...newObservationVariable.filter(variable => !variable.children),
-      ]);
+      if (!this.hasUserSelectedCohort) {
+        this.setInputVariables([
+          ...this.selectedSubjectVariables.filter(
+            variable => !variable.children
+          ),
+          ...newObservationVariable.filter(variable => !variable.children),
+        ]);
+      }
     },
   },
   async created() {
