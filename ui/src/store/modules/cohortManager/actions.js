@@ -295,6 +295,7 @@ export default {
   async [actions.SET_COHORT]({ commit, dispatch, getters }, cohort) {
     commit(mutations.RESET_PVALS);
     commit(mutations.RESET_OUTPUT_VARIABLES);
+    commit(mutations.RESET_INPUT_VARIABLES);
     commit(mutations.SET_COHORT, cohort);
 
     const studyInputVariables =
