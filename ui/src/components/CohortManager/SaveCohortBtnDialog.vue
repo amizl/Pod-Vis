@@ -46,7 +46,7 @@
         </v-card-title>
         <!-- <v-sheet class="pa-3 background"> </v-sheet> -->
         <v-card-text>
-          <v-form ref="form" v-model="valid" @submit.prevent="onSaveCollection">
+          <v-form ref="form" v-model="valid" @submit.prevent="onSaveCohort">
             <v-text-field
               v-model="cohortName"
               :rules="[() => !!cohortName || 'Cohort name is required.']"
