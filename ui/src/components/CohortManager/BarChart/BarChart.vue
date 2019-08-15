@@ -41,8 +41,8 @@
 
 <script>
 // Data Store
-import { mapState, mapActions } from 'vuex';
-import { state, actions } from '@/store/modules/cohortManager/types';
+import { mapState, mapActions, mapGetters } from 'vuex';
+import { state, actions, getters } from '@/store/modules/cohortManager/types';
 // D3 Modules
 import { max } from 'd3-array';
 import { select } from 'd3-selection';
@@ -68,7 +68,7 @@ export default {
     yaxis(el, binding) {
       const axisMethod = binding.value;
       select(el)
-        .transition()
+        // .transition()
         .call(axisMethod);
       // .selectAll('path')
       // .attr('stroke', '#E8EAF6')
@@ -108,10 +108,15 @@ export default {
     };
   },
   computed: {
+    ...mapGetters('cohortManager', {
+      findCohortQuery: getters.FIND_COHORT_QUERY,
+      hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
+    }),
     ...mapState('cohortManager', {
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
       dimensions: state.DIMENSIONS,
+      cohort: state.COHORT,
     }),
     w() {
       const { left, right } = this.margin;
@@ -161,6 +166,24 @@ export default {
     this.group = dimension.group();
     this.data = this.group.all();
     this.populationData = this.data.map(d => ({ ...d }));
+
+    // If there is a cohort selected then apply the appropriate
+    // queries to the chart
+    if (this.hasUserSelectedCohort) {
+      const queries = this.findCohortQuery(this.dimensionName);
+      // we want to delay updating the chart a cycle until
+      // the chart is actually mounted to the DOM
+      this.$nextTick(() => {
+        queries.forEach(queryForThisChart =>
+          this.userClickedBar(queryForThisChart.value)
+        );
+      });
+    }
+  },
+  destroyed() {
+    this.clearFilter({
+      dimension: this.dimensionName,
+    });
   },
   mounted() {
     this.container = this.$refs.container;

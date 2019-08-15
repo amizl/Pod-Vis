@@ -25,7 +25,12 @@
           :id="variable.id"
           :dimension-name="dimension"
         />
-        <HistogramChart v-else :id="variable.id" :dimension-name="dimension" />
+        <HistogramChart
+          v-else
+          :id="variable.id"
+          :dimension-name="dimension"
+          input-variable
+        />
       </v-layout>
     </v-layout>
   </v-sheet>

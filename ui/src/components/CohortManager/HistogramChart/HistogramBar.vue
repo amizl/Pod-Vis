@@ -1,12 +1,7 @@
 <template>
-  <!-- <rect
-    :x="x"
-    :y="useTweeningYIfNotFalsy"
-    :width="width"
-    :height="useTweeningHeightIfNotFalsy"
-    :fill="fill"
-  ></rect> -->
+  <rect v-if="!mounted" v-bind="$attrs" :y="y" :height="height" />
   <rect
+    v-else
     v-bind="$attrs"
     :y="useTweeningYIfNotFalsy"
     :height="useTweeningHeightIfNotFalsy"
@@ -21,18 +16,18 @@ export default {
     height: {
       type: Number,
       required: true,
-      default: 0,
     },
     y: {
       type: Number,
       required: true,
-      default: 0,
     },
   },
   data() {
     return {
       tweeningHeight: 0,
       tweeningY: 0,
+      mounted: false,
+      timeout: 500,
     };
   },
   computed: {
@@ -61,6 +56,14 @@ export default {
       this.tween(oldValue, newValue, 'tweeningY');
     },
   },
+  mounted() {
+    // Small hack to wait until the initial tween values
+    // get to their starting values and then toggle our
+    // animated rect.
+    setTimeout(() => {
+      this.mounted = true;
+    }, this.timeout);
+  },
   methods: {
     /**
      * Method to tween from one value to another
@@ -74,7 +77,7 @@ export default {
       //   frameHandler = requestAnimationFrame(animate);
       // };
       new TWEEN.Tween({ tweeningValue: startValue })
-        .to({ tweeningValue: endValue }, 500)
+        .to({ tweeningValue: endValue }, this.timeout)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(({ tweeningValue }) => {
           this[prop] = tweeningValue;

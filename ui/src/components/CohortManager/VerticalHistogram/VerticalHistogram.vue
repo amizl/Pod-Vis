@@ -8,23 +8,41 @@
           :key="`population-${i}`"
           :x="left ? xScale(bin.length) : 0"
           :y="yScale(bin.x1)"
-          :height="yScale(bin.x0) - yScale(bin.x1) - 1"
-          :width="left ? w - xScale(bin.length) : xScale(bin.length)"
+          :height="
+            yScale(bin.x0) - yScale(bin.x1) - 1 > 0
+              ? yScale(bin.x0) - yScale(bin.x1) - 1
+              : 0
+          "
+          :width="
+            left
+              ? w - xScale(bin.length) > 0
+                ? w - xScale(bin.length) > 0
+                : 0
+              : xScale(bin.length) > 0
+              ? xScale(bin.length)
+              : 0
+          "
           fill="#E8EAF6"
         />
-        <!-- .append('rect')
-        .attr('x', bin => x(bin.length))
-        .attr('y', bin => y(bin.x1))
-        .attr('height', d => y(d.x0) - y(d.x1) - .5)
-        .attr('width', d => width-x(d.length)) -->
-
         <animated-rect
           v-for="(bin, i) in bins"
           :key="`cohort-${i}`"
           :x="left ? xScale(bin.length) : 0"
           :y="yScale(bin.x1)"
-          :height="yScale(bin.x0) - yScale(bin.x1) - 1"
-          :width="left ? w - xScale(bin.length) : xScale(bin.length)"
+          :height="
+            yScale(bin.x0) - yScale(bin.x1) - 1 > 0
+              ? yScale(bin.x0) - yScale(bin.x1) - 1
+              : 0
+          "
+          :width="
+            left
+              ? w - xScale(bin.length) > 0
+                ? w - xScale(bin.length)
+                : 0
+              : xScale(bin.length) > 0
+              ? xScale(bin.length)
+              : 0
+          "
           :fill="selection.length ? getFill(bin) : '#3F51B5'"
         />
         <!-- Cohort Mean -->
@@ -336,6 +354,7 @@ export default {
         this.clearFilter({
           dimension: this.dimensionName,
         });
+        return;
       }
 
       const [high, low] = this.getClosestBins();
@@ -351,6 +370,18 @@ export default {
       this.addFilter({
         dimension: this.dimensionName,
         filter: d => d >= invertedLow && d < invertedHigh,
+      });
+
+      // Add query in order to save filters to database
+      this.addQuery({
+        param: this.dimensionName,
+        operator: '>=',
+        value: invertedLow,
+      });
+      this.addQuery({
+        param: this.dimensionName,
+        operator: '<',
+        value: invertedHigh,
       });
     },
     brushed() {

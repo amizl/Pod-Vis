@@ -16,7 +16,6 @@
           :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
           fill="#E8EAF6"
         />
-
         <animated-rect
           v-for="(bin, i) in bins"
           :key="`cohort-${i}`"
@@ -31,12 +30,31 @@
           :fill="selection.length ? getFill(bin) : '#3F51B5'"
         />
         <!-- Cohort Mean -->
+        <!-- <text
+          v-if="mean != populationMean"
+          :x="mean"
+          :y="h"
+          fill="#3F51B5"
+          stroke="white"
+          font-size="30"
+        >
+          C
+        </text>
+        <text
+          :x="populationMean"
+          :y="h"
+          fill="#3F51B5"
+          stroke="white"
+          :font-size="30"
+        >
+          P
+        </text> -->
         <!-- <circle
           r="15"
           :cx="mean"
           :cy="h"
-          fill="#3F51B5"
-          stroke="#E8EAF6"
+          fill="blue"
+          stroke="#3F51B5"
           stroke-width="5"
           fill-opacity=".9"
         /> -->
@@ -46,7 +64,7 @@
           :cx="populationMean"
           :cy="h"
           stroke="#3F51B5"
-          fill="#E8EAF6"
+          fill="orange"
           stroke-width="5"
           fill-opacity=".9"
         /> -->
@@ -67,8 +85,8 @@
 
 <script>
 // Data Store
-import { mapState, mapActions } from 'vuex';
-import { state, actions } from '@/store/modules/cohortManager/types';
+import { mapState, mapActions, mapGetters } from 'vuex';
+import { state, getters, actions } from '@/store/modules/cohortManager/types';
 // D3 Modules
 import { extent, max, mean, histogram } from 'd3-array';
 import { brushX } from 'd3-brush';
@@ -100,14 +118,14 @@ export default {
     xaxis(el, binding) {
       const axisMethod = binding.value;
       select(el)
-        .transition()
+        // .transition()
         .call(axisMethod);
       // .call(g => g.select('.domain').remove());
     },
     yaxis(el, binding) {
       const axisMethod = binding.value;
       select(el)
-        .transition()
+        // .transition()
         .call(axisMethod);
       // .call(g => g.select('.domain').remove());
     },
@@ -125,6 +143,10 @@ export default {
       required: true,
     },
     population: {
+      type: Boolean,
+      default: false,
+    },
+    inputVariable: {
       type: Boolean,
       default: false,
     },
@@ -151,10 +173,15 @@ export default {
     };
   },
   computed: {
+    ...mapGetters('cohortManager', {
+      findCohortQuery: getters.FIND_COHORT_QUERY,
+      hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
+    }),
     ...mapState('cohortManager', {
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
       dimensions: state.DIMENSIONS,
+      cohort: state.COHORT,
     }),
     w() {
       const { left, right } = this.margin;
@@ -199,7 +226,9 @@ export default {
       // .thresholds(this.cohortXScale.ticks(30))(this.data);
     },
     mean() {
-      return this.xScale(mean(this.data));
+      return this.xScale(
+        mean(this.filteredData.map(d => d[this.dimensionName]))
+      );
     },
     populationMean() {
       return this.xScale(mean(this.populationData));
@@ -242,6 +271,36 @@ export default {
 
     this.group = dimension.group();
     this.data = flattenGroupCounts(this.group.all());
+
+    if (this.inputVariable && this.hasUserSelectedCohort) {
+      // there should only be one query for a histogram...
+      const [query] = this.findCohortQuery(this.dimensionName);
+
+      this.$nextTick(() => {
+        const minValue = query.min_value;
+        const maxValue = query.max_value;
+        // Snap selections to closest bins
+        select(this.$refs.brush).call(this.brush.move, [
+          this.xScale(minValue),
+          this.xScale(maxValue),
+        ]);
+
+        // Filter dimension to be within snapped selection
+        this.addFilter({
+          dimension: this.dimensionName,
+          filter: d => d >= minValue && d < maxValue,
+          query: {
+            minValue,
+            maxValue,
+          },
+        });
+      });
+    }
+  },
+  destroyed() {
+    this.clearFilter({
+      dimension: this.dimensionName,
+    });
   },
   mounted() {
     this.container = this.$refs.container;
