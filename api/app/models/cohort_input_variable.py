@@ -17,6 +17,20 @@ class CohortInputVariable(db.Model):
     subject_ontology_id = db.Column(db.Integer, db.ForeignKey("subject_ontology.id"))
     dimension_label = db.Column(db.Enum(ObservationDimension))
 
+    observation_ontology = db.relationship(
+        "ObservationOntology",
+        lazy="select"
+    )
+    subject_ontology = db.relationship(
+        "SubjectOntology",
+        lazy="select"
+    )
+    study = db.relationship(
+        "Study",
+        lazy="select"
+    )
+
+
     def __init__(self, cohort_id, study_id=None, observation_ontology_id=None, subject_ontology_id=None, dimension_label=None):
         self.cohort_id = cohort_id
         self.study_id = study_id
@@ -81,7 +95,25 @@ class CohortInputVariable(db.Model):
             study_id = self.study_id,
             observation_ontology_id = self.observation_ontology_id,
             subject_ontology_id = self.subject_ontology_id,
-            observation_dimension = self.observation_dimension
+            # dimension_label = str(self.dimension_label)
             )
+
+        # Hack around ObservatonDimension not being JSON serializ
+        #
+        if self.dimension_label is ObservationDimension.left_y_axis:
+            input_variable['dimension_label']  = str(ObservationDimension.left_y_axis)
+        elif self.dimension_label is ObservationDimension.right_y_axis:
+            input_variable['dimension_label']  = str(ObservationDimension.right_y_axis)
+        elif self.dimension_label is ObservationDimension.change:
+            input_variable['dimension_label']  = str(ObservationDimension.change)
+        elif self.dimension_label is ObservationDimension.roc:
+            input_variable['dimension_label']  = str(ObservationDimension.roc)
+
+        if self.observation_ontology_id:
+            input_variable['observaton_ontology'] = self.observation_ontology.to_dict()
+        if self.subject_ontology_id:
+            input_variable['subject_ontology'] = self.subject_ontology.to_dict()
+        if self.study_id:
+            input_variable['study'] = self.study.to_dict()
 
         return input_variable
