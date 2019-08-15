@@ -6,8 +6,12 @@
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text">Cohort Manager</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items> <CohortSelection class="mt-2" /> </v-toolbar-items>
+      <v-toolbar-items>
+        <v-flex xs12 sm12> <CohortSelection class="mt-2" /> </v-flex>
+      </v-toolbar-items>
       <v-spacer></v-spacer>
+
+      <delete-cohort-button v-if="hasUserSelectedCohort" />
       <save-cohort-button />
     </v-toolbar>
     <v-layout column fill-height>
@@ -23,13 +27,14 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import { actions, state } from '@/store/modules/cohortManager/types';
+import { mapActions, mapState, mapGetters } from 'vuex';
+import { actions, state, getters } from '@/store/modules/cohortManager/types';
 
 import CohortSelection from '@/components/CohortManager/CohortSelection.vue';
 import AnalyticsTable from '@/components/CohortManager/AnalyticsTable.vue';
 import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
+import DeleteCohortButton from '@/components/CohortManager/DeleteCohortBtnDialog';
 import SaveCohortButton from '@/components/CohortManager/SaveCohortBtnDialog';
 
 export default {
@@ -40,6 +45,7 @@ export default {
     OutputVariables,
     AnalyticsTable,
     SaveCohortButton,
+    DeleteCohortButton,
   },
   props: {
     collectionId: {
@@ -53,6 +59,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters('cohortManager', {
+      hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
+    }),
     ...mapState('cohortManager', {
       collection: state.COLLECTION,
     }),
