@@ -11,6 +11,11 @@ class CohortQuery(db.Model):
     max_value = db.Column(db.Integer, nullable=True)
     value = db.Column(db.VARCHAR, nullable=True)
 
+    input_variable = db.relationship(
+        "CohortInputVariable",
+        lazy="select"
+    )
+
     def __init__(self, cohort_id, input_variable_id, min_value=None, max_value=None, value=None):
         self.cohort_id = cohort_id
         self.input_variable_id = input_variable_id
@@ -115,6 +120,7 @@ class CohortQuery(db.Model):
             min_value=self.min_value,
             max_value=self.max_value,
             value=self.value,
+            input_variable=self.input_variable.to_dict()
         )
 
         return cq

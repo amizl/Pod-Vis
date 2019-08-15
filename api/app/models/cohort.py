@@ -17,12 +17,22 @@ class Cohort(db.Model):
     instantiation_type = db.Column(db.Enum(InstantiationType))
     last_modified = db.Column(db.TIMESTAMP)
 
-    subjects = db.relationship(
-        "CohortSubject",
-        lazy="select",
-        cascade="all, delete-orphan")
+    # subjects = db.relationship(
+    #     "CohortSubject",
+    #     lazy="select",
+    #     cascade="all, delete-orphan")
     queries = db.relationship(
         "CohortQuery",
+        lazy="select",
+        cascade="all, delete-orphan"
+    )
+    input_variables = db.relationship(
+        "CohortInputVariable",
+        lazy="select",
+        cascade="all, delete-orphan"
+    )
+    output_variables = db.relationship(
+        "CohortOutputVariable",
         lazy="select",
         cascade="all, delete-orphan"
     )
@@ -99,13 +109,16 @@ class Cohort(db.Model):
             user_id=self.user_id,
             collection_id=self.collection_id,
             label=self.label,
+            queries=[query.to_dict() for query in self.queries],
+            input_variables=[variable.to_dict() for variable in self.input_variables],
+            output_variables=[variable.to_dict() for variable in self.output_variables]
             # instantiation_type=str(self.instantiation_type)
         )
 
-        if include_subjects:
-            cohort['subjects'] = [
-                subject.to_dict()
-                for subject in self.subjects
-            ]
+        # if include_subjects:
+        #     cohort['subjects'] = [
+        #         subject.to_dict()
+        #         for subject in self.subjects
+        #     ]
 
         return cohort
