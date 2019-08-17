@@ -146,30 +146,8 @@ class Collection(db.Model):
         connection = db.engine.connect()
         study_ids = [study.study_id for study in self.studies]
         # Get all subjects that are part of the studies included in
-        # the collection. Because subject's attributes are in an EAV
-        # table, using our model's to_dict() method to collapse these
-        # into columns and join this table with our observation data
-        # is easiest.
-        subjects_df = pd.DataFrame([
-            subject.to_dict(include_attributes=True, include_study=True)
-            for subject in Subject.find_all_by_study_ids(study_ids)
-        ]).set_index('id')
-        # Convert to datetime
-        if "Birthdate" in subjects_df.columns:
-            query_for_first_visit = text("""
-                SELECT subject_id, min(event_date) as first_visit
-                FROM subject_visit
-                JOIN subject on subject.id = subject_visit.subject_id
-                GROUP BY subject_id;
-            """)
-            result_proxy = connection.execute(query_for_first_visit)
-            result = [dict(row) for row in result_proxy]
-            first_visit_df = pd.DataFrame(result)
-            subjects_df = pd.merge(subjects_df, first_visit_df, left_on='id', right_on='subject_id')
-            subjects_df['Birthdate'] = pd.to_datetime(subjects_df['Birthdate'])
-            subjects_df['first_visit'] = pd.to_datetime(subjects_df['first_visit'])
-            # subjects_df['age'] = subjects_df['first_visit'] - subjects_df['Birthdate'].year
-            # return subjects_df
+        # the collection.
+        all_subjects = Subject.find_all_by_study_ids(study_ids)
         subject_variable_ids = [subject_var.id for subject_var in self.subject_variables]
 
         # Separate measures that are precomputed. Currently, a measure is precomputed
@@ -241,6 +219,8 @@ class Collection(db.Model):
 
         # Compute ROC for each patient and each scale from their first and last visit
         observations = []
+        subject_observations = {}
+
         for (subject_id, obs_id), df in result_df.groupby(['subject_id', 'observation_ontology_id']):
             totals = df.set_index('event_date')['total']
             first_date = totals.index.min()
@@ -262,6 +242,47 @@ class Collection(db.Model):
                     min=totals.loc[first_date],
                     max=totals.loc[last_date]
                 ))
+            # track observations per subject
+            if subject_id not in subject_observations:
+                subject_observations[subject_id] = {}
+            if obs_id not in subject_observations[subject_id]:
+                subject_observations[subject_id][obs_id] = True
+
+        # filter subjects to those with observations for all requested observation variables
+        n_observation_ids = len(self.observation_variables)
+        filtered_subjects = []
+        for subj in all_subjects:
+            subj_id = subj.to_dict()['id']
+            if subj_id in subject_observations:
+                obs_ids = subject_observations[subj_id]
+                if len(list(obs_ids.keys())) >= n_observation_ids:
+                    filtered_subjects.append(subj)
+
+        # Because subject's attributes are in an EAV
+        # table, using our model's to_dict() method to collapse these
+        # into columns and join this table with our observation data
+        # is easiest.
+        subjects_df = pd.DataFrame([
+            subject.to_dict(include_attributes=True, include_study=True)
+            for subject in filtered_subjects
+        ]).set_index('id')
+
+        # Convert to datetime
+        if "Birthdate" in subjects_df.columns:
+            query_for_first_visit = text("""
+                SELECT subject_id, min(event_date) as first_visit
+                FROM subject_visit
+                JOIN subject on subject.id = subject_visit.subject_id
+                GROUP BY subject_id;
+            """)
+            result_proxy = connection.execute(query_for_first_visit)
+            result = [dict(row) for row in result_proxy]
+            first_visit_df = pd.DataFrame(result)
+            subjects_df = pd.merge(subjects_df, first_visit_df, left_on='id', right_on='subject_id')
+            subjects_df['Birthdate'] = pd.to_datetime(subjects_df['Birthdate'])
+            subjects_df['first_visit'] = pd.to_datetime(subjects_df['first_visit'])
+            # subjects_df['age'] = subjects_df['first_visit'] - subjects_df['Birthdate'].year
+            # return subjects_df
 
         result = pd.merge(pd.DataFrame(observations), subjects_df, left_on='subject_id', right_on='subject_id')
         return result
