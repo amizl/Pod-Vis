@@ -11,4 +11,4 @@ COPY . /usr/src/app
 
 # Run the gunicorn WSGI server and mount it to our flask app,
 # port 8080 arbitrarily chosen
-CMD gunicorn -b 0.0.0.0:8080 cliovis:app -w 4
+CMD gunicorn -t 120 -b 0.0.0.0:8080 cliovis:app -w 4
