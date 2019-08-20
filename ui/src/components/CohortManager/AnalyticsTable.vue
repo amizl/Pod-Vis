@@ -71,7 +71,7 @@ export default {
           text: 'P Value',
           align: 'right',
           sortable: true,
-          value: 'label',
+          value: 'pval',
         },
       ],
     };
