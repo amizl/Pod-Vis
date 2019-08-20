@@ -37,7 +37,7 @@ export default {
       // cohorts are collection-specific
       ch.forEach(function(e) {
         if (e.collection_id === cid) {
-           new_ch.unshift(e);
+           new_ch.push(e);
         }
       });
 
