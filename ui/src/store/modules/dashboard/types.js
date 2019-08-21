@@ -15,6 +15,5 @@ export const mutations = {
 
 // Actions
 export const actions = {
-  FETCH_DATASETS: 'fetchDatasets',
   ADD_DATASET_TO_PROFILE: 'addDatasetToProfile',
 };

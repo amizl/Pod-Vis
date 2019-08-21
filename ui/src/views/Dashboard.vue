@@ -35,20 +35,10 @@ export default {
     CollectionTable,
   },
   computed: {
-    ...mapState('dashboard', {
-      datasets: state.DATASETS,
-      isLoading: state.IS_LOADING,
-    }),
   },
   created() {
-    if (!this.datasets.length) {
-      this.fetchDatasets();
-    }
   },
   methods: {
-    ...mapActions('dashboard', {
-      fetchDatasets: actions.FETCH_DATASETS,
-    }),
   },
 };
 </script>
