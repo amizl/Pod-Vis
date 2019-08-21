@@ -2,8 +2,8 @@
   <v-app>
     <!-- Notification Center is our global snackbar for error/success messages-->
     <notification-center />
-    <side-bar v-if="isUserAuthenicated" />
-    <!-- <app-header v-if="isUserAuthenicated" /> -->
+    <side-bar v-if="isUserAuthenticated" />
+    <!-- <app-header v-if="isUserAuthenticated" /> -->
     <!-- All of our views will be loaded inside content based on route-->
     <v-content class="indigo lighten-5">
       <transition name="fade" mode="out-in">
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     ...mapGetters('auth', {
-      isUserAuthenicated: authGetters.IS_USER_AUTHENTICATED,
+      isUserAuthenticated: authGetters.IS_USER_AUTHENTICATED,
     }),
   },
 };
