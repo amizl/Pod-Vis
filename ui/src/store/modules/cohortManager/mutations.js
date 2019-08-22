@@ -190,7 +190,7 @@ export default {
     const dimensions = state[stateTypes.DIMENSIONS];
     const dim = dimensions[dimension];
     if (typeof dim !== 'undefined') {
-	dim.filterAll();
+      dim.filterAll();
     }
   },
   /**
