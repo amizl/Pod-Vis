@@ -278,12 +278,7 @@ export default {
 
       // Clean up data... may want to put this is in its own dispatch action call.
       dispatch(actions.SET_COHORT, { id: null });
-      dispatch(actions.CLEAR_ALL_FILTERS);
-      commit(mutations.RESET_INPUT_VARIABLES);
-      commit(mutations.RESET_OUTPUT_VARIABLES);
-      commit(mutations.RESET_CROSS_FILTER);
       commit(mutations.RESET_DIMENSIONS);
-      commit(mutations.RESET_PVALS);
       commit(mutations.RESET_QUERIES);
       const notification = new SuccessNotification(`Cohort saved`);
       dispatch(notification.dispatch, notification, { root: true });

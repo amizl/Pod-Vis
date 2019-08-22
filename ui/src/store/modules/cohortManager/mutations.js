@@ -189,7 +189,9 @@ export default {
   [mutations.CLEAR_FILTER](state, { dimension }) {
     const dimensions = state[stateTypes.DIMENSIONS];
     const dim = dimensions[dimension];
-    dim.filterAll();
+    if (typeof dim !== 'undefined') {
+	dim.filterAll();
+    }
   },
   /**
    * Set pvals
