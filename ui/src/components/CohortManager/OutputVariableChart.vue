@@ -2,10 +2,16 @@
   <v-sheet color="white" height="100%" min-width="350px" max-width="350px">
     <v-layout column fill-height v-bind:class="getOutcomeClass(variable)">
       <v-card-title v-bind:class="getTitleClass(variable)">
-        <span v-if="variable.parentLabel">
-          {{ variable.parentLabel }} - {{ variable.label }}
+        <span style='margin: 0em 0em 1em 0em; width: 100%;'>
+          <v-layout align-center style='background-color: white; padding: 0.3em 0.3em 0em 0.3em;'>
+	    <span style="padding:0em 0.5em 0em 0em">
+                <img
+                  :src="'/images/' + variable.parent.label + '-icon-64.png'"
+                  style="height:2em"
+              /></span>
+              {{ getVariableLabel(variable) }}
+          </v-layout>
         </span>
-        <span v-else> {{ variable.label }} </span>
         <!-- <v-btn
           flat
           class="subheading primary--text text--lighten-4"
@@ -112,6 +118,13 @@ export default {
         return 'var-chart';
       }
     },
+    getVariableLabel(v) {
+      if (v.parentLabel) {
+     	return v.parentLabel + " - " + v.label;
+      } else {
+      	return v.label;
+      }
+    }
 },
 };
 </script>
