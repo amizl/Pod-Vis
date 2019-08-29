@@ -4,7 +4,7 @@
   </v-container>
   <v-container v-else fluid grid-list-md fill-height>
     <v-toolbar app class="primary">
-      <v-toolbar-title class="white--text">Cohort Manager</v-toolbar-title>
+      <v-toolbar-title class="white--text">Cohort Manager - {{ collection.label }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-flex xs12 sm12> <CohortSelection class="mt-2" /> </v-flex>
