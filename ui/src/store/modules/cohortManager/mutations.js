@@ -202,6 +202,14 @@ export default {
     state[stateTypes.PVALS] = pvals;
   },
   /**
+   * Set pval threshold
+   * @param {Object} state
+   * @param {Array} threshold P value threshold.
+   */
+  [mutations.SET_PVAL_THRESHOLD](state, threshold) {
+      state[stateTypes.PVAL_THRESHOLD] = threshold;
+  },
+/**
    * Set query for particular dimension.
    * @param {Object} state
    * @param {Object} query Object with the keys, param, operator, value that represents a filter
@@ -300,6 +308,13 @@ export default {
     state[stateTypes.PVALS] = [];
   },
   /**
+   * Reset pval threshold back to original state.
+   * @param {Object} state
+   */
+  [mutations.RESET_PVAL_THRESHOLD](state) {
+    state[stateTypes.PVAL_THRESHOLD] = 'None';
+  },
+    /**
    * Reset queries back to original state.
    * @param {Object} state
    */

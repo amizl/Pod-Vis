@@ -61,3 +61,18 @@ h6 {
 .caption {
   color: '#1F2933';
 }
+
+/* Highlight variables with P Value below threshold */
+.highlight-var {
+  background-color: #FFB0B0;
+}
+
+.var-chart {
+  padding-bottom: 0.5em;
+  padding: 2px;
+}
+
+.highlight-var-chart {
+  border: 2px solid red;
+  padding-bottom: 0.5em;
+}

@@ -341,4 +341,13 @@ export default {
     commit(mutations.RESET_PVALS);
     commit(mutations.RESET_QUERIES);
   },
+
+  [actions.SET_PVAL_THRESHOLD]({ commit }, threshold ) {
+    commit(mutations.SET_PVAL_THRESHOLD, threshold);
+  },
+
+  [actions.RESET_PVAL_THRESHOLD]({ commit }) {
+    commit(mutations.SET_PVAL_THRESHOLD);
+  },
+
 };

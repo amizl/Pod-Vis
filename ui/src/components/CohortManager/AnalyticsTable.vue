@@ -30,7 +30,7 @@
           hide-default-header
         >
           <template v-slot:items="props">
-            <tr>
+            <tr v-bind:class="getVariableClass(props.item)">
               <td class="text-xs-left">{{ props.item.label }}</td>
               <td class="text-xs-right">{{ props.item.pval | formatValue }}</td>
             </tr>
@@ -42,6 +42,9 @@
             </v-alert>
           </template> -->
         </v-data-table>
+
+         <v-select label="Highlight P Value <=" :items="pval_thresholds" box @change="updatePval" :value="pval_threshold"></v-select>
+
       </v-flex>
     </v-layout>
   </v-sheet>
@@ -60,6 +63,8 @@ export default {
   },
   data() {
     return {
+      highlight_by_pval: false,
+      pval_thresholds: [ "None", 0.1, 0.05, 0.001, 0.0001, 0.00001, 0.000001 ],
       headers: [
         {
           text: 'Variable',
@@ -79,8 +84,23 @@ export default {
   computed: {
     ...mapState('cohortManager', {
       pvals: state.PVALS,
+      pval_threshold: state.PVAL_THRESHOLD,
     }),
   },
+  methods: {
+    ...mapActions('cohortManager', {
+      setPvalThreshold: actions.SET_PVAL_THRESHOLD,
+    }),
+    updatePval(new_pval) {
+      this.setPvalThreshold(new_pval);
+    },
+    getVariableClass(v) {
+      if (v.pval < this.pval_threshold) {
+        return "highlight-var";
+      }
+      return "";
+    }
+  }
 };
 </script>
 

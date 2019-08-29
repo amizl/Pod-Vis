@@ -1,7 +1,7 @@
 <template>
   <v-sheet color="white" height="100%" min-width="350px" max-width="350px">
-    <v-layout column fill-height>
-      <v-card-title class="subheading primary--text text--darken-4 pb-0">
+    <v-layout column fill-height v-bind:class="getOutcomeClass(variable)">
+      <v-card-title v-bind:class="getTitleClass(variable)">
         <span v-if="variable.parentLabel">
           {{ variable.parentLabel }} - {{ variable.label }}
         </span>
@@ -33,10 +33,16 @@
 <script>
 import HistogramChart from '@/components/CohortManager/HistogramChart/HistogramChart.vue';
 import MultiChart from '@/components/CohortManager/MultiChart.vue';
-import { mapActions } from 'vuex';
-import { actions } from '@/store/modules/cohortManager/types';
+import { mapActions, mapState } from 'vuex';
+import { state, actions } from '@/store/modules/cohortManager/types';
 
 export default {
+  computed: {
+    ...mapState('cohortManager', {
+      pvals: state.PVALS,
+      pval_threshold: state.PVAL_THRESHOLD,
+    }),
+  },
   components: {
     HistogramChart,
     MultiChart,
@@ -53,7 +59,7 @@ export default {
   created() {
     if (this.variable.children) {
       this.variable.children.forEach(childVariable => {
-        this.addDimensionHelper(childVariable);
+      this.addDimensionHelper(childVariable);
       });
       this.dimension = this.variable.id;
     } else {
@@ -81,7 +87,32 @@ export default {
       };
       this.addDimension(payload);
     },
-  },
+    isBelowPValThreshold(v) {
+      for (var pv in this.pvals) {
+        if (this.pvals[pv].label === v.label) {
+          if (this.pvals[pv].pval <= this.pval_threshold) {
+	    return true;
+	  }
+	}
+      }
+      return false;
+    },
+    getTitleClass(v) {
+      var dflt = 'subheading primary--text text--darken-4 pb-0';
+      if (this.isBelowPValThreshold(v)) {
+        return dflt + ' highlight-var';
+      } else {
+        return dflt;
+      }
+    },
+    getOutcomeClass(v) {
+      if (this.isBelowPValThreshold(v)) {
+        return 'highlight-var-chart';
+     } else {
+        return 'var-chart';
+      }
+    },
+},
 };
 </script>
 

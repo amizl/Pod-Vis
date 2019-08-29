@@ -11,6 +11,7 @@ export const state = {
   CROSS_FILTER: 'crossFilter',
   DIMENSIONS: 'dimensions',
   PVALS: 'pvals',
+  PVAL_THRESHOLD: 'pvalThreshold',
   QUERIES: 'queries',
 };
 
@@ -47,6 +48,7 @@ export const mutations = {
   ADD_FILTER: 'addFilter',
   CLEAR_FILTER: 'clearFilter',
   SET_PVALS: 'setPvals',
+  SET_PVAL_THRESHOLD: 'setPvalThreshold',
   SET_QUERY: 'setQuery',
   CLEAR_QUERY: 'clearQuery',
   RESET_COHORTS: 'resetCohorts',
@@ -59,6 +61,7 @@ export const mutations = {
   RESET_CROSS_FILTER: 'resetCrossfilter',
   RESET_DIMENSIONS: 'resetDimensions',
   RESET_PVALS: 'resetPvals',
+  RESET_PVAL_THRESHOLD: 'resetPvalThreshold',
   RESET_QUERIES: 'resetQueries',
   REMOVE_COHORT: 'removeCohort',
 };
@@ -85,4 +88,6 @@ export const actions = {
   CLEAR_ALL_FILTERS: 'clearAllFilters',
   DELETE_SELECTED_COHORT: 'deleteSelectedCohort',
   REMOVE_COHORT: 'removeCohort',
+  SET_PVAL_THRESHOLD: 'setPvalThreshold',
+  RESET_PVAL_THRESHOLD: 'resetPvalThreshold',
 };
