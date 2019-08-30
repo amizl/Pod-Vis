@@ -24,14 +24,14 @@
           v-for="item in menuItems"
           :key="item.title"
           :to="item.path"
-          active-class="primary text--lighten-4"
-        >
+	  active-class="primary text--lighten-5"
+          >
           <v-list-tile-action>
-            <v-icon color="primary lighten-4">{{ item.icon }}</v-icon>
+            <v-icon color="primary lighten-1">{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content v-if="expand">
             <v-list-tile-title>
-              <span class="primary--text text--lighten-3">
+              <span>
                 {{ item.name }}
               </span>
             </v-list-tile-title>
@@ -160,10 +160,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.foo {
-  background-color: #54d1db;
-}
-
-/* Need to modify vuetify's stylus variables */
-</style>

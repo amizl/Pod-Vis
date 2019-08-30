@@ -70,9 +70,22 @@ h6 {
 .var-chart {
   padding-bottom: 0.5em;
   padding: 2px;
+  border-radius: 0.5rem;
 }
 
 .highlight-var-chart {
   border: 2px solid red;
   padding-bottom: 0.5em;
+  border-radius: 0.4rem;
 }
+
+/* Default font color for tile span in Sidebar - corresponds to 'primary--text text--lighten-3' */
+a.v-list__tile span {
+  color: #3F51B5;
+}
+
+/* Font color for active selection in Sidebar */
+a.v-list__tile.primary span {
+  color: #FFFFFF;
+}
+
