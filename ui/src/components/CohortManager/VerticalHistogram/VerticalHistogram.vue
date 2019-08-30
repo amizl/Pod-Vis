@@ -16,7 +16,7 @@
           :width="
             left
               ? w - xScale(bin.length) > 0
-                ? w - xScale(bin.length) > 0
+                ? w - xScale(bin.length)
                 : 0
               : xScale(bin.length) > 0
               ? xScale(bin.length)
