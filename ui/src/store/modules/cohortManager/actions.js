@@ -269,6 +269,7 @@ export default {
     try {
       const { data } = await axios.post('/api/cohorts', {
         queries: queriesMappedToVariables,
+        input_variables: inputVariables,
         output_variables: outputVariables,
         cohort_subjects: subjectsInCohort,
         cohort_name: cohortName,

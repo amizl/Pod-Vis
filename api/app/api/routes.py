@@ -7,7 +7,7 @@ from .exceptions import ResourceNotFound, BadRequest
 from ..auth.exceptions import AuthFailure
 from .. import models
 import pandas as pd
-
+import sys
 
 @api.route('/subjects')
 def get_all_subjects():
@@ -764,6 +764,7 @@ def create_cohort():
 
     request_data = request.get_json()
     queries = request_data.get("queries")
+    input_variables = request_data.get("input_variables", [])
     output_variables = request_data.get("output_variables", [])
     cohort_subjects = request_data.get("cohort_subjects")
     cohort_name = request_data.get("cohort_name")
@@ -821,14 +822,13 @@ def create_cohort():
                 dimension_label = dimension_label)
             new_output_variable.save_to_db()
 
-    for query in queries:
-        variable = query['variable']
+    # save all input variables in the database
+    input_vars = {}
+    for variable in input_variables:
         variable_type = variable['type']
 
-        if variable_type == 'subject':
+        if variable_type == 'subject' or variable_type == 'study':
             input_variable = models.CohortInputVariable(cohort.id, subject_ontology_id = variable['id'])
-        elif variable_type == 'study':
-            input_variable = models.CohortInputVariable(cohort.id, study_id = variable['id'])
         else:
             # type is observation
 
@@ -848,7 +848,12 @@ def create_cohort():
                 observation_ontology_id = variable['parentID'],
                 dimension_label = dimension_label)
         input_variable.save_to_db()
-
+        input_vars[variable['id']] = input_variable
+        
+    for query in queries:
+        variable = query['variable']
+        input_variable = input_vars[variable['id']]
+        
         variable_queries = query['query']
         for variable_query in variable_queries:
             if "value" in variable_query:
