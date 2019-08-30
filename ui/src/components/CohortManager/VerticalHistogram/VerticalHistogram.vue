@@ -372,17 +372,6 @@ export default {
         filter: d => d >= invertedLow && d < invertedHigh,
       });
 
-      // Add query in order to save filters to database
-      this.addQuery({
-        param: this.dimensionName,
-        operator: '>=',
-        value: invertedLow,
-      });
-      this.addQuery({
-        param: this.dimensionName,
-        operator: '<',
-        value: invertedHigh,
-      });
     },
     brushed() {
       const selection = event.selection;
