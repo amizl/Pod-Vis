@@ -1,24 +1,21 @@
 <template>
-  <v-navigation-drawer :mini-variant="!expand" app permanent fixed class="">
+   <v-navigation-drawer :mini-variant="!expand" app permanent fixed class="">
     <v-layout column fill-height align-space-around>
-      <v-toolbar extended flat color="white">
-        <v-list>
+        <v-list two-line class="pt-0 ma-0">
           <v-list-tile>
             <v-list-tile-action v-if="!expand">
-              <!-- <img
-                width="55px"
-                src="@/assets/C-2.png"
-                alt="IGS Logo"
-                class="rounded-lg mt-3"
-              /> -->
-              <img width="100px" src="@/assets/Clio-Vis-1.png" alt="IGS Logo" />
+              <img width="100%" src="/images/Clio-Vis-1.png" alt="CliO-Vis Logo"/>
             </v-list-tile-action>
+            <v-list-tile-content class="pt-0">
+              <img width="100%" src="/images/CliO-Vis-1.png" alt="CliO-Vis Logo"/>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile>
             <v-list-tile-content>
-              <img width="100%" src="@/assets/Clio-Vis-1.png" alt="IGS Logo" />
+              <img width="100%" src="/images/CliO-Vis-2.png" alt="Clinical Outcomes Visualization - Data made simple (TM)"/>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
-      </v-toolbar>
       <v-list three-line class="pt-0">
         <v-list-tile
           v-for="item in menuItems"
