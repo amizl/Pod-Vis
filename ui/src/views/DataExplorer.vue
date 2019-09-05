@@ -4,7 +4,7 @@
   </v-container>
   <v-container v-else fluid fill-height grid-list-md>
     <v-toolbar app class="primary">
-      <v-toolbar-title class="white--text">Data Explorer</v-toolbar-title>
+      <v-toolbar-title class="white--text">Data Explorer - {{ collection.label }}</v-toolbar-title>
     </v-toolbar>
     <v-layout column fill-height>
       <v-flex xs5>
@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { actions } from '@/store/modules/dataExplorer/types';
+import { mapActions, mapState } from 'vuex';
+import { actions, state } from '@/store/modules/dataExplorer/types';
 import SummaryView from '@/components/DataExplorer/SummaryView.vue';
 import Cohorts from '@/components/DataExplorer/Cohorts.vue';
 import Analytics from '@/components/DataExplorer/Analytics.vue';
@@ -59,6 +59,11 @@ export default {
     return {
       isLoading: false,
     };
+  },
+    computed: {
+    ...mapState('dataExplorer', {
+      collection: state.COLLECTION,
+    }),
   },
   async created() {
     // this.resetAllStoreData();
