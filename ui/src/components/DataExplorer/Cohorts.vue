@@ -7,7 +7,7 @@
         v-model="selected"
         flat
         :headers="headers"
-        :items="cohorts"
+        :items="collection_cohorts"
         item-key="id"
         :rows-per-page-items="[5]"
         select-all
@@ -48,8 +48,23 @@ export default {
   computed: {
     ...mapState('dataExplorer', {
       cohorts: state.COHORTS,
+      collection: state.COLLECTION,
     }),
-  },
+
+    // cohorts are collection-specific
+    collection_cohorts() {
+      var cch = [];
+      var cid = this.collection.id
+
+      this.cohorts.forEach(function(e) {
+        if (e.collection_id === cid) {
+          cch.push(e);
+        }
+      });
+      
+      return cch;
+    },
+},
   created() {
     this.fetchCohorts();
   },

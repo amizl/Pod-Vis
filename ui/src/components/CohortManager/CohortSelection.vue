@@ -3,7 +3,7 @@
     v-model="selectedCohort"
     flat
     dark
-    :items="cohorts"
+    :items="collection_cohorts"
     item-text="label"
     item-value="id"
     return-object
@@ -24,24 +24,24 @@ export default {
   },
   computed: {
     ...mapState('cohortManager', {
-      _cohorts: state.COHORTS,
+      cohorts: state.COHORTS,
       cohort: state.COHORT,
       collection: state.COLLECTION,
     }),
-    cohorts() {
+
+    // cohorts are collection-specific
+    collection_cohorts() {
       // include a default select that serves as the new cohort option
-      var new_ch = [{ id: null, label: 'New Cohort' }];
-      var ch = this._cohorts;
+      var cch = [{ id: null, label: 'New Cohort' }];
       var cid = this.collection.id;
 
-      // cohorts are collection-specific
-      ch.forEach(function(e) {
+      this.cohorts.forEach(function(e) {
         if (e.collection_id === cid) {
-          new_ch.push(e);
+          cch.push(e);
         }
       });
 
-      return new_ch;
+      return cch;
     },
   },
   watch: {
