@@ -62,10 +62,10 @@
       <!-- <v-list class="pb-5">
         <v-list-tile>
           <v-list-tile-action v-if="!expand">
-            <img width="20px" src="@/assets/som_igs_icon.svg" alt="IGS Logo" />
+            <img width="20px" src="@/assets/som_icon.svg" alt="IGS Logo" />
           </v-list-tile-action>
           <v-list-tile-content v-if="expand">
-            <img src="@/assets/som_igs_logo.svg" alt="IGS Logo" />
+            <img src="@/assets/som_logo.svg" alt="IGS Logo" />
           </v-list-tile-content>
         </v-list-tile>
       </v-list> -->
