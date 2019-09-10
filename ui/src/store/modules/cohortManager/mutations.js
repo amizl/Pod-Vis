@@ -209,7 +209,16 @@ export default {
   [mutations.SET_PVAL_THRESHOLD](state, threshold) {
       state[stateTypes.PVAL_THRESHOLD] = threshold;
   },
-/**
+  /**
+   * Set highlighted subset
+   * @param {Object} state
+   * @param {Array} New highlighted subset.
+   */
+  [mutations.SET_HIGHLIGHTED_SUBSET](state, subset) {
+      state[stateTypes.HIGHLIGHTED_SUBSET] = subset;
+  },
+
+  /**
    * Set query for particular dimension.
    * @param {Object} state
    * @param {Object} query Object with the keys, param, operator, value that represents a filter
@@ -314,7 +323,14 @@ export default {
   [mutations.RESET_PVAL_THRESHOLD](state) {
     state[stateTypes.PVAL_THRESHOLD] = 'None';
   },
-    /**
+  /**
+   * Reset highlighted subset back to original state.
+   * @param {Object} state
+   */
+  [mutations.RESET_HIGHLIGHTED_SUBSET](state) {
+    state[stateTypes.HIGHLIGHTED_SUBSET] = 'None';
+  },
+  /**
    * Reset queries back to original state.
    * @param {Object} state
    */

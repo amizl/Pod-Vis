@@ -14,7 +14,22 @@
               : 0
           "
           :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
-          fill="#E8EAF6"
+          fill="#A1A3AB"
+          :opacity="getOpacity('population')"
+        />
+        <animated-rect
+          v-for="(bin, i) in popMinusBins"
+          :key="`pop-minus-cohort-${i}`"
+          :x="xScale(bin.x0)"
+          :y="yScale(bin.length)"
+          :width="
+            xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+              ? xScale(bin.x1) - xScale(bin.x0) - 1
+              : 0
+          "
+          :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
+	  fill="#3FB551"
+          :opacity="getOpacity('non-cohort')"
         />
         <animated-rect
           v-for="(bin, i) in bins"
@@ -28,6 +43,7 @@
           "
           :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
           :fill="selection.length ? getFill(bin) : '#3F51B5'"
+          :opacity="getOpacity('cohort')"
         />
         <!-- Cohort Mean -->
         <!-- <text
@@ -181,6 +197,7 @@ export default {
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
       dimensions: state.DIMENSIONS,
+      highlightedSubset: state.HIGHLIGHTED_SUBSET,
       cohort: state.COHORT,
     }),
     w() {
@@ -224,6 +241,31 @@ export default {
       //   .thresholds(this.xScale.ticks(30))(this.data);
       // .domain(this.cohortXScale.domain())
       // .thresholds(this.cohortXScale.ticks(30))(this.data);
+    },
+    popMinusBins() {
+      // subtract bins from population bins to get popMinusBins
+      // i.e., bins for the non-cohort population
+      var pb = this.hist(this.populationData);
+      var b = this.hist(this.data);
+      var pm_bins = [];
+      var pb_len = pb.length;
+
+      // TODO - compute this in a more straightforward fashion
+      // TODO - factor out code in common with VerticalHistogram.vue
+      for (var i = 0;i < pb_len; ++i) {
+        var nbl = [];
+	nbl.x0 = pb[i].x0;
+	nbl.x1 = pb[i].x1;
+        var bl = typeof(b[i]) !== 'undefined' ? b[i].length : 0;
+	var pbl = typeof(pb[i]) !== 'undefined' ? pb[i].length : 0;
+        // TODO - we're creating bins of the correct size for display
+	// purposes, but the values inside aren't correct.
+        for (var j = bl;j < pbl; ++j) {
+	  nbl.push(1);
+        }
+        pm_bins.push(nbl);
+      }
+      return pm_bins;
     },
     mean() {
       return this.xScale(
@@ -451,6 +493,17 @@ export default {
         }
       } else {
         return '#3F51B5';
+      }
+    },
+    getOpacity(subset) {
+      if (this.highlightedSubset === 'None') {
+        return 0.8;
+      } else {
+        if (this.highlightedSubset === subset) {
+          return 1;
+        } else {
+	  return 0.3;
+	}
       }
     },
     resizeChart() {

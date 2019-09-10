@@ -13,6 +13,7 @@ export const state = {
   PVALS: 'pvals',
   PVAL_THRESHOLD: 'pvalThreshold',
   QUERIES: 'queries',
+  HIGHLIGHTED_SUBSET: 'highlightedSubset',
 };
 
 // Getters
@@ -49,6 +50,7 @@ export const mutations = {
   CLEAR_FILTER: 'clearFilter',
   SET_PVALS: 'setPvals',
   SET_PVAL_THRESHOLD: 'setPvalThreshold',
+  SET_HIGHLIGHTED_SUBSET: 'setHighlightedSubset',
   SET_QUERY: 'setQuery',
   CLEAR_QUERY: 'clearQuery',
   RESET_COHORTS: 'resetCohorts',
@@ -62,6 +64,7 @@ export const mutations = {
   RESET_DIMENSIONS: 'resetDimensions',
   RESET_PVALS: 'resetPvals',
   RESET_PVAL_THRESHOLD: 'resetPvalThreshold',
+  RESET_HIGHLIGHTED_SUBSET: 'resetHighlightedSubset',
   RESET_QUERIES: 'resetQueries',
   REMOVE_COHORT: 'removeCohort',
 };
@@ -90,4 +93,6 @@ export const actions = {
   REMOVE_COHORT: 'removeCohort',
   SET_PVAL_THRESHOLD: 'setPvalThreshold',
   RESET_PVAL_THRESHOLD: 'resetPvalThreshold',
+  SET_HIGHLIGHTED_SUBSET: 'setHighlightedSubset',
+  RESET_HIGHLIGHTED_SUBSET: 'resetHighlightedSubset',
 };

@@ -22,8 +22,32 @@
               ? xScale(bin.length)
               : 0
           "
-          fill="#E8EAF6"
+          fill="#A1A3AB"
+          :opacity="getOpacity('population')"
         />
+        <!-- Plot population minus selected cohort -->
+        <animated-rect
+          v-for="(bin, i) in popMinusBins"
+          :key="`pop-minus-cohort-${i}`"
+          :x="left ? xScale(bin.length) : 0"
+          :y="yScale(bin.x1)"
+          :height="
+            yScale(bin.x0) - yScale(bin.x1) - 1 > 0
+              ? yScale(bin.x0) - yScale(bin.x1) - 1
+              : 0
+          "
+          :width="
+            left
+              ? w - xScale(bin.length) > 0
+                ? w - xScale(bin.length)
+                : 0
+              : xScale(bin.length) > 0
+              ? xScale(bin.length)
+              : 0
+          "
+          fill="#3FB551"
+          :opacity="getOpacity('non-cohort')"
+         />
         <animated-rect
           v-for="(bin, i) in bins"
           :key="`cohort-${i}`"
@@ -43,9 +67,11 @@
               ? xScale(bin.length)
               : 0
           "
-          :fill="selection.length ? getFill(bin) : '#3F51B5'"
+          fill="#3F51B5"
+          :opacity="getOpacity('cohort')"
         />
-        <!-- Cohort Mean -->
+
+<!-- Cohort Mean -->
         <!-- <circle
           r="15"
           :cx="mean"
@@ -178,6 +204,7 @@ export default {
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
       dimensions: state.DIMENSIONS,
+      highlightedSubset: state.HIGHLIGHTED_SUBSET,
     }),
     w() {
       const { left, right } = this.margin;
@@ -221,6 +248,31 @@ export default {
       // .domain(this.cohortXScale.domain())
       // .thresholds(this.cohortXScale.ticks(30))(this.data);
     },
+    popMinusBins() {
+      // subtract bins from population bins to get popMinusBins
+      // i.e., bins for the non-cohort population
+      var pb = this.hist(this.populationData);
+      var b = this.hist(this.data);
+      var pm_bins = [];
+      var pb_len = pb.length;
+
+      // TODO - compute this in a more straightforward fashion
+      // TODO - factor out code in common with HistogramChart.vue
+      for (var i = 0;i < pb_len; ++i) {
+        var nbl = [];
+	nbl.x0 = pb[i].x0;
+	nbl.x1 = pb[i].x1;
+        var bl = typeof(b[i]) !== 'undefined' ? b[i].length : 0;
+	var pbl = typeof(pb[i]) !== 'undefined' ? pb[i].length : 0;
+        // TODO - we're creating bins of the correct size for display
+	// purposes, but the values inside aren't correct.
+        for (var j = bl;j < pbl; ++j) {
+	  nbl.push(1);
+        }
+        pm_bins.push(nbl);
+      }
+      return pm_bins;
+    },
     mean() {
       return this.xScale(mean(this.data));
     },
@@ -258,7 +310,6 @@ export default {
   watch: {
     filteredData() {
       this.data = flattenGroupCounts(this.group.all());
-
       if (this.selected.length && !this.dimension.currentFilter()) {
         this.selected = [];
       }
@@ -418,6 +469,17 @@ export default {
         }
       } else {
         return '#3F51B5';
+      }
+    },
+    getOpacity(subset) {
+      if (this.highlightedSubset === 'None') {
+        return 0.9;
+      } else {
+        if (this.highlightedSubset === subset) {
+          return 1;
+        } else {
+	  return 0.3;
+	}
       }
     },
     resizeChart() {
