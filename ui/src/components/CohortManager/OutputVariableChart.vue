@@ -2,8 +2,8 @@
   <v-sheet color="white" height="100%" min-width="350px" max-width="350px">
     <v-layout column fill-height v-bind:class="getOutcomeClass(variable)">
       <v-card-title v-bind:class="getTitleClass(variable)">
-        <span style='margin: 0em 0em 1em 0em; width: 100%;'>
-          <v-layout align-center style='background-color: white; padding: 0.3em 0.3em 0em 0.3em;'>
+        <span style='margin: 0em 0em 1em 0em;'>
+          <v-layout align-center style='background-color: white; padding: 0.4em 0.4em 0em 0.4em; border-radius: 0.5rem;'>
 	    <span style="padding:0em 0.5em 0em 0em">
                 <img
                   :src="'/images/' + variable.parent.label + '-icon-64.png'"
