@@ -7,7 +7,7 @@
       selectable
       :search="search"
       :items="[
-        { type: 'study', id: 'study_id', label: 'Study' },
+        { type: 'study', id: 12, label: 'Study' },
         ...subjectVariables,
       ]"
       item-text="label"

@@ -83,7 +83,7 @@ export default {
       this.addDimension(payload);
     } else {
       let dimension, payload;
-      if (this.variable.type == 'study') {
+      if (this.variable.label == 'Study') {
         dimension = this.variable.label;
         payload = {
           dimensionName: dimension, // GET STUDY NAME HERE...

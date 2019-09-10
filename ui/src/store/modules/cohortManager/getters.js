@@ -27,7 +27,7 @@ export default {
         if (inputVariable.study) {
           return inputVariable.study.label === dimensionName;
         } else if (inputVariable.observation_ontology) {
-          // TODO: This needs to be refacotred. Dimensions are currently
+          // TODO: This needs to be refactored. Dimensions are currently
           // keyed strangely and needs to be better named for an easier
           // mapping then having to format labels like this...
           const observationLabel = inputVariable.observation_ontology.label;
@@ -49,13 +49,13 @@ export default {
       });
     };
   },
-  [getters.FIND_COHORT_STUDY_INPUT_VARIABLES]: state => {
-    return !state.cohort.input_variables
-      ? []
-      : state.cohort.input_variables
-          .filter(variable => variable.study != null)
-          .map(variable => ({ ...variable.study, type: 'study' }));
-  },
+//  [getters.FIND_COHORT_STUDY_INPUT_VARIABLES]: state => {
+//    return !state.cohort.input_variables
+//      ? []
+//      : state.cohort.input_variables
+//          .filter(variable => variable.study != null)
+//          .map(variable => ({ ...variable.study, type: 'study' }));
+//  },
   [getters.FIND_COHORT_SUBJECT_INPUT_VARIABLES]: state => {
     return !state.cohort.input_variables
       ? []

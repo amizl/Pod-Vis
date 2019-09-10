@@ -21,7 +21,7 @@ export const getters = {
   HAS_USER_FILTERED_INPUT_VARIABLES: 'hasUserFilteredInputVariables',
   HAS_USER_SELECTED_COHORT: 'hasUserSelectedCohort',
   FIND_COHORT_QUERY: 'findCohortQuery',
-  FIND_COHORT_STUDY_INPUT_VARIABLES: 'findCohortStudyInputVariables',
+//  FIND_COHORT_STUDY_INPUT_VARIABLES: 'findCohortStudyInputVariables',
   FIND_COHORT_SUBJECT_INPUT_VARIABLES: 'findCohortSubjectInputVariables',
   FIND_COHORT_OBSERVATION_INPUT_VARIABLES:
     'findCohortObservationInputVariables',

@@ -294,8 +294,8 @@ export default {
     commit(mutations.RESET_INPUT_VARIABLES);
     commit(mutations.SET_COHORT, cohort);
 
-    const studyInputVariables =
-      getters[getterTypes.FIND_COHORT_STUDY_INPUT_VARIABLES];
+//    const studyInputVariables =
+//      getters[getterTypes.FIND_COHORT_STUDY_INPUT_VARIABLES];
     const subjectInputVariables =
       getters[getterTypes.FIND_COHORT_SUBJECT_INPUT_VARIABLES];
     const observationInputVariables =
@@ -305,7 +305,7 @@ export default {
 
     dispatch(actions.CLEAR_ALL_FILTERS);
     dispatch(actions.SET_INPUT_VARIABLES, [
-      ...studyInputVariables,
+//      ...studyInputVariables,
       ...subjectInputVariables,
       ...observationInputVariables,
     ]);
