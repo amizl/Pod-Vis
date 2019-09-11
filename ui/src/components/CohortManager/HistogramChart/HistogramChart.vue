@@ -1,5 +1,5 @@
 <template>
-  <v-flex ref="container" fill-height>
+  <v-flex ref="container">
     <svg ref="chart" :width="width" :height="height">
       <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
         <!-- Population bars are first so they will hide under cohort bars -->
