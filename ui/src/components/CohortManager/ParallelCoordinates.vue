@@ -8,7 +8,7 @@
       :y-domain="maxValueBetweenDimensions"
     />
     <!-- Parallel Coordinates -->
-    <canvas ref="canvas" :width="computedWidth" :height="computedHeight">
+    <canvas ref="canvas" :width="computedWidth" :height="computedHeight" style='padding: 0px 0px 8px 0px; margin: 0px;'>
     </canvas>
     <!-- Last visit histogram -->
     <VerticalHistogram
@@ -161,7 +161,7 @@ export default {
     computedHeight() {
       const { top, bottom } = this.margin;
       const { height } = this;
-      return height - top - bottom;
+      return height - top - bottom - 4;
     },
     xDimensionScale() {
       return scalePoint()
@@ -208,7 +208,6 @@ export default {
       addDimension: actions.ADD_DIMENSION,
     }),
     resizeChart() {
-      const { width, height } = this.container.getBoundingClientRect();
       this.height = 200;
       this.width = 150;
     },
