@@ -26,47 +26,30 @@
           :opacity="getOpacity('population')"
         />
         <!-- Plot population minus selected cohort -->
-        <animated-rect
+        <rect
           v-for="(bin, i) in popMinusBins"
           :key="`pop-minus-cohort-${i}`"
-          :x="left ? xScale(bin.length) : 0"
+	  :x="getNonCohortX(left, bin)"
           :y="yScale(bin.x1)"
-          :height="
-            yScale(bin.x0) - yScale(bin.x1) - 1 > 0
+          :height="yScale(bin.x0) - yScale(bin.x1) - 1 > 0
               ? yScale(bin.x0) - yScale(bin.x1) - 1
               : 0
           "
-          :width="
-            left
-              ? w - xScale(bin.length) > 0
-                ? w - xScale(bin.length)
-                : 0
-              : xScale(bin.length) > 0
-              ? xScale(bin.length)
-              : 0
-          "
+          :width="getNonCohortWidth(left,bin)"
           fill="#3FB551"
           :opacity="getOpacity('non-cohort')"
          />
-        <animated-rect
+        <rect
           v-for="(bin, i) in bins"
           :key="`cohort-${i}`"
-          :x="left ? xScale(bin.length) : 0"
+          :x="getCohortX(left,bin)"
           :y="yScale(bin.x1)"
           :height="
             yScale(bin.x0) - yScale(bin.x1) - 1 > 0
               ? yScale(bin.x0) - yScale(bin.x1) - 1
               : 0
           "
-          :width="
-            left
-              ? w - xScale(bin.length) > 0
-                ? w - xScale(bin.length)
-                : 0
-              : xScale(bin.length) > 0
-              ? xScale(bin.length)
-              : 0
-          "
+          :width="getCohortWidth(left,bin)"
           fill="#3F51B5"
           :opacity="getOpacity('cohort')"
         />
@@ -124,7 +107,7 @@ import { axisTop, axisLeft, axisRight } from 'd3-axis';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
-import AnimatedRect from './HistogramBar.vue';
+//import AnimatedRect from './HistogramBar.vue';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -158,7 +141,7 @@ export default {
     },
   },
   components: {
-    AnimatedRect,
+//    AnimatedRect,
   },
   props: {
     id: {
@@ -197,6 +180,7 @@ export default {
       data: [],
       populationData: [],
       selection: [],
+      populationCounts: {}
     };
   },
   computed: {
@@ -238,7 +222,14 @@ export default {
         .thresholds(this.yScale.ticks(30));
     },
     popBins() {
-      return this.hist(this.populationData);
+      var pop_bins = this.hist(this.populationData);
+      // cache bin counts
+      this.populationCounts = {};
+      var pb_len = pop_bins.length;
+      for (var i = 0;i < pb_len; ++i) {
+        this.populationCounts[pop_bins[i].x0] = pop_bins[i].length;
+      }
+      return pop_bins;
     },
     bins() {
       return this.hist(this.data);
@@ -469,6 +460,87 @@ export default {
         }
       } else {
         return '#3F51B5';
+      }
+    },
+    hasSelection() {
+      if (this.selection) {
+        if (this.selection.length) {
+          return true;
+	}
+      }
+      return false;
+    },
+    isBinSelected(bin) {
+      let [high, low] = this.selection.map(this.yScale.invert);
+      let { x0, x1 } = bin;
+
+      // Pad the high number as this might be a decimal
+      // and can cause some bars to not be colored in range
+      const PADDING = 1;
+      // Check that bin is within selection range
+      if (
+        low - PADDING <= x0 &&
+        low - PADDING <= x1 &&
+        high + PADDING >= x0 &&
+        high + PADDING >= x1
+      ) {
+        return true;
+      }
+      return false;
+    },
+    getCohortX(left, bin) {
+      var x = left ? this.xScale(bin.length) : 0;
+      if (this.hasSelection()) {
+        if (this.isBinSelected(bin)) {
+	  return x;
+	} else {
+	   return left ? this.xScale(0) : 0;
+        }
+      } else {
+        return x;
+      }
+    },
+    getCohortWidth(left, bin) {
+      var bar_width = left ? this.w - this.xScale(bin.length) > 0 ? this.w - this.xScale(bin.length) : 0
+              : this.xScale(bin.length) > 0 ? this.xScale(bin.length) : 0;
+
+      if (this.hasSelection()) {
+        if (this.isBinSelected(bin)) {
+	  return bar_width;
+	} else {
+	   return 0;
+        }
+      } else {
+        return bar_width;
+      }
+    },
+    getNonCohortX(left, bin) {
+      var x = left ? this.xScale(bin.length) : 0;
+      if (this.hasSelection()) {
+        if (this.isBinSelected(bin)) {
+	  return x;
+	} else {
+	   var bin_len = this.populationCounts[bin.x0];
+	   return left ? this.xScale(bin_len) : 0;
+        }
+      } else {
+        return x;
+      }
+    },
+    getNonCohortWidth(left, bin) {
+      var bar_width = left ? this.w - this.xScale(bin.length) > 0 ? this.w - this.xScale(bin.length) : 0
+              : this.xScale(bin.length) > 0 ? this.xScale(bin.length) : 0;
+
+      if (this.hasSelection()) {
+        if (this.isBinSelected(bin)) {
+	  return bar_width;
+	} else {
+	   var bin_len = this.populationCounts[bin.x0];
+           return left ? this.w - this.xScale(bin_len) > 0 ? this.w - this.xScale(bin_len) : 0
+              : this.xScale(bin_len) > 0 ? this.xScale(bin_len) : 0;
+        }
+      } else {
+        return bar_width;
       }
     },
     getOpacity(subset) {

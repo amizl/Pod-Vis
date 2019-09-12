@@ -17,32 +17,32 @@
           fill="#A1A3AB"
           :opacity="getOpacity('population')"
         />
-        <animated-rect
+        <rect
           v-for="(bin, i) in popMinusBins"
           :key="`pop-minus-cohort-${i}`"
           :x="xScale(bin.x0)"
-          :y="yScale(bin.length)"
+          :y="getNonCohortY(bin)"
           :width="
             xScale(bin.x1) - xScale(bin.x0) - 1 > 0
               ? xScale(bin.x1) - xScale(bin.x0) - 1
               : 0
           "
-          :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
+	  :height="getNonCohortHeight(bin)"
 	  fill="#3FB551"
           :opacity="getOpacity('non-cohort')"
         />
-        <animated-rect
+        <rect
           v-for="(bin, i) in bins"
           :key="`cohort-${i}`"
           :x="xScale(bin.x0)"
-          :y="yScale(bin.length)"
+          :y="getCohortY(bin)"
           :width="
             xScale(bin.x1) - xScale(bin.x0) - 1 > 0
               ? xScale(bin.x1) - xScale(bin.x0) - 1
               : 0
           "
-          :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
-          :fill="selection.length ? getFill(bin) : '#3F51B5'"
+          :height="getCohortHeight(bin)"
+          fill="#3F51B5"
           :opacity="getOpacity('cohort')"
         />
         <!-- Cohort Mean -->
@@ -113,7 +113,7 @@ import { axisBottom, axisLeft } from 'd3-axis';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
-import AnimatedRect from './HistogramBar.vue';
+//import AnimatedRect from './HistogramBar.vue';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -147,7 +147,7 @@ export default {
     },
   },
   components: {
-    AnimatedRect,
+//    AnimatedRect,
   },
   props: {
     id: {
@@ -186,6 +186,7 @@ export default {
       data: [],
       populationData: [],
       selection: [],
+      populationCounts: {}
     };
   },
   computed: {
@@ -232,7 +233,14 @@ export default {
         .thresholds(this.xScale.ticks(30));
     },
     popBins() {
-      return this.hist(this.populationData);
+      var pop_bins = this.hist(this.populationData);
+      // cache bin counts
+      this.populationCounts = {};
+      var pb_len = pop_bins.length;
+      for (var i = 0;i < pb_len; ++i) {
+        this.populationCounts[pop_bins[i].x0] = pop_bins[i].length;
+      }
+      return pop_bins;
     },
     bins() {
       return this.hist(this.data);
@@ -430,6 +438,8 @@ export default {
       }
 
       const [low, high] = this.getClosestBins();
+//      console.log("closest bins low = " low.x0 + "-" + low.x1 + " high = " + high.x0 + "-" + high.x1);
+//      console.log("closest bins low = " + low + " high = " + high);
 
       // Snap selections to closest bins
       select(this.$refs.brush)
@@ -472,27 +482,78 @@ export default {
       // Set remap our selection to snap to closest bins
       this.selection = this.getClosestBins();
     },
-    getFill(bin) {
+    hasSelection() {
       if (this.selection) {
-        let [low, high] = this.selection.map(this.xScale.invert);
-        let { x0, x1 } = bin;
+        if (this.selection.length) {
+          return true;
+	}
+      }
+      return false;
+    },
+    isBinSelected(bin) {
+      let [low, high] = this.selection.map(this.xScale.invert);
+      let { x0, x1 } = bin;
 
-        // Pad the high number as this might be a decimal
-        // and can cause some bars to not be colored in range
-        const PADDING = 1;
-        // Check that bin is within selection range
-        if (
-          low - PADDING <= x0 &&
-          low - PADDING <= x1 &&
-          high + PADDING >= x0 &&
-          high + PADDING >= x1
-        ) {
-          return '#3F51B5';
-        } else {
-          return '#E8EAF6';
+      // Pad the high number as this might be a decimal
+      // and can cause some bars to not be colored in range
+      const PADDING = 1;
+      // Check that bin is within selection range
+      if (
+        low - PADDING <= x0 &&
+        low - PADDING <= x1 &&
+        high + PADDING >= x0 &&
+        high + PADDING >= x1
+      ) {
+        return true;
+      }
+      return false;
+    },
+    getCohortY(bin) {
+        if (this.isBinSelected(bin)) {
+//     console.log("getCohortY() binx0=" + bin.x0 + " selected=" + this.isBinSelected(bin));
+     }
+     var y = this.yScale(bin.length);
+     if (this.hasSelection()) {
+        return this.isBinSelected(bin) ? y : this.yScale(0);
+      } else {
+        return y;
+      }
+    },
+    getCohortHeight(bin) {
+    if (this.isBinSelected(bin)) {
+//      console.log("getCohortHeight() binx0=" + bin.x0 + " selected=" + this.isBinSelected(bin));
+      }
+var bar_height = this.h - this.yScale(bin.length) > 0 ? this.h - this.yScale(bin.length) : 0;
+      if (this.hasSelection()) {
+        return this.isBinSelected(bin) ? bar_height : 0;
+      } else {
+        return bar_height;
+      }
+    },
+    getNonCohortY(bin) {
+      var y = this.yScale(bin.length)
+      if (this.hasSelection()) {
+        if (this.isBinSelected(bin)) {
+	  return y;
+	} else {
+	   var bin_len = this.populationCounts[bin.x0];
+	   return this.yScale(bin_len);
         }
       } else {
-        return '#3F51B5';
+        return y;
+      }
+    },
+    getNonCohortHeight(bin) {
+      var bar_height = this.h - this.yScale(bin.length) > 0 ? this.h - this.yScale(bin.length) : 0;
+      if (this.hasSelection()) {
+        if (this.isBinSelected(bin)) {
+	  return bar_height;
+	} else {
+	   var bin_len = this.populationCounts[bin.x0];
+	   return this.h - this.yScale(bin_len) > 0 ? this.h - this.yScale(bin_len) : 0;
+        }
+      } else {
+        return bar_height;
       }
     },
     getOpacity(subset) {
@@ -507,9 +568,8 @@ export default {
       }
     },
     resizeChart() {
-      const { width, height } = this.container.getBoundingClientRect();
-      this.width = width;
-      this.height = height;
+      this.height = 200;
+      this.width = 350;
     },
   },
 };
