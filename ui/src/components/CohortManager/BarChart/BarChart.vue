@@ -236,9 +236,8 @@ export default {
       }
     },
     resizeChart() {
-      const { width, height } = this.container.getBoundingClientRect();
-      this.width = width;
-      this.height = height;
+      this.height = 200;
+      this.width = 350;
     },
   },
 };
