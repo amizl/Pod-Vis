@@ -43,6 +43,7 @@ export default {
     hovering: false,
     observationVariables: [],
     subjectVariables: [],
+    propagateChanges: false,
   }),
   computed: {
     ...mapGetters('cohortManager', {
@@ -75,7 +76,7 @@ export default {
       //   .map(variable => variable.observation_ontology.id);
     },
     selectedSubjectVariables(newSubjectVariables) {
-      if (!this.hasUserSelectedCohort) {
+      if (this.propagateChanges) {
         this.setInputVariables([
           // Filter parent nodes because we don't want them added to our list,
           // i.e, 'Demographics'
@@ -87,7 +88,7 @@ export default {
       }
     },
     selectedObservationVariables(newObservationVariable) {
-      if (!this.hasUserSelectedCohort) {
+      if (this.propagateChanges) {
         this.setInputVariables([
           ...this.selectedSubjectVariables.filter(
             variable => !variable.children

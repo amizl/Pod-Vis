@@ -26,6 +26,7 @@ export default {
     dragging: false,
     hovering: false,
     observationVariables: [],
+    propagateChanges: false,
   }),
   computed: {
     ...mapGetters('cohortManager', {
@@ -57,7 +58,7 @@ export default {
       }
     },
     selectedObservationVariables(newObservationVariables) {
-      if (!this.hasUserSelectedCohort) {
+      if (this.propagateChanges) {
         // SCOPA, UPDRS, etc
         const outcomeMeasures = newObservationVariables.filter(
           variable =>

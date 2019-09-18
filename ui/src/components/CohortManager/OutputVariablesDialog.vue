@@ -23,7 +23,7 @@
         ></v-text-field>
       </v-sheet>
       <v-card-text>
-        <output-variables-tree :search="searchVariable" />
+        <output-variables-tree :search="searchVariable" ref="outputVars" />
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
@@ -47,6 +47,12 @@ export default {
     searchVariable: '',
     openOutputVariableDialog: false,
   }),
+  watch: {
+    openOutputVariableDialog(open) {
+      // set flag to allow propagation of dialog changes back to UI
+      this.$refs.outputVars.propagateChanges = open;
+    },
+  },
 };
 </script>
 
