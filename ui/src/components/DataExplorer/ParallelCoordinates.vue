@@ -2,6 +2,7 @@
   <v-sheet
     color="white"
     height="100%"
+    min-height="250px"
     min-width="200px"
     :class="classed"
     @click="selectForDetailedView"
