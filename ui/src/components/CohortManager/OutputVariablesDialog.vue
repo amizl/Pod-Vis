@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="openInputVariableDialog" scrollable max-width="600px">
+  <v-dialog v-model="openOutputVariableDialog" scrollable max-width="600px">
     <template v-slot:activator="{ on }">
       <v-btn flat color="primary" v-on="on">
         <v-icon left dark>add_box</v-icon>
@@ -28,7 +28,7 @@
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" flat @click="openInputVariableDialog = false"
+        <v-btn color="primary" flat @click="openOutputVariableDialog = false"
           ><v-icon left dark>close</v-icon>Close</v-btn
         >
       </v-card-actions>
@@ -45,7 +45,7 @@ export default {
   },
   data: () => ({
     searchVariable: '',
-    openInputVariableDialog: false,
+    openOutputVariableDialog: false,
   }),
 };
 </script>
