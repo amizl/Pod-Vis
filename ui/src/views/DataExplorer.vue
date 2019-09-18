@@ -60,23 +60,43 @@ export default {
       isLoading: false,
     };
   },
-    computed: {
+  computed: {
     ...mapState('dataExplorer', {
+      cohorts: state.COHORTS,
       collection: state.COLLECTION,
+      outcomeVariables: state.OUTCOME_VARIABLES,
     }),
   },
   async created() {
     // this.resetAllStoreData();
     this.isLoading = true;
+    await this.fetchCohorts();
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
     this.isLoading = false;
+
+    // set outcome variables to union of cohorts' output variables
+    var vars_added = {};
+    var outcome_vars = [];
+    this.cohorts.forEach(function(c) {
+	var output_vars = c.output_variables;
+	output_vars.forEach(function(ov) {
+	    var id = ov.observation_ontology.id;
+	    if (!(id in vars_added)) {
+		vars_added[id] = 1;
+		outcome_vars.push(ov.observation_ontology);
+	    }
+	});
+    });
+    this.setOutcomeVariables(outcome_vars);
   },
   methods: {
     ...mapActions('dataExplorer', {
+      fetchCohorts: actions.FETCH_COHORTS,
       fetchCollection: actions.FETCH_COLLECTION,
       fetchData: actions.FETCH_DATA,
-    }),
+      setOutcomeVariables: actions.SET_OUTCOME_VARIABLES,
+   })
   },
 };
 </script>

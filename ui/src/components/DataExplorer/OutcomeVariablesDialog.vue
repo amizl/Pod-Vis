@@ -54,10 +54,12 @@ export default {
     openInputVariableDialog: false,
     selectedObservationVariables: [],
     observationVariables: [],
+    propagateChanges: false,
   }),
   computed: {
     ...mapState('dataExplorer', {
       collection: state.COLLECTION,
+      outcomeVariables: state.OUTCOME_VARIABLES,
     }),
   },
   watch: {
@@ -66,8 +68,18 @@ export default {
       const outcomeMeasures = newObservationVariables.filter(
         variable => variable.parent_id != 1
       );
-
-      this.setOutcomeVariables(outcomeMeasures);
+      // only propagate changes from dialog back to UI when dialog is open
+      if (this.propagateChanges) {
+        this.setOutcomeVariables(outcomeMeasures);
+      }
+    },
+    openInputVariableDialog(open) {
+      // ensure that dialog state matches UI state
+      if (open) {
+        this.updateSelectedObservationVariables();
+      }
+      // set flag to allow propagation of dialog changes back to UI
+      this.propagateChanges = open;
     },
   },
   async created() {
@@ -80,6 +92,14 @@ export default {
     ...mapActions('dataExplorer', {
       setOutcomeVariables: actions.SET_OUTCOME_VARIABLES,
     }),
+    // ensure that dialog is in sync with outcome variables
+    updateSelectedObservationVariables() {
+      var new_selected_obs_vars = [];
+      this.outcomeVariables.forEach(function(ov) {
+        new_selected_obs_vars.push(ov);
+      });
+      this.selectedObservationVariables = new_selected_obs_vars;
+    },
   },
 };
 </script>
