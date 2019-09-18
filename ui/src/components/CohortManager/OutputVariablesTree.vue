@@ -39,10 +39,21 @@ export default {
   },
   watch: {
     cohort() {
+      // pull vars from user-selected cohort
       if (this.hasUserSelectedCohort) {
-        this.selectedObservationVariables = this.vars.filter(
-          variable => variable.type === 'observation'
-        );
+        var selected_vars = [];
+        this.vars.forEach(function(v) {
+          v.children.forEach(function(c) {
+            if (c.type === 'observation') {
+              selected_vars.push(c);
+            }
+          });
+	});
+        this.selectedObservationVariables = selected_vars;
+      }
+      // otherwise reset selections
+      else {
+        this.selectedObservationVariables = [];
       }
     },
     selectedObservationVariables(newObservationVariables) {
