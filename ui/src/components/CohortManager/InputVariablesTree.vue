@@ -56,13 +56,19 @@ export default {
   },
   watch: {
     cohort() {
-      if (this.hasUserSelectedCohort) {
+       // pull vars from user-selected cohort
+       if (this.hasUserSelectedCohort) {
         this.selectedSubjectVariables = this.vars.filter(
           variable => variable.type === 'subject'
         );
         this.selectedObservationVariables = this.vars.filter(
           variable => variable.type === 'observation'
         );
+      }
+      // otherwise reset selections
+      else {
+        this.selectedSubjectVariables = [];
+        this.selectedObservationVariables = [];
       }
       // const observationVariables = newCohort.input_variables
       //   .filter(variable => variable.observation_ontology !== null)
