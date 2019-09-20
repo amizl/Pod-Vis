@@ -83,9 +83,9 @@ def main():
                 if age_mo != "" and age_yr == "":
                     age_yr = int(float(age_mo) / 12.00)
 
-                # age - CliO-Vis can't handle empty values here
+                # HACK - CliO-Vis can't handle empty values here
                 if age_yr == "":
-                    age_yr = 200
+                    age_yr = 0
 
                 # insert subject attributes
                 insert_subject_attribute(cursor, subject_id, subject_ont, "Sex", gender, "string")
@@ -96,8 +96,6 @@ def main():
                 n_atts += 4
 
     print("inserted " + str(n_subjects) + " subject(s), " + str(n_atts) + " attribute(s)")
-
-    implant_cols = ['hosp_id','SID','grant_yn','withdrawdate','withdrawreason','ear1','ear2','ear3','Laby1','Laby2','Laby3','DeceasedYN','Code1_1','Code1_2','Code2_1','Code2_2','Code3_1','Code3_2','typ1','typ1extra','typ2','typ2extra','typ3','typ3extra','ser1','ser1extra','ser2','ser2extra','ser3','ser3extra','UIHC1','UIHC2','UIHC3','opdate1','opdate2','opdate3','condate1','condate2','condate3','new_typi','new_typ1','new_typ2','new_typ3','cur_typ1','cur_typ2','cur_typ3','updatei','update1','update2','update3','inactdatei','inactdate1','inactdate2','inactdate3','nele1','nele2','nele3','status_speech','status_audio','status_ep','status_music','imp_age_yr','imp_age_mo','imp2_age_yr','imp2_age_mo','imp_comment','consentdate','assentdate','surgeon1','surgeon2','surgeon3','comment1','comment2','comment3','grantator_yn','evergrant_yn','whynotstudy','when_nu_or_do','active','annual_recall','longterm_yn','entrydate']
 
     # created selected subject_ontology terms for implant data
     ci_id = insert_ontology_term(cursor, "subject", subject_ont, "Cochlear Implant", None)
@@ -111,12 +109,15 @@ def main():
     conn.commit()
 
     # add implant info
+    implant_cols = None
     with open(args.implant_file, newline='') as ifile:
         reader = csv.reader(ifile, delimiter=',')
         for row in reader:
             hosp_id = row[0]
-            # skip headers
-            if hosp_id != "" and not re.match(r'.*hosp_no.*', hosp_id):
+            # read column headers
+            if re.match(r'.*hosp_no.*', hosp_id):
+                implant_cols = row
+            elif hosp_id != "":
                 info = {}
                 colnum = 0
                 for col in implant_cols:
@@ -158,7 +159,7 @@ def main():
                 dev_failed = "no"
                 if 'comment1' in info and (re.match(r'.*(device failed|failed device).*', info['comment1'])):
                     dev_failed = "yes"
-                    
+
 #                print("read " + str(info))
 
                 subject_id = get_or_insert_subject(cursor, study_id, hosp_id)
@@ -169,17 +170,77 @@ def main():
                 insert_subject_attribute(cursor, subject_id, subject_ont, "Surgeon2", info['surgeon2'], "string")
                 insert_subject_attribute(cursor, subject_id, subject_ont, "Device Failed", dev_failed, "string")
 
+                # HACK - CliO-Vis expects all subject vars to be defined
                 if 'imp_age_yr' in info:
                     insert_subject_attribute(cursor, subject_id, subject_ont, "Implant1 Age", info['imp_age_yr'], "int")
+                else:
+                    insert_subject_attribute(cursor, subject_id, subject_ont, "Implant1 Age", 0, "int")
                 if 'imp2_age_yr' in info:
                     insert_subject_attribute(cursor, subject_id, subject_ont, "Implant2 Age", info['imp2_age_yr'], "int")
+                else:
+                    insert_subject_attribute(cursor, subject_id, subject_ont, "Implant2 Age", 0, "int")
 
                 conn.commit()
 
-    # created selected observation_ontology terms
-#    ci_id = insert_ontology_term(cursor, "subject", subject_ont, "Cochlear Implant", None)
+    # created selected observation_ontology terms for CNC test results
+    a_id = insert_ontology_term(cursor, "observation", observation_ont, "Aural", "Outcome Measures")
+    a_terms = [
+        "lCncWord1Per", "lCncPhon1Per", "lCncWord2Per", "lCncPhon2Per",
+        "rCncWord1Per", "rCncPhon1Per", "rCncWord2Per", "rCncPhon2Per",
+    ]
+    for term in a_terms:
+        tid = insert_ontology_term(cursor, "observation", observation_ont, term, "Aural")
 
-#    conn.commit()
+    # add visits and audiology results from
+    # Maryland consonant-vowel nucleus-consonant (CNC) Tests
+    visit_counts = {}
+    cnc_cols = None
+    with open(args.cnc_file, newline='') as cfile:
+        reader = csv.reader(cfile, delimiter=',')
+        for row in reader:
+            hosp_id = row[0]
+            # read column headers
+            if re.match(r'.*hosp_no.*', hosp_id):
+                cnc_cols = row
+            elif hosp_id != "":
+                info = {}
+                colnum = 0
+                for col in cnc_cols:
+                    if row[colnum] != "":
+                        info[col] = row[colnum]
+                    colnum += 1
+
+#                print("read " + str(info))
+                    
+                # get subject id
+                subject_id = get_or_insert_subject(cursor, study_id, hosp_id)
+
+                # create subject_visit
+                visit_num = 1
+                if subject_id in visit_counts:
+                    visit_num = visit_counts[subject_id] + 1
+                visit_counts[subject_id] = visit_num
+                disease_status = None
+
+                # event date: convert m?m/dd/yy to yyyy-mm-dd
+                event_date = info['testdate']
+                m = re.match(r'^(\d+)\/(\d+)\/(\d{2})$', event_date)
+                if m is not None:
+                    event_date = '20' + m.group(3) + "-" + m.group(1).zfill(2) + "-" + m.group(2)
+
+                visit_event = "Baseline"
+                if visit_num > 1:
+                    visit_event = "Visit " + str(visit_num)
+                
+                subject_visit_id = get_or_insert_subject_visit(cursor, visit_event, visit_num, disease_status, event_date, subject_id)
+                conn.commit()
+
+                # HACK - can't have missing int values
+                for term in a_terms:
+                    if term not in info:
+                        info[term] = 0
+                    obs_id = get_or_insert_observation(cursor, observation_ont, term, int(float(info[term])), subject_visit_id, "int")
+                conn.commit()
                 
     cursor.close()
     conn.close()
@@ -362,6 +423,68 @@ def insert_ontology_term(cursor, ontology, ontology_index, label, parent_term):
     # update index
     ontology_index[label] = { 'id': ontology_id, 'label': label, 'parent_id': parent_id }
     return ontology_id
+
+def get_subject_visit_id(cursor, visit_num, subject_id):
+    subject_visit_id = None
+    query = "select id from subject_visit where visit_num = %s and subject_id = %s";
+    try:
+        cursor.execute(query, (visit_num, subject_id))
+        for (id) in cursor:
+            subject_visit_id = id[0]
+    except Exception as e:
+        print(e)
+    return subject_visit_id
+
+def get_or_insert_subject_visit(cursor, visit_event, visit_num, disease_status, event_date, subject_id):
+    subject_visit_id = get_subject_visit_id(cursor, visit_num, subject_id)
+    if (subject_visit_id is not None):
+        return subject_visit_id
     
+    query = "insert into subject_visit (visit_event, visit_num, disease_status, event_date, subject_id) values (%s, %s, %s, %s, %s)"
+    try:
+        cursor.execute(query, (visit_event, visit_num, disease_status, event_date, subject_id))
+        subject_visit_id = cursor.lastrowid
+
+    except Exception as e:
+        print(e)
+        sys.exit()
+
+    print("Created subject visit {}/{} in database with ID: {}.".format(str(subject_id), str(visit_num), subject_visit_id))
+    return subject_visit_id
+
+def get_observation_id(cursor, subject_visit_id, obs_ont_id):
+    obs_id = None
+    query = "select id from observation where subject_visit_id = %s and observation_ontology_id = %s"
+    try:
+        cursor.execute(query, (subject_visit_id, obs_ont_id))
+        for (id) in cursor:
+            obs_id = id[0]
+    except Exception as e:
+        print(e)
+    return obs_id
+
+def get_or_insert_observation(cursor, observation_ont, term, value, subject_visit_id, type):
+    if term not in observation_ont:
+        print("ERROR - no observation_ontology term found for '" + term+ "'")
+        sys.exit(1)
+
+    ont_id = observation_ont[term]['id']
+
+    # don't insert a duplicate (or try to update an existing value)
+    obs_id = get_observation_id(cursor, subject_visit_id, ont_id)
+    if (obs_id is not None):
+        return obs_id
+
+    query = "insert into observation (observation_ontology_id, value, subject_visit_id, value_type) values (%s, %s, %s, %s)"
+    try:
+        cursor.execute(query, (ont_id, value, subject_visit_id, type))
+        obs_id = cursor.lastrowid
+
+    except Exception as e:
+        print(e)
+        sys.exit()
+
+    return obs_id
+
 if __name__ == '__main__':
     main()
