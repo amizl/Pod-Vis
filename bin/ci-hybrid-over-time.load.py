@@ -61,6 +61,30 @@ def main():
     n_atts = 0
     static_cols = []
     lnum = 0
+    # track subjects by id
+    subjects = {}
+
+    # insert new ontology terms
+    e1_id = insert_ontology_term(cursor, "subject", subject_ont, "Education (Years)", "Demographics")
+    e1_id = insert_ontology_term(cursor, "subject", subject_ont, "Marital Status", "Demographics")
+    e1_id = insert_ontology_term(cursor, "subject", subject_ont, "Native Language", "Demographics")
+    e1_id = insert_ontology_term(cursor, "subject", subject_ont, "Retired", "Demographics")
+
+    # created selected subject_ontology terms for implant data
+    ci_id = insert_ontology_term(cursor, "subject", subject_ont, "Cochlear Implant", None)
+    e1_id = insert_ontology_term(cursor, "subject", subject_ont, "Ear1", "Cochlear Implant")
+    e2_id = insert_ontology_term(cursor, "subject", subject_ont, "Ear2", "Cochlear Implant")
+    s1_id = insert_ontology_term(cursor, "subject", subject_ont, "Surgeon1", "Cochlear Implant")
+    s2_id = insert_ontology_term(cursor, "subject", subject_ont, "Surgeon2", "Cochlear Implant")
+    s1_id = insert_ontology_term(cursor, "subject", subject_ont, "Type1", "Cochlear Implant")
+    s2_id = insert_ontology_term(cursor, "subject", subject_ont, "Type2", "Cochlear Implant")
+    i1_id = insert_ontology_term(cursor, "subject", subject_ont, "Implant1 Age", "Cochlear Implant")
+    i2_id = insert_ontology_term(cursor, "subject", subject_ont, "Implant2 Age", "Cochlear Implant")
+    l1_id = insert_ontology_term(cursor, "subject", subject_ont, "lCauseLoss", "Cochlear Implant")
+    l2_id = insert_ontology_term(cursor, "subject", subject_ont, "rCauseLoss", "Cochlear Implant")
+    f_id = insert_ontology_term(cursor, "subject", subject_ont, "Device Failed", "Cochlear Implant")
+    conn.commit()
+    
     with open(args.static_file, newline='', encoding='ISO-8859-1') as sfile:
         reader = csv.reader(sfile, delimiter=',')
         for row in reader:
@@ -82,7 +106,8 @@ def main():
                     if row[colnum] != "":
                         info[col] = row[colnum]
                     colnum += 1
-                
+                subjects[hosp_id] = info
+                    
                 # gender
                 gender = 'unknown'
                 if 'gender' in info:
@@ -121,28 +146,52 @@ def main():
                 # approximate first visit age
                 first_visit_age = first_visit_yr - birth_yr
 
+                # Education (Years)
+                edu_years = 0
+                if 'eduYears' in info and info['eduYears'] != "":
+                    edu_years = info['eduYears']
+
+                # Marital Status
+                marital_status = "unknown"
+                if 'maritalStatus' in info and info['maritalStatus'] != "":
+                    marital_status = info['maritalStatus']
+
+                # Native language
+                native_lang = "unknown"
+                if 'nativeLang' in info and info['nativeLang'] != "":
+                    native_lang = info['nativeLang']
+
+                # Retired
+                retired = "unknown"
+                if 'retired' in info and info['retired'] != "":
+                    retired = info['retired']
+
+                # lCauseLoss
+                l_cause_loss = "unknown"
+                if 'lCauseLoss' in info and info['lCauseLoss'] != "":
+                    l_cause_loss = info['lCauseLoss']
+
+                # rCauseLoss
+                r_cause_loss = "unknown"
+                if 'rCauseLoss' in info and info['rCauseLoss'] != "":
+                    r_cause_loss = info['rCauseLoss']
+                    
                 # insert subject attributes
                 insert_subject_attribute(cursor, subject_id, subject_ont, "Sex", gender, "string")
                 insert_subject_attribute(cursor, subject_id, subject_ont, "Race", race, "string")
                 insert_subject_attribute(cursor, subject_id, subject_ont, "Birthdate", birthdate, "string")
                 insert_subject_attribute(cursor, subject_id, subject_ont, "Age at First Visit", first_visit_age, "int")
+
+                insert_subject_attribute(cursor, subject_id, subject_ont, "Education (Years)", edu_years, "int")
+                insert_subject_attribute(cursor, subject_id, subject_ont, "Marital Status", marital_status, "string")
+                insert_subject_attribute(cursor, subject_id, subject_ont, "Native Language", native_lang, "string")
+                insert_subject_attribute(cursor, subject_id, subject_ont, "Retired", retired, "string")
+                insert_subject_attribute(cursor, subject_id, subject_ont, "lCauseLoss", l_cause_loss, "string")
+                insert_subject_attribute(cursor, subject_id, subject_ont, "rCauseLoss", r_cause_loss, "string")
                 conn.commit()
                 n_atts += 4
 
     print("inserted " + str(n_subjects) + " subject(s), " + str(n_atts) + " attribute(s)")
-
-    # created selected subject_ontology terms for implant data
-    ci_id = insert_ontology_term(cursor, "subject", subject_ont, "Cochlear Implant", None)
-    e1_id = insert_ontology_term(cursor, "subject", subject_ont, "Ear1", "Cochlear Implant")
-    e2_id = insert_ontology_term(cursor, "subject", subject_ont, "Ear2", "Cochlear Implant")
-    s1_id = insert_ontology_term(cursor, "subject", subject_ont, "Surgeon1", "Cochlear Implant")
-    s2_id = insert_ontology_term(cursor, "subject", subject_ont, "Surgeon2", "Cochlear Implant")
-    s1_id = insert_ontology_term(cursor, "subject", subject_ont, "Type1", "Cochlear Implant")
-    s2_id = insert_ontology_term(cursor, "subject", subject_ont, "Type2", "Cochlear Implant")
-    i1_id = insert_ontology_term(cursor, "subject", subject_ont, "Implant1 Age", "Cochlear Implant")
-    i2_id = insert_ontology_term(cursor, "subject", subject_ont, "Implant2 Age", "Cochlear Implant")
-    f_id = insert_ontology_term(cursor, "subject", subject_ont, "Device Failed", "Cochlear Implant")
-    conn.commit()
 
     # add implant info
     implant_cols = None
@@ -154,6 +203,10 @@ def main():
             if re.match(r'.*HospitalNo.*', hosp_id):
                 implant_cols = row
             elif hosp_id != "":
+                if hosp_id not in subjects:
+                    print("implant file/skipping subject " + hosp_id + " not defined in static file")
+                    continue
+                
                 info = {}
                 colnum = 0
                 for col in implant_cols:
@@ -235,6 +288,9 @@ def main():
     # Maryland consonant-vowel nucleus-consonant (CNC) Tests
     visit_counts = {}
     cnc_cols = None
+    # track last visit date for each subject
+    subject_last_visit = {}
+
     with open(args.cnc_file, newline='') as cfile:
         reader = csv.reader(cfile, delimiter=',')
         for row in reader:
@@ -243,6 +299,10 @@ def main():
             if re.match(r'.*HospitalNo.*', hosp_id):
                 cnc_cols = row
             elif hosp_id != "":
+                if hosp_id not in subjects:
+                    print("cnc file/skipping subject " + hosp_id + " not defined in static file")
+                    continue
+                
                 info = {}
                 colnum = 0
                 for col in cnc_cols:
@@ -250,6 +310,10 @@ def main():
                         info[col] = row[colnum]
                     colnum += 1
 
+                # HACK - ignore pre-op measurements
+                if 'CombinedWord' not in info:
+                    continue
+                
 #                print("read " + str(info))
                     
                 # get subject id
@@ -271,15 +335,23 @@ def main():
                 visit_event = "Baseline"
                 if visit_num > 1:
                     visit_event = "Visit " + str(visit_num)
-                    
-                subject_visit_id = get_or_insert_subject_visit(cursor, visit_event, visit_num, disease_status, event_date, subject_id)
-                conn.commit()
 
-                for term in a_terms:
-                    if term in info:
-                        obs_id = get_or_insert_observation(cursor, observation_ont, term, int(float(info[term])), subject_visit_id, "int")
+                last_visit_date = None
+                if subject_id in subject_last_visit:
+                    last_visit_date = subject_last_visit[subject_id]
+                # HACK - skip duplicate visit dates
+                if last_visit_date == event_date:
+                    print("skipping duplicate visit date for " + str(hosp_id))
+                else:
+                    subject_visit_id = get_or_insert_subject_visit(cursor, visit_event, visit_num, disease_status, event_date, subject_id)
+                    conn.commit()
 
-                conn.commit()
+                    for term in a_terms:
+                        if term in info:
+                            obs_id = get_or_insert_observation(cursor, observation_ont, term, int(float(info[term])), subject_visit_id, "int")
+                    conn.commit()
+
+                subject_last_visit[subject_id] = event_date
                 
     cursor.close()
     conn.close()
