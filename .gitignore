@@ -4,3 +4,4 @@ env/
 dump.sql*
 mysql/
 *~
+.DS_Store
