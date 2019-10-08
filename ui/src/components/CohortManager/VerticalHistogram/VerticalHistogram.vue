@@ -54,26 +54,26 @@
           :opacity="getOpacity('cohort')"
         />
 
-<!-- Cohort Mean -->
-        <!-- <circle
-          r="15"
-          :cx="mean"
-          :cy="h"
-          fill="#3F51B5"
-          stroke="#E8EAF6"
-          stroke-width="5"
-          fill-opacity=".9"
-        /> -->
-        <!-- Population Mean -->
-        <!-- <circle
-          r="15"
-          :cx="populationMean"
-          :cy="h"
+	<!-- Cohort Mean -->
+	<circle v-if="typeof(mean) !== 'undefined'"
+          r="7"
+	  :cx="left ? w : 0"
+          :cy="mean"
+          fill="blue"
           stroke="#3F51B5"
-          fill="#E8EAF6"
-          stroke-width="5"
-          fill-opacity=".9"
-        /> -->
+          stroke-width="2"
+          fill-opacity=".6"
+        />
+        <!-- Population Mean -->
+        <circle v-if="typeof(populationMean) !== 'undefined'"
+          r="7"
+	  :cx="left ? w : 0"
+          :cy="populationMean"
+          stroke="#3F51B5"
+          fill="grey"
+          stroke-width="2"
+          fill-opacity=".6"
+        />
         <g ref="brush" class="brush"></g>
       </g>
 
@@ -265,10 +265,10 @@ export default {
       return pm_bins;
     },
     mean() {
-      return this.xScale(mean(this.data));
+      return this.yScale(mean(this.data));
     },
     populationMean() {
-      return this.xScale(mean(this.populationData));
+      return this.yScale(mean(this.populationData));
     },
     xScale() {
       const yScale = scaleLinear()

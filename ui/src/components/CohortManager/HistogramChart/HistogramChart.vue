@@ -46,44 +46,25 @@
           :opacity="getOpacity('cohort')"
         />
         <!-- Cohort Mean -->
-        <!-- <text
-          v-if="mean != populationMean"
-          :x="mean"
-          :y="h"
-          fill="#3F51B5"
-          stroke="white"
-          font-size="30"
-        >
-          C
-        </text>
-        <text
-          :x="populationMean"
-          :y="h"
-          fill="#3F51B5"
-          stroke="white"
-          :font-size="30"
-        >
-          P
-        </text> -->
-        <!-- <circle
-          r="15"
+        <circle v-if="typeof(mean) !== 'undefined'"
+          r="7"
           :cx="mean"
           :cy="h"
           fill="blue"
           stroke="#3F51B5"
-          stroke-width="5"
-          fill-opacity=".9"
-        /> -->
+          stroke-width="2"
+          fill-opacity=".6"
+        />
         <!-- Population Mean -->
-        <!-- <circle
-          r="15"
+        <circle v-if="typeof(populationMean) !== 'undefined'"
+          r="7"
           :cx="populationMean"
           :cy="h"
           stroke="#3F51B5"
-          fill="orange"
-          stroke-width="5"
-          fill-opacity=".9"
-        /> -->
+          fill="grey"
+          stroke-width="2"
+          fill-opacity=".6"
+        />
         <g ref="brush" class="brush"></g>
       </g>
 
@@ -277,7 +258,7 @@ export default {
     },
     mean() {
       return this.xScale(
-        mean(this.filteredData.map(d => d[this.dimensionName]))
+        mean(this.filteredData.map(this.dimension.accessor))
       );
     },
     populationMean() {
