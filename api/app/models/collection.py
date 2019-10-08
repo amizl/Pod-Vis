@@ -291,7 +291,16 @@ class Collection(db.Model):
             # return subjects_df
 
         result = pd.merge(pd.DataFrame(observations), subjects_df, left_on='subject_id', right_on='subject_id')
-        return result
+
+        result_df['event_date'] = pd.to_datetime(result_df['event_date'])
+
+        # set 'event_day' to time in days relative to the earliest visit (in the whole dataset)
+        dates_df = result_df.set_index('event_date')
+        first_date = dates_df.index.min()
+        result_df['event_day'] = result_df['event_date'] - first_date
+        result_df['event_day'] = result_df['event_day'].dt.days
+        
+        return { 'data': result, 'raw_data': result_df }
         # need to some how group by subject id and observation and count the number of distinct observation and see
         # if this number matches...
         # return result.groupby(['subject_id', 'observation'])['observation'].count()

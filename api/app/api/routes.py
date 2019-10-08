@@ -699,7 +699,7 @@ def fetch_data_for_cohort_manager():
 
     return jsonify({
         "success": True,
-        "data": data.to_json(orient="records", date_format='iso')
+        "data": "{ \"data\": " + data['data'].to_json(orient="records", date_format='iso') + "\n, \"raw_data\": " + data['raw_data'].to_json(orient="records", date_format='iso') + "}"
     })
 
 

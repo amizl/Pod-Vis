@@ -36,7 +36,13 @@ export default {
   [mutations.SET_DATA](state, data) {
     state[stateTypes.DATA] = data;
   },
+  [mutations.SET_RAW_DATA](state, data) {
+    state[stateTypes.RAW_DATA] = data;
+  },
   [mutations.SET_DETAILED_VIEW](state, detailedView) {
     state[stateTypes.DETAILED_VIEW] = detailedView;
+  },
+  [mutations.SET_LINE_STYLE](state, lineStyle) {
+    state[stateTypes.LINE_STYLE] = lineStyle;
   },
 };

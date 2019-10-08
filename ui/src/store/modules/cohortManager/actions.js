@@ -122,6 +122,7 @@ export default {
       //       "lastVisit": ...
       //     }
       // }]
+      // TODO - "Use d3-array’s group and rollup instead of d3-collection’s nest." (which is deprecated)
       let wideData = nest()
         // Group by subject ID
         .key(d => d.subject_id)
@@ -129,7 +130,7 @@ export default {
         // server to massage the data into the format we need
         // and send it back...however there was issues using pandas
         // and getting nested data for the observations. May need to
-        // revisit later on. Here we are are tranforming each subject
+        // revisit later on. Here we are are transforming each subject
         // record so that we nest its outcome measure with firstVisit,
         // lastVisit, and rate of change. We then want to reduce this
         // so we have a single object with keys of all its outcome measures.
@@ -152,7 +153,7 @@ export default {
               return { ...prev, ...curr };
             }, {});
         })
-        .entries(data) // tell it what data to process
+        .entries(data['data']) // tell it what data to process
         .map(d => {
           // pull out only the values
           return d.value;

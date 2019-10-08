@@ -91,13 +91,14 @@ export default {
               return { ...prev, ...curr };
             }, {});
         })
-        .entries(data) // tell it what data to process
+        .entries(data['data']) // tell it what data to process
         .map(d => {
           // pull out only the values
           return d.value;
         });
 
       commit(mutations.SET_DATA, wideData);
+      commit(mutations.SET_RAW_DATA, data['raw_data']);
     } catch ({ response }) {
       const notification = new ErrorNotification(response.data.error);
       dispatch(notification.dispatch, notification, { root: true });
@@ -110,6 +111,9 @@ export default {
   },
   [actions.SET_DETAILED_VIEW]({ commit }, detailedView) {
     commit(mutations.SET_DETAILED_VIEW, detailedView);
+  },
+  [actions.SET_LINE_STYLE]({ commit }, lineStyle) {
+    commit(mutations.SET_LINE_STYLE, lineStyle);
   },
   async [actions.FETCH_COHORTS]({ commit }) {
     commit(mutations.SET_LOADING, true);
