@@ -227,12 +227,17 @@ class Collection(db.Model):
             first_date = totals.index.min()
             last_date = totals.index.max()
 
+            # skip subjects with only one measurement/visit
+            if (len(totals) == 1):
+                continue
+
             # http://www.andrewshamlet.net/2017/07/07/python-tutorial-roc/
             n = len(totals)
             M = totals.diff(n-1)
             N = totals.shift(n-1)
             # normalize by duration
             roc = ((M / N) * 100) / ((last_date.year - first_date.year)) # / 365.25)
+
             change = totals[-1] - totals[0]
             observations.append(
                 dict(
@@ -399,6 +404,10 @@ class Collection(db.Model):
             totals = df.set_index('event_date')['total']
             first_date = totals.index.min()
             last_date = totals.index.max()
+
+            # skip subjects with only one measurement/visit
+            if (len(totals) == 1):
+                continue
 
             # http://www.andrewshamlet.net/2017/07/07/python-tutorial-roc/
             n = len(totals)
