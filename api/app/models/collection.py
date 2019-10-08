@@ -141,7 +141,7 @@ class Collection(db.Model):
             Pandas dataframe of observation data need to draw charts.
         """
         # TODO: REFACTOR
-        # This is very inefficient/conoluted. Really need to refactor...
+        # This is very inefficient/convoluted. Really need to refactor...
 
         connection = db.engine.connect()
         study_ids = [study.study_id for study in self.studies]
@@ -156,6 +156,7 @@ class Collection(db.Model):
         obs_ids = []
         obs_parent_ids = []
         for obs_id in observation_variable_ids:
+            # check whether obs_id has children
             result = ObservationOntology.find_by_parent_id(obs_id)
             if result:
                 obs_parent_ids.append(obs_id)
@@ -171,7 +172,7 @@ class Collection(db.Model):
                     v.event_date, CAST(sum(CAST(o.value AS SIGNED)) as SIGNED) as total
                 FROM study
                 JOIN subject s ON study.id = s.study_id
-                JOIN  subject_visit v ON s.id = v.subject_id
+                JOIN subject_visit v ON s.id = v.subject_id
                 JOIN observation o ON v.id = o.subject_visit_id
                 JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
                 WHERE study.id in :study_ids and o.observation_ontology_id in (
@@ -198,7 +199,7 @@ class Collection(db.Model):
                     v.event_date, CAST(o.value AS SIGNED) as total
                 FROM study
                 JOIN subject s ON study.id = s.study_id
-                JOIN  subject_visit v ON s.id = v.subject_id
+                JOIN subject_visit v ON s.id = v.subject_id
                 JOIN observation o ON v.id = o.subject_visit_id
                 JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
                 WHERE study.id in :study_ids and o.observation_ontology_id in :ids
@@ -230,7 +231,7 @@ class Collection(db.Model):
             n = len(totals)
             M = totals.diff(n-1)
             N = totals.shift(n-1)
-            # normalize by both minimum visit and duration
+            # normalize by duration
             roc = ((M / N) * 100) / ((last_date.year - first_date.year)) # / 365.25)
             change = totals[-1] - totals[0]
             observations.append(
