@@ -78,7 +78,7 @@ export default {
     // set outcome variables to union of cohorts' output variables
     var vars_added = {};
     var outcome_vars = [];
-    this.cohorts.forEach(function(c) {
+    this.cohorts.filter(v => v.collection_id == this.collectionId).forEach(function(c) {
 	var output_vars = c.output_variables;
 	output_vars.forEach(function(ov) {
 	    var id = ov.observation_ontology.id;
