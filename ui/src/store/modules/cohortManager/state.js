@@ -13,6 +13,6 @@ export default {
   [state.DIMENSIONS]: {},
   [state.PVALS]: [],
   [state.PVAL_THRESHOLD]: 'None',
-  [state.HIGHLIGHTED_SUBSET]: 'None',
+  [state.HIGHLIGHTED_SUBSET]: 'cohort',
   [state.QUERIES]: {},
 };

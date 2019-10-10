@@ -26,7 +26,7 @@
           :opacity="getOpacity('population')"
         />
         <!-- Plot population minus selected cohort -->
-        <rect
+        <rect v-if="highlightedSubset === 'non-cohort'"
           v-for="(bin, i) in popMinusBins"
           :key="`pop-minus-cohort-${i}`"
 	  :x="getNonCohortX(left, bin)"
@@ -39,7 +39,7 @@
           fill="#3FB551"
           :opacity="getOpacity('non-cohort')"
          />
-        <rect
+        <rect v-if="highlightedSubset === 'cohort'"
           v-for="(bin, i) in bins"
           :key="`cohort-${i}`"
           :x="getCohortX(left,bin)"
@@ -544,15 +544,7 @@ export default {
       }
     },
     getOpacity(subset) {
-      if (this.highlightedSubset === 'None') {
-        return 0.9;
-      } else {
-        if (this.highlightedSubset === subset) {
-          return 1;
-        } else {
-	  return 0.3;
-	}
-      }
+      return 0.7;
     },
     resizeChart() {
       this.height = 200;

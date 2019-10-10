@@ -17,7 +17,7 @@
           fill="#A1A3AB"
           :opacity="getOpacity('population')"
         />
-        <rect
+        <rect v-if="highlightedSubset === 'non-cohort'"
           v-for="(bin, i) in popMinusBins"
           :key="`pop-minus-cohort-${i}`"
           :x="xScale(bin.x0)"
@@ -31,7 +31,7 @@
 	  fill="#3FB551"
           :opacity="getOpacity('non-cohort')"
         />
-        <rect
+        <rect v-if="highlightedSubset === 'cohort'"
           v-for="(bin, i) in bins"
           :key="`cohort-${i}`"
           :x="xScale(bin.x0)"
@@ -538,15 +538,7 @@ var bar_height = this.h - this.yScale(bin.length) > 0 ? this.h - this.yScale(bin
       }
     },
     getOpacity(subset) {
-      if (this.highlightedSubset === 'None') {
-        return 0.8;
-      } else {
-        if (this.highlightedSubset === subset) {
-          return 1;
-        } else {
-	  return 0.3;
-	}
-      }
+      return 0.7;
     },
     resizeChart() {
       this.height = 200;

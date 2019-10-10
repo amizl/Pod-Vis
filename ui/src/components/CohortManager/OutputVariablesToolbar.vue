@@ -6,11 +6,10 @@
         <v-spacer />
       <v-toolbar-items>
       <!-- TODO...filters? -->
-        <span class="subheading primary--text mt-3 mr-3">Highlight:</span>
-        <v-btn-toggle v-model="subset" @change="doHighlightChange()">
+        <span class="subheading primary--text mt-3 mr-3">Show:</span>
+        <v-btn-toggle mandatory v-model="subset" @change="doHighlightChange()">
          <v-btn text color="primary" class="white--text mr-2 py-1" value="cohort">Cohort</v-btn>
          <v-btn text color="#3FB551" class="white--text mr-2 py-1" value="non-cohort">Non-Cohort</v-btn>
-         <v-btn text color="primary lighten-5" class="primary--text py-1" value="population">Population</v-btn>
         </v-btn-toggle>
      </v-toolbar-items>
     </v-toolbar>
@@ -34,7 +33,7 @@ export default {
   },
   data() {
     return {
-      subset: 'None',
+      subset: 'cohort',
     };
   },
   methods: {
@@ -45,11 +44,10 @@ export default {
       this.setHighlightedSubset(new_subset);
     },
     doHighlightChange() {
-      if (typeof this.subset === 'undefined') {
-        this.highlight('None');
-      } else {
-        this.highlight(this.subset);
+    if (typeof this.subset === 'undefined') {
+        this.subset = 'cohort';
       }
+      this.highlight(this.subset);
     },
   }
 };
