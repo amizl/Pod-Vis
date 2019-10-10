@@ -44,7 +44,7 @@ export default {
         data.collection.observation_variables
       );
       // TODO:
-      // These fields are hard-coded and will invetiably need to be changed.
+      // These fields are hard-coded and will inevitably need to be changed.
       // For example, firstVisit and lastVisit are stored in the database as
       //  left_y_axis and right_y_axis when queries are saved. This is because
       //  eventually we want to allow the user to specify the visit number rather
