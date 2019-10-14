@@ -4,7 +4,7 @@
         <v-list two-line class="pt-0 ma-0">
           <v-list-tile>
             <v-list-tile-action v-if="!expand">
-              <img width="100%" src="/images/Clio-Vis-1.png" alt="CliO-Vis Logo"/>
+              <img width="100%" src="/images/CliO-Vis-1.png" alt="CliO-Vis Logo"/>
             </v-list-tile-action>
             <v-list-tile-content class="pt-0">
               <img width="100%" src="/images/CliO-Vis-1.png" alt="CliO-Vis Logo"/>
