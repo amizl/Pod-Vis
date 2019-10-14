@@ -22,7 +22,7 @@
               ? xScale(bin.length)
               : 0
           "
-          fill="#A1A3AB"
+          fill="#F8D580"
           :opacity="getOpacity('population')"
         />
         <!-- Plot population minus selected cohort -->
@@ -70,7 +70,7 @@
 	  :cx="left ? w : 0"
           :cy="populationMean"
           stroke="none"
-          fill="grey"
+          fill="#F8B108"
           stroke-width="0"
           fill-opacity=".6"
         />

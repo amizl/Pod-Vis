@@ -14,7 +14,7 @@
               : 0
           "
           :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
-          fill="#A1A3AB"
+          fill="#F8D580"
           :opacity="getOpacity('population')"
         />
         <rect v-if="highlightedSubset === 'non-cohort'"
@@ -61,7 +61,7 @@
           :cx="populationMean"
           :cy="h"
           stroke="none"
-          fill="grey"
+          fill="#F8B108"
           stroke-width="0"
           fill-opacity=".6"
         />
