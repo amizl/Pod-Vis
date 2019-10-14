@@ -173,6 +173,7 @@ export default {
         bottom: 10,
         left: 25,
       },
+      filter: undefined,
       selected: [],
       container: null,
       dimension: null,
@@ -180,7 +181,9 @@ export default {
       data: [],
       populationData: [],
       selection: [],
-      populationCounts: {}
+      populationCounts: {},
+      mean: undefined,
+      populationMean: undefined
     };
   },
   computed: {
@@ -264,12 +267,6 @@ export default {
       }
       return pm_bins;
     },
-    mean() {
-      return this.yScale(mean(this.data));
-    },
-    populationMean() {
-      return this.yScale(mean(this.populationData));
-    },
     xScale() {
       const yScale = scaleLinear()
         .domain([0, max(this.popBins, d => d.length)])
@@ -304,6 +301,14 @@ export default {
       if (this.selected.length && !this.dimension.currentFilter()) {
         this.selected = [];
       }
+      this.updateSelected();
+      this.updateMean();
+    },
+    selected() {
+      this.updateMean();
+    },
+    populationData() {
+      this.updatePopulationMean();
     },
   },
   created() {
@@ -325,6 +330,28 @@ export default {
       addFilter: actions.ADD_FILTER,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    updateSelected() {
+      if (this.hasSelection()) {
+         const f = this.filter;
+	 const acc_fn = this.dimension.accessor;
+      	 const filtered = this.filteredData.filter(function(d) {
+	       var datum = acc_fn(d);
+	       return f.filter(datum);
+	      });
+        this.selected = filtered.map(acc_fn);
+      }
+    },
+    updateMean() {
+      // current selection (if any) must be taken into account
+      if (this.hasSelection()) {
+        this.mean = this.yScale(mean(this.selected));
+      } else {
+        this.mean = this.yScale(mean(this.data));
+      }
+    },
+    updatePopulationMean() {
+      this.populationMean = this.yScale(mean(this.populationData));
+    },
     initializeBrush() {
       const brushEl = this.$refs.brush;
 
@@ -396,6 +423,8 @@ export default {
         this.clearFilter({
           dimension: this.dimensionName,
         });
+	this.filter = undefined;
+        this.selected = [];
         return;
       }
 
@@ -409,11 +438,14 @@ export default {
       const [invertedHigh, invertedLow] = [high, low].map(this.yScale.invert);
 
       // Filter dimension to be within snapped selection
-      this.addFilter({
+      const new_filter = {
         dimension: this.dimensionName,
         filter: d => d >= invertedLow && d < invertedHigh,
-      });
-
+      };
+      this.addFilter(new_filter);
+      // assumes at most 1 filter, which appears to be the case
+      this.filter = new_filter;
+      this.updateSelected();
     },
     brushed() {
       const selection = event.selection;
