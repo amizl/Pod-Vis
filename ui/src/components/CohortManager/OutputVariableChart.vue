@@ -1,5 +1,5 @@
 <template>
-  <v-sheet color="white" height="100%" min-width="350px" max-width="350px">
+  <v-sheet color="white" height="100%" min-width="400px" max-width="500px">
     <v-layout column fill-height v-bind:class="getOutcomeClass(variable)">
       <v-card-title v-bind:class="getTitleClass(variable)">
         <span style='margin: 0em 0em 1em 0em;'>

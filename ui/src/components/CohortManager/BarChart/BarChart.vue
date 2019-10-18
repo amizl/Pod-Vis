@@ -236,7 +236,7 @@ export default {
       }
     },
     resizeChart() {
-      this.height = 200;
+      this.height = 100;
       this.width = 350;
     },
   },

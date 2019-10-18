@@ -579,7 +579,7 @@ export default {
       return 0.7;
     },
     resizeChart() {
-      this.height = 200;
+      this.height = 300;
       this.width = 100;
     },
   },

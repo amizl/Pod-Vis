@@ -208,8 +208,8 @@ export default {
       addDimension: actions.ADD_DIMENSION,
     }),
     resizeChart() {
-      this.height = 200;
-      this.width = 150;
+      this.height = 300;
+      this.width = 200;
     },
     drawCurve({ firstVisitCoordinates, lastVisitCoordinates }, color, alpha) {
       const { context } = this;

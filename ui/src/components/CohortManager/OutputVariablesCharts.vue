@@ -12,7 +12,8 @@
           <v-divider vertical></v-divider>
         </v-flex> -->
       </v-layout>
-    </v-flex>
+</v-flex>
+ <v-flex fill-width></v-flex>
   </v-layout>
 </template>
 

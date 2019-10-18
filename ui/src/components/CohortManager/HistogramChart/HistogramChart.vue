@@ -541,7 +541,7 @@ var bar_height = this.h - this.yScale(bin.length) > 0 ? this.h - this.yScale(bin
       return 0.7;
     },
     resizeChart() {
-      this.height = 200;
+      this.height = 100;
       this.width = 350;
     },
   },
