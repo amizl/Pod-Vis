@@ -1,5 +1,5 @@
 <template>
-  <v-sheet color="white" height="100%" min-width="400px" max-width="500px">
+  <v-sheet class="ma-1" color="white" height="100%" min-width="400px" max-width="500px">
     <v-layout column fill-height v-bind:class="getOutcomeClass(variable)">
       <v-card-title v-bind:class="getTitleClass(variable)">
         <span style='margin: 0em 0em 1em 0em;'>
@@ -20,13 +20,13 @@
           Reset
         </v-btn> -->
       </v-card-title>
-      <MultiChart
+      <MultiChart class="ma-1"
         v-if="variable.children"
         :key="resetCount"
         :variable="variable"
         :dimension-name="dimension"
       />
-      <HistogramChart
+      <HistogramChart class="ma-1"
         v-else
         :id="variable.id"
         :key="resetCount"
