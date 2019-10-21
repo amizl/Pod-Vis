@@ -12,6 +12,7 @@ import { scalePoint, scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
 import { max } from 'd3-array';
+import * as crossfilter from 'crossfilter2';
 
 export default {
   directives: {
@@ -43,8 +44,12 @@ export default {
   },
   computed: {
     ...mapState('dataExplorer', {
+      data: state.DATA,
       rawData: state.RAW_DATA,
       lineStyle: state.LINE_STYLE,
+      cohorts: state.COHORTS,
+      visibleCohorts: state.VISIBLE_COHORTS,
+      collection: state.COLLECTION,
     }),
     getRawData() {
       var filtered = this.rawData.filter(d => d.observation_ontology_id === this.dimensionName);
@@ -72,28 +77,6 @@ export default {
 
       return filtered;
     },
-    rawPaths() {
-      var rd = this.getRawData;
-      var xds = this.xDimensionScale;
-      var ds = this.dimensionScale;
-
-      // raw data must be grouped by subject id
-      var subj2coords = {};
-      rd.forEach(function(r) {
-        if (!(r.subject_id in subj2coords)) {
-          subj2coords[r.subject_id] = [];
-        }
-        subj2coords[r.subject_id].push({"x":xds(r.subject_event_day), "y":ds(r.total)});
-      });
-
-      var paths = [];
-      Object.keys(subj2coords).forEach(function(k) {
-        var coords = subj2coords[k];
-        paths.push(coords);
-      });
-      return paths;
-    },
-
     yAxisRangeMax() {
       var rd = this.getRawData;
       const rmax = max(rd, d => d.total);
@@ -113,6 +96,7 @@ export default {
     },
     xmax() {
       var tp = this.timepoints;
+      // TODO - allow user to adjust xmax up to the limit
       return tp[tp.length-1];
     },
     computedWidth() {
@@ -126,9 +110,8 @@ export default {
       return height - top - bottom;
     },
     xDimensionScale() {
-      var tp = this.timepoints;
-      return scalePoint()
-        .domain(tp)
+      return scaleLinear()
+        .domain([0, this.xmax])
         .range([0, this.computedWidth]);
     },
     dimensionScale() {
@@ -158,6 +141,12 @@ export default {
     lineStyle() {
       this.updateCanvas();
     },
+    cohorts() {
+      this.updateCanvas();
+    },
+    visibleCohorts() {
+      this.updateCanvas();
+    }
   },
   created() {
     this.devicePixelRatio = window.devicePixelRatio || 1;
@@ -174,6 +163,44 @@ export default {
     this.$nextTick(() => this.updateCanvas());
   },
   methods: {
+
+    selectedCohorts() {
+      var cch = [];
+      var cid = this.collection.id
+
+      this.visibleCohorts.forEach(function(e) {
+      if (e.collection_id === cid) {
+          cch.push(e);
+        }
+      });
+
+      return cch;
+    },
+    getRawPaths(subject_ids) {
+      var rd = this.getRawData;
+      var xds = this.xDimensionScale;
+      var ds = this.dimensionScale;
+
+      // group raw data by subject id
+      var subj2coords = {};
+      rd.forEach(function(r) {
+        if (!(r.subject_id in subj2coords)) {
+          subj2coords[r.subject_id] = [];
+        }
+        subj2coords[r.subject_id].push({"x":xds(r.subject_event_day), "y":ds(r.total)});
+      });
+
+      // extract paths for each subject
+      var paths = [];
+      subject_ids.forEach(function(k) {
+        var coords = subj2coords[k];
+        if (coords !== undefined) {
+          paths.push(coords);
+        }
+      });
+      return paths;
+    },
+
     resizeChart() {
       const { width, height } = this.container.getBoundingClientRect();
       this.height = height;
@@ -189,6 +216,8 @@ export default {
 
       context.beginPath();
       var lastCoords = undefined;
+
+      // TODO - truncate curves/lines at right axis
       
       // bezier curves
       if (this.lineStyle === 'bezier') {
@@ -217,7 +246,74 @@ export default {
       context.stroke();
     },
     drawRaw() {
-      this.rawPaths.forEach(path => this.drawMultiCurve(path, '#3F51B5', 0.45));
+      var cohorts = this.selectedCohorts();
+
+      // get all subject_ids
+//      var sids = {};
+//      this.rawData.forEach(function(r) {
+//        sids[r.subject_id] = 1;
+//      });
+      var slf = this;
+
+      // draw each cohort in turn
+      cohorts.forEach(function(c) {
+        console.log("cohort " + c.label + " color = " + c.color);
+        console.log("cohort keys = " + Object.keys(c));
+//        if (!c.show_cohort) {
+//          console.log("show_cohort = false");
+//          return;
+//        }
+     
+        // TODO - determine which subjects are in the cohort
+        const xf = crossfilter(slf.data);
+        console.log("data[0] = " + Object.keys(slf.data[0]));
+
+        // add dimensions and filters
+        // xf.dimension(dim);
+        // dim.filterFunction(filter);
+
+        c.queries.forEach(function(q) {
+          // adapted from FIND_COHORT_QUERY
+          const inputVariable = q.input_variable;
+          var filter_fn = undefined;
+          let accessor = undefined;
+          let dim = undefined;
+
+          if (q.input_variable.subject_ontology === undefined) {
+            accessor = function(d) { return d[q.input_variable.observation_ontology.id] };
+            console.log("trying to get observation_ontology_id " + q.input_variable.observation_ontology.id);
+            dim = xf.dimension(accessor);
+          } else {
+            accessor = function(d) { return d[q.input_variable.subject_ontology.label] };
+            console.log("trying to get subject_ontology_id " + q.input_variable.subject_ontology.label);
+            dim = xf.dimension(accessor);
+          }
+
+          if ((q.value !== undefined) && (q.value !== null)) {
+            filter_fn = function(d) { console.log("eq filter got " + d + " checking against " + q.value); return d === q.value; };
+//            console.log("adding filter for " + q.input_variable.observation_ontology.label + "=" + q.value);
+            dim.filterFunction(filter_fn);
+          } else if ((q.min_value !== undefined) && (q.max_value !== undefined)) {
+            filter_fn = function(d) { console.log("lte/gte filter got " + d + " checking against min=" + q.min_value + " max=" + q.max_value); return ((d >= q.min_value) && (d <= q.max_value)); };
+//            console.log("adding filter for " + q.input_variable.subject_ontology.label + ">=" + q.min_value + " <=" + q.max_value);
+            dim.filterFunction(filter_fn);
+          } else {
+            console.log("unsupported query " + q);
+          }
+        });
+
+        const filt = xf.allFiltered();
+
+        let sids = {};
+        filt.forEach(function(r) {
+          sids[r.subject_id] = 1;
+        });
+
+        var cohort_subject_ids = Object.keys(sids);
+        var paths = slf.getRawPaths(cohort_subject_ids);
+        console.log("got " + paths.length + " paths");
+        paths.forEach(path => slf.drawMultiCurve(path, c.color, 0.45));
+      });
     },
     drawLeftAxis() {
       var tickCount = 10,
@@ -268,7 +364,7 @@ export default {
           this.dimensionScale(d)
         );
         this.context.lineTo(
-          this.xDimensionScale(xmax) + 6,
+          this.xDimensionScale(xmax) + tickSize,
           this.dimensionScale(d)
         );
       });
@@ -300,9 +396,60 @@ export default {
       });
       this.context.save();
     },
+    drawBottomAxis() {
+      var tickCount = 10,
+        tickSize = 6,
+        tickPadding = 3,
+        tp = this.timepoints,
+        xmax = this.xmax;
+
+      var scale = scaleLinear().domain([0, this.xmax]).range([0, this.computedWidth]);
+      var ticks = scale.ticks(tickCount);
+      var tickFormat = scale.tickFormat(tickCount);
+      var ds = this.dimensionScale;
+
+      this.context.beginPath();
+      ticks.forEach(d => {
+        this.context.moveTo(
+          scale(d),
+          this.dimensionScale(0)
+        );
+        this.context.lineTo(
+          scale(d),
+          this.dimensionScale(0) + tickSize
+        );
+      });
+      this.context.strokeStyle = 'black';
+      this.context.stroke();
+
+      this.context.beginPath();
+      this.context.moveTo(this.xDimensionScale(0), this.computedHeight);
+      this.context.lineTo(this.xDimensionScale(xmax) + 0.5, this.computedHeight);
+      this.context.strokeStyle = 'black';
+      this.context.stroke();
+
+      this.context.textAlign = 'center';
+      this.context.textBaseline = 'middle';
+      ticks.forEach(d => {
+        this.context.fillText(
+          tickFormat(d),
+          this.xDimensionScale(d),
+          this.dimensionScale(0) + tickSize + tickPadding
+        );
+      });
+
+      this.context.fillText(
+        "time in days since first visit",
+        this.xDimensionScale(xmax/2),
+        this.dimensionScale(0) + ( tickSize + tickPadding) * 2
+      );
+
+      this.context.save();
+    },
     drawAxes() {
       this.drawLeftAxis();
       this.drawRightAxis();
+      this.drawBottomAxis();
     },
     updateCanvas() {
       // TODO - adding 50 is a workaround to account for the right-hand axis, which is outside of the computed area

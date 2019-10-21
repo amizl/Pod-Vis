@@ -20,6 +20,9 @@
               hide-details
             ></v-checkbox>
           </td>
+	  <td>
+	    <v-select outlined v-model="props.item.color" :items="colors"></v-select>
+	  </td>
           <td class="text-xs-right">{{ props.item.label }}</td>
         </template>
       </v-data-table>
@@ -35,7 +38,20 @@ export default {
   data() {
     return {
       selected: [],
+      cohort_colors: {},
+      colors: [
+        { "value": "#dc143c", "text": "Red" },
+        { "value": "#143cdc", "text": "Blue" },
+        { "value": "#143c3c", "text": "Green" },
+        { "value": "#d0d0d0", "text": "Grey" },
+      ],
       headers: [
+        {
+          text: 'Color',
+          align: 'right',
+          sortable: false,
+          value: 'color',
+        },
         {
           text: 'Cohort',
           align: 'right',
@@ -45,9 +61,23 @@ export default {
       ],
     };
   },
+  watch: {
+   selected() {
+     var selected_cohorts = {};
+     var visible_cohorts = [];
+     this.selected.forEach(function(s) { selected_cohorts[s['id']] = 1; });
+     this.cohorts.forEach(function(c) { if (c.id in selected_cohorts) { visible_cohorts.push(c); }});
+     console.log("visible_cohorts = " + visible_cohorts);
+     this.setVisibleCohorts(visible_cohorts);
+    },
+    collection_cohorts() {
+     this.setVisibleCohorts(this.visible_cohorts);
+    }
+  },
   computed: {
     ...mapState('dataExplorer', {
       cohorts: state.COHORTS,
+      visible_cohorts: state.VISIBLE_COHORTS,
       collection: state.COLLECTION,
     }),
 
@@ -57,20 +87,22 @@ export default {
       var cid = this.collection.id
 
       this.cohorts.forEach(function(e) {
-        if (e.collection_id === cid) {
+      if (e.collection_id === cid) {
+          e['color'] = { "value": "#d0d0d0", "text": "Grey" };
           cch.push(e);
         }
       });
       
       return cch;
     },
-},
+  },
   created() {
     this.fetchCohorts();
   },
   methods: {
     ...mapActions('dataExplorer', {
       fetchCohorts: actions.FETCH_COHORTS,
+      setVisibleCohorts: actions.SET_VISIBLE_COHORTS,
     }),
   },
 };
