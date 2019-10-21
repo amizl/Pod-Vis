@@ -127,4 +127,8 @@ export default {
       commit(mutations.SET_LOADING, false);
     }
   },
+  [actions.SET_VISIBLE_COHORTS]({ commit }, cohorts) {
+    commit(mutations.SET_VISIBLE_COHORTS, cohorts);
+  },
+
 };

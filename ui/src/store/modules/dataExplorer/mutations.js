@@ -10,6 +10,14 @@ export default {
     state[stateTypes.COHORTS] = cohorts;
   },
   /**
+   * Set visible cohorts mutation.
+   * @param {*} state
+   * @param {*} cohorts
+   */
+  [mutations.SET_VISIBLE_COHORTS](state, cohorts) {
+    state[stateTypes.VISIBLE_COHORTS] = cohorts;
+  },
+  /**
    * Set loading mutation.
    * @param {Object} state
    * @param {Boolean} isLoading Flag whether or not we are waiting on data.
