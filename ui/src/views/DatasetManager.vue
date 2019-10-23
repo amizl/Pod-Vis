@@ -32,13 +32,11 @@
           <v-tabs slider-color="primary" grow>
             <v-tab>
               <span class="">Available Datasets</span>
-              <!-- <span class="subheading grey--text ligthen-2"
+              <!-- <span class="subheading grey--text lighten-2"
                   >Select those you wish to combine.</span
                 > -->
             </v-tab>
-            <v-tab> <span class="">My Collections</span> </v-tab>
             <v-tab-item> <dataset-table :search="search" /> </v-tab-item>
-            <v-tab-item> <collection-table></collection-table></v-tab-item>
           </v-tabs>
         </v-card>
       </v-flex>

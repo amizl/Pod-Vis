@@ -12,13 +12,39 @@
       <tr>
         <td class="text-xs-left">{{ props.item.label }}</td>
         <td class="text-xs-right px-0">
-          <v-btn flat @click="routeToCohortManager(props.item)">
+
+          <v-tooltip top color="primary">
+           <template v-slot:activator="{ on }">
+	  <v-btn flat @click="routeToCohortManager(props.item)" v-on="on">
             <v-icon left small color="secondary">group_add</v-icon> Cohorts ({{props.item.num_cohorts}})
           </v-btn>
-          <v-btn flat @click="routeToDataExplorer(props.item)" :disabled="props.item.num_cohorts == 0">
+          </template>
+          <span>Launch Cohort Manager to add/remove Cohorts</span>
+        </v-tooltip>
+
+          <v-tooltip top color="primary">
+           <template v-slot:activator="{ on }">
+          <v-btn flat @click="routeToDataExplorer(props.item)" :disabled="props.item.num_cohorts == 0" v-on="on">
             <v-icon left small color="secondary">explore</v-icon> Explore
           </v-btn>
-        </td>
+          </template>
+          <span>Launch Data Explorer to compare Cohorts</span>
+        </v-tooltip>
+
+          <v-tooltip top color="primary">
+           <template v-slot:activator="{ on }">
+            <v-btn flat @click="deleteCollection(props.item.id)" v-on="on">
+              <v-icon left
+                color="primary"
+                class="mr-2"
+                @click="deleteCollection(props.item.id)"
+                >delete</v-icon>
+  	      Delete
+  	    </v-btn>
+          </template>
+          <span>Delete Collection</span>
+        </v-tooltip>
+	</td>
       </tr>
     </template>
     <template v-slot:no-data>
@@ -60,6 +86,7 @@ export default {
   methods: {
     ...mapActions('datasetManager', {
       fetchDatasets: actions.FETCH_COLLECTIONS,
+      deleteCollection: actions.DELETE_COLLECTION,
     }),
     routeToCohortManager({ id }) {
       // Route to view for dataset information
