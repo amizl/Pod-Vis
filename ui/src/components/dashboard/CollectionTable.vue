@@ -13,9 +13,9 @@
         <td class="text-xs-left">{{ props.item.label }}</td>
         <td class="text-xs-right px-0">
           <v-btn flat @click="routeToCohortManager(props.item)">
-            <v-icon left small color="secondary">group_add</v-icon> Cohorts
+            <v-icon left small color="secondary">group_add</v-icon> Cohorts ({{props.item.num_cohorts}})
           </v-btn>
-          <v-btn flat @click="routeToDataExplorer(props.item)">
+          <v-btn flat @click="routeToDataExplorer(props.item)" :disabled="props.item.num_cohorts == 0">
             <v-icon left small color="secondary">explore</v-icon> Explore
           </v-btn>
         </td>
@@ -54,8 +54,8 @@ export default {
       collections: state.COLLECTIONS,
     }),
   },
-  created() {
-    if (!this.collections.length) this.fetchDatasets();
+  mounted() {
+    this.fetchDatasets();
   },
   methods: {
     ...mapActions('datasetManager', {

@@ -459,11 +459,12 @@ def get_collections():
       include: Data to include from collections. This can currently be:
         1. studies
         2. variables
+        3. cohort_counts
 
     Example requests:
       /api/collections
       /api/collections?include=studies
-      /api/collections?incclude=studies&include=variables
+      /api/collections?include=studies&include=variables
     """
     user = get_current_user()
     collections = models.Collection.find_all_by_user_id(user.id)
@@ -471,7 +472,8 @@ def get_collections():
     include = request.args.getlist('include')
     kwargs = {
         "include_studies": "studies" in include,
-        "include_variables": "variables" in include
+        "include_variables": "variables" in include,
+        "include_cohort_counts": "cohort_counts" in include
     }
 
     return jsonify({

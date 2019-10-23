@@ -1,5 +1,6 @@
 from . import db
 from . import Subject, ObservationOntology
+from .cohort import Cohort
 import enum
 from sqlalchemy.sql import text
 import pandas as pd
@@ -465,7 +466,8 @@ class Collection(db.Model):
     def to_dict(self,
                 include_studies=False,
                 include_queries=False,
-                include_variables=False):
+                include_variables=False,
+                include_cohort_counts=False):
         """Return attributes as a dict.
 
         This easily allows for serializing the collection object and
@@ -491,4 +493,9 @@ class Collection(db.Model):
             # TODO
             pass
 
+        if include_cohort_counts:
+            all_cohorts = Cohort.find_all_by_collection_id(self.id)
+            user_cohorts = [c for c in all_cohorts if c.user_id == self.user_id]
+            collection['num_cohorts'] = len(user_cohorts)
+        
         return collection

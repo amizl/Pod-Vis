@@ -75,7 +75,7 @@ export default {
     commit(mutations.SET_LOADING, true);
 
     try {
-      const { data } = await axios.get('/api/collections');
+      const { data } = await axios.get('/api/collections?include=cohort_counts');
       commit(mutations.SET_COLLECTIONS, data.collections);
     } catch (err) {
       const notification = new ErrorNotification(err);
