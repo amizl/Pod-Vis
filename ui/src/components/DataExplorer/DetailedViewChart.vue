@@ -247,24 +247,21 @@ export default {
     },
     drawRaw() {
       var cohorts = this.selectedCohorts();
-
-      // get all subject_ids
-//      var sids = {};
-//      this.rawData.forEach(function(r) {
-//        sids[r.subject_id] = 1;
-//      });
       var slf = this;
+
+      const dimension2field = {
+        "left_y_axis": "firstVisit",
+        "right_y_axis": "lastVisit",
+        "change": "change",
+        "roc": "roc"
+      };
 
       // draw each cohort in turn
       cohorts.forEach(function(c) {
         console.log("cohort " + c.label + " color = " + c.color);
-        console.log("cohort keys = " + Object.keys(c));
-//        if (!c.show_cohort) {
-//          console.log("show_cohort = false");
-//          return;
-//        }
+//        console.log("cohort keys = " + Object.keys(c));
      
-        // TODO - determine which subjects are in the cohort
+        // determine which subjects are in the cohort
         const xf = crossfilter(slf.data);
         console.log("data[0] = " + Object.keys(slf.data[0]));
 
@@ -280,12 +277,20 @@ export default {
           let dim = undefined;
 
           if (q.input_variable.subject_ontology === undefined) {
-            accessor = function(d) { return d[q.input_variable.observation_ontology.id] };
-            console.log("trying to get observation_ontology_id " + q.input_variable.observation_ontology.id);
+//            console.log("trying to get observation_ontology_id " + q.input_variable.observation_ontology.id);
+            // convert dimension_label to data field name
+            let subfield = dimension2field[q.input_variable.dimension_label];
+            accessor = function(d) { return d[q.input_variable.observation_ontology.id][subfield] };
             dim = xf.dimension(accessor);
           } else {
-            accessor = function(d) { return d[q.input_variable.subject_ontology.label] };
-            console.log("trying to get subject_ontology_id " + q.input_variable.subject_ontology.label);
+            let lbl = q.input_variable.subject_ontology.label;
+            // special case for study
+            if (lbl === "Study") {
+               accessor = function(d) { return d["study"]["study_name"] };
+            } else {
+               accessor = function(d) { return d[lbl] };
+            }
+//            console.log("trying to get subject_ontology_id " + q.input_variable.subject_ontology.label);
             dim = xf.dimension(accessor);
           }
 
@@ -311,7 +316,7 @@ export default {
 
         var cohort_subject_ids = Object.keys(sids);
         var paths = slf.getRawPaths(cohort_subject_ids);
-        console.log("got " + paths.length + " paths");
+        console.log("got " + paths.length + " paths for cohort " + c.label);
         paths.forEach(path => slf.drawMultiCurve(path, c.color, 0.45));
       });
     },
