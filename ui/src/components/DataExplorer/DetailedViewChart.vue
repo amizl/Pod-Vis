@@ -11,7 +11,7 @@ import { state, actions } from '@/store/modules/dataExplorer/types';
 import { scalePoint, scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
-import { max } from 'd3-array';
+import { max, mean, deviation } from 'd3-array';
 import * as crossfilter from 'crossfilter2';
 
 export default {
@@ -33,6 +33,19 @@ export default {
       type: Object,
       required: true,
     },
+    lineStyle: {
+      type: String,
+      required: true,
+    },
+    drawMean: {
+      type: Boolean,
+      required: true,
+    },
+    xaxis: {
+      type: String,
+      required: true,
+    },
+
   },
   data() {
     return {
@@ -40,13 +53,13 @@ export default {
       width: 0,
       height: 0,
       margin: { top: 20, right: 25, bottom: 15, left: 25 },
+//      draw_mean: false,
     };
   },
   computed: {
     ...mapState('dataExplorer', {
       data: state.DATA,
       rawData: state.RAW_DATA,
-      lineStyle: state.LINE_STYLE,
       cohorts: state.COHORTS,
       visibleCohorts: state.VISIBLE_COHORTS,
       collection: state.COLLECTION,
@@ -72,6 +85,7 @@ export default {
         rows.forEach(function(r) {
           r['subject_event_day'] = r['event_day'] - first_day;
           r['subject_event_index'] = ind++;
+          // TODO - subject_event_index may differ from visit_num
         });
       });
 
@@ -82,11 +96,23 @@ export default {
       const rmax = max(rd, d => d.total);
       return rmax;
     },
+
+    // --------------------------------------------------
+    // x-axis
+    // --------------------------------------------------
+    xaccessor() {
+      if (this.xaxis === "days") {
+        return function(x) { return x.subject_event_day; };
+      } else {
+        return function(x) { return x.subject_event_index; };
+      }
+    },
     timepoints() {
       var rd = this.getRawData;
       var timepoints = {};
+      var xacc = this.xaccessor;
       rd.forEach(function(x) {
-	  timepoints[x.subject_event_day] = 1;
+        timepoints[xacc(x)] = 1;
       });
       return Object.keys(timepoints).sort((a, b) => a-b);
     },
@@ -99,6 +125,12 @@ export default {
       // TODO - allow user to adjust xmax up to the limit
       return tp[tp.length-1];
     },
+    xDimensionScale() {
+      return scaleLinear()
+        .domain([0, this.xmax])
+        .range([0, this.computedWidth]);
+    },
+
     computedWidth() {
       const { left, right } = this.margin;
       const { width } = this;
@@ -109,26 +141,11 @@ export default {
       const { height } = this;
       return height - top - bottom;
     },
-    xDimensionScale() {
-      return scaleLinear()
-        .domain([0, this.xmax])
-        .range([0, this.computedWidth]);
-    },
     dimensionScale() {
       const scale = scaleLinear()
         .domain([0, this.yAxisRangeMax])
         .range([this.computedHeight, 0]);
       return scale;
-    },
-    firstVisitAxis() {
-      return axisLeft()
-        .scale(this.dimensionScale)
-        .tickSize(0);
-    },
-    lastVisitAxis() {
-      return axisRight()
-        .scale(this.dimensionScale)
-        .tickSize(0);
     },
   },
   watch: {
@@ -139,6 +156,12 @@ export default {
       this.updateCanvas();
     },
     lineStyle() {
+      this.updateCanvas();
+    },
+    xaxis() {
+      this.updateCanvas();
+    },
+    drawMean() {
       this.updateCanvas();
     },
     cohorts() {
@@ -176,10 +199,12 @@ export default {
 
       return cch;
     },
+
     getRawPaths(subject_ids) {
       var rd = this.getRawData;
       var xds = this.xDimensionScale;
       var ds = this.dimensionScale;
+      var xacc = this.xaccessor;
 
       // group raw data by subject id
       var subj2coords = {};
@@ -187,7 +212,7 @@ export default {
         if (!(r.subject_id in subj2coords)) {
           subj2coords[r.subject_id] = [];
         }
-        subj2coords[r.subject_id].push({"x":xds(r.subject_event_day), "y":ds(r.total)});
+        subj2coords[r.subject_id].push({"x":xds(xacc(r)), "y":ds(r.total)});
       });
 
       // extract paths for each subject
@@ -201,6 +226,53 @@ export default {
       return paths;
     },
 
+    getMeanAndSDPaths(subject_ids) {
+      var rd = this.getRawData;
+      var xds = this.xDimensionScale;
+      var ds = this.dimensionScale;
+      var xacc = this.xaccessor;
+      var sjids = {};
+      subject_ids.forEach(function(sid) {
+        sjids[sid] = 1;
+      });
+
+      // group raw data by timepoint, filtering by subject_id
+      var tp2data = {};
+      rd.forEach(function(r) {
+        if (!(r.subject_id in sjids)) {
+          return;
+        }
+        var tp = xacc(r);
+        if (!(tp in tp2data)) {
+          tp2data[tp] = [];
+        }
+        tp2data[tp].push(r.total);
+      });
+
+      // extract paths for mean and mean +/- SD
+      var mean_path = [];
+      var mean_minus_sd_path = [];
+      var mean_plus_sd_path = [];
+
+      var sorted_tp = Object.keys(tp2data).sort((a, b) => a-b);
+
+      sorted_tp.forEach(function(tp) {
+        var data = tp2data[tp];
+        var mn = mean(data);
+        var sd = deviation(data);
+        // TODO - determine whether this is the best approach - normally sd is undefined for a sample of size 1
+        if (sd === undefined) {
+          sd = 0;
+        }
+        var xp = xds(tp);
+        mean_path.push({"x": xp, "y": ds(mn)});
+        mean_minus_sd_path.push({"x": xp, "y": ds(mn - sd)});
+        mean_plus_sd_path.push({"x": xp, "y": ds(mn + sd)});
+      });
+
+      return [mean_path, mean_minus_sd_path, mean_plus_sd_path];
+    },
+
     resizeChart() {
       const { width, height } = this.container.getBoundingClientRect();
       this.height = height;
@@ -208,16 +280,11 @@ export default {
       this.width = 500;
       // this.context.scale(this.devicePixelRatio, this.devicePixelRatio);
     },
-    drawMultiCurve(coords, color, alpha) {
-      const { context } = this;
-      context.lineWidth = 1;
-      context.strokeStyle = color;
-      context.globalAlpha = alpha;
 
-      context.beginPath();
+    traceMultiCurve(context, coords) {
       var lastCoords = undefined;
 
-      // TODO - truncate curves/lines at right axis
+      // TODO - use clip rect to truncate curves/lines at right axis
       
       // bezier curves
       if (this.lineStyle === 'bezier') {
@@ -243,8 +310,47 @@ export default {
           lastCoords = c;
         });
       }
+    },    
+
+    drawMultiCurve(coords, color, alpha, lineWidth=1) {
+      const { context } = this;
+      var savedLineWidth = context.lineWidth
+      context.lineWidth = lineWidth;
+      context.strokeStyle = color;
+      context.globalAlpha = alpha;
+
+      context.beginPath();
+      this.traceMultiCurve(context, coords);
+
       context.stroke();
+      context.lineWidth = savedLineWidth;
     },
+
+    drawMultiCurveRegion(coords1, coords2, strokeColor, fillColor, alpha, lineWidth=1) {
+      const { context } = this;
+      var savedLineWidth = context.lineWidth
+      var savedFillColor = context.fillStyle
+      var savedStrokeColor = context.strokeStyle
+
+      context.lineWidth = lineWidth;
+      context.strokeStyle = strokeColor;
+      context.globalAlpha = alpha;
+      context.fillStyle = fillColor;
+
+      context.beginPath();
+
+      this.traceMultiCurve(context, coords1);
+      context.lineTo(coords2[coords2.length - 1].x, coords2[coords2.length - 1].y);
+      this.traceMultiCurve(context, coords2.reverse());
+      context.lineTo(coords1[0].x, coords1[0].y);
+
+      context.fill();
+      context.stroke();
+      context.lineWidth = savedLineWidth;
+      context.fillStyle = savedFillColor;
+      context.strokeStyle = savedStrokeColor;
+    },
+
     drawRaw() {
       var cohorts = this.selectedCohorts();
       var slf = this;
@@ -259,11 +365,9 @@ export default {
       // draw each cohort in turn
       cohorts.forEach(function(c) {
         console.log("cohort " + c.label + " color = " + c.color);
-//        console.log("cohort keys = " + Object.keys(c));
      
         // determine which subjects are in the cohort
         const xf = crossfilter(slf.data);
-        console.log("data[0] = " + Object.keys(slf.data[0]));
 
         // add dimensions and filters
         // xf.dimension(dim);
@@ -277,7 +381,6 @@ export default {
           let dim = undefined;
 
           if (q.input_variable.subject_ontology === undefined) {
-//            console.log("trying to get observation_ontology_id " + q.input_variable.observation_ontology.id);
             // convert dimension_label to data field name
             let subfield = dimension2field[q.input_variable.dimension_label];
             accessor = function(d) { return d[q.input_variable.observation_ontology.id][subfield] };
@@ -290,7 +393,6 @@ export default {
             } else {
                accessor = function(d) { return d[lbl] };
             }
-//            console.log("trying to get subject_ontology_id " + q.input_variable.subject_ontology.label);
             dim = xf.dimension(accessor);
           }
 
@@ -315,9 +417,22 @@ export default {
         });
 
         var cohort_subject_ids = Object.keys(sids);
-        var paths = slf.getRawPaths(cohort_subject_ids);
-        console.log("got " + paths.length + " paths for cohort " + c.label);
-        paths.forEach(path => slf.drawMultiCurve(path, c.color, 0.45));
+
+        // draw mean and standard deviation for entire group
+        if (slf.drawMean) {
+          var paths = slf.getMeanAndSDPaths(cohort_subject_ids);
+          // +/- 1 SD
+          slf.drawMultiCurveRegion(paths[1], paths[2], 'black', '#d0d0d0', 0.4, 0.5);
+          // mean
+          slf.drawMultiCurve(paths[0], c.color, 0.6, 8);
+          // outline +/- 1 SD
+          slf.drawMultiCurve(paths[1], c.color, 0.6, 1);
+          slf.drawMultiCurve(paths[2], c.color, 0.6, 1);
+        } else {
+          // draw single path for each subject
+          var paths = slf.getRawPaths(cohort_subject_ids);
+          paths.forEach(path => slf.drawMultiCurve(path, c.color, 0.45));
+        }
       });
     },
     drawLeftAxis() {
@@ -408,6 +523,10 @@ export default {
         tp = this.timepoints,
         xmax = this.xmax;
 
+      if (this.xaxis === "visits") {
+        tickCount = tp.length;
+      }
+
       var scale = scaleLinear().domain([0, this.xmax]).range([0, this.computedWidth]);
       var ticks = scale.ticks(tickCount);
       var tickFormat = scale.tickFormat(tickCount);
@@ -439,14 +558,19 @@ export default {
         this.context.fillText(
           tickFormat(d),
           this.xDimensionScale(d),
-          this.dimensionScale(0) + tickSize + tickPadding
+          this.dimensionScale(0) + tickSize + (tickPadding * 2)
         );
       });
 
+      let caption = "visit number";
+      if (this.xaxis === "days" ) {
+        caption = "time in days since first visit";
+      }
+
       this.context.fillText(
-        "time in days since first visit",
+        caption,
         this.xDimensionScale(xmax/2),
-        this.dimensionScale(0) + ( tickSize + tickPadding) * 2
+        this.dimensionScale(0) + ( tickSize + tickPadding) * 3
       );
 
       this.context.save();

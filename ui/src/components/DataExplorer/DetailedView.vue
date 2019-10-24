@@ -5,13 +5,24 @@
 
     <v-toolbar card dense flat color="white rounded-lg">
       <v-toolbar-items>
-        <span class="subheading primary--text mt-3 mr-3">Draw:</span>
-        <v-btn-toggle v-model="style"  @change="doStyleChange()">
+        <span class="subheading primary--text mt-3 mr-2">Style:</span>
+        <v-btn-toggle v-model="line_style">
          <v-btn text color="primary" class="white--text mr-2 py-1" value="bezier">BEZIER</v-btn>
          <v-btn text color="#3FB551" class="white--text mr-2 py-1" value="line">LINE</v-btn>
         </v-btn-toggle>
-     </v-toolbar-items>
-</v-toolbar>
+
+        <span class="subheading primary--text mt-3 mr-2 ml-3">X-Axis:</span>
+        <v-btn-toggle v-model="xaxis">
+         <v-btn text color="primary" class="white--text mr-2 py-1" value="visits">VISITS</v-btn>
+         <v-btn text color="#3FB551" class="white--text mr-2 py-1" value="days">DAYS</v-btn>
+        </v-btn-toggle>
+
+       <span class="subheading primary--text mt-3 mr-2 ml-3">Show Mean/SD:</span>
+       <v-checkbox class="mt-2" v-model="draw_mean">
+       </v-checkbox>
+
+      </v-toolbar-items>
+      </v-toolbar>
 
       <v-divider></v-divider>
       <v-container fluid fill-height>
@@ -27,8 +38,10 @@
      <detailed-view-chart v-else
         :variable="detailedView"
         :dimension-name="detailedView.id"
+  	:line-style="line_style"
+        :draw-mean="draw_mean"
+  	:xaxis="xaxis"
       />
-
 
        </v-layout>
       </v-container>
@@ -47,24 +60,17 @@ export default {
   },
   data() {
     return {
-      style: 'bezier',
+      line_style: 'bezier',
+      draw_mean: true,
+      xaxis: 'visits',
     };
   },
   computed: {
     ...mapState('dataExplorer', {
       detailedView: state.DETAILED_VIEW,
-      lineStyle: state.LINE_STYLE,
     }),
   },
   methods: {
-    ...mapActions('dataExplorer', {
-      setLineStyle: actions.SET_LINE_STYLE,
-    }),
-    doStyleChange() {
-      if (typeof this.style !== 'undefined') {
-        this.setLineStyle(this.style);
-      }
-    }
   }
 };
 </script>

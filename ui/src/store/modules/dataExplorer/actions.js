@@ -112,9 +112,6 @@ export default {
   [actions.SET_DETAILED_VIEW]({ commit }, detailedView) {
     commit(mutations.SET_DETAILED_VIEW, detailedView);
   },
-  [actions.SET_LINE_STYLE]({ commit }, lineStyle) {
-    commit(mutations.SET_LINE_STYLE, lineStyle);
-  },
   async [actions.FETCH_COHORTS]({ commit }) {
     commit(mutations.SET_LOADING, true);
 

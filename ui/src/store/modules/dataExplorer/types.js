@@ -8,7 +8,6 @@ export const state = {
   DATA: 'data',
   RAW_DATA: 'rawData',
   DETAILED_VIEW: 'detailedView',
-  LINE_STYLE: 'lineStyle',
 };
 
 // Getters
@@ -24,7 +23,6 @@ export const mutations = {
   SET_DATA: 'setData',
   SET_RAW_DATA: 'setRawData',
   SET_DETAILED_VIEW: 'setDetailedView',
-  SET_LINE_STYLE: 'setLineStyle',
 };
 
 // Actions
@@ -36,5 +34,4 @@ export const actions = {
   FETCH_DATA: 'fetchData',
   FETCH_RAW_DATA: 'fetchRawData',
   SET_DETAILED_VIEW: 'setDetailedView',
-  SET_LINE_STYLE: 'setLineStyle',
 };

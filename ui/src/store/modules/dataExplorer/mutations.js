@@ -50,7 +50,4 @@ export default {
   [mutations.SET_DETAILED_VIEW](state, detailedView) {
     state[stateTypes.DETAILED_VIEW] = detailedView;
   },
-  [mutations.SET_LINE_STYLE](state, lineStyle) {
-    state[stateTypes.LINE_STYLE] = lineStyle;
-  },
 };
