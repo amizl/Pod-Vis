@@ -264,27 +264,6 @@ DROP TABLE IF EXISTS cliovis.cohort_query ;
 --     ON UPDATE CASCADE)
 -- ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS cliovis.cohort_query (
-  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  cohort_id INT NOT NULL,
-  input_variable_id INT NOT NULL,
-  min_value INT,
-  max_value INT,
-  value VARCHAR(255),
-  INDEX fk_cohort_query_cohort1_idx (cohort_id ASC),
-  INDEX fk_cohort_query_input_variable_idx (input_variable_id ASC),
-  CONSTRAINT fk_cohort_query_cohort1
-    FOREIGN KEY (cohort_id)
-    REFERENCES cliovis.cohort (id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT fk_cohort_query_input_variable
-    FOREIGN KEY (input_variable_id)
-    REFERENCES cliovis.cohort_input_variable (id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
 
 DROP TABLE IF EXISTS cliovis.cohort_input_variable;
 CREATE TABLE IF NOT EXISTS cliovis.cohort_input_variable (
@@ -317,6 +296,29 @@ CREATE TABLE IF NOT EXISTS cliovis.cohort_input_variable (
     ON UPDATE CASCADE
 )
 ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS cliovis.cohort_query (
+  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  cohort_id INT NOT NULL,
+  input_variable_id INT NOT NULL,
+  min_value INT,
+  max_value INT,
+  value VARCHAR(255),
+  INDEX fk_cohort_query_cohort1_idx (cohort_id ASC),
+  INDEX fk_cohort_query_input_variable_idx (input_variable_id ASC),
+  CONSTRAINT fk_cohort_query_cohort1
+    FOREIGN KEY (cohort_id)
+    REFERENCES cliovis.cohort (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_cohort_query_input_variable
+    FOREIGN KEY (input_variable_id)
+    REFERENCES cliovis.cohort_input_variable (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
 
 DROP TABLE IF EXISTS cliovis.cohort_output_variables;
 CREATE TABLE IF NOT EXISTS cliovis.cohort_output_variable (
