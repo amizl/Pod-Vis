@@ -21,7 +21,7 @@
             ></v-checkbox>
           </td>
 	  <td>
-	    <v-select outlined v-model="props.item.color" :items="colors"></v-select>
+	    <v-select outlined v-model="props.item.color" :items="colors" v-on:change="colorChange"></v-select>
 	  </td>
           <td class="text-xs-right">{{ props.item.label }}</td>
         </template>
@@ -38,7 +38,6 @@ export default {
   data() {
     return {
       selected: [],
-      cohort_colors: {},
       colors: [
         { "value": "#dc143c", "text": "Red" },
         { "value": "#143cdc", "text": "Blue" },
@@ -104,6 +103,10 @@ export default {
       fetchCohorts: actions.FETCH_COHORTS,
       setVisibleCohorts: actions.SET_VISIBLE_COHORTS,
     }),
+    colorChange(e) {
+      console.log("colorChange - " + e);
+      this.$root.$emit('update_detailed_view');
+    },
   },
 };
 </script>

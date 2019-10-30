@@ -184,6 +184,10 @@ export default {
     this.resizeChart();
 
     this.$nextTick(() => this.updateCanvas());
+
+    this.$root.$on('update_detailed_view', () => {
+      this.updateCanvas();
+    });
   },
   methods: {
 
