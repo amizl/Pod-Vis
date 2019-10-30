@@ -8,6 +8,7 @@ import argparse
 import re
 import sys
 import pandas as pd
+import numpy as np
 import pprint
 
 scale_file_map = {'Semantic Fluency' : "Semantic_Fluency.csv",
@@ -15,7 +16,12 @@ scale_file_map = {'Semantic Fluency' : "Semantic_Fluency.csv",
                    'MDS-UPDRS1-1' : "MDS_UPDRS_Part_I.csv",
                    'MDS-UPDRS1-2' : "MDS_UPDRS_Part_I__Patient_Questionnaire.csv",
                    'MDS-UPDRS2' : "MDS_UPDRS_Part_II__Patient_Questionnaire.csv",
-                   'MDS-UPDRS3' : "MDS_UPDRS_Part_III.csv"
+                   'MDS-UPDRS3' : "MDS_UPDRS_Part_III.csv",
+                   'Montreal Cognitive Assessment': "Montreal_Cognitive_Assessment__MoCA_.csv",
+                   'Letter Number Sequencing': "Letter_-_Number_Sequencing__PD_.csv",
+                   'Hopkins Verbal Learning Test': "Hopkins_Verbal_Learning_Test.csv",
+                   'Epworth Sleepiness Scale': 'Epworth_Sleepiness_Scale.csv',
+                   'Modified Schwab England ADL': 'Modified_Schwab_+_England_ADL.csv'
                    }
 study_map = {}
 patient_map = {}
@@ -71,6 +77,40 @@ def process_mds_updrs_3(filename):
     df = df.loc[:, ['PATNO', 'EVENT_ID', 'mds_updrs_3']]
     return df
 
+def process_moca(filename):
+    # Read the input as a pandas dataframe
+    df = pd.read_csv(filename)
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'MCATOT']]
+    return df
+
+def process_lns(filename):
+    # Read the input as a pandas dataframe
+    df = pd.read_csv(filename)
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'LNS_TOTRAW']]
+    return df    
+
+def process_hvlt(filename):
+    # Read the input as a pandas dataframe
+    df = pd.read_csv(filename)
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'DVT_TOTAL_RECALL', 'DVT_DELAYED_RECALL', 'DVT_RETENTION']]
+    return df    
+
+def process_ess(filename):
+    # Read the input as a pandas dataframe
+    df = pd.read_csv(filename)
+    df['ESS_TOT'] = df.loc[:, ["ESS1","ESS2","ESS3","ESS4","ESS5","ESS6","ESS7","ESS8"]].sum(axis=1, skipna = False)
+    df['ESS'] = np.where(df.ESS_TOT >= 10, "Sleepy", "Not Sleepy")
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'ESS_TOT', 'ESS']]
+    return df    
+
+def process_mse_adl(filename):
+    # Read the input as a pandas dataframe
+    df = pd.read_csv(filename)
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'MSEADLG']]
+    return df    
+
+
+
 def main():
     parser = argparse.ArgumentParser( description='Put a description of your script here')
     parser.add_argument('-i', '--input_dir', type=str, required=True, help='Path to an input directory from where to get files' )
@@ -108,6 +148,27 @@ def main():
             print("Processing MDS-UPDRS3")
             df_mds_updrs3 = process_mds_updrs_3(args.input_dir + filename)
             pp.pprint(df_mds_updrs3)
+        elif (scale == 'Montreal Cognitive Assessment-'):
+            print("Processing MDS-UPDRS3")
+            df_moca = process_moca(args.input_dir + filename)
+            pp.pprint(df_moca)
+        elif (scale == 'Letter Number Sequencing'):
+            print("Processing Letter Number Sequencing")
+            df_lns =  process_lns(args.input_dir + filename)
+            pp.pprint(df_lns)
+        elif (scale == 'Hopkins Verbal Learning Test'):
+            print("Processing Hopkins Verbal Learning Test")
+            df_hvlt =  process_hvlt(args.input_dir + filename)
+            pp.pprint(df_hvlt)
+        elif (scale == 'Epworth Sleepiness Scale'):
+            print("Processing Epworth Sleepiness Scale")
+            df_ess =  process_ess(args.input_dir + filename)
+            pp.pprint(df_ess)
+        elif (scale == 'Modified Schwab England ADL'):
+            print("Processing Modified Schwab England ADL")
+            df_mse_adl =  process_mse_adl(args.input_dir + filename)
+            pp.pprint(df_mse_adl)
+
 
     # Process UPDRS by merging and adding across the three measures
     df_mds_updrs1 = df_mds_updrs1_1.merge(df_mds_updrs1_2, how="outer", on = ['PATNO', 'EVENT_ID'])
