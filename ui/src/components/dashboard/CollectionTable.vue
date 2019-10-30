@@ -33,15 +33,8 @@
 
           <v-tooltip top color="primary">
            <template v-slot:activator="{ on }">
-            <v-btn flat @click="deleteCollection(props.item.id)" v-on="on">
-              <v-icon left
-                color="primary"
-                class="mr-2"
-                @click="deleteCollection(props.item.id)"
-                >delete</v-icon>
-  	      Delete
-  	    </v-btn>
-          </template>
+            <delete-collection-button :collection_id="props.item.id" />
+           </template>
           <span>Delete Collection</span>
         </v-tooltip>
 	</td>
@@ -58,8 +51,12 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
+import DeleteCollectionButton from '@/components/dashboard/DeleteCollectionBtnDialog';
 
 export default {
+  components: {
+    DeleteCollectionButton,
+  },
   data() {
     return {
       headers: [
