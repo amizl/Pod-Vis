@@ -3,7 +3,7 @@
   <v-data-table
     v-else
     :headers="headers"
-    :items="collections"
+    :items="this.show_public_collections ? publicCollections : privateCollections"
     item-key="label"
     hide-actions
     hide-headers
@@ -41,8 +41,11 @@
       </tr>
     </template>
     <template v-slot:no-data>
-      <v-alert :value="true" color="primary" icon="info">
-        You have no saved collections.
+      <v-alert v-if="show_public_collections" :value="true" color="primary" icon="info">
+        There are no public clinical data collections.
+      </v-alert>
+      <v-alert v-else :value="true" color="primary" icon="info">
+        You have no saved clinical data collections.
       </v-alert>
     </template>
   </v-data-table>
@@ -56,6 +59,13 @@ import DeleteCollectionButton from '@/components/dashboard/DeleteCollectionBtnDi
 export default {
   components: {
     DeleteCollectionButton,
+  },
+  props: {
+    // whether to show public collections (and _only_ public collections)
+    show_public_collections: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
@@ -76,6 +86,12 @@ export default {
       isLoading: state.IS_LOADING,
       collections: state.COLLECTIONS,
     }),
+    publicCollections() {
+      return this.filterCollections(true);
+    },
+    privateCollections() {
+      return this.filterCollections(false);
+    },
   },
   mounted() {
     this.fetchDatasets();
@@ -85,6 +101,15 @@ export default {
       fetchDatasets: actions.FETCH_COLLECTIONS,
       deleteCollection: actions.DELETE_COLLECTION,
     }),
+    filterCollections(is_public) {
+      var filtered_collections = [];
+      this.collections.forEach(function(c) {
+        if (c.is_public == is_public) {
+            filtered_collections.push(c);
+        }
+      });
+      return filtered_collections;
+    },
     routeToCohortManager({ id }) {
       // Route to view for dataset information
       // const currentPath = this.$router.currentPath.fullPath;

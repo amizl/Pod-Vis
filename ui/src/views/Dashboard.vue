@@ -6,10 +6,23 @@
     <v-layout fill-height>
       <!-- <v-layout align-center justify-center> -->
       <v-flex xs12>
-        <v-card flat class="rounded-lg shadow">
-          <v-card-title class="title primary--text">Clinical Data Collections</v-card-title>
-          <collection-table class="pb-1"></collection-table>
-        </v-card>
+         <v-tabs slider-color="primary" grow>
+           <v-tab>
+             <span class="">My Clinical Data Collections</span>
+           </v-tab>
+           <v-tab-item>
+             <collection-table class="pb-1" :show_public_collections="false"></collection-table>
+           </v-tab-item>
+
+           <v-tab>
+             <span class="">Public Clinical Data Collections</span>
+           </v-tab>
+           <v-tab-item>
+             <collection-table class="pb-1" :show_public_collections="true"></collection-table>
+           </v-tab-item>
+
+	 </v-tabs>
+	
       </v-flex>
     </v-layout>
   </v-container>
