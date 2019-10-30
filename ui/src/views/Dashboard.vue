@@ -7,20 +7,11 @@
       <!-- <v-layout align-center justify-center> -->
       <v-flex xs12>
         <v-card flat class="rounded-lg shadow">
-          <v-card-title class="title primary--text">Collections</v-card-title>
+          <v-card-title class="title primary--text">Clinical Data Collections</v-card-title>
           <collection-table class="pb-1"></collection-table>
         </v-card>
       </v-flex>
-      <!-- <v-flex xs8> <v-card> </v-card> </v-flex> -->
-
-      <!-- <h1 class="headline text-md-center">
-        <v-icon large class="pb-4">build</v-icon><br />
-        Dashboard is currently under development
-      </h1> -->
     </v-layout>
-    <!-- <v-layout align-center justify-center>
-      <v-flex xs12> <dataset-table /> </v-flex>
-    </v-layout> -->
   </v-container>
 </template>
 
