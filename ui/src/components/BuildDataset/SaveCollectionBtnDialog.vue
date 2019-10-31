@@ -11,7 +11,7 @@
     <v-dialog v-model="dialog" width="500">
       <v-card>
         <v-card-title primary-title>
-          <span class="title pl-2">Save Collection</span>
+          <span class="title pl-2">Save Clinical Data Collection</span>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" v-model="valid" @submit.prevent="onSaveCollection">
