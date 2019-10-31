@@ -33,7 +33,7 @@
 
           <v-tooltip top color="primary">
            <template v-slot:activator="{ on }">
-            <delete-collection-button :collection_id="props.item.id" />
+            <delete-collection-button v-if="props.item.is_deletable" :collection_id="props.item.id" />
            </template>
           <span>Delete Collection</span>
         </v-tooltip>
@@ -94,7 +94,9 @@ export default {
     },
   },
   mounted() {
-    this.fetchDatasets();
+    if (!this.isLoading) {
+      this.fetchDatasets();
+    }
   },
   methods: {
     ...mapActions('datasetManager', {

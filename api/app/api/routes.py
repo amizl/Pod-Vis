@@ -453,7 +453,7 @@ def create_collection():
 @api.route("/collections")
 @jwt_required
 def get_collections():
-    """Get user's collections.
+    """Get user's collections and any public collections.
 
     Params:
       include: Data to include from collections. This can currently be:
@@ -468,20 +468,32 @@ def get_collections():
     """
     user = get_current_user()
     collections = models.Collection.find_all_by_user_id(user.id)
+    pub_collections = models.Collection.find_all_public()
 
+    # add only public collections not owned by user
+    for c in pub_collections:
+        if (c.user_id != user.id):
+            collections.append(c)
+    
     include = request.args.getlist('include')
     kwargs = {
         "include_studies": "studies" in include,
         "include_variables": "variables" in include,
-        "include_cohort_counts": "cohort_counts" in include
+        "include_cohort_counts": "cohort_counts" in include,
+        # only count cohorts owned by the current user
+        "cohort_user_id": user.id
     }
 
+    # convert to list of dicts
+    collection_dicts = []
+    for c in collections:
+        d = c.to_dict(**kwargs)
+        d['is_deletable'] = (c.user_id == user.id)
+        collection_dicts.append(d)
+    
     return jsonify({
         "success": True,
-        "collections": [
-            collection.to_dict(**kwargs)
-            for collection in collections
-        ]
+        "collections": collection_dicts
     })
 
 @api.route("/collections/<int:collection_id>")
@@ -493,7 +505,7 @@ def get_collection(collection_id):
 
     if not collection:
         raise ResourceNotFound("Collection not found.")
-    if collection.user_id != user.id:
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
         raise AuthFailure('User not authorized to retrieve collection.')
 
     include = request.args.getlist('include')
@@ -671,7 +683,7 @@ def compute_roc_for_observation(collection_id, observation_id):
         raise ResourceNotFound("Collection does not exist.")
     if not observation:
         raise ResourceNotFound("Observation variable does not exist.")
-    if user.id != collection.user_id:
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
         raise AuthFailure('Not authorized to use this collection.')
     if not collection.contains_observation(observation_id):
         raise ResourceNotFound("Collection does not contain this observation.")
@@ -694,7 +706,7 @@ def fetch_data_for_cohort_manager():
 
     if not collection:
         raise ResourceNotFound("Collection does not exist.")
-    if user.id != collection.user_id:
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
         raise AuthFailure("Not authorized to use this collection.")
 
     data = collection.get_data_for_cohort_manager()
@@ -716,7 +728,7 @@ def demo_parcoords():
 
     if not collection:
         raise ResourceNotFound("Collection does not exist.")
-    if user.id != collection.user_id:
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
         raise AuthFailure("Not authorized to use this collection.")
 
     data = collection.proof_of_concept_parcoords()
@@ -781,7 +793,7 @@ def create_cohort():
     collection = models.Collection.find_by_id(collection_id)
     if not collection:
         raise ResourceNotFound("Collection does not exist.")
-    if user.id != collection.user_id:
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
         raise AuthFailure("Not authorized to use this collection.")
 
     # create cohort
