@@ -20,10 +20,10 @@
               hide-details
             ></v-checkbox>
           </td>
+          <td class="text-xs-left" fill-width>{{ props.item.label }}</td>
 	  <td>
 	    <v-select outlined v-model="props.item.color" :items="colors" v-on:change="colorChange"></v-select>
 	  </td>
-          <td class="text-xs-right">{{ props.item.label }}</td>
         </template>
       </v-data-table>
     </v-layout>
@@ -46,17 +46,18 @@ export default {
       ],
       headers: [
         {
-          text: 'Color',
-          align: 'right',
-          sortable: false,
-          value: 'color',
-        },
-        {
           text: 'Cohort',
-          align: 'right',
+          align: 'left',
           sortable: true,
           value: 'label',
         },
+        {
+          text: 'Color',
+          align: 'left',
+          sortable: false,
+          value: 'color',
+        },
+
       ],
     };
   },
