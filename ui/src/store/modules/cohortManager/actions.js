@@ -223,6 +223,16 @@ export default {
           .includes(data.subject_id);
       });
 
+      // pass _all_ observation variables, not just the selected ones
+      const collection = state[stateTypes.COLLECTION];
+      var output_vars = [];
+      collection.observation_variables.forEach(function(v) {
+        v.children.forEach(function(c) {
+          output_vars.push(c);
+        });
+      });
+      outputVariables = output_vars;
+	
       try {
         const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
           filteredData,
