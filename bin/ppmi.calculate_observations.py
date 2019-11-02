@@ -10,6 +10,7 @@ import sys
 import pandas as pd
 import numpy as np
 import pprint
+import datetime as dt
 
 scale_file_map = {'Semantic Fluency' : "Semantic_Fluency.csv",
                    'Benton Judgement of Line' : "Benton_Judgment_of_Line_Orientation.csv",
@@ -33,6 +34,97 @@ patient_map = {}
 subject_attr_map = {}
 project_id = 1
 pp = pprint.PrettyPrinter(indent=4)
+
+# Take the multiple values for the APPRDX field and assign a study name
+def assign_study(study_int):
+    if study_int == 1:
+        return "Parkinson's Disease"
+    elif study_int == 2:
+        return "Healthy Controls"
+    elif study_int == 3:
+        return "SWEDD"
+    elif study_int == 4:
+        return "Prodormal"
+    elif study_int == 5 or study_int == 6:
+        return "Genetic Cohort"
+    elif study_int == 7 or study_int == 8:
+        return "Genetic Registry"
+    else:
+        return "Unknown"
+
+# Take the multiple columns designated for race and assign a sinlge race string
+def assign_race(row):
+    # RAINDALS, RAASIAN, RABLACK, RAHAWOPI, RAWHITE, RANOS.  Other = RAINDALS, RAHAWOPI, RANOS, or more than one race specified.
+    if (np.sum(row) > 1):
+        return "Multi"
+    else:
+        if (row['RAINDALS'] == 1):
+            return "Other"
+        elif (row['RAASIAN'] == 1):
+            return 'Asian'
+        elif (row['RABLACK'] == 1):
+            return 'Black'
+        elif (row['RAWHITE'] == 1):
+            return 'White'
+        elif (row['RANOS'] == 1):
+            return 'Other'
+        elif (row['RAHAWOPI'] == 1):
+            return 'Other'
+        else:
+            return "Unknown"
+
+def process_demographics(input_dir):
+
+    # Enrolled PD Subject	- PATNO, APPRDX, ENROLLDT.  Merge SCREEN with RANDOM and find each unique PATNO with APPRDX = '1' that is not missing ENROLLDT.
+    # Enrolled Healthy Control - 	PATNO, APPRDX, ENROLLDT.  Merge SCREEN with RANDOM and find each unique PATNO with APPRDX = '2' that is not missing ENROLLDT.
+    # Enrolled SWEDD Subject - PATNO, APPRDX, ENROLLDT.  Merge SCREEN with RANDOM and find each unique PATNO with APPRDX = '3' that is not missing ENROLLDT.
+    # Enrolled Prodromal Subject - PATNO, APPRDX, ENROLLDT.  Merge SCREEN with RANDOM and find each unique PATNO with APPRDX = '4' that is not missing ENROLLDT.
+    # Enrolled Genetic Cohort Subject - PATNO, APPRDX, ENROLLDT.  Merge SCREEN with RANDOM and find each unique PATNO with APPRDX = '5' (PD subjects) or '6' (Unaffected subjects) that is not missing ENROLLDT.
+    # Enrolled Genetic Registry Subject - PATNO, APPRDX, ENROLLDT.  Merge SCREEN with RANDOM and find each unique PATNO with APPRDX = '7' (PD subjects) or '8' (Unaffected subjects) that is not missing ENROLLDT.
+
+    demographics_filename = 'Screening___Demographics.csv'
+    features_filename = 'PD_Features.csv'
+    randomization_filename = 'Randomization_table.csv'
+
+    # Read the input as a pandas dataframe
+    df_demo = pd.read_csv(input_dir + demographics_filename)
+    df_features = pd.read_csv(input_dir + features_filename)
+    df_random = pd.read_csv(input_dir + randomization_filename)
+
+    # Subset the frame for the columns needed
+    df_demo = df_demo.loc[:, ['PATNO', "APPRDX","CURRENT_APPRDX", "HISPLAT","RAINDALS","RAASIAN","RABLACK", "RAHAWOPI","RAWHITE","RANOS"]]
+    df_random = df_random.loc[:, ["PATNO", "ENROLLDT", "BIRTHDT", "GENDER"]]
+    df_features = df_features.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', "SXMO","SXYEAR","PDDXDT","PDDXEST","DXTREMOR",
+                                            "DXRIGID","DXBRADY","DXPOSINS","DXOTHSX","DXOTHCM","DOMSIDE"]]
+
+    # Merge the demographics and randomization table to get study groups
+    df_demo = df_demo.merge(df_random, how="outer", on = ['PATNO'])
+
+    # Features file has multiple entries and all we need is diagnosis date, so just get one entry per subject
+    # and the merge it with the demographics frame
+    df_features = df_features.groupby(['PATNO']).first().reset_index()
+    df_demo = df_demo.merge(df_features.loc[:, ['PATNO', "PDDXDT"]], how="outer", on = ['PATNO'])
+
+    # Recode some of the variables such as gender, race
+    df_demo['Study'] = df_demo['APPRDX'].apply(assign_study)
+    df_demo['Race'] = df_demo[["RAINDALS","RAASIAN","RABLACK", "RAHAWOPI","RAWHITE","RANOS"]].apply(assign_race, axis = 1)
+    df_demo['GENDER'] = df_demo['GENDER'].map(lambda x: 'Male' if x == 2 else 'Female')
+
+    # Process some of the dates to assume the first of the month allow date operations
+    # and then convert the datetime string to date
+    df_demo[['ENROLLDT', 'BIRTHDT', 'PDDXDT']] = df_demo[['ENROLLDT', 'BIRTHDT', 'PDDXDT']].apply(lambda x: "1/" + x)
+    df_demo[['ENROLLDT', 'BIRTHDT', 'PDDXDT']] = df_demo[['ENROLLDT', 'BIRTHDT', 'PDDXDT']].apply(lambda x: pd.to_datetime(x, format='%d/%m/%Y', errors='coerce'))
+
+    # Calculate some of the numeric properties such as age at enrollemnt, age at diagnosis
+    df_demo['enroll_age'] = round((df_demo['ENROLLDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1) 
+    df_demo['pd_diagnosis_age'] = round((df_demo['PDDXDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1 )
+
+    # Remove some of the unwanted columns from the demographic variables
+    df_demo = df_demo.loc[:, ['PATNO', 'Study', 'Race', 'BIRTHDT', 'GENDER', 'enroll_age', 'pd_diagnosis_age',
+                                "APPRDX","CURRENT_APPRDX", 'ENROLLDT', 'PDDXDT']]
+    pp.pprint(df_demo)
+    return df_demo
+
 
 def process_semantic_fluency(filename):
     # Read the input as a pandas dataframe
@@ -327,6 +419,9 @@ def main():
     parser.add_argument('-i', '--input_dir', type=str, required=True, help='Path to an input directory from where to get files' )
     parser.add_argument('-o', '--output_file_prefix', type=str, required=True, help='Prefix to use for all the output files that will be generated' )
     args = parser.parse_args()
+    
+    # Process the demographic variables
+    df_demo = process_demographics(args.input_dir)
 
     # Cycle through the scales and calculate the totals or any other transformations that need to be made
     for scale, filename in scale_file_map.items():
@@ -466,11 +561,15 @@ def main():
     # arbitrarily deciding to use the last one that appears
     df_all_vars = df_all_vars.groupby(['PATNO', 'EVENT_ID']).last().reset_index()
     df_all_vars_sorted = df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT'])
+
+    # Once the dataframes are created write the table to a CSV file
     pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
-    
-    # Once the dataframe is created write the table to a CSV file
     filename = "ppmi_obs.csv"
     df_all_vars_sorted.to_csv(args.input_dir + filename, index = False)
+
+    pp.pprint(df_demo.sort_values(by = ['PATNO', 'Study']))
+    filename = "ppmi_demographics.csv"
+    df_demo.to_csv(args.input_dir + filename, index = False)
 
 if __name__ == '__main__':
     main()
