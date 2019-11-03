@@ -27,7 +27,9 @@ scale_file_map = {'Semantic Fluency' : "Semantic_Fluency.csv",
                    'Symbol Digit Modalities': 'Symbol_Digit_Modalities.csv',
                    'State Trait Anxiety Inventory': 'State-Trait_Anxiety_Inventory.csv',
                    'Geriatric Depression': 'Geriatric_Depression_Scale__Short_.csv',
-                   'REM Sleep Disorder': 'REM_Sleep_Disorder_Questionnaire.csv'
+                   'REM Sleep Disorder': 'REM_Sleep_Disorder_Questionnaire.csv',
+                   'Pilot Biospecimen Analysis': 'Pilot_Biospecimen_Analysis_Results.csv',
+                   'Biospecimen Analysis': 'Current_Biospecimen_Analysis_Results.csv'
                    }
 study_map = {}
 patient_map = {}
@@ -117,15 +119,59 @@ def process_demographics(input_dir):
 
     # Calculate some of the numeric properties such as age at enrollemnt, age at diagnosis
     df_demo['enroll_age'] = round((df_demo['ENROLLDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1) 
-    df_demo['pd_diagnosis_age'] = round((df_demo['PDDXDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1 )
+    df_demo['age_at_dx'] = round((df_demo['PDDXDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1 )
+    df_demo['dx_duration'] = round((df_demo['ENROLLDT'] - df_demo['PDDXDT']).dt.days, 0 )
+    pp.pprint(df_demo)
+    df_demo['health_status'] = df_demo['age_at_dx'].map(lambda x: 'Unaffected' if np.isnan(x) else 'Affected') 
 
     # Remove some of the unwanted columns from the demographic variables
-    df_demo = df_demo.loc[:, ['PATNO', 'Study', 'Race', 'BIRTHDT', 'GENDER', 'enroll_age', 'pd_diagnosis_age',
-                                "APPRDX","CURRENT_APPRDX", 'ENROLLDT', 'PDDXDT']]
+    df_demo = df_demo.loc[:, ['PATNO', 'Study', 'Race', 'BIRTHDT', 'GENDER', 'enroll_age', 'health_status', 'age_at_dx',
+                                'dx_duration', "APPRDX","CURRENT_APPRDX", 'ENROLLDT', 'PDDXDT']]
     pp.pprint(df_demo)
     return df_demo
 
 
+# The biospecimen file has a few of the genetic test result. We will be filtering the file for these and
+# returning the values for these tests
+def process_biospecimen(filename):
+    # Read the input as a pandas dataframe
+    df = pd.read_csv(filename)
+
+    # "PATNO",CLINICAL_EVENT","TESTNAME","TESTVALUE"
+    df = df.loc[:, ["PATNO", "CLINICAL_EVENT", "TESTNAME", "TESTVALUE"]]
+
+    # Only grab the genetic tests of interest
+    # "APOE GENOTYPE", "ApoE_Genotype", "ApoE Genotype", "rs3910105", "rs356181"
+    test_list = ["APOE GENOTYPE", "ApoE_Genotype", "ApoE Genotype", "rs3910105", "rs356181"]   
+    df = df[df['TESTNAME'].isin(test_list)] 
+    df['TESTNAME'] = df['TESTNAME'].apply(lambda x: 'SNCA - rs356181' if x == "rs356181" else x) 
+    df['TESTNAME'] = df['TESTNAME'].apply(lambda x: 'SNCA - rs3910105' if x == "rs3910105" else x) 
+
+    # Some times there seem to be multiple rows for the same event and date. In such situations we are
+    # arbitrarily deciding to use the first one that appears
+    df = df.groupby(['PATNO', 'CLINICAL_EVENT', 'TESTNAME']).first().reset_index()
+    df = df.rename(columns={"PATNO": "PATNO", "CLINICAL_EVENT": "EVENT_ID", "TESTNAME": "TESTNAME", "TESTVALUE": "TESTVALUE"}, errors="raise")
+    return df
+
+def process_pilot_biospecimen(filename):
+    # Read the input as a pandas dataframe
+    df = pd.read_csv(filename)
+
+    # "PATNO",CLINICAL_EVENT","TESTNAME","TESTVALUE"
+    df = df.loc[:, ["PATNO", "CLINICAL_EVENT", "TESTNAME", "TESTVALUE"]]
+
+    # The event IDs are different so replace the two that we know are incorrect
+    # Baseline Colletion -> BC
+    # Visit 02 -> V02
+    df['CLINICAL_EVENT'] = df['CLINICAL_EVENT'].map(lambda x: 'V02' if x == 'Visit 02' else x)
+    df['CLINICAL_EVENT'] = df['CLINICAL_EVENT'].map(lambda x: 'BL' if x == 'Baseline Collection' else x)
+
+    # Some times there seem to be multiple rows for the same event and date. In such situations we are
+    # arbitrarily deciding to use the first one that appears
+    df = df.groupby(['PATNO', 'CLINICAL_EVENT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "PATNO", "CLINICAL_EVENT": "EVENT_ID", "TESTNAME": "TESTNAME", "TESTVALUE": "TESTVALUE"}, errors="raise")
+    pp.pprint(df)
+    return df
 def process_semantic_fluency(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
@@ -490,6 +536,14 @@ def main():
             print("Processing REM Sleep Disorder")
             df_rem_sleep =  process_rem_sleep(args.input_dir + filename)
             pp.pprint(df_rem_sleep.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+        elif (scale == 'Biospecimen Analysis'):
+            print("Processing Biospecimen Analysis")
+            df_bio =  process_biospecimen(args.input_dir + filename)
+            pp.pprint(df_bio.sort_values(by = ['PATNO', 'EVENT_ID']))
+        elif (scale == 'Pilot Biospecimen Analysis'):
+            print("Processing Pilot Biospecimen Analysis")
+            df_pilot_bio =  process_pilot_biospecimen(args.input_dir + filename)
+            pp.pprint(df_pilot_bio.sort_values(by = ['PATNO', 'EVENT_ID']))
 
 
     # Process UPDRS by merging and adding across the three measures
@@ -557,12 +611,27 @@ def main():
     df_all_vars = df_all_vars.merge(df_rem_sleep, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
     pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
 
+    # Merge pilot biospecimen test results to get the visit date
+    df_unique_sub_visits = df_all_vars.groupby(['PATNO', 'EVENT_ID']).last().reset_index().loc[:, ["PATNO", "EVENT_ID", "INFODT"]]
+    df_pilot_bio = df_pilot_bio.merge(df_unique_sub_visits, how="inner", on = ['PATNO', 'EVENT_ID'])
+
+    # Merge biospecimen test results to get the visit date
+    df_bio = df_bio.merge(df_unique_sub_visits, how="inner", on = ['PATNO', 'EVENT_ID'])
+
     # Some times there seem to be multiple rows for the same event with different date. In such situations we are
     # arbitrarily deciding to use the last one that appears
     df_all_vars = df_all_vars.groupby(['PATNO', 'EVENT_ID']).last().reset_index()
     df_all_vars_sorted = df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT'])
 
     # Once the dataframes are created write the table to a CSV file
+    pp.pprint(df_pilot_bio.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    filename = "ppmi_pilot_bio_obs.csv"
+    df_pilot_bio.to_csv(args.input_dir + filename, index = False)
+
+    pp.pprint(df_bio.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    filename = "ppmi_bio_obs.csv"
+    df_bio.to_csv(args.input_dir + filename, index = False)
+
     pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
     filename = "ppmi_obs.csv"
     df_all_vars_sorted.to_csv(args.input_dir + filename, index = False)
