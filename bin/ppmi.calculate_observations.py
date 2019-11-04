@@ -121,13 +121,13 @@ def process_demographics(input_dir):
     df_demo['enroll_age'] = round((df_demo['ENROLLDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1) 
     df_demo['age_at_dx'] = round((df_demo['PDDXDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1 )
     df_demo['dx_duration'] = round((df_demo['ENROLLDT'] - df_demo['PDDXDT']).dt.days, 0 )
-    pp.pprint(df_demo)
+    # pp.pprint(df_demo)
     df_demo['health_status'] = df_demo['age_at_dx'].map(lambda x: 'Unaffected' if np.isnan(x) else 'Affected') 
 
     # Remove some of the unwanted columns from the demographic variables
     df_demo = df_demo.loc[:, ['PATNO', 'Study', 'Race', 'BIRTHDT', 'GENDER', 'enroll_age', 'health_status', 'age_at_dx',
                                 'dx_duration', "APPRDX","CURRENT_APPRDX", 'ENROLLDT', 'PDDXDT']]
-    pp.pprint(df_demo)
+    # pp.pprint(df_demo)
     return df_demo
 
 
@@ -170,7 +170,7 @@ def process_pilot_biospecimen(filename):
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'CLINICAL_EVENT']).first().reset_index()
     df = df.rename(columns={"PATNO": "PATNO", "CLINICAL_EVENT": "EVENT_ID", "TESTNAME": "TESTNAME", "TESTVALUE": "TESTVALUE"}, errors="raise")
-    pp.pprint(df)
+    # pp.pprint(df)
     return df
 def process_semantic_fluency(filename):
     # Read the input as a pandas dataframe
@@ -186,7 +186,7 @@ def process_semantic_fluency(filename):
 def process_benton_judgement(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    pp.pprint(df)
+    # pp.pprint(df)
     df['benton_judgement'] = df.loc[:, ["JLO_TOTCALC"]].sum(axis=1, skipna = False) 
     df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'benton_judgement']]
 
@@ -474,142 +474,145 @@ def main():
         if (scale == 'Semantic Fluency'):
             print("Processing Semantic Fluency")
             df_semantic_fluency = process_semantic_fluency(args.input_dir + filename)
-            pp.pprint(df_semantic_fluency.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_semantic_fluency.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'Benton Judgement of Line'):
             print("Processing Benton Judgement of Line")
             df_benton_judgement = process_benton_judgement(args.input_dir + filename)
-            pp.pprint(df_benton_judgement.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_benton_judgement.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'MDS-UPDRS1-1'):
             print("Processing MDS-UPDRS1-1")
             df_mds_updrs1_1 = process_mds_updrs_1_1(args.input_dir + filename)
-            pp.pprint(df_mds_updrs1_1.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_mds_updrs1_1.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'MDS-UPDRS1-2'):
             print("Processing MDS-UPDRS1-2")
             df_mds_updrs1_2 = process_mds_updrs_1_2(args.input_dir + filename)
-            pp.pprint(df_mds_updrs1_2.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_mds_updrs1_2.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'MDS-UPDRS2'):
             print("Processing MDS-UPDRS2")
             df_mds_updrs2 = process_mds_updrs_2(args.input_dir + filename)
-            pp.pprint(df_mds_updrs2.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_mds_updrs2.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'MDS-UPDRS3'):
             print("Processing MDS-UPDRS3")
             df_mds_updrs3 = process_mds_updrs_3(args.input_dir + filename)
-            pp.pprint(df_mds_updrs3.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
-            exit
+            # pp.pprint(df_mds_updrs3.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'Montreal Cognitive Assessment'):
             print("Processing Montreal Cognitive Assessment")
             df_moca = process_moca(args.input_dir + filename)
-            pp.pprint(df_moca.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_moca.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'Letter Number Sequencing'):
             print("Processing Letter Number Sequencing")
             df_lns =  process_lns(args.input_dir + filename)
-            pp.pprint(df_lns.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_lns.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'Hopkins Verbal Learning Test'):
             print("Processing Hopkins Verbal Learning Test")
             df_hvlt =  process_hvlt(args.input_dir + filename)
-            pp.pprint(df_hvlt.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_hvlt.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'Epworth Sleepiness Scale'):
             print("Processing Epworth Sleepiness Scale")
             df_ess =  process_ess(args.input_dir + filename)
-            pp.pprint(df_ess.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_ess.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'Modified Schwab England ADL'):
             print("Processing Modified Schwab England ADL")
             df_mse_adl =  process_mse_adl(args.input_dir + filename)
-            pp.pprint(df_mse_adl.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_mse_adl.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'SCOPA_AUT'):
             print("Processing SCOPA_AUT")
             df_scopa_aut =  process_scopa_aut(args.input_dir + filename)
-            pp.pprint(df_scopa_aut.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_scopa_aut.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'Symbol Digit Modalities'):
             print("Processing Symbol Digit Modalities")
             df_sdm =  process_sdm(args.input_dir + filename)
-            pp.pprint(df_sdm.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_sdm.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'State Trait Anxiety Inventory'):
             print("Processing State Trait Anxiety Inventory")
             df_stai =  process_stai(args.input_dir + filename)
-            pp.pprint(df_stai.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_stai.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'Geriatric Depression'):
             print("Processing Geriatric Depression")
             df_ger_dep =  process_ger_dep(args.input_dir + filename)
-            pp.pprint(df_ger_dep.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_ger_dep.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'REM Sleep Disorder'):
             print("Processing REM Sleep Disorder")
             df_rem_sleep =  process_rem_sleep(args.input_dir + filename)
-            pp.pprint(df_rem_sleep.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_rem_sleep.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
         elif (scale == 'Biospecimen Analysis'):
             print("Processing Biospecimen Analysis")
             df_bio =  process_biospecimen(args.input_dir + filename)
-            pp.pprint(df_bio.sort_values(by = ['PATNO', 'EVENT_ID']))
+            # pp.pprint(df_bio.sort_values(by = ['PATNO', 'EVENT_ID']))
         elif (scale == 'Pilot Biospecimen Analysis'):
             print("Processing Pilot Biospecimen Analysis")
             df_pilot_bio =  process_pilot_biospecimen(args.input_dir + filename)
-            pp.pprint(df_pilot_bio.sort_values(by = ['PATNO', 'EVENT_ID']))
+            # pp.pprint(df_pilot_bio.sort_values(by = ['PATNO', 'EVENT_ID']))
 
 
     # Process UPDRS by merging and adding across the three measures
     df_mds_updrs1 = df_mds_updrs1_1.merge(df_mds_updrs1_2, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
     df_mds_updrs1['mds_updrs_1'] = df_mds_updrs1.loc[:, ["mds_updrs_1_1", "mds_updrs_1_2"]].sum(axis=1, skipna = False)
-    pp.pprint(df_mds_updrs1)
+    # pp.pprint(df_mds_updrs1)
 
     df_mds_updrs = df_mds_updrs1.merge(df_mds_updrs2, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT']).merge(df_mds_updrs3, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_mds_updrs)
+    # pp.pprint(df_mds_updrs)
     labels = ["mds_updrs_1", "mds_updrs_2", "mds_updrs_3"]
-    pp.pprint(df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels)])
+    # pp.pprint(df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels)])
     df_mds_updrs['mds_updrs_total'] = df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels) ].sum(axis=1, skipna = False)
-    pp.pprint(df_mds_updrs.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_mds_updrs.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
 
     # Merge al the dataframes to create a big matrix of observations
     df_all_vars = df_semantic_fluency
 
     df_all_vars = df_all_vars.merge(df_benton_judgement, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
 
     labels = ["PATNO", 'EVENT_ID', 'INFODT', "mds_updrs_1", "mds_updrs_2", "mds_updrs_3", "mds_updrs_total"]
     df_all_vars = df_all_vars.merge(df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels)], how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
     df_all_vars_sorted = df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars_sorted)
+    # pp.pprint(df_all_vars_sorted)
 
     # Merge MOCA
     df_all_vars = df_all_vars.merge(df_moca, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
 
     # Merge LNS
     df_all_vars = df_all_vars.merge(df_lns, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
 
     # Merge HVLT
     labels = ["PATNO", 'EVENT_ID', 'INFODT', 'DVT_TOTAL_RECALL', 'DVT_DELAYED_RECALL', 'DVT_RETENTION']
     df_all_vars = df_all_vars.merge(df_hvlt.loc[:, df_hvlt.columns.intersection(labels)], how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
 
     # Merge ESS
     labels = ["PATNO", 'EVENT_ID', 'INFODT', "ESS_TOT", "ESS"]
     df_all_vars = df_all_vars.merge(df_ess.loc[:, df_ess.columns.intersection(labels)], how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
 
     # Merge MSE-ADL
     df_all_vars = df_all_vars.merge(df_mse_adl, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
 
     # Merge SCOPA-AUT
     df_all_vars = df_all_vars.merge(df_scopa_aut, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
     
     # Merge SDM
     df_all_vars = df_all_vars.merge(df_sdm, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
     
     # Merge STAI
     df_all_vars = df_all_vars.merge(df_stai, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
     
     # Merge Geriatric Depression
     df_all_vars = df_all_vars.merge(df_ger_dep, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
 
     # Merge REM Sleep Disorder
     df_all_vars = df_all_vars.merge(df_rem_sleep, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+
+    # The INFODT field does not have the day so coerce to 1 and convert to date time
+    df_all_vars[['INFODT']] = df_all_vars[['INFODT']].apply(lambda x: "1/" + x)
+    df_all_vars[['INFODT']] = df_all_vars[['INFODT']].apply(lambda x: pd.to_datetime(x, format='%d/%m/%Y', errors='coerce'))
 
     # Merge pilot biospecimen test results to get the visit date
     df_unique_sub_visits = df_all_vars.groupby(['PATNO', 'EVENT_ID']).last().reset_index().loc[:, ["PATNO", "EVENT_ID", "INFODT"]]
@@ -623,22 +626,74 @@ def main():
     df_all_vars = df_all_vars.groupby(['PATNO', 'EVENT_ID']).last().reset_index()
     df_all_vars_sorted = df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT'])
 
+    # Convert the wide format to long format to calculate the summary values such as change and rate of change
+    df_all_vars_long = pd.melt(df_all_vars, id_vars=['PATNO', 'EVENT_ID', 'INFODT'])
+    df_all_vars_long_sorted = df_all_vars_long.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT'])
+    df_all_vars_long_sorted = df_all_vars_long_sorted.dropna()
+    # pp.pprint(df_all_vars_long_sorted)
+
+    # To calculate the difference and rate of change group by the patient and test and sort by INFODT
+    df_grouped_tests = df_all_vars_long_sorted.groupby(['PATNO', 'variable']).nth([0, -1]).reset_index()
+    df_grouped_tests = df_grouped_tests.sort_values(by = ['PATNO', 'variable', 'INFODT'])
+    df_grouped_tests = df_grouped_tests.dropna()
+    # pp.pprint(df_grouped_tests)
+
+    df_grouped_tests_summary = df_all_vars_long_sorted.groupby(['PATNO', 'variable']).agg(
+        num_days = ("INFODT", lambda x: (max(x) - min(x)).days) 
+    )
+    # pp.pprint(df_grouped_tests_summary)
+
+    df_groups_with_multiple = df_all_vars_long_sorted.groupby(['PATNO', 'variable']).filter(lambda x: len(x) > 1)
+    # pp.pprint(df_groups_with_multiple)
+    # Filter out categorical variables from observations
+    cat_vars_list = ["ESS", "REM RBD State", "Geriatric Depression State"]
+    df_groups_with_multiple = df_groups_with_multiple[~df_groups_with_multiple.variable.isin(cat_vars_list)]
+    df_grouped_tests_summary = df_groups_with_multiple.groupby(['PATNO', 'variable']).apply(calc_duration_change).reset_index()
+    # pp.pprint(df_grouped_tests_summary)
+
     # Once the dataframes are created write the table to a CSV file
-    pp.pprint(df_pilot_bio.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_pilot_bio.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
     filename = "ppmi_pilot_bio_obs.csv"
     df_pilot_bio.to_csv(args.input_dir + filename, index = False)
 
-    pp.pprint(df_bio.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_bio.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
     filename = "ppmi_bio_obs.csv"
     df_bio.to_csv(args.input_dir + filename, index = False)
 
-    pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
     filename = "ppmi_obs.csv"
     df_all_vars_sorted.to_csv(args.input_dir + filename, index = False)
 
-    pp.pprint(df_demo.sort_values(by = ['PATNO', 'Study']))
+    # pp.pprint(df_demo.sort_values(by = ['PATNO', 'Study']))
     filename = "ppmi_demographics.csv"
     df_demo.to_csv(args.input_dir + filename, index = False)
+
+    # pp.pprint(df_all_vars_long_sorted)
+    filename = "ppmi_obs_long.csv"
+    df_all_vars_long_sorted.to_csv(args.input_dir + filename, index = False)
+
+    # pp.pprint(df_grouped_tests_summary)
+    filename = "ppmi_obs_summary.csv"
+    df_grouped_tests_summary.to_csv(args.input_dir + filename, index = False)
+
+def calc_duration_change(group):
+    sorted_group = group.sort_values(by = ['INFODT'])
+    # pp.pprint(sorted_group)
+    min_index = 0
+    max_index = group.shape[0] - 1
+    try:
+        duration = round((sorted_group.iloc[max_index, 2] - sorted_group.iloc[min_index, 2]).days/365.25, 2)
+        delta = sorted_group.iloc[max_index, 4] - sorted_group.iloc[min_index, 4]
+        rate_of_change = round(delta / duration, 2)
+    except (RuntimeError, TypeError, NameError):
+        pp.pprint(sorted_group)
+
+    # print("Duration %4.2f change %8.2f ROC %8.2f" % (duration, delta, rate_of_change))
+    ds = pd.Series({'Duration': duration,
+                        'Change': delta,
+                        'ROC': rate_of_change})
+    # pp.pprint(ds)
+    return ds
 
 if __name__ == '__main__':
     main()
