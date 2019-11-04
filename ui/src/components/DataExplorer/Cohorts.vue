@@ -1,7 +1,15 @@
 <template>
+  <section>
   <v-sheet color="white" height="100%" class="rounded-lg shadow">
     <v-layout column fill-height class="ma-1">
-      <v-card-title class="title primary--text">Cohorts</v-card-title>
+
+    <v-toolbar card dense flat color="white rounded-lg">
+      <span class="title primary--text">Cohorts</span>
+      <v-divider vertical class="ml-4"></v-divider>
+      <v-spacer />
+      <v-toolbar-items> <cohort-manager-dialog :collection_id="this.collection.id" /> </v-toolbar-items>
+    </v-toolbar>
+    
       <v-divider></v-divider>
       <v-data-table
         v-model="selected"
@@ -28,13 +36,18 @@
       </v-data-table>
     </v-layout>
   </v-sheet>
+  </section>
 </template>
 
 <script>
+import CohortManagerDialog from '@/components/DataExplorer/CohortManagerDialog.vue';
 import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/dataExplorer/types';
 
 export default {
+  components: {
+    CohortManagerDialog,
+  },
   data() {
     return {
       selected: [],
