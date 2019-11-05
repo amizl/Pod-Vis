@@ -307,25 +307,27 @@ export default {
       // there should only be one query for a histogram...
       const [query] = this.findCohortQuery(this.dimensionName);
 
-      this.$nextTick(() => {
-        const minValue = query.min_value;
-        const maxValue = query.max_value;
-        // Snap selections to closest bins
-        select(this.$refs.brush).call(this.brush.move, [
-          this.xScale(minValue),
-          this.xScale(maxValue),
-        ]);
+      if (typeof(query) !== 'undefined') {
+        this.$nextTick(() => {
+          const minValue = query.min_value;
+          const maxValue = query.max_value;
+          // Snap selections to closest bins
+          select(this.$refs.brush).call(this.brush.move, [
+            this.xScale(minValue),
+            this.xScale(maxValue),
+          ]);
 
-        // Filter dimension to be within snapped selection
-        this.addFilter({
-          dimension: this.dimensionName,
-          filter: d => d >= minValue && d < maxValue,
-          query: {
-            minValue,
-            maxValue,
-          },
+          // Filter dimension to be within snapped selection
+          this.addFilter({
+            dimension: this.dimensionName,
+            filter: d => d >= minValue && d < maxValue,
+            query: {
+              minValue,
+              maxValue,
+            },
+          });
         });
-      });
+      }
     }
   },
   destroyed() {
