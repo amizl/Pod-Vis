@@ -31,12 +31,7 @@
           <span>Launch Data Explorer to compare Cohorts</span>
         </v-tooltip>
 
-          <v-tooltip top color="primary">
-           <template v-slot:activator="{ on }">
-            <delete-collection-button v-if="props.item.is_deletable" :collection_id="props.item.id" />
-           </template>
-          <span>Delete Collection</span>
-        </v-tooltip>
+        <delete-collection-button v-if="props.item.is_deletable" :collection_id="props.item.id"/>
 	</td>
       </tr>
     </template>

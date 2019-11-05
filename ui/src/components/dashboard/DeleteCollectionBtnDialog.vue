@@ -1,12 +1,20 @@
 <template>
- <span>
+  <span>
+
+   <v-tooltip top color="primary">
+   <template v-slot:activator="{ on }">
    <v-btn
       flat
       color="error"
+      v-on="on"
       @click="dialog = !dialog"
     >
       <v-icon color="error" left>delete</v-icon>DELETE
     </v-btn>
+   </template>
+   <span>Delete Collection</span>
+   </v-tooltip>
+
     <v-dialog v-model="dialog" width="500">
       <v-card class="rounded-lg">
         <v-card-title primary-title>
