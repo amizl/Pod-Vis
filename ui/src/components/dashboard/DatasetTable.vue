@@ -21,7 +21,7 @@
       </template>
       <template slot="no-data">
         <td class="text-xs-center">
-          Your dashboard is empty. Add datasets to your dashboard in the dataset
+          Your home page is empty. Add datasets to your home page in the dataset
           manager.
         </td>
       </template>

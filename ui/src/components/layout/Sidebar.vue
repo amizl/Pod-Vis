@@ -107,9 +107,9 @@ export default {
       expand: true,
       menuItems: [
         {
-          name: 'Dashboard',
-          icon: 'dashboard',
-          path: '/dashboard',
+          name: 'Home Page',
+          icon: 'home',
+          path: '/homepage',
         },
         {
           name: 'Dataset Manager',

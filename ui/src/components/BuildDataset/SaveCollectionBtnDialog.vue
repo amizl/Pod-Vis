@@ -86,7 +86,7 @@ export default {
         try {
           await this.saveCollection({ collectionName, variables, datasetIds });
           this.loading = false;
-          this.$router.push('/dashboard');
+          this.$router.push('/homepage');
         } catch (err) {
           this.loading = false;
         }

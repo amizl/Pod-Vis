@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-toolbar app class="primary">
-      <v-toolbar-title class="white--text">Dashboard</v-toolbar-title>
+      <v-toolbar-title class="white--text">Home Page</v-toolbar-title>
     </v-toolbar>
     <v-layout fill-height>
       <!-- <v-layout align-center justify-center> -->

@@ -9,11 +9,11 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/dashboard',
+      redirect: '/homepage',
     },
     {
-      path: '/dashboard',
-      name: 'dashboard',
+      path: '/homepage',
+      name: 'homepage',
       component: () => import('@/views/Dashboard.vue'),
       beforeEnter: requireAuth,
     },
