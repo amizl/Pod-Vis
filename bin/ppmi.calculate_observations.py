@@ -37,6 +37,31 @@ subject_attr_map = {}
 project_id = 1
 pp = pprint.PrettyPrinter(indent=4)
 
+# Method to calculate the change and rate of change for each group passed as a dataframe
+def calc_duration_change(group):
+    sorted_group = group.sort_values(by = ['VisitDate'])
+    # pp.pprint(sorted_group)
+    min_index = 0
+    max_index = group.shape[0] - 1
+    # print(sorted_group.iloc[max_index, 2], sorted_group.iloc[min_index, 2])
+    duration = round((sorted_group.iloc[max_index, 2] - sorted_group.iloc[min_index, 2]).days/365.25, 2)
+    delta = sorted_group.iloc[max_index, 4] - sorted_group.iloc[min_index, 4]
+    if (duration == 0):
+        ds = pd.Series({'Duration': 0,
+                        'Change': delta,
+                        'ROC': 0}) 
+        return ds
+
+    # If the duration is valid then calculate ROC
+    rate_of_change = round(delta / duration, 2)
+
+    # print("Duration %4.2f change %8.2f ROC %8.2f" % (duration, delta, rate_of_change))
+    ds = pd.Series({'Duration': duration,
+                        'Change': delta,
+                        'ROC': rate_of_change})
+    # pp.pprint(ds)
+    return ds
+
 # Take the multiple values for the APPRDX field and assign a study name
 def assign_study(study_int):
     if study_int == 1:
@@ -118,15 +143,21 @@ def process_demographics(input_dir):
     df_demo[['ENROLLDT', 'BIRTHDT', 'PDDXDT']] = df_demo[['ENROLLDT', 'BIRTHDT', 'PDDXDT']].apply(lambda x: pd.to_datetime(x, format='%d/%m/%Y', errors='coerce'))
 
     # Calculate some of the numeric properties such as age at enrollemnt, age at diagnosis
-    df_demo['enroll_age'] = round((df_demo['ENROLLDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1) 
-    df_demo['age_at_dx'] = round((df_demo['PDDXDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1 )
-    df_demo['dx_duration'] = round((df_demo['ENROLLDT'] - df_demo['PDDXDT']).dt.days, 0 )
+    df_demo['AgeAtEnrollment'] = round((df_demo['ENROLLDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1) 
+    df_demo['AgeAtDiagnosis'] = round((df_demo['PDDXDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1 )
+    df_demo['DX_Duration'] = round((df_demo['ENROLLDT'] - df_demo['PDDXDT']).dt.days, 0 )
     # pp.pprint(df_demo)
-    df_demo['health_status'] = df_demo['age_at_dx'].map(lambda x: 'Unaffected' if np.isnan(x) else 'Affected') 
+    df_demo['DiseaseStatus'] = df_demo['AgeAtDiagnosis'].map(lambda x: 'Unaffected' if np.isnan(x) else 'Affected') 
 
     # Remove some of the unwanted columns from the demographic variables
-    df_demo = df_demo.loc[:, ['PATNO', 'Study', 'Race', 'BIRTHDT', 'GENDER', 'enroll_age', 'health_status', 'age_at_dx',
-                                'dx_duration', "APPRDX","CURRENT_APPRDX", 'ENROLLDT', 'PDDXDT']]
+    df_demo = df_demo.loc[:, ['PATNO', 'Study', 'Race', 'BIRTHDT', 'GENDER', 'AgeAtEnrollment', 
+                                'DiseaseStatus', 'AgeAtDiagnosis', 'DX_Duration', 'ENROLLDT', 'PDDXDT']]
+    df_demo = df_demo.rename(columns={"PATNO": "SubjectNum", 
+                            "BIRTHDT": "DOB", 
+                            "GENDER": "Sex",
+                            "ENROLLDT": "EnrollDate",
+                            "PDDXDT": "DxDate"}, 
+                            errors="raise")
     # pp.pprint(df_demo)
     return df_demo
 
@@ -150,7 +181,11 @@ def process_biospecimen(filename):
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'CLINICAL_EVENT', 'TESTNAME']).first().reset_index()
-    df = df.rename(columns={"PATNO": "PATNO", "CLINICAL_EVENT": "EVENT_ID", "TESTNAME": "TESTNAME", "TESTVALUE": "TESTVALUE"}, errors="raise")
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "CLINICAL_EVENT": "VisitCode", 
+                            "TESTNAME": "Testname", 
+                            "TESTVALUE": "Value"}, 
+                            errors="raise")
     return df
 
 def process_pilot_biospecimen(filename):
@@ -169,75 +204,99 @@ def process_pilot_biospecimen(filename):
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'CLINICAL_EVENT']).first().reset_index()
-    df = df.rename(columns={"PATNO": "PATNO", "CLINICAL_EVENT": "EVENT_ID", "TESTNAME": "TESTNAME", "TESTVALUE": "TESTVALUE"}, errors="raise")
-    # pp.pprint(df)
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "CLINICAL_EVENT": "VisitCode", 
+                            "TESTNAME": "Testname", 
+                            "TESTVALUE": "Value"}, 
+                            errors="raise")
     return df
+
 def process_semantic_fluency(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df['semantic_fluency'] = df.loc[:, ['VLTANIM', 'VLTVEG', 'VLTFRUIT']].sum(axis=1, skipna = False) 
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'semantic_fluency']]
+    df['SemanticFluency'] = df.loc[:, ['VLTANIM', 'VLTVEG', 'VLTFRUIT']].sum(axis=1, skipna = False) 
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'SemanticFluency']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df
 
 def process_benton_judgement(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
     # pp.pprint(df)
-    df['benton_judgement'] = df.loc[:, ["JLO_TOTCALC"]].sum(axis=1, skipna = False) 
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'benton_judgement']]
+    df['BentonJudgment'] = df.loc[:, ["JLO_TOTCALC"]].sum(axis=1, skipna = False) 
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'BentonJudgment']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df
 
 def process_mds_updrs_1_1(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df['mds_updrs_1_1'] = df.loc[:, ['NP1COG', 'NP1HALL', 'NP1DPRS', 'NP1ANXS', 'NP1APAT','NP1DDS']].sum(axis=1, skipna = False) 
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'mds_updrs_1_1']]
+    df['MDS_UPDRS_1_1'] = df.loc[:, ['NP1COG', 'NP1HALL', 'NP1DPRS', 'NP1ANXS', 'NP1APAT','NP1DDS']].sum(axis=1, skipna = False) 
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'MDS_UPDRS_1_1']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df
 
 def process_mds_updrs_1_2(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df['mds_updrs_1_2'] = df.loc[:, ["NP1SLPN", "NP1SLPD", "NP1PAIN", "NP1URIN", "NP1CNST", "NP1LTHD", "NP1FATG"]].sum(axis=1, skipna = False) 
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'mds_updrs_1_2']]
+    df['MDS_UPDRS_1_2'] = df.loc[:, ["NP1SLPN", "NP1SLPD", "NP1PAIN", "NP1URIN", "NP1CNST", "NP1LTHD", "NP1FATG"]].sum(axis=1, skipna = False) 
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'MDS_UPDRS_1_2']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df            
 
 def process_mds_updrs_2(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df['mds_updrs_2'] = df.loc[:, ["NUPSOURC","NP2SPCH","NP2SALV","NP2SWAL","NP2EAT","NP2DRES","NP2HYGN","NP2HWRT","NP2HOBB",
+    df['MDS_UPDRS_2'] = df.loc[:, ["NUPSOURC","NP2SPCH","NP2SALV","NP2SWAL","NP2EAT","NP2DRES","NP2HYGN","NP2HWRT","NP2HOBB",
                                     "NP2TURN","NP2TRMR","NP2RISE","NP2WALK","NP2FREZ"]].sum(axis=1, skipna = False) 
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'mds_updrs_2']]
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'MDS_UPDRS_2']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df
 
 def process_mds_updrs_3(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df['mds_updrs_3'] = df.loc[:, ["NP3SPCH","NP3FACXP","NP3RIGN","NP3RIGRU","NP3RIGLU","PN3RIGRL","NP3RIGLL","NP3FTAPR","NP3FTAPL","NP3HMOVR",
+    df['MDS_UPDRS_3'] = df.loc[:, ["NP3SPCH","NP3FACXP","NP3RIGN","NP3RIGRU","NP3RIGLU","PN3RIGRL","NP3RIGLL","NP3FTAPR","NP3FTAPL","NP3HMOVR",
                                     "NP3HMOVL","NP3PRSPR","NP3PRSPL","NP3TTAPR","NP3TTAPL","NP3LGAGR","NP3LGAGL","NP3RISNG","NP3GAIT","NP3FRZGT",
                                     "NP3PSTBL","NP3POSTR","NP3BRADY","NP3PTRMR","NP3PTRML","NP3KTRMR","NP3KTRML","NP3RTARU","NP3RTALU","NP3RTARL",
                                     "NP3RTALL","NP3RTALJ","NP3RTCON"
                                     ]].sum(axis=1, skipna = False) 
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'mds_updrs_3']]
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'MDS_UPDRS_3']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
@@ -246,6 +305,10 @@ def process_mds_updrs_3(filename):
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df
 
 def process_moca(filename):
@@ -256,6 +319,11 @@ def process_moca(filename):
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "MCATOT": "MOCA", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df
 
 def process_lns(filename):
@@ -266,6 +334,11 @@ def process_lns(filename):
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "LNS_TOTRAW": "LNS_Total_Raw", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df    
 
 def process_hvlt(filename):
@@ -276,18 +349,29 @@ def process_hvlt(filename):
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "DVT_TOTAL_RECALL": "DVT_Total_Recall", 
+                            "DVT_DELAYED_RECALL": "DVT_Delayed_Recall", 
+                            "DVT_RETENTION": "DVT_Retention", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df    
 
 def process_ess(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df['ESS_TOT'] = df.loc[:, ["ESS1","ESS2","ESS3","ESS4","ESS5","ESS6","ESS7","ESS8"]].sum(axis=1, skipna = False)
-    df['ESS'] = np.where(df.ESS_TOT >= 10, "Sleepy", "Not Sleepy")
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'ESS_TOT', 'ESS']]
+    df['ESS_Score'] = df.loc[:, ["ESS1","ESS2","ESS3","ESS4","ESS5","ESS6","ESS7","ESS8"]].sum(axis=1, skipna = False)
+    df['ESS_State'] = np.where(df.ESS_Score >= 10, "Sleepy", "Not Sleepy")
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'ESS_Score', 'ESS_State']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df    
 
 def process_mse_adl(filename):
@@ -298,6 +382,11 @@ def process_mse_adl(filename):
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "MSEADLG": "MSEADL", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df    
 
 def process_scopa_aut(filename):
@@ -329,6 +418,10 @@ def process_scopa_aut(filename):
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df    
 
 def process_sdm(filename):
@@ -339,6 +432,11 @@ def process_sdm(filename):
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "SDMTOTAL": "SDM", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df    
 
 # Reverse the score by subtracting value from 5
@@ -390,6 +488,10 @@ def process_stai(filename):
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df    
 
 
@@ -413,13 +515,17 @@ def process_ger_dep(filename):
                     "GDSHLPLS","GDSHOME","GDSMEMRY","GDSWRTLS","GDSHOPLS","GDSBETER"]].sum(axis=1, skipna = False)
     df_part1 = df_part1.merge(df_part2, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
     df = df_part1.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'part_1', 'part_2']]
-    df['Dep_Score'] = df.loc[:, ['part_1', 'part_2']].sum(axis=1, skipna = False)
-    df['Geriatric Depression State'] = np.where(df.Dep_Score >= 5, "Depressed", "Not Depressed")
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'Dep_Score', 'Geriatric Depression State']]    
+    df['GDS_Score'] = df.loc[:, ['part_1', 'part_2']].sum(axis=1, skipna = False)
+    df['GDS'] = np.where(df.GDS_Score >= 5, "Depressed", "Not Depressed")
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'GDS_Score', 'GDS']]    
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df    
 
 def process_rem_sleep(filename):
@@ -451,12 +557,16 @@ def process_rem_sleep(filename):
     df_part1 = df_part1.merge(df_part2, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
     df = df_part1.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'part_1', 'part_2']]
     df['REM_RBD_Score'] = df.loc[:, ['part_1', 'part_2']].sum(axis=1, skipna = False)
-    df['REM RBD State'] = np.where(df.REM_RBD_Score >= 5, "REM RBD Positive", "REM RBD Negative")
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'REM_RBD_Score', 'REM RBD State']]
+    df['REM_RBD_State'] = np.where(df.REM_RBD_Score >= 5, "REM RBD Positive", "REM RBD Negative")
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'REM_RBD_Score', 'REM_RBD_State']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
+    df = df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
     return df    
 
 
@@ -474,197 +584,202 @@ def main():
         if (scale == 'Semantic Fluency'):
             print("Processing Semantic Fluency")
             df_semantic_fluency = process_semantic_fluency(args.input_dir + filename)
-            # pp.pprint(df_semantic_fluency.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_semantic_fluency.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Benton Judgement of Line'):
             print("Processing Benton Judgement of Line")
             df_benton_judgement = process_benton_judgement(args.input_dir + filename)
-            # pp.pprint(df_benton_judgement.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_benton_judgement.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'MDS-UPDRS1-1'):
             print("Processing MDS-UPDRS1-1")
             df_mds_updrs1_1 = process_mds_updrs_1_1(args.input_dir + filename)
-            # pp.pprint(df_mds_updrs1_1.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_mds_updrs1_1.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'MDS-UPDRS1-2'):
             print("Processing MDS-UPDRS1-2")
             df_mds_updrs1_2 = process_mds_updrs_1_2(args.input_dir + filename)
-            # pp.pprint(df_mds_updrs1_2.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_mds_updrs1_2.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'MDS-UPDRS2'):
             print("Processing MDS-UPDRS2")
             df_mds_updrs2 = process_mds_updrs_2(args.input_dir + filename)
-            # pp.pprint(df_mds_updrs2.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_mds_updrs2.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'MDS-UPDRS3'):
             print("Processing MDS-UPDRS3")
             df_mds_updrs3 = process_mds_updrs_3(args.input_dir + filename)
-            # pp.pprint(df_mds_updrs3.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_mds_updrs3.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Montreal Cognitive Assessment'):
             print("Processing Montreal Cognitive Assessment")
             df_moca = process_moca(args.input_dir + filename)
-            # pp.pprint(df_moca.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_moca.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Letter Number Sequencing'):
             print("Processing Letter Number Sequencing")
             df_lns =  process_lns(args.input_dir + filename)
-            # pp.pprint(df_lns.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_lns.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Hopkins Verbal Learning Test'):
             print("Processing Hopkins Verbal Learning Test")
             df_hvlt =  process_hvlt(args.input_dir + filename)
-            # pp.pprint(df_hvlt.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_hvlt.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Epworth Sleepiness Scale'):
             print("Processing Epworth Sleepiness Scale")
             df_ess =  process_ess(args.input_dir + filename)
-            # pp.pprint(df_ess.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_ess.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Modified Schwab England ADL'):
             print("Processing Modified Schwab England ADL")
             df_mse_adl =  process_mse_adl(args.input_dir + filename)
-            # pp.pprint(df_mse_adl.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_mse_adl.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'SCOPA_AUT'):
             print("Processing SCOPA_AUT")
             df_scopa_aut =  process_scopa_aut(args.input_dir + filename)
-            # pp.pprint(df_scopa_aut.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_scopa_aut.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Symbol Digit Modalities'):
             print("Processing Symbol Digit Modalities")
             df_sdm =  process_sdm(args.input_dir + filename)
-            # pp.pprint(df_sdm.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_sdm.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'State Trait Anxiety Inventory'):
             print("Processing State Trait Anxiety Inventory")
             df_stai =  process_stai(args.input_dir + filename)
-            # pp.pprint(df_stai.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_stai.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Geriatric Depression'):
             print("Processing Geriatric Depression")
             df_ger_dep =  process_ger_dep(args.input_dir + filename)
-            # pp.pprint(df_ger_dep.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_ger_dep.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'REM Sleep Disorder'):
             print("Processing REM Sleep Disorder")
             df_rem_sleep =  process_rem_sleep(args.input_dir + filename)
-            # pp.pprint(df_rem_sleep.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+            # pp.pprint(df_rem_sleep.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Biospecimen Analysis'):
             print("Processing Biospecimen Analysis")
             df_bio =  process_biospecimen(args.input_dir + filename)
-            # pp.pprint(df_bio.sort_values(by = ['PATNO', 'EVENT_ID']))
+            # pp.pprint(df_bio.sort_values(by = ['SubjectNum', 'VisitCode']))
         elif (scale == 'Pilot Biospecimen Analysis'):
             print("Processing Pilot Biospecimen Analysis")
             df_pilot_bio =  process_pilot_biospecimen(args.input_dir + filename)
-            # pp.pprint(df_pilot_bio.sort_values(by = ['PATNO', 'EVENT_ID']))
+            # pp.pprint(df_pilot_bio.sort_values(by = ['SubjectNum', 'VisitCode']))
 
 
     # Process UPDRS by merging and adding across the three measures
-    df_mds_updrs1 = df_mds_updrs1_1.merge(df_mds_updrs1_2, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    df_mds_updrs1['mds_updrs_1'] = df_mds_updrs1.loc[:, ["mds_updrs_1_1", "mds_updrs_1_2"]].sum(axis=1, skipna = False)
+    df_mds_updrs1 = df_mds_updrs1_1.merge(df_mds_updrs1_2, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    df_mds_updrs1['MDS_UPDRS_1'] = df_mds_updrs1.loc[:, ["MDS_UPDRS_1_1", "MDS_UPDRS_1_2"]].sum(axis=1, skipna = False)
     # pp.pprint(df_mds_updrs1)
 
-    df_mds_updrs = df_mds_updrs1.merge(df_mds_updrs2, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT']).merge(df_mds_updrs3, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
+    df_mds_updrs = df_mds_updrs1.merge(df_mds_updrs2, how="outer", 
+                                        on = ['SubjectNum', 'VisitCode', 'VisitDate']
+                                       ).merge(df_mds_updrs3, how="outer", 
+                                        on = ['SubjectNum', 'VisitCode', 'VisitDate']
+                                       )
     # pp.pprint(df_mds_updrs)
-    labels = ["mds_updrs_1", "mds_updrs_2", "mds_updrs_3"]
+    labels = ["MDS_UPDRS_1", "MDS_UPDRS_2", "MDS_UPDRS_3"]
     # pp.pprint(df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels)])
-    df_mds_updrs['mds_updrs_total'] = df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels) ].sum(axis=1, skipna = False)
-    # pp.pprint(df_mds_updrs.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    df_mds_updrs['MDS_UPDRS_Total'] = df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels) ].sum(axis=1, skipna = False)
+    # pp.pprint(df_mds_updrs.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
     # Merge al the dataframes to create a big matrix of observations
     df_all_vars = df_semantic_fluency
 
-    df_all_vars = df_all_vars.merge(df_benton_judgement, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    df_all_vars = df_all_vars.merge(df_benton_judgement, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
-    labels = ["PATNO", 'EVENT_ID', 'INFODT', "mds_updrs_1", "mds_updrs_2", "mds_updrs_3", "mds_updrs_total"]
-    df_all_vars = df_all_vars.merge(df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels)], how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    df_all_vars_sorted = df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT'])
+    labels = ["SubjectNum", 'VisitCode', 'VisitDate', "MDS_UPDRS_1", "MDS_UPDRS_2", "MDS_UPDRS_3", "MDS_UPDRS_Total"]
+    df_all_vars = df_all_vars.merge(df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels)], how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    df_all_vars_sorted = df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate'])
     # pp.pprint(df_all_vars_sorted)
 
     # Merge MOCA
-    df_all_vars = df_all_vars.merge(df_moca, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    df_all_vars = df_all_vars.merge(df_moca, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
     # Merge LNS
-    df_all_vars = df_all_vars.merge(df_lns, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    df_all_vars = df_all_vars.merge(df_lns, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
     # Merge HVLT
-    labels = ["PATNO", 'EVENT_ID', 'INFODT', 'DVT_TOTAL_RECALL', 'DVT_DELAYED_RECALL', 'DVT_RETENTION']
-    df_all_vars = df_all_vars.merge(df_hvlt.loc[:, df_hvlt.columns.intersection(labels)], how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    labels = ["SubjectNum", 'VisitCode', 'VisitDate', 'DVT_Total_Recall', 'DVT_Delayed_Recall', 'DVT_Retention']
+    df_all_vars = df_all_vars.merge(df_hvlt.loc[:, df_hvlt.columns.intersection(labels)], how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
     # Merge ESS
-    labels = ["PATNO", 'EVENT_ID', 'INFODT', "ESS_TOT", "ESS"]
-    df_all_vars = df_all_vars.merge(df_ess.loc[:, df_ess.columns.intersection(labels)], how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    labels = ["SubjectNum", 'VisitCode', 'VisitDate', "ESS_Score", "ESS_State"]
+    df_all_vars = df_all_vars.merge(df_ess.loc[:, df_ess.columns.intersection(labels)], how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
     # Merge MSE-ADL
-    df_all_vars = df_all_vars.merge(df_mse_adl, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    df_all_vars = df_all_vars.merge(df_mse_adl, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
     # Merge SCOPA-AUT
-    df_all_vars = df_all_vars.merge(df_scopa_aut, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    df_all_vars = df_all_vars.merge(df_scopa_aut, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     
     # Merge SDM
-    df_all_vars = df_all_vars.merge(df_sdm, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    df_all_vars = df_all_vars.merge(df_sdm, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     
     # Merge STAI
-    df_all_vars = df_all_vars.merge(df_stai, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    df_all_vars = df_all_vars.merge(df_stai, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     
     # Merge Geriatric Depression
-    df_all_vars = df_all_vars.merge(df_ger_dep, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    df_all_vars = df_all_vars.merge(df_ger_dep, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
     # Merge REM Sleep Disorder
-    df_all_vars = df_all_vars.merge(df_rem_sleep, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    df_all_vars = df_all_vars.merge(df_rem_sleep, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
-    # The INFODT field does not have the day so coerce to 1 and convert to date time
-    df_all_vars[['INFODT']] = df_all_vars[['INFODT']].apply(lambda x: "1/" + x)
-    df_all_vars[['INFODT']] = df_all_vars[['INFODT']].apply(lambda x: pd.to_datetime(x, format='%d/%m/%Y', errors='coerce'))
+    # The VisitDate field does not have the day so coerce to 1 and convert to date time
+    df_all_vars[['VisitDate']] = df_all_vars[['VisitDate']].apply(lambda x: "1/" + x)
+    df_all_vars[['VisitDate']] = df_all_vars[['VisitDate']].apply(lambda x: pd.to_datetime(x, format='%d/%m/%Y', errors='coerce'))
 
-    # Merge pilot biospecimen test results to get the visit date
-    df_unique_sub_visits = df_all_vars.groupby(['PATNO', 'EVENT_ID']).last().reset_index().loc[:, ["PATNO", "EVENT_ID", "INFODT"]]
-    df_pilot_bio = df_pilot_bio.merge(df_unique_sub_visits, how="inner", on = ['PATNO', 'EVENT_ID'])
+    df_unique_sub_visits = df_all_vars.groupby(['SubjectNum', 'VisitCode']).last().reset_index().loc[:, ["SubjectNum", "VisitCode", "VisitDate"]]
+    df_pilot_bio = df_pilot_bio.merge(df_unique_sub_visits, how="inner", on = ['SubjectNum', 'VisitCode'])
 
     # Merge biospecimen test results to get the visit date
-    df_bio = df_bio.merge(df_unique_sub_visits, how="inner", on = ['PATNO', 'EVENT_ID'])
+    df_bio = df_bio.merge(df_unique_sub_visits, how="inner", on = ['SubjectNum', 'VisitCode'])
 
     # Some times there seem to be multiple rows for the same event with different date. In such situations we are
     # arbitrarily deciding to use the last one that appears
-    df_all_vars = df_all_vars.groupby(['PATNO', 'EVENT_ID']).last().reset_index()
-    df_all_vars_sorted = df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT'])
+    df_all_vars = df_all_vars.groupby(['SubjectNum', 'VisitCode']).last().reset_index()
+    df_all_vars_sorted = df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate'])
 
     # Convert the wide format to long format to calculate the summary values such as change and rate of change
-    df_all_vars_long = pd.melt(df_all_vars, id_vars=['PATNO', 'EVENT_ID', 'INFODT'])
-    df_all_vars_long_sorted = df_all_vars_long.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT'])
+    df_all_vars_long = pd.melt(df_all_vars, id_vars=['SubjectNum', 'VisitCode', 'VisitDate'])
+    df_all_vars_long_sorted = df_all_vars_long.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate'])
     df_all_vars_long_sorted = df_all_vars_long_sorted.dropna()
     # pp.pprint(df_all_vars_long_sorted)
 
-    # To calculate the difference and rate of change group by the patient and test and sort by INFODT
-    df_grouped_tests = df_all_vars_long_sorted.groupby(['PATNO', 'variable']).nth([0, -1]).reset_index()
-    df_grouped_tests = df_grouped_tests.sort_values(by = ['PATNO', 'variable', 'INFODT'])
+    # To calculate the difference and rate of change group by the patient and test and sort by VisitDate
+    df_grouped_tests = df_all_vars_long_sorted.groupby(['SubjectNum', 'variable']).nth([0, -1]).reset_index()
+    df_grouped_tests = df_grouped_tests.sort_values(by = ['SubjectNum', 'variable', 'VisitDate'])
     df_grouped_tests = df_grouped_tests.dropna()
     # pp.pprint(df_grouped_tests)
 
-    df_grouped_tests_summary = df_all_vars_long_sorted.groupby(['PATNO', 'variable']).agg(
-        num_days = ("INFODT", lambda x: (max(x) - min(x)).days) 
+
+    df_grouped_tests_summary = df_all_vars_long_sorted.groupby(['SubjectNum', 'variable']).agg(
+        num_days = ("VisitDate", lambda x: (max(x) - min(x)).days) 
     )
     # pp.pprint(df_grouped_tests_summary)
 
-    df_groups_with_multiple = df_all_vars_long_sorted.groupby(['PATNO', 'variable']).filter(lambda x: len(x) > 1)
+    print("Generating summary information")
+    df_groups_with_multiple = df_all_vars_long_sorted.groupby(['SubjectNum', 'variable']).filter(lambda x: len(x) > 1)
     # pp.pprint(df_groups_with_multiple)
     # Filter out categorical variables from observations
-    cat_vars_list = ["ESS", "REM RBD State", "Geriatric Depression State"]
+    cat_vars_list = ["ESS_State", "REM_RBD_State", "GDS"]
     df_groups_with_multiple = df_groups_with_multiple[~df_groups_with_multiple.variable.isin(cat_vars_list)]
-    df_grouped_tests_summary = df_groups_with_multiple.groupby(['PATNO', 'variable']).apply(calc_duration_change).reset_index()
+    df_grouped_tests_summary = df_groups_with_multiple.groupby(['SubjectNum', 'variable']).apply(calc_duration_change).reset_index()
     # pp.pprint(df_grouped_tests_summary)
 
     # Once the dataframes are created write the table to a CSV file
-    # pp.pprint(df_pilot_bio.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_pilot_bio.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     filename = "ppmi_pilot_bio_obs.csv"
     df_pilot_bio.to_csv(args.input_dir + filename, index = False)
 
-    # pp.pprint(df_bio.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_bio.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     filename = "ppmi_bio_obs.csv"
     df_bio.to_csv(args.input_dir + filename, index = False)
 
-    # pp.pprint(df_all_vars.sort_values(by = ['PATNO', 'EVENT_ID', 'INFODT']))
+    # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     filename = "ppmi_obs.csv"
     df_all_vars_sorted.to_csv(args.input_dir + filename, index = False)
 
-    # pp.pprint(df_demo.sort_values(by = ['PATNO', 'Study']))
+    # pp.pprint(df_demo.sort_values(by = ['SubjectNum', 'Study']))
     filename = "ppmi_demographics.csv"
     df_demo.to_csv(args.input_dir + filename, index = False)
 
@@ -676,24 +791,15 @@ def main():
     filename = "ppmi_obs_summary.csv"
     df_grouped_tests_summary.to_csv(args.input_dir + filename, index = False)
 
-def calc_duration_change(group):
-    sorted_group = group.sort_values(by = ['INFODT'])
-    # pp.pprint(sorted_group)
-    min_index = 0
-    max_index = group.shape[0] - 1
-    try:
-        duration = round((sorted_group.iloc[max_index, 2] - sorted_group.iloc[min_index, 2]).days/365.25, 2)
-        delta = sorted_group.iloc[max_index, 4] - sorted_group.iloc[min_index, 4]
-        rate_of_change = round(delta / duration, 2)
-    except (RuntimeError, TypeError, NameError):
-        pp.pprint(sorted_group)
+    # Print a table of visit information
+    filename = "ppmi_visit_info.csv"
+    df_unique_sub_visits.to_csv(args.input_dir + filename, index = False)
 
-    # print("Duration %4.2f change %8.2f ROC %8.2f" % (duration, delta, rate_of_change))
-    ds = pd.Series({'Duration': duration,
-                        'Change': delta,
-                        'ROC': rate_of_change})
-    # pp.pprint(ds)
-    return ds
+    # Print a table of unique tests in the data
+    df_unique_obs = pd.DataFrame({"Observations": df_all_vars_long.variable.unique()})
+    # pp.pprint(df_unique_obs)
+    filename = "ppmi_unique_obs.csv"
+    df_unique_obs.to_csv(args.input_dir + filename, index = False)
 
 if __name__ == '__main__':
     main()
