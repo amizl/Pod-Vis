@@ -51,8 +51,8 @@
           :cx="mean"
           :cy="h"
           fill="blue"
-          stroke="none"
-          stroke-width="0"
+	  stroke="#3696f8"
+          stroke-width="1"
           fill-opacity=".6"
         />
         <!-- Population Mean -->
@@ -60,10 +60,10 @@
           r="7"
           :cx="populationMean"
           :cy="h"
-          stroke="none"
-          fill="#F8B108"
-          stroke-width="0"
-          fill-opacity=".6"
+          stroke="#f8d537"
+          fill="#F88123"
+          stroke-width="1"
+          fill-opacity=".8"
         />
         <g ref="brush" class="brush"></g>
       </g>
