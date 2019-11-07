@@ -11,7 +11,12 @@
     </v-toolbar>
     
       <v-divider></v-divider>
-      <v-data-table
+
+      <v-container v-if="collection_cohorts.length === 0" fluid fill-height>
+        <v-flex>Loading</v-flex>
+      </v-container>
+
+      <v-data-table v-else
         v-model="selected"
         flat
         :headers="headers"
@@ -29,6 +34,8 @@
             ></v-checkbox>
           </td>
           <td class="text-xs-left" fill-width>{{ props.item.label }}</td>
+          <td v-if="typeof(props.item.subject_ids) === 'undefined'" class="text-xs-left" fill-width>-</td>
+          <td v-else class="text-xs-left" fill-width>{{ props.item.subject_ids.length }}</td>
 	  <td>
 	    <v-select outlined v-model="props.item.color" :items="colors" v-on:change="colorChange"></v-select>
 	  </td>
@@ -65,6 +72,12 @@ export default {
           value: 'label',
         },
         {
+          text: 'Size',
+          align: 'left',
+          sortable: true,
+          value: 'subject_ids.length',
+        },
+        {
           text: 'Color',
           align: 'left',
           sortable: false,
@@ -80,7 +93,6 @@ export default {
      var visible_cohorts = [];
      this.selected.forEach(function(s) { selected_cohorts[s['id']] = 1; });
      this.cohorts.forEach(function(c) { if (c.id in selected_cohorts) { visible_cohorts.push(c); }});
-     console.log("visible_cohorts = " + visible_cohorts);
      this.setVisibleCohorts(visible_cohorts);
     },
     collection_cohorts() {

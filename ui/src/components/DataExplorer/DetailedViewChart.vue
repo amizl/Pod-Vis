@@ -12,7 +12,6 @@ import { scalePoint, scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
 import { max, mean, deviation } from 'd3-array';
-import * as crossfilter from 'crossfilter2';
 
 export default {
   directives: {
@@ -369,58 +368,7 @@ export default {
       // draw each cohort in turn
       cohorts.forEach(function(c) {
         console.log("cohort " + c.label + " color = " + c.color);
-     
-        // determine which subjects are in the cohort
-        const xf = crossfilter(slf.data);
-
-        // add dimensions and filters
-        // xf.dimension(dim);
-        // dim.filterFunction(filter);
-
-        c.queries.forEach(function(q) {
-          // adapted from FIND_COHORT_QUERY
-          const inputVariable = q.input_variable;
-          var filter_fn = undefined;
-          let accessor = undefined;
-          let dim = undefined;
-
-          if (q.input_variable.subject_ontology === undefined) {
-            // convert dimension_label to data field name
-            let subfield = dimension2field[q.input_variable.dimension_label];
-            accessor = function(d) { return d[q.input_variable.observation_ontology.id][subfield] };
-            dim = xf.dimension(accessor);
-          } else {
-            let lbl = q.input_variable.subject_ontology.label;
-            // special case for study
-            if (lbl === "Study") {
-               accessor = function(d) { return d["study"]["study_name"] };
-            } else {
-               accessor = function(d) { return d[lbl] };
-            }
-            dim = xf.dimension(accessor);
-          }
-
-          if ((q.value !== undefined) && (q.value !== null)) {
-            filter_fn = function(d) { console.log("eq filter got " + d + " checking against " + q.value); return d === q.value; };
-//            console.log("adding filter for " + q.input_variable.observation_ontology.label + "=" + q.value);
-            dim.filterFunction(filter_fn);
-          } else if ((q.min_value !== undefined) && (q.max_value !== undefined)) {
-            filter_fn = function(d) { console.log("lte/gte filter got " + d + " checking against min=" + q.min_value + " max=" + q.max_value); return ((d >= q.min_value) && (d <= q.max_value)); };
-//            console.log("adding filter for " + q.input_variable.subject_ontology.label + ">=" + q.min_value + " <=" + q.max_value);
-            dim.filterFunction(filter_fn);
-          } else {
-            console.log("unsupported query " + q);
-          }
-        });
-
-        const filt = xf.allFiltered();
-
-        let sids = {};
-        filt.forEach(function(r) {
-          sids[r.subject_id] = 1;
-        });
-
-        var cohort_subject_ids = Object.keys(sids);
+        var cohort_subject_ids = c.subject_ids;
 
         // draw mean and standard deviation for entire group
         if (slf.drawMean) {
