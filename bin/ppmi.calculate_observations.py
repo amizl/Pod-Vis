@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 
 """
+This script is used to parse the PPMI data and extract the unique observation names,
+and observations and generate the subject and observation ontology list, subject attributes,
+visit observations, and subject summary files from the file. If there are any transformations
+that need to be performed on the data, they are performed here. For instance the calculation
+of UPDRS Totals, Semantic Fluency Totals, etc. 
 
 """
 
@@ -31,10 +36,6 @@ scale_file_map = {'Semantic Fluency' : "Semantic_Fluency.csv",
                    'Pilot Biospecimen Analysis': 'Pilot_Biospecimen_Analysis_Results.csv',
                    'Biospecimen Analysis': 'Current_Biospecimen_Analysis_Results.csv'
                    }
-study_map = {}
-patient_map = {}
-subject_attr_map = {}
-project_id = 1
 pp = pprint.PrettyPrinter(indent=4)
 
 # Method to calculate the change and rate of change for each group passed as a dataframe
@@ -67,11 +68,11 @@ def assign_study(study_int):
     if study_int == 1:
         return "Parkinson's Disease"
     elif study_int == 2:
-        return "Healthy Controls"
+        return "Healthy Control"
     elif study_int == 3:
         return "SWEDD"
     elif study_int == 4:
-        return "Prodormal"
+        return "Prodromal"
     elif study_int == 5 or study_int == 6:
         return "Genetic Cohort"
     elif study_int == 7 or study_int == 8:
@@ -143,20 +144,20 @@ def process_demographics(input_dir):
     df_demo[['ENROLLDT', 'BIRTHDT', 'PDDXDT']] = df_demo[['ENROLLDT', 'BIRTHDT', 'PDDXDT']].apply(lambda x: pd.to_datetime(x, format='%d/%m/%Y', errors='coerce'))
 
     # Calculate some of the numeric properties such as age at enrollemnt, age at diagnosis
-    df_demo['AgeAtEnrollment'] = round((df_demo['ENROLLDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1) 
-    df_demo['AgeAtDiagnosis'] = round((df_demo['PDDXDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1 )
-    df_demo['DX_Duration'] = round((df_demo['ENROLLDT'] - df_demo['PDDXDT']).dt.days, 0 )
+    df_demo['Age At Enrollment'] = round((df_demo['ENROLLDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1) 
+    df_demo['Age At Diagnosis'] = round((df_demo['PDDXDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1 )
+    df_demo['Disease Duration'] = round((df_demo['ENROLLDT'] - df_demo['PDDXDT']).dt.days, 0 )
     # pp.pprint(df_demo)
     df_demo['DiseaseStatus'] = df_demo['AgeAtDiagnosis'].map(lambda x: 'Unaffected' if np.isnan(x) else 'Affected') 
 
     # Remove some of the unwanted columns from the demographic variables
-    df_demo = df_demo.loc[:, ['PATNO', 'Study', 'Race', 'BIRTHDT', 'GENDER', 'AgeAtEnrollment', 
-                                'DiseaseStatus', 'AgeAtDiagnosis', 'DX_Duration', 'ENROLLDT', 'PDDXDT']]
+    df_demo = df_demo.loc[:, ['PATNO', 'Study', 'Race', 'BIRTHDT', 'GENDER', 'Age At Enrollment', 
+                                'Disease Status', 'Age At Diagnosis', 'Disease Duration', 'ENROLLDT', 'PDDXDT']]
     df_demo = df_demo.rename(columns={"PATNO": "SubjectNum", 
-                            "BIRTHDT": "DOB", 
+                            "BIRTHDT": "Birthdate", 
                             "GENDER": "Sex",
-                            "ENROLLDT": "EnrollDate",
-                            "PDDXDT": "DxDate"}, 
+                            "ENROLLDT": "Enroll Date",
+                            "PDDXDT": "Diagnosis Date"}, 
                             errors="raise")
     # pp.pprint(df_demo)
     return df_demo
@@ -571,13 +572,22 @@ def process_rem_sleep(filename):
 
 
 def main():
+    # Parse the arguments
     parser = argparse.ArgumentParser( description='Put a description of your script here')
     parser.add_argument('-i', '--input_dir', type=str, required=True, help='Path to an input directory from where to get files' )
-    parser.add_argument('-o', '--output_file_prefix', type=str, required=True, help='Prefix to use for all the output files that will be generated' )
+    parser.add_argument('-o', '--output_dir', type=str, required=False, help='Path to directory where the output files that will be generated' )
     args = parser.parse_args()
-    
+
+    # If the output dir is not specified then use the input dir
+    if args.output_dir is None:
+        args.output_dir = args.input_dir
+
     # Process the demographic variables
     df_demo = process_demographics(args.input_dir)
+    df_test = df_demo
+    pd.to_datetime(df_test['EnrollDate']).apply(lambda x: x.date()) 
+    df_demo_long = pd.melt(df_test, id_vars=['SubjectNum'], var_name ='SubjectVar', value_name ='Value')
+    df_demo_long = df_demo_long.dropna()
 
     # Cycle through the scales and calculate the totals or any other transformations that need to be made
     for scale, filename in scale_file_map.items():
@@ -752,9 +762,9 @@ def main():
     # pp.pprint(df_grouped_tests)
 
 
-    df_grouped_tests_summary = df_all_vars_long_sorted.groupby(['SubjectNum', 'variable']).agg(
-        num_days = ("VisitDate", lambda x: (max(x) - min(x)).days) 
-    )
+    # df_grouped_tests_summary = df_all_vars_long_sorted.groupby(['SubjectNum', 'variable']).agg(
+    #    num_days = ("VisitDate", lambda x: (max(x) - min(x)).days) 
+    #)
     # pp.pprint(df_grouped_tests_summary)
 
     print("Generating summary information")
@@ -769,37 +779,47 @@ def main():
     # Once the dataframes are created write the table to a CSV file
     # pp.pprint(df_pilot_bio.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     filename = "ppmi_pilot_bio_obs.csv"
-    df_pilot_bio.to_csv(args.input_dir + filename, index = False)
+    df_pilot_bio.to_csv(args.output_dir + filename, index = False)
 
     # pp.pprint(df_bio.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     filename = "ppmi_bio_obs.csv"
-    df_bio.to_csv(args.input_dir + filename, index = False)
+    df_bio.to_csv(args.output_dir + filename, index = False)
 
     # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     filename = "ppmi_obs.csv"
-    df_all_vars_sorted.to_csv(args.input_dir + filename, index = False)
+    df_all_vars_sorted.to_csv(args.output_dir + filename, index = False)
 
     # pp.pprint(df_demo.sort_values(by = ['SubjectNum', 'Study']))
     filename = "ppmi_demographics.csv"
-    df_demo.to_csv(args.input_dir + filename, index = False)
+    df_demo.to_csv(args.output_dir + filename, index = False)
+
+    # pp.pprint(df_demo_long)
+    filename = "ppmi_demographics_long.csv"
+    df_demo_long.to_csv(args.output_dir + filename, index = False)
 
     # pp.pprint(df_all_vars_long_sorted)
     filename = "ppmi_obs_long.csv"
-    df_all_vars_long_sorted.to_csv(args.input_dir + filename, index = False)
+    df_all_vars_long_sorted.to_csv(args.output_dir + filename, index = False)
 
     # pp.pprint(df_grouped_tests_summary)
     filename = "ppmi_obs_summary.csv"
-    df_grouped_tests_summary.to_csv(args.input_dir + filename, index = False)
+    df_grouped_tests_summary.to_csv(args.output_dir + filename, index = False)
 
     # Print a table of visit information
     filename = "ppmi_visit_info.csv"
-    df_unique_sub_visits.to_csv(args.input_dir + filename, index = False)
+    df_unique_sub_visits.to_csv(args.output_dir + filename, index = False)
 
     # Print a table of unique tests in the data
     df_unique_obs = pd.DataFrame({"Observations": df_all_vars_long.variable.unique()})
     # pp.pprint(df_unique_obs)
     filename = "ppmi_unique_obs.csv"
-    df_unique_obs.to_csv(args.input_dir + filename, index = False)
+    df_unique_obs.to_csv(args.output_dir + filename, index = False)
+
+    # Print a table of unique subject variables in the data
+    df_unique_subject_vars = pd.DataFrame({"Observations": df_demo_long.SubjectVar.unique()})
+    # pp.pprint(df_unique_subject_vars)
+    filename = "ppmi_unique_subject_vars.csv"
+    df_unique_subject_vars.to_csv(args.output_dir + filename, index = False)
 
 if __name__ == '__main__':
     main()
