@@ -1,6 +1,6 @@
 SubjectNum,Study,Race,DOB,Sex,AgeAtEnrollment,DiseaseStatus,AgeAtDiagnosis,DX_Duration,EnrollDate,DxDate
 3400,Parkinson's Disease,White,1971-05-01,Female,39.2,Affected,38.4,273.0,2010-07-01,2009-10-01
 3407,Parkinson's Disease,White,1945-07-01,Male,65.2,Affected,64.6,212.0,2010-09-01,2010-02-01
-3100,Healthy Controls,White,1942-12-01,Female,67.8,Unaffected,,,2010-10-01,
+3100,Healthy Control,White,1942-12-01,Female,67.8,Unaffected,,,2010-10-01,
 3001,Parkinson's Disease,White,1946-01-01,Male,65.2,Affected,64.2,334.0,2011-03-01,2010-04-01
 5005,Unknown,White,,Female,,Unaffected,,,,2017-05-01

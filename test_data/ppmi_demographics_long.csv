@@ -1,10 +1,26 @@
 SubjectNum,SubjectVar,Value
 3400,Study,Parkinson's Disease
-3401,Study,Healthy Controls
+3401,Study,Healthy Control
 3402,Study,SWEDD
 3403,Study,Parkinson's Disease
-3404,Study,Healthy Controls
-3405,Study,Healthy Controls
-3406,Study,Parkinson's Disease
-3407,Study,Parkinson's Disease
-3100,Study,Healthy Controls
+3404,Study,Healthy Control
+3400,Race,White
+3401,Race,White
+3402,Race,White
+3403,Race,White
+3404,Race,White
+3400,Sex,Female
+3401,Sex,Female
+3402,Sex,Male
+3403,Sex,Male
+3404,Sex,Female
+3400,BirthDate,1971-05-01 00:00:00
+3401,BirthDate,1954-03-01 00:00:00
+3402,BirthDate,1964-06-01 00:00:00
+3403,BirthDate,1941-08-01 00:00:00
+3404,BirthDate,1954-08-01 00:00:00
+3400,DiseaseStatus,Affected
+3401,DiseaseStatus,Unaffected
+3402,DiseaseStatus,Affected
+3403,DiseaseStatus,Affected
+3404,DiseaseStatus,Unaffected

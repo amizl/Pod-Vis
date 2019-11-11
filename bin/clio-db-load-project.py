@@ -15,8 +15,10 @@ import csv
 import mysql.connector
 import pandas as pd
 import pprint as pp
+from decimal import *
 
 study_map = {}
+subject_map = {}
 patient_map = {}
 subject_attr_map = {}
 project_map = {}
@@ -68,7 +70,7 @@ def main():
     # pp.pprint(df_project_info)
     # pp.pprint(df_study_info)
     pp.pprint(subject_ont)
-    pp.pprint(observation_ont)
+    # pp.pprint(observation_ont)
 
     # Loop through the entity_file_map and process each file
     # The order is important as processing project, subject ontology, and observation ontology 
@@ -79,15 +81,18 @@ def main():
         pp.pprint(entity_file)
         entity_file = args.input_dir + entity_file
         print("Processing entity: %s file: %s" % (entity, entity_file))
-        if entity is "ProjectA":
+        if entity is "Project":
             print("Processing project and studies .....")
             process_projects_and_studies(cursor, conn, entity_file, df_project_info, df_study_info, df_col_names_field_map)
-        elif entity is "Subject OntologyA":
+        elif entity is "Subject Ontology":
             print("Processing subject ontology .....")
             process_subject_ontology(cursor, conn, entity_file, subject_ont, df_col_names_field_map)
         elif entity is "Observation Ontology":
             print("Processing observation ontology .....")
             process_observation_ontology(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
+        elif entity is "Subject Info":
+            print("Processing subject information .....")
+            process_subject_info(cursor, conn, entity_file, study_map, subject_ont, df_col_names_field_map)
 
     exit()
 
@@ -423,9 +428,169 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                     update_observation_ontology_term(cursor, observation_ont_id, observation_term, parent_id, value_type, data_category, flip_axis) 
                     conn.commit()
 
+
+# Process the subject info file and either create an entry in the table or update the entry for 
+# the subject from the demographics file with the following columns
+# SubjectNum,SubjectVar,Value
+# project_name	project_description	primary_diease	study_name	longitudinal	study_description
+def process_subject_info(cursor, conn, project_file, study_map, subject_ont, df_col_names_field_map):
+
+    pp.pprint(study_map)
+    pp.pprint(subject_ont)
+
+    # Create a lookup from column name to field name
+    colname_to_fields = {}
+    colname_to_data_type = {}
+    for index, row in df_col_names_field_map.iterrows():
+        # pp.pprint("Row: {} Index: {}".format(row, index))
+        col_name = row['FieldName']
+        data_type = row['Type']
+        field_name = index
+        colname_to_fields[col_name] = field_name
+        colname_to_data_type[col_name] = data_type
+
+    pp.pprint(colname_to_fields)
+
+    # Open the file an iterate over the list
+    with open(project_file) as ifh:
+        reader = csv.DictReader(ifh)
+
+        # Process the remaining lines
+        for row in reader:
+            # from ppmi_projects.csv
+            # pp.pprint(row)
+            subject_num = row['SubjectNum']
+            subject_var = row['SubjectVar']
+            value = row['Value']
+
+            print("Processing subject num: {} variable: {} value: {}".format(subject_num, subject_var, value))
+
+            # If the subject variable is "Study" then create an entry in the subject table
+            if subject_var == "Study":
+                if value in study_map.keys(): 
+                    study_id = study_map[value] 
+                else:
+                    print ("Could not find study name {} in study map. Skipping ....".format(value))
+                    continue
+
+                # Check to see if the subject already exists in the database, if so add to subject map
+                # else create one
+                subject_id = get_subject_entry(cursor, subject_num, study_id)
+                if subject_id == 0:
+                    subject_id = create_subject_entry(cursor, subject_num, study_id)
+                    conn.commit()
+                
+                # Add entry in subject map    
+                subject_map[subject_num] = {"id": subject_id, "study_id": study_id}
+            else:
+                # For the column name lookup the field name
+                if subject_var in colname_to_fields: 
+                    sub_ont_label = colname_to_fields[subject_var]
+                    value_type = colname_to_data_type[subject_var]
+                else:
+                    print ("Could not find subject variable {} in colname to fields. Skipping ....".format(subject_var))
+                    continue
+
+                # As the subject variable is not "Study" create an entry in the subject_attribute
+                # table
+                if sub_ont_label in subject_ont.keys(): 
+                    subject_ont_id = subject_ont[sub_ont_label]["id"]
+                else:
+                    print ("Could not find subject variable {} in subject ontology. Skipping ....".format(sub_ont_label))
+                    continue
+
+                if subject_num in subject_map.keys(): 
+                    study_id = subject_map[subject_num]["study_id"]
+                    subject_id = subject_map[subject_num]["id"] 
+                else:
+                    print ("Could not find subject {} in subject map. Skipping ....".format(subject_num))
+                    continue
+
+                # Check to see if this subject attribute already exists, in which case update it,
+                # else add it
+                print("Processing variable {} with value: {} for subject ID: {} with subject ont : {}".format(sub_ont_label, value, subject_id, subject_ont_id))
+                subj_attr_id = get_subject_attribute(cursor, subject_id, subject_ont_id)
+                if (subj_attr_id == 0):
+                    # Add the entry for this subject attribute
+                    add_subject_attribute(cursor, subject_id, subject_ont_id, value, value_type)
+                    conn.commit()
+                else:
+                    # As this entry already exists, update the fields
+                    update_subject_attribute(cursor, subject_id, subject_ont_id, value, value_type)
+                    conn.commit()
+
+def get_subject_attribute(cursor, subject_id, subject_ont_id):
+    attr_id = 0
+
+    query = "SELECT id FROM subject_attribute where subject_id = {} and subject_ontology_id = {}".format(subject_id, subject_ont_id)
+    print("Executing query: '{}'".format(query))
+    try:
+        cursor.execute(query)
+
+        row = cursor.fetchone()
+        if row is not None:
+            attr_id = row[0]
+
+    except Exception as e:
+        print(e)
+        sys.exit()
+    
+    print("Returning subject attribute ID: {}".format(attr_id))
+    return attr_id    
+
 def add_subject_attribute(cursor, subject_id, ont_id, val, val_type):
-    query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type) VALUES (%s, %s, %s, %s)"
-    cursor.execute(query, (subject_id, ont_id, val, val_type))
+    if val_type == 'Char':
+        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type) VALUES ({}, {}, '{}', '{}')"
+        query = query.format(subject_id, ont_id, val, val_type)
+    elif val_type == 'Decimal':
+        dec_value = Decimal(val)
+        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type, dec_value) VALUES ({}, {}, '{}', '{}', {})"
+        query = query.format(subject_id, ont_id, val, val_type, dec_value)
+    elif val_type == 'Integer':
+        int_value = int(val)
+        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type, int_value) VALUES ({}, {}, '{}', '{}', {})"
+        query = query.format(subject_id, ont_id, val, val_type, int_value)
+    elif val_type == 'Date':
+        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type, date_value) VALUES ({}, {}, '{}', '{}', '{}')"
+        query = query.format(subject_id, ont_id, val, val_type, val)
+    else:
+        print("Unknown value type {} skipping this entry".format(val_type))
+        return
+
+    try:
+        print("Executing query: '{}'".format(query))
+        cursor.execute(query)
+
+    except Exception as e:
+        print(e)
+        sys.exit()
+
+def update_subject_attribute(cursor, subject_id, ont_id, val, val_type):
+    if val_type == 'Char':
+        query = "UPDATE subject_attribute SET value = '{}', value_type = '{}' where subject_id = {} and subject_ontology_id = {}"
+        query = query.format(val, val_type, subject_id, ont_id)
+    elif val_type == 'Decimal':
+        dec_value = Decimal(val)
+        query = "UPDATE subject_attribute SET value = '{}', value_type = '{}', dec_value = {} where subject_id = {} and subject_ontology_id = {}"
+        query = query.format(val, val_type, dec_value, subject_id, ont_id)
+    elif val_type == 'Integer':
+        int_value = int(val)
+        query = "UPDATE subject_attribute SET value = '{}', value_type = '{}', int_value = {} where subject_id = {} and subject_ontology_id = {}"
+        query = query.format(val, val_type, int_value, subject_id, ont_id)
+    elif val_type == 'Date':
+        query = "UPDATE subject_attribute SET value = '{}', value_type = '{}', date_value = '{}' where subject_id = {} and subject_ontology_id = {}"
+        query = query.format(val, val_type, val, subject_id, ont_id)
+    else:
+        print("Unknown value type {} skipping this entry".format(val_type))
+        return
+
+    try:
+        print("Executing query: '{}'".format(query))
+        cursor.execute(query)
+
+    except Exception as e:
+        print(e)
+        sys.exit()
 
 def get_subject_ontology(cursor, label):
     ont_id = 0
@@ -713,9 +878,10 @@ def update_project_entry(cursor, project_id, project_name, primary_disease, proj
     print("Updated project entry '{}' in database with ID: {}.".format(project_name, project_id))
 
 # Method that inserts the subject in the database and returns the subject ID
-def create_subject_entry(cursor, subject_num, study_id, birth_date, sex, race):
+def create_subject_entry(cursor, subject_num, study_id):
     subject_id = 0
     query = "insert into subject (subject_num, study_id) values ('{}', {})".format(subject_num, study_id)
+    print("Executing query: {}".format(query))
     try:
         cursor.execute(query)
         subject_id = cursor.lastrowid
@@ -868,6 +1034,7 @@ def get_subject_entry(cursor, subject_num, study_id):
     subject_id = 0
     # First check if this entry already exists in which case just read the subject ID and return it
     query = "SELECT id FROM subject where subject_num = '{}' AND study_id = {}".format(subject_num, study_id)
+    print ("Executing query: {}".format(query))
     try:
         cursor.execute(query)
 
@@ -878,7 +1045,7 @@ def get_subject_entry(cursor, subject_num, study_id):
     except Exception as e:
         print(e)
         sys.exit()
-
+    print("Returning subject ID: {} for Subject Num: {}".format(subject_id, subject_num))
     return subject_id
 
 
