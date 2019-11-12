@@ -93,6 +93,9 @@ def main():
         elif entity is "Subject Info":
             print("Processing subject information .....")
             process_subject_info(cursor, conn, entity_file, study_map, subject_ont, df_col_names_field_map)
+        elif entity is "Visit":
+            print("Processing visit information .....")
+            process_subject_visits(cursor, conn, entity_file, df_col_names_field_map)
 
     exit()
 
@@ -183,6 +186,62 @@ def main():
                 subject_attr_map[subject_id] = True
 
             conn.commit()
+
+
+# Process the subject visits file to create or update entries inthe subject_visit table
+# tables. The file has the following columns:
+# SubjectNum,VisitCode,VisitDate
+def process_subject_visits(cursor, conn, visit_file, df_col_names_field_map):
+
+    pp.pprint(subject_map)
+
+    # Open the file an iterate over the list
+    with open(visit_file) as ifh:
+
+        reader = csv.DictReader(ifh)
+
+        # Process the remaining lines
+        for row in reader:
+            # from ppmi_projects.csv
+            pp.pprint(row)
+            subject_num = row['SubjectNum']
+            visit_code = row['VisitCode']
+            visit_date = row['VisitDate']
+            visit_num = row['VisitNum']
+            disease_status = row['VisitDiseaseStatus']
+
+            if subject_num in subject_map:
+                subject_info = subject_map[subject_num]
+                subject_id = subject_info["id"]
+            else:
+                print("Cannot find subject num {} in subject map. Skipping entry .....".format(subject_num))
+
+            print("Subject: {} ID: {} Visit Code: {} Visit Date: {} Visit Num: {}".format(subject_num, subject_id, visit_code, visit_date, visit_num))
+
+            # If no visits have been processed yet then create a map to hold visits
+            if ('visits' not in subject_info):
+                subject_info['visits'] = {}
+            subject_visits = subject_info['visits']
+
+            # Check to see if this subject visit already exists in database, if so use the ID
+            # else create an entry
+            subject_visit_id = 0
+            if (visit_num not in subject_visits):
+                subject_visit_id = get_subject_visit(cursor, subject_id, visit_num)
+                if (subject_visit_id == 0):
+                    # As the subject visit entry does not exist in database create it
+                    subject_visit_id = create_subject_visit(cursor, subject_id, visit_num, visit_code, 
+                                                            visit_date, disease_status)
+                    subject_map[subject_num]['visits'][visit_num] = subject_visit_id
+                    conn.commit()
+                else:
+                    # Visit already exists, so update the visit
+                    update_subject_visit(cursor, subject_visit_id, visit_code, visit_date, disease_status)
+                    subject_map[subject_num]['visits'][visit_num] = subject_visit_id
+                    conn.commit()
+            else:
+                subject_visit_id = subject_visits[visit_num]            
+
 
 # Process the projects file and create missing entries or update existing entries in the 'project' and 'study'
 # tables. The file has the following columns:
@@ -909,9 +968,11 @@ def create_subject_observation(cursor, subject_visit_id, obs_ont_id, value):
     return observation_id
 
 # Method that inserts the visit in the database and returns the visit ID
-def create_subject_visit(cursor, visit_num, subject_id, visit_event, event_date, disease_status):
+def create_subject_visit(cursor, subject_id, visit_num, visit_code, visit_date, disease_status):
     visit_id = 0
-    query = "insert into subject_visit (visit_num, subject_id, visit_event, event_date, disease_status) values ({}, {}, '{}', '{}', '{}')".format(visit_num, subject_id, visit_event, event_date, disease_status)
+    query = "insert into subject_visit (visit_num, subject_id, visit_event, event_date, disease_status) values ({}, {}, '{}', '{}', '{}')"
+    query = query.format(visit_num, subject_id, visit_code, visit_date, disease_status)
+    print("Executing query: {}".format(query))
     try:
         cursor.execute(query)
         visit_id = cursor.lastrowid
@@ -922,6 +983,20 @@ def create_subject_visit(cursor, visit_num, subject_id, visit_event, event_date,
 
     print("Created subject visit '{}' in database with subject ID: {}.".format(visit_num, subject_id))
     return visit_id
+
+# Method that updates the visit in the database and returns the visit ID
+def update_subject_visit(cursor, subject_visit_id, visit_code, visit_date, disease_status):
+    query = "update subject_visit set visit_event = '{}', event_date = '{}', disease_status = '{}' where id = {}"
+    query = query.format(visit_code, visit_date, disease_status, subject_visit_id)
+    print("Executing query: {}".format(query))
+    try:
+        cursor.execute(query)
+
+    except Exception as e:
+        print(e)
+        sys.exit()
+
+    print("Updated subject visit ID {} in database.".format(subject_visit_id))
 
 # Method that checks for the observation in the database and returns the observation ID, else zero
 def get_subject_observation(cursor, subject_visit_id, obs_ont_id):
@@ -1013,11 +1088,12 @@ def get_study_info(conn):
     return df
 
 # Method that checks for the visit in the database and returns the visit ID, else zero
-def get_subject_visit(cursor, visit_num, subject_id):
+def get_subject_visit(cursor, subject_id, visit_num):
     visit_id = 0
     # First check if this visit already exists in which case just read the visit ID and return it
-    query = "SELECT id FROM subject_visit where visit_num = '{}' AND subject_id = {}".format(visit_num, subject_id)
+    query = "SELECT id FROM subject_visit where visit_num = {} AND subject_id = {}".format(visit_num, subject_id)
     try:
+        print("Executing query: {}".format(query))
         cursor.execute(query)
 
         row = cursor.fetchone()
@@ -1026,7 +1102,7 @@ def get_subject_visit(cursor, visit_num, subject_id):
     except Exception as e:
         print(e)
         sys.exit()
-
+    print("Returning visit ID: {}".format(visit_id))
     return visit_id
 
 # Method that checks for the subject in the database and returns the subject ID, else zero
