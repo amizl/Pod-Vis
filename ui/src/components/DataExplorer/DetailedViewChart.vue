@@ -391,10 +391,10 @@ export default {
           // +/- 1 SD
           slf.drawMultiCurveRegion(paths[1], paths[2], 'black', '#d0d0d0', 0.4, 0.5);
           // mean
-          slf.drawMultiCurve(paths[0], c.color, 0.6, 8);
+          slf.drawMultiCurve(paths[0], c.color, 0.7, 8);
           // outline +/- 1 SD
-          slf.drawMultiCurve(paths[1], c.color, 0.6, 1);
-          slf.drawMultiCurve(paths[2], c.color, 0.6, 1);
+          slf.drawMultiCurve(paths[1], c.color, 0.7, 1);
+          slf.drawMultiCurve(paths[2], c.color, 0.7, 1);
         }
       });
     },
