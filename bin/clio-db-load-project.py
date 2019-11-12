@@ -96,96 +96,9 @@ def main():
         elif entity is "Visit":
             print("Processing visit information .....")
             process_subject_visits(cursor, conn, entity_file, df_col_names_field_map)
-
-    exit()
-
-    # Open the file an iterate over the list
-    with open(args.input_file) as ifh:
-        line = ifh.readline() # Ignore header line
-
-        # Process the remaining lines
-        for line in ifh:
-            line = line.rstrip()
-            # from ppmi_derived_visits.tsv
-            subject_num, sex, study_group, race, birth_date, disease_status, event_date, score, scale, event, item, category, age, visit_num = re.split("\t", line)
-            # event values are:
-            print("Patient ID: {} event date {} measure {} value {}".format(subject_num, event_date, item, score))
-
-            # Check to see if an entry for this study already exists, if not create one
-            study_id = 0
-            if (study_group not in study_map):
-                study_id = get_study_entry(cursor, study_group, project_id)
-                if (study_id == 0):
-                    # As the study ID does not exist in the database create it
-                    study_id = create_study_entry(cursor, study_group, project_id)
-                    conn.commit()
-
-                study_map[study_group] = study_id
-            else:
-                study_id = study_map[study_group]
-
-            # Check to see if this subject already exists in database, if so use the ID
-            # else create an entry
-            subject_id = 0
-            if (subject_num not in patient_map):
-                subject_id = get_subject_entry(cursor, subject_num, study_id)
-                if (subject_id == 0):
-                    # As the subject entry does not exist in database create it
-                    subject_id = create_subject_entry(cursor, subject_num, study_id, birth_date, sex, race)
-                    conn.commit()
-
-                patient_map[subject_num] = {'subject_id' : subject_id}
-            else:
-                subject_id = patient_map[subject_num]['subject_id']
-
-            subject_info = patient_map[subject_num]
-
-            # If no visits have been processed yet then create a map to hold visits
-            if ('visits' not in subject_info):
-                subject_info['visits'] = {}
-            subject_visits = subject_info['visits']
-
-            # Check to see if this subject visit already exists in database, if so use the ID
-            # else create an entry
-            subject_visit_id = 0
-            if (visit_num not in subject_visits):
-                subject_visit_id = get_subject_visit(cursor, visit_num, subject_id)
-                if (subject_visit_id == 0):
-                    # As the subject visit entry does not exist in database create it
-                    subject_visit_id = create_subject_visit(cursor, visit_num, subject_id, event, event_date, disease_status)
-                    patient_map[subject_num]['visits'][visit_num] = subject_visit_id
-                    conn.commit()
-            else:
-                subject_visit_id = subject_visits[visit_num]
-
-            if 'Outcome Measures' not in observation_ont:
-                add_observation_ontology_term(cursor, observation_ont, 'Outcome Measures', None)
-            if category not in observation_ont:
-                add_observation_ontology_term(cursor, observation_ont, category, observation_ont['Outcome Measures']['id'])
-            if scale not in observation_ont:
-                add_observation_ontology_term(cursor, observation_ont, scale, observation_ont[category]['id'])
-            if item not in observation_ont:
-                add_observation_ontology_term(cursor, observation_ont, item, observation_ont[scale]['id'])
-            # Check to see if this observation exists, if not add it to the database
-            observation_id = get_subject_observation(cursor, subject_visit_id, observation_ont[item]['id'])
-            if (observation_id == 0):
-                # AS this observation does not exist in the table, create it
-                observation_ont_id = observation_ont[item]['id']
-                observation_id = create_subject_observation(cursor, subject_visit_id, observation_ont_id, score)
-
-            # columns with subject attributes (0-based)
-            #  1:female(gender) 3:hispanic(race)
-            for term in ['Sex', 'Race', 'Birthdate']:
-                if term not in subject_ont:
-                    add_subject_ontology_term(cursor, subject_ont, term)
-
-            if subject_id not in subject_attr_map:
-                add_subject_attribute(cursor, subject_id, subject_ont['Sex']['id'], sex, 'string')
-                add_subject_attribute(cursor, subject_id, subject_ont['Race']['id'], race, 'string')
-                add_subject_attribute(cursor, subject_id, subject_ont['Birthdate']['id'], birth_date, 'date')
-                subject_attr_map[subject_id] = True
-
-            conn.commit()
+        elif entity is "Observations":
+            print("Processing observations information .....")
+            process_subject_observations(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
 
 
 # Process the subject visits file to create or update entries inthe subject_visit table
@@ -242,6 +155,94 @@ def process_subject_visits(cursor, conn, visit_file, df_col_names_field_map):
             else:
                 subject_visit_id = subject_visits[visit_num]            
 
+
+# Process the subject observations file to create or update entries in the observation table
+# The file has the following columns:
+# SubjectNum,VisitCode,VisitDate
+def process_subject_observations(cursor, conn, obs_file, observation_ont, df_col_names_field_map):
+
+    pp.pprint(subject_map)
+    pp.pprint(observation_ont)
+    pp.pprint(df_col_names_field_map)
+
+    # Create a lookup from column name to field name
+    colname_to_fields = {}
+    colname_to_data_type = {}
+    for index, row in df_col_names_field_map.iterrows():
+        # pp.pprint("Row: {} Index: {}".format(row, index))
+        col_name = row['FieldName']
+        testname = row['Testname']
+        data_type = row['Type']
+        field_name = index
+        if (testname):
+            key = testname
+        else:
+            key = index 
+        print("Key for this map is: {}".format(key))
+
+        colname_to_fields[key] = field_name
+        colname_to_data_type[key] = data_type
+
+    pp.pprint(colname_to_fields)
+    pp.pprint(colname_to_data_type)
+
+    # Open the file an iterate over the list
+    with open(obs_file) as ifh:
+
+        reader = csv.DictReader(ifh)
+
+        # Process the remaining lines
+        for row in reader:
+            # from ppmi_projects.csv
+            pp.pprint(row)
+            subject_num = row['SubjectNum']
+            testname = row['Testname']
+            value = row['Value']
+            visit_num = row['VisitNum']
+
+            if subject_num in subject_map:
+                subject_info = subject_map[subject_num]
+                subject_id = subject_info["id"]
+            else:
+                print("WARN: Cannot find subject num {} in subject map. Skipping entry .....".format(subject_num))
+                continue
+
+            # If no visits have been processed yet then warn
+            if ('visits' not in subject_info):
+                print("WARN: Cannot find subject visits {} in subject map. Skipping entry .....".format(subject_num))
+                continue
+            else:
+                subject_visits = subject_info['visits']
+                if visit_num in subject_visits:
+                    subject_visit_id = subject_visits[visit_num]
+                else:
+                    print("WARN: Cannot find subject visit number {} in visits. Skipping entry .....".format(visit_num))
+                    continue
+
+
+            print("Subject: {} ID: {} Visit Num: {} Testname: {} Value: {}".format(subject_num, subject_id, visit_num, testname, value))
+            observation_term = colname_to_fields[testname]
+            value_type = colname_to_data_type[testname]
+
+            if observation_term in observation_ont:
+                obs_ont_id = observation_ont[observation_term]["id"]
+            else:
+                print("WARN: Cannot find testname {} in observation ontology. Skipping entry .....".format(testname))
+                continue
+
+            # Check to see if this observation already exists in database, if so use the ID
+            # else create an entry
+            obs_id = 0
+            obs_id = get_subject_observation(cursor, subject_visit_id, obs_ont_id)
+            if (obs_id == 0):
+                print("Creating entry.")
+                # As the subject visit entry does not exist in database create it
+                obs_id = create_subject_observation(cursor, subject_visit_id, obs_ont_id, value, value_type) 
+                conn.commit()
+            else:
+                print("Updating entry.")
+                update_subject_observation(cursor, subject_visit_id, obs_ont_id, value, value_type) 
+                conn.commit()
 
 # Process the projects file and create missing entries or update existing entries in the 'project' and 'study'
 # tables. The file has the following columns:
@@ -953,11 +954,29 @@ def create_subject_entry(cursor, subject_num, study_id):
     return subject_id
 
 # Method that inserts the observation in the database and returns the observation ID
-def create_subject_observation(cursor, subject_visit_id, obs_ont_id, value):
-    observation_id = 0
-    query = "insert into observation (subject_visit_id, observation_ontology_id, value, value_type) values (%s, %s, %s, %s)"
+def create_subject_observation(cursor, subject_visit_id, obs_ont_id, value, value_type):
+    observation_id = 0    
+    if value_type == 'Char':
+        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type) VALUES ({}, {}, '{}', '{}')"
+        query = query.format(subject_visit_id, obs_ont_id, value, value_type)
+    elif value_type == 'Decimal':
+        dec_value = Decimal(value)
+        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, dec_value) VALUES ({}, {}, '{}', '{}', {})"
+        query = query.format(subject_visit_id, obs_ont_id, value, value_type, dec_value)
+    elif value_type == 'Integer':
+        int_value = int(value)
+        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, int_value) VALUES ({}, {}, '{}', '{}', {})"
+        query = query.format(subject_visit_id, obs_ont_id, value, value_type, int_value)
+    elif value_type == 'Date':
+        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, date_value) VALUES ({}, {}, '{}', '{}', '{}')"
+        query = query.format(subject_visit_id, obs_ont_id, value, value_type, value)
+    else:
+        print("Unknown value type {} skipping this entry".format(value_type))
+        return
+
     try:
-        cursor.execute(query, (subject_visit_id, obs_ont_id, value, 'int'))
+        print("Executing query: '{}'".format(query))
+        cursor.execute(query)
         observation_id = cursor.lastrowid
 
     except Exception as e:
@@ -966,6 +985,37 @@ def create_subject_observation(cursor, subject_visit_id, obs_ont_id, value):
 
     print("Created subject observation '{}' in database with subject visit ID: {}.".format(obs_ont_id, subject_visit_id))
     return observation_id
+
+
+# Method that update the observation in the database and returns the observation ID
+def update_subject_observation(cursor, subject_visit_id, obs_ont_id, value, value_type):
+    if value_type == 'Char':
+        query = "update observation set value = '{}', value_type = '{}' where subject_visit_id = {} and observation_ontology_id = {}"
+        query = query.format(value, value_type, subject_visit_id, obs_ont_id)
+    elif value_type == 'Decimal':
+        dec_value = Decimal(value)
+        query = "update observation set value = '{}', value_type = '{}', dec_value = {} where subject_visit_id = {} and observation_ontology_id = {}"
+        query = query.format(value, value_type, subject_visit_id, obs_ont_id, dec_value)
+    elif value_type == 'Integer':
+        int_value = int(value)
+        query = "update observation set value = '{}', value_type = '{}', int_value = {} where subject_visit_id = {} and observation_ontology_id = {}"
+        query = query.format(value, value_type, subject_visit_id, obs_ont_id, int_value)
+    elif value_type == 'Date':
+        query = "update observation set value = '{}', value_type = '{}', date_value = '{}' where subject_visit_id = {} and observation_ontology_id = {}"
+        query = query.format(subject_visit_id, obs_ont_id, value, value_type, value)
+    else:
+        print("Unknown value type {} skipping this entry".format(value_type))
+        return
+
+    try:
+        print("Executing query: '{}'".format(query))
+        cursor.execute(query)
+
+    except Exception as e:
+        print(e)
+        sys.exit()
+
+    print("Updated subject observation '{}' in database with subject visit ID: {}.".format(obs_ont_id, subject_visit_id))
 
 # Method that inserts the visit in the database and returns the visit ID
 def create_subject_visit(cursor, subject_id, visit_num, visit_code, visit_date, disease_status):
@@ -1003,6 +1053,7 @@ def get_subject_observation(cursor, subject_visit_id, obs_ont_id):
     observation_id = 0
     # First check if this observation already exists in which case just read the observation ID and return it
     query = "SELECT id FROM observation where observation_ontology_id = '{}' AND subject_visit_id = {}".format(obs_ont_id, subject_visit_id)
+    print("Executing query: {}".format(query))
     try:
         cursor.execute(query)
 
