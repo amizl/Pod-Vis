@@ -36,6 +36,10 @@ export default {
       type: String,
       required: true,
     },
+    drawRaw: {
+      type: Boolean,
+      required: true,
+    },
     drawMean: {
       type: Boolean,
       required: true,
@@ -158,6 +162,9 @@ export default {
       this.updateCanvas();
     },
     xaxis() {
+      this.updateCanvas();
+    },
+    drawRaw() {
       this.updateCanvas();
     },
     drawMean() {
@@ -354,7 +361,7 @@ export default {
       context.strokeStyle = savedStrokeColor;
     },
 
-    drawRaw() {
+    drawData() {
       var cohorts = this.selectedCohorts();
       var slf = this;
 
@@ -370,6 +377,14 @@ export default {
         console.log("cohort " + c.label + " color = " + c.color);
         var cohort_subject_ids = c.subject_ids;
 
+        // draw raw data
+        if (slf.drawRaw) {
+          // draw single path for each subject
+          var paths = slf.getRawPaths(cohort_subject_ids);
+          var raw_opacity = slf.drawMean ? 0.3 : 0.5;
+          paths.forEach(path => slf.drawMultiCurve(path, c.color, raw_opacity));
+        }
+
         // draw mean and standard deviation for entire group
         if (slf.drawMean) {
           var paths = slf.getMeanAndSDPaths(cohort_subject_ids);
@@ -380,10 +395,6 @@ export default {
           // outline +/- 1 SD
           slf.drawMultiCurve(paths[1], c.color, 0.6, 1);
           slf.drawMultiCurve(paths[2], c.color, 0.6, 1);
-        } else {
-          // draw single path for each subject
-          var paths = slf.getRawPaths(cohort_subject_ids);
-          paths.forEach(path => slf.drawMultiCurve(path, c.color, 0.45));
         }
       });
     },
@@ -536,7 +547,7 @@ export default {
       // TODO - adding 50 is a workaround to account for the right-hand axis, which is outside of the computed area
       this.context.clearRect(0, 0, this.computedWidth + this.margin.left + 50, this.computedHeight + 50);
       this.context.translate(this.margin.left, 0);
-      this.drawRaw();
+      this.drawData();
       this.drawAxes();
       this.context.translate(-this.margin.left, 0);
     },
