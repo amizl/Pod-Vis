@@ -125,9 +125,53 @@ export default {
       commit(mutations.SET_LOADING, false);
     }
     dispatch(actions.SET_COHORT_SUBJECTS);
+    dispatch(actions.ANALYZE_COHORTS);
   },
   [actions.SET_VISIBLE_COHORTS]({ commit }, cohorts) {
     commit(mutations.SET_VISIBLE_COHORTS, cohorts);
+  },
+  async [actions.ANALYZE_COHORTS]({ commit, dispatch, state }) {
+    let { cohorts, data, outputVariables } = state;
+    const collection = state[stateTypes.COLLECTION];
+
+      // need cohorts, collection, and output vars
+      if ((typeof collection === 'undefined') || (typeof collection.observation_variables === 'undefined') || (typeof cohorts === 'undefined')) {
+	commit(mutations.SET_ANOVA_PVALS, []);
+	return;
+    }
+      
+    // create group of samples for each cohort:
+    let groups = [];
+    cohorts.forEach(function(c) {
+      if (c.collection_id === collection.id) {
+        let subjids = [];
+        c.subject_ids.forEach(function(sid) { subjids[sid] = 1; });
+        let cohort_data = data.filter(d => d.subject_id in subjids);	  
+        groups.push(cohort_data);
+      }
+    });
+    let numGroups = groups.length;
+
+    // pass _all_ observation variables, not just the selected ones
+    var output_vars = [];
+    collection.observation_variables.forEach(function(v) {
+      v.children.forEach(function(c) {
+        output_vars.push(c);
+      });
+    });
+    outputVariables = output_vars;
+
+    try {
+      const { data } = await axios.post(`/api/compute-anova`, {
+        numGroups,
+        groups,
+        outputVariables,
+      });
+      commit(mutations.SET_ANOVA_PVALS, data.pvals);
+    } catch ({ response }) {
+      const notification = new ErrorNotification(response.data.error);
+      dispatch(notification.dispatch, notification, { root: true });
+    }
   },
   [actions.SET_COHORT_SUBJECTS]({ commit, dispatch, state }) {
       let { cohorts, collection, data } = state;

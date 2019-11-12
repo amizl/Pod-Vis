@@ -8,6 +8,7 @@ export const state = {
   DATA: 'data',
   RAW_DATA: 'rawData',
   DETAILED_VIEW: 'detailedView',
+  ANOVA_PVALS: 'anovaPvals',
 };
 
 // Getters
@@ -23,6 +24,7 @@ export const mutations = {
   SET_DATA: 'setData',
   SET_RAW_DATA: 'setRawData',
   SET_DETAILED_VIEW: 'setDetailedView',
+  SET_ANOVA_PVALS: 'setAnovaPvals',
 };
 
 // Actions
