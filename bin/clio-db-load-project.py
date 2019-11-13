@@ -124,7 +124,7 @@ def process_subject_visits(cursor, conn, visit_file, df_col_names_field_map):
             visit_code = row['VisitCode']
             visit_date = row['VisitDate']
             visit_num = row['VisitNum']
-            disease_status = row['VisitDiseaseStatus']
+            disease_status = ""
 
             if subject_num in subject_map:
                 subject_info = subject_map[subject_num]
@@ -132,7 +132,7 @@ def process_subject_visits(cursor, conn, visit_file, df_col_names_field_map):
             else:
                 print("Cannot find subject num {} in subject map. Skipping entry .....".format(subject_num))
 
-            print("Subject: {} ID: {} Visit Code: {} Visit Date: {} Visit Num: {}".format(subject_num, subject_id, visit_code, visit_date, visit_num))
+            print("Processing subject: {} ID: {} Visit Code: {} Visit Date: {} Visit Num: {}".format(subject_num, subject_id, visit_code, visit_date, visit_num))
 
             # If no visits have been processed yet then create a map to hold visits
             if ('visits' not in subject_info):
@@ -173,7 +173,6 @@ def process_subject_observations(cursor, conn, obs_file, observation_ont, df_col
     colname_to_data_type = {}
     for index, row in df_col_names_field_map.iterrows():
         # pp.pprint("Row: {} Index: {}".format(row, index))
-        col_name = row['FieldName']
         testname = row['Testname']
         data_type = row['Type']
         field_name = index
@@ -262,7 +261,6 @@ def process_subject_obs_summary(cursor, conn, obs_file, observation_ont, df_col_
     colname_to_data_type = {}
     for index, row in df_col_names_field_map.iterrows():
         # pp.pprint("Row: {} Index: {}".format(row, index))
-        col_name = row['FieldName']
         testname = row['Testname']
         data_type = row['Type']
         field_name = index
@@ -582,7 +580,7 @@ def process_subject_info(cursor, conn, project_file, study_map, subject_ont, df_
     colname_to_data_type = {}
     for index, row in df_col_names_field_map.iterrows():
         # pp.pprint("Row: {} Index: {}".format(row, index))
-        col_name = row['FieldName']
+        col_name = row['Testname']
         data_type = row['Type']
         field_name = index
         colname_to_fields[col_name] = field_name

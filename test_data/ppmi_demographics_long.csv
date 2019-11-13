@@ -1,26 +1,43 @@
 SubjectNum,SubjectVar,Value
 3400,Study,Parkinson's Disease
-3401,Study,Healthy Control
-3402,Study,SWEDD
-3403,Study,Parkinson's Disease
-3404,Study,Healthy Control
+3407,Study,Parkinson's Disease
+3100,Study,Healthy Control
+3001,Study,Parkinson's Disease
+5005,Study,Unknown
 3400,Race,White
-3401,Race,White
-3402,Race,White
-3403,Race,White
-3404,Race,White
+3407,Race,White
+3100,Race,White
+3001,Race,White
+5005,Race,White
+3400,Birthdate,1971-05-01 00:00:00
+3407,Birthdate,1945-07-01 00:00:00
+3100,Birthdate,1942-12-01 00:00:00
+3001,Birthdate,1946-01-01 00:00:00
 3400,Sex,Female
-3401,Sex,Female
-3402,Sex,Male
-3403,Sex,Male
-3404,Sex,Female
-3400,BirthDate,1971-05-01 00:00:00
-3401,BirthDate,1954-03-01 00:00:00
-3402,BirthDate,1964-06-01 00:00:00
-3403,BirthDate,1941-08-01 00:00:00
-3404,BirthDate,1954-08-01 00:00:00
-3400,DiseaseStatus,Affected
-3401,DiseaseStatus,Unaffected
-3402,DiseaseStatus,Affected
-3403,DiseaseStatus,Affected
-3404,DiseaseStatus,Unaffected
+3407,Sex,Male
+3100,Sex,Female
+3001,Sex,Male
+5005,Sex,Female
+3400,Age At Enrollment,39.2
+3407,Age At Enrollment,65.2
+3100,Age At Enrollment,67.8
+3001,Age At Enrollment,65.2
+3400,Disease Status,Affected
+3407,Disease Status,Affected
+3100,Disease Status,Unaffected
+3001,Disease Status,Affected
+5005,Disease Status,Unaffected
+3400,Age At Diagnosis,38.4
+3407,Age At Diagnosis,64.6
+3001,Age At Diagnosis,64.2
+3400,Disease Duration,273.0
+3407,Disease Duration,212.0
+3001,Disease Duration,334.0
+3400,Enroll Date,2010-07-01 00:00:00
+3407,Enroll Date,2010-09-01 00:00:00
+3100,Enroll Date,2010-10-01 00:00:00
+3001,Enroll Date,2011-03-01 00:00:00
+3400,Diagnosis Date,2009-10-01 00:00:00
+3407,Diagnosis Date,2010-02-01 00:00:00
+3001,Diagnosis Date,2010-04-01 00:00:00
+5005,Diagnosis Date,2017-05-01 00:00:00

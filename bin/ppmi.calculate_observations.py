@@ -44,9 +44,9 @@ def calc_duration_change(group):
     # pp.pprint(sorted_group)
     min_index = 0
     max_index = group.shape[0] - 1
-    # print(sorted_group.iloc[max_index, 2], sorted_group.iloc[min_index, 2])
-    duration = round((sorted_group.iloc[max_index, 2] - sorted_group.iloc[min_index, 2]).days/365.25, 2)
-    delta = sorted_group.iloc[max_index, 4] - sorted_group.iloc[min_index, 4]
+    # print(sorted_group.iloc[max_index, 1], sorted_group.iloc[min_index, 1])
+    duration = round((sorted_group.iloc[max_index, 1] - sorted_group.iloc[min_index, 1]).days/365.25, 2)
+    delta = sorted_group.iloc[max_index, 3] - sorted_group.iloc[min_index, 3]
     if (duration == 0):
         ds = pd.Series({'Duration': 0,
                         'Change': delta,
@@ -148,7 +148,7 @@ def process_demographics(input_dir):
     df_demo['Age At Diagnosis'] = round((df_demo['PDDXDT'] - df_demo['BIRTHDT']).dt.days/365.25, 1 )
     df_demo['Disease Duration'] = round((df_demo['ENROLLDT'] - df_demo['PDDXDT']).dt.days, 0 )
     # pp.pprint(df_demo)
-    df_demo['DiseaseStatus'] = df_demo['AgeAtDiagnosis'].map(lambda x: 'Unaffected' if np.isnan(x) else 'Affected') 
+    df_demo['Disease Status'] = df_demo['Age At Diagnosis'].map(lambda x: 'Unaffected' if np.isnan(x) else 'Affected') 
 
     # Remove some of the unwanted columns from the demographic variables
     df_demo = df_demo.loc[:, ['PATNO', 'Study', 'Race', 'BIRTHDT', 'GENDER', 'Age At Enrollment', 
@@ -585,7 +585,7 @@ def main():
     # Process the demographic variables
     df_demo = process_demographics(args.input_dir)
     df_test = df_demo
-    pd.to_datetime(df_test['EnrollDate']).apply(lambda x: x.date()) 
+    pd.to_datetime(df_test['Enroll Date']).apply(lambda x: x.date()) 
     df_demo_long = pd.melt(df_test, id_vars=['SubjectNum'], var_name ='SubjectVar', value_name ='Value')
     df_demo_long = df_demo_long.dropna()
 
@@ -738,11 +738,16 @@ def main():
     df_all_vars[['VisitDate']] = df_all_vars[['VisitDate']].apply(lambda x: "1/" + x)
     df_all_vars[['VisitDate']] = df_all_vars[['VisitDate']].apply(lambda x: pd.to_datetime(x, format='%d/%m/%Y', errors='coerce'))
 
-    df_unique_sub_visits = df_all_vars.groupby(['SubjectNum', 'VisitCode']).last().reset_index().loc[:, ["SubjectNum", "VisitCode", "VisitDate"]]
-    df_pilot_bio = df_pilot_bio.merge(df_unique_sub_visits, how="inner", on = ['SubjectNum', 'VisitCode'])
+    # Get the unique visits for all the subjects and calculate visit number
+    df_unique_sub_visits = df_all_vars.sort_values(['SubjectNum', 'VisitDate']).groupby(['SubjectNum', 'VisitCode']).last().reset_index().loc[:, ["SubjectNum", "VisitCode", "VisitDate"]]
+    df_unique_sub_visits = df_unique_sub_visits.sort_values(['SubjectNum', 'VisitDate'])
+    df_unique_sub_visits['VisitNum'] = df_unique_sub_visits.groupby(['SubjectNum']).cumcount()+1
+    df_all_vars = df_all_vars.merge(df_unique_sub_visits, how="inner", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
+    # pp.pprint(df_all_vars)
 
-    # Merge biospecimen test results to get the visit date
-    df_bio = df_bio.merge(df_unique_sub_visits, how="inner", on = ['SubjectNum', 'VisitCode'])
+    # Merge biospecimen  and pilot biospecimen test results to get the visit date
+    df_pilot_bio = df_unique_sub_visits.merge(df_pilot_bio, how="inner", on = ['SubjectNum', 'VisitCode'])
+    df_bio = df_unique_sub_visits.merge(df_bio, how="inner", on = ['SubjectNum', 'VisitCode'])
 
     # Some times there seem to be multiple rows for the same event with different date. In such situations we are
     # arbitrarily deciding to use the last one that appears
@@ -750,31 +755,43 @@ def main():
     df_all_vars_sorted = df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate'])
 
     # Convert the wide format to long format to calculate the summary values such as change and rate of change
-    df_all_vars_long = pd.melt(df_all_vars, id_vars=['SubjectNum', 'VisitCode', 'VisitDate'])
+    df_all_vars_long = pd.melt(df_all_vars, id_vars=['SubjectNum', 'VisitCode', 'VisitDate', 'VisitNum'], var_name='Testname', value_name='Value')
     df_all_vars_long_sorted = df_all_vars_long.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate'])
     df_all_vars_long_sorted = df_all_vars_long_sorted.dropna()
-    # pp.pprint(df_all_vars_long_sorted)
+    print("All observations:")
+    pp.pprint(df_all_vars_long_sorted)
 
     # To calculate the difference and rate of change group by the patient and test and sort by VisitDate
-    df_grouped_tests = df_all_vars_long_sorted.groupby(['SubjectNum', 'variable']).nth([0, -1]).reset_index()
-    df_grouped_tests = df_grouped_tests.sort_values(by = ['SubjectNum', 'variable', 'VisitDate'])
+    df_grouped_tests = df_all_vars_long_sorted.groupby(['SubjectNum', 'Testname']).nth([0, -1]).reset_index()
+    df_grouped_tests = df_grouped_tests.sort_values(by = ['SubjectNum', 'Testname', 'VisitDate'])
     df_grouped_tests = df_grouped_tests.dropna()
     # pp.pprint(df_grouped_tests)
 
-
-    # df_grouped_tests_summary = df_all_vars_long_sorted.groupby(['SubjectNum', 'variable']).agg(
-    #    num_days = ("VisitDate", lambda x: (max(x) - min(x)).days) 
-    #)
-    # pp.pprint(df_grouped_tests_summary)
-
     print("Generating summary information")
-    df_groups_with_multiple = df_all_vars_long_sorted.groupby(['SubjectNum', 'variable']).filter(lambda x: len(x) > 1)
-    # pp.pprint(df_groups_with_multiple)
+    df_groups_with_multiple = df_all_vars_long_sorted.groupby(['SubjectNum', 'Testname']).filter(lambda x: len(x) > 1)
+    pp.pprint(df_groups_with_multiple)
     # Filter out categorical variables from observations
     cat_vars_list = ["ESS_State", "REM_RBD_State", "GDS"]
-    df_groups_with_multiple = df_groups_with_multiple[~df_groups_with_multiple.variable.isin(cat_vars_list)]
-    df_grouped_tests_summary = df_groups_with_multiple.groupby(['SubjectNum', 'variable']).apply(calc_duration_change).reset_index()
-    # pp.pprint(df_grouped_tests_summary)
+    df_groups_with_multiple = df_groups_with_multiple[~df_groups_with_multiple.Testname.isin(cat_vars_list)]
+    df_grouped_tests_summary = df_groups_with_multiple.groupby(['SubjectNum', 'Testname']).apply(calc_duration_change).reset_index()
+    df_grouped_tests_summary = pd.melt(df_grouped_tests_summary.loc[:, ['SubjectNum', 'Testname', 'Change', 'ROC']], 
+                                        id_vars=['SubjectNum', 'Testname'], var_name='Type', value_name="Value")
+    df_grouped_tests_summary['Testname'] = df_grouped_tests_summary['Testname'] + "-" + df_grouped_tests_summary['Type']
+    df_grouped_tests_summary = df_grouped_tests_summary.loc[:, ['SubjectNum', 'Testname', 'Value']] 
+    print("Grouped test summary:")
+    pp.pprint(df_grouped_tests_summary)
+
+    print("Pilot observations:")
+    pp.pprint(df_pilot_bio.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
+    # Merge all the observations icnluding the biochemical and pilot observations into
+    # a single dataframe
+    df_all_obs = df_all_vars_long_sorted.append(df_pilot_bio)
+    df_all_obs = df_all_obs.append(df_bio)
+    df_all_obs['Value'] = df_all_obs['Value'].map(lambda x: 0 if x == "below detection limit" else x)
+    df_all_obs = df_all_obs.sort_values(by = ['SubjectNum', 'VisitNum', 'Testname'])
+
+    print("Merged observations:")
+    pp.pprint(df_all_obs)
 
     # Once the dataframes are created write the table to a CSV file
     # pp.pprint(df_pilot_bio.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
@@ -799,7 +816,7 @@ def main():
 
     # pp.pprint(df_all_vars_long_sorted)
     filename = "ppmi_obs_long.csv"
-    df_all_vars_long_sorted.to_csv(args.output_dir + filename, index = False)
+    df_all_obs.to_csv(args.output_dir + filename, index = False)
 
     # pp.pprint(df_grouped_tests_summary)
     filename = "ppmi_obs_summary.csv"
@@ -809,9 +826,15 @@ def main():
     filename = "ppmi_visit_info.csv"
     df_unique_sub_visits.to_csv(args.output_dir + filename, index = False)
 
-    # Print a table of unique tests in the data
-    df_unique_obs = pd.DataFrame({"Observations": df_all_vars_long.variable.unique()})
-    # pp.pprint(df_unique_obs)
+    # Print a table of unique tests in the data by combining the tests in the summary as well as observation
+    # data frames
+    unique_obs = df_all_obs.Testname.unique()
+    unique_summary_obs = df_grouped_tests_summary.Testname.unique()
+    unique_all_obs = np.concatenate([unique_obs, unique_summary_obs])
+    pp.pprint(unique_all_obs)
+    # df_unique_obs = pd.DataFrame({"Observations": df_all_obs.Testname.unique()})
+    df_unique_obs = pd.DataFrame({"Observations": unique_all_obs})
+    pp.pprint(df_unique_obs)
     filename = "ppmi_unique_obs.csv"
     df_unique_obs.to_csv(args.output_dir + filename, index = False)
 

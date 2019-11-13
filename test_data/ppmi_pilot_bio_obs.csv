@@ -1,12 +1,12 @@
-SubjectNum,VisitCode,Testname,Value,VisitDate
-3001,BL,Abeta 42,300,2011-03-01
-3001,V02,CSF Hemoglobin,below detection limit,2011-08-01
-3001,V04,CSF Hemoglobin,below detection limit,2012-03-01
-3100,BL,CSF Hemoglobin,991.93,2010-10-01
-3400,BL,Abeta 42,207,2010-07-01
-3400,ST,Abeta 42,231,2010-12-01
-3400,V04,CSF Hemoglobin,2543.96,2011-07-01
-3400,V06,CSF Hemoglobin,below detection limit,2012-07-01
-3407,BL,Abeta 42,189,2010-09-01
-3407,V02,Abeta 42,216,2011-04-01
-3407,V04,CSF Hemoglobin,228.02,2011-09-01
+SubjectNum,VisitCode,VisitDate,VisitNum,Testname,Value
+3001,BL,2011-03-01,2,Abeta 42,300
+3001,V02,2011-08-01,4,CSF Hemoglobin,below detection limit
+3001,V04,2012-03-01,6,CSF Hemoglobin,below detection limit
+3100,BL,2010-10-01,2,CSF Hemoglobin,991.93
+3400,BL,2010-07-01,1,Abeta 42,207
+3400,ST,2010-12-01,4,Abeta 42,231
+3400,V04,2011-07-01,5,CSF Hemoglobin,2543.96
+3400,V06,2012-07-01,7,CSF Hemoglobin,below detection limit
+3407,BL,2010-09-01,2,Abeta 42,189
+3407,V02,2011-04-01,4,Abeta 42,216
+3407,V04,2011-09-01,6,CSF Hemoglobin,228.02
