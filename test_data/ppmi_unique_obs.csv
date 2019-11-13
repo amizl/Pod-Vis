@@ -12,7 +12,7 @@ VisitDate
 VisitCode
 VisitNumber
 SemanticFluency
-BentonJudgement
+BentonJudgment
 MDS_UPDRS_1
 MDS_UPDRS_2
 MDS_UPDRS_3
@@ -38,7 +38,7 @@ SNCA-rs3910105
 CSF-Abeta-42
 CSF-Hemoglobin
 SemanticFluency-Change
-BentonJudgement-Change
+BentonJudgment-Change
 MDS_UPDRS_1-Change
 MDS_UPDRS_2-Change
 MDS_UPDRS_3-Change
@@ -56,7 +56,7 @@ STAI-Change
 GDS_Score-Change
 REM_RBD_Score-Change
 SemanticFluency-ROC
-BentonJudgement-ROC
+BentonJudgment-ROC
 MDS_UPDRS_1-ROC
 MDS_UPDRS_2-ROC
 MDS_UPDRS_3-ROC

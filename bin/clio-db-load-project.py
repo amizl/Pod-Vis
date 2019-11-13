@@ -99,6 +99,9 @@ def main():
         elif entity is "Observations":
             print("Processing observations information .....")
             process_subject_observations(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
+        elif entity is "Observations Summary":
+            print("Processing observations summary information .....")
+            process_subject_obs_summary(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
 
 
 # Process the subject visits file to create or update entries inthe subject_visit table
@@ -242,6 +245,82 @@ def process_subject_observations(cursor, conn, obs_file, observation_ont, df_col
             else:
                 print("Updating entry.")
                 update_subject_observation(cursor, subject_visit_id, obs_ont_id, value, value_type) 
+                conn.commit()
+
+
+# Process the subject observations summary file to create or update entries in the observation_summary table
+# The file has the following columns:
+# SubjectNum,VisitCode,VisitDate
+def process_subject_obs_summary(cursor, conn, obs_file, observation_ont, df_col_names_field_map):
+
+    pp.pprint(subject_map)
+    pp.pprint(observation_ont)
+    pp.pprint(df_col_names_field_map)
+
+    # Create a lookup from column name to field name
+    colname_to_fields = {}
+    colname_to_data_type = {}
+    for index, row in df_col_names_field_map.iterrows():
+        # pp.pprint("Row: {} Index: {}".format(row, index))
+        col_name = row['FieldName']
+        testname = row['Testname']
+        data_type = row['Type']
+        field_name = index
+        if (testname):
+            key = testname
+        else:
+            key = index 
+        print("Key for this map is: {}".format(key))
+
+        colname_to_fields[key] = field_name
+        colname_to_data_type[key] = data_type
+
+    pp.pprint(colname_to_fields)
+    pp.pprint(colname_to_data_type)
+
+    # Open the file an iterate over the list
+    with open(obs_file) as ifh:
+
+        reader = csv.DictReader(ifh)
+
+        # Process the remaining lines
+        for row in reader:
+            # from ppmi_projects.csv
+            pp.pprint(row)
+            subject_num = row['SubjectNum']
+            testname = row['Testname']
+            value = row['Value']
+
+            if subject_num in subject_map:
+                subject_info = subject_map[subject_num]
+                subject_id = subject_info["id"]
+            else:
+                print("WARN: Cannot find subject num {} in subject map. Skipping entry .....".format(subject_num))
+                continue
+
+            observation_term = colname_to_fields[testname]
+            value_type = colname_to_data_type[testname]
+            print("Subject: {} ID: {} Testname: {} Value: {} Observation Ontology: {} Value Type: {}".format(subject_num, subject_id, testname, value,
+                                                                                                            observation_term, value_type))
+
+            if observation_term in observation_ont:
+                obs_ont_id = observation_ont[observation_term]["id"]
+            else:
+                print("WARN: Cannot find testname {} in observation ontology. Skipping entry .....".format(testname))
+                continue
+
+            # Check to see if this observation already exists in database, if so use the ID
+            # else create an entry
+            obs_id = 0
+            obs_id = get_subject_obs_summary(cursor, subject_id, obs_ont_id)
+            if (obs_id == 0):
+                print("Creating entry.")
+                # As the subject visit entry does not exist in database create it
+                obs_id = create_subject_obs_summary(cursor, subject_id, obs_ont_id, value, value_type) 
+                conn.commit()
+            else:
+                print("Updating entry.")
+                update_subject_obs_summary(cursor, subject_id, obs_ont_id, value, value_type) 
                 conn.commit()
 
 # Process the projects file and create missing entries or update existing entries in the 'project' and 'study'
@@ -1017,6 +1096,70 @@ def update_subject_observation(cursor, subject_visit_id, obs_ont_id, value, valu
 
     print("Updated subject observation '{}' in database with subject visit ID: {}.".format(obs_ont_id, subject_visit_id))
 
+# Method that inserts the observation_summary in the database and returns the observation_summary ID
+def create_subject_obs_summary(cursor, subject_id, obs_ont_id, value, value_type):
+    obs_summary_id = 0    
+    if value_type == 'Char':
+        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type) VALUES ({}, {}, '{}', '{}')"
+        query = query.format(subject_id, obs_ont_id, value, value_type)
+    elif value_type == 'Decimal':
+        dec_value = Decimal(value)
+        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, dec_value) VALUES ({}, {}, '{}', '{}', {})"
+        query = query.format(subject_id, obs_ont_id, value, value_type, dec_value)
+    elif value_type == 'Integer':
+        int_value = int(value)
+        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, int_value) VALUES ({}, {}, '{}', '{}', {})"
+        query = query.format(subject_id, obs_ont_id, value, value_type, int_value)
+    elif value_type == 'Date':
+        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, date_value) VALUES ({}, {}, '{}', '{}', '{}')"
+        query = query.format(subject_id, obs_ont_id, value, value_type, value)
+    else:
+        print("Unknown value type {} skipping this entry".format(value_type))
+        return
+
+    try:
+        print("Executing query: '{}'".format(query))
+        cursor.execute(query)
+        obs_summary_id = cursor.lastrowid
+
+    except Exception as e:
+        print(e)
+        sys.exit()
+
+    print("Created subject observation summary '{}' in database with subject ID: {}.".format(obs_ont_id, subject_id))
+    return obs_summary_id
+
+
+# Method that update the observation summary in the database 
+def update_subject_obs_summary(cursor, subject_id, obs_ont_id, value, value_type):
+    if value_type == 'Char':
+        query = "update observation_summary set value = '{}', value_type = '{}' where subject_id = {} and observation_ontology_id = {}"
+        query = query.format(value, value_type, subject_id, obs_ont_id)
+    elif value_type == 'Decimal':
+        dec_value = Decimal(value)
+        query = "update observation_summary set value = '{}', value_type = '{}', dec_value = {} where subject_id = {} and observation_ontology_id = {}"
+        query = query.format(value, value_type, subject_id, obs_ont_id, dec_value)
+    elif value_type == 'Integer':
+        int_value = int(value)
+        query = "update observation_summary set value = '{}', value_type = '{}', int_value = {} where subject_id = {} and observation_ontology_id = {}"
+        query = query.format(value, value_type, subject_id, obs_ont_id, int_value)
+    elif value_type == 'Date':
+        query = "update observation_summary set value = '{}', value_type = '{}', date_value = '{}' where subject_id = {} and observation_ontology_id = {}"
+        query = query.format(subject_id, obs_ont_id, value, value_type, value)
+    else:
+        print("Unknown value type {} skipping this entry".format(value_type))
+        return
+
+    try:
+        print("Executing query: '{}'".format(query))
+        cursor.execute(query)
+
+    except Exception as e:
+        print(e)
+        sys.exit()
+
+    print("Updated subject observation '{}' in database with subject ID: {}.".format(obs_ont_id, subject_id))
+
 # Method that inserts the visit in the database and returns the visit ID
 def create_subject_visit(cursor, subject_id, visit_num, visit_code, visit_date, disease_status):
     visit_id = 0
@@ -1066,6 +1209,24 @@ def get_subject_observation(cursor, subject_visit_id, obs_ont_id):
 
     return observation_id
 
+
+# Method that checks for the observation summary in the database and returns the observation summary ID, else zero
+def get_subject_obs_summary(cursor, subject_id, obs_ont_id):
+    obs_summary_id = 0
+    # First check if this observation summary already exists in which case just read the observation summary ID and return it
+    query = "SELECT id FROM observation_summary where observation_ontology_id = '{}' AND subject_id = {}".format(obs_ont_id, subject_id)
+    print("Executing query: {}".format(query))
+    try:
+        cursor.execute(query)
+
+        row = cursor.fetchone()
+        if row is not None:
+            obs_summary_id = row[0]
+    except Exception as e:
+        print(e)
+        sys.exit()
+
+    return obs_summary_id
 
 def get_observation_ontology_index(cursor):
     idx = dict()
