@@ -129,10 +129,8 @@ export default {
       return tp[tp.length-1];
     },
     xDimensionScale() {
-      var xmin = 1;
-      if (this.xaxis === "days") xmin = 0;
       return scaleLinear()
-        .domain([xmin, this.xmax])
+        .domain([this.xmin, this.xmax])
         .range([0, this.computedWidth]);
     },
 
@@ -462,8 +460,6 @@ export default {
         tickCount = 10,
         tp = this.timepoints;
 
-//      if (this.xaxis !== "visits") return;
-
       // compute last timepoint for each subject
       var subj2lasttp = {};
       rd.forEach(function(r) {
@@ -512,7 +508,7 @@ export default {
       if (this.xaxis === "visits") {
         tickCount = tp.length;
       }
-      var xscale = scaleLinear().domain([0, this.xmax]).range([0, this.computedWidth]);
+      var xscale = scaleLinear().domain([this.xmin, this.xmax]).range([0, this.computedWidth]);
       var yscale = scaleLinear().domain([0, max_subjects]).range([this.computedHeight+90, this.computedHeight+40]);
       var ticks = xscale.ticks(tickCount);
 
@@ -540,7 +536,7 @@ export default {
         context.strokeStyle = 'white';
         context.globalAlpha = opacity;
         context.beginPath();
-        let x1 = xscale(time) - bars_width + (barnum * bar_width);
+        let x1 = xscale(time) + (barnum * bar_width);
         let x2 = x1 + bar_width;
         let y1 = yscale(start_subj_count);
         let y2 = yscale(end_subj_count);
@@ -555,7 +551,7 @@ export default {
       };
 
       ticks.forEach(d => {
-        if (d === 0) return;
+        if (d >= this.xmax) return;
         let barnum = 0;
 
         // population
@@ -673,7 +669,7 @@ export default {
         tickCount = tp.length;
       }
 
-      var scale = scaleLinear().domain([0, this.xmax]).range([0, this.computedWidth]);
+      var scale = scaleLinear().domain([this.xmin, this.xmax]).range([0, this.computedWidth]);
       var ticks = scale.ticks(tickCount);
       var tickFormat = scale.tickFormat(tickCount);
       var ds = this.dimensionScale;
@@ -693,7 +689,7 @@ export default {
       this.context.stroke();
 
       this.context.beginPath();
-      this.context.moveTo(this.xDimensionScale(0), this.computedHeight);
+      this.context.moveTo(this.xDimensionScale(this.xmin), this.computedHeight);
       this.context.lineTo(this.xDimensionScale(xmax) + 0.5, this.computedHeight);
       this.context.strokeStyle = 'black';
       this.context.stroke();
