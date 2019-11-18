@@ -231,7 +231,9 @@ def main():
                 visit_event = "Baseline"
                 if visit_num > 1:
                     visit_event = "Visit " + str(visit_num)
-                
+                    # HACK - ensure event_date is _after_ the original
+                    event_date = '2020-03-20'
+                    
                 subject_visit_id = get_or_insert_subject_visit(cursor, visit_event, visit_num, disease_status, event_date, subject_id)
                 conn.commit()
 
@@ -239,7 +241,9 @@ def main():
                 for term in a_terms:
                     if term not in info:
                         info[term] = 0
-                    obs_id = get_or_insert_observation(cursor, observation_ont, term, int(float(info[term])), subject_visit_id, "int")
+                    # HACK - perturb values to ensure they're not all the same
+                    obs_id = get_or_insert_observation(cursor, observation_ont, term, int(float(info[term])) + (10 * visit_num), subject_visit_id, "int")
+#                    obs_id = get_or_insert_observation(cursor, observation_ont, term, int(float(info[term])), subject_visit_id, "int")
                 conn.commit()
                 
     cursor.close()
