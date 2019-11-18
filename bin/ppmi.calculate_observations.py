@@ -396,8 +396,9 @@ def process_scopa_aut(filename):
     df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', "SCAU1","SCAU2","SCAU3","SCAU4","SCAU5","SCAU6","SCAU7","SCAU8","SCAU9","SCAU10",
                     "SCAU11","SCAU12","SCAU13","SCAU14","SCAU15","SCAU16","SCAU17","SCAU18","SCAU19","SCAU20",
                     "SCAU21","SCAU22","SCAU23","SCAU23A","SCAU23AT","SCAU24","SCAU25"]]
+    df = df.fillna(0)
 
-    # Compute the first 21 values but replave 9 with 3 as that is the formula specified in the conversion document
+    # Compute the first 21 values but replace 9 with 3 as that is the formula specified in the conversion document
     # SCAU1 - SCAU25.  For questions 1-21 (SCAU1 - SCAU21), add 3 points for each response of "9". Otherwise, add the number of points in response.  
     # For questions 22-25 (SCAU22 - SCAU25), add 0 points for each response of "9". Otherwise, add the number of points in response.
     df_part1 = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', "SCAU1","SCAU2","SCAU3","SCAU4","SCAU5","SCAU6","SCAU7","SCAU8","SCAU9","SCAU10",
@@ -408,9 +409,10 @@ def process_scopa_aut(filename):
                     "SCAU11","SCAU12","SCAU13","SCAU14","SCAU15","SCAU16","SCAU17","SCAU18","SCAU19","SCAU20",
                     "SCAU21"]].sum(axis=1, skipna = False)
     
-    df_part2 = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', "SCAU22","SCAU23","SCAU23A","SCAU23AT","SCAU24","SCAU25"]]
+    df_part2 = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', "SCAU22","SCAU23","SCAU24","SCAU25"]]
     df_part2 = df_part2.where(df_part2 != 9, other = 0)
-    df_part2['part_2'] = df_part2.loc[:, ["SCAU22","SCAU23","SCAU23A","SCAU23AT","SCAU24","SCAU25"]].sum(axis=1, skipna = False)
+    df_part2['part_2'] = df_part2.loc[:, ["SCAU22","SCAU23","SCAU24","SCAU25"]].sum(axis=1, skipna = False)
+
     df_part1 = df_part1.merge(df_part2, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
     df = df_part1.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'part_1', 'part_2']]
     df['SCOPA-AUT'] = df.loc[:, ['part_1', 'part_2']].sum(axis=1, skipna = False)
@@ -423,6 +425,8 @@ def process_scopa_aut(filename):
                             "EVENT_ID": "VisitCode", 
                             "INFODT": "VisitDate"}, 
                             errors="raise")
+    print(df.size)
+    print(df)
     return df    
 
 def process_sdm(filename):
@@ -788,6 +792,7 @@ def main():
     df_all_obs = df_all_vars_long_sorted.append(df_pilot_bio)
     df_all_obs = df_all_obs.append(df_bio)
     df_all_obs['Value'] = df_all_obs['Value'].map(lambda x: 0 if x == "below detection limit" else x)
+    df_all_obs['Testname'] = df_all_obs['Testname'].map(lambda x: "ApoE Genotype" if x == "APOE GENOTYPE" else x)
     df_all_obs = df_all_obs.sort_values(by = ['SubjectNum', 'VisitNum', 'Testname'])
 
     print("Merged observations:")
