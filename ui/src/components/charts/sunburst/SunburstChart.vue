@@ -135,7 +135,7 @@ export default {
   },
   data() {
     return {
-      hierachicalData: {},
+      hierarchicalData: {},
       width: 200,
       height: 200,
       svg: undefined,
