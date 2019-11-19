@@ -83,7 +83,7 @@ export default new Router({
       name: 'dataset',
       component: () => import('@/views/Dataset.vue'),
       props: route => ({
-        id: route.params.id,
+        id: +route.params.id,
       }),
       beforeEnter: requireAuth,
     },
