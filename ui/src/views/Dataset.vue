@@ -115,9 +115,7 @@ export default {
       ],
       addToProfileSuccess: false,
       summaryData: null,
-      variables: [],
       groupBy: ['Sex', 'Race'],
-      // TODO: Descriptions need to be loaded into database
     };
   },
   computed: {
@@ -130,10 +128,6 @@ export default {
     const { data: dataset } = await this.fetchDataset();
     if (dataset) {
       this.dataset = dataset;
-
-      this.fetchVariables().then(({ data }) => {
-        this.variables = data.variables;
-      });
 
       this.fetchDemographicSummary().then(({ data }) => {
         const { counts } = data;
@@ -165,9 +159,6 @@ export default {
         .join('&');
 
       return axios.get(`/api/studies/${this.id}/subjects/count?${queryParams}`);
-    },
-    fetchVariables() {
-      return axios.get(`/api/studies/${this.id}/variables`);
     },
   },
 };
