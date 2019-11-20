@@ -1,17 +1,35 @@
 from . import db
+import enum
 
+class DataCategory(enum.Enum):
+    Categorical = "Categorical"
+    Ordinal = "Ordinal"
+    Continuous = "Continuous"
+
+class ValueType(enum.Enum):
+    int = "int"
+    decimal = "decimal"
+    char = "char"
+    date = "date"
+    
 class ObservationOntology(db.Model):
     __tablename__ = "observation_ontology"
 
     id = db.Column(db.Integer, primary_key=True)
     parent_id = db.Column(db.Integer, db.ForeignKey("observation_ontology.id"))
     label = db.Column(db.VARCHAR, nullable=False)
-
+    value_type = db.Column(db.Enum(ValueType))
+    data_category = db.Column(db.Enum(DataCategory))
+    flip_axis = db.Column(db.Integer, nullable=True)
+    
     parent = db.relationship("ObservationOntology", remote_side=[id])
 
-    def __init__(self,  parent_id, label):
+    def __init__(self,  parent_id, label, value_type, data_category, flip_axis):
         self.parent_id = parent_id
-        self.label= label
+        self.label = label
+        self.value_type = value_type
+        self.data_category = data_category
+        self.flip_axis = flip_axis
 
     @classmethod
     def get_all_observation_ontology(cls):
@@ -60,7 +78,10 @@ class ObservationOntology(db.Model):
         ontology = dict(
           id=self.id,
           parent_id=self.parent_id,
-          label=self.label
+          label=self.label,
+          value_type=self.value_type,
+          data_category=self.data_category,
+          flip_axis=self.flip_axis,
         )
 
         if include_parent and self.parent:

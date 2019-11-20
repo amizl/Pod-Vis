@@ -223,13 +223,13 @@ def get_study_variable_distribution(study_id, observation_ontology_id):
     """
     study = models.Study.find_by_id(study_id)
     observation = models.ObservationOntology.find_by_id(observation_ontology_id)
-
+    
     if not study:
         raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
     if not observation:
         raise ResourceNotFound("Observation variable does not exist.")
 
-    observation_counts = study.find_observation_value_counts_by_scale(observation_ontology_id)
+    observation_counts = study.find_observation_value_counts_by_scale(observation)
 
     # df_value_counts = pd.DataFrame(observation_counts)
     # # TODO... only do this if type is int but saved as string
@@ -239,7 +239,9 @@ def get_study_variable_distribution(study_id, observation_ontology_id):
         "success": True,
         "counts": observation_counts,
         # "counts": df_value_counts.sort_values(by="value").to_dict("records"),
-        "scale": observation_ontology_id
+        "scale": observation_ontology_id,
+        "value_type": observation.value_type.name,
+        "data_category": observation.data_category.name,
     })
 
 @api.route('/studies/<int:study_id>/subjects/variables/<int:subject_ontology_id>/distribution')

@@ -11,14 +11,16 @@ class Study(db.Model):
     study_name = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey("project.id"))
+    longitudinal = db.Column(db.Integer, nullable=True)
 
     project = db.relationship("Project", back_populates="studies", lazy="select")
     subjects = db.relationship("Subject", back_populates="study", lazy="select")
 
-    def __init__(self, study_name, description, project_id):
+    def __init__(self, study_name, description, project_id, longitudinal):
         self.study_name = study_name
         self.description = description
         self.project_id = project_id
+        self.longitudinal = longitudinal
 
     @classmethod
     def get_all_studies(cls):
@@ -42,43 +44,47 @@ class Study(db.Model):
         return cls.query.filter_by(id=study_id).first()
 
     def get_variables(self):
-        """Get all variables in a study."""
+        """Get all variables measured in a study."""
         connection = db.engine.connect()
 
-        # Convoluted query. The IF statement is handling the edge case
-        # where the observation_ontology_id is already computed, thus
-        # we do not want the parent_id because this will be a cateogory
-        # such as 'Genereal Disease Severity Measures'.
+        # build lookup table/function to determine top-level category for each scale (observation ontology term)
         query = text("""
-            SELECT distinct o.label as category, t.label as scale, t.id
-            FROM observation_ontology o
-            JOIN (
-                SELECT *
-                FROM observation_ontology
-                WHERE id
-                IN (
-                    SELECT distinct IF(
-                        oo.parent_id IN (
-                            SELECT id
-                            FROM observation_ontology
-                            WHERE parent_id = 1
-                        ),
-                        oo.id,
-                        oo.parent_id)
-                    FROM study
-                    JOIN subject s ON study.id = s.study_id
-                    JOIN  subject_visit v ON s.id = v.subject_id
-                    JOIN observation o ON v.id = o.subject_visit_id
-                    JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-                    WHERE study.id = :study_id
-                )
-            ) t
-            ON t.parent_id = o.id
+            SELECT distinct oo_p.id as parent_id, oo_p.label as parent_label, oo.id, oo.label
+            FROM observation_ontology oo, observation_ontology oo_p
+            WHERE oo.parent_id = oo_p.id
+        """)
+
+        # map each ontology term to its immediate parent
+        o2p = {}
+        for parent_id, parent_label, id, label in connection.execute(query).fetchall():
+            if (id != parent_id):
+                o2p[id] = {"id": parent_id, "label": parent_label};
+
+        # map each ontology term to its highest level parent (i.e., category)
+        def get_scale_category(id):
+            parent = {'id': id}
+            while parent['id'] in o2p:
+                parent = o2p[parent['id']]
+            return parent['label']
+
+        # get all variables measured in the study
+        query = text("""
+            SELECT distinct oo.label as scale, oo.id, oo.data_category, oo.value_type, oo.flip_axis
+            FROM observation_ontology oo,
+                 study s, 
+                 subject subj, 
+                 subject_visit sv, 
+                 observation obs
+            WHERE s.id = :study_id
+              AND subj.study_id = s.id
+              AND sv.subject_id = subj.id
+              AND sv.id = obs.subject_visit_id
+              AND obs.observation_ontology_id = oo.id
         """)
 
         result = [
-            dict(category=category, scale=scale, id=scale_id)
-            for category, scale, scale_id in
+            dict(category=get_scale_category(scale_id), scale=scale, id=scale_id, data_category=data_category, value_type=value_type, flip_axis=flip_axis)
+            for scale, scale_id, data_category, value_type, flip_axis in
             connection.execute(query, study_id=self.id).fetchall()
         ]
 
@@ -118,60 +124,31 @@ class Study(db.Model):
         """)
 
 
-    def find_observation_value_counts_by_scale(self, observation_ontology_id):
-        """Compute totals for each patient on each visit for scale (observaton id)."""
+    def find_observation_value_counts_by_scale(self, observation):
+        """Compute totals for each patient on each visit for scale."""
         connection = db.engine.connect()
 
-        # Check if any ontologies exist with observation_ontology_id as parent.
-        # If there are no parent, this should be a computed measure. Computed measures are measures
-        # such as "MDS-UPDRS Total (Part I-III)". This means we do not need to aggregate
-        # outcome measures in observation table.
-        observation_ontologies = ObservationOntology.find_by_parent_id(observation_ontology_id)
-        if not observation_ontologies:
-            query = text("""
-                SELECT CAST(o.value AS SIGNED) as value
-                FROM study
-                JOIN subject s ON study.id = s.study_id
-                JOIN  subject_visit v ON s.id = v.subject_id
-                JOIN observation o ON v.id = o.subject_visit_id
-                JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-                WHERE study.id = :study_id and o.observation_ontology_id = :parent_id
-                GROUP BY s.id, v.id
-                ORDER BY value
-            """)
-        else:
-            query = text("""
-                SELECT CAST(sum(CAST(o.value AS SIGNED)) as SIGNED) as value
-                FROM study
-                JOIN subject s ON study.id = s.study_id
-                JOIN  subject_visit v ON s.id = v.subject_id
-                JOIN observation o ON v.id = o.subject_visit_id
-                JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-                WHERE study.id = :study_id and o.observation_ontology_id in (
-                    SELECT id
-                    FROM observation_ontology
-                    WHERE parent_id = :parent_id
-                )
-                GROUP BY s.id, v.id
-                ORDER BY value
-            """)
+        query = text("""
+        SELECT DISTINCT o.value as value, COUNT(*) as count
+        FROM study
+        JOIN subject s ON study.id = s.study_id
+        JOIN subject_visit v ON s.id = v.subject_id
+        JOIN observation o ON v.id = o.subject_visit_id
+        JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
+        WHERE study.id = :study_id and o.observation_ontology_id = :obs_id
+        GROUP BY o.value
+        ORDER BY value
+        """)
+        
         result_proxy = connection.execute(query, study_id=self.id,
-            parent_id=observation_ontology_id).fetchall()
+                                          obs_id=observation.id).fetchall()
         result = [dict(row) for row in result_proxy]
-
+            
         connection.close()
         return result
 
     def find_subject_attribute_counts_by_scale(self, scale):
         """Get all value counts for a subject attributes in a study by scale.
-
-        This is equivalent to the SQL query:
-            SELECT o.value
-            FROM study
-            JOIN subject s ON study.id = s.study_id
-            JOIN  subject_visit v ON s.id = v.subject_id
-            JOIN observation o ON v.id = o.subject_visit_id
-            WHERE study.id = %s and o.scale = %s;
         """
         query = text("""
             SELECT o.value
@@ -232,6 +209,7 @@ class Study(db.Model):
             study_name=self.study_name,
             description=self.description,
             project_id=self.project_id,
+            longitudinal=self.longitudinal,
         )
         if include_subjects:
             study['subjects'] = [subject.to_dict(**kwargs) for subject in self.subjects]

@@ -91,7 +91,7 @@ class Collection(db.Model):
         query = text("""
             SELECT s.id as subject_id,
                 v.event_date as event_date,
-                CAST(sum(CAST(o.value AS SIGNED)) as SIGNED) as total
+                o.value as total
             FROM study
             JOIN subject s ON study.id = s.study_id
             JOIN  subject_visit v ON s.id = v.subject_id
@@ -170,7 +170,7 @@ class Collection(db.Model):
             query = text("""
                 SELECT
                     s.id as subject_id, oo.parent_id as observation_ontology_id,
-                    v.event_date, CAST(sum(CAST(o.value AS SIGNED)) as SIGNED) as total
+                    v.event_date, o.value as total
                 FROM study
                 JOIN subject s ON study.id = s.study_id
                 JOIN subject_visit v ON s.id = v.subject_id
@@ -197,7 +197,7 @@ class Collection(db.Model):
             query_for_precomputed_totals = text("""
                 SELECT
                     s.id as subject_id, oo.id as observation_ontology_id,
-                    v.event_date, CAST(o.value AS SIGNED) as total
+                    v.event_date, o.value as total
                 FROM study
                 JOIN subject s ON study.id = s.study_id
                 JOIN subject_visit v ON s.id = v.subject_id
@@ -358,7 +358,7 @@ class Collection(db.Model):
             query = text("""
                 SELECT
                     s.id as subject_id, oo.parent_id as observation_ontology_id,
-                    v.event_date, v.visit_event, v.visit_num, CAST(sum(CAST(o.value AS SIGNED)) as SIGNED) as total
+                    v.event_date, v.visit_event, v.visit_num, o.value as total
                 FROM study
                 JOIN subject s ON study.id = s.study_id
                 JOIN  subject_visit v ON s.id = v.subject_id
@@ -385,7 +385,7 @@ class Collection(db.Model):
             query_for_precomputed_totals = text("""
                 SELECT
                     s.id as subject_id, oo.id as observation_ontology_id,
-                    v.event_date, v.visit_event, v.visit_num, CAST(o.value AS SIGNED) as total
+                    v.event_date, v.visit_event, v.visit_num, o.value as total
                 FROM study
                 JOIN subject s ON study.id = s.study_id
                 JOIN  subject_visit v ON s.id = v.subject_id

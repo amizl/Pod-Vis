@@ -2,7 +2,7 @@
   <transition name="fade" mode="out-in">
     <loading-spinner v-if="isLoading" small />
     <histogram-sparkline
-      v-else-if="type === 'observation'"
+      v-else-if="(type === 'observation') && (dataCategory === 'Continuous')"
       :data="data"
       value="value"
     />
@@ -31,6 +31,10 @@ export default {
     },
     datasetId: {
       type: Number,
+      required: true,
+    },
+    dataCategory: {
+      type: String,
       required: true,
     },
   },
