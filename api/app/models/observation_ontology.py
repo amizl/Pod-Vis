@@ -79,11 +79,14 @@ class ObservationOntology(db.Model):
           id=self.id,
           parent_id=self.parent_id,
           label=self.label,
-          value_type=self.value_type,
-          data_category=self.data_category,
           flip_axis=self.flip_axis,
         )
 
+        if self.value_type is not None:
+            ontology['value_type'] = self.value_type.value
+        if self.data_category is not None:
+            ontology['data_category'] = self.data_category.value
+        
         if include_parent and self.parent:
             ontology['parent'] = self.parent.to_dict()
 
