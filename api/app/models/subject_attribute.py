@@ -5,7 +5,9 @@ class ValueType(enum.Enum):
     int = "int"
     string = "string"
     date = "date"
-
+    decimal = "decimal"
+    char = "char"
+    
 class SubjectAttribute(db.Model):
     __tablename__ = "subject_attribute"
 
