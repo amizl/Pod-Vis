@@ -1193,7 +1193,7 @@ def update_subject_visit(cursor, subject_visit_id, visit_code, visit_date, disea
 def get_subject_observation(cursor, subject_visit_id, obs_ont_id):
     observation_id = 0
     # First check if this observation already exists in which case just read the observation ID and return it
-    query = "SELECT id FROM observation where observation_ontology_id = '{}' AND subject_visit_id = {}".format(obs_ont_id, subject_visit_id)
+    query = "SELECT id FROM observation where observation_ontology_id = {} AND subject_visit_id = {}".format(obs_ont_id, subject_visit_id)
     print("Executing query: {}".format(query))
     try:
         cursor.execute(query)
@@ -1212,7 +1212,7 @@ def get_subject_observation(cursor, subject_visit_id, obs_ont_id):
 def get_subject_obs_summary(cursor, subject_id, obs_ont_id):
     obs_summary_id = 0
     # First check if this observation summary already exists in which case just read the observation summary ID and return it
-    query = "SELECT id FROM observation_summary where observation_ontology_id = '{}' AND subject_id = {}".format(obs_ont_id, subject_id)
+    query = "SELECT id FROM observation_summary where observation_ontology_id = {} AND subject_id = {}".format(obs_ont_id, subject_id)
     print("Executing query: {}".format(query))
     try:
         cursor.execute(query)

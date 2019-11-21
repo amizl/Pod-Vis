@@ -827,6 +827,11 @@ def main():
     filename = "ppmi_obs_summary.csv"
     df_grouped_tests_summary.to_csv(args.output_dir + filename, index = False)
 
+    # Before printing the subject visits calculate the age at visit
+    df_unique_sub_visits = df_unique_sub_visits.merge(df_demo.loc[:, ['SubjectNum', 'Birthdate']], how="inner", on = ['SubjectNum'])
+    df_unique_sub_visits['AgeAtVisit'] = round((df_unique_sub_visits['VisitDate'] - df_unique_sub_visits['Birthdate']).dt.days/365.25, 1) 
+    # pp.pprint(df_unique_sub_visits)
+    
     # Print a table of visit information
     filename = "ppmi_visit_info.csv"
     df_unique_sub_visits.to_csv(args.output_dir + filename, index = False)
