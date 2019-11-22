@@ -118,7 +118,7 @@ export default {
     // add type key to variables to distinguish that these variables
     // are relating to the observations
     variables.forEach(variable => (variable.type = 'observation'));
-    this.variables = variables;
+    this.variables = variables.filter(v => v.data_category !== 'Categorical');
 
     // TODO...fetch shared subject attributes
     const {
