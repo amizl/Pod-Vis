@@ -77,6 +77,18 @@ class Collection(db.Model):
         """
         return cls.query.filter_by(user_id=user_id).all()
 
+    @classmethod
+    def find_all_public(cls):
+        """Find all public collections.
+
+        Args:
+
+        Returns:
+            If exists, the collections.
+        """
+        # include only public collections not owned by the current user
+        return cls.query.filter(Collection.is_public==1)
+    
     def contains_observation(self, observation_ontology_id):
         """Check if collection contains observation variable."""
         observation_ids = [
@@ -442,7 +454,9 @@ class Collection(db.Model):
                 include_studies=False,
                 include_queries=False,
                 include_variables=False,
-                include_cohort_counts=False):
+                include_cohort_counts=False,
+                # for a public Collection, the cohort user_id may differ from the Collection user_id
+                cohort_user_id=None):
         """Return attributes as a dict.
 
         This easily allows for serializing the collection object and
@@ -470,7 +484,9 @@ class Collection(db.Model):
 
         if include_cohort_counts:
             all_cohorts = Cohort.find_all_by_collection_id(self.id)
-            user_cohorts = [c for c in all_cohorts if c.user_id == self.user_id]
+            if (cohort_user_id is None):
+                cohort_user_id = self.user_id
+            user_cohorts = [c for c in all_cohorts if c.user_id == cohort_user_id]
             collection['num_cohorts'] = len(user_cohorts)
         
         return collection

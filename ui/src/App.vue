@@ -7,7 +7,7 @@
     <!-- All of our views will be loaded inside content based on route-->
     <v-content class="indigo lighten-5">
       <transition name="fade" mode="out-in">
-        <!-- /dashboard, /datasets, etc. components to be injected here -->
+        <!-- /homepage, /datasets, etc. components to be injected here -->
         <router-view />
       </transition>
     </v-content>

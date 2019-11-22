@@ -95,7 +95,8 @@ export default {
     },
     isBelowPValThreshold(v) {
       for (var pv in this.pvals) {
-        if (this.pvals[pv].label === v.label) {
+        if ((this.pvals[pv].label === v.label) ||
+           ((this.pvals[pv].label === v.parentLabel) && (v.label === 'Change'))) {
           if (this.pvals[pv].pval <= this.pval_threshold) {
 	    return true;
 	  }

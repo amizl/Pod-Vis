@@ -107,8 +107,8 @@ export default {
           password: this.password,
         })
           .then(() => {
-            // If creating account is successful, redirect user to dashboard
-            this.$router.push('/dashboard');
+            // If creating account is successful, redirect user to home page
+            this.$router.push('/homepage');
           })
           .catch(() => {
             // Currently do nothing here if creating account is unsuccessful.

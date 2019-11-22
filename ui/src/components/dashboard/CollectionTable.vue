@@ -3,7 +3,7 @@
   <v-data-table
     v-else
     :headers="headers"
-    :items="collections"
+    :items="this.show_public_collections ? publicCollections : privateCollections"
     item-key="label"
     hide-actions
     hide-headers
@@ -31,25 +31,16 @@
           <span>Launch Data Explorer to compare Cohorts</span>
         </v-tooltip>
 
-          <v-tooltip top color="primary">
-           <template v-slot:activator="{ on }">
-            <v-btn flat @click="deleteCollection(props.item.id)" v-on="on">
-              <v-icon left
-                color="primary"
-                class="mr-2"
-                @click="deleteCollection(props.item.id)"
-                >delete</v-icon>
-  	      Delete
-  	    </v-btn>
-          </template>
-          <span>Delete Collection</span>
-        </v-tooltip>
+        <delete-collection-button v-if="props.item.is_deletable" :collection_id="props.item.id"/>
 	</td>
       </tr>
     </template>
     <template v-slot:no-data>
-      <v-alert :value="true" color="primary" icon="info">
-        You have no saved collections.
+      <v-alert v-if="show_public_collections" :value="true" color="primary" icon="info">
+        There are no public clinical data collections.
+      </v-alert>
+      <v-alert v-else :value="true" color="primary" icon="info">
+        You have no saved clinical data collections.
       </v-alert>
     </template>
   </v-data-table>
@@ -58,8 +49,19 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
+import DeleteCollectionButton from '@/components/dashboard/DeleteCollectionBtnDialog';
 
 export default {
+  components: {
+    DeleteCollectionButton,
+  },
+  props: {
+    // whether to show public collections (and _only_ public collections)
+    show_public_collections: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
       headers: [
@@ -79,15 +81,32 @@ export default {
       isLoading: state.IS_LOADING,
       collections: state.COLLECTIONS,
     }),
+    publicCollections() {
+      return this.filterCollections(true);
+    },
+    privateCollections() {
+      return this.filterCollections(false);
+    },
   },
   mounted() {
-    this.fetchDatasets();
+    if (!this.isLoading) {
+      this.fetchDatasets();
+    }
   },
   methods: {
     ...mapActions('datasetManager', {
       fetchDatasets: actions.FETCH_COLLECTIONS,
       deleteCollection: actions.DELETE_COLLECTION,
     }),
+    filterCollections(is_public) {
+      var filtered_collections = [];
+      this.collections.forEach(function(c) {
+        if (c.is_public == is_public) {
+            filtered_collections.push(c);
+        }
+      });
+      return filtered_collections;
+    },
     routeToCohortManager({ id }) {
       // Route to view for dataset information
       // const currentPath = this.$router.currentPath.fullPath;

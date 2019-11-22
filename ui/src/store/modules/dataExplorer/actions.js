@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { nest } from 'd3-collection';
 import { ErrorNotification } from '@/store/modules/notifications/notifications';
-import { makeHierarchy } from '@/utils/helpers';
+import { makeHierarchy, getCohortSubjectIds } from '@/utils/helpers';
 import { actions, mutations, state as stateTypes } from './types';
 
 export default {
@@ -27,6 +27,7 @@ export default {
       data.collection.subject_variables = subjectVariables;
       data.collection.observation_variables = observationVariables;
       commit(mutations.SET_COLLECTION, data.collection);
+      dispatch(actions.SET_COHORT_SUBJECTS);
     } catch ({ response }) {
       // Something went wrong...
       // user didn't have access to collection? collection not found?
@@ -106,13 +107,13 @@ export default {
       commit(mutations.SET_LOADING, false);
     }
   },
-  [actions.SET_OUTCOME_VARIABLES]({ commit }, outcomeVariables) {
+  [actions.SET_OUTCOME_VARIABLES]({ commit, dispatch }, outcomeVariables) {
     commit(mutations.SET_OUTCOME_VARIABLES, outcomeVariables);
   },
   [actions.SET_DETAILED_VIEW]({ commit }, detailedView) {
     commit(mutations.SET_DETAILED_VIEW, detailedView);
   },
-  async [actions.FETCH_COHORTS]({ commit }) {
+  async [actions.FETCH_COHORTS]({ commit, dispatch, state }) {
     commit(mutations.SET_LOADING, true);
 
     try {
@@ -123,9 +124,68 @@ export default {
     } finally {
       commit(mutations.SET_LOADING, false);
     }
+    dispatch(actions.SET_COHORT_SUBJECTS);
+    dispatch(actions.ANALYZE_COHORTS);
   },
   [actions.SET_VISIBLE_COHORTS]({ commit }, cohorts) {
     commit(mutations.SET_VISIBLE_COHORTS, cohorts);
   },
+  async [actions.ANALYZE_COHORTS]({ commit, dispatch, state }) {
+    let { cohorts, data, outputVariables } = state;
+    const collection = state[stateTypes.COLLECTION];
 
+      // need cohorts, collection, and output vars
+      if ((typeof collection === 'undefined') || (typeof collection.observation_variables === 'undefined') || (typeof cohorts === 'undefined')) {
+	commit(mutations.SET_ANOVA_PVALS, []);
+	return;
+    }
+      
+    // create group of samples for each cohort:
+    let groups = [];
+    cohorts.forEach(function(c) {
+      if (c.collection_id === collection.id) {
+        let subjids = [];
+        c.subject_ids.forEach(function(sid) { subjids[sid] = 1; });
+        let cohort_data = data.filter(d => d.subject_id in subjids);	  
+        groups.push(cohort_data);
+      }
+    });
+    let numGroups = groups.length;
+
+    // pass _all_ observation variables, not just the selected ones
+    var output_vars = [];
+    collection.observation_variables.forEach(function(v) {
+      v.children.forEach(function(c) {
+        output_vars.push(c);
+      });
+    });
+    outputVariables = output_vars;
+
+    try {
+      const { data } = await axios.post(`/api/compute-anova`, {
+        numGroups,
+        groups,
+        outputVariables,
+      });
+      commit(mutations.SET_ANOVA_PVALS, data.pvals);
+    } catch ({ response }) {
+      const notification = new ErrorNotification(response.data.error);
+      dispatch(notification.dispatch, notification, { root: true });
+    }
+  },
+  [actions.SET_COHORT_SUBJECTS]({ commit, dispatch, state }) {
+      let { cohorts, collection, data } = state;
+      if ((typeof(collection) === 'undefined') || (typeof(cohorts) === 'undefined')
+	  || (typeof(data) === 'undefined') || (data.length === 0)) {
+	  return;
+      }
+      
+      // compute subjects in each cohort
+      cohorts.forEach(function(c) {
+          if (c.collection_id === collection.id) {
+	    let subj_ids = getCohortSubjectIds(data, c);
+            c.subject_ids = subj_ids;
+	  }
+      });
+  },
 };

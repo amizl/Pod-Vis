@@ -4,7 +4,9 @@
   </v-container>
   <v-container v-else fluid grid-list-md fill-height>
     <v-toolbar app class="primary">
-      <v-toolbar-title class="white--text">Cohort Manager - {{ collection.label }}</v-toolbar-title>
+      <v-toolbar-title class="subheading white--text">Cohort Manager
+	  <div class="subheading">{{ collection.label }}</div>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-flex xs12 sm12> <CohortSelection class="mt-2" /> </v-flex>
@@ -13,6 +15,14 @@
 
       <delete-cohort-button />
       <save-cohort-button />
+
+      <v-tooltip top color="primary">
+        <template v-slot:activator="{ on }">
+          <data-explorer-button />
+        </template>
+        <span>Launch Data Explorer to compare Cohorts</span>
+      </v-tooltip>
+	
     </v-toolbar>
     <v-layout column fill-height>
       <v-flex xs6>
@@ -36,6 +46,7 @@ import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
 import DeleteCohortButton from '@/components/CohortManager/DeleteCohortBtnDialog';
 import SaveCohortButton from '@/components/CohortManager/SaveCohortBtnDialog';
+import DataExplorerButton from '@/components/CohortManager/DataExplorerBtnDialog';
 
 export default {
   name: 'CohortManager',
@@ -46,6 +57,7 @@ export default {
     AnalyticsTable,
     SaveCohortButton,
     DeleteCohortButton,
+    DataExplorerButton,
   },
   props: {
     collectionId: {

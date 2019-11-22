@@ -9,4 +9,5 @@ export default {
   [state.OUTCOME_VARIABLES]: [],
   [state.IS_LOADING]: false,
   [state.DETAILED_VIEW]: null,
+  [state.ANOVA_PVALS]: [],
 };

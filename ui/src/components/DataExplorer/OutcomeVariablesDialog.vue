@@ -1,12 +1,17 @@
 <template>
-  <v-dialog v-model="openInputVariableDialog" scrollable max-width="600px">
+  <div>
+    <v-tooltip top color="primary">
     <template v-slot:activator="{ on }">
-      <v-btn flat color="primary" v-on="on">
+      <v-btn flat color="primary"  @click="openInputVariableDialog = !openInputVariableDialog" style="height:100%" v-on="on">
         <v-icon left dark>add_box</v-icon>
         Outcome Variables
       </v-btn>
     </template>
-    <v-card max-height="500px" class="rounded-lg">
+    <span>Add/remove outcome variables from Summary View.</span>
+    </v-tooltip>
+
+  <v-dialog v-model="openInputVariableDialog" scrollable max-width="600px">
+   <v-card max-height="500px" class="rounded-lg">
       <v-card-title class="title primary--text text--darken-3">
         Outcome Variables
       </v-card-title>
@@ -42,6 +47,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+ </div>
 </template>
 
 <script>

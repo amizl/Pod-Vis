@@ -50,4 +50,8 @@ export default {
   [mutations.SET_DETAILED_VIEW](state, detailedView) {
     state[stateTypes.DETAILED_VIEW] = detailedView;
   },
+  [mutations.SET_ANOVA_PVALS](state, pvals) {
+    state[stateTypes.ANOVA_PVALS] = pvals;
+  },
+
 };

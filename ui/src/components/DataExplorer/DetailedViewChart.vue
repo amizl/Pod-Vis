@@ -12,7 +12,6 @@ import { scalePoint, scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
 import { max, mean, deviation } from 'd3-array';
-import * as crossfilter from 'crossfilter2';
 
 export default {
   directives: {
@@ -37,6 +36,10 @@ export default {
       type: String,
       required: true,
     },
+    drawRaw: {
+      type: Boolean,
+      required: true,
+    },
     drawMean: {
       type: Boolean,
       required: true,
@@ -52,7 +55,7 @@ export default {
       devicePixelRatio: 1,
       width: 0,
       height: 0,
-      margin: { top: 20, right: 25, bottom: 15, left: 25 },
+      margin: { top: 20, right: 25, bottom: 100, left: 25 },
 //      draw_mean: false,
     };
   },
@@ -81,7 +84,7 @@ export default {
         var rows = subj2data[k];
         var srows = rows.sort((a, b) => a['event_day']-b['event_day']);
         var first_day = srows[0]['event_day'];
-        var ind = 0;
+        var ind = 1;
         rows.forEach(function(r) {
           r['subject_event_day'] = r['event_day'] - first_day;
           r['subject_event_index'] = ind++;
@@ -127,7 +130,7 @@ export default {
     },
     xDimensionScale() {
       return scaleLinear()
-        .domain([0, this.xmax])
+        .domain([this.xmin, this.xmax])
         .range([0, this.computedWidth]);
     },
 
@@ -161,6 +164,9 @@ export default {
     xaxis() {
       this.updateCanvas();
     },
+    drawRaw() {
+      this.updateCanvas();
+    },
     drawMean() {
       this.updateCanvas();
     },
@@ -184,6 +190,10 @@ export default {
     this.resizeChart();
 
     this.$nextTick(() => this.updateCanvas());
+
+    this.$root.$on('update_detailed_view', () => {
+      this.updateCanvas();
+    });
   },
   methods: {
 
@@ -277,7 +287,7 @@ export default {
       const { width, height } = this.container.getBoundingClientRect();
       this.height = height;
       // HACK
-      this.width = 500;
+      this.width = 550;
       // this.context.scale(this.devicePixelRatio, this.devicePixelRatio);
     },
 
@@ -324,6 +334,7 @@ export default {
 
       context.stroke();
       context.lineWidth = savedLineWidth;
+      context.globalAlpha = 1;
     },
 
     drawMultiCurveRegion(coords1, coords2, strokeColor, fillColor, alpha, lineWidth=1) {
@@ -349,9 +360,10 @@ export default {
       context.lineWidth = savedLineWidth;
       context.fillStyle = savedFillColor;
       context.strokeStyle = savedStrokeColor;
+      context.globalAlpha = 1;
     },
 
-    drawRaw() {
+    drawData() {
       var cohorts = this.selectedCohorts();
       var slf = this;
 
@@ -362,79 +374,218 @@ export default {
         "roc": "roc"
       };
 
-      // draw each cohort in turn
-      cohorts.forEach(function(c) {
-        console.log("cohort " + c.label + " color = " + c.color);
-     
-        // determine which subjects are in the cohort
-        const xf = crossfilter(slf.data);
-
-        // add dimensions and filters
-        // xf.dimension(dim);
-        // dim.filterFunction(filter);
-
-        c.queries.forEach(function(q) {
-          // adapted from FIND_COHORT_QUERY
-          const inputVariable = q.input_variable;
-          var filter_fn = undefined;
-          let accessor = undefined;
-          let dim = undefined;
-
-          if (q.input_variable.subject_ontology === undefined) {
-            // convert dimension_label to data field name
-            let subfield = dimension2field[q.input_variable.dimension_label];
-            accessor = function(d) { return d[q.input_variable.observation_ontology.id][subfield] };
-            dim = xf.dimension(accessor);
-          } else {
-            let lbl = q.input_variable.subject_ontology.label;
-            // special case for study
-            if (lbl === "Study") {
-               accessor = function(d) { return d["study"]["study_name"] };
-            } else {
-               accessor = function(d) { return d[lbl] };
-            }
-            dim = xf.dimension(accessor);
-          }
-
-          if ((q.value !== undefined) && (q.value !== null)) {
-            filter_fn = function(d) { console.log("eq filter got " + d + " checking against " + q.value); return d === q.value; };
-//            console.log("adding filter for " + q.input_variable.observation_ontology.label + "=" + q.value);
-            dim.filterFunction(filter_fn);
-          } else if ((q.min_value !== undefined) && (q.max_value !== undefined)) {
-            filter_fn = function(d) { console.log("lte/gte filter got " + d + " checking against min=" + q.min_value + " max=" + q.max_value); return ((d >= q.min_value) && (d <= q.max_value)); };
-//            console.log("adding filter for " + q.input_variable.subject_ontology.label + ">=" + q.min_value + " <=" + q.max_value);
-            dim.filterFunction(filter_fn);
-          } else {
-            console.log("unsupported query " + q);
-          }
-        });
-
-        const filt = xf.allFiltered();
-
-        let sids = {};
-        filt.forEach(function(r) {
-          sids[r.subject_id] = 1;
-        });
-
-        var cohort_subject_ids = Object.keys(sids);
-
-        // draw mean and standard deviation for entire group
-        if (slf.drawMean) {
-          var paths = slf.getMeanAndSDPaths(cohort_subject_ids);
-          // +/- 1 SD
-          slf.drawMultiCurveRegion(paths[1], paths[2], 'black', '#d0d0d0', 0.4, 0.5);
-          // mean
-          slf.drawMultiCurve(paths[0], c.color, 0.6, 8);
-          // outline +/- 1 SD
-          slf.drawMultiCurve(paths[1], c.color, 0.6, 1);
-          slf.drawMultiCurve(paths[2], c.color, 0.6, 1);
-        } else {
+      // draw all raw data
+      if (slf.drawRaw) {
+        cohorts.forEach(function(c) {
+          var cohort_subject_ids = c.subject_ids;
           // draw single path for each subject
           var paths = slf.getRawPaths(cohort_subject_ids);
-          paths.forEach(path => slf.drawMultiCurve(path, c.color, 0.45));
-        }
+          var raw_opacity = slf.drawMean ? 0.3 : 0.5;
+          paths.forEach(path => { slf.drawMultiCurve(path, c.color, raw_opacity); });
+        });
+      }
+
+      if (slf.drawMean) {
+        var groups = [];
+
+        // get all paths
+        cohorts.forEach(function(c) {
+          var cohort_subject_ids = c.subject_ids;
+          // draw mean and standard deviation for entire group
+          var paths = slf.getMeanAndSDPaths(cohort_subject_ids);
+          groups.push({'paths': paths, 'color': c.color});
+        });
+
+        // shade +/- 1 SD regions
+        groups.forEach(function(g) {
+          slf.drawMultiCurveRegion(g['paths'][1], g['paths'][2], 'black', '#d0d0d0', 0.4, 0.5);
+        });
+
+        // draw +/- 1 SD outlines
+        groups.forEach(function(g) {
+          slf.drawMultiCurve(g['paths'][1], g['color'], 0.7, 1);
+          slf.drawMultiCurve(g['paths'][2], g['color'], 0.7, 1);
+        });
+
+        // draw group means
+        groups.forEach(function(g) {
+          slf.drawMultiCurve(g['paths'][0], g['color'], 0.7, 8);
+        });
+     }
+
+    },
+
+    drawSubjectCountsVerticalAxis(yscale, max_subjects, which) {
+      var tickCount = 3,
+        tickSize = 6,
+        ticks = yscale.ticks(tickCount),
+        tickFormat = yscale.tickFormat(tickCount),
+        x1 = 0,
+        x2 = -tickSize,
+        tickOffset = -3,
+        textAlign = 'right';
+
+      if (which === "right") {
+        x1 = this.computedWidth;
+        x2 = this.computedWidth + tickSize;
+        tickOffset = 3;
+        textAlign = 'left';
+      }
+
+      this.context.beginPath();
+      ticks.forEach(d => {
+        this.context.moveTo(x1, yscale(d));
+        this.context.lineTo(x2, yscale(d));
+      });
+      this.context.strokeStyle = 'black';
+      this.context.stroke();
+
+      this.context.textAlign = textAlign;
+      this.context.textBaseline = 'middle';
+      ticks.forEach(d => {
+        this.context.fillText(
+          tickFormat(d),
+          x2 + tickOffset,
+          yscale(d)
+        );
       });
     },
+
+    // plot number of subjects remaining at each timepoint/visit
+    // TODO - move computation of subject counts out of the draw loop
+    drawSubjectCounts() {
+      var rd = this.getRawData,
+        cohorts = this.selectedCohorts(),
+        xacc = this.xaccessor,
+        tickCount = 10,
+        tp = this.timepoints;
+
+      // compute last timepoint for each subject
+      var subj2lasttp = {};
+      rd.forEach(function(r) {
+        if ((!(r.subject_id in subj2lasttp)) || (subj2lasttp[r.subject_id] < xacc(r))) {
+          subj2lasttp[r.subject_id] = xacc(r);
+        }
+      });
+
+      var max_subjects = Object.keys(subj2lasttp).length;
+
+      // map timepoint to list of subjects for whom it is the last visit
+      var last2subjects = {};
+      Object.keys(subj2lasttp).forEach( sid => {
+        var tp = subj2lasttp[sid];
+        if (!(tp in last2subjects)) {
+          last2subjects[tp] = [];
+        }
+        last2subjects[tp].push(sid);
+      });
+
+      // map timepoint to remaining subjects in each cohort
+      var tp2ccounts = {};
+
+      var ccounts = {};
+      ccounts['population'] = {};
+      Object.keys(subj2lasttp).forEach(x => {ccounts['population'][x] = 1;});
+      cohorts.forEach(c => {
+//        console.log("got cohort " + c.label + " with " + c.subject_ids.length + " subject(s)");
+        ccounts[c.label] = {};
+        c.subject_ids.forEach(sid => { ccounts[c.label][sid] = 1; });
+      });
+
+      Object.keys(last2subjects).sort(function(a,b) {return a-b;}).forEach(tp => {
+        // shallow copy
+        tp2ccounts[tp] = { 'population': Object.assign ({},  ccounts['population']) };
+        cohorts.forEach(c => { tp2ccounts[tp][c.label] = Object.assign({}, ccounts[c.label]) });
+
+        // update cohorts, including total population
+        var subjids = last2subjects[tp];
+        subjids.forEach(x => { 
+          delete ccounts['population'][x]; 
+          cohorts.forEach(c => { delete ccounts[c.label][x]; });
+        });
+      });
+
+      if (this.xaxis === "visits") {
+        tickCount = tp.length;
+      }
+      var xscale = scaleLinear().domain([this.xmin, this.xmax]).range([0, this.computedWidth]);
+      var yscale = scaleLinear().domain([0, max_subjects]).range([this.computedHeight+90, this.computedHeight+40]);
+      var ticks = xscale.ticks(tickCount);
+
+      // add missing timepoints to tp2ccounts
+      var last_tp = -1;
+      var tnum = 0;
+      Object.keys(tp2ccounts).sort(function(a,b) {return a-b;}).forEach(tp => {
+        while (ticks[tnum] <= tp) {
+          tp2ccounts[ticks[tnum]] = tp2ccounts[tp];
+          tnum += 1;
+        }
+        last_tp = tp;
+      });
+
+      this.drawSubjectCountsVerticalAxis(yscale, max_subjects, "left");
+      this.drawSubjectCountsVerticalAxis(yscale, max_subjects, "right");
+
+      // plot subject counts
+      var bars_width = xscale(ticks[1]) - xscale(ticks[0]) - 2;
+      var n_bars = cohorts.length + 1;
+      var bar_width = bars_width / n_bars;
+
+      var draw_bar = function(context, time, barnum, start_subj_count, end_subj_count, color, opacity=1) {
+        context.fillStyle = color;
+        context.strokeStyle = 'white';
+        context.globalAlpha = opacity;
+        context.beginPath();
+        let x1 = xscale(time) + (barnum * bar_width);
+        let x2 = x1 + bar_width;
+        let y1 = yscale(start_subj_count);
+        let y2 = yscale(end_subj_count);
+        context.moveTo(x1, y1);
+        context.lineTo(x1, y2);
+        context.lineTo(x2, y2);
+        context.lineTo(x2, y1);
+        context.lineTo(x1, y1);
+        context.fill();
+        context.stroke();
+        context.globalAlpha = 1;
+      };
+
+      ticks.forEach(d => {
+        if (d >= this.xmax) return;
+        let barnum = 0;
+
+        // population
+        var subj_count = Object.keys(tp2ccounts[d]['population']).length;
+        draw_bar(this.context, d, barnum++, 0, subj_count, "#F8D580", 0.7);
+
+        // using multiple bar graph instead of stacked bar graph because the cohorts are not disjoint
+        var offset = 0;
+        var bars = [];
+
+        cohorts.forEach(c => {
+          var sc = Object.keys(tp2ccounts[d][c.label]).length;
+          bars.push({'tp': d, 'score': sc, 'color': c.color});
+          offset += sc;
+        });                
+
+        // TODO - sort bars in same order that cohorts are listed in Cohorts panel?
+        bars.forEach(b => {
+          draw_bar(this.context, b['tp'], barnum++, 0, b['score'], b['color']);
+        });
+
+      });
+
+      this.context.strokeStyle = 'black';
+      this.context.fillStyle = 'black';
+      this.context.textAlign = 'center'
+
+      this.context.fillText(
+        "number of subjects remaining",
+        xscale(this.xmax/2),
+        yscale(0) + 10
+      );
+    },
+
     drawLeftAxis() {
       var tickCount = 10,
         tickSize = 6,
@@ -451,10 +602,8 @@ export default {
       this.context.stroke();
 
       this.context.beginPath();
-      this.context.moveTo(-tickSize, 0);
-      this.context.lineTo(0.5, 0);
+      this.context.moveTo(0.5, 0);
       this.context.lineTo(0.5, this.computedHeight);
-      this.context.lineTo(-tickSize, this.computedHeight);
       this.context.strokeStyle = 'black';
       this.context.stroke();
 
@@ -467,7 +616,6 @@ export default {
           this.dimensionScale(d)
         );
       });
-      this.context.save();
     },
     drawRightAxis() {
       var tickCount = 10,
@@ -492,14 +640,9 @@ export default {
       this.context.stroke();
 
       this.context.beginPath();
-      this.context.moveTo(this.xDimensionScale(xmax) + tickSize, 0);
-      this.context.lineTo(this.xDimensionScale(xmax) + 0.5, 0);
+      this.context.moveTo(this.xDimensionScale(xmax) + 0.5, 0);
       this.context.lineTo(
         this.xDimensionScale(xmax) + 0.5,
-        this.computedHeight
-      );
-      this.context.lineTo(
-        this.xDimensionScale(xmax) + tickSize,
         this.computedHeight
       );
       this.context.strokeStyle = 'black';
@@ -514,7 +657,6 @@ export default {
           this.dimensionScale(d)
         );
       });
-      this.context.save();
     },
     drawBottomAxis() {
       var tickCount = 10,
@@ -527,7 +669,7 @@ export default {
         tickCount = tp.length;
       }
 
-      var scale = scaleLinear().domain([0, this.xmax]).range([0, this.computedWidth]);
+      var scale = scaleLinear().domain([this.xmin, this.xmax]).range([0, this.computedWidth]);
       var ticks = scale.ticks(tickCount);
       var tickFormat = scale.tickFormat(tickCount);
       var ds = this.dimensionScale;
@@ -547,7 +689,7 @@ export default {
       this.context.stroke();
 
       this.context.beginPath();
-      this.context.moveTo(this.xDimensionScale(0), this.computedHeight);
+      this.context.moveTo(this.xDimensionScale(this.xmin), this.computedHeight);
       this.context.lineTo(this.xDimensionScale(xmax) + 0.5, this.computedHeight);
       this.context.strokeStyle = 'black';
       this.context.stroke();
@@ -572,8 +714,6 @@ export default {
         this.xDimensionScale(xmax/2),
         this.dimensionScale(0) + ( tickSize + tickPadding) * 3
       );
-
-      this.context.save();
     },
     drawAxes() {
       this.drawLeftAxis();
@@ -582,10 +722,11 @@ export default {
     },
     updateCanvas() {
       // TODO - adding 50 is a workaround to account for the right-hand axis, which is outside of the computed area
-      this.context.clearRect(0, 0, this.computedWidth + this.margin.left + 50, this.computedHeight + 50);
+      this.context.clearRect(0, 0, this.computedWidth + this.margin.left + 50, this.computedHeight + 120);
       this.context.translate(this.margin.left, 0);
-      this.drawRaw();
+      this.drawData();
       this.drawAxes();
+      this.drawSubjectCounts();
       this.context.translate(-this.margin.left, 0);
     },
   },

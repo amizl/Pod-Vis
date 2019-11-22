@@ -51,8 +51,8 @@
           :cx="mean"
           :cy="h"
           fill="blue"
-          stroke="none"
-          stroke-width="0"
+	  stroke="#3696f8"
+          stroke-width="1"
           fill-opacity=".6"
         />
         <!-- Population Mean -->
@@ -60,10 +60,10 @@
           r="7"
           :cx="populationMean"
           :cy="h"
-          stroke="none"
-          fill="#F8B108"
-          stroke-width="0"
-          fill-opacity=".6"
+          stroke="#f8d537"
+          fill="#F88123"
+          stroke-width="1"
+          fill-opacity=".8"
         />
         <g ref="brush" class="brush"></g>
       </g>
@@ -307,25 +307,27 @@ export default {
       // there should only be one query for a histogram...
       const [query] = this.findCohortQuery(this.dimensionName);
 
-      this.$nextTick(() => {
-        const minValue = query.min_value;
-        const maxValue = query.max_value;
-        // Snap selections to closest bins
-        select(this.$refs.brush).call(this.brush.move, [
-          this.xScale(minValue),
-          this.xScale(maxValue),
-        ]);
+      if (typeof(query) !== 'undefined') {
+        this.$nextTick(() => {
+          const minValue = query.min_value;
+          const maxValue = query.max_value;
+          // Snap selections to closest bins
+          select(this.$refs.brush).call(this.brush.move, [
+            this.xScale(minValue),
+            this.xScale(maxValue),
+          ]);
 
-        // Filter dimension to be within snapped selection
-        this.addFilter({
-          dimension: this.dimensionName,
-          filter: d => d >= minValue && d < maxValue,
-          query: {
-            minValue,
-            maxValue,
-          },
+          // Filter dimension to be within snapped selection
+          this.addFilter({
+            dimension: this.dimensionName,
+            filter: d => d >= minValue && d < maxValue,
+            query: {
+              minValue,
+              maxValue,
+            },
+          });
         });
-      });
+      }
     }
   },
   destroyed() {
