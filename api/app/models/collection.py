@@ -1,6 +1,7 @@
 from . import db
 from . import Subject, ObservationOntology
 from .cohort import Cohort
+import decimal
 import enum
 from sqlalchemy.sql import text
 import pandas as pd
@@ -197,14 +198,24 @@ class Collection(db.Model):
             n_years = last_date.year - first_date.year
             if n_years <= 0:
                 n_years = 1
-            roc = ((M / N) * 100) / n_years # / 365.25)
+
+            roc = None
+
+            # rate of change may be undefined if N = 0 anywhere
+            try:
+                roc = ((M / N) * 100) / n_years # / 365.25)
+                roc = roc.values[-1]
+            except decimal.InvalidOperation:
+                pass
+            except decimal.DivisionByZero:
+                pass
 
             change = totals[-1] - totals[0]
             observations.append(
                 dict(
                     subject_id=subject_id,
                     observation=obs_id,
-                    roc=roc.values[-1],
+                    roc=roc,
                     change=change,
                     # handle the case where there are multiple visits on the same day
                     min=totals.loc[[first_date]][0],
@@ -226,6 +237,9 @@ class Collection(db.Model):
                 if len(list(obs_ids.keys())) >= n_observation_ids:
                     filtered_subjects.append(subj)
 
+        if len(filtered_subjects) == 0:
+            return { 'data': pd.DataFrame(), 'raw_data': pd.DataFrame() }
+                    
         # Because subject's attributes are in an EAV
         # table, using our model's to_dict() method to collapse these
         # into columns and join this table with our observation data
@@ -234,7 +248,7 @@ class Collection(db.Model):
             subject.to_dict(include_attributes=True, include_study=True)
             for subject in filtered_subjects
         ]).set_index('id')
-        
+
         # Convert to datetime
         if "Birthdate" in subjects_df.columns:
             query_for_first_visit = text("""
