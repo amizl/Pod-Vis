@@ -93,6 +93,7 @@ def main():
         elif entity is "Subject Info":
             print("Processing subject information .....")
             process_subject_info(cursor, conn, entity_file, study_map, subject_ont, df_col_names_field_map)
+            exit()
         elif entity is "Visit":
             print("Processing visit information .....")
             process_subject_visits(cursor, conn, entity_file, df_col_names_field_map)
