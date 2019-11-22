@@ -1,7 +1,7 @@
 <template>
   <v-container fluid grid-list-md>
     <v-toolbar app class="primary">
-      <v-toolbar-title class="white--text">Create Dataset</v-toolbar-title>
+      <v-toolbar-title class="white--text">Create Clinical Data Collection</v-toolbar-title>
       <v-spacer></v-spacer>
       <save-collection-btn-dialog
         :variables="variables"
@@ -35,7 +35,7 @@
                   <span class="title primary--text">Shared Variables</span>
                   <br />
                   <span class="subheading grey--text ligthen-2"
-                    >Select the variables to include in the new dataset
+                    >Select the variables to include in the new clinical data
                     collection.</span
                   >
                 </p>
@@ -58,7 +58,7 @@
                   <span class="title primary--text">Unshared Variables</span>
                   <br />
                   <span class="subheading grey--text ligthen-2"
-                    >These variables are not shared within selected datasets.
+                    >These variables are not shared among the selected datasets.
                   </span>
                 </p>
               </v-card-title>

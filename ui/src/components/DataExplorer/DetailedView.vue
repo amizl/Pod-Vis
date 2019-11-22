@@ -17,7 +17,11 @@
          <v-btn text color="#3FB551" class="white--text mr-2 py-1" value="days">DAYS</v-btn>
         </v-btn-toggle>
 
-       <span class="subheading primary--text mt-3 mr-2 ml-3">Show Mean/SD:</span>
+       <span class="subheading primary--text mt-3 mr-2 ml-3">Show Raw Data:</span>
+       <v-checkbox class="mt-2" v-model="draw_raw">
+       </v-checkbox>
+
+       <span class="subheading primary--text mt-3 mr-2 ml-3">Overlay Mean/SD:</span>
        <v-checkbox class="mt-2" v-model="draw_mean">
        </v-checkbox>
 
@@ -40,6 +44,7 @@
         :dimension-name="detailedView.id"
   	:line-style="line_style"
         :draw-mean="draw_mean"
+        :draw-raw="draw_raw"
   	:xaxis="xaxis"
       />
 
@@ -62,6 +67,7 @@ export default {
     return {
       line_style: 'bezier',
       draw_mean: true,
+      draw_raw: true,
       xaxis: 'visits',
     };
   },

@@ -1,9 +1,11 @@
 from . import db
 from . import Subject, ObservationOntology
 from .cohort import Cohort
+import decimal
 import enum
 from sqlalchemy.sql import text
 import pandas as pd
+import sys
 
 class InstantiationType(enum.Enum):
     static = "static"
@@ -75,6 +77,18 @@ class Collection(db.Model):
         """
         return cls.query.filter_by(user_id=user_id).all()
 
+    @classmethod
+    def find_all_public(cls):
+        """Find all public collections.
+
+        Args:
+
+        Returns:
+            If exists, the collections.
+        """
+        # include only public collections not owned by the current user
+        return cls.query.filter(Collection.is_public==1)
+    
     def contains_observation(self, observation_ontology_id):
         """Check if collection contains observation variable."""
         observation_ids = [
@@ -150,86 +164,42 @@ class Collection(db.Model):
         # the collection.
         all_subjects = Subject.find_all_by_study_ids(study_ids)
         subject_variable_ids = [subject_var.id for subject_var in self.subject_variables]
-
-        # Separate measures that are precomputed. Currently, a measure is precomputed
-        # if there are no item measures pointing to it.
-        observation_variable_ids = [obs_var.ontology.id for obs_var in self.observation_variables]
-        obs_ids = []
-        obs_parent_ids = []
-        for obs_id in observation_variable_ids:
-            # check whether obs_id has children
-            result = ObservationOntology.find_by_parent_id(obs_id)
-            if result:
-                obs_parent_ids.append(obs_id)
-            else:
-                obs_ids.append(obs_id)
+        obs_ids = [obs_var.ontology.id for obs_var in self.observation_variables]
 
         # Query for getting observation totals for patients across all
         # their visits.
-        if obs_parent_ids:
-            query = text("""
-                SELECT
-                    s.id as subject_id, oo.parent_id as observation_ontology_id,
-                    v.event_date, o.value as total
-                FROM study
-                JOIN subject s ON study.id = s.study_id
-                JOIN subject_visit v ON s.id = v.subject_id
-                JOIN observation o ON v.id = o.subject_visit_id
-                JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-                WHERE study.id in :study_ids and o.observation_ontology_id in (
-                    SELECT id
-                    FROM observation_ontology
-                    WHERE parent_id in :parent_ids
-                )
-                GROUP BY study.id, s.id, v.event_date, oo.parent_id
-                ORDER BY study_id, subject_id, observation_ontology_id, event_date, total
-            """)
-            result_proxy = connection.execute(
-                query,
-                study_ids=study_ids,
-                parent_ids=obs_parent_ids) \
-                .fetchall()
-            result = [dict(row) for row in result_proxy]
-            result_df = pd.DataFrame(result)
+        query_for_totals = text("""
+          SELECT
+              sv.subject_id as subject_id, oo.id as observation_ontology_id,
+              sv.event_date, sv.visit_num, CAST(o.value AS DECIMAL) as total
+          FROM subject s, subject_visit sv, observation o, observation_ontology oo
+          WHERE s.study_id in :study_ids
+          AND s.id = sv.subject_id
+          AND sv.id = o.subject_visit_id
+          AND oo.id = o.observation_ontology_id
+          AND o.observation_ontology_id in :ids
+          ORDER BY s.study_id, subject_id, observation_ontology_id, event_date, sv.visit_num, total
+        """)
 
-        if obs_ids:
-            # Now query for precomputed
-            query_for_precomputed_totals = text("""
-                SELECT
-                    s.id as subject_id, oo.id as observation_ontology_id,
-                    v.event_date, o.value as total
-                FROM study
-                JOIN subject s ON study.id = s.study_id
-                JOIN subject_visit v ON s.id = v.subject_id
-                JOIN observation o ON v.id = o.subject_visit_id
-                JOIN observation_ontology oo ON o.observation_ontology_id = oo.id
-                WHERE study.id in :study_ids and o.observation_ontology_id in :ids
-                ORDER BY study_id, subject_id, observation_ontology_id, event_date, total
-            """)
-            result_proxy_for_precompute_totals = connection.execute(
-                query_for_precomputed_totals,
-                study_ids=study_ids,
-                ids=obs_ids) \
-                .fetchall()
-            result_for_precompute_totals = [dict(row) for row in result_proxy_for_precompute_totals]
-            result_df_for_precompute_totals = pd.DataFrame(result_for_precompute_totals)
-
-        if obs_parent_ids and obs_ids:
-            result_df = pd.concat([result_df, result_df_for_precompute_totals])
-        elif not obs_parent_ids and obs_ids:
-            result_df = result_df_for_precompute_totals
-
+        result_proxy = connection.execute(
+            query_for_totals,
+            study_ids=study_ids,
+            ids=obs_ids).fetchall()
+        result = [dict(row) for row in result_proxy]
+        result_df = pd.DataFrame(result)
+        result_df['event_date'] = pd.to_datetime(result_df['event_date'])
+        
         # Compute ROC for each patient and each scale from their first and last visit
         observations = []
         subject_observations = {}
 
         for (subject_id, obs_id), df in result_df.groupby(['subject_id', 'observation_ontology_id']):
-            totals = df.set_index('event_date')['total']
+            totals = df.set_index('event_date', 'visit_num')['total']
             first_date = totals.index.min()
             last_date = totals.index.max()
 
             # skip subjects with only one measurement/visit
-            if (len(totals) == 1):
+            if (len(totals) <= 1):
                 continue
 
             # http://www.andrewshamlet.net/2017/07/07/python-tutorial-roc/
@@ -237,17 +207,31 @@ class Collection(db.Model):
             M = totals.diff(n-1)
             N = totals.shift(n-1)
             # normalize by duration
-            roc = ((M / N) * 100) / ((last_date.year - first_date.year)) # / 365.25)
+            n_years = last_date.year - first_date.year
+            if n_years <= 0:
+                n_years = 1
+
+            roc = None
+
+            # rate of change may be undefined if N = 0 anywhere
+            try:
+                roc = ((M / N) * 100) / n_years # / 365.25)
+                roc = roc.values[-1]
+            except decimal.InvalidOperation:
+                pass
+            except decimal.DivisionByZero:
+                pass
 
             change = totals[-1] - totals[0]
             observations.append(
                 dict(
                     subject_id=subject_id,
                     observation=obs_id,
-                    roc=roc.values[-1],
+                    roc=roc,
                     change=change,
-                    min=totals.loc[first_date],
-                    max=totals.loc[last_date]
+                    # handle the case where there are multiple visits on the same day
+                    min=totals.loc[[first_date]][0],
+                    max=totals.loc[[last_date]][-1]
                 ))
             # track observations per subject
             if subject_id not in subject_observations:
@@ -265,6 +249,9 @@ class Collection(db.Model):
                 if len(list(obs_ids.keys())) >= n_observation_ids:
                     filtered_subjects.append(subj)
 
+        if len(filtered_subjects) == 0:
+            return { 'data': pd.DataFrame(), 'raw_data': pd.DataFrame() }
+                    
         # Because subject's attributes are in an EAV
         # table, using our model's to_dict() method to collapse these
         # into columns and join this table with our observation data
@@ -291,7 +278,7 @@ class Collection(db.Model):
             # subjects_df['age'] = subjects_df['first_visit'] - subjects_df['Birthdate'].year
             # return subjects_df
 
-        result = pd.merge(pd.DataFrame(observations), subjects_df, left_on='subject_id', right_on='subject_id')
+        result = pd.merge(pd.DataFrame(observations), subjects_df, left_on='subject_id', right_on='id')
 
         result_df['event_date'] = pd.to_datetime(result_df['event_date'])
 
@@ -467,7 +454,9 @@ class Collection(db.Model):
                 include_studies=False,
                 include_queries=False,
                 include_variables=False,
-                include_cohort_counts=False):
+                include_cohort_counts=False,
+                # for a public Collection, the cohort user_id may differ from the Collection user_id
+                cohort_user_id=None):
         """Return attributes as a dict.
 
         This easily allows for serializing the collection object and
@@ -495,7 +484,9 @@ class Collection(db.Model):
 
         if include_cohort_counts:
             all_cohorts = Cohort.find_all_by_collection_id(self.id)
-            user_cohorts = [c for c in all_cohorts if c.user_id == self.user_id]
+            if (cohort_user_id is None):
+                cohort_user_id = self.user_id
+            user_cohorts = [c for c in all_cohorts if c.user_id == cohort_user_id]
             collection['num_cohorts'] = len(user_cohorts)
         
         return collection

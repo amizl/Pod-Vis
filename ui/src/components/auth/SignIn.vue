@@ -64,8 +64,8 @@ export default {
       if (this.$refs.form.validate()) {
         this.signUserIn({ email, password })
           .then(() => {
-            // If signing in is successful, redirect user to dashboard
-            this.$router.push('/dashboard');
+            // If signing in is successful, redirect user to home page
+            this.$router.push('/homepage');
           })
           .catch(() => {
             // Currently do nothing here if sign in is unsuccessful.

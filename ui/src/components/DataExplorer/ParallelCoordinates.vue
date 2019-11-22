@@ -3,6 +3,7 @@
     color="white"
     height="100%"
     min-height="250px"
+    max-height="300px"
     min-width="200px"
     :class="classed"
     @click="selectForDetailedView"

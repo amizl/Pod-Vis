@@ -2,7 +2,7 @@
  * Authentication Navigation Gaurds.
  *
  * These handle the logic before entering a particular route.
- * There are routes where a user needs to be authenticated (dashboard), and were
+ * There are routes where a user needs to be authenticated (home page), and where
  * you can't be authenticated (sign in page).
  */
 
@@ -33,11 +33,11 @@ export const requireNotAuth = async (to, from, next) => {
   // If user was routed to signin somehow from a route,
   // and they are still authenticated, keep them on their
   // current route.
-  // Otherwise route them to the dashboard.
+  // Otherwise route them to the home page.
   try {
     await store.dispatch(`${authModule}/${authActions.VALIDATE_TOKEN}`);
     if (isUserAuthenticated() && from.name) next(from.name);
-    if (isUserAuthenticated() && !from.name) next('/dashboard');
+    if (isUserAuthenticated() && !from.name) next('/homepage');
   } catch (err) {
     next();
   }

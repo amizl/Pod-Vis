@@ -6,7 +6,7 @@
           <v-layout align-center style='background-color: white; padding: 0.4em 0.4em 0em 0.4em; border-radius: 0.5rem;'>
 	    <span style="padding:0em 0.5em 0em 0em">
                 <img
-                  :src="'/images/' + variable.parent.label + '-icon-64.png'"
+                  :src="'/images/' + variable.category + '-icon-64.png'"
                   style="height:2em"
               /></span>
               {{ getVariableLabel(variable) }}
@@ -95,7 +95,8 @@ export default {
     },
     isBelowPValThreshold(v) {
       for (var pv in this.pvals) {
-        if (this.pvals[pv].label === v.label) {
+        if ((this.pvals[pv].label === v.label) ||
+           ((this.pvals[pv].label === v.parentLabel) && (v.label === 'Change'))) {
           if (this.pvals[pv].pval <= this.pval_threshold) {
 	    return true;
 	  }

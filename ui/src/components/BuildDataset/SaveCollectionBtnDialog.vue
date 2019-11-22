@@ -5,13 +5,13 @@
       color="primary--text"
       @click="dialog = !dialog"
     >
-      <v-icon left>save</v-icon> SAVE DATASET
+      <v-icon left>save</v-icon> SAVE COLLECTION
     </v-btn>
     <!-- SAVE COLLECTION FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
       <v-card>
         <v-card-title primary-title>
-          <span class="title pl-2">Save Dataset</span>
+          <span class="title pl-2">Save Clinical Data Collection</span>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" v-model="valid" @submit.prevent="onSaveCollection">
@@ -21,7 +21,7 @@
                 () => !!collectionName || 'Collection name is required.',
               ]"
               prepend-inner-icon="table_chart"
-              label="Please name your dataset."
+              label="Please name your clinical data collection."
               box
               flat
               background-color="grey lighten-4"
@@ -86,7 +86,7 @@ export default {
         try {
           await this.saveCollection({ collectionName, variables, datasetIds });
           this.loading = false;
-          this.$router.push('/datasets');
+          this.$router.push('/homepage');
         } catch (err) {
           this.loading = false;
         }

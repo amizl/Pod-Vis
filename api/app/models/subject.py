@@ -87,6 +87,9 @@ class Subject(db.Model):
             AttributeError if attribute in group_by is not a part of the model.
         """
         subjects = cls.find_all_by_study_id(study_id)
+
+        # note that this query is being run for each and every subject:
+        # SELECT <bunch of fields> FROM subject_attribute WHERE %(param_1)s = subject_attribute.subject_id
         subjects_df = pd.DataFrame([
             subject.to_dict(include_attributes=True)
             for subject in subjects

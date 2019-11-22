@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_current_user
-from scipy.stats import mannwhitneyu
+from scipy.stats import mannwhitneyu, f_oneway
 from functools import reduce
 from . import api
 from .exceptions import ResourceNotFound, BadRequest
@@ -455,7 +455,7 @@ def create_collection():
 @api.route("/collections")
 @jwt_required
 def get_collections():
-    """Get user's collections.
+    """Get user's collections and any public collections.
 
     Params:
       include: Data to include from collections. This can currently be:
@@ -470,20 +470,32 @@ def get_collections():
     """
     user = get_current_user()
     collections = models.Collection.find_all_by_user_id(user.id)
+    pub_collections = models.Collection.find_all_public()
 
+    # add only public collections not owned by user
+    for c in pub_collections:
+        if (c.user_id != user.id):
+            collections.append(c)
+    
     include = request.args.getlist('include')
     kwargs = {
         "include_studies": "studies" in include,
         "include_variables": "variables" in include,
-        "include_cohort_counts": "cohort_counts" in include
+        "include_cohort_counts": "cohort_counts" in include,
+        # only count cohorts owned by the current user
+        "cohort_user_id": user.id
     }
 
+    # convert to list of dicts
+    collection_dicts = []
+    for c in collections:
+        d = c.to_dict(**kwargs)
+        d['is_deletable'] = (c.user_id == user.id)
+        collection_dicts.append(d)
+    
     return jsonify({
         "success": True,
-        "collections": [
-            collection.to_dict(**kwargs)
-            for collection in collections
-        ]
+        "collections": collection_dicts
     })
 
 @api.route("/collections/<int:collection_id>")
@@ -495,7 +507,7 @@ def get_collection(collection_id):
 
     if not collection:
         raise ResourceNotFound("Collection not found.")
-    if collection.user_id != user.id:
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
         raise AuthFailure('User not authorized to retrieve collection.')
 
     include = request.args.getlist('include')
@@ -504,7 +516,16 @@ def get_collection(collection_id):
         "include_variables": "variables" in include
     }
 
-    return jsonify(dict(success=True, collection=collection.to_dict(**kwargs)))
+    collection_d = collection.to_dict(**kwargs)
+
+    # add scale categories
+    get_scale_category = models.ObservationOntology.get_var_category_fn()
+    for ov in collection_d['observation_variables']:
+        if 'ontology' in ov:
+            oo = ov['ontology']
+            oo['category'] = get_scale_category(oo['id'])
+    
+    return jsonify(dict(success=True, collection=collection_d))
 
 @api.route("/collections/<int:collection_id>", methods=["DELETE"])
 @jwt_required
@@ -673,7 +694,7 @@ def compute_roc_for_observation(collection_id, observation_id):
         raise ResourceNotFound("Collection does not exist.")
     if not observation:
         raise ResourceNotFound("Observation variable does not exist.")
-    if user.id != collection.user_id:
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
         raise AuthFailure('Not authorized to use this collection.')
     if not collection.contains_observation(observation_id):
         raise ResourceNotFound("Collection does not contain this observation.")
@@ -696,7 +717,7 @@ def fetch_data_for_cohort_manager():
 
     if not collection:
         raise ResourceNotFound("Collection does not exist.")
-    if user.id != collection.user_id:
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
         raise AuthFailure("Not authorized to use this collection.")
 
     data = collection.get_data_for_cohort_manager()
@@ -718,7 +739,7 @@ def demo_parcoords():
 
     if not collection:
         raise ResourceNotFound("Collection does not exist.")
-    if user.id != collection.user_id:
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
         raise AuthFailure("Not authorized to use this collection.")
 
     data = collection.proof_of_concept_parcoords()
@@ -727,6 +748,39 @@ def demo_parcoords():
         "success": True,
         "data": data
 #        "data": data.to_json(orient="records", date_format='iso')
+    })
+
+@api.route('/compute-anova', methods=['POST'])
+def compute_anova():
+    """Compute 1-way ANOVA test"""
+    request_data = request.get_json()
+    groups = request_data.get("groups")
+    output_variables = request_data.get("outputVariables")
+
+    pvals = []
+
+    for output_variable in output_variables:
+        # Output variables that are simply "change" or "firstVisit" will have the
+        # id of "change-208" or "firstVisit-208". We want to detect this so we can
+        # use the correct id
+        if isinstance(output_variable.get("id"), str) and "-" in output_variable.get("id"):
+            variable_id = str(output_variable.get("parentID"))
+            variable_label = output_variable.get("parentLabel")
+        else:
+            variable_id = str(output_variable.get("id"))
+            variable_label = output_variable.get("label")
+
+        samples = []
+        for g in groups:
+            sample = [float(data.get(variable_id).get('change')) for data in g]
+            samples.append(sample)
+            
+        fval, pval = f_oneway(*samples)
+        pvals.append(dict(label=variable_label, pval=pval, fval=fval))
+         
+    return jsonify({
+        "success": True,
+        "pvals": pvals,
     })
 
 @api.route('/compute-mannwhitneyu', methods=['POST'])
@@ -749,9 +803,17 @@ def compute_mannwhitneyu():
             variable_id = str(output_variable.get("id"))
             variable_label = output_variable.get("label")
 
-        filtered_first_visit_sample = [data.get(variable_id).get('change') for data in filtered_data]
-        unfiltered_last_visit_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
-        stats, pval = mannwhitneyu(filtered_first_visit_sample, unfiltered_last_visit_sample)
+        # ignore parent ontology terms with no actual data
+        # TODO - filter these correctly on the client side
+        if unfiltered_data is not None:
+            if unfiltered_data[0].get(variable_id) is None:
+                continue
+
+            filtered_sample = [data.get(variable_id).get('change') for data in filtered_data]
+        unfiltered_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
+        # TODO - use of 'None' default for alternative is deprecated, see https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html
+        stats, pval = mannwhitneyu(filtered_sample, unfiltered_sample)
+                
         pvals.append(dict(label=variable_label, pval=pval))
 
     return jsonify({
@@ -783,7 +845,7 @@ def create_cohort():
     collection = models.Collection.find_by_id(collection_id)
     if not collection:
         raise ResourceNotFound("Collection does not exist.")
-    if user.id != collection.user_id:
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
         raise AuthFailure("Not authorized to use this collection.")
 
     # create cohort
