@@ -45,28 +45,9 @@ class Study(db.Model):
 
     def get_variables(self):
         """Get all variables measured in a study."""
+        get_scale_category = ObservationOntology.get_var_category_fn()
         connection = db.engine.connect()
-
-        # build lookup table/function to determine top-level category for each scale (observation ontology term)
-        query = text("""
-            SELECT distinct oo_p.id as parent_id, oo_p.label as parent_label, oo.id, oo.label
-            FROM observation_ontology oo, observation_ontology oo_p
-            WHERE oo.parent_id = oo_p.id
-        """)
-
-        # map each ontology term to its immediate parent
-        o2p = {}
-        for parent_id, parent_label, id, label in connection.execute(query).fetchall():
-            if (id != parent_id):
-                o2p[id] = {"id": parent_id, "label": parent_label};
-
-        # map each ontology term to its highest level parent (i.e., category)
-        def get_scale_category(id):
-            parent = {'id': id}
-            while parent['id'] in o2p:
-                parent = o2p[parent['id']]
-            return parent['label']
-
+        
         # get all variables measured in the study
         query = text("""
             SELECT distinct oo.label as scale, oo.id, oo.data_category, oo.value_type, oo.flip_axis

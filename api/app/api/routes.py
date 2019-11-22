@@ -516,7 +516,16 @@ def get_collection(collection_id):
         "include_variables": "variables" in include
     }
 
-    return jsonify(dict(success=True, collection=collection.to_dict(**kwargs)))
+    collection_d = collection.to_dict(**kwargs)
+
+    # add scale categories
+    get_scale_category = models.ObservationOntology.get_var_category_fn()
+    for ov in collection_d['observation_variables']:
+        if 'ontology' in ov:
+            oo = ov['ontology']
+            oo['category'] = get_scale_category(oo['id'])
+    
+    return jsonify(dict(success=True, collection=collection_d))
 
 @api.route("/collections/<int:collection_id>", methods=["DELETE"])
 @jwt_required

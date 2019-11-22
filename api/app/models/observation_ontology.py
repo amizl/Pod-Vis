@@ -1,5 +1,6 @@
 from . import db
 import enum
+from sqlalchemy.sql import text
 
 class DataCategory(enum.Enum):
     Categorical = "Categorical"
@@ -64,6 +65,43 @@ class ObservationOntology(db.Model):
         """
         return cls.query.filter_by(parent_id=observation_ontology_id).all()
 
+    @classmethod
+    def get_var_category_fn(cls):
+        """Get function that maps variable id to variable category.
+
+        Args:
+
+        Returns:
+           Function that maps variable id to variable category.
+        """
+        connection = db.engine.connect()
+
+        # build lookup table/function to determine top-level category for each scale (observation ontology term)
+        query = text("""
+            SELECT distinct oo_p.id as parent_id, oo_p.label as parent_label, oo.id, oo.label
+            FROM observation_ontology oo, observation_ontology oo_p
+            WHERE oo.parent_id = oo_p.id
+        """)
+
+        # map each ontology term to its immediate parent
+        o2p = {}
+        for parent_id, parent_label, id, label in connection.execute(query).fetchall():
+            if (id != parent_id):
+                o2p[id] = {"id": parent_id, "label": parent_label}
+
+        # map each ontology term to its highest level parent (i.e., category)
+        def get_scale_category(id):
+            parent = {'id': id}
+            while parent['id'] in o2p:
+                parent = o2p[parent['id']]
+            if 'label' in parent:
+                return parent['label']
+            else:
+                return None
+
+        connection.close()
+        return get_scale_category
+    
     def save_to_db(self):
         """Save to database."""
         db.session.add(self)
