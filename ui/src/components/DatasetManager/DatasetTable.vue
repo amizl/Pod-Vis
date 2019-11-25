@@ -21,6 +21,8 @@
         </td>
         <td class="text-xs-left">{{ props.item.project_name }}</td>
         <td class="text-xs-left">{{ props.item.study_name }}</td>
+	<td class="text-xs-left">{{ props.item.num_subjects }}</td>
+	<td class="text-xs-left">{{ props.item.longitudinal ? "Yes" : "No" }}</td>
         <!-- <td class="text-xs-right">{{ props.item.n_samples }}</td>
         <td class="text-xs-right">{{ props.item.outcome_categories }}</td>
         <td class="text-xs-right">{{ props.item.outcome_measures }}</td>
@@ -76,10 +78,14 @@ export default {
           text: 'Study',
           value: 'study_name',
         },
-        // {
-        //   text: 'Subject Count',
-        //   value: 'subject count',
-        // },
+        {
+           text: 'Subject Count',
+           value: 'num_subjects',
+        },
+        {
+           text: 'Longitudinal?',
+           value: 'longitudinal',
+        },
         // {
         //   text: 'Outcome Categories',
         //   value: 'categories',

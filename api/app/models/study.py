@@ -178,7 +178,7 @@ class Study(db.Model):
                     .all()
         ]
 
-    def to_dict(self, include_subjects=False, include_project=False, **kwargs):
+    def to_dict(self, include_num_subjects=False, include_subjects=False, include_project=False, **kwargs):
         """Return attributes as a dict.
 
         This easily allows for serializing the study object and
@@ -192,6 +192,9 @@ class Study(db.Model):
             project_id=self.project_id,
             longitudinal=self.longitudinal,
         )
+
+        if include_num_subjects:
+            study['num_subjects'] = len(self.subjects)
         if include_subjects:
             study['subjects'] = [subject.to_dict(**kwargs) for subject in self.subjects]
         if include_project:

@@ -354,7 +354,8 @@ def get_all_projects():
     include = request.args.getlist('include')
     kwargs = {
         "include_studies": "studies" in include,
-        "include_subjects": "subjects" in include
+        "include_subjects": "subjects" in include,
+        "include_num_subjects": "num_subjects" in include,
     }
 
     return jsonify({
