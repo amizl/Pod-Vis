@@ -263,9 +263,12 @@ def get_subject_variable_counts(study_id, subject_ontology_id):
         for subject in models.Subject.find_all_by_study_id(study_id)
     ]
 
+    # filter subjects without the specified attribute
+    filtered_subjects = [s for s in subjects if subject_attribute.label in s]
+    
     rename_idx = dict()
     rename_idx[subject_attribute.label] = 'value'
-    df = pd.DataFrame(subjects) \
+    df = pd.DataFrame(filtered_subjects) \
         .groupby(subject_attribute.label) \
         .size() \
         .to_frame('count') \
