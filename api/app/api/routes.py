@@ -578,12 +578,22 @@ def get_all_cohorts():
         "include_subjects": "subjects" in include,
     }
 
+    cohorts_l = [
+        cohort.to_dict(**kwargs)
+        for cohort in cohorts
+    ]
+    
+    # add scale categories
+    get_scale_category = models.ObservationOntology.get_var_category_fn()
+    for c in cohorts_l:
+        for ov in c['output_variables']:
+            if 'observation_ontology' in ov:
+                oo = ov['observation_ontology']
+                oo['category'] = get_scale_category(oo['id'])
+
     return jsonify({
         "success": True,
-        "cohorts": [
-            cohort.to_dict(**kwargs)
-            for cohort in cohorts
-        ]
+        "cohorts": cohorts_l
     })
 
 @api.route("/cohorts/<int:cohort_id>")
