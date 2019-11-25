@@ -1,30 +1,27 @@
 <template>
-  <v-container v-if="isLoading" fluid fill-height>
+  <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-1">
     <loading-spinner />
   </v-container>
-  <v-container v-else fluid fill-height grid-list-md>
+  <v-container v-else fluid fill-height grid-list-mdt class="ma-0 pa-1">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text">Data Explorer - {{ collection.label }}</v-toolbar-title>
     </v-toolbar>
     <v-layout column fill-height>
-      <v-flex xs5>
+      <v-flex xs5 class="ma-0 pa-1">
         <v-layout fill-height>
-          <!-- <v-flex xs3> <outcome-variables /></v-flex> -->
           <v-flex xs12> <summary-view /> </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs7>
+      <v-flex xs7 class="ma-0 pa-1">
         <v-layout fill-height>
           <v-flex xs3 fill-height>
             <v-layout column fill-height>
-              <v-flex fill-height> <cohorts /> </v-flex>
-              <!-- <v-flex> <analytics /> </v-flex> -->
+              <v-flex fill-height class="ma-0 pa-1"> <cohorts /> </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs9> <detailed-view /> </v-flex>
-          <v-flex xs3>
+          <v-flex xs9 class="ma-0 pa-1"> <detailed-view /> </v-flex>
+          <v-flex xs3 class="ma-0 pa-1">
             <v-layout column fill-height>
-              <!-- <v-flex> <cohorts /> </v-flex> -->
               <v-flex> <analytics /> </v-flex>
             </v-layout>
           </v-flex>

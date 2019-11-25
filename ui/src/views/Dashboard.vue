@@ -1,11 +1,11 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="ma-0 pa-2">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text">Home Page</v-toolbar-title>
     </v-toolbar>
     <v-layout fill-height>
       <!-- <v-layout align-center justify-center> -->
-      <v-flex xs12>
+      <v-flex xs12 class="pa-0 ma-0">
          <v-tabs slider-color="primary" grow>
            <v-tab>
              <span class="">My Clinical Data Collections</span>
