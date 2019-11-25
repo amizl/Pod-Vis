@@ -950,10 +950,18 @@ def create_cohort():
                 query.save_to_db()
 
     # TODO: Save cohort subjects to cohort_subject table
+    cohort_d = cohort.to_dict()
+
+    # add scale categories
+    get_scale_category = models.ObservationOntology.get_var_category_fn()
+    for ov in cohort_d['output_variables']:
+        if 'observation_ontology' in ov:
+            oo = ov['observation_ontology']
+            oo['category'] = get_scale_category(oo['id'])
 
     return jsonify({
         "success": True,
-        "cohort": cohort.to_dict()
+        "cohort": cohort_d
     }), 201
 
 
