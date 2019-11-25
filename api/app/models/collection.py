@@ -263,28 +263,15 @@ class Collection(db.Model):
 
         # Convert to datetime
         if "Birthdate" in subjects_df.columns:
-            query_for_first_visit = text("""
-                SELECT subject_id, min(event_date) as first_visit
-                FROM subject_visit
-                JOIN subject on subject.id = subject_visit.subject_id
-                GROUP BY subject_id;
-            """)
-            result_proxy = connection.execute(query_for_first_visit)
-            result = [dict(row) for row in result_proxy]
-            first_visit_df = pd.DataFrame(result)
-            subjects_df = pd.merge(subjects_df, first_visit_df, left_on='id', right_on='subject_id')
             subjects_df['Birthdate'] = pd.to_datetime(subjects_df['Birthdate'])
-            subjects_df['first_visit'] = pd.to_datetime(subjects_df['first_visit'])
-            # subjects_df['age'] = subjects_df['first_visit'] - subjects_df['Birthdate'].year
-            # return subjects_df
-
+            
         result = pd.merge(pd.DataFrame(observations), subjects_df, left_on='subject_id', right_on='id')
-
         result_df['event_date'] = pd.to_datetime(result_df['event_date'])
 
         # set 'event_day' to time in days relative to the earliest visit (in the whole dataset)
         dates_df = result_df.set_index('event_date')
         first_date = dates_df.index.min()
+
         result_df['event_day'] = result_df['event_date'] - first_date
         result_df['event_day'] = result_df['event_day'].dt.days
         
