@@ -257,28 +257,8 @@ def get_subject_variable_counts(study_id, subject_ontology_id):
     if not subject_attribute:
         raise ResourceNotFound(f"The subject attribute with ID {subject_ontology_id} does not exist.")
 
-    subjects = [
-        subject.to_dict(include_attributes=True)
-        for subject in models.Subject.find_all_by_study_id(study_id)
-    ]
-
-    # filter subjects without the specified attribute
-    filtered_subjects = [s for s in subjects if subject_attribute.label in s]
-    counts = None
-
-    if len(filtered_subjects) == 0:
-        counts = []
-    else:
-        rename_idx = dict()
-        rename_idx[subject_attribute.label] = 'value'
-        df = pd.DataFrame(filtered_subjects) \
-               .groupby(subject_attribute.label) \
-               .size() \
-               .to_frame('count') \
-               .reset_index() \
-               .rename(columns=rename_idx)
-        counts = df.to_dict("records")
-
+    counts = models.Subject.get_study_subjects_variable_counts(study_id, subject_ontology_id)
+        
     return jsonify({
         "success": True,
         "counts": counts,

@@ -1,5 +1,6 @@
 from . import db
 import pandas as pd
+from sqlalchemy.sql import text
 
 class Subject(db.Model):
     __tablename__ = "subject"
@@ -24,6 +25,33 @@ class Subject(db.Model):
             All subjects.
         """
         return cls.query.all()
+
+    @classmethod
+    def get_study_subjects_variable_counts(cls, study_id, subject_ontology_id):
+        """Get all subjects' variable counts for a given study and variable.
+
+        Returns:
+            List of counts.
+        """
+        connection = db.engine.connect()
+        query = text("""
+            SELECT sa.value as value, COUNT(*) as count
+            FROM subject s, subject_attribute sa
+            WHERE s.study_id = (:study_id)
+            AND s.id = sa.subject_id
+            AND sa.subject_ontology_id = (:subject_ontology_id)
+            GROUP BY sa.value
+        """)
+
+        result_proxy = connection.execute(
+            query,
+            study_id=study_id,
+            subject_ontology_id=subject_ontology_id) \
+            .fetchall()
+
+        result = [dict(row) for row in result_proxy]
+        connection.close()
+        return result
 
     @classmethod
     def find_by_id(cls, subject_id):
