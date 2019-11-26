@@ -7,7 +7,6 @@ from .exceptions import ResourceNotFound, BadRequest
 from ..auth.exceptions import AuthFailure
 from .. import models
 import pandas as pd
-import sys
 
 @api.route('/subjects')
 def get_all_subjects():
@@ -265,19 +264,24 @@ def get_subject_variable_counts(study_id, subject_ontology_id):
 
     # filter subjects without the specified attribute
     filtered_subjects = [s for s in subjects if subject_attribute.label in s]
-    
-    rename_idx = dict()
-    rename_idx[subject_attribute.label] = 'value'
-    df = pd.DataFrame(filtered_subjects) \
-        .groupby(subject_attribute.label) \
-        .size() \
-        .to_frame('count') \
-        .reset_index() \
-        .rename(columns=rename_idx)
+    counts = None
+
+    if len(filtered_subjects) == 0:
+        counts = []
+    else:
+        rename_idx = dict()
+        rename_idx[subject_attribute.label] = 'value'
+        df = pd.DataFrame(filtered_subjects) \
+               .groupby(subject_attribute.label) \
+               .size() \
+               .to_frame('count') \
+               .reset_index() \
+               .rename(columns=rename_idx)
+        counts = df.to_dict("records")
 
     return jsonify({
         "success": True,
-        "counts": df.to_dict("records"),
+        "counts": counts,
         "scale": subject_attribute.label,
         "subject_ontology_id": subject_attribute.label
     })
