@@ -1,6 +1,7 @@
 from . import db
 import pandas as pd
 from sqlalchemy.sql import text
+import sqlalchemy.orm
 
 class Subject(db.Model):
     __tablename__ = "subject"
@@ -78,7 +79,7 @@ class Subject(db.Model):
         return cls.query.filter_by(study_id=study_id).all()
 
     @classmethod
-    def find_all_by_study_ids(cls, study_ids):
+    def find_all_by_study_ids(cls, study_ids, load_atts=False):
         """Find all subjects by study ids.
 
         Args:
@@ -87,7 +88,11 @@ class Subject(db.Model):
         Returns:
             All subjects within studies.
         """
-        return cls.query.filter(cls.study_id.in_(study_ids))
+        q = cls.query;
+        if load_atts:
+            q = q.options(sqlalchemy.orm.joinedload(cls.attributes))
+
+        return q.filter(cls.study_id.in_(study_ids))
 
     @classmethod
     def find_first_by_study_id(cls, study_id):
