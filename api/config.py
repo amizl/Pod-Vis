@@ -43,7 +43,7 @@ class DevelopmentConfig(Config):
     ENV = 'development'
     # When hitting the datase, print out its queries in console
     # (may not be necessary)
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('MYSQL_DEVELOPMENT_DATABASE_URI')
     # In dvelopment we dont need JWT cookies to be sent over https
     JWT_COOKIE_SECURE = False
