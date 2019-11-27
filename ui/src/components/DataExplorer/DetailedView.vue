@@ -5,12 +5,13 @@
 
     <v-toolbar card dense flat color="white rounded-lg">
       <v-toolbar-items>
+<!--
         <span class="subheading primary--text mt-3 mr-2">Style:</span>
         <v-btn-toggle v-model="line_style">
          <v-btn text color="primary" class="white--text mr-2 py-1" value="bezier">BEZIER</v-btn>
          <v-btn text color="#3FB551" class="white--text mr-2 py-1" value="line">LINE</v-btn>
         </v-btn-toggle>
-
+-->
         <span class="subheading primary--text mt-3 mr-2 ml-3">X-Axis:</span>
         <v-btn-toggle v-model="xaxis">
          <v-btn text color="primary" class="white--text mr-2 py-1" value="visits">VISITS</v-btn>

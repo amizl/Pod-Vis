@@ -14,7 +14,7 @@ export default {
     commit(mutations.SET_LOADING, true);
 
     try {
-      const { data } = await axios.get('/api/projects?include=studies');
+      const { data } = await axios.get('/api/projects?include=studies&include=num_subjects');
       const datasets = data.projects
         .map(project =>
           project.studies.map(study => ({

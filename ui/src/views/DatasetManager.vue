@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="ma-0 pa-2">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text">Dataset Manager</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -27,7 +27,7 @@
       <!-- </v-toolbar-items> -->
     </v-toolbar>
     <v-layout fill-height justify-center>
-      <v-flex xs12>
+      <v-flex xs12 class="pa-0 ma-0">
         <v-card class="shadow rounded-lg">
           <v-tabs slider-color="primary" grow>
             <v-tab>

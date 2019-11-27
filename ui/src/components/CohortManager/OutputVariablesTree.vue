@@ -64,15 +64,17 @@ export default {
           variable =>
             variable.children &&
             variable.children.length &&
+            ("data_category" in variable) &&
             variable.parent_id != 1
         );
-        // Fist Visit, Change, etc
+
+        // First Visit, Change, etc
         const dimensions = newObservationVariables.filter(
           variable => !variable.children
         );
 
         // If a user selected a study with all of its dimensions,
-        // we want add just the one study and remove dimensions
+        // we want to add just the one study and remove dimensions
         // so we can draw a parallel coordinates plot
         const parentIDs = outcomeMeasures.map(m => m.id);
         let dimensionsNotInParentIDs = dimensions.filter(

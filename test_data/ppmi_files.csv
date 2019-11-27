@@ -1,0 +1,8 @@
+Entity,File
+Project,ppmi_projects.csv
+Subject Ontology,ppmi_unique_subject_vars.csv
+Observation Ontology,ppmi_unique_obs.csv
+Subject Info,ppmi_demographics_long.csv
+Visit,ppmi_visit_info.csv
+Observations,ppmi_obs_long.csv
+Observations Summary,ppmi_obs_summary.csv

@@ -1,8 +1,8 @@
 <template>
-  <v-container v-if="isLoading" fluid fill-height>
+  <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-2">
     <loading-spinner />
   </v-container>
-  <v-container v-else fluid grid-list-md fill-height>
+  <v-container v-else fluid grid-list-md fill-height class="ma-0 pa-2">
     <v-toolbar app class="primary">
       <v-toolbar-title class="subheading white--text">Cohort Manager
 	  <div class="subheading">{{ collection.label }}</div>
@@ -24,9 +24,9 @@
       </v-tooltip>
 	
     </v-toolbar>
-    <v-layout column fill-height>
-      <v-flex xs6>
-        <v-layout fill-height>
+    <v-layout column fill-height class="ma-0 pa-0">
+      <v-flex xs6 class="ma-0 pa-0">
+        <v-layout fill-height class="ma-0 pa-0">
           <v-flex xs8> <input-variables /> </v-flex>
           <v-flex xs4> <analytics-table /> </v-flex>
         </v-layout>

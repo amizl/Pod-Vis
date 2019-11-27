@@ -7,7 +7,6 @@ from .exceptions import ResourceNotFound, BadRequest
 from ..auth.exceptions import AuthFailure
 from .. import models
 import pandas as pd
-import sys
 
 @api.route('/subjects')
 def get_all_subjects():
@@ -223,13 +222,13 @@ def get_study_variable_distribution(study_id, observation_ontology_id):
     """
     study = models.Study.find_by_id(study_id)
     observation = models.ObservationOntology.find_by_id(observation_ontology_id)
-
+    
     if not study:
         raise ResourceNotFound(f"The study with ID {study_id} does not exist.")
     if not observation:
         raise ResourceNotFound("Observation variable does not exist.")
 
-    observation_counts = study.find_observation_value_counts_by_scale(observation_ontology_id)
+    observation_counts = study.find_observation_value_counts_by_scale(observation)
 
     # df_value_counts = pd.DataFrame(observation_counts)
     # # TODO... only do this if type is int but saved as string
@@ -239,7 +238,9 @@ def get_study_variable_distribution(study_id, observation_ontology_id):
         "success": True,
         "counts": observation_counts,
         # "counts": df_value_counts.sort_values(by="value").to_dict("records"),
-        "scale": observation_ontology_id
+        "scale": observation_ontology_id,
+        "value_type": observation.value_type.name,
+        "data_category": observation.data_category.name,
     })
 
 @api.route('/studies/<int:study_id>/subjects/variables/<int:subject_ontology_id>/distribution')
@@ -256,23 +257,11 @@ def get_subject_variable_counts(study_id, subject_ontology_id):
     if not subject_attribute:
         raise ResourceNotFound(f"The subject attribute with ID {subject_ontology_id} does not exist.")
 
-    subjects = [
-        subject.to_dict(include_attributes=True)
-        for subject in models.Subject.find_all_by_study_id(study_id)
-    ]
-
-    rename_idx = dict()
-    rename_idx[subject_attribute.label] = 'value'
-    df = pd.DataFrame(subjects) \
-        .groupby(subject_attribute.label) \
-        .size() \
-        .to_frame('count') \
-        .reset_index() \
-        .rename(columns=rename_idx)
-
+    counts = models.Subject.get_study_subjects_variable_counts(study_id, subject_ontology_id)
+        
     return jsonify({
         "success": True,
-        "counts": df.to_dict("records"),
+        "counts": counts,
         "scale": subject_attribute.label,
         "subject_ontology_id": subject_attribute.label
     })
@@ -349,7 +338,8 @@ def get_all_projects():
     include = request.args.getlist('include')
     kwargs = {
         "include_studies": "studies" in include,
-        "include_subjects": "subjects" in include
+        "include_subjects": "subjects" in include,
+        "include_num_subjects": "num_subjects" in include,
     }
 
     return jsonify({
@@ -514,7 +504,16 @@ def get_collection(collection_id):
         "include_variables": "variables" in include
     }
 
-    return jsonify(dict(success=True, collection=collection.to_dict(**kwargs)))
+    collection_d = collection.to_dict(**kwargs)
+
+    # add scale categories
+    get_scale_category = models.ObservationOntology.get_var_category_fn()
+    for ov in collection_d['observation_variables']:
+        if 'ontology' in ov:
+            oo = ov['ontology']
+            oo['category'] = get_scale_category(oo['id'])
+    
+    return jsonify(dict(success=True, collection=collection_d))
 
 @api.route("/collections/<int:collection_id>", methods=["DELETE"])
 @jwt_required
@@ -564,12 +563,22 @@ def get_all_cohorts():
         "include_subjects": "subjects" in include,
     }
 
+    cohorts_l = [
+        cohort.to_dict(**kwargs)
+        for cohort in cohorts
+    ]
+    
+    # add scale categories
+    get_scale_category = models.ObservationOntology.get_var_category_fn()
+    for c in cohorts_l:
+        for ov in c['output_variables']:
+            if 'observation_ontology' in ov:
+                oo = ov['observation_ontology']
+                oo['category'] = get_scale_category(oo['id'])
+
     return jsonify({
         "success": True,
-        "cohorts": [
-            cohort.to_dict(**kwargs)
-            for cohort in cohorts
-        ]
+        "cohorts": cohorts_l
     })
 
 @api.route("/cohorts/<int:cohort_id>")
@@ -792,10 +801,17 @@ def compute_mannwhitneyu():
             variable_id = str(output_variable.get("id"))
             variable_label = output_variable.get("label")
 
-        filtered_sample = [data.get(variable_id).get('change') for data in filtered_data]
+        # ignore parent ontology terms with no actual data
+        # TODO - filter these correctly on the client side
+        if unfiltered_data is not None:
+            if unfiltered_data[0].get(variable_id) is None:
+                continue
+
+            filtered_sample = [data.get(variable_id).get('change') for data in filtered_data]
         unfiltered_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
         # TODO - use of 'None' default for alternative is deprecated, see https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html
         stats, pval = mannwhitneyu(filtered_sample, unfiltered_sample)
+                
         pvals.append(dict(label=variable_label, pval=pval))
 
     return jsonify({
@@ -919,10 +935,18 @@ def create_cohort():
                 query.save_to_db()
 
     # TODO: Save cohort subjects to cohort_subject table
+    cohort_d = cohort.to_dict()
+
+    # add scale categories
+    get_scale_category = models.ObservationOntology.get_var_category_fn()
+    for ov in cohort_d['output_variables']:
+        if 'observation_ontology' in ov:
+            oo = ov['observation_ontology']
+            oo['category'] = get_scale_category(oo['id'])
 
     return jsonify({
         "success": True,
-        "cohort": cohort.to_dict()
+        "cohort": cohort_d
     }), 201
 
 

@@ -1,5 +1,7 @@
 from . import db
 import pandas as pd
+from sqlalchemy.sql import text
+import sqlalchemy.orm
 
 class Subject(db.Model):
     __tablename__ = "subject"
@@ -26,6 +28,33 @@ class Subject(db.Model):
         return cls.query.all()
 
     @classmethod
+    def get_study_subjects_variable_counts(cls, study_id, subject_ontology_id):
+        """Get all subjects' variable counts for a given study and variable.
+
+        Returns:
+            List of counts.
+        """
+        connection = db.engine.connect()
+        query = text("""
+            SELECT sa.value as value, COUNT(*) as count
+            FROM subject s, subject_attribute sa
+            WHERE s.study_id = (:study_id)
+            AND s.id = sa.subject_id
+            AND sa.subject_ontology_id = (:subject_ontology_id)
+            GROUP BY sa.value
+        """)
+
+        result_proxy = connection.execute(
+            query,
+            study_id=study_id,
+            subject_ontology_id=subject_ontology_id) \
+            .fetchall()
+
+        result = [dict(row) for row in result_proxy]
+        connection.close()
+        return result
+
+    @classmethod
     def find_by_id(cls, subject_id):
         """Find subject by its id.
 
@@ -50,7 +79,7 @@ class Subject(db.Model):
         return cls.query.filter_by(study_id=study_id).all()
 
     @classmethod
-    def find_all_by_study_ids(cls, study_ids):
+    def find_all_by_study_ids(cls, study_ids, load_atts=False):
         """Find all subjects by study ids.
 
         Args:
@@ -59,7 +88,11 @@ class Subject(db.Model):
         Returns:
             All subjects within studies.
         """
-        return cls.query.filter(cls.study_id.in_(study_ids))
+        q = cls.query;
+        if load_atts:
+            q = q.options(sqlalchemy.orm.joinedload(cls.attributes))
+
+        return q.filter(cls.study_id.in_(study_ids))
 
     @classmethod
     def find_first_by_study_id(cls, study_id):
@@ -87,6 +120,9 @@ class Subject(db.Model):
             AttributeError if attribute in group_by is not a part of the model.
         """
         subjects = cls.find_all_by_study_id(study_id)
+
+        # note that this query is being run for each and every subject:
+        # SELECT <bunch of fields> FROM subject_attribute WHERE %(param_1)s = subject_attribute.subject_id
         subjects_df = pd.DataFrame([
             subject.to_dict(include_attributes=True)
             for subject in subjects

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <v-container v-if="dataset" fluid grid-list-xl>
+    <v-container v-if="dataset" fluid grid-list-xl class="ma-0 pa-2">
       <v-toolbar app class="primary">
         <v-toolbar-title class="white--text">Dataset Overview</v-toolbar-title>
       </v-toolbar>
-      <v-layout row wrap justify-center>
-        <v-flex xs8>
+      <v-layout row wrap justify-center class="ma-0 pa-1">
+        <v-flex xs8 class="ma-0 pa-2">
           <v-layout row wrap justify-center>
-            <v-flex xs12>
+            <v-flex xs12 class="ma-0 pa-1">
               <v-card flat class="rounded-lg shadow">
                 <v-card-title primary-title card color="white">
                   <p class="title mb-0 ">
@@ -28,7 +28,7 @@
             </v-flex>
           </v-layout>
           <v-layout row wrap justify-center>
-            <v-flex xs12>
+            <v-flex xs12 class="ma-0 pa-1">
               <v-card flat class="rounded-lg shadow">
                 <v-card-title primary-title card color="white">
                   <span class="title">Variables</span>
@@ -38,7 +38,7 @@
             </v-flex>
           </v-layout>
         </v-flex>
-        <v-flex xs4>
+        <v-flex xs4 class="ma-0 pa-1">
           <v-card flat class="rounded-lg shadow">
             <v-card-title primary-title card color="white">
               <span class="title">Subject Summary</span>
@@ -95,29 +95,16 @@ export default {
   },
   props: {
     id: {
-      type: String,
-      default: '',
+      type: Number,
+      required: true,
     },
   },
   data() {
     return {
       dataset: null,
-      items: [
-        {
-          id: 1,
-          name: 'Category',
-          children: [
-            { id: 2, name: 'Calendar : app' },
-            { id: 3, name: 'Chrome : app' },
-            { id: 4, name: 'Webstorm : app' },
-          ],
-        },
-      ],
       addToProfileSuccess: false,
       summaryData: null,
-      variables: [],
       groupBy: ['Sex', 'Race'],
-      // TODO: Descriptions need to be loaded into database
     };
   },
   computed: {
@@ -130,10 +117,6 @@ export default {
     const { data: dataset } = await this.fetchDataset();
     if (dataset) {
       this.dataset = dataset;
-
-      this.fetchVariables().then(({ data }) => {
-        this.variables = data.variables;
-      });
 
       this.fetchDemographicSummary().then(({ data }) => {
         const { counts } = data;
@@ -165,9 +148,6 @@ export default {
         .join('&');
 
       return axios.get(`/api/studies/${this.id}/subjects/count?${queryParams}`);
-    },
-    fetchVariables() {
-      return axios.get(`/api/studies/${this.id}/variables`);
     },
   },
 };

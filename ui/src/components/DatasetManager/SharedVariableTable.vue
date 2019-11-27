@@ -38,6 +38,7 @@
               :dataset-id="dataset.id"
               :type="props.item.type"
               :scale-id="props.item.id"
+              :data-category="props.item.data_category"
             />
           </td>
         </tr>
@@ -117,7 +118,7 @@ export default {
     // add type key to variables to distinguish that these variables
     // are relating to the observations
     variables.forEach(variable => (variable.type = 'observation'));
-    this.variables = variables;
+    this.variables = variables.filter(v => v.data_category !== 'Categorical');
 
     // TODO...fetch shared subject attributes
     const {
@@ -128,6 +129,8 @@ export default {
     // add type key to subject variables to distinguish that these variables
     // are relating to the subejcts
     subjectVariables.forEach(variable => (variable.type = 'subject'));
+    // TODO - retrieve data_category from database
+    subjectVariables.forEach(variable => (variable.data_category = 'Unknown'));
     this.variables = [...this.variables, ...subjectVariables];
 
     this.isLoading = false;

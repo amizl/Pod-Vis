@@ -1,0 +1,60 @@
+Observations
+ApoE Genotype
+MDS_UPDRS_1
+MDS_UPDRS_2
+MDS_UPDRS_3
+MDS_UPDRS_Total
+MOCA
+MSEADL
+SNCA - rs356181
+SNCA - rs3910105
+Abeta 42
+BentonJudgment
+DVT_Delayed_Recall
+DVT_Retention
+DVT_Total_Recall
+ESS_Score
+ESS_State
+GDS
+GDS_Score
+LNS_Total_Raw
+REM_RBD_Score
+REM_RBD_State
+SDM
+STAI
+SemanticFluency
+CSF Hemoglobin
+BentonJudgment-Change
+DVT_Delayed_Recall-Change
+DVT_Retention-Change
+DVT_Total_Recall-Change
+ESS_Score-Change
+GDS_Score-Change
+LNS_Total_Raw-Change
+MDS_UPDRS_1-Change
+MDS_UPDRS_2-Change
+MDS_UPDRS_3-Change
+MDS_UPDRS_Total-Change
+MOCA-Change
+MSEADL-Change
+REM_RBD_Score-Change
+SDM-Change
+STAI-Change
+SemanticFluency-Change
+BentonJudgment-ROC
+DVT_Delayed_Recall-ROC
+DVT_Retention-ROC
+DVT_Total_Recall-ROC
+ESS_Score-ROC
+GDS_Score-ROC
+LNS_Total_Raw-ROC
+MDS_UPDRS_1-ROC
+MDS_UPDRS_2-ROC
+MDS_UPDRS_3-ROC
+MDS_UPDRS_Total-ROC
+MOCA-ROC
+MSEADL-ROC
+REM_RBD_Score-ROC
+SDM-ROC
+STAI-ROC
+SemanticFluency-ROC
