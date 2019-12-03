@@ -2,7 +2,6 @@ from functools import wraps
 from flask import request, jsonify
 from marshmallow import Schema, fields
 from .exceptions import AuthFailure
-import sys
 
 class SignInSchema(Schema):
     """Schema for validating sign in request."""
@@ -22,7 +21,6 @@ def validate_sign_in(func):
     def wrapper(*args, **kwargs):
         request_data = request.get_json()
         data = SignInSchema().load(request_data)
-        sys.stderr.flush()
         email = data.get("email")
         password = data.get("password")
         return func(email, password)
