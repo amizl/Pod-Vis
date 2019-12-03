@@ -130,7 +130,6 @@ export default {
       setVisibleCohorts: actions.SET_VISIBLE_COHORTS,
     }),
     colorChange(e) {
-      console.log("colorChange - " + e);
       this.$root.$emit('update_detailed_view');
     },
   },
