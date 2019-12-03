@@ -1,5 +1,5 @@
 import { uniqBy } from 'lodash';
-import * as crossfilter from 'crossfilter2';
+import crossfilter from 'crossfilter2';
 
 export function makeHierarchy(data) {
   const ontologies = data.map(obs => obs.ontology);

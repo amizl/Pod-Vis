@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import * as crossfilter from 'crossfilter2';
+import crossfilter from 'crossfilter2';
 import { mutations, state as stateTypes } from './types';
 
 export default {
