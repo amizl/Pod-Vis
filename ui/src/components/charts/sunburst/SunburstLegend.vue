@@ -75,14 +75,13 @@ export default {
      * Given node id, find node.
      */
     getNodeById(nodeId) {
-      let id = nodeId || 0;
+      const id = nodeId || 0;
 
-      const node = this.nodes.find(node => node.data.id == id);
+      const node = this.nodes.find(n => n.data.id === id);
       if (node) {
         return node;
-      } else {
-        return null;
       }
+      return null;
     },
   },
 };

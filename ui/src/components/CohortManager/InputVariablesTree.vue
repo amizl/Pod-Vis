@@ -6,10 +6,7 @@
       return-object
       selectable
       :search="search"
-      :items="[
-        { type: 'study', id: 24, label: 'Study' },
-        ...subjectVariables,
-      ]"
+      :items="[{ type: 'study', id: 24, label: 'Study' }, ...subjectVariables]"
       item-text="label"
     ></v-treeview>
     <v-treeview
@@ -57,8 +54,8 @@ export default {
   },
   watch: {
     cohort() {
-       // pull vars from user-selected cohort
-       if (this.hasUserSelectedCohort) {
+      // pull vars from user-selected cohort
+      if (this.hasUserSelectedCohort) {
         this.selectedSubjectVariables = this.vars.filter(
           variable => variable.type === 'subject'
         );

@@ -23,7 +23,7 @@
         ></v-text-field>
       </v-sheet>
       <v-card-text>
-        <input-variables-tree :search="searchVariable" ref="inputVars"/>
+        <input-variables-tree ref="inputVars" :search="searchVariable" />
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>

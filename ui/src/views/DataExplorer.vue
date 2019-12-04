@@ -4,7 +4,9 @@
   </v-container>
   <v-container v-else fluid fill-height grid-list-mdt class="ma-0 pa-1">
     <v-toolbar app class="primary">
-      <v-toolbar-title class="white--text">Data Explorer - {{ collection.label }}</v-toolbar-title>
+      <v-toolbar-title class="white--text"
+        >Data Explorer - {{ collection.label }}</v-toolbar-title
+      >
     </v-toolbar>
     <v-layout column fill-height>
       <v-flex xs5 class="ma-0 pa-1">
@@ -73,19 +75,21 @@ export default {
     this.isLoading = false;
 
     // set outcome variables to union of cohorts' output variables
-    var vars_added = {};
-    var outcome_vars = [];
-    this.cohorts.filter(v => v.collection_id == this.collectionId).forEach(function(c) {
-	var output_vars = c.output_variables;
-	output_vars.forEach(function(ov) {
-	    var id = ov.observation_ontology.id;
-	    if (!(id in vars_added)) {
-		vars_added[id] = 1;
-		outcome_vars.push(ov.observation_ontology);
-	    }
-	});
-    });
-    this.setOutcomeVariables(outcome_vars);
+    const varsAdded = {};
+    const outcomeVars = [];
+    this.cohorts
+      .filter(v => v.collection_id === this.collectionId)
+      .forEach(c => {
+        const outputVars = c.output_variables;
+        outputVars.forEach(ov => {
+          const { id } = ov.observation_ontology;
+          if (!(id in varsAdded)) {
+            varsAdded[id] = 1;
+            outcomeVars.push(ov.observation_ontology);
+          }
+        });
+      });
+    this.setOutcomeVariables(outcomeVars);
   },
   methods: {
     ...mapActions('dataExplorer', {
@@ -93,7 +97,7 @@ export default {
       fetchCollection: actions.FETCH_COLLECTION,
       fetchData: actions.FETCH_DATA,
       setOutcomeVariables: actions.SET_OUTCOME_VARIABLES,
-   })
+    }),
   },
 };
 </script>

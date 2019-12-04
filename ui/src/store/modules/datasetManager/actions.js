@@ -14,7 +14,9 @@ export default {
     commit(mutations.SET_LOADING, true);
 
     try {
-      const { data } = await axios.get('/api/projects?include=studies&include=num_subjects');
+      const { data } = await axios.get(
+        '/api/projects?include=studies&include=num_subjects'
+      );
       const datasets = data.projects
         .map(project =>
           project.studies.map(study => ({
@@ -75,7 +77,9 @@ export default {
     commit(mutations.SET_LOADING, true);
 
     try {
-      const { data } = await axios.get('/api/collections?include=cohort_counts');
+      const { data } = await axios.get(
+        '/api/collections?include=cohort_counts'
+      );
       commit(mutations.SET_COLLECTIONS, data.collections);
     } catch (err) {
       const notification = new ErrorNotification(err);

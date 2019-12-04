@@ -3,7 +3,9 @@
   <v-data-table
     v-else
     :headers="headers"
-    :items="this.show_public_collections ? publicCollections : privateCollections"
+    :items="
+      this.showPublicCollections ? publicCollections : privateCollections
+    "
     item-key="label"
     hide-actions
     hide-headers
@@ -12,31 +14,44 @@
       <tr>
         <td class="text-xs-left">{{ props.item.label }}</td>
         <td class="text-xs-right px-0">
+          <v-tooltip top color="primary">
+            <template v-slot:activator="{ on }">
+              <v-btn flat @click="routeToCohortManager(props.item)" v-on="on">
+                <v-icon left small color="secondary">group_add</v-icon> Cohorts
+                ({{ props.item.num_cohorts }})
+              </v-btn>
+            </template>
+            <span>Launch Cohort Manager to add/remove Cohorts</span>
+          </v-tooltip>
 
           <v-tooltip top color="primary">
-           <template v-slot:activator="{ on }">
-	  <v-btn flat @click="routeToCohortManager(props.item)" v-on="on">
-            <v-icon left small color="secondary">group_add</v-icon> Cohorts ({{props.item.num_cohorts}})
-          </v-btn>
-          </template>
-          <span>Launch Cohort Manager to add/remove Cohorts</span>
-        </v-tooltip>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                flat
+                :disabled="props.item.num_cohorts == 0"
+                @click="routeToDataExplorer(props.item)"
+                v-on="on"
+              >
+                <v-icon left small color="secondary">explore</v-icon> Explore
+              </v-btn>
+            </template>
+            <span>Launch Data Explorer to compare Cohorts</span>
+          </v-tooltip>
 
-          <v-tooltip top color="primary">
-           <template v-slot:activator="{ on }">
-          <v-btn flat @click="routeToDataExplorer(props.item)" :disabled="props.item.num_cohorts == 0" v-on="on">
-            <v-icon left small color="secondary">explore</v-icon> Explore
-          </v-btn>
-          </template>
-          <span>Launch Data Explorer to compare Cohorts</span>
-        </v-tooltip>
-
-        <delete-collection-button v-if="props.item.is_deletable" :collection_id="props.item.id"/>
-	</td>
+          <delete-collection-button
+            v-if="props.item.is_deletable"
+            :collectionId="props.item.id"
+          />
+        </td>
       </tr>
     </template>
     <template v-slot:no-data>
-      <v-alert v-if="show_public_collections" :value="true" color="primary" icon="info">
+      <v-alert
+        v-if="showPublicCollections"
+        :value="true"
+        color="primary"
+        icon="info"
+      >
         There are no public clinical data collections.
       </v-alert>
       <v-alert v-else :value="true" color="primary" icon="info">
@@ -57,7 +72,7 @@ export default {
   },
   props: {
     // whether to show public collections (and _only_ public collections)
-    show_public_collections: {
+    showPublicCollections: {
       type: Boolean,
       required: true,
     },
@@ -98,14 +113,14 @@ export default {
       fetchDatasets: actions.FETCH_COLLECTIONS,
       deleteCollection: actions.DELETE_COLLECTION,
     }),
-    filterCollections(is_public) {
-      var filtered_collections = [];
-      this.collections.forEach(function(c) {
-        if (c.is_public == is_public) {
-            filtered_collections.push(c);
+    filterCollections(isPublic) {
+      const filteredCollections = [];
+      this.collections.forEach(c => {
+        if (c.is_public == isPublic) {
+          filteredCollections.push(c);
         }
       });
-      return filtered_collections;
+      return filteredCollections;
     },
     routeToCohortManager({ id }) {
       // Route to view for dataset information

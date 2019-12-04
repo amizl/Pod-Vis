@@ -42,15 +42,15 @@ export default {
     cohort() {
       // pull vars from user-selected cohort
       if (this.hasUserSelectedCohort) {
-        var selected_vars = [];
-        this.vars.forEach(function(v) {
-          v.children.forEach(function(c) {
+        const selectedVars = [];
+        this.vars.forEach(v => {
+          v.children.forEach(c => {
             if (c.type === 'observation') {
-              selected_vars.push(c);
+              selectedVars.push(c);
             }
           });
-	});
-        this.selectedObservationVariables = selected_vars;
+        });
+        this.selectedObservationVariables = selectedVars;
       }
       // otherwise reset selections
       else {
@@ -64,8 +64,8 @@ export default {
           variable =>
             variable.children &&
             variable.children.length &&
-            ("data_category" in variable) &&
-            variable.parent_id != 1
+            'data_category' in variable &&
+            variable.parent_id !== 1
         );
 
         // First Visit, Change, etc
@@ -77,7 +77,7 @@ export default {
         // we want to add just the one study and remove dimensions
         // so we can draw a parallel coordinates plot
         const parentIDs = outcomeMeasures.map(m => m.id);
-        let dimensionsNotInParentIDs = dimensions.filter(
+        const dimensionsNotInParentIDs = dimensions.filter(
           obs => !parentIDs.includes(obs.parentID)
         );
 

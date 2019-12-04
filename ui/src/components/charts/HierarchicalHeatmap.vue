@@ -91,8 +91,12 @@ const Grid = {
         {this.gridColumns.map(colData => (
           <GridColumn
             on-gridColClick={data => this.$emit('zoomIn', data)}
-            on-gridColEnter={data => (this.active = data)}
-            on-gridColLeave={() => (this.active = null)}
+            on-gridColEnter={data => {
+              this.active = data;
+            }}
+            on-gridColLeave={() => {
+              this.active = null;
+            }}
             isActive={!this.active || this.active === colData.key}
             data={colData}
             xScale={this.xScale}

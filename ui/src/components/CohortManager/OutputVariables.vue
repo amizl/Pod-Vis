@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import { state } from '@/store/modules/cohortManager/types';
 import OutputVariablesToolbar from '@/components/CohortManager/OutputVariablesToolbar.vue';
 import OutputVariablesCharts from '@/components/CohortManager/OutputVariablesCharts.vue';

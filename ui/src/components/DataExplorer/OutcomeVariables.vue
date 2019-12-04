@@ -35,7 +35,7 @@ export default {
     selectedObservationVariables(newObservationVariables) {
       // SCOPA, UPDRS, etc
       const outcomeMeasures = newObservationVariables.filter(
-        variable => variable.parent_id != 1
+        variable => variable.parent_id !== 1
       );
 
       this.setOutcomeVariables(outcomeMeasures);

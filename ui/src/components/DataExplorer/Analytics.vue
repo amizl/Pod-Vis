@@ -1,11 +1,16 @@
 <template>
   <v-sheet color="white" height="100%" class="rounded-lg shadow">
     <v-layout column fill-height class="ma-1">
-      <v-card-title class="primary--text">ANOVA
-       <div class="subheading">1-way ANOVA for first-last visit change</div>
+      <v-card-title class="primary--text"
+        >ANOVA
+        <div class="subheading">1-way ANOVA for first-last visit change</div>
       </v-card-title>
       <v-divider></v-divider>
-       <v-container v-if="(typeof anova_pvals === undefined) || (!anova_pvals.length)" fluid fill-height>
+      <v-container
+        v-if="typeof anova_pvals === undefined || !anova_pvals.length"
+        fluid
+        fill-height
+      >
         <v-layout column align-center justify-center fill-height>
           <v-subheader class="subheading primary--text text--lighten-4">
             <v-flex xs6
@@ -13,9 +18,7 @@
                 >info</v-icon
               ></v-flex
             >
-            <v-flex>
-              Nothing to show.
-            </v-flex>
+            <v-flex> Nothing to show. </v-flex>
           </v-subheader>
         </v-layout>
       </v-container>
@@ -36,14 +39,13 @@
           </template>
         </v-data-table>
       </v-flex>
-       
     </v-layout>
   </v-sheet>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import { state, actions } from '@/store/modules/dataExplorer/types';
+import { mapState } from 'vuex';
+import { state } from '@/store/modules/dataExplorer/types';
 import { format } from 'd3-format';
 
 export default {
@@ -74,7 +76,7 @@ export default {
           value: 'fval',
         },
       ],
-    }
+    };
   },
   computed: {
     ...mapState('dataExplorer', {

@@ -1,7 +1,9 @@
 <template>
   <v-container fluid grid-list-md class="ma-0 pa-2">
     <v-toolbar app class="primary">
-      <v-toolbar-title class="white--text">Create Clinical Data Collection</v-toolbar-title>
+      <v-toolbar-title class="white--text"
+        >Create Clinical Data Collection</v-toolbar-title
+      >
       <v-spacer></v-spacer>
       <save-collection-btn-dialog
         :variables="variables"

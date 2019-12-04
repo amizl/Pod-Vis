@@ -1,20 +1,27 @@
 <template>
   <div>
-       <v-tooltip top color="primary">
-         <template v-slot:activator="{ on }">
-          <v-btn flat color="primary" @click="dialog = !dialog" style="height:100%;" v-on="on">
+    <v-tooltip top color="primary">
+      <template v-slot:activator="{ on }">
+        <v-btn
+          flat
+          color="primary"
+          style="height:100%;"
+          @click="dialog = !dialog"
+          v-on="on"
+        >
           <v-icon left dark>add_box</v-icon>
           Cohorts
-          </v-btn>
-        </template>
-        <span>Launch Cohort Manager to add/remove Cohorts</span>
-       </v-tooltip>
+        </v-btn>
+      </template>
+      <span>Launch Cohort Manager to add/remove Cohorts</span>
+    </v-tooltip>
 
     <v-dialog v-model="dialog" width="500">
       <v-card class="rounded-lg">
         <v-card-title class="title primary--text text--darken-3">
           <span class="primary--text title pl-2"
-            >Are you sure you want to leave the Data Explorer and go to the Cohort Manager?</span
+            >Are you sure you want to leave the Data Explorer and go to the
+            Cohort Manager?</span
           >
         </v-card-title>
         <v-divider></v-divider>
@@ -23,8 +30,13 @@
           <v-btn flat color="red lighten-2" @click="dialog = false">
             <v-icon left>close</v-icon> No
           </v-btn>
-          <v-btn :loading="loading" color="primary" @click="launchCohortManager">
-            Yes</v-btn>
+          <v-btn
+            :loading="loading"
+            color="primary"
+            @click="launchCohortManager"
+          >
+            Yes</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -32,12 +44,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import { actions, getters } from '@/store/modules/datasetManager/types';
-
 export default {
   props: {
-    collection_id: {
+    collectionId: {
       type: Number,
       required: true,
     },
@@ -46,12 +55,11 @@ export default {
     dialog: false,
     loading: false,
   }),
-  computed: {
-  },
+  computed: {},
   methods: {
     async launchCohortManager() {
       try {
-        this.$router.push('/cohorts?collection=' + this.collection_id);
+        this.$router.push(`/cohorts?collection=${this.collectionId}`);
         this.loading = false;
         this.dialog = false;
       } catch (err) {

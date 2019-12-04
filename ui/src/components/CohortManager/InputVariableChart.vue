@@ -64,7 +64,7 @@ export default {
   },
   created() {
     if (this.variable.type === 'observation') {
-      const [measure, id] = this.variable.id.split('-');
+      const measure = this.variable.id.split('-')[0];
 
       const dimensionName = `${this.variable.parentLabel} - ${
         this.variable.label
@@ -74,16 +74,17 @@ export default {
       const dimensionId = this.variable.parentID;
 
       const payload = {
-        dimensionName: dimensionName,
+        dimensionName,
         accessor: d => {
-          let dimName = dimensionId;
+          const dimName = dimensionId;
           return d[dimName][measure];
         },
       };
       this.addDimension(payload);
     } else {
-      let dimension, payload;
-      if (this.variable.label == 'Study') {
+      let dimension;
+      let payload;
+      if (this.variable.label === 'Study') {
         dimension = this.variable.label;
         payload = {
           dimensionName: dimension, // GET STUDY NAME HERE...
@@ -94,7 +95,7 @@ export default {
         payload = {
           dimensionName: dimension,
           accessor: d => {
-            let dimName = dimension;
+            const dimName = dimension;
             return d[dimName];
           },
         };

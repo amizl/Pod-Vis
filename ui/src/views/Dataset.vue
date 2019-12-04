@@ -133,7 +133,9 @@ export default {
         dataset: this.dataset.dataset,
         id: this.id,
       };
-      this._addToProfile(payload).then(() => (this.addToProfileSuccess = true));
+      this._addToProfile(payload).then(() => {
+        this.addToProfileSuccess = true;
+      });
     },
     goBack() {
       this.$router.go(-1);

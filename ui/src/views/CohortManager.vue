@@ -4,8 +4,9 @@
   </v-container>
   <v-container v-else fluid grid-list-md fill-height class="ma-0 pa-2">
     <v-toolbar app class="primary">
-      <v-toolbar-title class="subheading white--text">Cohort Manager
-	  <div class="subheading">{{ collection.label }}</div>
+      <v-toolbar-title class="subheading white--text"
+        >Cohort Manager
+        <div class="subheading">{{ collection.label }}</div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
@@ -22,7 +23,6 @@
         </template>
         <span>Launch Data Explorer to compare Cohorts</span>
       </v-tooltip>
-	
     </v-toolbar>
     <v-layout column fill-height class="ma-0 pa-0">
       <v-flex xs6 class="ma-0 pa-0">

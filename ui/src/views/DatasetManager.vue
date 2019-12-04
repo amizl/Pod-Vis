@@ -48,12 +48,10 @@
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
 import DatasetTable from '@/components/DatasetManager/DatasetTable.vue';
-import CollectionTable from '@/components/DatasetManager/CollectionTable.vue';
 
 export default {
   components: {
     DatasetTable,
-    CollectionTable,
   },
   filters: {
     buildPath(datasets) {

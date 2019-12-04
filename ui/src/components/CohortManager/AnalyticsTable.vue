@@ -3,9 +3,9 @@
     <v-layout column fill-height class="ma-1">
       <v-toolbar card dense flat color="white rounded-lg">
         <v-toolbar-title class="subheading primary--text">
-	  Mann-Whitney Rank Test
-	  <div class="subheading">cohort vs. remainder change</div>
-	</v-toolbar-title>
+          Mann-Whitney Rank Test
+          <div class="subheading">cohort vs. remainder change</div>
+        </v-toolbar-title>
       </v-toolbar>
       <v-divider></v-divider>
       <v-container v-if="!pvals.length" fluid fill-height>
@@ -31,7 +31,7 @@
           hide-default-header
         >
           <template v-slot:items="props">
-            <tr v-bind:class="getVariableClass(props.item)">
+            <tr :class="getVariableClass(props.item)">
               <td class="text-xs-left">{{ props.item.label }}</td>
               <td class="text-xs-right">{{ props.item.pval | formatValue }}</td>
             </tr>
@@ -44,8 +44,13 @@
           </template> -->
         </v-data-table>
 
-         <v-select label="Highlight P Value <=" :items="pval_thresholds" box @change="updatePval" :value="pval_threshold"></v-select>
-
+        <v-select
+          label="Highlight P Value <="
+          :items="pval_thresholds"
+          box
+          :value="pval_threshold"
+          @change="updatePval"
+        ></v-select>
       </v-flex>
     </v-layout>
   </v-sheet>
@@ -65,7 +70,7 @@ export default {
   data() {
     return {
       highlight_by_pval: false,
-      pval_thresholds: [ "None", 0.1, 0.05, 0.001, 0.0001, 0.00001, 0.000001 ],
+      pval_thresholds: ['None', 0.1, 0.05, 0.001, 0.0001, 0.00001, 0.000001],
       headers: [
         {
           text: 'Variable',
@@ -92,16 +97,16 @@ export default {
     ...mapActions('cohortManager', {
       setPvalThreshold: actions.SET_PVAL_THRESHOLD,
     }),
-    updatePval(new_pval) {
-      this.setPvalThreshold(new_pval);
+    updatePval(newPval) {
+      this.setPvalThreshold(newPval);
     },
     getVariableClass(v) {
       if (v.pval < this.pval_threshold) {
-        return "highlight-var";
+        return 'highlight-var';
       }
-      return "";
-    }
-  }
+      return '';
+    },
+  },
 };
 </script>
 

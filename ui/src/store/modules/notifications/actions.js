@@ -9,6 +9,6 @@ export default {
    */
   [actions.NOTIFY]({ commit }, notification = null) {
     commit(mutations.SET_NOTIFICATION, notification);
-    commit(mutations.SET_NOTIFY, notification !== null ? true : false);
+    commit(mutations.SET_NOTIFY, notification !== null);
   },
 };

@@ -17,7 +17,9 @@ export default {
       const subjectVariables = makeHierarchy(data.collection.subject_variables);
 
       subjectVariables.forEach(subjectVariable => {
-        subjectVariable.children.forEach(child => (child['type'] = 'subject'));
+        subjectVariable.children.forEach(child => {
+          child.type = 'subject';
+        });
       });
 
       const observationVariables = makeHierarchy(
@@ -45,7 +47,7 @@ export default {
     commit(mutations.SET_LOADING, true);
     const collection = state[stateTypes.COLLECTION];
     try {
-      let response = await axios.get(
+      const response = await axios.get(
         `/api/cohort-manager?collection=${collection.id}`
       );
 
@@ -62,7 +64,7 @@ export default {
       //       "lastVisit": ...
       //     }
       // }]
-      let wideData = nest()
+      const wideData = nest()
         // Group by subject ID
         .key(d => d.subject_id)
         // This is very convoluted...ideally we want the
@@ -74,8 +76,8 @@ export default {
         // lastVisit, and rate of change. We then want to reduce this
         // so we have a single object with keys of all its outcome measures.
         // This can be considered moving from "long to wide".
-        .rollup(values => {
-          return values
+        .rollup(values =>
+          values
             .map(d => {
               const { observation, change, roc, min, max, ...rest } = d;
               return {
@@ -88,18 +90,17 @@ export default {
                 ...rest,
               };
             })
-            .reduce((prev, curr) => {
-              return { ...prev, ...curr };
-            }, {});
-        })
-        .entries(data['data']) // tell it what data to process
-        .map(d => {
-          // pull out only the values
-          return d.value;
-        });
+            .reduce((prev, curr) => ({ ...prev, ...curr }), {})
+        )
+        .entries(data.data) // tell it what data to process
+        .map(
+          d =>
+            // pull out only the values
+            d.value
+        );
 
       commit(mutations.SET_DATA, wideData);
-      commit(mutations.SET_RAW_DATA, data['raw_data']);
+      commit(mutations.SET_RAW_DATA, data.raw_data);
     } catch ({ response }) {
       const notification = new ErrorNotification(response.data.error);
       dispatch(notification.dispatch, notification, { root: true });
@@ -107,13 +108,13 @@ export default {
       commit(mutations.SET_LOADING, false);
     }
   },
-  [actions.SET_OUTCOME_VARIABLES]({ commit, dispatch }, outcomeVariables) {
+  [actions.SET_OUTCOME_VARIABLES]({ commit }, outcomeVariables) {
     commit(mutations.SET_OUTCOME_VARIABLES, outcomeVariables);
   },
   [actions.SET_DETAILED_VIEW]({ commit }, detailedView) {
     commit(mutations.SET_DETAILED_VIEW, detailedView);
   },
-  async [actions.FETCH_COHORTS]({ commit, dispatch, state }) {
+  async [actions.FETCH_COHORTS]({ commit, dispatch }) {
     commit(mutations.SET_LOADING, true);
 
     try {
@@ -131,35 +132,42 @@ export default {
     commit(mutations.SET_VISIBLE_COHORTS, cohorts);
   },
   async [actions.ANALYZE_COHORTS]({ commit, dispatch, state }) {
-    let { cohorts, data, outputVariables } = state;
+    const { cohorts, data } = state;
+    let { outputVariables } = state;
     const collection = state[stateTypes.COLLECTION];
 
-      // need cohorts, collection, and output vars
-      if ((typeof collection === 'undefined') || (typeof collection.observation_variables === 'undefined') || (typeof cohorts === 'undefined')) {
-	commit(mutations.SET_ANOVA_PVALS, []);
-	return;
+    // need cohorts, collection, and output vars
+    if (
+      typeof collection === 'undefined' ||
+      typeof collection.observation_variables === 'undefined' ||
+      typeof cohorts === 'undefined'
+    ) {
+      commit(mutations.SET_ANOVA_PVALS, []);
+      return;
     }
-      
+
     // create group of samples for each cohort:
-    let groups = [];
-    cohorts.forEach(function(c) {
+    const groups = [];
+    cohorts.forEach(c => {
       if (c.collection_id === collection.id) {
-        let subjids = [];
-        c.subject_ids.forEach(function(sid) { subjids[sid] = 1; });
-        let cohort_data = data.filter(d => d.subject_id in subjids);	  
-        groups.push(cohort_data);
+        const subjids = [];
+        c.subject_ids.forEach(sid => {
+          subjids[sid] = 1;
+        });
+        const cohortData = data.filter(d => d.subject_id in subjids);
+        groups.push(cohortData);
       }
     });
-    let numGroups = groups.length;
+    const numGroups = groups.length;
 
     // pass _all_ observation variables, not just the selected ones
-    var output_vars = [];
-    collection.observation_variables.forEach(function(v) {
-      v.children.forEach(function(c) {
-        output_vars.push(c);
+    const outputVars = [];
+    collection.observation_variables.forEach(v => {
+      v.children.forEach(c => {
+        outputVars.push(c);
       });
     });
-    outputVariables = output_vars;
+    outputVariables = outputVars;
 
     try {
       const { data } = await axios.post(`/api/compute-anova`, {
@@ -173,19 +181,23 @@ export default {
       dispatch(notification.dispatch, notification, { root: true });
     }
   },
-  [actions.SET_COHORT_SUBJECTS]({ commit, dispatch, state }) {
-      let { cohorts, collection, data } = state;
-      if ((typeof(collection) === 'undefined') || (typeof(cohorts) === 'undefined')
-	  || (typeof(data) === 'undefined') || (data.length === 0)) {
-	  return;
+  [actions.SET_COHORT_SUBJECTS]({ state }) {
+    const { cohorts, collection, data } = state;
+    if (
+      typeof collection === 'undefined' ||
+      typeof cohorts === 'undefined' ||
+      typeof data === 'undefined' ||
+      data.length === 0
+    ) {
+      return;
+    }
+
+    // compute subjects in each cohort
+    cohorts.forEach(c => {
+      if (c.collection_id === collection.id) {
+        const subjIds = getCohortSubjectIds(data, c);
+        c.subject_ids = subjIds;
       }
-      
-      // compute subjects in each cohort
-      cohorts.forEach(function(c) {
-          if (c.collection_id === collection.id) {
-	    let subj_ids = getCohortSubjectIds(data, c);
-            c.subject_ids = subj_ids;
-	  }
-      });
+    });
   },
 };

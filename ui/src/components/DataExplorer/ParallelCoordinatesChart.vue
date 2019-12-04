@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import { state, actions } from '@/store/modules/dataExplorer/types';
+import { mapState } from 'vuex';
+import { state } from '@/store/modules/dataExplorer/types';
 import { scalePoint, scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
@@ -142,7 +142,7 @@ export default {
   },
   methods: {
     resizeChart() {
-      const { width, height } = this.container.getBoundingClientRect();
+      const { height } = this.container.getBoundingClientRect();
       this.height = height;
       this.width = 175;
       // this.context.scale(this.devicePixelRatio, this.devicePixelRatio);
@@ -174,11 +174,11 @@ export default {
       this.paths.forEach(path => this.drawCurve(path, '#3F51B5', 0.45));
     },
     drawLeftAxis() {
-      var tickCount = 10,
-        tickSize = 6,
-        tickPadding = 3,
-        ticks = this.dimensionScale.ticks(tickCount),
-        tickFormat = this.dimensionScale.tickFormat(tickCount);
+      const tickCount = 10;
+      const tickSize = 6;
+      const tickPadding = 3;
+      const ticks = this.dimensionScale.ticks(tickCount);
+      const tickFormat = this.dimensionScale.tickFormat(tickCount);
 
       this.context.beginPath();
       ticks.forEach(d => {
@@ -208,11 +208,11 @@ export default {
       this.context.save();
     },
     drawRightAxis() {
-      var tickCount = 10,
-        tickSize = 6,
-        tickPadding = 3,
-        ticks = this.dimensionScale.ticks(tickCount),
-        tickFormat = this.dimensionScale.tickFormat(tickCount);
+      const tickCount = 10;
+      const tickSize = 6;
+      const tickPadding = 3;
+      const ticks = this.dimensionScale.ticks(tickCount);
+      const tickFormat = this.dimensionScale.tickFormat(tickCount);
 
       this.context.beginPath();
       ticks.forEach(d => {

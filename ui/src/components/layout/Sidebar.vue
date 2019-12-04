@@ -1,36 +1,46 @@
 <template>
-   <v-navigation-drawer :mini-variant="!expand" app permanent fixed class="">
+  <v-navigation-drawer :mini-variant="!expand" app permanent fixed class="">
     <v-layout column fill-height align-space-around>
-        <v-list two-line class="pt-0 ma-0">
-          <v-list-tile>
-            <v-list-tile-action v-if="!expand">
-              <img width="100%" src="/images/CliO-Vis-1.png" alt="CliO-Vis Logo"/>
-            </v-list-tile-action>
-            <v-list-tile-content class="pt-0">
-              <img width="100%" src="/images/CliO-Vis-1.png" alt="CliO-Vis Logo"/>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-content>
-              <img width="100%" src="/images/CliO-Vis-2.png" alt="Clinical Outcomes Visualization - Data made simple (TM)"/>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
+      <v-list two-line class="pt-0 ma-0">
+        <v-list-tile>
+          <v-list-tile-action v-if="!expand">
+            <img
+              width="100%"
+              src="/images/CliO-Vis-1.png"
+              alt="CliO-Vis Logo"
+            />
+          </v-list-tile-action>
+          <v-list-tile-content class="pt-0">
+            <img
+              width="100%"
+              src="/images/CliO-Vis-1.png"
+              alt="CliO-Vis Logo"
+            />
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-content>
+            <img
+              width="100%"
+              src="/images/CliO-Vis-2.png"
+              alt="Clinical Outcomes Visualization - Data made simple (TM)"
+            />
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
       <v-list three-line class="pt-0">
         <v-list-tile
           v-for="item in menuItems"
           :key="item.title"
           :to="item.path"
-	  active-class="primary text--lighten-5"
-          >
+          active-class="primary text--lighten-5"
+        >
           <v-list-tile-action>
             <v-icon color="primary lighten-1">{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content v-if="expand">
             <v-list-tile-title>
-              <span>
-                {{ item.name }}
-              </span>
+              <span> {{ item.name }} </span>
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
@@ -137,13 +147,13 @@ export default {
   watch: {
     expand(value) {
       // cache if sidebar is toggled
-      window.localStorage['expand'] = value;
+      window.localStorage.expand = value;
     },
   },
   created() {
     // Check if we have cached if the sidebar is toggled
     if ('expand' in window.localStorage) {
-      const expand = window.localStorage['expand'];
+      const { expand } = window.localStorage;
       this.expand = eval(expand); // evaluate 'false' or 'true' strings
     } else {
       this.expand = true;
@@ -156,4 +166,3 @@ export default {
   },
 };
 </script>
-

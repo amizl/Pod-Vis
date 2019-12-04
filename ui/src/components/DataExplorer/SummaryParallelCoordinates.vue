@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     rerenderCharts() {
-      this.chartsKey++;
+      this.chartsKey += 1;
     },
   },
 };

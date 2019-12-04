@@ -1,15 +1,24 @@
 <template>
-  <v-sheet class="ma-1" color="white" height="100%" min-width="400px" max-width="500px">
-    <v-layout column fill-height v-bind:class="getOutcomeClass(variable)">
-      <v-card-title v-bind:class="getTitleClass(variable)">
-        <span style='margin: 0em 0em 1em 0em;'>
-          <v-layout align-center style='background-color: white; padding: 0.4em 0.4em 0em 0.4em; border-radius: 0.5rem;'>
-	    <span style="padding:0em 0.5em 0em 0em">
-                <img
-                  :src="'/images/' + variable.category + '-icon-64.png'"
-                  style="height:2em"
-              /></span>
-              {{ getVariableLabel(variable) }}
+  <v-sheet
+    class="ma-1"
+    color="white"
+    height="100%"
+    min-width="400px"
+    max-width="500px"
+  >
+    <v-layout column fill-height :class="getOutcomeClass(variable)">
+      <v-card-title :class="getTitleClass(variable)">
+        <span style="margin: 0em 0em 1em 0em;">
+          <v-layout
+            align-center
+            style="background-color: white; padding: 0.4em 0.4em 0em 0.4em; border-radius: 0.5rem;"
+          >
+            <span style="padding:0em 0.5em 0em 0em">
+              <img
+                :src="'/images/' + variable.category + '-icon-64.png'"
+                style="height:2em"
+            /></span>
+            {{ getVariableLabel(variable) }}
           </v-layout>
         </span>
         <!-- <v-btn
@@ -20,16 +29,18 @@
           Reset
         </v-btn> -->
       </v-card-title>
-      <MultiChart class="ma-1"
+      <MultiChart
         v-if="variable.children"
         :key="resetCount"
+        class="ma-1"
         :variable="variable"
         :dimension-name="dimension"
       />
-      <HistogramChart class="ma-1"
+      <HistogramChart
         v-else
         :id="variable.id"
         :key="resetCount"
+        class="ma-1"
         :dimension-name="dimension"
       />
     </v-layout>
@@ -43,12 +54,6 @@ import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
 
 export default {
-  computed: {
-    ...mapState('cohortManager', {
-      pvals: state.PVALS,
-      pval_threshold: state.PVAL_THRESHOLD,
-    }),
-  },
   components: {
     HistogramChart,
     MultiChart,
@@ -62,10 +67,16 @@ export default {
   data() {
     return { dimension: null, resetCount: 0 };
   },
+  computed: {
+    ...mapState('cohortManager', {
+      pvals: state.PVALS,
+      pval_threshold: state.PVAL_THRESHOLD,
+    }),
+  },
   created() {
     if (this.variable.children) {
       this.variable.children.forEach(childVariable => {
-      this.addDimensionHelper(childVariable);
+        this.addDimensionHelper(childVariable);
       });
       this.dimension = this.variable.id;
     } else {
@@ -78,55 +89,56 @@ export default {
       clearFilter: actions.CLEAR_FILTER,
     }),
     addDimensionHelper(variable) {
-      const [measure, id] = variable.id.split('-');
+      const measure = variable.id.split('-')[0];
       const dimensionName = `${variable.parentLabel} - ${variable.label}`;
 
       this.dimension = dimensionName;
       const dimensionId = variable.parentID;
 
       const payload = {
-        dimensionName: dimensionName,
+        dimensionName,
         accessor: d => {
-          let dimName = dimensionId;
+          const dimName = dimensionId;
           return d[dimName][measure];
         },
       };
       this.addDimension(payload);
     },
     isBelowPValThreshold(v) {
-      for (var pv in this.pvals) {
-        if ((this.pvals[pv].label === v.label) ||
-           ((this.pvals[pv].label === v.parentLabel) && (v.label === 'Change'))) {
-          if (this.pvals[pv].pval <= this.pval_threshold) {
-	    return true;
-	  }
-	}
-      }
-      return false;
+      const pvt = this.pval_threshold;
+      let rv = false;
+      this.pvals.forEach(pv => {
+        if (
+          pv.label === v.label ||
+          (pv.label === v.parentLabel && v.label === 'Change')
+        ) {
+          if (pv.pval <= pvt) {
+            rv = true;
+          }
+        }
+      });
+      return rv;
     },
     getTitleClass(v) {
-      var dflt = 'subheading primary--text text--darken-4 pb-0';
+      const dflt = 'subheading primary--text text--darken-4 pb-0';
       if (this.isBelowPValThreshold(v)) {
-        return dflt + ' highlight-var';
-      } else {
-        return dflt;
+        return `${dflt} highlight-var`;
       }
+      return dflt;
     },
     getOutcomeClass(v) {
       if (this.isBelowPValThreshold(v)) {
         return 'highlight-var-chart';
-     } else {
-        return 'var-chart';
       }
+      return 'var-chart';
     },
     getVariableLabel(v) {
       if (v.parentLabel) {
-     	return v.parentLabel + " - " + v.label;
-      } else {
-      	return v.label;
+        return `${v.parentLabel} - ${v.label}`;
       }
-    }
-},
+      return v.label;
+    },
+  },
 };
 </script>
 

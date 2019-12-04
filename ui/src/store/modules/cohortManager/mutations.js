@@ -207,7 +207,7 @@ export default {
    * @param {Array} threshold P value threshold.
    */
   [mutations.SET_PVAL_THRESHOLD](state, threshold) {
-      state[stateTypes.PVAL_THRESHOLD] = threshold;
+    state[stateTypes.PVAL_THRESHOLD] = threshold;
   },
   /**
    * Set highlighted subset
@@ -215,7 +215,7 @@ export default {
    * @param {Array} New highlighted subset.
    */
   [mutations.SET_HIGHLIGHTED_SUBSET](state, subset) {
-      state[stateTypes.HIGHLIGHTED_SUBSET] = subset;
+    state[stateTypes.HIGHLIGHTED_SUBSET] = subset;
   },
 
   /**

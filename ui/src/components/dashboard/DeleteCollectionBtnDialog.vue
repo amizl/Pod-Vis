@@ -1,19 +1,13 @@
 <template>
   <span>
-
-   <v-tooltip top color="primary">
-   <template v-slot:activator="{ on }">
-   <v-btn
-      flat
-      color="error"
-      v-on="on"
-      @click="dialog = !dialog"
-    >
-      <v-icon color="error" left>delete</v-icon>DELETE
-    </v-btn>
-   </template>
-   <span>Delete Collection</span>
-   </v-tooltip>
+    <v-tooltip top color="primary">
+      <template v-slot:activator="{ on }">
+        <v-btn flat color="error" v-on="on" @click="dialog = !dialog">
+          <v-icon color="error" left>delete</v-icon>DELETE
+        </v-btn>
+      </template>
+      <span>Delete Collection</span>
+    </v-tooltip>
 
     <v-dialog v-model="dialog" width="500">
       <v-card class="rounded-lg">
@@ -38,12 +32,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import { actions, getters } from '@/store/modules/datasetManager/types';
+import { mapActions } from 'vuex';
+import { actions } from '@/store/modules/datasetManager/types';
 
 export default {
   props: {
-    collection_id: {
+    collectionId: {
       type: Number,
       required: true,
     },
@@ -52,15 +46,14 @@ export default {
     dialog: false,
     loading: false,
   }),
-  computed: {
-  },
+  computed: {},
   methods: {
     ...mapActions('datasetManager', {
       deleteCollection: actions.DELETE_COLLECTION,
     }),
     async onDeleteCollection() {
       try {
-        await this.deleteCollection(this.collection_id);
+        await this.deleteCollection(this.collectionId);
         this.loading = false;
         this.dialog = false;
       } catch (err) {

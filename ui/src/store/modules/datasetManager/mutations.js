@@ -28,7 +28,7 @@ export default {
   [mutations.DELETE_COLLECTION](state, collectionId) {
     const collections = state[stateTypes.COLLECTIONS];
     state[stateTypes.COLLECTIONS] = collections.filter(
-      collection => collection.id != collectionId
+      collection => collection.id !== collectionId
     );
   },
 };

@@ -91,26 +91,26 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
-import { uniqBy } from "lodash";
-import { mapState } from "vuex";
-import { state } from "@/store/modules/cohortManager/types";
+import draggable from 'vuedraggable';
+import { uniqBy } from 'lodash';
+import { mapState } from 'vuex';
+import { state } from '@/store/modules/cohortManager/types';
 
 export default {
   components: {
-    draggable
+    draggable,
   },
   data: () => ({
     dragging: false,
     hovering: false,
     observationVariables: [],
-    subjectVariables: []
+    subjectVariables: [],
   }),
   computed: {
-    ...mapState("cohortManager", {
+    ...mapState('cohortManager', {
       collection: state.COLLECTION,
-      isLoading: state.IS_LOADING
-    })
+      isLoading: state.IS_LOADING,
+    }),
   },
   watch: {
     collection() {
@@ -125,7 +125,9 @@ export default {
         this.collection.subject_variables
       );
       subjectVariables.forEach(subjectVariable => {
-        subjectVariable.children.forEach(child => (child["type"] = "subject"));
+        subjectVariable.children.forEach(child => {
+          child.type = 'subject';
+        });
       });
 
       const observationVariables = this.makeHierarchy(
@@ -133,14 +135,14 @@ export default {
       );
 
       observationVariables.forEach(observationVariable => {
-        observationVariable.children.forEach(
-          child => (child["type"] = "observation")
-        );
+        observationVariable.children.forEach(child => {
+          child.type = 'observation';
+        });
       });
 
       this.subjectVariables = subjectVariables;
       this.observationVariables = observationVariables;
-    }
+    },
   },
   async created() {
     // console.log(this.collection.observation_variables);
@@ -156,16 +158,16 @@ export default {
       const ontologies = data.map(obs => obs.ontology);
       const parents = uniqBy(
         ontologies.map(ontology => ontology.parent),
-        "label"
+        'label'
       ).map(parent => ({
         ...parent,
         children: ontologies.filter(
           ontology => ontology.parent.label === parent.label
-        )
+        ),
       }));
       return parents;
-    }
-  }
+    },
+  },
 };
 </script>
 

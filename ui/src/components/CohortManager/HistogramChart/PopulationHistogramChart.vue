@@ -177,13 +177,12 @@ export default {
     getFill(key) {
       if (!this.selected.length || this.selected.includes(key)) {
         return this.colorScale(key);
-      } else {
-        return '#E8EAF6';
       }
+      return '#E8EAF6';
     },
     userClickedBar(key) {
       if (this.selected.includes(key)) {
-        this.selected = this.selected.filter(d => d != key);
+        this.selected = this.selected.filter(d => d !== key);
       } else {
         this.selected.push(key);
       }

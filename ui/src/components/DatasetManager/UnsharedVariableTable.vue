@@ -106,7 +106,9 @@ export default {
       );
 
     this.variables = missingVariables;
-    this.variables.forEach(v => (v.type = 'observation'));
+    this.variables.forEach(v => {
+      v.type = 'observation';
+    });
 
     // TODO: Check subject variables are missing from shared subject variables
     // const {

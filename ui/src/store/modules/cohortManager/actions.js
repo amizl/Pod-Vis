@@ -37,7 +37,9 @@ export default {
       const subjectVariables = makeHierarchy(data.collection.subject_variables);
 
       subjectVariables.forEach(subjectVariable => {
-        subjectVariable.children.forEach(child => (child['type'] = 'subject'));
+        subjectVariable.children.forEach(child => {
+          child.type = 'subject';
+        });
       });
 
       const observationVariables = makeHierarchy(
@@ -51,8 +53,8 @@ export default {
       //  than hard-coding first and last.
       observationVariables.forEach(observationVariable => {
         observationVariable.children.forEach(child => {
-          child['type'] = 'observation';
-          child['children'] = [
+          child.type = 'observation';
+          child.children = [
             {
               ...child,
               id: `firstVisit-${child.id}`,
@@ -105,7 +107,7 @@ export default {
     commit(mutations.SET_LOADING, true);
     const collection = state[stateTypes.COLLECTION];
     try {
-      let response = await axios.get(
+      const response = await axios.get(
         `/api/cohort-manager?collection=${collection.id}`
       );
 
@@ -123,7 +125,7 @@ export default {
       //     }
       // }]
       // TODO - "Use d3-array’s group and rollup instead of d3-collection’s nest." (which is deprecated)
-      let wideData = nest()
+      const wideData = nest()
         // Group by subject ID
         .key(d => d.subject_id)
         // This is very convoluted...ideally we want the
@@ -135,8 +137,8 @@ export default {
         // lastVisit, and rate of change. We then want to reduce this
         // so we have a single object with keys of all its outcome measures.
         // This can be considered moving from "long to wide".
-        .rollup(values => {
-          return values
+        .rollup(values =>
+          values
             .map(d => {
               const { observation, change, roc, min, max, ...rest } = d;
               return {
@@ -149,15 +151,14 @@ export default {
                 ...rest,
               };
             })
-            .reduce((prev, curr) => {
-              return { ...prev, ...curr };
-            }, {});
-        })
-        .entries(data['data']) // tell it what data to process
-        .map(d => {
-          // pull out only the values
-          return d.value;
-        });
+            .reduce((prev, curr) => ({ ...prev, ...curr }), {})
+        )
+        .entries(data.data) // tell it what data to process
+        .map(
+          d =>
+            // pull out only the values
+            d.value
+        );
 
       commit(mutations.INITIALIZE_CROSS_FILTER, wideData);
       commit(mutations.UPDATE_FILTERED_DATA);
@@ -210,29 +211,31 @@ export default {
     });
   },
   async [actions.ANALYZE_FILTERED]({ commit, dispatch, state }) {
-    let { filteredData, unfilteredData, outputVariables } = state;
+    const { filteredData } = state;
+    let { unfilteredData, outputVariables } = state;
     if (filteredData.length == unfilteredData.length) {
       // Nothing is filtered
       commit(mutations.SET_PVALS, []);
     } else {
       // Remove subjects within our filtered data sets from our unfiltered so
       // we can have separate samples
-      unfilteredData = unfilteredData.filter(data => {
-        return !filteredData
-          .map(({ subject_id }) => subject_id)
-          .includes(data.subject_id);
-      });
+      unfilteredData = unfilteredData.filter(
+        data =>
+          !filteredData
+            .map(({ subjectId }) => subjectId)
+            .includes(data.subject_id)
+      );
 
       // pass _all_ observation variables, not just the selected ones
       const collection = state[stateTypes.COLLECTION];
-      var output_vars = [];
-      collection.observation_variables.forEach(function(v) {
-        v.children.forEach(function(c) {
-          output_vars.push(c);
+      const outputVars = [];
+      collection.observation_variables.forEach(v => {
+        v.children.forEach(c => {
+          outputVars.push(c);
         });
       });
-      outputVariables = output_vars;
-	
+      outputVariables = outputVars;
+
       try {
         const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
           filteredData,
@@ -305,8 +308,8 @@ export default {
     commit(mutations.RESET_INPUT_VARIABLES);
     commit(mutations.SET_COHORT, cohort);
 
-//    const studyInputVariables =
-//      getters[getterTypes.FIND_COHORT_STUDY_INPUT_VARIABLES];
+    //    const studyInputVariables =
+    //      getters[getterTypes.FIND_COHORT_STUDY_INPUT_VARIABLES];
     const subjectInputVariables =
       getters[getterTypes.FIND_COHORT_SUBJECT_INPUT_VARIABLES];
     const observationInputVariables =
@@ -316,7 +319,7 @@ export default {
 
     dispatch(actions.CLEAR_ALL_FILTERS);
     dispatch(actions.SET_INPUT_VARIABLES, [
-//      ...studyInputVariables,
+      //      ...studyInputVariables,
       ...subjectInputVariables,
       ...observationInputVariables,
     ]);
@@ -353,13 +356,13 @@ export default {
     commit(mutations.RESET_PVALS);
     commit(mutations.RESET_QUERIES);
   },
-  [actions.SET_PVAL_THRESHOLD]({ commit }, threshold ) {
+  [actions.SET_PVAL_THRESHOLD]({ commit }, threshold) {
     commit(mutations.SET_PVAL_THRESHOLD, threshold);
   },
   [actions.RESET_PVAL_THRESHOLD]({ commit }) {
     commit(mutations.SET_PVAL_THRESHOLD);
   },
-  [actions.SET_HIGHLIGHTED_SUBSET]({ commit }, subset ) {
+  [actions.SET_HIGHLIGHTED_SUBSET]({ commit }, subset) {
     commit(mutations.SET_HIGHLIGHTED_SUBSET, subset);
   },
   [actions.RESET_HIGHLIGHTED_SUBSET]({ commit }) {

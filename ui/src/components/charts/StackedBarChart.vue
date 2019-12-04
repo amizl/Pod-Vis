@@ -24,7 +24,7 @@ const Axes = {
   },
   render() {
     // eslint-disable-line no-unused-vars
-    const axisX = <g ref="axisX" />; //transform={`translate(0, ${this.height})`}/>;
+    const axisX = <g ref="axisX" />; // transform={`translate(0, ${this.height})`}/>;
     // const axisY = <g ref='axisY'/>;
     return <g>{axisX}</g>;
   },
@@ -38,8 +38,8 @@ const Axes = {
     // d3 is actually still doing DOM manipulation, which we want
     // to avoid. But I am unaware of a better way at this moment
     // to draw axes/ticks inside Vue.
-    const axisX = this.$refs.axisX;
-    const axisY = this.$refs.axisY;
+    const { axisX } = this.$refs;
+    const { axisY } = this.$refs;
 
     select(axisX).call(this.axisX);
     select(axisY).call(this.axisY);

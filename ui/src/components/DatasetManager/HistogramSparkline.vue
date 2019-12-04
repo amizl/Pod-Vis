@@ -2,7 +2,7 @@
   <transition name="fade" mode="out-in">
     <loading-spinner v-if="isLoading" small />
     <histogram-sparkline
-      v-else-if="(type === 'observation') && (dataCategory === 'Continuous')"
+      v-else-if="type === 'observation' && dataCategory === 'Continuous'"
       :data="data"
       value="value"
     />

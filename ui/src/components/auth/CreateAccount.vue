@@ -80,7 +80,7 @@ export default {
       rules: {
         required: value => !!value || 'This field is required.',
         comparePassword: value =>
-          value == this.password || "Passwords don't match.",
+          value === this.password || "Passwords don't match.",
       },
     };
   },

@@ -53,5 +53,4 @@ export default {
   [mutations.SET_ANOVA_PVALS](state, pvals) {
     state[stateTypes.ANOVA_PVALS] = pvals;
   },
-
 };

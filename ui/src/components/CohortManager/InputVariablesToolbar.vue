@@ -64,9 +64,9 @@ export default {
   },
   watch: {
     filteredData(oldData, newData) {
-      let startValue = newData.length;
-      let endValue = oldData.length;
-      var vm = this;
+      const startValue = newData.length;
+      const endValue = oldData.length;
+      const vm = this;
       function animate() {
         if (TWEEN.update()) {
           requestAnimationFrame(animate);
@@ -76,7 +76,7 @@ export default {
         .to({ tweeningValue: endValue }, 1000)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(({ tweeningValue }) => {
-          vm['tweenData'] = tweeningValue;
+          vm.tweenData = tweeningValue;
         })
         .start();
       animate();
@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     tween(startValue, endValue, prop) {
-      var vm = this;
+      const vm = this;
       function animate() {
         if (TWEEN.update()) {
           requestAnimationFrame(animate);

@@ -26,38 +26,42 @@
           :opacity="getOpacity('population')"
         />
         <!-- Plot population minus selected cohort -->
-        <rect v-if="highlightedSubset === 'non-cohort'"
+        <rect
           v-for="(bin, i) in popMinusBins"
+          v-if="highlightedSubset === 'non-cohort'"
           :key="`pop-minus-cohort-${i}`"
-	  :x="getNonCohortX(left, bin)"
-          :y="yScale(bin.x1)"
-          :height="yScale(bin.x0) - yScale(bin.x1) - 1 > 0
-              ? yScale(bin.x0) - yScale(bin.x1) - 1
-              : 0
-          "
-          :width="getNonCohortWidth(left,bin)"
-          fill="#3FB551"
-          :opacity="getOpacity('non-cohort')"
-         />
-        <rect v-if="highlightedSubset === 'cohort'"
-          v-for="(bin, i) in bins"
-          :key="`cohort-${i}`"
-          :x="getCohortX(left,bin)"
+          :x="getNonCohortX(left, bin)"
           :y="yScale(bin.x1)"
           :height="
             yScale(bin.x0) - yScale(bin.x1) - 1 > 0
               ? yScale(bin.x0) - yScale(bin.x1) - 1
               : 0
           "
-          :width="getCohortWidth(left,bin)"
+          :width="getNonCohortWidth(left, bin)"
+          fill="#3FB551"
+          :opacity="getOpacity('non-cohort')"
+        />
+        <rect
+          v-for="(bin, i) in bins"
+          v-if="highlightedSubset === 'cohort'"
+          :key="`cohort-${i}`"
+          :x="getCohortX(left, bin)"
+          :y="yScale(bin.x1)"
+          :height="
+            yScale(bin.x0) - yScale(bin.x1) - 1 > 0
+              ? yScale(bin.x0) - yScale(bin.x1) - 1
+              : 0
+          "
+          :width="getCohortWidth(left, bin)"
           fill="#3F51B5"
           :opacity="getOpacity('cohort')"
         />
 
-	<!-- Cohort Mean -->
-	<circle v-if="typeof(mean) !== 'undefined'"
+        <!-- Cohort Mean -->
+        <circle
+          v-if="typeof mean !== 'undefined'"
           r="7"
-	  :cx="left ? w : 0"
+          :cx="left ? w : 0"
           :cy="mean"
           fill="blue"
           stroke="#3696f8"
@@ -65,9 +69,10 @@
           fill-opacity=".6"
         />
         <!-- Population Mean -->
-        <circle v-if="typeof(populationMean) !== 'undefined'"
+        <circle
+          v-if="typeof populationMean !== 'undefined'"
           r="7"
-	  :cx="left ? w : 0"
+          :cx="left ? w : 0"
           :cy="populationMean"
           stroke="#f8d537"
           fill="#F88123"
@@ -107,7 +112,7 @@ import { axisTop, axisLeft, axisRight } from 'd3-axis';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
-//import AnimatedRect from './HistogramBar.vue';
+// import AnimatedRect from './HistogramBar.vue';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -141,7 +146,7 @@ export default {
     },
   },
   components: {
-//    AnimatedRect,
+    //    AnimatedRect,
   },
   props: {
     id: {
@@ -183,7 +188,7 @@ export default {
       selection: [],
       populationCounts: {},
       mean: undefined,
-      populationMean: undefined
+      populationMean: undefined,
     };
   },
   computed: {
@@ -225,14 +230,14 @@ export default {
         .thresholds(this.yScale.ticks(30));
     },
     popBins() {
-      var pop_bins = this.hist(this.populationData);
+      const popBins = this.hist(this.populationData);
       // cache bin counts
       this.populationCounts = {};
-      var pb_len = pop_bins.length;
-      for (var i = 0;i < pb_len; ++i) {
-        this.populationCounts[pop_bins[i].x0] = pop_bins[i].length;
+      const pbLen = popBins.length;
+      for (let i = 0; i < pbLen; i += 1) {
+        this.populationCounts[popBins[i].x0] = popBins[i].length;
       }
-      return pop_bins;
+      return popBins;
     },
     bins() {
       return this.hist(this.data);
@@ -245,27 +250,27 @@ export default {
     popMinusBins() {
       // subtract bins from population bins to get popMinusBins
       // i.e., bins for the non-cohort population
-      var pb = this.hist(this.populationData);
-      var b = this.hist(this.data);
-      var pm_bins = [];
-      var pb_len = pb.length;
+      const pb = this.hist(this.populationData);
+      const b = this.hist(this.data);
+      const pmBins = [];
+      const pbLen = pb.length;
 
       // TODO - compute this in a more straightforward fashion
       // TODO - factor out code in common with HistogramChart.vue
-      for (var i = 0;i < pb_len; ++i) {
-        var nbl = [];
-	nbl.x0 = pb[i].x0;
-	nbl.x1 = pb[i].x1;
-        var bl = typeof(b[i]) !== 'undefined' ? b[i].length : 0;
-	var pbl = typeof(pb[i]) !== 'undefined' ? pb[i].length : 0;
+      for (let i = 0; i < pbLen; i += 1) {
+        const nbl = [];
+        nbl.x0 = pb[i].x0;
+        nbl.x1 = pb[i].x1;
+        const bl = typeof b[i] !== 'undefined' ? b[i].length : 0;
+        const pbl = typeof pb[i] !== 'undefined' ? pb[i].length : 0;
         // TODO - we're creating bins of the correct size for display
-	// purposes, but the values inside aren't correct.
-        for (var j = bl;j < pbl; ++j) {
-	  nbl.push(1);
+        // purposes, but the values inside aren't correct.
+        for (let j = bl; j < pbl; j += 1) {
+          nbl.push(1);
         }
-        pm_bins.push(nbl);
+        pmBins.push(nbl);
       }
-      return pm_bins;
+      return pmBins;
     },
     xScale() {
       const yScale = scaleLinear()
@@ -332,13 +337,13 @@ export default {
     }),
     updateSelected() {
       if (this.hasSelection()) {
-         const f = this.filter;
-	 const acc_fn = this.dimension.accessor;
-      	 const filtered = this.filteredData.filter(function(d) {
-	       var datum = acc_fn(d);
-	       return f.filter(datum);
-	      });
-        this.selected = filtered.map(acc_fn);
+        const f = this.filter;
+        const accFn = this.dimension.accessor;
+        const filtered = this.filteredData.filter(d => {
+          const datum = accFn(d);
+          return f.filter(datum);
+        });
+        this.selected = filtered.map(accFn);
       }
     },
     updateMean() {
@@ -363,9 +368,9 @@ export default {
 
       // This provides the shape of our handles on the brush
       const handlePath = d => {
-        const e = +(d.type == 'e'),
-          x = e ? 1 : -1,
-          y = this.w;
+        const e = +(d.type === 'e');
+        const x = e ? 1 : -1;
+        const y = this.w;
         return `M${0.5 * x},${y}A6,6 0 0 ${e} ${6.5 * x},${y + 6}V${2 * y -
           6}A6,6 0 0 ${e} ${0.5 * x},${2 * y}ZM${2.5 * x},${y + 8}V${2 * y -
           8}M${4.5 * x},${y + 8}V${2 * y - 8}`;
@@ -391,7 +396,7 @@ export default {
      * snap to the correct locations.
      */
     getClosestBins() {
-      const selection = event.selection;
+      const { selection } = event;
       const [low, high] = selection.map(this.yScale.invert);
 
       // Get closest bin to our lower selection
@@ -423,7 +428,7 @@ export default {
         this.clearFilter({
           dimension: this.dimensionName,
         });
-	this.filter = undefined;
+        this.filter = undefined;
         this.selected = [];
         return;
       }
@@ -438,17 +443,17 @@ export default {
       const [invertedHigh, invertedLow] = [high, low].map(this.yScale.invert);
 
       // Filter dimension to be within snapped selection
-      const new_filter = {
+      const newFilter = {
         dimension: this.dimensionName,
         filter: d => d >= invertedLow && d < invertedHigh,
       };
-      this.addFilter(new_filter);
+      this.addFilter(newFilter);
       // assumes at most 1 filter, which appears to be the case
-      this.filter = new_filter;
+      this.filter = newFilter;
       this.updateSelected();
     },
     brushed() {
-      const selection = event.selection;
+      const { selection } = event;
       if (!selection) {
         this.selection = [];
         return; // Ignore empty selections
@@ -464,17 +469,20 @@ export default {
       }
 
       // Appropriately place brush handles
-      this.handle.attr('display', null).attr('transform', (d, i) => {
-         return 'translate(' + (this.width) + ',' + selection[i] + ') rotate(90)';
-      });
+      this.handle
+        .attr('display', null)
+        .attr(
+          'transform',
+          (d, i) => `translate(${this.width},${selection[i]}) rotate(90)`
+        );
 
       // Set remap our selection to snap to closest bins
       this.selection = this.getClosestBins();
     },
     getFill(bin) {
       if (this.selection) {
-        let [high, low] = this.selection.map(this.yScale.invert);
-        let { x0, x1 } = bin;
+        const [high, low] = this.selection.map(this.yScale.invert);
+        const { x0, x1 } = bin;
 
         // Pad the high number as this might be a decimal
         // and can cause some bars to not be colored in range
@@ -487,24 +495,22 @@ export default {
           high + PADDING >= x1
         ) {
           return '#3F51B5';
-        } else {
-          return '#E8EAF6';
         }
-      } else {
-        return '#3F51B5';
+        return '#E8EAF6';
       }
+      return '#3F51B5';
     },
     hasSelection() {
       if (this.selection) {
         if (this.selection.length) {
           return true;
-	}
+        }
       }
       return false;
     },
     isBinSelected(bin) {
-      let [high, low] = this.selection.map(this.yScale.invert);
-      let { x0, x1 } = bin;
+      const [high, low] = this.selection.map(this.yScale.invert);
+      const { x0, x1 } = bin;
 
       // Pad the high number as this might be a decimal
       // and can cause some bars to not be colored in range
@@ -521,59 +527,66 @@ export default {
       return false;
     },
     getCohortX(left, bin) {
-      var x = left ? this.xScale(bin.length) : 0;
+      const x = left ? this.xScale(bin.length) : 0;
       if (this.hasSelection()) {
         if (this.isBinSelected(bin)) {
-	  return x;
-	} else {
-	   return left ? this.xScale(0) : 0;
+          return x;
         }
-      } else {
-        return x;
+        return left ? this.xScale(0) : 0;
       }
+      return x;
     },
     getCohortWidth(left, bin) {
-      var bar_width = left ? this.w - this.xScale(bin.length) > 0 ? this.w - this.xScale(bin.length) : 0
-              : this.xScale(bin.length) > 0 ? this.xScale(bin.length) : 0;
+      const barWidth = left
+        ? this.w - this.xScale(bin.length) > 0
+          ? this.w - this.xScale(bin.length)
+          : 0
+        : this.xScale(bin.length) > 0
+        ? this.xScale(bin.length)
+        : 0;
 
       if (this.hasSelection()) {
         if (this.isBinSelected(bin)) {
-	  return bar_width;
-	} else {
-	   return 0;
+          return barWidth;
         }
-      } else {
-        return bar_width;
+        return 0;
       }
+      return barWidth;
     },
     getNonCohortX(left, bin) {
-      var x = left ? this.xScale(bin.length) : 0;
+      const x = left ? this.xScale(bin.length) : 0;
       if (this.hasSelection()) {
         if (this.isBinSelected(bin)) {
-	  return x;
-	} else {
-	   var bin_len = this.populationCounts[bin.x0];
-	   return left ? this.xScale(bin_len) : 0;
+          return x;
         }
-      } else {
-        return x;
+        const binLen = this.populationCounts[bin.x0];
+        return left ? this.xScale(binLen) : 0;
       }
+      return x;
     },
     getNonCohortWidth(left, bin) {
-      var bar_width = left ? this.w - this.xScale(bin.length) > 0 ? this.w - this.xScale(bin.length) : 0
-              : this.xScale(bin.length) > 0 ? this.xScale(bin.length) : 0;
+      const barWidth = left
+        ? this.w - this.xScale(bin.length) > 0
+          ? this.w - this.xScale(bin.length)
+          : 0
+        : this.xScale(bin.length) > 0
+        ? this.xScale(bin.length)
+        : 0;
 
       if (this.hasSelection()) {
         if (this.isBinSelected(bin)) {
-	  return bar_width;
-	} else {
-	   var bin_len = this.populationCounts[bin.x0];
-           return left ? this.w - this.xScale(bin_len) > 0 ? this.w - this.xScale(bin_len) : 0
-              : this.xScale(bin_len) > 0 ? this.xScale(bin_len) : 0;
+          return barWidth;
         }
-      } else {
-        return bar_width;
+        const binLen = this.populationCounts[bin.x0];
+        return left
+          ? this.w - this.xScale(binLen) > 0
+            ? this.w - this.xScale(binLen)
+            : 0
+          : this.xScale(binLen) > 0
+          ? this.xScale(binLen)
+          : 0;
       }
+      return barWidth;
     },
     getOpacity(subset) {
       return 0.7;

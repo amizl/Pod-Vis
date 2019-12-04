@@ -1,5 +1,5 @@
-import { getters, state as stateTypes } from './types';
 import { nest } from 'd3-collection';
+import { getters, state as stateTypes } from './types';
 
 export default {
   [getters.HAS_USER_FILTERED_INPUT_VARIABLES]: state => {
@@ -15,54 +15,48 @@ export default {
     const cohort = state[stateTypes.COHORT];
     if (cohort.id == null) {
       return false;
-    } else {
-      return true;
     }
+    return true;
   },
-  [getters.FIND_COHORT_QUERY]: state => {
-    return dimensionName => {
-      return state.cohort.queries.filter(query => {
-        const inputVariable = query.input_variable;
-        // Need to safely access correct attribute
-        if (inputVariable.study) {
-          return inputVariable.study.label === dimensionName;
-        } else if (inputVariable.observation_ontology) {
-          // TODO: This needs to be refactored. Dimensions are currently
-          // keyed strangely and needs to be better named for an easier
-          // mapping then having to format labels like this...
-          const observationLabel = inputVariable.observation_ontology.label;
-          const dimLabel = inputVariable.dimension_label;
-          let newLabel = '';
-          if (dimLabel === 'change') {
-            newLabel = `${observationLabel} - Change`;
-          } else if (dimLabel === 'roc') {
-            newLabel = `${observationLabel} - Rate of Change`;
-          } else if (dimLabel === 'left_y_axis') {
-            newLabel = `${observationLabel} - First Visit`;
-          } else if (dimLabel === 'right_y_axis') {
-            newLabel = `${observationLabel} - Last Visit`;
-          }
-          return newLabel === dimensionName;
-        } else {
-          return inputVariable.subject_ontology.label === dimensionName;
+  [getters.FIND_COHORT_QUERY]: state => dimensionName =>
+    state.cohort.queries.filter(query => {
+      const inputVariable = query.input_variable;
+      // Need to safely access correct attribute
+      if (inputVariable.study) {
+        return inputVariable.study.label === dimensionName;
+      } else if (inputVariable.observation_ontology) {
+        // TODO: This needs to be refactored. Dimensions are currently
+        // keyed strangely and needs to be better named for an easier
+        // mapping then having to format labels like this...
+        const observationLabel = inputVariable.observation_ontology.label;
+        const dimLabel = inputVariable.dimension_label;
+        let newLabel = '';
+        if (dimLabel === 'change') {
+          newLabel = `${observationLabel} - Change`;
+        } else if (dimLabel === 'roc') {
+          newLabel = `${observationLabel} - Rate of Change`;
+        } else if (dimLabel === 'left_y_axis') {
+          newLabel = `${observationLabel} - First Visit`;
+        } else if (dimLabel === 'right_y_axis') {
+          newLabel = `${observationLabel} - Last Visit`;
         }
-      });
-    };
-  },
-//  [getters.FIND_COHORT_STUDY_INPUT_VARIABLES]: state => {
-//    return !state.cohort.input_variables
-//      ? []
-//      : state.cohort.input_variables
-//          .filter(variable => variable.study != null)
-//          .map(variable => ({ ...variable.study, type: 'study' }));
-//  },
-  [getters.FIND_COHORT_SUBJECT_INPUT_VARIABLES]: state => {
-    return !state.cohort.input_variables
+        return newLabel === dimensionName;
+      }
+      return inputVariable.subject_ontology.label === dimensionName;
+    }),
+  //  [getters.FIND_COHORT_STUDY_INPUT_VARIABLES]: state => {
+  //    return !state.cohort.input_variables
+  //      ? []
+  //      : state.cohort.input_variables
+  //          .filter(variable => variable.study != null)
+  //          .map(variable => ({ ...variable.study, type: 'study' }));
+  //  },
+  [getters.FIND_COHORT_SUBJECT_INPUT_VARIABLES]: state =>
+    !state.cohort.input_variables
       ? []
       : state.cohort.input_variables
           .filter(variable => variable.subject_ontology != null)
-          .map(variable => ({ ...variable.subject_ontology, type: 'subject' }));
-  },
+          .map(variable => ({ ...variable.subject_ontology, type: 'subject' })),
   [getters.FIND_COHORT_OBSERVATION_INPUT_VARIABLES]: state => {
     // return !state.cohort.input_variables
     //   ? []
@@ -146,7 +140,7 @@ export default {
       .map(d => {
         const id = Number(d.key);
         const observation = state.cohort.output_variables.find(
-          d => d.observation_ontology_id === id
+          dt => dt.observation_ontology_id === id
         );
         return {
           ...observation.observation_ontology,
@@ -158,7 +152,7 @@ export default {
     // we want add just the one study and remove dimensions
     // so we can draw a parallel coordinates plot
     const parentIDs = outcomeMeasures.map(m => m.id);
-    let dimensionsNotInParentIDs = outputVariables.filter(
+    const dimensionsNotInParentIDs = outputVariables.filter(
       obs => !parentIDs.includes(obs.parentID)
     );
 

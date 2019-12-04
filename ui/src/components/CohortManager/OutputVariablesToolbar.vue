@@ -3,15 +3,27 @@
     <v-toolbar card dense flat color="white rounded-lg">
       <v-toolbar-items> <output-variables-dialog /> </v-toolbar-items>
       <v-divider vertical class="ml-4"></v-divider>
-        <v-spacer />
+      <v-spacer />
       <v-toolbar-items>
-      <!-- TODO...filters? -->
+        <!-- TODO...filters? -->
         <span class="subheading primary--text mt-3 mr-3">Show:</span>
-        <v-btn-toggle mandatory v-model="subset" @change="doHighlightChange()">
-         <v-btn text color="primary" class="white--text mr-2 py-1" value="cohort">Cohort</v-btn>
-         <v-btn text color="#3FB551" class="white--text mr-2 py-1" value="non-cohort">Non-Cohort</v-btn>
+        <v-btn-toggle v-model="subset" mandatory @change="doHighlightChange()">
+          <v-btn
+            text
+            color="primary"
+            class="white--text mr-2 py-1"
+            value="cohort"
+            >Cohort</v-btn
+          >
+          <v-btn
+            text
+            color="#3FB551"
+            class="white--text mr-2 py-1"
+            value="non-cohort"
+            >Non-Cohort</v-btn
+          >
         </v-btn-toggle>
-     </v-toolbar-items>
+      </v-toolbar-items>
     </v-toolbar>
     <v-divider></v-divider>
   </section>
@@ -26,30 +38,30 @@ export default {
   components: {
     OutputVariablesDialog,
   },
-  computed: {
-    ...mapState('cohortManager', {
-      highlighted_subset: state.HIGHLIGHTED_SUBSET,
-    }),
-  },
   data() {
     return {
       subset: 'cohort',
     };
   },
+  computed: {
+    ...mapState('cohortManager', {
+      highlighted_subset: state.HIGHLIGHTED_SUBSET,
+    }),
+  },
   methods: {
     ...mapActions('cohortManager', {
       setHighlightedSubset: actions.SET_HIGHLIGHTED_SUBSET,
     }),
-    highlight(new_subset) {
-      this.setHighlightedSubset(new_subset);
+    highlight(newSubset) {
+      this.setHighlightedSubset(newSubset);
     },
     doHighlightChange() {
-    if (typeof this.subset === 'undefined') {
+      if (typeof this.subset === 'undefined') {
         this.subset = 'cohort';
       }
       this.highlight(this.subset);
     },
-  }
+  },
 };
 </script>
 

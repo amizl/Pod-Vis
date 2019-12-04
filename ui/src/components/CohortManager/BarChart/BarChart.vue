@@ -204,28 +204,25 @@ export default {
         //   return this.colorScale(key);
         // }
         return '#3F51B5';
-      } else {
-        return '#E8EAF6';
       }
+      return '#E8EAF6';
     },
     userClickedBar(key) {
       if (this.selected.includes(key)) {
-        this.selected = this.selected.filter(d => d != key);
+        this.selected = this.selected.filter(d => d !== key);
       } else {
         this.selected.push(key);
       }
 
       const allBarsSelected =
-        this.selected.length == this.xScale.domain().length;
+        this.selected.length === this.xScale.domain().length;
       if (!allBarsSelected && this.selected.length) {
         this.addFilter({
           dimension: this.dimensionName,
           filter: d => this.selected.includes(d),
-          query: this.selected.map(key => {
-            return {
-              value: key,
-            };
-          }),
+          query: this.selected.map(k => ({
+            value: k,
+          })),
         });
       } else {
         // We want to clear our filter if all the bars are selected or if

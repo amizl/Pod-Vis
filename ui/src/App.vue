@@ -18,14 +18,12 @@
 import { mapGetters } from 'vuex';
 import { getters as authGetters } from '@/store/modules/auth/types';
 import SideBar from './components/layout/Sidebar.vue';
-import AppHeader from './components/layout/Header.vue';
 import NotificationCenter from './components/common/notificationCenter.vue';
 
 export default {
   name: 'App',
   components: {
     SideBar,
-    AppHeader,
     NotificationCenter,
   },
   computed: {

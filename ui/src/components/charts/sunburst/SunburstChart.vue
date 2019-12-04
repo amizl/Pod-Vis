@@ -43,7 +43,7 @@ import { schemeCategory10 as d3SchemeCategory10 } from 'd3-scale-chromatic';
 function getUniqueNodeId(node) {
   return node
     .ancestors()
-    .map(node => node.data.name)
+    .map(n => n.data.name)
     .join('-');
 }
 
@@ -58,7 +58,7 @@ function getUniqueNodeId(node) {
 function mapWithDash(data, keyOrder) {
   return data.map(d => {
     const values = keyOrder.map(key => d[key]);
-    return [values.join('-'), d['count']];
+    return [values.join('-'), d.count];
   });
 }
 
@@ -70,8 +70,9 @@ function mapWithDash(data, keyOrder) {
  */
 function buildHierarchy(csv) {
   let currentId = 0;
-  const root = { id: currentId++, name: 'root', children: [] };
-  for (let i = 0; i < csv.length; i++) {
+  const root = { id: currentId, name: 'root', children: [] };
+  currentId += 1;
+  for (let i = 0; i < csv.length; i += 1) {
     const sequence = csv[i][0];
     const size = +csv[i][1];
     if (isNaN(size)) {
@@ -80,15 +81,15 @@ function buildHierarchy(csv) {
     }
     const parts = sequence.split('-');
     let currentNode = root;
-    for (var j = 0; j < parts.length; j++) {
-      const children = currentNode['children'];
+    for (let j = 0; j < parts.length; j += 1) {
+      const { children } = currentNode;
       const nodeName = parts[j];
       let childNode;
       if (j + 1 < parts.length) {
         // Not yet at the end of the sequence; move down the tree.
         let foundChild = false;
-        for (var k = 0; k < children.length; k++) {
-          if (children[k]['name'] == nodeName) {
+        for (let k = 0; k < children.length; k += 1) {
+          if (children[k].name === nodeName) {
             childNode = children[k];
             foundChild = true;
             break;
@@ -96,13 +97,15 @@ function buildHierarchy(csv) {
         }
         // If we don't already have a child node for this branch, create it.
         if (!foundChild) {
-          childNode = { id: currentId++, name: nodeName, children: [] };
+          childNode = { id: currentId, name: nodeName, children: [] };
+          currentId += 1;
           children.push(childNode);
         }
         currentNode = childNode;
       } else {
         // Reached the end of the sequence; create a leaf node.
-        childNode = { id: currentId++, name: nodeName, size: size };
+        childNode = { id: currentId, name: nodeName, size };
+        currentId += 1;
         children.push(childNode);
       }
     }
@@ -117,6 +120,7 @@ export default {
       if (value) {
         return value.toPrecision(3);
       }
+      return undefined;
     },
   },
   props: {
@@ -211,15 +215,15 @@ export default {
     },
   },
   mounted() {
-    const width = this.width,
-      height = this.height,
-      // radius = this.radius,
-      // x = this.x,
-      // y = this.y,
-      // partition = this.partition,
-      arc = this.arc,
-      // root = this.root,
-      nodes = this.nodes;
+    const { width } = this;
+    const { height } = this;
+    // radius = this.radius,
+    // x = this.x,
+    // y = this.y,
+    // partition = this.partition,
+    const { arc } = this;
+    // root = this.root,
+    const { nodes } = this;
     // formatNumber = d3Format(',d');
 
     const svg = d3Select(this.$refs.chart)
@@ -227,7 +231,7 @@ export default {
       .attr('width', width)
       .attr('height', height)
       .append('g')
-      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+      .attr('transform', `translate(${width / 2},${height / 2})`);
     this.svg = svg;
 
     const color = this.colorScale;
@@ -254,17 +258,15 @@ export default {
 
         if (childrenIds.includes(d.data.id)) {
           return 1;
-        } else {
-          return 0.2;
         }
+        return 0.2;
       })
       .style('fill', d => {
         if (d.data.name in this.color) {
           return this.color[d.data.name];
-        } else {
-          // return color((d.children ? d : d.parent).data.name);
-          return color(d.data.name);
         }
+        // return color((d.children ? d : d.parent).data.name);
+        return color(d.data.name);
       });
 
     // .on("click", this.click)
@@ -281,16 +283,15 @@ export default {
       this.current = node;
     },
     getNodeById(nodeId) {
-      let id = nodeId || 1;
+      const id = nodeId || 1;
 
       const path = this.pathes
         .nodes()
-        .find(({ __data__: data }) => data.data.id == id);
+        .find(({ __data__: data }) => data.data.id === id);
       if (path) {
         return path.__data__;
-      } else {
-        return null;
       }
+      return null;
     },
     highlightPath(node, opacity = 0.3) {
       const sequenceArray = node.ancestors();
@@ -309,12 +310,15 @@ export default {
       const t = d3Transition()
         .duration(750)
         .tween('scale', () => {
-          const xd = d3Interpolate(this.x.domain(), [node.x0, node.x1]),
-            yd = d3Interpolate(this.y.domain(), [node.y0, 1]),
-            yr = d3Interpolate(this.y.range(), [node.y0 ? 20 : 0, this.radius]);
-          return t => {
-            this.x.domain(xd(t));
-            this.y.domain(yd(t)).range(yr(t));
+          const xd = d3Interpolate(this.x.domain(), [node.x0, node.x1]);
+          const yd = d3Interpolate(this.y.domain(), [node.y0, 1]);
+          const yr = d3Interpolate(this.y.range(), [
+            node.y0 ? 20 : 0,
+            this.radius,
+          ]);
+          return tr => {
+            this.x.domain(xd(tr));
+            this.y.domain(yd(tr)).range(yr(tr));
           };
         });
 
@@ -325,21 +329,20 @@ export default {
         this.svg
           .selectAll('path')
           .transition(t)
-          .attrTween('d', node => () => this.arc(node))
-          .style('opacity', node => {
+          .attrTween('d', n => () => this.arc(n))
+          .style('opacity', n => {
             // If node is current node, let's keep its opacity at 1,
             // that way we can easily visualize the parent ring
             if (this.current.data.id === node.data.id) return 1;
             // Keep leaf nodes' opacity at 1
             if (!this.current.children) return 1;
 
-            const childrenIds = this.current.children.map(node => node.data.id);
+            const childrenIds = this.current.children.map(nd => nd.data.id);
 
-            if (childrenIds.includes(node.data.id)) {
+            if (childrenIds.includes(n.data.id)) {
               return 1;
-            } else {
-              return 0.2;
             }
+            return 0.2;
           });
       }
     },

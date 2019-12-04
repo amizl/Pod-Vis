@@ -41,7 +41,16 @@ export default {
     ParallelCoordinates,
     HistogramChart,
   },
-  props: ['variable', 'dimensionName'],
+  props: {
+    variable: {
+      type: Object,
+      required: true,
+    },
+    dimensionName: {
+      type: Number,
+      required: true,
+    },
+  },
 };
 </script>
 
