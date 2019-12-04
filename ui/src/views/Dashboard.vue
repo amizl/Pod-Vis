@@ -11,7 +11,7 @@
           <v-tab-item>
             <collection-table
               class="pb-1"
-              :showPublicCollections="false"
+              :show-public-collections="false"
             ></collection-table>
           </v-tab-item>
 
@@ -21,7 +21,7 @@
           <v-tab-item>
             <collection-table
               class="pb-1"
-              :showPublicCollections="true"
+              :show-public-collections="true"
             ></collection-table>
           </v-tab-item>
         </v-tabs>

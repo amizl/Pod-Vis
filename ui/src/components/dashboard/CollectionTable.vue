@@ -3,9 +3,7 @@
   <v-data-table
     v-else
     :headers="headers"
-    :items="
-      this.showPublicCollections ? publicCollections : privateCollections
-    "
+    :items="this.showPublicCollections ? publicCollections : privateCollections"
     item-key="label"
     hide-actions
     hide-headers
@@ -40,7 +38,7 @@
 
           <delete-collection-button
             v-if="props.item.is_deletable"
-            :collectionId="props.item.id"
+            :collection-id="props.item.id"
           />
         </td>
       </tr>
@@ -97,10 +95,10 @@ export default {
       collections: state.COLLECTIONS,
     }),
     publicCollections() {
-      return this.filterCollections(true);
+      return this.filterCollections(1);
     },
     privateCollections() {
-      return this.filterCollections(false);
+      return this.filterCollections(0);
     },
   },
   mounted() {
@@ -116,7 +114,7 @@ export default {
     filterCollections(isPublic) {
       const filteredCollections = [];
       this.collections.forEach(c => {
-        if (c.is_public == isPublic) {
+        if (c.is_public === isPublic) {
           filteredCollections.push(c);
         }
       });

@@ -7,7 +7,7 @@
           <v-divider vertical class="ml-4"></v-divider>
           <v-spacer />
           <v-toolbar-items>
-            <cohort-manager-dialog :collectionId="this.collection.id" />
+            <cohort-manager-dialog :collection-id="this.collection.id" />
           </v-toolbar-items>
         </v-toolbar>
 

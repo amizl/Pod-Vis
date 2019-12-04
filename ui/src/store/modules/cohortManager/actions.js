@@ -213,7 +213,7 @@ export default {
   async [actions.ANALYZE_FILTERED]({ commit, dispatch, state }) {
     const { filteredData } = state;
     let { unfilteredData, outputVariables } = state;
-    if (filteredData.length == unfilteredData.length) {
+    if (filteredData.length === unfilteredData.length) {
       // Nothing is filtered
       commit(mutations.SET_PVALS, []);
     } else {
