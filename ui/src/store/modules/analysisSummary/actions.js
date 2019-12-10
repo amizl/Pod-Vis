@@ -52,7 +52,7 @@ export default {
         groups,
         outputVariables,
       });
-      commit(mutations.SET_PAIRWISE_TUKEY_HSD_PVALS, resData.results);
+      commit(mutations.SET_PAIRWISE_TUKEY_HSD_PVALS, data.results);
     } catch ({ response }) {
       const notification = new ErrorNotification(response.data.error);
       dispatch(notification.dispatch, notification, { root: true });
