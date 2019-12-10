@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { state } from '@/store/modules/dataExplorer/types';
+import { mapState, mapActions } from 'vuex';
+import { state, actions } from '@/store/modules/dataExplorer/types';
 import ParallelCoordinates from '@/components/DataExplorer/ParallelCoordinates.vue';
 
 export default {
@@ -52,9 +52,16 @@ export default {
      */
     outcomeVariables() {
       this.rerenderCharts();
+      this.setDetailedView(null);
     },
   },
+  created() {
+      this.setDetailedView(null);
+  },
   methods: {
+    ...mapActions('dataExplorer', {
+      setDetailedView: actions.SET_DETAILED_VIEW,
+    }),
     rerenderCharts() {
       this.chartsKey += 1;
     },
