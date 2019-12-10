@@ -3,7 +3,7 @@
   <v-data-table
     v-else
     :headers="headers"
-    :items="this.showPublicCollections ? publicCollections : privateCollections"
+    :items="showPublicCollections ? publicCollections : privateCollections"
     item-key="label"
     hide-actions
     hide-headers
@@ -11,12 +11,13 @@
     <template v-slot:items="props">
       <tr>
         <td class="text-xs-left">{{ props.item.label }}</td>
+        <td class="text-xs-left">{{ props.item.date_generated }}</td>
         <td class="text-xs-right px-0">
           <v-tooltip top color="primary">
             <template v-slot:activator="{ on }">
               <v-btn flat @click="routeToCohortManager(props.item)" v-on="on">
-                <v-icon left small color="secondary">group_add</v-icon> Cohorts
-                ({{ props.item.num_cohorts }})
+                <v-icon left small color="secondary">group_add</v-icon> Add
+                Cohorts ({{ props.item.num_cohorts }})
               </v-btn>
             </template>
             <span>Launch Cohort Manager to add/remove Cohorts</span>
@@ -34,6 +35,20 @@
               </v-btn>
             </template>
             <span>Launch Data Explorer to compare Cohorts</span>
+          </v-tooltip>
+
+          <v-tooltip top color="primary">
+            <template v-slot:activator="{ on }">
+              <v-btn
+                flat
+                :disabled="props.item.num_cohorts == 0"
+                @click="routeToAnalysisSummary(props.item)"
+                v-on="on"
+              >
+                <v-icon left small color="secondary">bar_chart</v-icon> Analyze
+              </v-btn>
+            </template>
+            <span>View Analysis Summary for current Cohorts</span>
           </v-tooltip>
 
           <delete-collection-button
@@ -81,6 +96,10 @@ export default {
         {
           text: 'Collection Name',
           value: 'label',
+        },
+        {
+          text: 'Created',
+          value: 'date_generated',
         },
         {
           text: 'Actions',
@@ -131,6 +150,10 @@ export default {
       // const currentPath = this.$router.currentPath.fullPath;
       // this.$router.push(`analysis/${id}/`);
       this.$router.push(`explore?collection=${id}`);
+    },
+    routeToAnalysisSummary({ id }) {
+      // Route to view for analysis summary
+      this.$router.push(`summary?collection=${id}`);
     },
   },
 };

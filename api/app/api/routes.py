@@ -7,6 +7,7 @@ from .exceptions import ResourceNotFound, BadRequest
 from ..auth.exceptions import AuthFailure
 from .. import models
 import pandas as pd
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
 
 @api.route('/subjects')
 def get_all_subjects():
@@ -779,6 +780,43 @@ def compute_anova():
     return jsonify({
         "success": True,
         "pvals": pvals,
+    })
+
+@api.route('/compute-pairwise-tukeyhsd', methods=['POST'])
+def compute_pairwise_tukeyhsd():
+    """Compute Tukey HSD test"""
+    request_data = request.get_json()
+    groups = request_data.get("groups")
+    output_variables = request_data.get("outputVariables")
+    results = {}
+
+    for output_variable in output_variables:
+        if isinstance(output_variable.get("id"), str) and "-" in output_variable.get("id"):
+            variable_id = str(output_variable.get("parentID"))
+            variable_label = output_variable.get("parentLabel")
+        else:
+            variable_id = str(output_variable.get("id"))
+            variable_label = output_variable.get("label")
+
+        groupnums = []
+        data = []
+        
+        for g in groups:
+            for datum in g['data']:
+                groupnums.append(g['id'])
+                data.append(datum.get(variable_id).get('change'))
+
+        # compute Tukey-HSD
+        res = pairwise_tukeyhsd(groups=groupnums, endog=data)
+        results[variable_label] = {
+            'label': variable_label,
+            'unique_groups': [x.item() for x in list(res.groupsunique)],
+            'pvals': [x.item() for x in list(res.pvalues)],
+            'reject': [True if x else False for x in list(res.reject) ]}
+
+    return jsonify({
+        "success": True,
+        "results": results,
     })
 
 @api.route('/compute-mannwhitneyu', methods=['POST'])

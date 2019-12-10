@@ -127,6 +127,11 @@ export default {
           path: '/datasets',
         },
         // {
+        //   name: 'Analysis Summary',
+        //   icon: 'bar_chart',
+        //   path: '/summary',
+        // },
+        // {
         //   name: 'Cohort Manager',
         //   icon: 'group',
         //   path: '/cohorts',
@@ -135,11 +140,6 @@ export default {
         //   name: 'Data Explorer',
         //   icon: 'explore',
         //   path: '/explore',
-        // },
-        // {
-        //   name: 'Analysis Tool',
-        //   icon: 'bar_chart',
-        //   path: '/analysis',
         // },
       ],
     };

@@ -67,6 +67,27 @@ h6 {
   background-color: #FFB0B0;
 }
 
+/* Color gradient for P-value significance */
+.pval-lt-1 {
+  background-color: #FEEDDE;
+}
+
+.pval-lt-0p1 {
+  background-color: #FDD0A2;
+}
+
+.pval-lt-0p05 {
+  background-color: #FDAE6B;
+}
+
+.pval-lt-0p01 {
+  background-color: #FD8D3C;
+}
+
+.pval-lt-0p001 {
+  background-color: #E6550D;
+}
+
 .var-chart {
   padding-bottom: 0.5em;
   padding: 2px;

@@ -13,3 +13,4 @@ python-dotenv
 numpy
 scipy
 scikit_learn
+statsmodels

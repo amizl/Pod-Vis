@@ -37,7 +37,6 @@ export default new Router({
     },
     {
       path: '/explore',
-      // path: '/:user/explore/:dataset/:analysis',
       name: 'dataExplorer',
       component: () => import('@/views/DataExplorer.vue'),
       beforeEnter: requireAuth,
@@ -46,15 +45,13 @@ export default new Router({
       }),
     },
     {
-      path: '/analysis',
-      // path: '/:user/analysis/:dataset/:analysis',
-      name: 'analysis',
-      component: () => import('@/views/AnalysisTool.vue'),
+      path: '/summary',
+      name: 'summary',
+      component: () => import('@/views/AnalysisSummary.vue'),
       beforeEnter: requireAuth,
       props: route => ({
         user: route.params.user,
-        dataset: route.params.dataset,
-        analysis: route.params.analysis,
+        collectionId: +route.query.collection,
       }),
     },
     {

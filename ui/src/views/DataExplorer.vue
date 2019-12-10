@@ -5,8 +5,16 @@
   <v-container v-else fluid fill-height grid-list-mdt class="ma-0 pa-1">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text"
-        >Data Explorer - {{ collection.label }}</v-toolbar-title
-      >
+        >Data Explorer
+        <div class="subheading">{{ collection.label }}</div>
+      </v-toolbar-title>
+      <v-spacer />
+      <v-tooltip top color="primary">
+        <template v-slot:activator="{ on }">
+          <analysis-summary-button :collection-id="collectionId" />
+        </template>
+        <span>View Analysis Summary for all Cohorts and Outcome Variables</span>
+      </v-tooltip>
     </v-toolbar>
     <v-layout column fill-height>
       <v-flex xs5 class="ma-0 pa-1">
@@ -40,6 +48,7 @@ import SummaryView from '@/components/DataExplorer/SummaryView.vue';
 import Cohorts from '@/components/DataExplorer/Cohorts.vue';
 import Analytics from '@/components/DataExplorer/Analytics.vue';
 import DetailedView from '@/components/DataExplorer/DetailedView.vue';
+import AnalysisSummaryButton from '@/components/DataExplorer/AnalysisSummaryBtnDialog';
 
 export default {
   components: {
@@ -47,6 +56,7 @@ export default {
     SummaryView,
     Cohorts,
     DetailedView,
+    AnalysisSummaryButton,
   },
   props: {
     collectionId: {
