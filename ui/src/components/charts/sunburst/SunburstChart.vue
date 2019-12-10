@@ -75,7 +75,7 @@ function buildHierarchy(csv) {
   for (let i = 0; i < csv.length; i += 1) {
     const sequence = csv[i][0];
     const size = +csv[i][1];
-    if (isNaN(size)) {
+    if (Number.isNaN(size)) {
       // e.g. if this is a header row
       continue;
     }
