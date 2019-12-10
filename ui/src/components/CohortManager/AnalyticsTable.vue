@@ -64,7 +64,7 @@ import { format } from 'd3-format';
 export default {
   filters: {
     formatValue(pvalue) {
-      return format('.5f')(pvalue);
+      return format('.2e')(pvalue);
     },
   },
   data() {
