@@ -4,15 +4,12 @@
 
 **dataset** - *do we need a generic term?*
 
-**domain** -
-
-
+**domain** - A group of related variables e.g., cognitive, mental health.
 
 **outcome variable** -
 
-
 **predictor variable** -
 
-**query** -
+**query** - Possible synonym for "experiment". Discussion ongoing.
 
-**summary matrix** -
+**summary matrix** - Matrix that shows queries (including domains, variables, and cohorts) mapped to query results.
