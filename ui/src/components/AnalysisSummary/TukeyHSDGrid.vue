@@ -185,7 +185,14 @@ export default {
       }
       return ccl;
     },
-    table_cell_click(cohort1, cohort2) {},
+    table_cell_click(cohort1, cohort2) {
+      const cid = this.collection.id;
+      this.$router.push(
+        `explore?collection=${cid}&variable=${
+          this.selectedOutcomeVariable.id
+        }&cohorts=${cohort1.id},${cohort2.id}`
+      );
+    },
   },
 };
 </script>

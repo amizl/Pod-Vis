@@ -13,7 +13,13 @@
 
         <v-divider></v-divider>
 
-        <v-container v-if="collection_cohorts.length === 0" fluid fill-height>
+        <v-container
+          v-if="
+            typeof cohorts === 'undefined' || collection_cohorts.length === 0
+          "
+          fluid
+          fill-height
+        >
           <v-flex>Loading</v-flex>
         </v-container>
 
@@ -21,6 +27,7 @@
           v-else
           v-model="selected"
           flat
+          dense
           :headers="headers"
           :items="collection_cohorts"
           item-key="id"
@@ -46,14 +53,7 @@
             <td v-else class="text-xs-left" fill-width>
               {{ props.item.subject_ids.length }}
             </td>
-            <td>
-              <v-select
-                v-model="props.item.color"
-                outlined
-                :items="colors"
-                @change="colorChange"
-              ></v-select>
-            </td>
+            <td><v-chip :color="props.item.color" /></td>
           </template>
         </v-data-table>
       </v-layout>
@@ -74,10 +74,15 @@ export default {
     return {
       selected: [],
       colors: [
-        { value: '#dc143c', text: 'Red' },
-        { value: '#143cdc', text: 'Blue' },
-        { value: '#143c3c', text: 'Green' },
-        { value: '#d0d0d0', text: 'Grey' },
+        '#e41a1c',
+        '#377eb8',
+        '#4daf4a',
+        '#984ea3',
+        '#ff7f00',
+        '#ffff33',
+        '#a65628',
+        '#f781bf',
+        '#999999',
       ],
       headers: [
         {
@@ -112,10 +117,11 @@ export default {
     collection_cohorts() {
       const cch = [];
       const cid = this.collection.id;
-
+      let ind = 0;
       this.cohorts.forEach(e => {
         if (e.collection_id === cid) {
-          e.color = { value: '#d0d0d0', text: 'Grey' };
+          e.color = this.colors[ind];
+          ind += 1;
           cch.push(e);
         }
       });
@@ -137,12 +143,10 @@ export default {
       });
       this.setVisibleCohorts(visibleCohorts);
     },
-    collection_cohorts() {
-      this.setVisibleCohorts(this.visibleCohorts);
-    },
   },
   created() {
-    this.fetchCohorts();
+    // ensure this.selected consistent with visible
+    this.selectCohorts(this.visibleCohorts);
   },
   methods: {
     ...mapActions('dataExplorer', {
@@ -151,6 +155,18 @@ export default {
     }),
     colorChange(e) {
       this.$root.$emit('update_detailed_view');
+    },
+    selectCohorts(cohorts) {
+      const current = {};
+      this.selected.forEach(s => {
+        current[s.id] = 1;
+      });
+      cohorts.forEach(c => {
+        if (!(c.id in current)) {
+          current[c.id] = 1;
+          this.selected.push(c);
+        }
+      });
     },
   },
 };

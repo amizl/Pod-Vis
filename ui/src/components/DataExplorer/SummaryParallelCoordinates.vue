@@ -47,21 +47,14 @@ export default {
      * Watch for user adding outcome variables. When this happens,
      * we want to trigger a rerender so all the charts' dimensions
      * resize according to the available space in the flex area.
-     * We can achieve a forecful rerender by updating the key of
+     * We can achieve a forceful rerender by updating the key of
      * the parent component.
      */
     outcomeVariables() {
       this.rerenderCharts();
-      this.setDetailedView(null);
     },
   },
-  created() {
-      this.setDetailedView(null);
-  },
   methods: {
-    ...mapActions('dataExplorer', {
-      setDetailedView: actions.SET_DETAILED_VIEW,
-    }),
     rerenderCharts() {
       this.chartsKey += 1;
     },

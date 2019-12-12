@@ -63,6 +63,16 @@ export default {
       type: Number,
       required: true,
     },
+    variableId: {
+      type: Number,
+      required: false,
+      default: undefined,
+    },
+    cohortIds: {
+      type: String,
+      required: false,
+      default: undefined,
+    },
   },
   data() {
     return {
@@ -79,14 +89,15 @@ export default {
   async created() {
     // this.resetAllStoreData();
     this.isLoading = true;
-    await this.fetchCohorts();
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
+    await this.fetchCohorts();
     this.isLoading = false;
 
     // set outcome variables to union of cohorts' output variables
     const varsAdded = {};
     const outcomeVars = [];
+
     this.cohorts
       .filter(v => v.collection_id === this.collectionId)
       .forEach(c => {
@@ -100,6 +111,38 @@ export default {
         });
       });
     this.setOutcomeVariables(outcomeVars);
+
+    // initialize page with preselected variable in the highlight view
+    if (
+      typeof this.variableId !== 'undefined' &&
+      !Number.isNaN(this.variableId)
+    ) {
+      let outVar = null;
+      outcomeVars.forEach(ov => {
+        if (ov.id === this.variableId) {
+          outVar = ov;
+        }
+      });
+      this.setDetailedView(outVar);
+    } else {
+      this.setDetailedView(null);
+    }
+
+    // initialize page with preselected list of cohorts displayed in detailed view
+    if (typeof this.cohortIds !== 'undefined' && this.cohortIds !== '') {
+      const cids = this.cohortIds.split(',');
+      const cidD = {};
+      cids.forEach(cid => {
+        cidD[cid] = 1;
+      });
+      const vc = [];
+      this.cohorts.forEach(c => {
+        if (c.id in cidD) {
+          vc.push(c);
+        }
+      });
+      this.setVisibleCohorts(vc);
+    }
   },
   methods: {
     ...mapActions('dataExplorer', {
@@ -107,6 +150,8 @@ export default {
       fetchCollection: actions.FETCH_COLLECTION,
       fetchData: actions.FETCH_DATA,
       setOutcomeVariables: actions.SET_OUTCOME_VARIABLES,
+      setDetailedView: actions.SET_DETAILED_VIEW,
+      setVisibleCohorts: actions.SET_VISIBLE_COHORTS,
     }),
   },
 };

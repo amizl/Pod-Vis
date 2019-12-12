@@ -42,6 +42,8 @@ export default new Router({
       beforeEnter: requireAuth,
       props: route => ({
         collectionId: +route.query.collection,
+        variableId: +route.query.variable,
+        cohortIds: route.query.cohorts,
       }),
     },
     {

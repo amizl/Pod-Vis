@@ -212,6 +212,17 @@ export default {
       return cch;
     },
 
+    cohortsHaveSubjects() {
+      const cohorts = this.selectedCohorts();
+      let haveSubjects = true;
+      cohorts.forEach(c => {
+        if (typeof c.subject_ids === 'undefined') {
+          haveSubjects = false;
+        }
+      });
+      return haveSubjects;
+    },
+
     getRawPaths(subjectIds) {
       const rd = this.getRawData;
       const xds = this.xDimensionScale;
@@ -388,12 +399,14 @@ export default {
       if (slf.drawRaw) {
         cohorts.forEach(c => {
           const cohortSubjectIds = c.subject_ids;
-          // draw single path for each subject
-          const paths = slf.getRawPaths(cohortSubjectIds);
-          const rawOpacity = slf.drawMean ? 0.3 : 0.5;
-          paths.forEach(path => {
-            slf.drawMultiCurve(path, c.color, rawOpacity);
-          });
+          if (typeof cohortSubjectIds !== 'undefined') {
+            // draw single path for each subject
+            const paths = slf.getRawPaths(cohortSubjectIds);
+            const rawOpacity = slf.drawMean ? 0.3 : 0.5;
+            paths.forEach(path => {
+              slf.drawMultiCurve(path, c.color, rawOpacity);
+            });
+          }
         });
       }
 
@@ -403,9 +416,11 @@ export default {
         // get all paths
         cohorts.forEach(c => {
           const cohortSubjectIds = c.subject_ids;
-          // draw mean and standard deviation for entire group
-          const paths = slf.getMeanAndSDPaths(cohortSubjectIds);
-          groups.push({ paths, color: c.color });
+          if (typeof cohortSubjectIds !== 'undefined') {
+            // draw mean and standard deviation for entire group
+            const paths = slf.getMeanAndSDPaths(cohortSubjectIds);
+            groups.push({ paths, color: c.color });
+          }
         });
 
         // shade +/- 1 SD regions
@@ -506,7 +521,6 @@ export default {
         ccounts.population[x] = 1;
       });
       cohorts.forEach(c => {
-        //        console.log("got cohort " + c.label + " with " + c.subject_ids.length + " subject(s)");
         ccounts[c.label] = {};
         c.subject_ids.forEach(sid => {
           ccounts[c.label][sid] = 1;
@@ -765,11 +779,13 @@ export default {
         this.computedWidth + this.margin.left + 50,
         this.computedHeight + 120
       );
-      this.context.translate(this.margin.left, 0);
-      this.drawData();
-      this.drawAxes();
-      this.drawSubjectCounts();
-      this.context.translate(-this.margin.left, 0);
+      if (this.cohortsHaveSubjects()) {
+        this.context.translate(this.margin.left, 0);
+        this.drawData();
+        this.drawAxes();
+        this.drawSubjectCounts();
+        this.context.translate(-this.margin.left, 0);
+      }
     },
   },
 };
