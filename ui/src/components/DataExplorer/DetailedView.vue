@@ -17,7 +17,7 @@
         </v-btn-toggle>
 -->
           <span class="subheading primary--text mt-3 mr-2 ml-3">X-Axis:</span>
-          <v-btn-toggle v-model="xaxis">
+          <v-btn-toggle v-model="xaxis" mandatory>
             <v-btn
               text
               color="primary"
