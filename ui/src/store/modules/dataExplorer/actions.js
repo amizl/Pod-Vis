@@ -191,7 +191,6 @@ export default {
     ) {
       return;
     }
-
     // compute subjects in each cohort
     cohorts.forEach(c => {
       if (c.collection_id === collection.id) {
