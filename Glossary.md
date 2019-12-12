@@ -1,18 +1,18 @@
 **clinical data collection** -
 
-**cohort** - a subset of a dataset.
+**cohort** - A subset of a dataset's subjects. Defined by a query.
 
 **dataset** - *do we need a generic term?*
 
-**domains** -
+**domain** -
 
 
 
-**Outcome variables** -
+**outcome variable** -
 
 
-**Predictor variables** -
+**predictor variable** -
 
-**Query** -
+**query** -
 
-**Summary Matrix** -
+**summary matrix** -
