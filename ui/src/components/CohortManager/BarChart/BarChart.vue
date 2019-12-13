@@ -13,7 +13,7 @@
           :y="yScale(d.value)"
           :width="xScale.bandwidth()"
           :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
-          fill="#E8EAF6"
+          fill="#FAE1A6"
           @click.native="userClickedBar(d.key)"
         />
         <bar-rect
@@ -205,7 +205,7 @@ export default {
         // }
         return '#3F51B5';
       }
-      return '#E8EAF6';
+      return '#FAE1A6';
     },
     userClickedBar(key) {
       if (this.selected.includes(key)) {

@@ -5,10 +5,10 @@
       <v-divider vertical class="ml-4"></v-divider>
       <v-spacer />
       <v-toolbar-items>
-        <v-chip disabled label color="primary" class="white--text"
+        <v-chip disabled color="#3F51B5" class="white--text"
           >Cohort</v-chip
         >
-        <v-chip disabled label color="primary lighten-5" class="primary--text"
+        <v-chip disabled color="#FAE1A6" class="primary--text"
           >Population</v-chip
         >
       </v-toolbar-items>
