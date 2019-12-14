@@ -5,7 +5,6 @@ import decimal
 import enum
 from sqlalchemy.sql import text
 import pandas as pd
-import sys
 import time
 
 class InstantiationType(enum.Enum):
@@ -283,8 +282,9 @@ class Collection(db.Model):
         ]).set_index('id')
 
         # Convert to datetime
-        if "Birthdate" in subjects_df.columns:
-            subjects_df['Birthdate'] = pd.to_datetime(subjects_df['Birthdate'])
+        for date_col in ["Birthdate", "Enroll Date", "Diagnosis Date"]:
+            if date_col in subjects_df.columns:
+                subjects_df[date_col] = pd.to_datetime(subjects_df[date_col])
             
         result = pd.merge(pd.DataFrame(observations), subjects_df, left_on='subject_id', right_on='id')
         result_df = pd.DataFrame(all_rows)
@@ -296,7 +296,7 @@ class Collection(db.Model):
 
         result_df['event_day'] = result_df['event_date'] - first_date
         result_df['event_day'] = result_df['event_day'].dt.days
-        
+
         return { 'data': result, 'raw_data': result_df }
         # need to some how group by subject id and observation and count the number of distinct observation and see
         # if this number matches...

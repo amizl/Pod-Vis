@@ -92,8 +92,11 @@ class SubjectAttribute(db.Model):
 
         if self.value_type is ValueType.int:
             response['value'] = int(self.value)
+        elif self.value_type is ValueType.decimal:
+            response['value'] = float(self.value)
+        elif self.value_type is ValueType.date:
+            response['value'] = self.value
         else:
             response['value'] = str(self.value)
-        # TODO... date
 
         return response
