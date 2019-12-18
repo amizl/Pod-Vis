@@ -3,14 +3,31 @@
     <v-toolbar card dense flat color="white rounded-lg">
       <v-toolbar-items> <input-variables-dialog /> </v-toolbar-items>
       <v-divider vertical class="ml-4"></v-divider>
+      <v-chip
+        v-if="inputVariables.length == 0"
+        disabled
+        color="primary"
+        class="white--text title-1"
+        >No variables selected</v-chip
+      >
+      <v-chip v-else disabled color="primary" class="white--text title-1"
+        >{{ inputVariables.length }} variable<span
+          v-if="inputVariables.length != 1"
+          >s</span
+        >&nbsp;selected</v-chip
+      >
       <v-spacer />
       <v-toolbar-items>
-        <v-chip disabled color="#3F51B5" class="white--text"
-          >Cohort</v-chip
+        <v-chip disabled color="#3F51B5" class="white--text title-1"
+          >Cohort - {{ animatedNumber }}</v-chip
         >
-        <v-chip disabled color="#FAE1A6" class="primary--text"
-          >Population</v-chip
+        <v-chip disabled color="#FAE1A6" class="primary--text title-1"
+          >Population - {{ unfilteredData.length }}</v-chip
         >
+      </v-toolbar-items>
+      <v-toolbar-items>
+        <v-icon v-if="expanded" @click="expandClicked">expand_less</v-icon>
+        <v-icon v-else @click="expandClicked">expand_more</v-icon>
       </v-toolbar-items>
       <!-- <v-spacer></v-spacer>
       <v-select
@@ -22,6 +39,7 @@
         color="primary"
       ></v-select> -->
       <!-- <v-spacer></v-spacer> -->
+      <!--
       <v-divider vertical class="mr-4"></v-divider>
       <v-toolbar-items class="scrollable">
         <v-tooltip color="primary" top>
@@ -33,6 +51,7 @@
           <span>Number of subjects in cohort.</span>
         </v-tooltip>
       </v-toolbar-items>
+-->
     </v-toolbar>
     <v-divider></v-divider>
   </section>
@@ -48,6 +67,12 @@ export default {
   components: {
     InputVariablesDialog,
   },
+  props: {
+    expanded: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
       tweenData: 0,
@@ -57,6 +82,7 @@ export default {
     ...mapState('cohortManager', {
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
+      inputVariables: state.INPUT_VARIABLES,
     }),
     animatedNumber() {
       return this.tweenData.toFixed(0);
@@ -86,6 +112,9 @@ export default {
     this.tweenData = this.filteredData.length;
   },
   methods: {
+    expandClicked() {
+      this.$emit('expandClicked', !this.expanded);
+    },
     tween(startValue, endValue, prop) {
       const vm = this;
       function animate() {

@@ -1,8 +1,11 @@
 <template>
   <v-sheet color="white" height="100%" class="rounded-lg shadow">
     <v-layout column fill-height class="ma-1">
-      <input-variables-toolbar />
-      <v-container fluid fill-height class="pa-0 pb-1">
+      <input-variables-toolbar
+        :expanded="expanded"
+        @expandClicked="expandClicked"
+      />
+      <v-container v-show="expanded" fluid fill-height class="pa-0 pb-1">
         <input-variables-charts v-if="hasUserAddedInputVariables" />
         <v-layout v-else column align-center justify-center fill-height>
           <v-subheader class="display-1 primary--text text--lighten-5">
@@ -29,6 +32,7 @@ export default {
     return {
       variables: [],
       value: [],
+      expanded: true,
     };
   },
   computed: {
@@ -44,6 +48,9 @@ export default {
       addInputVariable: mutations.ADD_INPUT_VARIABLE,
       removeInputVariable: mutations.REMOVE_INPUT_VARIABLE,
     }),
+    expandClicked(newval) {
+      this.expanded = newval;
+    },
   },
 };
 </script>

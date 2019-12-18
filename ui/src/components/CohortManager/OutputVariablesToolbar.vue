@@ -3,6 +3,19 @@
     <v-toolbar card dense flat color="white rounded-lg">
       <v-toolbar-items> <output-variables-dialog /> </v-toolbar-items>
       <v-divider vertical class="ml-4"></v-divider>
+      <v-chip
+        v-if="outputVariables.length == 0"
+        disabled
+        color="primary"
+        class="white--text title-1"
+        >No variables selected</v-chip
+      >
+      <v-chip v-else disabled color="primary" class="white--text title-1"
+        >{{ outputVariables.length }} variable<span
+          v-if="outputVariables.length != 1"
+          >s</span
+        >&nbsp;selected</v-chip
+      >
       <v-spacer />
       <v-toolbar-items>
         <!-- TODO...filters? -->
@@ -24,6 +37,10 @@
           >
         </v-btn-toggle>
       </v-toolbar-items>
+      <v-toolbar-items>
+        <v-icon v-if="expanded" @click="expandClicked">expand_less</v-icon>
+        <v-icon v-else @click="expandClicked">expand_more</v-icon>
+      </v-toolbar-items>
     </v-toolbar>
     <v-divider></v-divider>
   </section>
@@ -38,6 +55,12 @@ export default {
   components: {
     OutputVariablesDialog,
   },
+  props: {
+    expanded: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
       subset: 'cohort',
@@ -46,12 +69,16 @@ export default {
   computed: {
     ...mapState('cohortManager', {
       highlighted_subset: state.HIGHLIGHTED_SUBSET,
+      outputVariables: state.OUTPUT_VARIABLES,
     }),
   },
   methods: {
     ...mapActions('cohortManager', {
       setHighlightedSubset: actions.SET_HIGHLIGHTED_SUBSET,
     }),
+    expandClicked() {
+      this.$emit('expandClicked', !this.expanded);
+    },
     highlight(newSubset) {
       this.setHighlightedSubset(newSubset);
     },
