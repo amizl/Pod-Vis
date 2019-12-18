@@ -1,77 +1,83 @@
 <template>
-  <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
-  <v-data-table
-    v-else
-    :headers="headers"
-    :items="showPublicCollections ? publicCollections : privateCollections"
-    item-key="label"
-    hide-actions
-    hide-headers
-  >
-    <template v-slot:items="props">
-      <tr>
-        <td class="text-xs-left">{{ props.item.label }}</td>
-        <td class="text-xs-left">{{ props.item.date_generated }}</td>
-        <td class="text-xs-right px-0">
-          <v-tooltip top color="primary">
-            <template v-slot:activator="{ on }">
-              <v-btn flat @click="routeToCohortManager(props.item)" v-on="on">
-                <v-icon left small color="secondary">group_add</v-icon> Add
-                Cohorts ({{ props.item.num_cohorts }})
-              </v-btn>
-            </template>
-            <span>Launch Cohort Manager to add/remove Cohorts</span>
-          </v-tooltip>
+  <div>
+    <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
 
-          <v-tooltip top color="primary">
-            <template v-slot:activator="{ on }">
-              <v-btn
-                flat
-                :disabled="props.item.num_cohorts == 0"
-                @click="routeToDataExplorer(props.item)"
-                v-on="on"
-              >
-                <v-icon left small color="secondary">explore</v-icon> Explore
-              </v-btn>
-            </template>
-            <span>Launch Data Explorer to compare Cohorts</span>
-          </v-tooltip>
+    <v-data-table
+      :headers="headers"
+      :items="showPublicCollections ? publicCollections : privateCollections"
+      item-key="label"
+      hide-headers
+      hide-actions
+    >
+      <template v-slot:items="props">
+        <tr>
+          <td class="text-xs-left">{{ props.item.label }}</td>
+          <td class="text-xs-left">{{ props.item.date_generated }}</td>
+          <td class="text-xs-right px-0">
+            <v-tooltip top color="primary">
+              <template v-slot:activator="{ on }">
+                <v-btn flat @click="routeToCohortManager(props.item)" v-on="on">
+                  <v-icon left small color="secondary">group_add</v-icon> Add
+                  Cohorts ({{ props.item.num_cohorts }})
+                </v-btn>
+              </template>
+              <span>Launch Cohort Manager to add/remove Cohorts</span>
+            </v-tooltip>
 
-          <v-tooltip top color="primary">
-            <template v-slot:activator="{ on }">
-              <v-btn
-                flat
-                :disabled="props.item.num_cohorts == 0"
-                @click="routeToAnalysisSummary(props.item)"
-                v-on="on"
-              >
-                <v-icon left small color="secondary">bar_chart</v-icon> Analyze
-              </v-btn>
-            </template>
-            <span>View Analysis Summary for current Cohorts</span>
-          </v-tooltip>
+            <v-tooltip top color="primary">
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  flat
+                  :disabled="props.item.num_cohorts == 0"
+                  @click="routeToDataExplorer(props.item)"
+                  v-on="on"
+                >
+                  <v-icon left small color="secondary">explore</v-icon> Explore
+                </v-btn>
+              </template>
+              <span>Launch Data Explorer to compare Cohorts</span>
+            </v-tooltip>
 
-          <delete-collection-button
-            v-if="props.item.is_deletable"
-            :collection-id="props.item.id"
-          />
-        </td>
-      </tr>
-    </template>
-    <template v-slot:no-data>
-      <v-alert
-        v-if="showPublicCollections"
-        :value="true"
-        color="primary"
-        icon="info"
-      >
-        There are no public clinical data collections.
-      </v-alert>
-      <v-alert v-else :value="true" color="primary" icon="info">
-        You have no saved clinical data collections.
-      </v-alert>
-    </template>
-  </v-data-table>
+            <v-tooltip top color="primary">
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  flat
+                  :disabled="props.item.num_cohorts == 0"
+                  @click="routeToAnalysisSummary(props.item)"
+                  v-on="on"
+                >
+                  <v-icon left small color="secondary">grid_on</v-icon>
+                  Summarize
+                </v-btn>
+              </template>
+              <span>View Analysis Summary for current Cohorts</span>
+            </v-tooltip>
+
+            <delete-collection-button
+              v-if="props.item.is_deletable"
+              :collection-id="props.item.id"
+            />
+          </td>
+        </tr>
+        <tr v-for="(cohort, index) in props.item.cohorts">
+          <td colspan="3">cohort row</td>
+        </tr>
+      </template>
+      <template v-slot:no-data>
+        <v-alert
+          v-if="showPublicCollections"
+          :value="true"
+          color="primary"
+          icon="info"
+        >
+          There are no public clinical data collections.
+        </v-alert>
+        <v-alert v-else :value="true" color="primary" icon="info">
+          You have no saved clinical data collections.
+        </v-alert>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
