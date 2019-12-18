@@ -23,7 +23,6 @@
         >
           <template v-slot:items="props">
             <tr>
-              <td class="text-xs-left">{{ props.item.label }}</td>
               <td v-for="ov in outcomeVariables" :key="ov.id">
                 <v-layout justify-center
                   ><v-chip
@@ -50,9 +49,6 @@ import { format } from 'd3-format';
 export default {
   components: {},
   props: {},
-  data() {
-    return {};
-  },
   computed: {
     ...mapState('analysisSummary', {
       selectedOutcomeVariable: state.SELECTED_OUTCOME_VARIABLE,
@@ -77,28 +73,6 @@ export default {
 
       return cch;
     },
-    headers() {
-      const ovars = this.outcomeVariables;
-      const headers = [
-        {
-          text: 'Cohort',
-          align: 'left',
-          sortable: true,
-          divider: true,
-          value: 'label',
-        },
-      ];
-      ovars.forEach(ov => {
-        headers.push({
-          text: ov.label,
-          align: 'center',
-          sortable: false,
-          divider: true,
-          value: ov.id,
-        });
-      });
-      return headers;
-    },
     pval_dict() {
       const ap = this.anova_pvals;
       const pd = {};
@@ -108,7 +82,24 @@ export default {
       return pd;
     },
     items() {
-      return this.collection_cohorts;
+      return [this.collection_cohorts[0]];
+    },
+    headers() {
+      let th = this;
+      const ovars = this.outcomeVariables;
+      const headers = [];
+      let ind = 0;
+      ovars.forEach(ov => {
+        headers.push({
+          text: ov.label,
+          align: 'center',
+          sortable: false,
+          divider: true,
+          value: ov.id,
+        });
+        ind += 1;
+      });
+      return headers;
     },
   },
   created() {
@@ -118,7 +109,7 @@ export default {
     ...mapActions('analysisSummary', {
       setSelectedOutcomeVariable: actions.SET_SELECTED_OUTCOME_VARIABLE,
     }),
-    table_cell(cohort, ov) {
+    variable_pval(ov) {
       const pd = this.pval_dict;
       if (ov.label in pd) {
         const { pval } = pd[ov.label];
@@ -127,7 +118,12 @@ export default {
         }
         return `p=${format('.4f')(pval)}`;
       }
-      return 'X';
+      return null;
+    },
+    table_cell(cohort, ov) {
+      let pval = this.variable_pval(ov);
+      if (pval === null) {return 'X';}
+      return pval;
     },
     table_cell_class(ov) {
       const pd = this.pval_dict;
@@ -168,6 +164,7 @@ export default {
     table_cell_click(ov) {
       this.setSelectedOutcomeVariable(ov);
     },
+
   },
 };
 </script>
