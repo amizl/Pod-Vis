@@ -1,7 +1,8 @@
 <template>
   <v-flex ref="container" fill-height>
     <!-- Detailed View Chart -->
-    <canvas ref="canvas" :width="width" :height="height"> </canvas>
+    <canvas ref="canvas" :width="width" :height="height" min-height="500">
+    </canvas>
   </v-flex>
 </template>
 
@@ -299,7 +300,10 @@ export default {
     resizeChart() {
       const { height } = this.container.getBoundingClientRect();
       this.height = height;
-      // HACK
+      // HACK - establish minimum size
+      if (height < 400) {
+        this.height = 400;
+      }
       this.width = 550;
       // this.context.scale(this.devicePixelRatio, this.devicePixelRatio);
     },
