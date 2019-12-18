@@ -53,13 +53,28 @@
       </v-list>
       <v-spacer></v-spacer>
       <v-list one-line>
+        <v-list-tile @click="expand = !expand">
+          <v-tooltip v-if="expand" color="primary" right>
+            <v-list-tile-action slot="activator">
+              <v-icon color="primary" small>chevron_left</v-icon>
+            </v-list-tile-action>
+            <span>Collapse menu</span>
+          </v-tooltip>
+          <v-tooltip v-else color="primary" right>
+            <v-list-tile-action slot="activator">
+              <v-icon color="primary" small>chevron_right</v-icon>
+            </v-list-tile-action>
+            <span>Expand menu</span>
+          </v-tooltip>
+        </v-list-tile>
+
         <v-list-tile @click="signOutDialog = true">
           <v-list-tile-action v-if="expand">
-            <v-icon color="primary">exit_to_app</v-icon>
+            <v-icon color="primary">close</v-icon>
           </v-list-tile-action>
           <v-tooltip v-else color="primary" right>
             <v-list-tile-action slot="activator">
-              <v-icon color="primary">exit_to_app</v-icon>
+              <v-icon color="primary">close</v-icon>
             </v-list-tile-action>
             <span>Sign Out</span>
           </v-tooltip>
@@ -69,21 +84,7 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="expand = !expand">
-          <v-tooltip v-if="expand" color="primary" right>
-            <v-list-tile-action slot="activator">
-              <v-icon color="primary" small>keyboard_arrow_left</v-icon>
-            </v-list-tile-action>
-            <span>Collapse menu</span>
-          </v-tooltip>
 
-          <v-tooltip v-else color="primary" right>
-            <v-list-tile-action slot="activator">
-              <v-icon color="primary" small>keyboard_arrow_right</v-icon>
-            </v-list-tile-action>
-            <span>Expand menu</span>
-          </v-tooltip>
-        </v-list-tile>
       </v-list>
       <!-- <v-list class="pb-5">
         <v-list-tile>
