@@ -39,11 +39,11 @@
             <v-icon color="primary lighten-1">{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-tooltip v-else color="primary" right>
-          <v-list-tile-action slot="activator">
-            <v-icon color="primary lighten-1">{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-      	 <span>{{ item.name }}</span>
-	 </v-tooltip>
+            <v-list-tile-action slot="activator">
+              <v-icon color="primary lighten-1">{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+            <span>{{ item.name }}</span>
+          </v-tooltip>
           <v-list-tile-content v-if="expand">
             <v-list-tile-title>
               <span> {{ item.name }} </span>
@@ -58,36 +58,32 @@
             <v-icon color="primary">exit_to_app</v-icon>
           </v-list-tile-action>
           <v-tooltip v-else color="primary" right>
-          <v-list-tile-action slot="activator">
-            <v-icon color="primary">exit_to_app</v-icon>
-          </v-list-tile-action>
-   	  <span>Sign Out</span>
+            <v-list-tile-action slot="activator">
+              <v-icon color="primary">exit_to_app</v-icon>
+            </v-list-tile-action>
+            <span>Sign Out</span>
           </v-tooltip>
-	  <v-list-tile-content v-if="expand">
+          <v-list-tile-content v-if="expand">
             <v-list-tile-title>
               <span class="primary--text"> Sign out </span>
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-          <v-list-tile @click="expand = !expand">
-
-           <v-tooltip v-if="expand" color="primary" right>
+        <v-list-tile @click="expand = !expand">
+          <v-tooltip v-if="expand" color="primary" right>
             <v-list-tile-action slot="activator">
               <v-icon color="primary" small>keyboard_arrow_left</v-icon>
             </v-list-tile-action>
-	    <span>Collapse menu</span>
-            </v-tooltip>
+            <span>Collapse menu</span>
+          </v-tooltip>
 
-           <v-tooltip v-else color="primary" right>
-             <v-list-tile-action slot="activator">
-	      <v-icon color="primary" small
-                >keyboard_arrow_right</v-icon>
-             </v-list-tile-action>
-	    <span>Expand menu</span>
-            </v-tooltip>
-	      
-          </v-list-tile>
-    
+          <v-tooltip v-else color="primary" right>
+            <v-list-tile-action slot="activator">
+              <v-icon color="primary" small>keyboard_arrow_right</v-icon>
+            </v-list-tile-action>
+            <span>Expand menu</span>
+          </v-tooltip>
+        </v-list-tile>
       </v-list>
       <!-- <v-list class="pb-5">
         <v-list-tile>
