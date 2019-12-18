@@ -2,17 +2,24 @@
   <v-container fluid grid-list-md class="ma-0 pa-2">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text"
-        >Create Clinical Data Collection</v-toolbar-title
+        >Dataset Manager - Select Variables</v-toolbar-title
       >
       <v-spacer></v-spacer>
       <save-collection-btn-dialog
         :variables="variables"
         :dataset-ids="selectedDatasetIDs"
+        @dialogOpen="dialogOpened"
+        @collectionSaved="collectionSaved"
       />
     </v-toolbar>
+
+    <v-sheet color="white" height="100%" class="scroll rounded-lg shadow">
+      <analysis-tracker step="2" :substep="substep"></analysis-tracker>
+    </v-sheet>
+
     <!-- <v-layout row justify-center>
       <v-flex xs12>
-        <p class="subheading grey--text ligthen-2">Selected Datasets:</p>
+        <p class="subheading grey--text lighten-2">Selected Datasets:</p>
         <v-container grid-list-lg fluid pt-0 mt-0 pl-0 ml-0>
           <v-layout row wrap>
             <v-flex v-for="dataset in selectedDatasets" :key="dataset.id" xs4>
@@ -89,12 +96,14 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
+import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import SharedVariableTable from '@/components/DatasetManager/SharedVariableTable.vue';
 import UnsharedVariableTable from '@/components/DatasetManager/UnsharedVariableTable.vue';
 import SaveCollectionBtnDialog from '@/components/BuildDataset/SaveCollectionBtnDialog.vue';
 
 export default {
   components: {
+    AnalysisTracker,
     SharedVariableTable,
     UnsharedVariableTable,
     SaveCollectionBtnDialog,
@@ -111,6 +120,7 @@ export default {
     collectionName: '',
     activeDataset: null,
     selected: [],
+    substep: '2.2',
   }),
   computed: {
     ...mapState('datasetManager', {
@@ -129,6 +139,16 @@ export default {
     }),
     goBack() {
       this.$router.go(-1);
+    },
+    dialogOpened(isOpen) {
+      if (isOpen) {
+        this.substep = '2.3';
+      } else {
+        this.substep = '2.2';
+      }
+    },
+    collectionSaved() {
+      this.step = '3';
     },
   },
 };

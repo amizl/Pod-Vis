@@ -6,52 +6,57 @@
           Mann-Whitney Rank Test
           <div class="subheading">cohort vs. remainder change</div>
         </v-toolbar-title>
+        <v-divider vertical class="ml-4"></v-divider>
+        <v-spacer />
+        <v-toolbar-items>
+          <v-icon v-if="expanded" @click="expandClicked">expand_less</v-icon>
+          <v-icon v-else @click="expandClicked">expand_more</v-icon>
+        </v-toolbar-items>
       </v-toolbar>
       <v-divider></v-divider>
-      <v-container v-if="!pvals.length" fluid fill-height>
-        <v-layout column align-center justify-center fill-height>
-          <v-subheader class="subheading primary--text text--lighten-4">
-            <v-flex xs6
-              ><v-icon large class="primary--text text--lighten-4"
-                >info</v-icon
-              ></v-flex
-            >
-            <v-flex>
-              Add output variables and filter charts for Mann-Whitney rank test
-              on cohort and population samples.
-            </v-flex>
-          </v-subheader>
-        </v-layout>
-      </v-container>
-      <v-flex v-else>
-        <v-data-table
-          :headers="headers"
-          :items="pvals"
-          dense
-          hide-default-header
-        >
-          <template v-slot:items="props">
-            <tr :class="getVariableClass(props.item)">
-              <td class="text-xs-left">{{ props.item.label }}</td>
-              <td class="text-xs-right">{{ props.item.pval | formatValue }}</td>
-            </tr>
-          </template>
-          <!-- <template v-slot:no-data>
+      <div v-show="expanded">
+        <v-container v-if="!pvals.length" fluid fill-height>
+          <v-layout column align-center justify-center fill-height>
+            <v-subheader class="subheading primary--text text--lighten-4">
+              <v-flex>
+                Add variables and apply filters to them to view Mann-Whitney
+                rank test results for all outcome variables.
+              </v-flex>
+            </v-subheader>
+          </v-layout>
+        </v-container>
+        <v-flex v-else>
+          <v-data-table
+            :headers="headers"
+            :items="pvals"
+            dense
+            hide-default-header
+          >
+            <template v-slot:items="props">
+              <tr :class="getVariableClass(props.item)">
+                <td class="text-xs-left">{{ props.item.label }}</td>
+                <td class="text-xs-right">
+                  {{ props.item.pval | formatValue }}
+                </td>
+              </tr>
+            </template>
+            <!-- <template v-slot:no-data>
             <v-alert :value="true" color="primary" icon="info">
               Add output variables and filter charts for Mann-Whitney rank test
               on cohort and population samples.
             </v-alert>
           </template> -->
-        </v-data-table>
+          </v-data-table>
 
-        <v-select
-          label="Highlight P Value <="
-          :items="pval_thresholds"
-          box
-          :value="pval_threshold"
-          @change="updatePval"
-        ></v-select>
-      </v-flex>
+          <v-select
+            label="Highlight P Value <="
+            :items="pval_thresholds"
+            box
+            :value="pval_threshold"
+            @change="updatePval"
+          ></v-select>
+        </v-flex>
+      </div>
     </v-layout>
   </v-sheet>
 </template>
@@ -70,7 +75,16 @@ export default {
   data() {
     return {
       highlight_by_pval: false,
-      pval_thresholds: ['None', 0.1, 0.05, 0.001, 0.0001, 0.00001, 0.000001],
+      pval_thresholds: [
+        'None',
+        0.1,
+        0.05,
+        0.01,
+        0.001,
+        0.0001,
+        0.00001,
+        0.000001,
+      ],
       headers: [
         {
           text: 'Variable',
@@ -85,6 +99,7 @@ export default {
           value: 'pval',
         },
       ],
+      expanded: true,
     };
   },
   computed: {
@@ -105,6 +120,9 @@ export default {
         return 'highlight-var';
       }
       return '';
+    },
+    expandClicked() {
+      this.expanded = !this.expanded;
     },
   },
 };

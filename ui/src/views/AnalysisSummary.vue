@@ -2,17 +2,26 @@
   <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-2">
     <loading-spinner />
   </v-container>
-  <v-container v-else fluid grid-list-md fill-height class="ma-0 pa-2">
+  <v-container v-else fluid fill-width class="ma-0 pa-2">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text"
-        >Analysis Summary
+        >Summary Matrix
         <div class="subheading">{{ collection.label }}</div>
       </v-toolbar-title>
     </v-toolbar>
 
-    <v-layout column fill-height class="ma-0 pa-0">
-      <one-way-anova-grid />
-      <tukey-hsd-grid class="mt-2" />
+    <v-layout row class="ma-0 pa-0">
+      <v-flex xs12>
+        <analysis-tracker step="5" :substep="substep"></analysis-tracker>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row fill-height class="ma-0 pa-0">
+      <v-flex xs12><one-way-anova-grid /></v-flex>
+    </v-layout>
+
+    <v-layout row fill-height class="ma-0 pa-0">
+      <v-flex xs12><tukey-hsd-grid class="mt-2"/></v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -25,12 +34,14 @@ import {
   state as deState,
 } from '@/store/modules/dataExplorer/types';
 
+import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import OneWayAnovaGrid from '@/components/AnalysisSummary/OneWayANOVAGrid.vue';
 import TukeyHsdGrid from '@/components/AnalysisSummary/TukeyHSDGrid.vue';
 
 export default {
   name: 'AnalysisSummary',
   components: {
+    AnalysisTracker,
     OneWayAnovaGrid,
     TukeyHsdGrid,
   },
@@ -43,6 +54,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      substep: '5.1',
     };
   },
   computed: {

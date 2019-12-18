@@ -5,13 +5,13 @@
       color="primary--text"
       @click="dialog = !dialog"
     >
-      <v-icon left>save</v-icon> SAVE COLLECTION
+      <v-icon left>save</v-icon> SAVE STUDY DATASET
     </v-btn>
     <!-- SAVE COLLECTION FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
       <v-card>
         <v-card-title primary-title>
-          <span class="title pl-2">Save Clinical Data Collection</span>
+          <span class="title pl-2">Save Study Dataset</span>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" v-model="valid" @submit.prevent="onSaveCollection">
@@ -21,7 +21,7 @@
                 () => !!collectionName || 'Collection name is required.',
               ]"
               prepend-inner-icon="table_chart"
-              label="Please name your clinical data collection."
+              label="Please name your study dataset."
               box
               flat
               background-color="grey lighten-4"
@@ -75,6 +75,11 @@ export default {
       return this.variables.length > 0;
     },
   },
+  watch: {
+    dialog() {
+      this.$emit('dialogOpen', this.dialog);
+    },
+  },
   methods: {
     ...mapActions('datasetManager', {
       saveCollection: actions.SAVE_COLLECTION,
@@ -84,9 +89,14 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true;
         try {
-          await this.saveCollection({ collectionName, variables, datasetIds });
+          const newCollection = await this.saveCollection({
+            collectionName,
+            variables,
+            datasetIds,
+          });
+          this.$emit('collectionSaved');
           this.loading = false;
-          this.$router.push('/homepage');
+          this.$router.push(`/cohorts?collection=${newCollection.id}`);
         } catch (err) {
           this.loading = false;
         }

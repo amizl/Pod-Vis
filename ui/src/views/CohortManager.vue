@@ -2,7 +2,7 @@
   <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-2">
     <loading-spinner />
   </v-container>
-  <v-container v-else fluid grid-list-md fill-height class="ma-0 pa-2">
+  <v-container v-else fluid fill-width class="ma-0 pa-2">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text"
         >Cohort Manager
@@ -24,14 +24,23 @@
         <span>Launch Data Explorer to compare Cohorts</span>
       </v-tooltip>
     </v-toolbar>
-    <v-layout column fill-height class="ma-0 pa-0">
-      <v-flex xs6 class="ma-0 pa-0">
-        <v-layout fill-height class="ma-0 pa-0">
-          <v-flex xs8> <input-variables /> </v-flex>
-          <v-flex xs4> <analytics-table /> </v-flex>
-        </v-layout>
+
+    <v-layout row class="ma-0 pa-0">
+      <v-flex xs12>
+        <analysis-tracker step="3" :substep="substep"></analysis-tracker>
       </v-flex>
-      <v-flex xs6> <output-variables /> </v-flex>
+    </v-layout>
+
+    <v-layout row fill-height class="mt-2 pa-0">
+      <v-flex xs12> <input-variables /> </v-flex>
+    </v-layout>
+
+    <v-layout row class="mt-2 pa-0">
+      <v-flex xs12> <output-variables /> </v-flex>
+    </v-layout>
+
+    <v-layout row class="mt-2 pa-0">
+      <v-flex xs6> <analytics-table /> </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -40,6 +49,7 @@
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions, state, getters } from '@/store/modules/cohortManager/types';
 
+import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import CohortSelection from '@/components/CohortManager/CohortSelection.vue';
 import AnalyticsTable from '@/components/CohortManager/AnalyticsTable.vue';
 import InputVariables from '@/components/CohortManager/InputVariables.vue';
@@ -51,6 +61,7 @@ import DataExplorerButton from '@/components/CohortManager/DataExplorerBtnDialog
 export default {
   name: 'CohortManager',
   components: {
+    AnalysisTracker,
     CohortSelection,
     InputVariables,
     OutputVariables,
@@ -68,6 +79,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      substep: '3.1',
     };
   },
   computed: {

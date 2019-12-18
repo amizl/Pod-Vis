@@ -8,11 +8,11 @@
           @click="dialog = !dialog"
           v-on="on"
         >
-          <v-icon left>bar_chart</v-icon>
-          Analyze
+          <v-icon left>grid_on</v-icon>
+          Summary Matrix
         </v-btn>
       </template>
-      <span>View Analysis Summary for all Cohorts and Outcome Variables</span>
+      <span>View Summary Matrix for all Cohorts and Outcome Variables</span>
     </v-tooltip>
 
     <v-dialog v-model="dialog" width="500">
@@ -20,7 +20,7 @@
         <v-card-title class="title primary--text text--darken-3">
           <span class="primary--text title pl-2"
             >Are you sure you want to leave the Data Explorer and go to the
-            Analysis Summary?</span
+            Summary Matrix?</span
           >
         </v-card-title>
         <v-divider></v-divider>

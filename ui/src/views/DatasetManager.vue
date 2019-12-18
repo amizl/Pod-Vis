@@ -1,7 +1,10 @@
 <template>
   <v-container fluid class="ma-0 pa-2">
     <v-toolbar app class="primary">
-      <v-toolbar-title class="white--text">Dataset Manager</v-toolbar-title>
+      <v-toolbar-title class="white--text"
+        >Dataset Manager - Choose Datasets</v-toolbar-title
+      >
+
       <v-spacer></v-spacer>
       <!-- <v-text-field
         v-model="search"
@@ -22,11 +25,16 @@
         right
       >
         <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
-        Create Clinical Data Collection</v-btn
+        Select Variables</v-btn
       >
       <!-- </v-toolbar-items> -->
     </v-toolbar>
-    <v-layout fill-height justify-center>
+
+    <v-sheet color="white" height="100%" class="scroll rounded-lg shadow">
+      <analysis-tracker step="2" substep="2.1"></analysis-tracker>
+    </v-sheet>
+
+    <v-layout fill-height justify-center class="mt-2">
       <v-flex xs12 class="pa-0 ma-0">
         <v-card class="shadow rounded-lg">
           <v-tabs slider-color="primary" grow>
@@ -47,10 +55,12 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
+import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import DatasetTable from '@/components/DatasetManager/DatasetTable.vue';
 
 export default {
   components: {
+    AnalysisTracker,
     DatasetTable,
   },
   filters: {

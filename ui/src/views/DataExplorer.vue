@@ -2,7 +2,7 @@
   <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-1">
     <loading-spinner />
   </v-container>
-  <v-container v-else fluid fill-height grid-list-mdt class="ma-0 pa-1">
+  <v-container v-else fluid fill-width class="ma-0 pa-1">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text"
         >Data Explorer
@@ -16,34 +16,52 @@
         <span>View Analysis Summary for all Cohorts and Outcome Variables</span>
       </v-tooltip>
     </v-toolbar>
-    <v-layout column fill-height>
-      <v-flex xs5 class="ma-0 pa-1">
-        <v-layout fill-height>
-          <v-flex xs12> <summary-view /> </v-flex>
+
+    <v-layout row class="ma-0 pa-0">
+      <v-flex xs12>
+        <analysis-tracker step="4" :substep="substep"></analysis-tracker>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row fill-height class="ma-0 pa-0">
+      <v-flex xs12> <summary-view /> </v-flex>
+    </v-layout>
+
+    <v-layout row fill-height class="ma-0 pa-0">
+      <v-flex fill-height xs12>
+        <v-layout col fill-height class="ma-0 pa-0">
+          <v-flex xs3 fill-height class="ma-0 pa-1"> <cohorts /> </v-flex>
+          <v-flex xs6 fill-height class="ma-0 pa-1"> <detailed-view /> </v-flex>
+          <v-flex xs3 fill-height class="ma-0 pa-1"> <analytics /> </v-flex>
         </v-layout>
       </v-flex>
+    </v-layout>
+    <!--
+    <v-layout column fill-height>
       <v-flex xs7 class="ma-0 pa-1">
         <v-layout fill-height>
           <v-flex xs3 fill-height>
             <v-layout column fill-height>
-              <v-flex fill-height class="ma-0 pa-1"> <cohorts /> </v-flex>
+
             </v-layout>
           </v-flex>
-          <v-flex xs9 class="ma-0 pa-1"> <detailed-view /> </v-flex>
+
           <v-flex xs3 class="ma-0 pa-1">
             <v-layout column fill-height>
-              <v-flex> <analytics /> </v-flex>
+
             </v-layout>
           </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
+-->
   </v-container>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/dataExplorer/types';
+import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import SummaryView from '@/components/DataExplorer/SummaryView.vue';
 import Cohorts from '@/components/DataExplorer/Cohorts.vue';
 import Analytics from '@/components/DataExplorer/Analytics.vue';
@@ -52,6 +70,7 @@ import AnalysisSummaryButton from '@/components/DataExplorer/AnalysisSummaryBtnD
 
 export default {
   components: {
+    AnalysisTracker,
     Analytics,
     SummaryView,
     Cohorts,
@@ -77,6 +96,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      substep: '4.1',
     };
   },
   computed: {

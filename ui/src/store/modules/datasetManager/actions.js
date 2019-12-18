@@ -55,13 +55,14 @@ export default {
       commit(mutations.SET_LOADING, false);
 
       const notification = new SuccessNotification(
-        'Collection successfully saved.'
+        'Study Dataset successfully saved.'
       );
 
       commit(mutations.CLEAR_SELECTED_DATASETS);
       dispatch(notification.dispatch, notification, { root: true });
-
-      return new Promise(resolve => resolve());
+      return new Promise(resolve => {
+        resolve(data.collection);
+      });
     } catch (err) {
       const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
@@ -95,7 +96,7 @@ export default {
       await axios.delete(`/api/collections/${collectionId}`);
       commit(mutations.DELETE_COLLECTION, collectionId);
       const notification = new SuccessNotification(
-        'Collection successfully deleted.'
+        'Study Dataset successfully deleted.'
       );
       dispatch(notification.dispatch, notification, { root: true });
     } catch (err) {
