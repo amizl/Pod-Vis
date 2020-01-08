@@ -122,7 +122,9 @@ export default {
     },
     table_cell(cohort, ov) {
       let pval = this.variable_pval(ov);
-      if (pval === null) {return 'X';}
+      if (pval === null) {
+        return 'X';
+      }
       return pval;
     },
     table_cell_class(ov) {
@@ -164,7 +166,6 @@ export default {
     table_cell_click(ov) {
       this.setSelectedOutcomeVariable(ov);
     },
-
   },
 };
 </script>

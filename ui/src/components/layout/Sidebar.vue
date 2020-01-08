@@ -84,7 +84,6 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-
       </v-list>
       <!-- <v-list class="pb-5">
         <v-list-tile>
