@@ -125,13 +125,14 @@ export default {
         });
       });
       // remove last column
-      headers.pop();
+      //      headers.pop();
       return headers;
     },
     items() {
       const cc = this.collection_cohorts;
       // remove first row
-      return cc.slice(1);
+      //      return cc.slice(1);
+      return cc;
     },
   },
   watch: {
