@@ -9,7 +9,6 @@
             step="1"
             :style="stepStyle('1')"
             :class="stepClass('1')"
-            style="text-align: center;"
             >Home Page
           </v-stepper-step>
           <span>{{ step_descr['1'] }}</span>
@@ -90,8 +89,8 @@
           :complete="substepnum !== '2.1' || stepnum === '3'"
           step="2.1"
           >Choose Datasets
-          <small class="primary--text"
-            >Select one or more datasets and click on "SELECT VARIABLES"</small
+          <span
+            >Select one or more datasets and click on "SELECT VARIABLES"</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
@@ -99,9 +98,9 @@
           :complete="substepnum === '2.3' || stepnum === '3'"
           step="2.2"
           >Select Variables
-          <small class="primary--text"
+          <span
             >Select one or more variables and click on "SAVE STUDY
-            DATASET"</small
+            DATASET"</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
