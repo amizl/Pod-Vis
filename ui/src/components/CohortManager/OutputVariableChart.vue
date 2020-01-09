@@ -15,8 +15,8 @@
           >
             <span style="padding:0em 0.5em 0em 0em">
               <img
-                :src="'/images/' + variable.category + '-icon-64.png'"
-                style="height:2em"
+                :src="'/images/' + variable.category + '-icon-128.png'" :title="variable.category"
+                style="height:3.5em"
             /></span>
             {{ getVariableLabel(variable) }}
           </v-layout>

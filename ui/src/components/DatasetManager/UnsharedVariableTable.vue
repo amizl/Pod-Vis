@@ -18,10 +18,10 @@
           </td>
           <td>
             <v-layout align-center
-              ><span style="padding:0em 0.5em 0em 0em"
+              ><span style="padding:0.5em 1.5em 0.25em 0em"
                 ><img
-                  :src="'/images/' + props.item.category + '-icon-64.png'"
-                  style="height:2em"
+                  :src="'/images/' + props.item.category + '-icon-128.png'" :title="variable.category"
+                  style="height:3.5em"
               /></span>
               {{ props.item.category }}</v-layout
             >
