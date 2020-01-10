@@ -484,8 +484,8 @@ class Collection(db.Model):
                 include_study=True) for study in self.studies]
 
         if include_variables:
-            collection['observation_variables'] = [var.to_dict() for var in self.observation_variables]
-            collection['subject_variables'] = [var.to_dict() for var in self.subject_variables]
+            collection['observation_variables'] = sorted([var.to_dict() for var in self.observation_variables], key=lambda x: x['ontology']['label'])
+            collection['subject_variables'] = sorted([var.to_dict() for var in self.subject_variables], key=lambda x: x['ontology']['label'])
 
         if include_queries:
             # TODO
