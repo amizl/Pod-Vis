@@ -21,51 +21,6 @@
       :dimension-name="`${variable.label} - Last Visit`"
       :y-domain="maxValueBetweenDimensions"
     />
-
-    <!-- PARACOORDS: SVG edition (slower since each line will live on the DOM) -->
-    <!-- <svg ref="chart" :width="width" :height="height">
-      <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
-        <text
-          fill="black"
-          text-anchor="middle"
-          y="-9"
-          :x="xDimensionScale('First Visit')"
-        >
-          First Visit
-        </text>
-        <g
-          v-dimension="firstVisitAxis"
-          :transform="`translate(${xDimensionScale('First Visit')})`"
-        ></g>
-        <text
-          fill="black"
-          text-anchor="middle"
-          y="-9"
-          :x="xDimensionScale('Last Visit')"
-        >
-          Last Visit
-        </text>
-        <g
-          v-dimension="lastVisitAxis"
-          :transform="`translate(${xDimensionScale('Last Visit')})`"
-        />
-        <path
-          v-for="(path, i) in populationPaths"
-          :key="i"
-          :d="path"
-          stroke="#E8EAF6"
-          opacity="1"
-        />
-        <path
-          v-for="(path, i) in paths"
-          :key="i"
-          :d="path"
-          stroke="#3F51B5"
-          stroke-width="1"
-          opacity=".45"
-        />
-      </g>
-    </svg> -->
   </v-flex>
 </template>
 
