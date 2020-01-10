@@ -3,17 +3,16 @@
     class="ma-1"
     color="white"
     height="100%"
-    min-width="400px"
-    max-width="500px"
+    width="400px"
   >
     <v-layout column fill-height :class="getOutcomeClass(variable)">
       <v-card-title :class="getTitleClass(variable)">
         <span style="margin: 0em 0em 1em 0em;">
           <v-layout
             align-center
-            style="background-color: white; padding: 0.4em 0.4em 0em 0.4em; border-radius: 0.5rem;"
+            style="background-color: white; padding: 0.4em 1.5em 0em 0.4em; border-radius: 0.5rem;"
           >
-            <span style="padding:0.5em 0.5em 0.25em 0em">
+            <span style="padding:0em 0.5em 0em 0em">
               <img
                 :src="'/images/' + variable.category + '-icon-128.png'" :title="variable.category"
                 style="height:3.5em"
