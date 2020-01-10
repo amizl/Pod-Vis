@@ -26,6 +26,7 @@ export default {
     dragging: false,
     hovering: false,
     observationVariables: [],
+    observationVariablesD: [],
     propagateChanges: false,
   }),
   computed: {
@@ -59,37 +60,44 @@ export default {
     },
     selectedObservationVariables(newObservationVariables) {
       if (this.propagateChanges) {
-        // SCOPA, UPDRS, etc
-        const outcomeMeasures = newObservationVariables.filter(
-          variable =>
-            variable.children &&
-            variable.children.length &&
-            'data_category' in variable &&
-            variable.parent_id !== 1
-        );
 
         // First Visit, Change, etc
         const dimensions = newObservationVariables.filter(
           variable => !variable.children
         );
 
-        // If a user selected a study with all of its dimensions,
-        // we want to add just the one study and remove dimensions
-        // so we can draw a parallel coordinates plot
-        const parentIDs = outcomeMeasures.map(m => m.id);
-        const dimensionsNotInParentIDs = dimensions.filter(
-          obs => !parentIDs.includes(obs.parentID)
-        );
+        // Parent measures
+        let measures = {};
+        const obsD = this.observationVariablesD;
 
-        this.setOutputVariables(
-          [...outcomeMeasures, ...dimensionsNotInParentIDs]
-          // newObservationVariables.filter(variable => !variable.children)
-        );
+         // Group dimensions by (actual) parent
+         dimensions.forEach(d => {
+           const measure = d.id.split('-')[0];
+           const actual_parent_id = d.id.split('-')[1];
+           const parent = obsD[actual_parent_id];
+           if (!(parent.id in measures)) {
+             measures[parent.id] = parent;
+             parent.selected_measures = {};
+           }
+           parent.selected_measures[measure] = 1;
+         });
+
+         const measures_list = Object.keys(measures).map(function(k) {return measures[k]});
+         this.setOutputVariables(measures_list);
       }
     },
   },
   async created() {
     this.observationVariables = this.collection.observation_variables;
+    // recursively index observationVariables by id
+    const obsD = this.observationVariablesD;
+    const indexVars = function(vars) {
+      vars.forEach(v => {
+        obsD[v.id] = v;
+        if (v.children) indexVars(v.children);
+      });
+    };
+    indexVars(this.observationVariables);
   },
   methods: {
     ...mapActions('cohortManager', {

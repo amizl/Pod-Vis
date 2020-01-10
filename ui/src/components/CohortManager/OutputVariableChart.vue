@@ -30,19 +30,11 @@
         </v-btn> -->
       </v-card-title>
       <MultiChart
-        v-if="variable.children"
         :key="resetCount"
         class="ma-1"
         :variable="variable"
         :dimension-name="dimension"
-      />
-      <HistogramChart
-        v-else
-        :id="variable.id"
-        :key="resetCount"
-        class="ma-1"
-        :dimension-name="dimension"
-      />
+	/>
     </v-layout>
   </v-sheet>
 </template>
