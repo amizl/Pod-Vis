@@ -7,10 +7,10 @@
         v-if="outputVariables.length == 0"
         disabled
         color="primary"
-        class="white--text title-1"
+        class="white--text title"
         >No variables selected</v-chip
       >
-      <v-chip v-else disabled color="primary" class="white--text title-1"
+      <v-chip v-else disabled color="primary" class="white--text title"
         >{{ outputVariables.length }} variable<span
           v-if="outputVariables.length != 1"
           >s</span

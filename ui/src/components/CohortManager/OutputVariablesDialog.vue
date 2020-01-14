@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="openOutputVariableDialog" scrollable max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn flat color="primary" v-on="on">
+      <v-btn flat color="primary" v-on="on" class="title">
         <v-icon left dark>add_box</v-icon>
         Outcome Variables
       </v-btn>

@@ -7,10 +7,10 @@
         v-if="inputVariables.length == 0"
         disabled
         color="primary"
-        class="white--text title-1"
+        class="white--text title"
         >No variables selected</v-chip
       >
-      <v-chip v-else disabled color="primary" class="white--text title-1"
+      <v-chip v-else disabled color="primary" class="white--text title"
         >{{ inputVariables.length }} variable<span
           v-if="inputVariables.length != 1"
           >s</span
@@ -18,10 +18,10 @@
       >
       <v-spacer />
       <v-toolbar-items>
-        <v-chip disabled color="#3F51B5" class="white--text title-1"
+        <v-chip disabled color="#3F51B5" class="white--text title"
           >Cohort - {{ animatedNumber }}</v-chip
         >
-        <v-chip disabled color="#FAE1A6" class="primary--text title-1"
+        <v-chip disabled color="#FAE1A6" class="primary--text title"
           >Population - {{ unfilteredData.length }}</v-chip
         >
       </v-toolbar-items>

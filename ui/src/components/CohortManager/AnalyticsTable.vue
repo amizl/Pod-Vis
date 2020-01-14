@@ -2,9 +2,9 @@
   <v-sheet color="white" height="100%" class="rounded-lg shadow">
     <v-layout column fill-height class="ma-1">
       <v-toolbar card dense flat color="white rounded-lg">
-        <v-toolbar-title class="subheading primary--text">
+        <v-toolbar-title class="primary--text title">
           Mann-Whitney Rank Test
-          <div class="subheading">cohort vs. remainder change</div>
+          <div class="subtitle-1">cohort vs. remainder change</div>
         </v-toolbar-title>
         <v-divider vertical class="ml-4"></v-divider>
         <v-spacer />
