@@ -242,8 +242,6 @@ class Collection(db.Model):
             if obs_id not in subject_observations[subject_id]:
                 subject_observations[subject_id][obs_id] = True
 
-        start_time = time.time()
-                
         # read query result, group by subject_id, observation_ontology_id
         all_rows = []
         for row in result_proxy:
