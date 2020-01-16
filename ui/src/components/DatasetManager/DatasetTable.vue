@@ -30,7 +30,7 @@
         <td class="text-xs-right">{{ props.item.outcome_measures }}</td>
         <td class="text-xs-right">{{ props.item.demographics.length }}</td>
         <td class="text-xs-right">{{ props.item.variables.length }}</td> -->
-        <td class="text-xs-right justify-center">
+        <td class="text-xs-right">
           <v-tooltip top color="primary">
             <template v-slot:activator="{ on }">
               <v-icon
@@ -105,8 +105,9 @@ export default {
         //   value: 'variables',
         // },
         {
-          text: '',
+          text: 'Study Info',
           value: 'name',
+          align: 'right',
           sortable: false,
         },
       ],
