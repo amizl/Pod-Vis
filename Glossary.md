@@ -1,5 +1,5 @@
 
-**cohort** - A subset of a study dataset.
+**selected cohort** - A subset of a study dataset.
 
 **dataset** - *do we need a generic term?*
 
@@ -7,7 +7,7 @@
 
 **domain** - A group of related variables e.g., cognitive, mental health.
 
-**population** - The entirety of a study dataset
+**study population** - The entirety of a study dataset
 
 **predictor variable** -
 
