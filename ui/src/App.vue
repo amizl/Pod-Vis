@@ -46,4 +46,10 @@ export default {
 .fade-leave-active {
   opacity: 0;
 }
+
+/* Larger font for data table headings */
+table.v-table thead th {
+      font-size: 20px !important;
+}
+
 </style>
