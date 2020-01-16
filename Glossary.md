@@ -7,6 +7,8 @@
 
 **domain** - A group of related variables e.g., cognitive, mental health.
 
+**population** - The entirety of a study dataset
+
 **predictor variable** -
 
 **outcome variable** -
