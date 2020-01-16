@@ -49,7 +49,6 @@ export default {
 
 /* Larger font for data table headings */
 table.v-table thead th {
-      font-size: 20px !important;
+  font-size: 20px !important;
 }
-
 </style>

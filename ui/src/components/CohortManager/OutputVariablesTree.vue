@@ -60,7 +60,6 @@ export default {
     },
     selectedObservationVariables(newObservationVariables) {
       if (this.propagateChanges) {
-
         // First Visit, Change, etc
         const dimensions = newObservationVariables.filter(
           variable => !variable.children
@@ -70,20 +69,22 @@ export default {
         let measures = {};
         const obsD = this.observationVariablesD;
 
-         // Group dimensions by (actual) parent
-         dimensions.forEach(d => {
-           const measure = d.id.split('-')[0];
-           const actual_parent_id = d.id.split('-')[1];
-           const parent = obsD[actual_parent_id];
-           if (!(parent.id in measures)) {
-             measures[parent.id] = parent;
-             parent.selected_measures = {};
-           }
-           parent.selected_measures[measure] = 1;
-         });
+        // Group dimensions by (actual) parent
+        dimensions.forEach(d => {
+          const measure = d.id.split('-')[0];
+          const actual_parent_id = d.id.split('-')[1];
+          const parent = obsD[actual_parent_id];
+          if (!(parent.id in measures)) {
+            measures[parent.id] = parent;
+            parent.selected_measures = {};
+          }
+          parent.selected_measures[measure] = 1;
+        });
 
-         const measures_list = Object.keys(measures).map(function(k) {return measures[k]});
-         this.setOutputVariables(measures_list);
+        const measures_list = Object.keys(measures).map(function(k) {
+          return measures[k];
+        });
+        this.setOutputVariables(measures_list);
       }
     },
   },

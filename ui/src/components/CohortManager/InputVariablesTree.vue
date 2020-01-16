@@ -6,7 +6,13 @@
       return-object
       selectable
       :search="search"
-      :items="[{ type: 'study', id: 24, label: 'Study' }, ...subjectVariables].sort(function(a,b) {return a.label < b.label ? -1 : (a.label > b.label) ? 1 : 0;})"
+      :items="
+        [{ type: 'study', id: 24, label: 'Study' }, ...subjectVariables].sort(
+          function(a, b) {
+            return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
+          }
+        )
+      "
       item-text="label"
     ></v-treeview>
     <v-treeview

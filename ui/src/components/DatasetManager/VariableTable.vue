@@ -20,7 +20,8 @@
           <v-layout align-center
             ><span style="padding:0.5em 0.5em 0.25em 0em"
               ><img
-                :src="'/images/' + props.item.category + '-icon-128.png'" :title="props.item.category"
+                :src="'/images/' + props.item.category + '-icon-128.png'"
+                :title="props.item.category"
                 style="height:3.5em"
             /></span>
             {{ props.item.category }}</v-layout
