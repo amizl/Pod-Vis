@@ -110,7 +110,6 @@ def get_intersection_of_variables():
     """
     study_ids = request.args.getlist('id')
     studies = [models.Study.find_by_id(study_id) for study_id in study_ids]
-
     variables = list()
 
     for study in studies:
@@ -125,6 +124,28 @@ def get_intersection_of_variables():
         "variables": reduced_vars
     })
 
+@api.route("/studies/subject_variables")
+def get_subject_variables():
+    """Retrieve all subjects for a set of studies, along with the variables supported by those subjects.
+
+    Example URL:
+      /api/studies/subject_variables?id=1&id=2
+    """
+    study_ids = request.args.getlist('id')
+
+    subjects = models.Study.get_subject_variables(study_ids)
+
+#    studies = [models.Study.find_by_id(study_id) for study_id in study_ids]
+#    variables = list()
+#    for study in studies:
+#        variables.extend(study.get_variables())
+    # convert to list of tuples and uniquify with set comprehension
+#    reduced_vars = [dict(t) for t in {tuple(d.items()) for d in variables}]
+
+    return jsonify({
+        "success": True,
+        "subjects": subjects
+    })
 
 @api.route('/studies/<int:study_id>/subjects')
 def get_study_subjects(study_id):

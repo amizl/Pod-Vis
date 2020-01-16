@@ -43,6 +43,105 @@ class Study(db.Model):
         """
         return cls.query.filter_by(id=study_id).first()
 
+    @classmethod
+    def get_subject_variables(cls, study_ids):
+        """Retrieve all subjects, showing which variables have first+last for each.
+
+        Args:
+            id: List of study IDs.
+
+        Returns:
+            All subjects in the named studies.
+
+        """                
+
+        connection = db.engine.connect()
+
+        # Based on query from collection.get_data_for_cohort_manager
+        query_for_subject_obs_vars = text("""
+          SELECT
+              sv.subject_id as subject_id, s.study_id as study_id, oo.id as observation_ontology_id,
+              sv.event_date, sv.visit_num
+          FROM subject s, subject_visit sv, observation o, observation_ontology oo
+          WHERE s.study_id in :study_ids
+          AND s.id = sv.subject_id
+          AND sv.id = o.subject_visit_id
+          AND oo.id = o.observation_ontology_id
+          ORDER BY subject_id, study_id, observation_ontology_id, event_date, sv.visit_num
+        """)
+
+        result_proxy = connection.execute(
+            query_for_subject_obs_vars,
+            study_ids=study_ids).fetchall()
+
+        # dict mapping from subject id to dict of variables
+        subject_vars = {}
+        
+        # group by subject_id, obs_id
+        last_subj_id = None
+        last_study_id = None
+        last_obs_id = None
+        group_rows = []
+        
+        # process a set of rows grouped by subject_id, observation_ontology_id
+        def process_group(subject_id, study_id, obs_id):
+            if (last_subj_id is None):
+                return
+
+            # skip subjects with only one measurement/visit
+            n = len(group_rows)
+            if (n <= 1):
+                return
+
+            if subject_id not in subject_vars:
+                subject_vars[subject_id] = {}
+
+            if study_id not in subject_vars[subject_id]:
+                subject_vars[subject_id][study_id] = {}
+                
+            # this subject has at least two values for the specified observation
+            subject_vars[subject_id][study_id][obs_id] = 1
+            
+        # read query result, group by subject_id, observation_ontology_id
+        for row in result_proxy:
+            rd = dict(row)
+            if last_subj_id != rd['subject_id'] or last_study_id != rd['study_id'] or last_obs_id != rd['observation_ontology_id']:
+                process_group(last_subj_id, last_study_id, last_obs_id)
+                group_rows = []
+            group_rows.append(rd)
+            last_subj_id = rd['subject_id']
+            last_study_id = rd['study_id']
+            last_obs_id = rd['observation_ontology_id']
+        process_group(last_subj_id, last_study_id, last_obs_id)
+
+        # add in subject/demographic variables, where there is no first/last visit requirement
+        query_for_subject_vars = text("""
+          SELECT
+              s.id as subject_id, s.study_id as study_id, so.id as subject_ontology_id
+          FROM subject s, subject_attribute sa, subject_ontology so
+          WHERE s.study_id in :study_ids
+          AND s.id = sa.subject_id
+          AND sa.subject_ontology_id = so.id
+          ORDER BY subject_id, study_id, subject_ontology_id
+        """)
+
+        result_proxy = connection.execute(
+            query_for_subject_vars,
+            study_ids=study_ids).fetchall()
+
+        for row in result_proxy:
+            rd = dict(row)
+            subj_id = rd['subject_id']
+            study_id = rd['study_id']
+            att_id = rd['subject_ontology_id']
+            if subj_id not in subject_vars:
+                subject_vars[subj_id] = {}
+            if study_id not in subject_vars[subj_id]:
+                subject_vars[subj_id][study_id] = {}
+            subject_vars[subj_id][study_id][att_id] = 1
+                
+        return subject_vars
+
     def get_variables(self):
         """Get all variables measured in a study."""
         get_scale_category = ObservationOntology.get_var_category_fn()
