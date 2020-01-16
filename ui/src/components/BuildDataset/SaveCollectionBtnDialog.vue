@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn
-      :disabled="!areVariablesSelected"
+      :disabled="numSubjectsSelected == 0"
       color="primary--text"
       @click="dialog = !dialog"
     >
@@ -62,6 +62,10 @@ export default {
     datasetIds: {
       type: Array,
       default: () => [],
+    },
+    numSubjectsSelected: {
+      type: Number,
+      default: 0,
     },
   },
   data: () => ({

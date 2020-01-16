@@ -12,6 +12,28 @@
       class="ml-1 mr-1"
       hide-actions
     >
+      <!-- TODO - use v-slot:body.prepend in Vuetify 2.x -->
+      <template v-slot:headers="props">
+        <tr>
+          <th></th>
+          <th class="text-xs-left">Category<br /></th>
+          <th class="text-xs-left">Scale<br /></th>
+          <th
+            v-for="dataset in datasets"
+            :key="dataset.id"
+            class="text-xs-center"
+          >
+            {{ dataset.study_name }}<br />
+            <v-chip
+              disabled
+              :color="getNumSubjectsColor(getStudyCount(dataset.id))"
+              class="primary--text title ma-2"
+              >{{ getStudyCount(dataset.id) + ' selected' }}</v-chip
+            >
+          </th>
+        </tr>
+      </template>
+
       <template v-slot:items="props">
         <tr>
           <td v-if="selectable">
@@ -21,7 +43,8 @@
             <v-layout align-center
               ><span style="padding:0.5em 0.5em 0.25em 0em"
                 ><img
-                  :src="'/images/' + props.item.category + '-icon-128.png'" :title="props.item.category"
+                  :src="'/images/' + props.item.category + '-icon-128.png'"
+                  :title="props.item.category"
                   style="height:2.5em"
               /></span>
               {{ props.item.category }}</v-layout
@@ -40,6 +63,7 @@
               :scale-id="props.item.id"
               :data-category="props.item.data_category"
             />
+            {{ getStudyVariableCount(dataset.id, props.item.id) }}
           </td>
         </tr>
       </template>
@@ -74,6 +98,9 @@ export default {
       isLoading: true,
       selected: [],
       variables: [],
+      subject_variables: {},
+      study_variable_counts: {},
+      subject_counts: { all: 0 },
       headers: [
         {
           text: 'Category',
@@ -97,6 +124,9 @@ export default {
      */
     selected(value) {
       if (this.selectable) this.$emit('input', value);
+      var selectedIds = value.map(v => v['id']);
+      this.subject_counts = this.countSubjects(selectedIds);
+      this.$emit('nSubjects', this.subject_counts['all']);
     },
   },
   async created() {
@@ -121,6 +151,12 @@ export default {
       variable.type = 'observation';
     });
     this.variables = variables.filter(v => v.data_category !== 'Categorical');
+
+    const { data: subjVars } = await this.fetchSubjectVariables();
+    this.subject_variables = subjVars['subjects'];
+
+    // build hash that maps variable_id + study_id -> number of subjects
+    this.computeStudyVariableCounts();
 
     // TODO...fetch shared subject attributes
     const {
@@ -151,6 +187,98 @@ export default {
       const base = `/api/studies/variables`;
       const query = this.datasets.map(({ id }) => `id=${id}`).join('&');
       return axios.get(`${base}?${query}`);
+    },
+    /**
+     * Retrieve list of subjects along with the variables measured (first + last) for each.
+     */
+    fetchSubjectVariables() {
+      const base = `/api/studies/subject_variables`;
+      const query = this.datasets.map(({ id }) => `id=${id}`).join('&');
+      return axios.get(`${base}?${query}`);
+    },
+    /**
+     * Build hash that maps variable_id + study_id -> number of subjects
+     */
+    computeStudyVariableCounts() {
+      var svc = {};
+      const subj_ids = Object.keys(this.subject_variables);
+      subj_ids.forEach(subj_id => {
+        var study_ids = Object.keys(this.subject_variables[subj_id]);
+        study_ids.forEach(study_id => {
+          var var_ids = Object.keys(this.subject_variables[subj_id][study_id]);
+          var_ids.forEach(var_id => {
+            var key = var_id + ':' + study_id;
+            if (!(key in svc)) {
+              svc[key] = 0;
+            }
+            svc[key] = svc[key] + 1;
+          });
+        });
+      });
+      this.study_variable_counts = svc;
+    },
+
+    getStudyVariableCount(study_id, var_id) {
+      var key = var_id + ':' + study_id;
+      if (key in this.study_variable_counts) {
+        return this.study_variable_counts[key];
+      } else {
+        return 0;
+      }
+    },
+
+    getStudyCount(study_id) {
+      if (study_id in this.subject_counts) {
+        return this.subject_counts[study_id];
+      } else {
+        return 0;
+      }
+    },
+
+    /**
+     * Count the number of subjects in the Dataset for a given list of variable ids.
+     */
+    countSubjects(var_ids) {
+      var nSubjects = { all: 0 };
+
+      if (var_ids.length === 0) return nSubjects;
+      this.datasets.forEach(d => {
+        nSubjects[d.id] = 0;
+      });
+
+      const subj_ids = Object.keys(this.subject_variables);
+      subj_ids.forEach(subj_id => {
+        var include_subject = true;
+        var study_ids = Object.keys(this.subject_variables[subj_id]);
+        study_ids.forEach(study_id => {
+          const svars = this.subject_variables[subj_id][study_id];
+          // check for presence of all requested vars:
+          var_ids.forEach(v => {
+            if (!(v in svars)) {
+              include_subject = false;
+            }
+          });
+          if (include_subject) {
+            nSubjects[study_id] += 1;
+            nSubjects['all'] += 1;
+          }
+        });
+      });
+      return nSubjects;
+    },
+
+    /**
+     * Return the color corresponding to a given number of subjects. Used to indicate
+     * when a given cohort/dataset has few/very few subjects.
+     */
+    getNumSubjectsColor(nSubjects) {
+      if (nSubjects <= 10) {
+        return '#F83008';
+      } else if (nSubjects <= 25) {
+        return '#F8B108';
+      } else {
+        return '#FAE1A6';
+      }
     },
   },
 };

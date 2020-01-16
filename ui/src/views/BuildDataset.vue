@@ -5,9 +5,19 @@
         >Dataset Manager - Select Variables</v-toolbar-title
       >
       <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-chip
+          disabled
+          :color="getNumSubjectsColor(numSubjects)"
+          class="primary--text title ma-2"
+          >{{ numSubjects }} subjects selected</v-chip
+        >
+      </v-toolbar-items>
+
       <save-collection-btn-dialog
         :variables="variables"
         :dataset-ids="selectedDatasetIDs"
+        :num-subjects-selected="numSubjects"
         @dialogOpen="dialogOpened"
         @collectionSaved="collectionSaved"
       />
@@ -53,6 +63,7 @@
                 v-model="selected"
                 :datasets="selectedDatasets"
                 selectable
+                @nSubjects="updateNumSubjects"
               />
             </v-card>
           </v-flex>
@@ -121,6 +132,7 @@ export default {
     activeDataset: null,
     selected: [],
     substep: '2.2',
+    numSubjects: 0,
   }),
   computed: {
     ...mapState('datasetManager', {
@@ -149,6 +161,19 @@ export default {
     },
     collectionSaved() {
       this.step = '3';
+    },
+    updateNumSubjects(ns) {
+      this.numSubjects = ns;
+    },
+    // TODO - duplicated from SharedVariableTable.vue
+    getNumSubjectsColor(nSubjects) {
+      if (nSubjects <= 10) {
+        return '#F83008';
+      } else if (nSubjects <= 25) {
+        return '#F8B108';
+      } else {
+        return '#FAE1A6';
+      }
     },
   },
 };
