@@ -19,10 +19,10 @@
       <v-spacer />
       <v-toolbar-items>
         <v-chip disabled color="#3F51B5" class="white--text title"
-          >Cohort - {{ animatedNumber }}</v-chip
+          >Selected Cohort - {{ animatedNumber }}</v-chip
         >
         <v-chip disabled color="#FAE1A6" class="primary--text title"
-          >Population - {{ unfilteredData.length }}</v-chip
+          >Study Population - {{ unfilteredData.length }}</v-chip
         >
       </v-toolbar-items>
       <v-toolbar-items>
