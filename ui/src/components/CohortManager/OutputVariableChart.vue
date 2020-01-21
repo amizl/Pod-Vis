@@ -11,9 +11,9 @@
               <img
                 :src="'/images/' + variable.category + '-icon-128.png'"
                 :title="variable.category"
-                style="height:3.5em"
+                style="height:3em"
             /></span>
-            {{ getVariableLabel(variable) }}
+            <span class="subtitle-1">{{ getVariableLabel(variable) }}</span>
           </v-layout>
         </span>
         <!-- <v-btn
@@ -35,14 +35,12 @@
 </template>
 
 <script>
-import HistogramChart from '@/components/CohortManager/HistogramChart/HistogramChart.vue';
 import MultiChart from '@/components/CohortManager/MultiChart.vue';
 import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
 
 export default {
   components: {
-    HistogramChart,
     MultiChart,
   },
   props: {
