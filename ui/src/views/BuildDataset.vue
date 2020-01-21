@@ -53,9 +53,8 @@
                 <p>
                   <span class="title primary--text">Shared Variables</span>
                   <br />
-                  <span class="subheading grey--text ligthen-2"
-                    >Select the variables to include in the new clinical data
-                    collection.</span
+                  <span class="subtitle-1 grey--text lighten-2"
+                    >Select the variables to include in the new study dataset.</span
                   >
                 </p>
               </v-card-title>
@@ -77,7 +76,7 @@
                 <p>
                   <span class="title primary--text">Unshared Variables</span>
                   <br />
-                  <span class="subheading grey--text ligthen-2"
+                  <span class="subtitle-1 grey--text ligthen-2"
                     >These variables are not shared among the selected datasets.
                   </span>
                 </p>
