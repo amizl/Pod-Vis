@@ -16,7 +16,7 @@
          <v-btn text color="#3FB551" class="white--text mr-2 py-1" value="line">LINE</v-btn>
         </v-btn-toggle>
 -->
-          <span class="subheading primary--text mt-3 mr-2 ml-3">X-Axis:</span>
+          <span class="subtitle-1 primary--text mt-3 mr-2 ml-3">X-Axis:</span>
           <v-btn-toggle v-model="xaxis" mandatory>
             <v-btn
               text
@@ -34,12 +34,12 @@
             >
           </v-btn-toggle>
 
-          <span class="subheading primary--text mt-3 mr-2 ml-3"
+          <span class="subtitle-1 primary--text mt-3 mr-2 ml-3"
             >Show Raw Data:</span
           >
           <v-checkbox v-model="draw_raw" class="mt-2"> </v-checkbox>
 
-          <span class="subheading primary--text mt-3 mr-2 ml-3"
+          <span class="subtitle-1 primary--text mt-3 mr-2 ml-3"
             >Overlay Mean/SD:</span
           >
           <v-checkbox v-model="draw_mean" class="mt-2"> </v-checkbox>

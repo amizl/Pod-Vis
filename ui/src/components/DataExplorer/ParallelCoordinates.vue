@@ -9,7 +9,7 @@
     @click="selectForDetailedView"
   >
     <v-layout column fill-height>
-      <v-card-title class="subheading primary--text text--darken-4">
+      <v-card-title class="subtitle-1 primary--text text--darken-4">
         {{
           variable.type == 'observation'
             ? `${variable.parentLabel} - ${variable.label}`

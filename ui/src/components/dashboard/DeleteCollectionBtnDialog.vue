@@ -6,7 +6,7 @@
           <v-icon color="error" left>delete</v-icon>DELETE
         </v-btn>
       </template>
-      <span>Delete Collection</span>
+      <span class="subtitle-1">Delete Collection</span>
     </v-tooltip>
 
     <v-dialog v-model="dialog" width="500">

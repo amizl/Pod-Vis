@@ -22,12 +22,12 @@
               ><img
                 :src="'/images/' + props.item.category + '-icon-128.png'"
                 :title="props.item.category"
-                style="height:3.5em"
+                style="height:2.5em"
             /></span>
             {{ props.item.category }}</v-layout
           >
         </td>
-        <td>{{ props.item.scale }}</td>
+        <td><span>{{ props.item.scale }}</span></td>
         <!-- <td v-if="histogram"></td> -->
         <!-- <td>{{ props.item.description }}</td> -->
         <!-- <td>{{ props.item.data_range }}</td> -->

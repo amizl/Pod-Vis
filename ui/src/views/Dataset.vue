@@ -12,7 +12,7 @@
                 <v-card-title primary-title card color="white">
                   <p class="title mb-0 ">
                     {{ dataset.study.study_name }} <br />
-                    <span class="caption grey--text lighten-2">
+                    <span class="subtitle-2 grey--text">
                       {{ dataset.study.project.project_name }}
                     </span>
                   </p>

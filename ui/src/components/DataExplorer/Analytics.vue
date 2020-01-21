@@ -1,9 +1,9 @@
 <template>
   <v-sheet color="white" height="100%" class="rounded-lg shadow">
     <v-layout column fill-height class="ma-1">
-      <v-card-title class="primary--text"
+      <v-card-title class="title primary--text"
         >ANOVA
-        <div class="subheading">1-way ANOVA for first-last visit change</div>
+        <div class="subtitle-1">1-way ANOVA for first-last visit change</div>
       </v-card-title>
       <v-divider></v-divider>
       <v-container

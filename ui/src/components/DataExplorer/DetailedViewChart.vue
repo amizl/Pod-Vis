@@ -54,7 +54,9 @@ export default {
       devicePixelRatio: 1,
       width: 0,
       height: 0,
-      margin: { top: 20, right: 25, bottom: 100, left: 25 },
+      margin: { top: 20, right: 50, bottom: 100, left: 50 },
+      tick_font: "15px sans-serif",
+      label_font: "20px sans-serif",
       //      draw_mean: false,
     };
   },
@@ -191,9 +193,9 @@ export default {
     this.context = select(this.canvas)
       .node()
       .getContext('2d');
+
     // Resize chart so we have parent dimensions (width/height)
     this.resizeChart();
-
     this.$nextTick(() => this.updateCanvas());
 
     this.$root.$on('update_detailed_view', () => {
@@ -469,6 +471,7 @@ export default {
         textAlign = 'left';
       }
 
+      this.context.font = this.tick_font;
       this.context.beginPath();
       ticks.forEach(d => {
         this.context.moveTo(x1, yscale(d));
@@ -611,6 +614,7 @@ export default {
         context.globalAlpha = 1;
       };
 
+      this.context.font = this.label_font;
       ticks.forEach(d => {
         if (d >= this.xmax) return;
         let barnum = 0;
@@ -642,7 +646,7 @@ export default {
       this.context.fillText(
         'number of subjects remaining',
         xscale(this.xmax / 2),
-        yscale(0) + 10
+        yscale(0) + 12
       );
     },
 
@@ -653,6 +657,7 @@ export default {
       const ticks = this.dimensionScale.ticks(tickCount);
       const tickFormat = this.dimensionScale.tickFormat(tickCount);
 
+      this.context.font = this.tick_font;
       this.context.beginPath();
       ticks.forEach(d => {
         this.context.moveTo(0, this.dimensionScale(d));
@@ -718,7 +723,7 @@ export default {
     drawBottomAxis() {
       let tickCount = 10;
       const tickSize = 6;
-      const tickPadding = 3;
+      const tickPadding = 4;
       const tp = this.timepoints;
       const { xmax } = this;
 
@@ -764,6 +769,7 @@ export default {
         caption = 'time in days since first visit';
       }
 
+      this.context.font = this.label_font;
       this.context.fillText(
         caption,
         this.xDimensionScale(xmax / 2),

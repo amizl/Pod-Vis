@@ -35,6 +35,105 @@ export default {
 </script>
 
 <style>
+
+/* Increase font sizes throughout the app (modifying main.styl has no effect in 1.5) */
+
+html {
+  font-size: 1.2em;
+}
+
+/* v-datatable */
+table.v-datatable td.text-xs-left {
+  font-size: 1em;
+}
+
+table.v-datatable td.text-xs-center {
+  font-size: 1em;
+}
+
+table.v-datatable td.text-xs-right {
+  font-size: 1em;
+}
+
+table.v-datatable td div {
+  font-size: 1.2em;
+}
+
+table.v-datatable td span {
+  font-size: 1.4em;
+}
+
+table.v-datatable div.v-btn__content {
+  font-size: 1.2em;
+}
+
+div.v-btn__content {
+  font-size: 1.2em;
+}
+
+div.v-datatable__actions {
+  font-size: 1.2em;
+}
+
+span.subheading {
+  font-size: 1.5em;
+}
+
+span.subtitle-1 {
+  font-size: 1.2em;
+}
+
+/* Sidebar navigation options */
+div.v-list__tile__title {
+  font-size: 1.2em;
+}
+
+/* Stepper labels */
+div.v-stepper__label {
+  font-size: 0.9em;
+}
+
+/* Circled number in stepper step */
+span.v-stepper__step__step {
+  font-size: 1em;
+}
+
+/* Dataset Overview page */
+div.v-card__text {
+  font-size: 1.2em;
+}
+
+div.v-treeview-node__label {
+  font-size: 1em;
+}
+
+table.v-datatable div.layout.align-center {
+  font-size: 1.4em;
+}
+
+table.v-datatable span {
+  font-size: 1.4em;
+}
+
+/* title/heading of tabs in v-datatable */
+div.v-tabs__div {
+  font-size: 1.2em;
+}
+
+/* larger font for data table headings */
+table.v-table thead th {
+  font-size: 20px !important;
+}
+
+/* Increase font size of D3 axis labels */
+g.tick text {
+ font-size: 1.2em;
+}
+
+svg {
+ font-size: 2em;
+}
+
 /* Transition effect for changing routes */
 .fade-enter-active,
 .fade-leave-active {
@@ -47,8 +146,4 @@ export default {
   opacity: 0;
 }
 
-/* Larger font for data table headings */
-table.v-table thead th {
-  font-size: 20px !important;
-}
 </style>

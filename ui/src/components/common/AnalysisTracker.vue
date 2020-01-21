@@ -11,7 +11,7 @@
             :class="stepClass('1')"
             >Home Page
           </v-stepper-step>
-          <span>{{ step_descr['1'] }}</span>
+          <span class="subtitle-1">{{ step_descr['1'] }}</span>
         </v-tooltip>
 
         <v-divider></v-divider>
@@ -25,7 +25,7 @@
             :class="stepClass('2')"
             >Dataset Manager
           </v-stepper-step>
-          <span>{{ step_descr['2'] }}</span>
+          <span class="subtitle-1">{{ step_descr['2'] }}</span>
         </v-tooltip>
 
         <v-divider></v-divider>
@@ -39,7 +39,7 @@
             :class="stepClass('3')"
             >Cohort Manager
           </v-stepper-step>
-          <span>{{ step_descr['3'] }}</span>
+          <span class="subtitle-1">{{ step_descr['3'] }}</span>
         </v-tooltip>
 
         <v-divider></v-divider>
@@ -53,7 +53,7 @@
             :class="stepClass('4')"
             >Data Explorer
           </v-stepper-step>
-          <span>{{ step_descr['4'] }}</span>
+          <span class="subtitle-1">{{ step_descr['4'] }}</span>
         </v-tooltip>
 
         <v-divider></v-divider>
@@ -67,7 +67,7 @@
             :class="stepClass('5')"
             >Summary Matrix
           </v-stepper-step>
-          <span>{{ step_descr['5'] }}</span>
+          <span class="subtitle-1">{{ step_descr['5'] }}</span>
         </v-tooltip>
       </v-stepper-header>
       <v-stepper-items>
