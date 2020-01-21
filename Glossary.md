@@ -1,11 +1,13 @@
 
-**cohort** - A subset of a study dataset.
+**selected cohort** - A subset of a study dataset.
 
 **dataset** - *do we need a generic term?*
 
 **study dataset** - A dataset created by combining one or more datasets and choosing a subset of their variables.
 
 **domain** - A group of related variables e.g., cognitive, mental health.
+
+**study population** - The entirety of a study dataset
 
 **predictor variable** -
 
