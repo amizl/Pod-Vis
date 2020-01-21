@@ -16,8 +16,8 @@
       <template v-slot:headers="props">
         <tr>
           <th></th>
-          <th class="text-xs-left">Category<br /></th>
-          <th class="text-xs-left">Scale<br /></th>
+          <th class="text-xs-left">Domain<br /></th>
+          <th class="text-xs-left">Variable<br /></th>
           <th
             v-for="dataset in datasets"
             :key="dataset.id"
@@ -50,7 +50,7 @@
               {{ props.item.category }}</v-layout
             >
           </td>
-          <td>{{ props.item.scale }}</td>
+          <td><span>{{ props.item.scale }}</span></td>
           <!-- Study columns with distribution visualizations -->
           <td
             v-for="dataset in datasets"
