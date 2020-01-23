@@ -141,7 +141,7 @@ g.tick text {
 }
 
 /* Lines connecting steps in the v-stepper */
-hr.v-divider.theme--light {
+div.v-stepper__header hr.v-divider.theme--light {
   border-top-width: 3px;
   border-top-color: rgba(0,0,0,0.35) !important;
 }
