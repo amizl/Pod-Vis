@@ -35,7 +35,6 @@ export default {
 </script>
 
 <style>
-
 /* Increase font sizes throughout the app (modifying main.styl has no effect in 1.5) */
 
 html {
@@ -137,17 +136,17 @@ table.v-table thead th {
 
 /* Increase font size of D3 axis labels */
 g.tick text {
- font-size: 1.2em;
+  font-size: 1.2em;
 }
 
 /* Lines connecting steps in the v-stepper */
 div.v-stepper__header hr.v-divider.theme--light {
   border-top-width: 3px;
-  border-top-color: rgba(0,0,0,0.35) !important;
+  border-top-color: rgba(0, 0, 0, 0.35) !important;
 }
 
 svg {
- font-size: 2em;
+  font-size: 2em;
 }
 
 /* Transition effect for changing routes */
@@ -161,5 +160,4 @@ svg {
 .fade-leave-active {
   opacity: 0;
 }
-
 </style>

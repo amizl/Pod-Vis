@@ -12,7 +12,11 @@
 
     <v-layout row class="ma-0 pa-0">
       <v-flex xs12>
-        <analysis-tracker step="5" :substep="substep"></analysis-tracker>
+        <analysis-tracker
+          step="5"
+          :substep="substep"
+          :collection-id="collectionId"
+        ></analysis-tracker>
       </v-flex>
     </v-layout>
 
