@@ -9,6 +9,7 @@
             step="1"
             :style="stepStyle('1')"
             :class="stepClass('1')"
+            @click.native="gotoHomepage()"
             >Home Page
           </v-stepper-step>
           <span class="subtitle-1">{{ step_descr['1'] }}</span>
@@ -23,6 +24,7 @@
             step="2"
             :style="stepStyle('2')"
             :class="stepClass('2')"
+            @click.native="gotoDatasetManager()"
             >Dataset Manager
           </v-stepper-step>
           <span class="subtitle-1">{{ step_descr['2'] }}</span>
@@ -37,6 +39,7 @@
             step="3"
             :style="stepStyle('3')"
             :class="stepClass('3')"
+            @click.native="gotoCohortManager()"
             >Cohort Manager
           </v-stepper-step>
           <span class="subtitle-1">{{ step_descr['3'] }}</span>
@@ -51,6 +54,7 @@
             step="4"
             :style="stepStyle('4')"
             :class="stepClass('4')"
+            @click.native="gotoDataExplorer()"
             >Data Explorer
           </v-stepper-step>
           <span class="subtitle-1">{{ step_descr['4'] }}</span>
@@ -65,6 +69,7 @@
             step="5"
             :style="stepStyle('5')"
             :class="stepClass('5')"
+            @click.native="gotoSummaryMatrix()"
             >Summary Matrix
           </v-stepper-step>
           <span class="subtitle-1">{{ step_descr['5'] }}</span>
@@ -162,13 +167,30 @@
         <v-divider></v-divider>
       </v-stepper-header>
     </v-stepper>
+    <error-dialog
+      :show="show_error_dialog"
+      :error-message="error_message"
+      @closed="show_error_dialog = false"
+    ></error-dialog>
+    <confirmation-dialog
+      :show="show_confirmation_dialog"
+      :confirmation-message="confirmation_message"
+      :target-uri="target_uri"
+      @closed="show_confirmation_dialog = false"
+    ></confirmation-dialog>
   </div>
 </template>
 <script>
 import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
+import ErrorDialog from '@/components/common/ErrorDialog.vue';
+import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue';
 
 export default {
+  components: {
+    ErrorDialog,
+    ConfirmationDialog,
+  },
   props: {
     step: {
       type: String,
@@ -177,6 +199,10 @@ export default {
     substep: {
       type: String,
       required: true,
+    },
+    collectionId: {
+      type: Number,
+      required: false,
     },
     currentStepStyle: {
       type: String,
@@ -197,6 +223,15 @@ export default {
         '5': 'Review a log of your previous analyses',
       },
       expanded: true,
+
+      // ErrorDialog
+      error_message: '',
+      show_error_dialog: false,
+
+      // ConfirmationDialog
+      confirmation_message: '',
+      show_confirmation_dialog: false,
+      target_uri: '',
     };
   },
   watch: {
@@ -225,13 +260,87 @@ export default {
     },
     stepStyle(step) {
       if (step === this.stepnum) {
-        return this.currentStepStyle;
+        return this.currentStepStyle + ' cursor: pointer;';
       } else {
-        return '';
+        return 'cursor: pointer;';
       }
     },
     stepClass(step) {
       return 'pb-2';
+    },
+    gotoHomepage() {
+      if (this.stepnum === 1) {
+        // no-op
+      } else if (this.stepnum > 2) {
+        this.displayConfirmationDialog(
+          'Are you sure you want to return to the home page? ' +
+            'Any unsaved work in progress on the current study dataset will be lost.',
+          'homepage'
+        );
+      } else {
+        this.$router.push(`homepage`);
+      }
+    },
+    gotoDatasetManager() {
+      if (this.stepnum === 2) {
+        // no-op
+      } else if (this.stepnum > 2) {
+        this.displayConfirmationDialog(
+          'Are you sure you want to return to the Dataset Manager? ' +
+            'Any unsaved work in progress on the current study dataset will be lost.',
+          'datasets'
+        );
+      } else {
+        this.$router.push(`datasets`);
+      }
+    },
+    gotoCohortManager() {
+      if (this.stepnum === 3) {
+        // no-op
+      } else if (this.stepnum <= 2) {
+        this.displayErrorDialog(
+          'A study dataset must be created before the Cohort Manager can be used. ' +
+            "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
+            'link for an existing study dataset.'
+        );
+      } else {
+        this.$router.push(`cohorts?collection=${this.collectionId}`);
+      }
+    },
+    gotoDataExplorer() {
+      if (this.stepnum === 4) {
+        // no-op
+      } else if (this.stepnum <= 2) {
+        this.displayErrorDialog(
+          'A study dataset must be created before the Data Explorer can be used. ' +
+            "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
+            'link for an existing study dataset.'
+        );
+      } else {
+        this.$router.push(`explore?collection=${this.collectionId}`);
+      }
+    },
+    gotoSummaryMatrix() {
+      if (this.stepnum === 5) {
+        // no-op
+      } else if (this.stepnum <= 2) {
+        this.displayErrorDialog(
+          'A study dataset must be created before the Summary Matrix can be viewed. ' +
+            "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
+            'link for an existing study dataset.'
+        );
+      } else {
+        this.$router.push(`summary?collection=${this.collectionId}`);
+      }
+    },
+    displayErrorDialog(errorMsg) {
+      this.error_message = errorMsg;
+      this.show_error_dialog = true;
+    },
+    displayConfirmationDialog(confirmationMsg, targetUri) {
+      this.confirmation_message = confirmationMsg;
+      this.target_uri = targetUri;
+      this.show_confirmation_dialog = true;
     },
   },
 };
