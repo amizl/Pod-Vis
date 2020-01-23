@@ -96,6 +96,16 @@ div.v-stepper__label {
 /* Circled number in stepper step */
 span.v-stepper__step__step {
   font-size: 1em;
+  width: 40px;
+  height: 40px;
+}
+
+div.v-stepper__step span.v-stepper__step__step {
+  margin-bottom: 16px important!;
+}
+
+.v-stepper__step {
+  padding-top: 16px;
 }
 
 /* Dataset Overview page */
@@ -128,6 +138,12 @@ table.v-table thead th {
 /* Increase font size of D3 axis labels */
 g.tick text {
  font-size: 1.2em;
+}
+
+/* Lines connecting steps in the v-stepper */
+hr.v-divider.theme--light {
+  border-top-width: 3px;
+  border-top-color: rgba(0,0,0,0.35) !important;
 }
 
 svg {
