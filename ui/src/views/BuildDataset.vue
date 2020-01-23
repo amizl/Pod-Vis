@@ -54,7 +54,8 @@
                   <span class="title primary--text">Shared Variables</span>
                   <br />
                   <span class="subtitle-1 grey--text lighten-2"
-                    >Select the variables to include in the new study dataset.</span
+                    >Select the variables to include in the new study
+                    dataset.</span
                   >
                 </p>
               </v-card-title>

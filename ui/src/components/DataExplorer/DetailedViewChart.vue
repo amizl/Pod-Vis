@@ -55,8 +55,8 @@ export default {
       width: 0,
       height: 0,
       margin: { top: 20, right: 50, bottom: 100, left: 50 },
-      tick_font: "15px sans-serif",
-      label_font: "20px sans-serif",
+      tick_font: '15px sans-serif',
+      label_font: '20px sans-serif',
       //      draw_mean: false,
     };
   },

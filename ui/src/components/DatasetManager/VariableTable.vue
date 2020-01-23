@@ -27,7 +27,9 @@
             {{ props.item.category }}</v-layout
           >
         </td>
-        <td><span>{{ props.item.scale }}</span></td>
+        <td>
+          <span>{{ props.item.scale }}</span>
+        </td>
         <!-- <td v-if="histogram"></td> -->
         <!-- <td>{{ props.item.description }}</td> -->
         <!-- <td>{{ props.item.data_range }}</td> -->

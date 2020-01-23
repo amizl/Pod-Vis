@@ -50,7 +50,9 @@
               {{ props.item.category }}</v-layout
             >
           </td>
-          <td><span>{{ props.item.scale }}</span></td>
+          <td>
+            <span>{{ props.item.scale }}</span>
+          </td>
           <!-- Study columns with distribution visualizations -->
           <td
             v-for="dataset in datasets"
