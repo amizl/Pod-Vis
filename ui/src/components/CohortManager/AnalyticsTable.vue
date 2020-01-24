@@ -36,7 +36,7 @@
               <tr :class="getVariableClass(props.item)">
                 <td class="text-xs-left">{{ props.item.label }}</td>
                 <td class="text-xs-right">
-                  {{ props.item.pval | formatValue }}
+                  {{ props.item.pval | formatPValue }}
                 </td>
               </tr>
             </template>
@@ -68,9 +68,13 @@ import { format } from 'd3-format';
 
 export default {
   filters: {
-    formatValue(pvalue) {
-      return format('.2e')(pvalue);
-    },
+    formatPValue(pvalue) {
+      if (pvalue < 0.0001) {
+        return "< 0.0001";
+      } else {
+        return format('.4f')(pvalue);
+      }
+    }
   },
   data() {
     return {
@@ -82,8 +86,6 @@ export default {
         0.01,
         0.001,
         0.0001,
-        0.00001,
-        0.000001,
       ],
       headers: [
         {

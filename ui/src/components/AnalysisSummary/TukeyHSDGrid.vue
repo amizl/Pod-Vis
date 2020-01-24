@@ -9,9 +9,9 @@
         <v-spacer />
         <v-chip color="#FEEDDE">p &lt;= 1</v-chip>
         <v-chip color="#FDD0A2">p &lt;= 0.1</v-chip>
-        <v-chip color="#FDAE6B">p &lt;= 0.05</v-chip>
-        <v-chip color="#FD8D3C">p &lt;= 0.01</v-chip>
-        <v-chip color="#F16913">p &lt;= 0.001</v-chip>
+        <v-chip color="#FDAE6B">p &lt;= 0.01</v-chip>
+        <v-chip color="#FD8D3C">p &lt;= 0.001</v-chip>
+        <v-chip color="#F16913">p &lt;= 0.0001</v-chip>
       </v-card-title>
       <v-divider></v-divider>
 
@@ -165,7 +165,7 @@ export default {
         const pd = this.pval_dict;
         const pval = pd[cohort1.id][cohort2.id];
         if (pval < 0.0001) {
-          return `p=${format('.2e')(pval)}`;
+          return 'p<0.0001';
         }
         return `p=${format('.4f')(pval)}`;
       }
@@ -175,11 +175,11 @@ export default {
       const pd = this.pval_dict;
       const pval = pd[cohort1.id][cohort2.id];
       let ccl = '#FEEDDE';
-      if (pval <= 0.001) {
+      if (pval <= 0.0001) {
         ccl = '#F16913';
-      } else if (pval <= 0.01) {
+      } else if (pval <= 0.001) {
         ccl = '#FD8D3C';
-      } else if (pval <= 0.05) {
+      } else if (pval <= 0.01) {
         ccl = '#FDAE6B';
       } else if (pval <= 0.1) {
         ccl = '#FDD0A2';
