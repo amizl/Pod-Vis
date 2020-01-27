@@ -12,8 +12,12 @@
       <template v-slot:items="props">
         <tr>
           <td class="text-xs-left">{{ props.item.label }}</td>
-          <td class="text-xs-left">{{ props.item.date_generated | formatDate }}</td>
-	  <td class="text-xs-left">{{ props.item.is_public ? 'Yes' : 'No' }}</td>
+          <td class="text-xs-left">
+            {{ props.item.date_generated | formatDate }}
+          </td>
+          <td class="text-xs-left">
+            {{ props.item.is_public ? 'Yes' : 'No' }}
+          </td>
           <td class="text-xs-left px-0">
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on }">
@@ -86,7 +90,7 @@ export default {
   filters: {
     formatDate(ts) {
       // note that toISOString is going to give us UTC
-      return new Date(ts).toISOString().substr(0,10);
+      return new Date(ts).toISOString().substr(0, 10);
     },
   },
   components: {
@@ -114,7 +118,7 @@ export default {
           text: 'Public?',
           value: 'is_public',
         },
-       {
+        {
           text: 'Available Actions',
           value: 'label',
           sortable: false,
