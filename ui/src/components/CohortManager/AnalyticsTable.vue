@@ -70,23 +70,16 @@ export default {
   filters: {
     formatPValue(pvalue) {
       if (pvalue < 0.0001) {
-        return "< 0.0001";
+        return '< 0.0001';
       } else {
         return format('.4f')(pvalue);
       }
-    }
+    },
   },
   data() {
     return {
       highlight_by_pval: false,
-      pval_thresholds: [
-        'None',
-        0.1,
-        0.05,
-        0.01,
-        0.001,
-        0.0001,
-      ],
+      pval_thresholds: ['None', 0.1, 0.05, 0.01, 0.001, 0.0001],
       headers: [
         {
           text: 'Variable',
