@@ -81,6 +81,10 @@ export default {
       const { data } = await axios.get(
         '/api/collections?include=cohort_counts'
       );
+      data.collections.forEach(c => {
+        c.date_generated_epoch = new Date(c.date_generated).getTime();
+      });
+      data.collections.sort((a,b) => { return b.date_generated_epoch - a.date_generated_epoch });
       commit(mutations.SET_COLLECTIONS, data.collections);
     } catch (err) {
       const notification = new ErrorNotification(err);

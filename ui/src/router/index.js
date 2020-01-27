@@ -18,6 +18,12 @@ export default new Router({
       beforeEnter: requireAuth,
     },
     {
+      path: '/study_datasets',
+      name: 'studyDataset',
+      component: () => import('@/views/StudyDataset.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
       path: '/cohorts',
       name: 'cohortManager',
       component: () => import('@/views/CohortManager.vue'),

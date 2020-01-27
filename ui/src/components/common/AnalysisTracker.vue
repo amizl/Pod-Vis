@@ -75,11 +75,7 @@
           <span class="subtitle-1">{{ step_descr['5'] }}</span>
         </v-tooltip>
       </v-stepper-header>
-      <v-stepper-items>
-        <v-stepper-content step="1" :style="stepStyle('1')">
-          <v-btn color="primary" @click="stepTwo()">BEGIN</v-btn>
-        </v-stepper-content>
-      </v-stepper-items>
+      <v-stepper-items> </v-stepper-items>
     </v-stepper>
 
     <!-- substep trackers -->
@@ -95,7 +91,7 @@
           step="2.1"
           >Choose Datasets
           <span
-            >Select one or more datasets and click on "SELECT VARIABLES"</span
+            >Choose one or more datasets and click on "SELECT VARIABLES"</span
           ></v-stepper-step
         >
         <v-divider></v-divider>

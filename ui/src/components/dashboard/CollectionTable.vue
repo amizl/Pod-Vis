@@ -4,16 +4,17 @@
 
     <v-data-table
       :headers="headers"
-      :items="showPublicCollections ? publicCollections : privateCollections"
+      :items="visibleCollections"
       item-key="label"
-      hide-headers
       hide-actions
+      disable-initial-sort
     >
       <template v-slot:items="props">
         <tr>
           <td class="text-xs-left">{{ props.item.label }}</td>
-          <td class="text-xs-left">{{ props.item.date_generated }}</td>
-          <td class="text-xs-right px-0">
+          <td class="text-xs-left">{{ props.item.date_generated | formatDate }}</td>
+	  <td class="text-xs-left">{{ props.item.is_public ? 'Yes' : 'No' }}</td>
+          <td class="text-xs-left px-0">
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on }">
                 <v-btn flat @click="routeToCohortManager(props.item)" v-on="on">
@@ -70,16 +71,8 @@
         </tr>
       </template>
       <template v-slot:no-data>
-        <v-alert
-          v-if="showPublicCollections"
-          :value="true"
-          color="primary"
-          icon="info"
-        >
-          There are no public clinical data collections.
-        </v-alert>
-        <v-alert v-else :value="true" color="primary" icon="info">
-          You have no saved clinical data collections.
+        <v-alert :value="true" color="primary" icon="info">
+          You have no saved study datasets.
         </v-alert>
       </template>
     </v-data-table>
@@ -92,13 +85,19 @@ import { state, actions } from '@/store/modules/datasetManager/types';
 import DeleteCollectionButton from '@/components/dashboard/DeleteCollectionBtnDialog';
 
 export default {
+  filters: {
+    formatDate(ts) {
+      // note that toISOString is going to give us UTC
+      return new Date(ts).toISOString().substr(0,10);
+    },
+  },
   components: {
     DeleteCollectionButton,
   },
   props: {
-    // whether to show public collections (and _only_ public collections)
-    showPublicCollections: {
-      type: Boolean,
+    // which collections to show - public, private, or all
+    showCollections: {
+      type: String,
       required: true,
     },
   },
@@ -106,16 +105,21 @@ export default {
     return {
       headers: [
         {
-          text: 'Collection Name',
+          text: 'Study Dataset',
           value: 'label',
         },
         {
           text: 'Created',
-          value: 'date_generated',
+          value: 'date_generated_epoch',
         },
         {
-          text: 'Actions',
+          text: 'Public?',
+          value: 'is_public',
+        },
+       {
+          text: 'Available Actions',
           value: 'label',
+          sortable: false,
         },
       ],
     };
@@ -125,11 +129,14 @@ export default {
       isLoading: state.IS_LOADING,
       collections: state.COLLECTIONS,
     }),
-    publicCollections() {
-      return this.filterCollections(1);
-    },
-    privateCollections() {
-      return this.filterCollections(0);
+    visibleCollections() {
+      if (this.showCollections === 'all') {
+        return this.collections;
+      } else if (this.showCollections === 'public') {
+        return this.filterCollections(1);
+      } else if (this.showCollections === 'private') {
+        return this.filterCollections(0);
+      }
     },
   },
   mounted() {
