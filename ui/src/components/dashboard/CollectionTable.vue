@@ -17,7 +17,7 @@
           <td class="text-xs-left px-0">
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on }">
-                <v-btn flat @click="routeToCohortManager(props.item)" v-on="on">
+                <v-btn @click="routeToCohortManager(props.item)" v-on="on">
                   <v-icon left small color="secondary">group_add</v-icon> Add
                   Cohorts ({{ props.item.num_cohorts }})
                 </v-btn>
@@ -30,7 +30,6 @@
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on }">
                 <v-btn
-                  flat
                   :disabled="props.item.num_cohorts == 0"
                   @click="routeToDataExplorer(props.item)"
                   v-on="on"
@@ -46,7 +45,6 @@
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on }">
                 <v-btn
-                  flat
                   :disabled="props.item.num_cohorts == 0"
                   @click="routeToAnalysisSummary(props.item)"
                   v-on="on"

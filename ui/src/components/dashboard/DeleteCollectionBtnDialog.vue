@@ -2,8 +2,8 @@
   <span>
     <v-tooltip top color="primary">
       <template v-slot:activator="{ on }">
-        <v-btn flat color="error" v-on="on" @click="dialog = !dialog">
-          <v-icon color="error" left>delete</v-icon>DELETE
+        <v-btn color="error" v-on="on" @click="dialog = !dialog">
+          <v-icon color="white" left>delete</v-icon>DELETE
         </v-btn>
       </template>
       <span class="subtitle-1">Delete Collection</span>
