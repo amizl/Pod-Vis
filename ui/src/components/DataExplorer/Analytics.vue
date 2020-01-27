@@ -33,8 +33,12 @@
           <template v-slot:items="props">
             <tr>
               <td class="text-xs-left">{{ props.item.label }}</td>
-              <td class="text-xs-right">{{ props.item.pval | formatPValue }}</td>
-              <td class="text-xs-right">{{ props.item.fval | formatFValue }}</td>
+              <td class="text-xs-right">
+                {{ props.item.pval | formatPValue }}
+              </td>
+              <td class="text-xs-right">
+                {{ props.item.fval | formatFValue }}
+              </td>
             </tr>
           </template>
         </v-data-table>
@@ -52,7 +56,7 @@ export default {
   filters: {
     formatPValue(pvalue) {
       if (pvalue < 0.0001) {
-        return "< 0.0001";
+        return '< 0.0001';
       } else {
         return format('.4f')(pvalue);
       }
