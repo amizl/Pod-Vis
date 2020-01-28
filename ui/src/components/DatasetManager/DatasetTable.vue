@@ -41,10 +41,7 @@
                 >info</v-icon
               >
             </template>
-            <span
-              >Learn more about
-              <strong>{{ props.item.study_name }}</strong></span
-            >
+            <span>Learn more about this dataset.</span>
           </v-tooltip>
         </td>
       </tr>
@@ -77,7 +74,7 @@ export default {
           value: 'project_name',
         },
         {
-          text: 'Study',
+          text: 'Dataset',
           value: 'study_name',
         },
         {
@@ -105,7 +102,7 @@ export default {
         //   value: 'variables',
         // },
         {
-          text: 'Study Info',
+          text: 'Info',
           value: 'name',
           align: 'right',
           sortable: false,
