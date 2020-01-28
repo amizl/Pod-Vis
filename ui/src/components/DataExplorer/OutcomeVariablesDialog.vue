@@ -10,7 +10,7 @@
           v-on="on"
         >
           <v-icon left dark>add_box</v-icon>
-          Outcome Variables
+          Choose Outcome Variable
         </v-btn>
       </template>
       <span>Add/remove outcome variables from Summary View.</span>

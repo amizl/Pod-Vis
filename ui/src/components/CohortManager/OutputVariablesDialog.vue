@@ -3,12 +3,12 @@
     <template v-slot:activator="{ on }">
       <v-btn flat color="primary" class="title" v-on="on">
         <v-icon left dark>add_box</v-icon>
-        Outcome Variables
+        Choose Outcome Variables
       </v-btn>
     </template>
     <v-card max-height="500px">
       <v-card-title class="title primary--text text--darken-3">
-        Outcome Variables
+        Choose Outcome Variables
       </v-card-title>
       <v-sheet class="pa-3 background">
         <v-text-field
