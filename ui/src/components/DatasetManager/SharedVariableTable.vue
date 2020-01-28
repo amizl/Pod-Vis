@@ -65,7 +65,16 @@
               :scale-id="props.item.id"
               :data-category="props.item.data_category"
             />
-            {{ getStudyVariableCount(dataset.id, props.item.id) }}
+            <span
+              :style="
+                'color: ' +
+                  getStudyVariableColor(
+                    getStudyVariableCount(dataset.id, props.item.id)
+                  )
+              "
+            >
+              {{ getStudyVariableCount(dataset.id, props.item.id) }}</span
+            >
           </td>
         </tr>
       </template>
@@ -222,11 +231,11 @@ export default {
 
     getStudyVariableCount(study_id, var_id) {
       var key = var_id + ':' + study_id;
+      var count = 0;
       if (key in this.study_variable_counts) {
-        return this.study_variable_counts[key];
-      } else {
-        return 0;
+        count = this.study_variable_counts[key];
       }
+      return count;
     },
 
     getStudyCount(study_id) {
@@ -280,6 +289,16 @@ export default {
         return '#F8B108';
       } else {
         return '#FAE1A6';
+      }
+    },
+
+    getStudyVariableColor(nSubjects) {
+      if (nSubjects <= 10) {
+        return '#F83008';
+      } else if (nSubjects <= 25) {
+        return '#F8B108';
+      } else {
+        return 'black';
       }
     },
   },
