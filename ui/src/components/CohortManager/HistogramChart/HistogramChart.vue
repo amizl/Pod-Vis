@@ -164,7 +164,6 @@ export default {
         bottom: 20,
         left: 50,
       },
-      selected: [],
       container: null,
       dimension: null,
       group: [],
@@ -291,9 +290,9 @@ export default {
   watch: {
     filteredData() {
       this.data = flattenGroupCounts(this.group.all());
-
-      if (this.selected.length && !this.dimension.currentFilter()) {
-        this.selected = [];
+      if (!this.dimension.currentFilter()) {
+        this.handle.attr('display', 'none');
+        select(this.$refs.brush).call(this.brush.move, null);
       }
     },
   },
