@@ -169,22 +169,21 @@ export default {
     // build hash that maps variable_id + study_id -> number of subjects
     this.computeStudyVariableCounts();
 
-    // TODO...fetch shared subject attributes
+    // fetch shared subject attributes
     const {
-      data: { subject_attributes: subjectVariables },
-    } = await axios.get(
-      `/api/studies/${this.datasets[0].id}/subjects/attributes`
-    );
+      data: { attributes },
+    } = await this.fetchSharedAttributes();
+
     // add type key to subject variables to distinguish that these variables
-    // are relating to the subejcts
-    subjectVariables.forEach(variable => {
+    // are relating to the subjects
+    attributes.forEach(variable => {
       variable.type = 'subject';
     });
     // TODO - retrieve data_category from database
-    subjectVariables.forEach(variable => {
+    attributes.forEach(variable => {
       variable.data_category = 'Unknown';
     });
-    this.variables = [...this.variables, ...subjectVariables];
+    this.variables = [...this.variables, ...attributes];
 
     this.isLoading = false;
   },
@@ -196,6 +195,11 @@ export default {
      */
     fetchSharedVariables() {
       const base = `/api/studies/variables`;
+      const query = this.datasets.map(({ id }) => `id=${id}`).join('&');
+      return axios.get(`${base}?${query}`);
+    },
+    fetchSharedAttributes() {
+      const base = `/api/studies/attributes`;
       const query = this.datasets.map(({ id }) => `id=${id}`).join('&');
       return axios.get(`${base}?${query}`);
     },
