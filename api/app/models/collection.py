@@ -181,10 +181,13 @@ class Collection(db.Model):
           ORDER BY subject_id, observation_ontology_id, event_date, sv.visit_num
         """)
 
-        result_proxy = connection.execute(
-            query_for_totals,
-            study_ids=study_ids,
-            ids=obs_ids).fetchall()
+        if len(obs_ids) == 0:
+            result_proxy = []
+        else:
+            result_proxy = connection.execute(
+                query_for_totals,
+                study_ids=study_ids,
+                ids=obs_ids).fetchall()
 
         # group by subject_id, obs_id
         last_subj_id = None
