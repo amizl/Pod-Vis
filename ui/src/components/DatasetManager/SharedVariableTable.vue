@@ -135,9 +135,24 @@ export default {
      */
     selected(value) {
       if (this.selectable) this.$emit('input', value);
+
+      // track number of selected subject and observation_variables
+      var n_subject = 0;
+      var n_observation = 0;
+
+      value.forEach(v => {
+        if (v.type === 'subject') {
+          n_subject += 1;
+        } else if (v.type === 'observation') {
+          n_observation += 1;
+        }
+      });
+
       var selectedIds = value.map(v => v['id']);
       this.subject_counts = this.countSubjects(selectedIds);
       this.$emit('nSubjects', this.subject_counts['all']);
+      this.$emit('nSubjectVars', n_subject);
+      this.$emit('nObservationVars', n_observation);
     },
   },
   async created() {

@@ -18,6 +18,8 @@
         :variables="variables"
         :dataset-ids="selectedDatasetIDs"
         :num-subjects-selected="numSubjects"
+        :num-observation-vars-selected="numObservationVars"
+        :num-subject-vars-selected="numSubjectVars"
         @dialogOpen="dialogOpened"
         @collectionSaved="collectionSaved"
       />
@@ -64,6 +66,8 @@
                 :datasets="selectedDatasets"
                 selectable
                 @nSubjects="updateNumSubjects"
+                @nObservationVars="updateNumObservationVars"
+                @nSubjectVars="updateNumSubjectVars"
               />
             </v-card>
           </v-flex>
@@ -133,6 +137,8 @@ export default {
     selected: [],
     substep: '2.2',
     numSubjects: 0,
+    numObservationVars: 0,
+    numSubjectVars: 0,
   }),
   computed: {
     ...mapState('datasetManager', {
@@ -165,6 +171,13 @@ export default {
     updateNumSubjects(ns) {
       this.numSubjects = ns;
     },
+    updateNumObservationVars(no) {
+      this.numObservationVars = no;
+    },
+    updateNumSubjectVars(ns) {
+      this.numSubjectVars = ns;
+    },
+
     // TODO - duplicated from SharedVariableTable.vue
     getNumSubjectsColor(nSubjects) {
       if (nSubjects <= 10) {

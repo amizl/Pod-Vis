@@ -1,7 +1,11 @@
 <template>
   <div>
     <v-btn
-      :disabled="numSubjectsSelected == 0"
+      :disabled="
+        numSubjectsSelected === 0 ||
+          numObservationVarsSelected === 0 ||
+          numSubjectVarsSelected === 0
+      "
       color="primary--text"
       @click="dialog = !dialog"
     >
@@ -64,6 +68,14 @@ export default {
       default: () => [],
     },
     numSubjectsSelected: {
+      type: Number,
+      default: 0,
+    },
+    numObservationVarsSelected: {
+      type: Number,
+      default: 0,
+    },
+    numSubjectVarsSelected: {
       type: Number,
       default: 0,
     },
