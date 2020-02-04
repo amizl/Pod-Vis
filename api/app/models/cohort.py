@@ -104,8 +104,14 @@ class Cohort(db.Model):
         This easily allows for serializing the cohort object and
         sending over http.
         """
-        input_vars = sorted([variable.to_dict() for variable in self.input_variables], key=lambda x: x['subject_ontology']['label'])
-        output_vars = sorted([variable.to_dict() for variable in self.output_variables], key=lambda x: x['observation_ontology']['label'])
+        def varkey(x):
+            if 'subject_ontology' in x:
+                return x['subject_ontology']['label']
+            else:
+                return x['observation_ontology']['label']
+
+        input_vars = sorted([variable.to_dict() for variable in self.input_variables], key=varkey)
+        output_vars = sorted([variable.to_dict() for variable in self.output_variables], key=varkey)
         
         cohort = dict(
             id=self.id,
