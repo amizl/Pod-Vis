@@ -130,7 +130,7 @@ export default {
   data() {
     return {
       signOutDialog: false,
-      expand: true,
+      expand: false,
       menuItems: [
         {
           name: 'Home Page',
@@ -163,7 +163,9 @@ export default {
   watch: {
     expand(value) {
       // cache if sidebar is toggled
-      window.localStorage.expand = value;
+      if (window.localStorage.expand != value) {
+        window.localStorage.expand = value;
+      }
     },
   },
   created() {
@@ -172,7 +174,7 @@ export default {
       const { expand } = window.localStorage;
       this.expand = eval(expand); // evaluate 'false' or 'true' strings
     } else {
-      this.expand = true;
+      this.expand = false;
     }
   },
   methods: {
