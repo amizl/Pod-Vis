@@ -5,7 +5,8 @@
     :width="width"
     :height="useTweeningHeightIfNotFalsy"
     :fill="fill"
-  ></rect>
+    ><title v-if="tooltip !== ''">{{ tooltip }}</title></rect
+  >
 </template>
 
 <script>
@@ -39,6 +40,11 @@ export default {
     fill: {
       type: String,
       required: true,
+    },
+    tooltip: {
+      type: String,
+      required: false,
+      default: '',
     },
   },
   data() {

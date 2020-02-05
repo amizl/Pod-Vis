@@ -24,6 +24,7 @@
           "
           :id="variable.id"
           :dimension-name="dimension"
+          bar-tooltip="Click to add or remove this value from the cohort filter"
         />
         <HistogramChart
           v-else

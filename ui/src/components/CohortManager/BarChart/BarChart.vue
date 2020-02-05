@@ -14,6 +14,7 @@
           :width="xScale.bandwidth()"
           :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
           fill="#FAE1A6"
+          :tooltip="barTooltip"
           @click.native="userClickedBar(d.key)"
         />
         <bar-rect
@@ -24,6 +25,7 @@
           :width="xScale.bandwidth()"
           :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
           :fill="getFill(d.key)"
+          :tooltip="barTooltip"
           @click.native="userClickedBar(d.key)"
         />
       </g>
@@ -86,6 +88,11 @@ export default {
     dimensionName: {
       type: String,
       required: true,
+    },
+    barTooltip: {
+      type: String,
+      required: false,
+      default: '',
     },
   },
   data() {
