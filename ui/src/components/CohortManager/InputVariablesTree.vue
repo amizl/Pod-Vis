@@ -6,6 +6,7 @@
       return-object
       selectable
       :search="search"
+      :open.sync="openSubj"
       :items="
         [{ type: 'study', id: 24, label: 'Study' }, ...subjectVariables].sort(
           function(a, b) {
@@ -22,6 +23,7 @@
       return-object
       :items="observationVariables"
       :search="search"
+      :open.sync="openObs"
       item-text="label"
     ></v-treeview>
   </div>
@@ -47,6 +49,8 @@ export default {
     observationVariables: [],
     subjectVariables: [],
     propagateChanges: false,
+    openSubj: [],
+    openObs: [],
   }),
   computed: {
     ...mapGetters('cohortManager', {
@@ -79,6 +83,17 @@ export default {
       //   .map(variable => variable.observation_ontology.id);
     },
     selectedSubjectVariables(newSubjectVariables) {
+      // open up any selected nodes that are not already open
+      var openIds = {};
+      this.openSubj.forEach(s => {
+        openIds[s.id] = true;
+      });
+      newSubjectVariables.forEach(s => {
+        if (!(s.id in openIds)) {
+          this.openSubj.push(s);
+        }
+      });
+
       if (this.propagateChanges) {
         this.setInputVariables([
           // Filter parent nodes because we don't want them added to our list,
@@ -90,13 +105,24 @@ export default {
         ]);
       }
     },
-    selectedObservationVariables(newObservationVariable) {
+    selectedObservationVariables(newObservationVariables) {
+      // open up any selected nodes that are not already open
+      var openIds = {};
+      this.openObs.forEach(s => {
+        openIds[s.id] = true;
+      });
+      newObservationVariables.forEach(s => {
+        if (!(s.id in openIds)) {
+          this.openObs.push(s);
+        }
+      });
+
       if (this.propagateChanges) {
         this.setInputVariables([
           ...this.selectedSubjectVariables.filter(
             variable => !variable.children
           ),
-          ...newObservationVariable.filter(variable => !variable.children),
+          ...newObservationVariables.filter(variable => !variable.children),
         ]);
       }
     },

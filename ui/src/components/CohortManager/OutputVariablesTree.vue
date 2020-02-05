@@ -6,6 +6,7 @@
     return-object
     :items="observationVariables"
     :search="search"
+    :open.sync="openObs"
     item-text="label"
   ></v-treeview>
 </template>
@@ -28,6 +29,7 @@ export default {
     observationVariables: [],
     observationVariablesD: [],
     propagateChanges: false,
+    openObs: [],
   }),
   computed: {
     ...mapGetters('cohortManager', {
@@ -59,6 +61,17 @@ export default {
       }
     },
     selectedObservationVariables(newObservationVariables) {
+      // open up any selected nodes that are not already open
+      var openIds = {};
+      this.openObs.forEach(s => {
+        openIds[s.id] = true;
+      });
+      newObservationVariables.forEach(s => {
+        if (!(s.id in openIds)) {
+          this.openObs.push(s);
+        }
+      });
+
       if (this.propagateChanges) {
         // First Visit, Change, etc
         const dimensions = newObservationVariables.filter(
