@@ -1,6 +1,6 @@
 <template>
   <v-toolbar app class="white">
-    <v-toolbar-title>CliO-Vis</v-toolbar-title>
+    <v-toolbar-title>POD-Vis</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn v-for="item in menuItems" :key="item.name" :to="item.path" flat>
