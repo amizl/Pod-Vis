@@ -3,6 +3,16 @@
     <v-container v-if="dataset" fluid grid-list-xl class="ma-0 pa-2">
       <v-toolbar app class="primary">
         <v-toolbar-title class="white--text">Dataset Overview</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-tooltip bottom color="primary">
+          <template v-slot:activator="{ on }">
+            <v-btn color="primary--text" @click="goBack()" v-on="on">
+              <v-icon left>table_chart</v-icon>
+              Dataset Manager
+            </v-btn>
+          </template>
+          <span>Return to Dataset Manager</span>
+        </v-tooltip>
       </v-toolbar>
       <v-layout row wrap justify-center class="ma-0 pa-1">
         <v-flex xs8 class="ma-0 pa-2">
