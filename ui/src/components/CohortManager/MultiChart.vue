@@ -4,9 +4,9 @@
       <v-flex xs4>
         <v-flex
           v-if="
-		(!variable.selected_measures) || 
-		('firstVisit' in variable.selected_measures &&
-		'lastVisit' in variable.selected_measures)
+            !variable.selected_measures ||
+              ('firstVisit' in variable.selected_measures &&
+                'lastVisit' in variable.selected_measures)
           "
         >
           <v-layout>
@@ -50,7 +50,10 @@
       <v-flex xs8>
         <v-layout column fill-height>
           <v-flex
-            v-if="!variable.selected_measures || ('change' in variable.selected_measures)"
+            v-if="
+              !variable.selected_measures ||
+                'change' in variable.selected_measures
+            "
             xs6
             class="pb-0"
           >
@@ -60,7 +63,13 @@
               :dimension-name="`${variable.label} - Change`"
             />
           </v-flex>
-          <v-flex v-if="!variable.selected_measures || ('roc' in variable.selected_measures)" xs6 class="pt-0">
+          <v-flex
+            v-if="
+              !variable.selected_measures || 'roc' in variable.selected_measures
+            "
+            xs6
+            class="pt-0"
+          >
             Rate of Change
             <HistogramChart
               :id="`change-${dimensionName}`"
