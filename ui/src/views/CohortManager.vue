@@ -10,18 +10,20 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-flex xs12 sm12> <CohortSelection class="mt-2" /> </v-flex>
+        <v-flex xs12 sm12>
+          <CohortSelection class="mt-2" @selectedCohort="selectedCohort" />
+        </v-flex>
       </v-toolbar-items>
       <v-spacer></v-spacer>
 
       <delete-cohort-button />
-      <save-cohort-button @cohortSaved="cohortSaved" />
+      <save-cohort-button @cohortSaved="cohortLoaded" />
 
       <v-tooltip top color="primary">
         <template v-slot:activator="{ on }">
-          <data-explorer-button />
+          <analysis-summary-button :collection-id="collectionId" />
         </template>
-        <span>Launch Data Explorer to compare Cohorts</span>
+        <span>View Analysis Summary for all Cohorts and Outcome Variables</span>
       </v-tooltip>
     </v-toolbar>
 
@@ -71,7 +73,7 @@ import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
 import DeleteCohortButton from '@/components/CohortManager/DeleteCohortBtnDialog';
 import SaveCohortButton from '@/components/CohortManager/SaveCohortBtnDialog';
-import DataExplorerButton from '@/components/CohortManager/DataExplorerBtnDialog';
+import AnalysisSummaryButton from '@/components/DataExplorer/AnalysisSummaryBtnDialog';
 
 export default {
   name: 'CohortManager',
@@ -83,7 +85,7 @@ export default {
     AnalyticsTable,
     SaveCohortButton,
     DeleteCohortButton,
-    DataExplorerButton,
+    AnalysisSummaryButton,
   },
   props: {
     collectionId: {
@@ -151,6 +153,7 @@ export default {
         this.substep = '3.1';
       }
     },
+    cohortLoaded() {},
   },
 };
 </script>

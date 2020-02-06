@@ -13,7 +13,7 @@
     <v-layout row class="ma-0 pa-0">
       <v-flex xs12>
         <analysis-tracker
-          step="5"
+          step="4"
           :substep="substep"
           :collection-id="collectionId"
         ></analysis-tracker>
@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      substep: '5.1',
+      substep: '4.1',
     };
   },
   computed: {

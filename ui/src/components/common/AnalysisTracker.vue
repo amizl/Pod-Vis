@@ -54,8 +54,8 @@
             step="4"
             :style="stepStyle('4')"
             :class="stepClass('4')"
-            @click.native="gotoDataExplorer()"
-            >Data Explorer
+            @click.native="gotoSummaryMatrix()"
+            >Summary Matrix
           </v-stepper-step>
           <span class="subtitle-1">{{ step_descr['4'] }}</span>
         </v-tooltip>
@@ -69,8 +69,8 @@
             step="5"
             :style="stepStyle('5')"
             :class="stepClass('5')"
-            @click.native="gotoSummaryMatrix()"
-            >Summary Matrix
+            @click.native="gotoDataExplorer()"
+            >Data Explorer
           </v-stepper-step>
           <span class="subtitle-1">{{ step_descr['5'] }}</span>
         </v-tooltip>
@@ -163,7 +163,9 @@
     >
       <v-stepper-header>
         <v-stepper-step step="4.1"
-          >Choose your timeframe - not yet implemented</v-stepper-step
+          >Choose a variable from the One-Way ANOVA table (top), then click on
+          one of the p-values in the Tukey/Range HSD test table (bottom) to
+          compare those cohorts in the Data Explorer.</v-stepper-step
         >
         <v-divider></v-divider>
       </v-stepper-header>
@@ -177,7 +179,9 @@
     >
       <v-stepper-header>
         <v-stepper-step step="5.1"
-          >Review a log of previous analyses</v-stepper-step
+          >Explore all the data for a chosen variable and set of cohorts. Click
+          on an outcome variable in the Summary View (top) then choose one or
+          more cohorts to display in the Cohorts table below.</v-stepper-step
         >
         <v-divider></v-divider>
       </v-stepper-header>
@@ -232,8 +236,8 @@ export default {
         '1': 'Archive of Uploaded Datasets',
         '2': 'Create your study dataset',
         '3': 'Design your query: Choose predictors and outcomes',
-        '4': 'Choose your timeframe',
-        '5': 'Review a log of your previous analyses',
+        '4': 'Compare cohorts in the Summary Matrix.',
+        '5': 'Examine cohorts and variables in the Data Explorer.',
       },
       expanded: true,
 

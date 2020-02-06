@@ -47,6 +47,7 @@ export default {
   watch: {
     selectedCohort(newCohort) {
       this.setCohort(newCohort);
+      this.$emit('selectedCohort', newCohort);
     },
     cohort() {
       this.selectedCohort = this.cohort;

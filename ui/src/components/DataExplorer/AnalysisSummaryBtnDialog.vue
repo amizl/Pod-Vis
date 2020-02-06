@@ -4,7 +4,7 @@
       <template v-slot:activator="{ on }">
         <v-btn
           color="primary--text"
-          :disabled="false"
+          :disabled="collection_cohorts.length < 2"
           @click="dialog = !dialog"
           v-on="on"
         >
@@ -19,7 +19,7 @@
       <v-card class="rounded-lg">
         <v-card-title class="title primary--text text--darken-3">
           <span class="primary--text title pl-2"
-            >Are you sure you want to leave the Data Explorer and go to the
+            >Are you sure you want to leave the Cohort Manager and go to the
             Summary Matrix?</span
           >
         </v-card-title>

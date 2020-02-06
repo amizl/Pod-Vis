@@ -35,21 +35,6 @@
               <template v-slot:activator="{ on }">
                 <v-btn
                   :disabled="props.item.num_cohorts == 0"
-                  @click="routeToDataExplorer(props.item)"
-                  v-on="on"
-                >
-                  <v-icon left small color="secondary">explore</v-icon> Explore
-                </v-btn>
-              </template>
-              <span class="subtitle-1"
-                >Launch Data Explorer to compare Cohorts</span
-              >
-            </v-tooltip>
-
-            <v-tooltip top color="primary">
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  :disabled="props.item.num_cohorts == 0"
                   @click="routeToAnalysisSummary(props.item)"
                   v-on="on"
                 >
@@ -59,6 +44,21 @@
               </template>
               <span class="subtitle-1"
                 >View Analysis Summary for current Cohorts</span
+              >
+            </v-tooltip>
+
+            <v-tooltip top color="primary">
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  :disabled="props.item.num_cohorts == 0"
+                  @click="routeToDataExplorer(props.item)"
+                  v-on="on"
+                >
+                  <v-icon left small color="secondary">explore</v-icon> Explore
+                </v-btn>
+              </template>
+              <span class="subtitle-1"
+                >Launch Data Explorer to compare Cohorts</span
               >
             </v-tooltip>
 
