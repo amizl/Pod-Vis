@@ -2,6 +2,10 @@
   <v-flex ref="container" fill-height style="display: inline-block">
     <svg ref="chart" :width="width" :height="height">
       <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
+        <title v-if="hasSelection()">
+          Click outside the selected area to remove the filter.
+        </title>
+        <title v-else>Click and drag to add a cohort filter.</title>
         <!-- Population bars are first so they will hide under cohort bars -->
         <rect
           v-for="(bin, i) in popBins"
