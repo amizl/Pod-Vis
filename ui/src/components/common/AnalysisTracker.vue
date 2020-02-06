@@ -1,11 +1,11 @@
 <template>
   <div style="background: white">
-    <v-stepper v-model="stepnum" :value="stepnum" alt-labels>
+    <v-stepper v-model="step" :value="step" alt-labels>
       <v-stepper-header>
         <v-tooltip color="primary" right>
           <v-stepper-step
             slot="activator"
-            :complete="stepnum > 1"
+            :complete="step > 1"
             step="1"
             :style="stepStyle('1')"
             :class="stepClass('1')"
@@ -20,7 +20,7 @@
         <v-tooltip color="primary" right>
           <v-stepper-step
             slot="activator"
-            :complete="stepnum > 2"
+            :complete="step > 2"
             step="2"
             :style="stepStyle('2')"
             :class="stepClass('2')"
@@ -35,7 +35,7 @@
         <v-tooltip color="primary" right>
           <v-stepper-step
             slot="activator"
-            :complete="stepnum > 3"
+            :complete="step > 3"
             step="3"
             :style="stepStyle('3')"
             :class="stepClass('3')"
@@ -50,7 +50,7 @@
         <v-tooltip color="primary" right>
           <v-stepper-step
             slot="activator"
-            :complete="stepnum > 4"
+            :complete="step > 4"
             step="4"
             :style="stepStyle('4')"
             :class="stepClass('4')"
@@ -65,7 +65,7 @@
         <v-tooltip color="primary" right>
           <v-stepper-step
             slot="activator"
-            :complete="stepnum > 5"
+            :complete="step > 5"
             step="5"
             :style="stepStyle('5')"
             :class="stepClass('5')"
@@ -81,23 +81,19 @@
     <!-- substep trackers -->
     <v-stepper
       v-if="step === '2'"
-      :value="substepnum"
-      model="substepnum"
+      :value="substep"
+      model="substep"
       :style="currentStepStyle"
     >
       <v-stepper-header>
-        <v-stepper-step
-          :complete="substepnum !== '2.1' || stepnum === '3'"
-          step="2.1"
+        <v-stepper-step :complete="substep !== '2.1' || step === '3'" step="2.1"
           >Choose Datasets
           <span
             >Choose one or more datasets and click on "SELECT VARIABLES"</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step
-          :complete="substepnum === '2.3' || stepnum === '3'"
-          step="2.2"
+        <v-stepper-step :complete="substep === '2.3' || step === '3'" step="2.2"
           >Select Variables
           <span
             >Select one or more variables and click on "SAVE STUDY
@@ -105,7 +101,7 @@
           ></v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="stepnum === '3'" step="2.3"
+        <v-stepper-step :complete="step === '3'" step="2.3"
           >Save (and name) Study Dataset</v-stepper-step
         >
       </v-stepper-header>
@@ -113,8 +109,8 @@
 
     <v-stepper
       v-if="step === '3'"
-      :value="substepnum"
-      model="substepnum"
+      :value="substep"
+      model="substep"
       :style="currentStepStyle"
     >
       <v-stepper-header>
@@ -134,12 +130,35 @@
         <v-divider></v-divider>
         <v-stepper-step step="3.4">Save Cohort</v-stepper-step>
       </v-stepper-header>
+      <v-stepper-items>
+        <v-stepper-content step="3.1">
+          Click on "CHOOSE PREDICTOR VARIABLES" below and select one or more
+          variables, then click here to
+          <v-btn @click="goto3p2()">Continue</v-btn>.
+        </v-stepper-content>
+
+        <v-stepper-content step="3.2">
+          Click on "CHOOSE OUTCOME VARIABLES" below and select one or more
+          variables, then click here to
+          <v-btn @click="goto3p3()">Continue</v-btn>.
+        </v-stepper-content>
+
+        <v-stepper-content step="3.3">
+          Apply filters to predictor variables to define the desired cohort,
+          then click here to <v-btn @click="goto3p4()">Continue</v-btn>.
+        </v-stepper-content>
+
+        <v-stepper-content step="3.4">
+          Click on "SAVE COHORT" in the toolbar above to name and save this
+          cohort.
+        </v-stepper-content>
+      </v-stepper-items>
     </v-stepper>
 
     <v-stepper
       v-if="step === '4'"
-      :value="substepnum"
-      model="substepnum"
+      :value="substep"
+      model="substep"
       :style="currentStepStyle"
     >
       <v-stepper-header>
@@ -152,8 +171,8 @@
 
     <v-stepper
       v-if="step === '5'"
-      :value="substepnum"
-      model="substepnum"
+      :value="substep"
+      model="substep"
       :style="currentStepStyle"
     >
       <v-stepper-header>
@@ -209,8 +228,6 @@ export default {
   },
   data() {
     return {
-      stepnum: '',
-      substepnum: '',
       step_descr: {
         '1': 'Archive of Uploaded Datasets',
         '2': 'Create your study dataset',
@@ -230,18 +247,6 @@ export default {
       target_uri: '',
     };
   },
-  watch: {
-    step() {
-      this.stepnum = this.step;
-    },
-    substep() {
-      this.substepnum = this.substep;
-    },
-  },
-  created() {
-    this.stepnum = this.step;
-    this.substepnum = this.substep;
-  },
   computed: {
     ...mapState('cohortManager', {
       inputVariables: state.INPUT_VARIABLES,
@@ -255,7 +260,7 @@ export default {
       this.$router.push('/datasets');
     },
     stepStyle(step) {
-      if (step === this.stepnum) {
+      if (step === this.step) {
         return this.currentStepStyle + ' cursor: pointer;';
       } else {
         return 'cursor: pointer;';
@@ -264,10 +269,11 @@ export default {
     stepClass(step) {
       return 'pb-2';
     },
+    // Transitions between major steps
     gotoHomepage() {
-      if (this.stepnum === 1) {
+      if (this.step === 1) {
         // no-op
-      } else if (this.stepnum > 2) {
+      } else if (this.step > 2) {
         this.displayConfirmationDialog(
           'Are you sure you want to return to the home page? ' +
             'Any unsaved work in progress on the current study dataset will be lost.',
@@ -278,9 +284,9 @@ export default {
       }
     },
     gotoDatasetManager() {
-      if (this.stepnum === 2) {
+      if (this.step === 2) {
         // no-op
-      } else if (this.stepnum > 2) {
+      } else if (this.step > 2) {
         this.displayConfirmationDialog(
           'Are you sure you want to return to the Dataset Manager? ' +
             'Any unsaved work in progress on the current study dataset will be lost.',
@@ -291,9 +297,9 @@ export default {
       }
     },
     gotoCohortManager() {
-      if (this.stepnum === 3) {
+      if (this.step === 3) {
         // no-op
-      } else if (this.stepnum <= 2) {
+      } else if (this.step <= 2) {
         this.displayErrorDialog(
           'A study dataset must be created before the Cohort Manager can be used. ' +
             "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
@@ -304,9 +310,9 @@ export default {
       }
     },
     gotoDataExplorer() {
-      if (this.stepnum === 4) {
+      if (this.step === 4) {
         // no-op
-      } else if (this.stepnum <= 2) {
+      } else if (this.step <= 2) {
         this.displayErrorDialog(
           'A study dataset must be created before the Data Explorer can be used. ' +
             "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
@@ -317,9 +323,9 @@ export default {
       }
     },
     gotoSummaryMatrix() {
-      if (this.stepnum === 5) {
+      if (this.step === 5) {
         // no-op
-      } else if (this.stepnum <= 2) {
+      } else if (this.step <= 2) {
         this.displayErrorDialog(
           'A study dataset must be created before the Summary Matrix can be viewed. ' +
             "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
@@ -329,6 +335,29 @@ export default {
         this.$router.push(`summary?collection=${this.collectionId}`);
       }
     },
+    // Cohort Manager sub-step transitions.
+    goto3p2() {
+      if (this.inputVariables.length > 0) {
+        this.$emit('update:substep', '3.2');
+      } else {
+        this.displayErrorDialog('At least one predictor variable must be selected before continuing to the next step.');
+      }
+    },
+    goto3p3() {
+      if (this.outputVariables.length > 0) {
+        this.$emit('update:substep', '3.3');
+      } else {
+        this.displayErrorDialog('At least one outcome variable must be selected before continuing to the next step.');
+      }
+    },
+    goto3p4() {
+      if (this.filteredData.length < this.unfilteredData.length) {
+        this.$emit('update:substep', '3.4');
+      } else {
+        this.displayErrorDialog('At least one filter must be added before continuing to the next step.');
+      }
+    },
+
     displayErrorDialog(errorMsg) {
       this.error_message = errorMsg;
       this.show_error_dialog = true;

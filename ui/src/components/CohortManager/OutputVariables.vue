@@ -1,8 +1,13 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
+  <v-sheet
+    color="white"
+    height="100%"
+    class="rounded-lg shadow"
+  >
     <v-layout column fill-height class="ma-1">
       <output-variables-toolbar
         :expanded="expanded"
+        :highlighted="highlighted"
         @expandClicked="expandClicked"
       />
       <v-container v-show="expanded" fluid fill-height class="pa-0 pb-1">
@@ -28,11 +33,21 @@ export default {
     OutputVariablesToolbar,
     OutputVariablesCharts,
   },
+  props: {
+    expanded: {
+      type: Boolean,
+      required: true,
+    },
+    highlighted: {
+      type: Boolean,
+      required: true,
+    },
+  },
+
   data() {
     return {
       variables: [],
       value: [],
-      expanded: true,
     };
   },
   computed: {
@@ -44,12 +59,8 @@ export default {
     },
   },
   methods: {
-    // ...mapMutations("cohortManager", {
-    //   addInputVariable: mutations.ADD_INPUT_VARIABLE,
-    //   removeInputVariable: mutations.REMOVE_INPUT_VARIABLE
-    // })
     expandClicked(newval) {
-      this.expanded = newval;
+      this.$emit('update:expanded', newval);
     },
   },
 };

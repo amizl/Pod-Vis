@@ -15,7 +15,7 @@
       <v-spacer></v-spacer>
 
       <delete-cohort-button />
-      <save-cohort-button />
+      <save-cohort-button @cohortSaved="cohortSaved" />
 
       <v-tooltip top color="primary">
         <template v-slot:activator="{ on }">
@@ -29,22 +29,33 @@
       <v-flex xs12>
         <analysis-tracker
           step="3"
-          :substep="substep"
+          :substep.sync="substep"
           :collection-id="collectionId"
         ></analysis-tracker>
       </v-flex>
     </v-layout>
 
     <v-layout row fill-height class="mt-2 pa-0">
-      <v-flex xs12> <input-variables /> </v-flex>
+      <v-flex xs12>
+        <input-variables
+          :expanded.sync="inExpanded"
+          :highlighted="inHighlighted"
+        />
+      </v-flex>
     </v-layout>
 
     <v-layout row class="mt-2 pa-0">
-      <v-flex xs12> <output-variables /> </v-flex>
+      <v-flex xs12>
+        <output-variables
+          :expanded.sync="outExpanded"
+          :highlighted="outHighlighted"
+          :disabled="true"
+        />
+      </v-flex>
     </v-layout>
 
     <v-layout row class="mt-2 pa-0">
-      <v-flex xs6> <analytics-table /> </v-flex>
+      <v-flex xs6> <analytics-table :disabled="true" /> </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -84,6 +95,10 @@ export default {
     return {
       isLoading: false,
       substep: '3.1',
+      inExpanded: true,
+      outExpanded: false,
+      inHighlighted: true,
+      outHighlighted: false,
     };
   },
   computed: {
@@ -94,9 +109,31 @@ export default {
       collection: state.COLLECTION,
     }),
   },
+  watch: {
+    substep() {
+      if (this.substep === '3.1') {
+        this.inExpanded = true;
+        this.outExpanded = false;
+        this.inHighlighted = true;
+        this.outHighlighted = false;
+      } else if (this.substep === '3.2') {
+        this.inExpanded = false;
+        this.outExpanded = true;
+        this.inHighlighted = false;
+        this.outHighlighted = true;
+      } else if (this.substep === '3.3') {
+        this.inExpanded = true;
+        this.outExpanded = true;
+        this.inHighlighted = true;
+        this.outHighlighted = false;
+      } else if (this.substep === '3.4') {
+        this.inHighlighted = false;
+        this.outHighlighted = false;
+      }
+    },
+  },
   async created() {
     this.resetAllStoreData();
-
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
@@ -108,6 +145,12 @@ export default {
       fetchData: actions.FETCH_DATA,
       resetAllStoreData: actions.RESET_ALL_STORE_DATA,
     }),
+    cohortSaved(success) {
+      // go back to first substep
+      if (success) {
+        this.substep = '3.1';
+      }
+    },
   },
 };
 </script>

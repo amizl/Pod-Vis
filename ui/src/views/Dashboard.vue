@@ -4,7 +4,10 @@
       <v-toolbar-title class="white--text">Home Page</v-toolbar-title>
     </v-toolbar>
 
-    <analysis-tracker step="1" substep="1.0"></analysis-tracker>
+    <analysis-tracker
+      :step.sync="step"
+      :substep.sync="substep"
+    ></analysis-tracker>
 
     <v-sheet color="white" class="scroll rounded-lg shadow mt-2">
       <v-flex xs12 class="pa-0 ma-0">
@@ -68,6 +71,8 @@ export default {
   data() {
     return {
       selected_action: null,
+      step: '1',
+      substep: '1.0',
     };
   },
   computed: {},

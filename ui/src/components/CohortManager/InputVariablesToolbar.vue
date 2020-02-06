@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-toolbar card dense flat color="white rounded-lg">
+    <v-toolbar card dense flat :color="getToolbarColor()" class="rounded-lg">
       <v-toolbar-items> <input-variables-dialog /> </v-toolbar-items>
       <v-divider vertical class="ml-4"></v-divider>
       <v-chip
@@ -72,6 +72,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    highlighted: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
@@ -130,6 +134,13 @@ export default {
         })
         .start();
       animate();
+    },
+    getToolbarColor() {
+      if (this.highlighted) {
+        return 'rgb(212,197,71,0.2)';
+      } else {
+        return 'white';
+      }
     },
   },
 };

@@ -92,8 +92,10 @@ export default {
           await this.saveCohort({ cohortName });
           this.loading = false;
           this.dialog = false;
+          this.$emit('cohortSaved', true);
         } catch (err) {
           this.loading = false;
+          this.$emit('cohortSaved', false);
         }
       }
     },

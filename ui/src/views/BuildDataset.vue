@@ -26,7 +26,10 @@
     </v-toolbar>
 
     <v-sheet color="white" height="100%" class="scroll rounded-lg shadow">
-      <analysis-tracker step="2" :substep="substep"></analysis-tracker>
+      <analysis-tracker
+        :step.sync="step"
+        :substep.sync="substep"
+      ></analysis-tracker>
     </v-sheet>
 
     <!-- <v-layout row justify-center>
@@ -135,6 +138,7 @@ export default {
     collectionName: '',
     activeDataset: null,
     selected: [],
+    step: '2',
     substep: '2.2',
     numSubjects: 0,
     numObservationVars: 0,
