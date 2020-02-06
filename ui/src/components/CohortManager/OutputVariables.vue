@@ -1,9 +1,5 @@
 <template>
-  <v-sheet
-    color="white"
-    height="100%"
-    class="rounded-lg shadow"
-  >
+  <v-sheet color="white" height="100%" class="rounded-lg shadow">
     <v-layout column fill-height class="ma-1">
       <output-variables-toolbar
         :expanded="expanded"

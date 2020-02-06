@@ -340,21 +340,27 @@ export default {
       if (this.inputVariables.length > 0) {
         this.$emit('update:substep', '3.2');
       } else {
-        this.displayErrorDialog('At least one predictor variable must be selected before continuing to the next step.');
+        this.displayErrorDialog(
+          'At least one predictor variable must be selected before continuing to the next step.'
+        );
       }
     },
     goto3p3() {
       if (this.outputVariables.length > 0) {
         this.$emit('update:substep', '3.3');
       } else {
-        this.displayErrorDialog('At least one outcome variable must be selected before continuing to the next step.');
+        this.displayErrorDialog(
+          'At least one outcome variable must be selected before continuing to the next step.'
+        );
       }
     },
     goto3p4() {
       if (this.filteredData.length < this.unfilteredData.length) {
         this.$emit('update:substep', '3.4');
       } else {
-        this.displayErrorDialog('At least one filter must be added before continuing to the next step.');
+        this.displayErrorDialog(
+          'At least one filter must be added before continuing to the next step.'
+        );
       }
     },
 
