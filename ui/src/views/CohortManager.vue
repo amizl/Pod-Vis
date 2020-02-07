@@ -11,7 +11,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-flex xs12 sm12>
-          <CohortSelection class="mt-2" @selectedCohort="selectedCohort" />
+          <CohortSelection class="mt-2" @selectedCohort="cohortLoaded" />
         </v-flex>
       </v-toolbar-items>
       <v-spacer></v-spacer>
@@ -153,7 +153,11 @@ export default {
         this.substep = '3.1';
       }
     },
-    cohortLoaded() {},
+    cohortLoaded(newCohort) {
+      if (newCohort.label !== 'New Cohort') {
+        this.substep = '3.4';
+      }
+    },
   },
 };
 </script>
