@@ -49,7 +49,7 @@
           </v-data-table>
 
           <v-select
-            label="Highlight P Value <="
+            label="Highlight P Value <"
             :items="pval_thresholds"
             box
             :value="pval_threshold"
