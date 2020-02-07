@@ -4,11 +4,11 @@
       <v-card-title class="title primary--text"
         >One-Way ANOVA
         <v-spacer />
-        <v-chip color="#FEEDDE">p &lt;= 1</v-chip>
-        <v-chip color="#FDD0A2">p &lt;= 0.1</v-chip>
-        <v-chip color="#FDAE6B">p &lt;= 0.01</v-chip>
-        <v-chip color="#FD8D3C">p &lt;= 0.001</v-chip>
-        <v-chip color="#F16913">p &lt;= 0.0001</v-chip>
+        <v-chip color="#FEEDDE">p &lt; 1</v-chip>
+        <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
+        <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
+        <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
+        <v-chip color="#F16913">p &lt; 0.0001</v-chip>
       </v-card-title>
       <v-divider></v-divider>
 
@@ -132,13 +132,13 @@ export default {
       if (ov.label in pd) {
         const { pval } = pd[ov.label];
         let ccl = 'pval-lt-1';
-        if (pval <= 0.0001) {
+        if (pval < 0.0001) {
           ccl = 'pval-lt-0p001';
-        } else if (pval <= 0.001) {
+        } else if (pval < 0.001) {
           ccl = 'pval-lt-0p01';
-        } else if (pval <= 0.01) {
+        } else if (pval < 0.01) {
           ccl = 'pval-lt-0p05';
-        } else if (pval <= 0.1) {
+        } else if (pval < 0.1) {
           ccl = 'pval-lt-0p1';
         }
         return ccl;
@@ -150,13 +150,13 @@ export default {
       if (ov.label in pd) {
         const { pval } = pd[ov.label];
         let ccl = '#FEEDDE';
-        if (pval <= 0.0001) {
+        if (pval < 0.0001) {
           ccl = '#F16913';
-        } else if (pval <= 0.001) {
+        } else if (pval < 0.001) {
           ccl = '#FD8D3C';
-        } else if (pval <= 0.01) {
+        } else if (pval < 0.01) {
           ccl = '#FDAE6B';
-        } else if (pval <= 0.1) {
+        } else if (pval < 0.1) {
           ccl = '#FDD0A2';
         }
         return ccl;
