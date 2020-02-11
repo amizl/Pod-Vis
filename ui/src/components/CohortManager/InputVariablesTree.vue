@@ -6,14 +6,14 @@
       return-object
       selectable
       :search="search"
-      :open.sync="openSubj"
+      :open="openSubj"
       :items="
-        [{ type: 'study', id: 24, label: 'Study' }, ...subjectVariables].sort(
+        [{ type: 'study', id: 24, label: 'Study', parent_id: null }, ...subjectVariables].sort(
           function(a, b) {
             return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
           }
         )
-      "
+	"
       item-text="label"
     ></v-treeview>
     <v-treeview
@@ -23,7 +23,7 @@
       return-object
       :items="observationVariables"
       :search="search"
-      :open.sync="openObs"
+      :open="openObs"
       item-text="label"
     ></v-treeview>
   </div>
@@ -64,6 +64,7 @@ export default {
   },
   watch: {
     cohort() {
+
       // pull vars from user-selected cohort
       if (this.hasUserSelectedCohort) {
         this.selectedSubjectVariables = this.vars.filter(
@@ -89,11 +90,10 @@ export default {
         openIds[s.id] = true;
       });
       newSubjectVariables.forEach(s => {
-        if (!(s.id in openIds)) {
+        if (s.children && !(s.id in openIds)) {
           this.openSubj.push(s);
         }
       });
-
       if (this.propagateChanges) {
         this.setInputVariables([
           // Filter parent nodes because we don't want them added to our list,
@@ -116,7 +116,6 @@ export default {
           this.openObs.push(s);
         }
       });
-
       if (this.propagateChanges) {
         this.setInputVariables([
           ...this.selectedSubjectVariables.filter(
