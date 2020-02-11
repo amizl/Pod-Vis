@@ -128,7 +128,7 @@
           >Apply Filters to Variables</v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step step="3.4">Save Cohort</v-stepper-step>
+        <v-stepper-step :complete="substep === '3.5'" step="3.4">Save Cohort</v-stepper-step>
 
         <v-divider></v-divider>
         <v-stepper-step step="3.5">Repeat or Continue</v-stepper-step>
