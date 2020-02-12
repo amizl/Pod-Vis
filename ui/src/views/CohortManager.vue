@@ -149,9 +149,9 @@ export default {
     }),
     cohortSaved(success) {
       // go back to first substep
-//      if (success) {
-//        this.substep = '3.1';
-//      }
+      //      if (success) {
+      //        this.substep = '3.1';
+      //      }
     },
     cohortLoaded(newCohort) {
       if (newCohort.label !== 'New Cohort') {

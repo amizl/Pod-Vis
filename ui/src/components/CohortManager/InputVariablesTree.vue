@@ -8,12 +8,13 @@
       :search="search"
       :open="openSubj"
       :items="
-        [{ type: 'study', id: 24, label: 'Study', parent_id: null }, ...subjectVariables].sort(
-          function(a, b) {
-            return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
-          }
-        )
-	"
+        [
+          { type: 'study', id: 24, label: 'Study', parent_id: null },
+          ...subjectVariables,
+        ].sort(function(a, b) {
+          return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
+        })
+      "
       item-text="label"
     ></v-treeview>
     <v-treeview
@@ -64,7 +65,6 @@ export default {
   },
   watch: {
     cohort() {
-
       // pull vars from user-selected cohort
       if (this.hasUserSelectedCohort) {
         this.selectedSubjectVariables = this.vars.filter(

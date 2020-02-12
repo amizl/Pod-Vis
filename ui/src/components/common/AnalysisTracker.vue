@@ -128,11 +128,12 @@
           >Apply Filters to Variables</v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="substep === '3.5'" step="3.4">Save Cohort</v-stepper-step>
+        <v-stepper-step :complete="substep === '3.5'" step="3.4"
+          >Save Cohort</v-stepper-step
+        >
 
         <v-divider></v-divider>
         <v-stepper-step step="3.5">Repeat or Continue</v-stepper-step>
-
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="3.1">
@@ -159,17 +160,22 @@
 
         <v-stepper-content step="3.5">
           <div v-if="collection_cohorts.length < 3">
-            So far only {{ collection_cohorts.length }} <span v-if="collection_cohorts.length === 1">cohort has</span>
-	    <span v-else>cohorts have</span> been defined. To proceed to the Summary Matrix a minimum of 3 distinct
-	    cohorts must be created and saved. Click <v-btn @click="goto3p1()">Create Cohort</v-btn> to create another cohort.
-	  </div>
-	  <div v-else>
-	    {{ collection_cohorts.length }} cohorts have been created and saved. If you wish to create another cohort,
-	    click on <v-btn @click="goto3p1()">Create Cohort</v-btn> to create another cohort. Otherwise, click
-	    <v-btn @click="gotoSummaryMatrix()">Continue</v-btn> to proceed to the Summary Matrix.
-	  </div>
+            So far only {{ collection_cohorts.length }}
+            <span v-if="collection_cohorts.length === 1">cohort has</span>
+            <span v-else>cohorts have</span> been defined. To proceed to the
+            Summary Matrix a minimum of 3 distinct cohorts must be created and
+            saved. Click <v-btn @click="goto3p1()">Create Cohort</v-btn> to
+            create another cohort.
+          </div>
+          <div v-else>
+            {{ collection_cohorts.length }} cohorts have been created and saved.
+            If you wish to create another cohort, click on
+            <v-btn @click="goto3p1()">Create Cohort</v-btn> to create another
+            cohort. Otherwise, click
+            <v-btn @click="gotoSummaryMatrix()">Continue</v-btn> to proceed to
+            the Summary Matrix.
+          </div>
         </v-stepper-content>
-
       </v-stepper-items>
     </v-stepper>
 
@@ -373,9 +379,9 @@ export default {
       }
     },
     // Cohort Manager sub-step transitions.
-			    goto3p1() {
-        this.$emit('update:substep', '3.1');
-			   },
+    goto3p1() {
+      this.$emit('update:substep', '3.1');
+    },
     goto3p2() {
       if (this.inputVariables.length > 0) {
         this.$emit('update:substep', '3.2');
@@ -404,8 +410,8 @@ export default {
       }
     },
     goto3p5() {
-       // TODO - check that collection was saved
-       this.$emit('update:substep', '3.5');
+      // TODO - check that collection was saved
+      this.$emit('update:substep', '3.5');
     },
 
     displayErrorDialog(errorMsg) {
