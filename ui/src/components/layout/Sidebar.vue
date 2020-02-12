@@ -2,28 +2,19 @@
   <v-navigation-drawer :mini-variant="!expand" app permanent fixed class="">
     <v-layout column fill-height align-space-around>
       <v-list two-line class="pt-0 ma-0">
-        <v-list-tile>
+        <v-list-tile  class="mt-2">
           <v-list-tile-action v-if="!expand">
             <img
               width="100%"
-              src="/images/CliO-Vis-1.png"
-              alt="CliO-Vis Logo"
+              src="/images/POD-Vis.jpg"
+              alt="POD-Vis: Probing Outcomes Data with Visual analytics"
             />
           </v-list-tile-action>
           <v-list-tile-content class="pt-0">
             <img
               width="100%"
-              src="/images/CliO-Vis-1.png"
-              alt="CliO-Vis Logo"
-            />
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile>
-          <v-list-tile-content>
-            <img
-              width="100%"
-              src="/images/CliO-Vis-2.png"
-              alt="Clinical Outcomes Visualization - Data made simple (TM)"
+              src="/images/POD-Vis_tag.jpg"
+	      alt="POD-Vis: Probing Outcomes Data with Visual analytics"
             />
           </v-list-tile-content>
         </v-list-tile>
