@@ -69,6 +69,7 @@ export default {
         await this.deleteSelectedCohort();
         this.loading = false;
         this.dialog = false;
+        this.$emit('cohortDeleted', true);
       } catch (err) {
         this.loading = false;
       }

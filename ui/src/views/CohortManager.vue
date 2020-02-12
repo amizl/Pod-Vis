@@ -16,8 +16,8 @@
       </v-toolbar-items>
       <v-spacer></v-spacer>
 
-      <delete-cohort-button />
-      <save-cohort-button @cohortSaved="cohortLoaded" />
+      <delete-cohort-button @cohortDeleted="cohortDeleted" />
+      <save-cohort-button @cohortSaved="cohortSaved" />
 
       <v-tooltip top color="primary">
         <template v-slot:activator="{ on }">
@@ -159,6 +159,12 @@ export default {
       } else {
         this.substep = '3.1';
       }
+    },
+    cohortSaved() {
+      this.substep = '3.1';
+    },
+    cohortDeleted() {
+      this.substep = '3.1';
     },
   },
 };

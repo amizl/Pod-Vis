@@ -95,7 +95,6 @@ export default {
           this.$emit('cohortSaved', true);
         } catch (err) {
           this.loading = false;
-          this.$emit('cohortSaved', false);
         }
       }
     },
