@@ -214,6 +214,9 @@ export default {
     const { filteredData } = state;
     let { unfilteredData, outputVariables } = state;
     if (filteredData.length === unfilteredData.length) {
+      // increment requestnum to ensure any previously-submitted request is ignored
+      var cb = function(reqnum) {};
+      commit(mutations.INCREMENT_REQUEST_NUM, { callback: cb });
       // Nothing is filtered
       commit(mutations.SET_PVALS, []);
     } else {
@@ -236,18 +239,27 @@ export default {
       });
       outputVariables = outputVars;
 
-      try {
-        const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
-          filteredData,
-          unfilteredData,
-          outputVariables,
-        });
+      // TODO - actually cancel superseded pending requests instead of just ignoring them
+      var cb = async function(reqnum) {
+        try {
+          const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
+            filteredData,
+            unfilteredData,
+            outputVariables,
+          });
 
-        commit(mutations.SET_PVALS, data.pvals);
-      } catch ({ response }) {
-        const notification = new ErrorNotification(response.data.error);
-        dispatch(notification.dispatch, notification, { root: true });
-      }
+          if (state[stateTypes.REQUEST_NUM] > reqnum) {
+            //		console.log("request " + reqnum + " is no longer current, ignoring return value");
+          } else {
+            commit(mutations.SET_PVALS, data.pvals);
+          }
+        } catch ({ response }) {
+          const notification = new ErrorNotification(response.data.error);
+          dispatch(notification.dispatch, notification, { root: true });
+        }
+      };
+
+      commit(mutations.INCREMENT_REQUEST_NUM, { callback: cb });
     }
   },
   async [actions.SAVE_COHORT]({ commit, dispatch, state }, { cohortName }) {
@@ -295,6 +307,7 @@ export default {
       dispatch(actions.SET_COHORT, { id: null });
       commit(mutations.RESET_DIMENSIONS);
       commit(mutations.RESET_QUERIES);
+      commit(mutations.RESET_PVALS);
       const notification = new SuccessNotification(`Cohort saved`);
       dispatch(notification.dispatch, notification, { root: true });
     } catch ({ response }) {
@@ -316,7 +329,6 @@ export default {
       getters[getterTypes.FIND_COHORT_OBSERVATION_INPUT_VARIABLES];
     const outputVariables =
       getters[getterTypes.FIND_COHORT_OBSERVATION_OUTPUT_VARIABLES];
-
     dispatch(actions.CLEAR_ALL_FILTERS);
     dispatch(actions.SET_INPUT_VARIABLES, [
       //      ...studyInputVariables,

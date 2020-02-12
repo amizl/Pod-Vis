@@ -337,4 +337,12 @@ export default {
   [mutations.RESET_QUERIES](state) {
     state[stateTypes.QUERIES] = {};
   },
+  /**
+   * Increment request number and return the result via callback.
+   * @param {Object} state
+   */
+  [mutations.INCREMENT_REQUEST_NUM](state, { callback }) {
+    state[stateTypes.REQUEST_NUM] = state[stateTypes.REQUEST_NUM] + 1;
+    callback(state[stateTypes.REQUEST_NUM]);
+  },
 };

@@ -14,6 +14,7 @@ export const state = {
   PVAL_THRESHOLD: 'pvalThreshold',
   QUERIES: 'queries',
   HIGHLIGHTED_SUBSET: 'highlightedSubset',
+  REQUEST_NUM: 'requestNum',
 };
 
 // Getters
@@ -67,6 +68,7 @@ export const mutations = {
   RESET_HIGHLIGHTED_SUBSET: 'resetHighlightedSubset',
   RESET_QUERIES: 'resetQueries',
   REMOVE_COHORT: 'removeCohort',
+  INCREMENT_REQUEST_NUM: 'incrementRequestNum',
 };
 
 // Actions
