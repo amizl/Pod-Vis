@@ -90,7 +90,7 @@ export default {
         openIds[s.id] = true;
       });
       newSubjectVariables.forEach(s => {
-        if (s.children && !(s.id in openIds)) {
+        if (!(s.id in openIds)) {
           this.openSubj.push(s);
         }
       });
