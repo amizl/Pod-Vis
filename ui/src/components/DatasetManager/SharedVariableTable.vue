@@ -8,7 +8,7 @@
       :items="variables"
       :select-all="selectable"
       item-key="scale"
-      must-sort
+      :pagination.sync="pagination"
       class="ml-1 mr-1"
       hide-actions
     >
@@ -112,6 +112,7 @@ export default {
       subject_variables: {},
       study_variable_counts: {},
       subject_counts: { all: 0 },
+      pagination: { sortBy: 'full_path', rowsPerPage: -1 },
       headers: [
         {
           text: 'Category',
@@ -176,7 +177,11 @@ export default {
     variables.forEach(variable => {
       variable.type = 'observation';
     });
-    this.variables = variables.filter(v => v.data_category !== 'Categorical');
+    var vf = variables.filter(v => v.data_category !== 'Categorical');
+    vf.forEach(x => {
+      x.full_path = x.category + '/' + x.scale;
+    });
+    this.variables = vf;
 
     const { data: subjVars } = await this.fetchSubjectVariables();
     this.subject_variables = subjVars['subjects'];
@@ -193,13 +198,11 @@ export default {
     // are relating to the subjects
     attributes.forEach(variable => {
       variable.type = 'subject';
-    });
-    // TODO - retrieve data_category from database
-    attributes.forEach(variable => {
+      variable.full_path = variable.category + '/' + variable.scale;
+      // TODO - retrieve data_category from database
       variable.data_category = 'Unknown';
     });
     this.variables = [...this.variables, ...attributes];
-
     this.isLoading = false;
   },
   methods: {

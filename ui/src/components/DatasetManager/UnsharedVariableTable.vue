@@ -8,8 +8,9 @@
       :items="variables"
       :select-all="selectable"
       item-key="scale"
-      must-sort
+      :pagination.sync="pagination"
       class="ml-1 mr-1"
+      hide-actions
     >
       <template v-slot:items="props">
         <tr>
@@ -66,6 +67,7 @@ export default {
       isLoading: true,
       selected: [],
       variables: [],
+      pagination: { sortBy: 'full_path', rowsPerPage: -1 },
       headers: [
         {
           text: 'Category',
@@ -106,10 +108,11 @@ export default {
           !sharedVariables.map(variable => variable.scale).includes(scale)
       );
 
-    this.variables = missingVariables;
-    this.variables.forEach(v => {
+    missingVariables.forEach(v => {
       v.type = 'observation';
+      v.full_path = v.category + '/' + v.scale;
     });
+    this.variables = missingVariables;
 
     // TODO: Check subject variables are missing from shared subject variables
     // const {
