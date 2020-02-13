@@ -114,16 +114,16 @@
       :style="currentStepStyle"
     >
       <v-stepper-header>
-        <v-stepper-step :complete="inputVariables.length > 0" step="3.1"
+        <v-stepper-step :complete="(inputVariables.length > 0) || (substep >= 3.4)" step="3.1"
           >Choose Predictor Variables</v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="outputVariables.length > 0" step="3.2"
+        <v-stepper-step :complete="(outputVariables.length > 0) || (substep >= 3.4)" step="3.2"
           >Choose Outcome Variables</v-stepper-step
         >
         <v-divider></v-divider>
         <v-stepper-step
-          :complete="filteredData.length < unfilteredData.length"
+          :complete="(filteredData.length < unfilteredData.length) || (substep >= 3.4)"
           step="3.3"
           >Apply Filters to Variables</v-stepper-step
         >
@@ -155,7 +155,7 @@
 
         <v-stepper-content step="3.4">
           Click on "SAVE COHORT" in the toolbar above to name and save this
-          cohort then click here to <v-btn @click="goto3p5()">Continue</v-btn>.
+          cohort.
         </v-stepper-content>
 
         <v-stepper-content step="3.5">

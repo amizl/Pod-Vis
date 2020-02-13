@@ -161,7 +161,7 @@ export default {
       }
     },
     cohortSaved() {
-      this.substep = '3.1';
+      this.substep = '3.5';
     },
     cohortDeleted() {
       this.substep = '3.1';
