@@ -2,7 +2,7 @@
   <v-navigation-drawer :mini-variant="!expand" app permanent fixed class="">
     <v-layout column fill-height align-space-around>
       <v-list two-line class="pt-0 ma-0">
-        <v-list-tile  class="mt-2">
+        <v-list-tile class="mt-2">
           <v-list-tile-action v-if="!expand">
             <img
               width="100%"
@@ -14,7 +14,7 @@
             <img
               width="100%"
               src="/images/POD-Vis_tag.jpg"
-	      alt="POD-Vis: Probing Outcomes Data with Visual analytics"
+              alt="POD-Vis: Probing Outcomes Data with Visual analytics"
             />
           </v-list-tile-content>
         </v-list-tile>
