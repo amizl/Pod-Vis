@@ -10,7 +10,7 @@
           disabled
           :color="getNumSubjectsColor(numSubjects)"
           class="primary--text title ma-2"
-          >{{ numSubjects }} subjects selected</v-chip
+          >TOTAL SAMPLE: {{ numSubjects }} subjects selected</v-chip
         >
       </v-toolbar-items>
 
