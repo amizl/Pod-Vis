@@ -22,7 +22,7 @@
             <v-text-field
               v-model="collectionName"
               :rules="[
-                () => !!collectionName || 'Collection name is required.',
+                () => !!collectionName || 'Study Dataset name is required.',
               ]"
               prepend-inner-icon="table_chart"
               label="Please name your study dataset."

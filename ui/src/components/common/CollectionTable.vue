@@ -23,7 +23,7 @@ export default {
     return {
       headers: [
         {
-          text: 'Collection Name',
+          text: 'Study Dataset Name',
           value: 'label',
         },
       ],
