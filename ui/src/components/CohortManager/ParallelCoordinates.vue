@@ -67,6 +67,7 @@ export default {
     ...mapState('cohortManager', {
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
+      highlightedSubset: state.HIGHLIGHTED_SUBSET,
       dimensions: state.DIMENSIONS,
     }),
     populationData() {
@@ -74,6 +75,19 @@ export default {
     },
     cohortData() {
       return this.filteredData.map(d => d[this.dimensionName]);
+    },
+    nonCohortData() {
+      var cohortSubIds = {};
+      this.filteredData.forEach(d => {
+        cohortSubIds[d['subject_id']] = 1;
+      });
+      var nonCohortData = [];
+      this.unfilteredData.forEach(d => {
+        if (!(d['subject_id'] in cohortSubIds)) {
+          nonCohortData.push(d);
+        }
+      });
+      return nonCohortData.map(d => d[this.dimensionName]);
     },
     populationPaths() {
       return this.populationData.map(d => {
@@ -91,8 +105,24 @@ export default {
         };
       });
     },
-    paths() {
+    cohortPaths() {
       return this.cohortData.map(d => {
+        const firstVisitCoordinates = {
+          x: this.xDimensionScale('First Visit'),
+          y: this.dimensionScale(d.firstVisit),
+        };
+        const lastVisitCoordinates = {
+          x: this.xDimensionScale('Last Visit'),
+          y: this.dimensionScale(d.lastVisit),
+        };
+        return {
+          firstVisitCoordinates,
+          lastVisitCoordinates,
+        };
+      });
+    },
+    nonCohortPaths() {
+      return this.nonCohortData.map(d => {
         const firstVisitCoordinates = {
           x: this.xDimensionScale('First Visit'),
           y: this.dimensionScale(d.firstVisit),
@@ -149,6 +179,9 @@ export default {
     cohortData() {
       this.updateCanvas();
     },
+    highlightedSubset() {
+      this.updateCanvas();
+    },
   },
   created() {},
   mounted() {
@@ -192,10 +225,16 @@ export default {
       context.stroke();
     },
     drawUnfiltered() {
-      this.populationPaths.forEach(path => this.drawCurve(path, '#E8EAF6', 1));
+      this.populationPaths.forEach(path => this.drawCurve(path, '#F8D580', 1));
     },
     drawFiltered() {
-      this.paths.forEach(path => this.drawCurve(path, '#3F51B5', 0.45));
+      if (this.highlightedSubset === 'cohort') {
+        this.cohortPaths.forEach(path => this.drawCurve(path, '#3F51B5', 0.45));
+      } else {
+        this.nonCohortPaths.forEach(path =>
+          this.drawCurve(path, '#3FB551', 0.45)
+        );
+      }
     },
     updateCanvas() {
       this.context.clearRect(0, 0, this.width, this.height);
