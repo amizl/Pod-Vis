@@ -9,7 +9,7 @@
       :open="openSubj"
       :items="
         [
-          { type: 'study', id: 24, label: 'Study', parent_id: null },
+          { type: 'study', id: 24, label: 'Dataset', parent_id: null },
           ...subjectVariables,
         ].sort(function(a, b) {
           return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;

@@ -85,7 +85,7 @@ export default {
     } else {
       let dimension;
       let payload;
-      if (this.variable.label === 'Study') {
+      if ((this.variable.label === 'Study') || (this.variable.label === 'Dataset')) {
         dimension = this.variable.label;
         payload = {
           dimensionName: dimension, // GET STUDY NAME HERE...
