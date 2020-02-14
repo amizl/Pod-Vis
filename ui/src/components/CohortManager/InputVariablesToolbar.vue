@@ -1,7 +1,9 @@
 <template>
   <section>
     <v-toolbar card dense flat :color="getToolbarColor()" class="rounded-lg">
-      <v-toolbar-items> <input-variables-dialog /> </v-toolbar-items>
+      <v-toolbar-items>
+        <input-variables-dialog @dialogOpened="opened" />
+      </v-toolbar-items>
       <v-divider vertical class="ml-4"></v-divider>
       <v-chip
         v-if="inputVariables.length == 0"
@@ -141,6 +143,9 @@ export default {
       } else {
         return 'white';
       }
+    },
+    opened() {
+      this.$emit('expandClicked', true);
     },
   },
 };

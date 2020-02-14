@@ -51,6 +51,9 @@ export default {
     openInputVariableDialog(open) {
       // set flag to allow propagation of dialog changes back to UI
       this.$refs.inputVars.propagateChanges = open;
+      if (open) {
+        this.$emit('dialogOpened', true);
+      }
     },
   },
 };
