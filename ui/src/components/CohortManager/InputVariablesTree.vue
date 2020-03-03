@@ -84,46 +84,50 @@ export default {
       //   .map(variable => variable.observation_ontology.id);
     },
     selectedSubjectVariables(newSubjectVariables) {
-      // open up any selected nodes that are not already open
-      var openIds = {};
-      this.openSubj.forEach(s => {
-        openIds[s.id] = true;
+      var ivt = this;
+
+      new Promise(function(resolve, reject) {
+        // open up any selected nodes that are not already open
+        var openIds = {};
+        ivt.openSubj.forEach(s => {
+          openIds[s.id] = true;
+        });
+        newSubjectVariables.forEach(s => {
+          if (!(s.id in openIds)) {
+            ivt.openSubj.push(s);
+          }
+        });
+
+        // slight delay on actually adding the variables so that the
+        // dialog/tree has time to update first
+        setTimeout(() => {
+          ivt.subjectVariablesChanged(newSubjectVariables);
+          resolve();
+        }, 100);
       });
-      newSubjectVariables.forEach(s => {
-        if (!(s.id in openIds)) {
-          this.openSubj.push(s);
-        }
-      });
-      if (this.propagateChanges) {
-        this.setInputVariables([
-          // Filter parent nodes because we don't want them added to our list,
-          // i.e, 'Demographics'
-          ...newSubjectVariables.filter(variable => !variable.children),
-          ...this.selectedObservationVariables.filter(
-            variable => !variable.children
-          ),
-        ]);
-      }
     },
     selectedObservationVariables(newObservationVariables) {
-      // open up any selected nodes that are not already open
-      var openIds = {};
-      this.openObs.forEach(s => {
-        openIds[s.id] = true;
+      var ivt = this;
+
+      new Promise(function(resolve, reject) {
+        // open up any selected nodes that are not already open
+        var openIds = {};
+        ivt.openObs.forEach(s => {
+          openIds[s.id] = true;
+        });
+        newObservationVariables.forEach(s => {
+          if (!(s.id in openIds)) {
+            ivt.openObs.push(s);
+          }
+        });
+
+        // slight delay on actually adding the variables so that the
+        // dialog/tree has time to update first
+        setTimeout(() => {
+          ivt.observationVariablesChanged(newObservationVariables);
+          resolve();
+        }, 100);
       });
-      newObservationVariables.forEach(s => {
-        if (!(s.id in openIds)) {
-          this.openObs.push(s);
-        }
-      });
-      if (this.propagateChanges) {
-        this.setInputVariables([
-          ...this.selectedSubjectVariables.filter(
-            variable => !variable.children
-          ),
-          ...newObservationVariables.filter(variable => !variable.children),
-        ]);
-      }
     },
   },
   async created() {
@@ -146,6 +150,28 @@ export default {
         ),
       }));
       return parents;
+    },
+    subjectVariablesChanged(newSubjectVariables) {
+      if (this.propagateChanges) {
+        this.setInputVariables([
+          // Filter parent nodes because we don't want them added to our list,
+          // i.e, 'Demographics'
+          ...newSubjectVariables.filter(variable => !variable.children),
+          ...this.selectedObservationVariables.filter(
+            variable => !variable.children
+          ),
+        ]);
+      }
+    },
+    observationVariablesChanged(newObservationVariables) {
+      if (this.propagateChanges) {
+        this.setInputVariables([
+          ...this.selectedSubjectVariables.filter(
+            variable => !variable.children
+          ),
+          ...newObservationVariables.filter(variable => !variable.children),
+        ]);
+      }
     },
   },
 };

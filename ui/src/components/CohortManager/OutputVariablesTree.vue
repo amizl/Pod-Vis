@@ -61,17 +61,46 @@ export default {
       }
     },
     selectedObservationVariables(newObservationVariables) {
-      // open up any selected nodes that are not already open
-      var openIds = {};
-      this.openObs.forEach(s => {
-        openIds[s.id] = true;
-      });
-      newObservationVariables.forEach(s => {
-        if (!(s.id in openIds)) {
-          this.openObs.push(s);
-        }
-      });
+      var ovt = this;
 
+      new Promise(function(resolve, reject) {
+        // open up any selected nodes that are not already open
+        var openIds = {};
+        ovt.openObs.forEach(s => {
+          openIds[s.id] = true;
+        });
+        newObservationVariables.forEach(s => {
+          if (!(s.id in openIds)) {
+            ovt.openObs.push(s);
+          }
+        });
+
+        // slight delay on actually adding the variables so that the
+        // dialog/tree has time to update first
+        setTimeout(() => {
+          ovt.observationVariablesChanged(newObservationVariables);
+          resolve();
+        }, 100);
+      });
+    },
+  },
+  async created() {
+    this.observationVariables = this.collection.observation_variables;
+    // recursively index observationVariables by id
+    const obsD = this.observationVariablesD;
+    const indexVars = function(vars) {
+      vars.forEach(v => {
+        obsD[v.id] = v;
+        if (v.children) indexVars(v.children);
+      });
+    };
+    indexVars(this.observationVariables);
+  },
+  methods: {
+    ...mapActions('cohortManager', {
+      setOutputVariables: actions.SET_OUTPUT_VARIABLES,
+    }),
+    observationVariablesChanged(newObservationVariables) {
       if (this.propagateChanges) {
         // First Visit, Change, etc
         const dimensions = newObservationVariables.filter(
@@ -100,23 +129,6 @@ export default {
         this.setOutputVariables(measures_list);
       }
     },
-  },
-  async created() {
-    this.observationVariables = this.collection.observation_variables;
-    // recursively index observationVariables by id
-    const obsD = this.observationVariablesD;
-    const indexVars = function(vars) {
-      vars.forEach(v => {
-        obsD[v.id] = v;
-        if (v.children) indexVars(v.children);
-      });
-    };
-    indexVars(this.observationVariables);
-  },
-  methods: {
-    ...mapActions('cohortManager', {
-      setOutputVariables: actions.SET_OUTPUT_VARIABLES,
-    }),
   },
 };
 </script>
