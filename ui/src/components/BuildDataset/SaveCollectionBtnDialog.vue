@@ -3,8 +3,7 @@
     <v-btn
       :disabled="
         numSubjectsSelected === 0 ||
-          numObservationVarsSelected === 0 ||
-          numSubjectVarsSelected === 0
+          numObservationVarsSelected === 0
       "
       color="primary--text"
       @click="dialog = !dialog"
