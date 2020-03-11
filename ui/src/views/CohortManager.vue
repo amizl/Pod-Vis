@@ -33,6 +33,7 @@
           step="3"
           :substep.sync="substep"
           :collection-id="collectionId"
+          @createSimilar="createSimilar"
         ></analysis-tracker>
       </v-flex>
     </v-layout>
@@ -109,7 +110,20 @@ export default {
     }),
     ...mapState('cohortManager', {
       collection: state.COLLECTION,
+      cohorts: state.COHORTS,
     }),
+    // cohorts are collection-specific
+    collection_cohorts() {
+      const cid = this.collection.id;
+
+      this.cohorts.forEach(e => {
+        if (e.collection_id === cid) {
+          cch.push(e);
+        }
+      });
+
+      return cch;
+    },
   },
   watch: {
     substep() {
@@ -146,16 +160,25 @@ export default {
       fetchCollection: actions.FETCH_COLLECTION,
       fetchData: actions.FETCH_DATA,
       resetAllStoreData: actions.RESET_ALL_STORE_DATA,
+      setCohort: actions.SET_COHORT,
     }),
     cohortSaved(success) {
-      // go back to first substep
-      //      if (success) {
-      //        this.substep = '3.1';
-      //      }
+      // now handled in AnalysisTracker
+    },
+    // create new cohort similar to the most-recently-created one
+    createSimilar(success) {
+      var ncc = this.collection_cohorts.length;
+      // load last cohort in the list
+      if (ncc > 0) {
+        var last_cohort = this.collection_cohorts[ncc - 1];
+        this.setCohort(last_cohort);
+      }
+      // return to "add filters" step
+      this.substep = '3.3';
     },
     cohortLoaded(newCohort) {
       if (newCohort.label !== 'New Cohort') {
-        this.substep = '3.5';
+        this.substep = '3.3';
       } else {
         this.substep = '3.1';
       }

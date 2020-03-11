@@ -170,14 +170,21 @@
             <span v-if="collection_cohorts.length === 1">cohort has</span>
             <span v-else>cohorts have</span> been defined. To proceed to the
             Summary Matrix a minimum of 3 distinct cohorts must be created and
-            saved. Click <v-btn @click="goto3p1()">Create Cohort</v-btn> to
-            create another cohort.
+            saved. Click
+            <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
+            create another cohort based on the most-recently-saved cohort, or
+            <v-btn @click="goto3p1()">Create New Cohort</v-btn> to create an
+            entirely new cohort from scratch. "Create Similar Cohort" can be
+            useful, for example, if you'd like to keep the same set of predictor
+            and output variables across several cohorts.
           </div>
           <div v-else>
             {{ collection_cohorts.length }} cohorts have been created and saved.
             If you wish to create another cohort, click on
-            <v-btn @click="goto3p1()">Create Cohort</v-btn> to create another
-            cohort. Otherwise, click
+            <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
+            create another cohort based on the most-recently-saved cohort, or
+            <v-btn @click="goto3p1()">Create New Cohort</v-btn> to create an
+            entirely new cohort from scratch. Otherwise, click
             <v-btn @click="gotoSummaryMatrix()">Continue</v-btn> to proceed to
             the Summary Matrix.
           </div>
@@ -387,6 +394,9 @@ export default {
     // Cohort Manager sub-step transitions.
     goto3p1() {
       this.$emit('update:substep', '3.1');
+    },
+    createSimilar() {
+      this.$emit('createSimilar', true);
     },
     goto3p2() {
       if (this.inputVariables.length > 0) {
