@@ -114,6 +114,7 @@ export default {
     }),
     // cohorts are collection-specific
     collection_cohorts() {
+      const cch = [];
       const cid = this.collection.id;
 
       this.cohorts.forEach(e => {
