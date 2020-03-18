@@ -92,6 +92,12 @@ class Study(db.Model):
 
         """                
 
+        # retrieve studies, index by id
+        studies = [cls.find_by_id(study_id) for study_id in study_ids]
+        id2study= {}
+        for study in studies:
+            id2study[study.id] = study
+
         connection = db.engine.connect()
 
         # Based on query from collection.get_data_for_cohort_manager
@@ -125,9 +131,11 @@ class Study(db.Model):
             if (last_subj_id is None):
                 return
 
-            # skip subjects with only one measurement/visit
+            study = id2study[study_id]
+            
+            # skip subjects with only one measurement/visit, but only for longitudinal studies
             n = len(group_rows)
-            if (n <= 1):
+            if (n <= 1) and (study.longitudinal == 1):
                 return
 
             if subject_id not in subject_vars:
@@ -136,7 +144,8 @@ class Study(db.Model):
             if study_id not in subject_vars[subject_id]:
                 subject_vars[subject_id][study_id] = {}
                 
-            # this subject has at least two values for the specified observation
+            # this subject has at least two values for the specified observation,
+            # or is part of a cross-sectional study
             subject_vars[subject_id][study_id][obs_id] = 1
             
         # read query result, group by subject_id, observation_ontology_id
