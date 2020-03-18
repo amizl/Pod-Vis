@@ -132,33 +132,11 @@ def get_intersection_of_attributes():
       /api/studies/attributes?id=1&id=2
     """
     study_ids = request.args.getlist('id')
-    studies = [models.Study.find_by_id(study_id) for study_id in study_ids]
-    ns = len(studies)
-    # dict mapping attribute id to the attribute
-    atts_d = {}
-    # dict mapping attribute id to the number of studies with that attribute
-    atts_counts_d = {}
-    
-    for study in studies:
-        subject = models.Subject.find_first_by_study_id(study.id)
-        atts = subject.get_attributes()
-        for att in atts:
-            if att['id'] not in atts_d:
-                atts_d[att['id']] = att
-            if att['id'] not in atts_counts_d:
-                atts_counts_d[att['id']] = 1
-            else:
-                atts_counts_d[att['id']] += 1
-        
-    # return only those attributes that appear in every study
-    shared_atts = []
-    for att in atts_d.values():
-        if atts_counts_d[att['id']] == ns:
-            shared_atts.append(att)
-    
+    subj_atts = models.Study.get_subject_attributes(study_ids)
+
     return jsonify({
         "success": True,
-        "attributes": shared_atts
+        "attributes": subj_atts
     })
 
 @api.route("/studies/subject_variables")
@@ -232,10 +210,10 @@ def get_study_subject_attributes(study_id):
     if not study:
         raise ResourceNotFound("Study does not exist.")
 
-    subject = models.Subject.find_first_by_study_id(study_id)
+    subj_atts = models.Study.get_subject_attributes([study_id])
     return jsonify({
         "success": True,
-        "subject_attributes": subject.get_attributes()
+        "subject_attributes": subj_atts
     })
 
 @api.route('/studies/<int:study_id>/observations')

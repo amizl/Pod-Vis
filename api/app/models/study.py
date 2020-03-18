@@ -44,6 +44,43 @@ class Study(db.Model):
         return cls.query.filter_by(id=study_id).first()
 
     @classmethod
+    def get_subject_attributes(cls, study_ids):
+        """Find all attributes by study id.
+
+        Args:
+          study_ids: List of study ID
+
+        Returns:
+            All attributes in common to the specified studies.
+        """
+        connection = db.engine.connect()
+        query = text("""
+        SELECT parent.label as parent_label, so.label, so.id, COUNT(DISTINCT s.study_id) AS n_studies
+        FROM subject s
+        JOIN subject_attribute sa ON sa.subject_id = s.id
+        JOIN subject_ontology so ON so.id = sa.subject_ontology_id
+        LEFT OUTER JOIN subject_ontology parent on parent.id = so.parent_id
+        WHERE s.study_id in (:study_ids)
+        GROUP BY parent.label, so.label, so.id
+        HAVING n_studies = (:n_studies)
+        """)
+
+        result_proxy = connection.execute(
+            query,
+            study_ids=study_ids,
+            n_studies=len(study_ids)) \
+            .fetchall()
+
+        result = [{
+            "category": row.parent_label if row.parent_label else None,
+            "scale": row.label,
+            "id": row.id,
+        } for row in result_proxy]
+
+        connection.close()
+        return result
+    
+    @classmethod
     def get_subject_variables(cls, study_ids):
         """Retrieve all subjects, showing which variables have first+last for each.
 
