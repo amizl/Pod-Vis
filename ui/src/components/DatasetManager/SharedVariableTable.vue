@@ -177,11 +177,10 @@ export default {
     variables.forEach(variable => {
       variable.type = 'observation';
     });
-    var vf = variables.filter(v => v.data_category !== 'Categorical');
-    vf.forEach(x => {
+    variables.forEach(x => {
       x.full_path = x.category + '/' + x.scale;
     });
-    this.variables = vf;
+    this.variables = variables;
 
     const { data: subjVars } = await this.fetchSubjectVariables();
     this.subject_variables = subjVars['subjects'];
