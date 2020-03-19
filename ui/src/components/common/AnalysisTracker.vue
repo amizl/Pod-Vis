@@ -170,19 +170,24 @@
             <span v-if="collection_cohorts.length === 1">cohort has</span>
             <span v-else>cohorts have</span> been defined. To proceed to the
             Summary Matrix a minimum of 3 distinct cohorts must be created and
-            saved.<br clear='both'>
-	    Click on <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
-            create another cohort based on the last one, or <v-btn @click="goto3p1()">Create New Cohort</v-btn>
-	    to create a new cohort from scratch.
+            saved.<br clear="both" />
+            Click on
+            <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
+            create another cohort based on the last one, or
+            <v-btn @click="goto3p1()">Create New Cohort</v-btn> to create a new
+            cohort from scratch.
           </div>
           <div v-else>
-            {{ collection_cohorts.length }} cohorts have been created and saved.<br clear='both'>
-	    Click on <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
-            create another cohort based on the last one, <v-btn @click="goto3p1()">Create New Cohort</v-btn>
-	    to create a new cohort from scratch,
-            or <v-btn @click="gotoSummaryMatrix()">Continue</v-btn> to proceed to
+            {{ collection_cohorts.length }} cohorts have been created and
+            saved.<br clear="both" />
+            Click on
+            <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
+            create another cohort based on the last one,
+            <v-btn @click="goto3p1()">Create New Cohort</v-btn> to create a new
+            cohort from scratch, or
+            <v-btn @click="gotoSummaryMatrix()">Continue</v-btn> to proceed to
             the Summary Matrix.
-           </div>
+          </div>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>

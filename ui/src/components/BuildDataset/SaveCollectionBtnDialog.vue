@@ -1,7 +1,10 @@
 <template>
   <div>
     <v-btn
-      :disabled="(numSubjectsSelected === 0) || ((numSubjectVarsSelected + numObservationVarsSelected) === 0)"
+      :disabled="
+        numSubjectsSelected === 0 ||
+          numSubjectVarsSelected + numObservationVarsSelected === 0
+      "
       color="primary--text"
       @click="dialog = !dialog"
     >
