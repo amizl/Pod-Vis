@@ -5,6 +5,7 @@ import decimal
 import enum
 from sqlalchemy.sql import text
 import pandas as pd
+import sys
 import time
 
 class InstantiationType(enum.Enum):
@@ -164,14 +165,26 @@ class Collection(db.Model):
         subject_variable_ids = [subject_var.id for subject_var in self.subject_variables]
         obs_ids = [obs_var.ontology.id for obs_var in self.observation_variables]
 
-        # Query for getting observation totals for patients across all
+        # subject -> study mapping
+        sys.stderr.write("study list = " + str(study_ids))
+        sys.stderr.flush()
+        studyid2study= {}
+        for study in self.studies:
+            studyid2study[study.study_id] = study
+            sys.stderr.flush()
+        subjid2study = {}
+        for subject in all_subjects:
+            if subject.study_id in studyid2study:
+                subjid2study[subject.id] = studyid2study[subject.study_id]
+            
+        # Query for getting observation values for patients across all
         # their visits. Note that the observations are sorted by event
         # date and visit_num, with the latter used to order multiple
         # visits on the same day.
         query_for_totals = text("""
           SELECT
-              sv.subject_id as subject_id, oo.id as observation_ontology_id,
-              sv.event_date, sv.visit_num, CAST(o.value AS DECIMAL) as total
+              sv.subject_id as subject_id, oo.id as observation_ontology_id, oo.data_category,
+              sv.event_date, sv.visit_num, o.value_type, o.int_value, o.dec_value, o.value
           FROM subject s, subject_visit sv, observation o, observation_ontology oo
           WHERE s.study_id in :study_ids
           AND s.id = sv.subject_id
@@ -192,20 +205,55 @@ class Collection(db.Model):
         # group by subject_id, obs_id
         last_subj_id = None
         last_obs_id = None
+        last_obs_category = None
         group_rows = []
+        # observations for continuous and categorical data
         observations = []
         subject_observations = {}
-        
+
+        # record that a subject has an observation 
+        def add_subj_observation(subject_id, obs_id):
+            # track observations per subject
+            if subject_id not in subject_observations:
+                subject_observations[subject_id] = {}
+            if obs_id not in subject_observations[subject_id]:
+                subject_observations[subject_id][obs_id] = True
+
         # process a set of rows grouped by subject_id, observation_ontology_id
         def process_group(subject_id, obs_id):
             if (last_subj_id is None):
                 return
-
-            # skip subjects with only one measurement/visit
+            
+            # skip subjects with only one measurement/visit, but only for longitudinal studies
+            study = subjid2study[subject_id]
             n = len(group_rows)
-            if (n <= 1):
+            if (n <= 1) and (study.study.longitudinal == 1):
                 return
 
+            # Categorical observations
+            if last_obs_category == 'Categorical':
+                observations.append(
+                    dict(
+                        subject_id=subject_id,
+                        observation=obs_id,
+                        value=group_rows[0]['value'],
+                        roc=None,
+                        change=None,
+                        min=None,
+                        max=None,
+                    ))
+                add_subj_observation(subject_id, obs_id)
+                return
+
+            # All other types of observations
+            for gr in group_rows:
+                if gr['value_type'] == 'int':
+                    gr['total'] = gr['int_value']
+                elif gr['value_type'] == 'decimal':
+                    gr['total'] = gr['dec_value']
+                else:
+                    raise Exception("Unhandled value_type (" + gr['value_type'] + ")")
+                        
             # note - using first visit on first day as "first_vist" and last visit on last day as "last_visit"
             first_date = group_rows[0]['event_date']
             last_date = group_rows[-1]['event_date']
@@ -233,17 +281,14 @@ class Collection(db.Model):
                 dict(
                     subject_id=subject_id,
                     observation=obs_id,
+                    value=None,
                     roc=roc,
                     change=M,
                     min=group_rows[0]['total'],
                     max=group_rows[-1]['total'],
                 ))
 
-            # track observations per subject
-            if subject_id not in subject_observations:
-                subject_observations[subject_id] = {}
-            if obs_id not in subject_observations[subject_id]:
-                subject_observations[subject_id][obs_id] = True
+            add_subj_observation(subject_id, obs_id)
 
         # read query result, group by subject_id, observation_ontology_id
         all_rows = []
@@ -257,6 +302,7 @@ class Collection(db.Model):
             all_rows.append(rd)
             last_subj_id = rd['subject_id']
             last_obs_id = rd['observation_ontology_id']
+            last_obs_category = rd['data_category']
 
         process_group(last_subj_id, last_obs_id)
 
