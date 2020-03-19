@@ -87,6 +87,12 @@ export default {
         });
       });
 
+      // determine whether this is longitudinal or cross-sectional data
+      data.collection.is_longitudinal = true;
+      data.collection.studies.forEach(s => {
+        if (s.study.longitudinal === 0) data.collection.is_longitudinal = false;
+      });
+
       data.collection.subject_variables = subjectVariables;
       data.collection.observation_variables = observationVariables;
       commit(mutations.SET_COLLECTION, data.collection);
@@ -213,7 +219,12 @@ export default {
   async [actions.ANALYZE_FILTERED]({ commit, dispatch, state }) {
     const { filteredData } = state;
     let { unfilteredData, outputVariables } = state;
-    if (filteredData.length === unfilteredData.length) {
+    const collection = state[stateTypes.COLLECTION];
+
+    // TODO - run another test instead
+    if (!collection.is_longitudinal) {
+      //	console.log("cross-sectional dataset detected, not running Mann-Whitney rank test");
+    } else if (filteredData.length === unfilteredData.length) {
       // increment requestnum to ensure any previously-submitted request is ignored
       var cb = function(reqnum) {};
       commit(mutations.INCREMENT_REQUEST_NUM, { callback: cb });
@@ -230,7 +241,6 @@ export default {
       );
 
       // pass _all_ observation variables, not just the selected ones
-      const collection = state[stateTypes.COLLECTION];
       const outputVars = [];
       collection.observation_variables.forEach(v => {
         v.children.forEach(c => {

@@ -57,7 +57,7 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row class="mt-2 pa-0">
+    <v-layout v-if="collection.is_longitudinal" row class="mt-2 pa-0">
       <v-flex xs6> <analytics-table :disabled="true" /> </v-flex>
     </v-layout>
   </v-container>
@@ -183,9 +183,6 @@ export default {
       } else {
         this.substep = '3.1';
       }
-    },
-    cohortSaved() {
-      this.substep = '3.5';
     },
     cohortDeleted() {
       this.substep = '3.1';
