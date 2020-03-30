@@ -47,7 +47,12 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 import { state, actions, getters } from '@/store/modules/cohortManager/types';
 
 //import 'd3fc';
-import { axisOrdinalBottom, axisLeft, axisLabelOffset, axisLabelRotate } from 'd3fc';
+import {
+  axisOrdinalBottom,
+  axisLeft,
+  axisLabelOffset,
+  axisLabelRotate,
+} from 'd3fc';
 
 // D3 Modules
 import { max } from 'd3-array';
@@ -62,6 +67,9 @@ import BarRect from './BarRect.vue';
 
 const PX_PER_LABEL_LINE = 15;
 const N_LABEL_LINES = 4;
+// set one but not both of these to true:
+const ROTATE_LABELS = false;
+const OFFSET_LABELS = true;
 
 export default {
   directives: {
@@ -110,7 +118,7 @@ export default {
       margin: {
         top: 10,
         right: 30,
-        bottom: 15,
+        bottom: 20,
         left: 50,
       },
       selected: [],
@@ -139,7 +147,7 @@ export default {
     h() {
       const { top, bottom } = this.margin;
       const { height } = this;
-      return height - top - bottom - ((N_LABEL_LINES-1) * PX_PER_LABEL_LINE);
+      return height - top - bottom - (N_LABEL_LINES - 1) * PX_PER_LABEL_LINE;
     },
     colorScale() {
       return scaleOrdinal()
@@ -158,7 +166,16 @@ export default {
         .range([this.h, 0]);
     },
     xAxis() {
-      var xaxis = axisLabelOffset(axisOrdinalBottom(this.xScale));
+      var xaxis = null;
+      if (ROTATE_LABELS) {
+        xaxis = axisLabelRotate(axisOrdinalBottom(this.xScale));
+        if (this.populationData.map(d => d.key).length > 2) {
+          xaxis.labelRotate(18);
+        }
+      } else if (OFFSET_LABELS) {
+        xaxis = axisLabelOffset(axisOrdinalBottom(this.xScale));
+      }
+
       return xaxis;
     },
     yAxis() {
