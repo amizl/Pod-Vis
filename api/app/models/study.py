@@ -60,7 +60,7 @@ class Study(db.Model):
         JOIN subject_attribute sa ON sa.subject_id = s.id
         JOIN subject_ontology so ON so.id = sa.subject_ontology_id
         LEFT OUTER JOIN subject_ontology parent on parent.id = so.parent_id
-        WHERE s.study_id in (:study_ids)
+        WHERE s.study_id in :study_ids
         GROUP BY parent.label, so.label, so.id
         HAVING n_studies = (:n_studies)
         """)
