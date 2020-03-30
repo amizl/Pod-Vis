@@ -64,7 +64,20 @@ h6 {
 
 /* Highlight variables with P Value below threshold */
 .highlight-var {
-  background-color: rgb(236,118,188);
+  border: 4px solid rgb(236,118,188);
+  border-radius: 0.4rem;
+  padding: 0.25em;
+}
+
+.not-highlight-var {
+  border: 4px solid transparent;
+  border-radius: 0.4rem;
+  padding: 0.25em;
+}
+
+.highlight-var-row {
+  background: rgb(236,118,188);
+  border: 2px solid white;
 }
 
 /* Color gradient for P-value significance */
@@ -89,14 +102,12 @@ h6 {
 }
 
 .var-chart {
-  padding-bottom: 0.5em;
-  padding: 2px;
-  border-radius: 0.5rem;
+  border: 4px solid transparent;
+  border-radius: 0.4rem;
 }
 
 .highlight-var-chart {
-  border: 2px solid red;
-  padding-bottom: 0.5em;
+  border: 4px solid rgb(236,118,188);
   border-radius: 0.4rem;
 }
 

@@ -112,7 +112,7 @@ export default {
     },
     getVariableClass(v) {
       if (v.pval < this.pval_threshold) {
-        return 'highlight-var';
+        return 'highlight-var-row';
       }
       return '';
     },

@@ -54,8 +54,8 @@
               !variable.selected_measures ||
                 'change' in variable.selected_measures
             "
+	    :class="highlightChange ? 'highlight-var' : 'not-highlight-var'"
             xs6
-            class="pb-0"
           >
             Change
             <HistogramChart
@@ -101,7 +101,11 @@ export default {
       type: Number,
       required: true,
     },
-  },
+    highlightChange: {
+      type: Boolean,
+      required: false,
+    },
+},
 };
 </script>
 

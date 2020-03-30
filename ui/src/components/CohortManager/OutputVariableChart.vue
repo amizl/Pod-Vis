@@ -1,8 +1,8 @@
 <template>
   <v-sheet class="ma-1" color="white" height="100%" width="400px">
-    <v-layout column fill-height :class="getOutcomeClass(variable)">
+    <v-layout column fill-height class="var-chart">
       <v-card-title :class="getTitleClass(variable)">
-        <span style="margin: 0em 0em 1em 0em;">
+        <span style="margin: 0em;">
           <v-layout
             align-center
             style="background-color: white; padding: 0.4em 1.5em 0em 0.4em; border-radius: 0.5rem;"
@@ -29,7 +29,8 @@
         class="ma-1"
         :variable="variable"
         :dimension-name="dimension"
-      />
+	:highlight-change="isBelowPValThreshold(variable)"
+	/>
     </v-layout>
   </v-sheet>
 </template>
@@ -109,7 +110,7 @@ export default {
       if (this.isBelowPValThreshold(v)) {
         return `${dflt} highlight-var`;
       }
-      return dflt;
+      return `${dflt} not-highlight-var`;
     },
     getOutcomeClass(v) {
       if (this.isBelowPValThreshold(v)) {
