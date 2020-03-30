@@ -45,17 +45,23 @@
 // Data Store
 import { mapState, mapActions, mapGetters } from 'vuex';
 import { state, actions, getters } from '@/store/modules/cohortManager/types';
+
+//import 'd3fc';
+import { axisOrdinalBottom, axisLeft, axisLabelOffset, axisLabelRotate } from 'd3fc';
+
 // D3 Modules
 import { max } from 'd3-array';
 import { select } from 'd3-selection';
 import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale';
 import 'd3-transition';
-import { axisBottom, axisLeft } from 'd3-axis';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
 import BarRect from './BarRect.vue';
+
+const PX_PER_LABEL_LINE = 15;
+const N_LABEL_LINES = 4;
 
 export default {
   directives: {
@@ -104,7 +110,7 @@ export default {
       margin: {
         top: 10,
         right: 30,
-        bottom: 20,
+        bottom: 15,
         left: 50,
       },
       selected: [],
@@ -133,7 +139,7 @@ export default {
     h() {
       const { top, bottom } = this.margin;
       const { height } = this;
-      return height - top - bottom;
+      return height - top - bottom - ((N_LABEL_LINES-1) * PX_PER_LABEL_LINE);
     },
     colorScale() {
       return scaleOrdinal()
@@ -152,7 +158,8 @@ export default {
         .range([this.h, 0]);
     },
     xAxis() {
-      return axisBottom(this.xScale);
+      var xaxis = axisLabelOffset(axisOrdinalBottom(this.xScale));
+      return xaxis;
     },
     yAxis() {
       return axisLeft(this.yScale).ticks(5);
@@ -240,7 +247,7 @@ export default {
       }
     },
     resizeChart() {
-      this.height = 100;
+      this.height = 150;
       this.width = 350;
     },
   },
