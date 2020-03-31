@@ -12,7 +12,7 @@ export default {
   [state.CROSS_FILTER]: null,
   [state.DIMENSIONS]: {},
   [state.PVALS]: [],
-  [state.PVAL_THRESHOLD]: 0.0001,
+  [state.PVAL_THRESHOLD]: 0.001,
   [state.PVALS_REQUEST]: [],
   [state.HIGHLIGHTED_SUBSET]: 'cohort',
   [state.QUERIES]: {},
