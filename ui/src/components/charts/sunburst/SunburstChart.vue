@@ -38,7 +38,7 @@ import {
 import { arc as d3Arc } from 'd3-shape';
 import { interpolate as d3Interpolate } from 'd3-interpolate';
 import { transition as d3Transition } from 'd3-transition';
-import { schemeCategory10 as d3SchemeCategory10 } from 'd3-scale-chromatic';
+import { schemeSet3 as d3SchemeSet3 } from 'd3-scale-chromatic';
 
 function getUniqueNodeId(node) {
   return node
@@ -183,7 +183,7 @@ export default {
       return [...new Set(nodeNames)];
     },
     colorScale() {
-      const color = d3ScaleOrdinal(d3SchemeCategory10).domain(this.colorDomain);
+      const color = d3ScaleOrdinal(d3SchemeSet3).domain(this.colorDomain);
       // .range([
       //         "#5254a3",
       //         "#6b6ecf",
@@ -262,8 +262,9 @@ export default {
         return 0.2;
       })
       .style('fill', d => {
-        if (d.data.name in this.color) {
-          return this.color[d.data.name];
+        var name_lc = d.data.name.toLowerCase();
+        if (name_lc in this.color) {
+          return this.color[name_lc];
         }
         // return color((d.children ? d : d.parent).data.name);
         return color(d.data.name);

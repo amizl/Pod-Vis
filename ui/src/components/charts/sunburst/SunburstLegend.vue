@@ -11,7 +11,7 @@
   >
     <template v-slot:prepend="{ item }">
       <v-icon
-        :color="item.name in color ? color[item.name] : colorScale(item.name)"
+        :color="item.name.toLowerCase() in color ? color[item.name.toLowerCase()] : colorScale(item.name)"
         >stop</v-icon
       >
     </template>

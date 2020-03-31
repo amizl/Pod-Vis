@@ -57,7 +57,7 @@
               <sunburst-chart
                 :data="summaryData"
                 :keyorder="groupBy"
-                :color="{ male: '#3498DB', female: '#FFC0CB' }"
+                :color="{ male: '#00AEEF', female: '#EC76BC' }"
               >
                 <template
                   v-slot:legend="{ data, color, colorScale, actions, nodes }"
