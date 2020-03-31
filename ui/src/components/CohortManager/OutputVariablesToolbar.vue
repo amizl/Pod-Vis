@@ -96,7 +96,7 @@ export default {
     },
     getToolbarColor() {
       if (this.highlighted) {
-        return 'rgb(212,197,71,0.2)';
+        return 'rgb(251,234,127,0.3)';
       } else {
         return 'white';
       }
