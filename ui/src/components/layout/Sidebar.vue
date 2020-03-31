@@ -1,9 +1,9 @@
 <template>
-  <v-navigation-drawer :mini-variant="!expand" app permanent fixed class="">
+  <v-navigation-drawer :mini-variant="!showExpanded()" app permanent fixed class="">
     <v-layout column fill-height align-space-around>
       <v-list three-line class="pt-3">
         <v-list-tile>
-          <div v-if="expand">
+          <div v-if="showExpanded()">
             <img
               width="100%"
               src="/images/POD-Vis_tag2.jpg"
@@ -27,7 +27,7 @@
           :to="item.path"
           active-class="primary text--lighten-5"
         >
-          <v-list-tile-action v-if="expand">
+          <v-list-tile-action v-if="showExpanded()">
             <v-icon color="primary lighten-1">{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-tooltip v-else color="primary" right>
@@ -36,7 +36,7 @@
             </v-list-tile-action>
             <span>{{ item.name }}</span>
           </v-tooltip>
-          <v-list-tile-content v-if="expand">
+          <v-list-tile-content v-if="showExpanded()">
             <v-list-tile-title>
               <span> {{ item.name }} </span>
             </v-list-tile-title>
@@ -45,8 +45,10 @@
       </v-list>
       <v-spacer></v-spacer>
       <v-list one-line>
-        <v-list-tile @click="expand = !expand">
-          <v-tooltip v-if="expand" color="primary" right>
+	<v-list-tile v-if="this.$route.name === 'homepage'">
+	</v-list-tile>
+        <v-list-tile v-else @click="expand = !expand">
+          <v-tooltip v-if="showExpanded()" color="primary" right>
             <v-list-tile-action slot="activator">
               <v-icon color="primary" small>chevron_left</v-icon>
             </v-list-tile-action>
@@ -61,7 +63,7 @@
         </v-list-tile>
 
         <v-list-tile @click="signOutDialog = true">
-          <v-list-tile-action v-if="expand">
+          <v-list-tile-action v-if="showExpanded()">
             <v-icon color="primary">close</v-icon>
           </v-list-tile-action>
           <v-tooltip v-else color="primary" right>
@@ -70,7 +72,7 @@
             </v-list-tile-action>
             <span>Sign Out</span>
           </v-tooltip>
-          <v-list-tile-content v-if="expand">
+          <v-list-tile-content v-if="showExpanded()">
             <v-list-tile-title>
               <span class="primary--text"> Sign out </span>
             </v-list-tile-title>
@@ -79,10 +81,10 @@
       </v-list>
       <!-- <v-list class="pb-5">
         <v-list-tile>
-          <v-list-tile-action v-if="!expand">
+          <v-list-tile-action v-if="!showExpanded()">
             <img width="20px" src="@/assets/som_icon.svg" alt="IGS Logo" />
           </v-list-tile-action>
-          <v-list-tile-content v-if="expand">
+          <v-list-tile-content v-if="showExpanded()">
             <img src="@/assets/som_logo.svg" alt="IGS Logo" />
           </v-list-tile-content>
         </v-list-tile>
@@ -173,6 +175,13 @@ export default {
     ...mapActions({
       signUserOut: actions.SIGN_USER_OUT,
     }),
+    showExpanded() {
+      // always expand Sidebar on home page
+      if (this.$route.name === "homepage") {
+        return true;
+      }
+      return this.expand;
+    },
   },
 };
 </script>
