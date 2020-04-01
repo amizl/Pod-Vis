@@ -58,9 +58,9 @@
           :cx="mean"
           :cy="h"
           fill="blue"
-          stroke="#3696f8"
-          stroke-width="1"
-          fill-opacity=".6"
+          stroke="#2bdb60"
+          stroke-width="2"
+          fill-opacity=".8"
         />
         <!-- Population Mean -->
         <circle
@@ -70,7 +70,7 @@
           :cy="h"
           stroke="#f8d537"
           fill="#F88123"
-          stroke-width="1"
+          stroke-width="2"
           fill-opacity=".8"
         />
         <g ref="brush" class="brush"></g>
