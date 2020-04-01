@@ -164,7 +164,7 @@ export default {
       setCohort: actions.SET_COHORT,
     }),
     cohortSaved(success) {
-      // now handled in AnalysisTracker
+      this.substep = '3.5';
     },
     // create new cohort similar to the most-recently-created one
     createSimilar(success) {
