@@ -6,7 +6,7 @@
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text"
         >Summary Matrix
-        <div class="subheading">{{ collection.label }}</div>
+        <div class="subheading">Dataset: {{ collection.label }}</div>
       </v-toolbar-title>
     </v-toolbar>
 

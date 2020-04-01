@@ -2,7 +2,9 @@
   <v-container fluid grid-list-md class="ma-0 pa-2">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text"
-        >Dataset Manager - Select Variables</v-toolbar-title
+		       >Dataset Manager - Create New Study Dataset
+        <div class="subheading">Select Variables</div>
+      </v-toolbar-title
       >
       <v-spacer></v-spacer>
       <v-toolbar-items>

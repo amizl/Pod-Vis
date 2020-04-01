@@ -2,8 +2,9 @@
   <v-container fluid class="ma-0 pa-2">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text"
-        >Use Saved Study Dataset</v-toolbar-title
-      >
+		       >Dataset Manager - Use Saved Study Dataset
+        <div class="subheading">Select Dataset</div>
+</v-toolbar-title>
     </v-toolbar>
 
     <v-sheet color="white" class="scroll rounded-lg shadow mt-2">

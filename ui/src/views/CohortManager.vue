@@ -6,7 +6,7 @@
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text"
         >Cohort Manager
-        <div class="subheading">{{ collection.label }}</div>
+        <div class="subheading">Dataset: {{ collection.label }}</div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
