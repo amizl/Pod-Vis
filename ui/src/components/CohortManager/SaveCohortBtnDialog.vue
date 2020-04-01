@@ -77,7 +77,9 @@ export default {
   },
   watch: {
     cohort(newCohort) {
-      this.cohortName = newCohort.label;
+      if ((newCohort.label != 'Choose Cohort') && (newCohort.label != 'New Cohort')) {
+        this.cohortName = newCohort.label;
+      }
     },
   },
   methods: {
