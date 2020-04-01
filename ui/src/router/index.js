@@ -33,15 +33,6 @@ export default new Router({
       }),
     },
     {
-      path: '/cohorts/build',
-      name: 'buildCohort',
-      component: () => import('@/views/BuildCohort.vue'),
-      beforeEnter: requireAuth,
-      props: route => ({
-        id: route.query.id,
-      }),
-    },
-    {
       path: '/explore',
       name: 'dataExplorer',
       component: () => import('@/views/DataExplorer.vue'),
