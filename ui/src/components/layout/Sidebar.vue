@@ -28,11 +28,11 @@
           active-class="primary text--lighten-5"
         >
           <v-list-tile-action v-if="showExpanded()">
-            <v-icon color="primary lighten-1">{{ item.icon }}</v-icon>
+            <v-icon color="primary lighten-1" large>{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-tooltip v-else color="primary" right>
             <v-list-tile-action slot="activator">
-              <v-icon color="primary lighten-1">{{ item.icon }}</v-icon>
+              <v-icon color="primary lighten-1" large>{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <span>{{ item.name }}</span>
           </v-tooltip>
@@ -50,13 +50,13 @@
         <v-list-tile v-else @click="expand = !expand">
           <v-tooltip v-if="showExpanded()" color="primary" right>
             <v-list-tile-action slot="activator">
-              <v-icon color="primary" small>chevron_left</v-icon>
+              <v-icon color="primary" xLarge>chevron_left</v-icon>
             </v-list-tile-action>
             <span>Collapse menu</span>
           </v-tooltip>
           <v-tooltip v-else color="primary" right>
             <v-list-tile-action slot="activator">
-              <v-icon color="primary" small>chevron_right</v-icon>
+              <v-icon color="primary" xLarge>chevron_right</v-icon>
             </v-list-tile-action>
             <span>Expand menu</span>
           </v-tooltip>
@@ -64,11 +64,11 @@
 
         <v-list-tile @click="signOutDialog = true">
           <v-list-tile-action v-if="showExpanded()">
-            <v-icon color="primary">close</v-icon>
+            <v-icon color="primary" large>close</v-icon>
           </v-list-tile-action>
           <v-tooltip v-else color="primary" right>
             <v-list-tile-action slot="activator">
-              <v-icon color="primary">close</v-icon>
+              <v-icon color="primary" large>close</v-icon>
             </v-list-tile-action>
             <span>Sign Out</span>
           </v-tooltip>
