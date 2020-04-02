@@ -27,7 +27,7 @@
                 </v-btn>
               </template>
               <span class="subtitle-1"
-                >Launch Cohort Manager to add/remove Cohorts</span
+                >Launch Cohort Manager to add/remove Cohorts ({{props.item.num_cohorts}} cohorts created so far)</span
               >
             </v-tooltip>
 
