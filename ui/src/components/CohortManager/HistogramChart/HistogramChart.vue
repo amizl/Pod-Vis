@@ -61,7 +61,9 @@
           stroke="#2bdb60"
           stroke-width="2"
           fill-opacity=".8"
-        />
+	  >	  
+	  <title>Cohort mean value</title>
+        </circle>
         <!-- Population Mean -->
         <circle
           v-if="typeof populationMean !== 'undefined'"
@@ -72,7 +74,9 @@
           fill="#F88123"
           stroke-width="2"
           fill-opacity=".8"
-        />
+	  >
+	  <title>Population mean value</title>
+        </circle>
         <g ref="brush" class="brush"></g>
       </g>
 
