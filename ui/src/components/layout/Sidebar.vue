@@ -1,5 +1,11 @@
 <template>
-  <v-navigation-drawer :mini-variant="!showExpanded()" app permanent fixed class="">
+  <v-navigation-drawer
+    :mini-variant="!showExpanded()"
+    app
+    permanent
+    fixed
+    class=""
+  >
     <v-layout column fill-height align-space-around>
       <v-list three-line class="pt-3">
         <v-list-tile>
@@ -45,18 +51,17 @@
       </v-list>
       <v-spacer></v-spacer>
       <v-list one-line>
-	<v-list-tile v-if="this.$route.name === 'homepage'">
-	</v-list-tile>
+        <v-list-tile v-if="this.$route.name === 'homepage'"> </v-list-tile>
         <v-list-tile v-else @click="expand = !expand">
           <v-tooltip v-if="showExpanded()" color="primary" right>
             <v-list-tile-action slot="activator">
-              <v-icon color="primary" xLarge>chevron_left</v-icon>
+              <v-icon color="primary" x-large>chevron_left</v-icon>
             </v-list-tile-action>
             <span>Collapse menu</span>
           </v-tooltip>
           <v-tooltip v-else color="primary" right>
             <v-list-tile-action slot="activator">
-              <v-icon color="primary" xLarge>chevron_right</v-icon>
+              <v-icon color="primary" x-large>chevron_right</v-icon>
             </v-list-tile-action>
             <span>Expand menu</span>
           </v-tooltip>
@@ -177,7 +182,7 @@ export default {
     }),
     showExpanded() {
       // always expand Sidebar on home page
-      if (this.$route.name === "homepage") {
+      if (this.$route.name === 'homepage') {
         return true;
       }
       return this.expand;

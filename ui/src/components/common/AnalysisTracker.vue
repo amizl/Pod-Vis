@@ -177,8 +177,8 @@
             cohort from scratch.
           </div>
           <div v-else>
-            {{ collection_cohorts.length }} cohorts have been created and
-            saved. Click on:<br clear="both" />
+            {{ collection_cohorts.length }} cohorts have been created and saved.
+            Click on:<br clear="both" />
             <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
             create another cohort based on the last one<br clear="both" />
             <v-btn @click="goto3p1()">Create New Cohort</v-btn> to create a new

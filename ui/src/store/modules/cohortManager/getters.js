@@ -13,7 +13,7 @@ export default {
   },
   [getters.HAS_USER_SELECTED_COHORT]: state => {
     const cohort = state[stateTypes.COHORT];
-    if ((cohort.id == null) || (cohort.id < 0)){
+    if (cohort.id == null || cohort.id < 0) {
       return false;
     }
     return true;

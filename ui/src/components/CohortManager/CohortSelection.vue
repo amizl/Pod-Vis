@@ -32,7 +32,10 @@ export default {
     // cohorts are collection-specific
     collection_cohorts() {
       // include a default select that serves as the new cohort option
-      const cch = [{ id: null, label: 'Choose Cohort' }, { id: -1, label: 'New Cohort' }];
+      const cch = [
+        { id: null, label: 'Choose Cohort' },
+        { id: -1, label: 'New Cohort' },
+      ];
       const cid = this.collection.id;
 
       this.cohorts.forEach(e => {

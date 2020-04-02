@@ -54,7 +54,7 @@
               !variable.selected_measures ||
                 'change' in variable.selected_measures
             "
-	    :class="highlightChange ? 'highlight-var' : 'not-highlight-var'"
+            :class="highlightChange ? 'highlight-var' : 'not-highlight-var'"
             xs6
           >
             Change
@@ -105,7 +105,7 @@ export default {
       type: Boolean,
       required: false,
     },
-},
+  },
 };
 </script>
 

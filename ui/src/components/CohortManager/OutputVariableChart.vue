@@ -29,8 +29,8 @@
         class="ma-1"
         :variable="variable"
         :dimension-name="dimension"
-	:highlight-change="isBelowPValThreshold(variable)"
-	/>
+        :highlight-change="isBelowPValThreshold(variable)"
+      />
     </v-layout>
   </v-sheet>
 </template>

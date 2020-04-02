@@ -2,9 +2,9 @@
   <v-container fluid class="ma-0 pa-2">
     <v-toolbar app class="primary">
       <v-toolbar-title class="white--text"
-		       >Dataset Manager - Create New Study Dataset
+        >Dataset Manager - Create New Study Dataset
         <div class="subheading">Choose Datasets</div>
-</v-toolbar-title>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
       <!-- <v-text-field

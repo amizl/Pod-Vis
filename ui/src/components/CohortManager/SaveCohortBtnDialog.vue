@@ -77,7 +77,10 @@ export default {
   },
   watch: {
     cohort(newCohort) {
-      if ((newCohort.label != 'Choose Cohort') && (newCohort.label != 'New Cohort')) {
+      if (
+        newCohort.label != 'Choose Cohort' &&
+        newCohort.label != 'New Cohort'
+      ) {
         this.cohortName = newCohort.label;
       }
     },

@@ -178,7 +178,10 @@ export default {
       this.substep = '3.3';
     },
     cohortLoaded(newCohort) {
-      if ((newCohort.label !== 'New Cohort') && (newCohort.label !== 'Choose Cohort')) {
+      if (
+        newCohort.label !== 'New Cohort' &&
+        newCohort.label !== 'Choose Cohort'
+      ) {
         this.substep = '3.3';
       } else {
         this.substep = '3.1';
