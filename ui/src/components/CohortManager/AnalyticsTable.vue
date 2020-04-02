@@ -48,13 +48,24 @@
           </template> -->
           </v-data-table>
 
-          <v-select
-            label="Highlight P Value <"
-            :items="pval_thresholds"
-            box
-            :value="pval_threshold"
-            @change="updatePval"
-          ></v-select>
+          <v-container
+            align-center
+            fluid
+            pa-0
+            pl-4
+            style="border: 4px solid rgb(236,118,188); border-radius: 0.4rem;"
+          >
+            <v-layout align-center row>
+              <span style="padding: 0em 0.5em 0em 0em;">Highlight P &lt;</span
+              ><v-radio-group v-model="pvt" row>
+                <v-radio
+                  v-for="pv in pval_thresholds"
+                  :label="pv.toString()"
+                  :value="pv"
+                ></v-radio>
+              </v-radio-group>
+            </v-layout>
+          </v-container>
         </v-flex>
       </div>
     </v-layout>
@@ -80,6 +91,7 @@ export default {
     return {
       highlight_by_pval: false,
       pval_thresholds: ['None', 0.1, 0.05, 0.01, 0.001, 0.0001],
+      pvt: 'None',
       headers: [
         {
           text: 'Variable',
@@ -103,10 +115,19 @@ export default {
       pval_threshold: state.PVAL_THRESHOLD,
     }),
   },
+  watch: {
+    pvt(newPvt) {
+      this.setPvalThreshold(newPvt);
+    },
+  },
+  created() {
+    this.pvt = this.pval_threshold;
+  },
   methods: {
     ...mapActions('cohortManager', {
       setPvalThreshold: actions.SET_PVAL_THRESHOLD,
     }),
+
     updatePval(newPval) {
       this.setPvalThreshold(newPval);
     },
