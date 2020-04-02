@@ -121,3 +121,6 @@ a.v-list__tile.primary span {
   color: #FFFFFF;
 }
 
+div.v-stepper__content {
+    padding: 10px 24px 10px;
+}
