@@ -46,7 +46,6 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 import { state, actions, getters } from '@/store/modules/cohortManager/types';
 
-//import 'd3fc';
 import {
   axisOrdinalBottom,
   axisLeft,
