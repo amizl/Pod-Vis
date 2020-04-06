@@ -24,7 +24,22 @@
           Reset
         </v-btn> -->
       </v-card-title>
+
+      <ColumnChart
+        v-if="
+          !variable.is_longitudinal && variable.data_category === 'Categorical'
+        "
+        :id="variable.id"
+        :dimension-name="dimension"
+      />
+      <HistogramChart
+        v-else-if="!variable.is_longitudinal"
+        :id="variable.id"
+        :dimension-name="variable.label"
+        :input-variable="false"
+      />
       <MultiChart
+        v-else
         :key="resetCount"
         class="ma-1"
         :variable="variable"
@@ -36,12 +51,16 @@
 </template>
 
 <script>
+import ColumnChart from '@/components/CohortManager/BarChart/BarChart.vue';
+import HistogramChart from '@/components/CohortManager/HistogramChart/HistogramChart.vue';
 import MultiChart from '@/components/CohortManager/MultiChart.vue';
 import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
 
 export default {
   components: {
+    ColumnChart,
+    HistogramChart,
     MultiChart,
   },
   props: {
@@ -75,12 +94,21 @@ export default {
       clearFilter: actions.CLEAR_FILTER,
     }),
     addDimensionHelper(variable) {
-      const measure = variable.id.split('-')[0];
-      const dimensionName = `${variable.parentLabel} - ${variable.label}`;
+      var measure = null;
+      var dimensionName = null;
+      var dimensionId = null;
 
-      this.dimension = dimensionName;
-      const dimensionId = variable.parentID;
-
+      if (variable.is_longitudinal) {
+        measure = variable.id.split('-')[0];
+        dimensionName = `${variable.parentLabel} - ${variable.label}`;
+        this.dimension = dimensionName;
+        dimensionId = variable.parentID;
+      } else {
+        measure = 'value';
+        dimensionName = variable.label;
+        this.dimension = dimensionName;
+        dimensionId = variable.id;
+      }
       const payload = {
         dimensionName,
         accessor: d => {

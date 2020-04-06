@@ -113,14 +113,18 @@ export default {
 
         // Group dimensions by (actual) parent
         dimensions.forEach(d => {
-          const measure = d.id.split('-')[0];
-          const actual_parent_id = d.id.split('-')[1];
-          const parent = obsD[actual_parent_id];
-          if (!(parent.id in measures)) {
-            measures[parent.id] = parent;
-            parent.selected_measures = {};
+          if (d.is_longitudinal) {
+            const measure = d.id.split('-')[0];
+            const actual_parent_id = d.id.split('-')[1];
+            const parent = obsD[actual_parent_id];
+            if (!(parent.id in measures)) {
+              measures[parent.id] = parent;
+              parent.selected_measures = {};
+            }
+            parent.selected_measures[measure] = 1;
+          } else {
+            measures[d.id] = d;
           }
-          parent.selected_measures[measure] = 1;
         });
 
         const measures_list = Object.keys(measures).map(function(k) {

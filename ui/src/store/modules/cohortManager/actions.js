@@ -42,6 +42,12 @@ export default {
         });
       });
 
+      // determine whether this is longitudinal or cross-sectional data
+      data.collection.is_longitudinal = true;
+      data.collection.studies.forEach(s => {
+        if (s.study.longitudinal === 0) data.collection.is_longitudinal = false;
+      });
+
       const observationVariables = makeHierarchy(
         data.collection.observation_variables
       );
@@ -54,43 +60,42 @@ export default {
       observationVariables.forEach(observationVariable => {
         observationVariable.children.forEach(child => {
           child.type = 'observation';
-          child.children = [
-            {
-              ...child,
-              id: `firstVisit-${child.id}`,
-              parentID: child.id,
-              parentLabel: child.label,
-              label: 'First Visit',
-            },
-            {
-              ...child,
-              id: `lastVisit-${child.id}`,
-              parentID: child.id,
-              parentLabel: child.label,
-              label: 'Last Visit',
-            },
-            {
-              ...child,
-              id: `change-${child.id}`,
-              parentID: child.id,
-              parentLabel: child.label,
-              label: 'Change',
-            },
-            {
-              ...child,
-              id: `roc-${child.id}`,
-              parentID: child.id,
-              parentLabel: child.label,
-              label: 'Rate of Change',
-            },
-          ];
+          if (data.collection.is_longitudinal) {
+            child.is_longitudinal = true;
+            child.children = [
+              {
+                ...child,
+                id: `firstVisit-${child.id}`,
+                parentID: child.id,
+                parentLabel: child.label,
+                label: 'First Visit',
+              },
+              {
+                ...child,
+                id: `lastVisit-${child.id}`,
+                parentID: child.id,
+                parentLabel: child.label,
+                label: 'Last Visit',
+              },
+              {
+                ...child,
+                id: `change-${child.id}`,
+                parentID: child.id,
+                parentLabel: child.label,
+                label: 'Change',
+              },
+              {
+                ...child,
+                id: `roc-${child.id}`,
+                parentID: child.id,
+                parentLabel: child.label,
+                label: 'Rate of Change',
+              },
+            ];
+          } else {
+            child.is_longitudinal = false;
+          }
         });
-      });
-
-      // determine whether this is longitudinal or cross-sectional data
-      data.collection.is_longitudinal = true;
-      data.collection.studies.forEach(s => {
-        if (s.study.longitudinal === 0) data.collection.is_longitudinal = false;
       });
 
       data.collection.subject_variables = subjectVariables;
@@ -146,9 +151,10 @@ export default {
         .rollup(values =>
           values
             .map(d => {
-              const { observation, change, roc, min, max, ...rest } = d;
+              const { observation, change, roc, min, max, value, ...rest } = d;
               return {
                 [observation]: {
+                  value,
                   change,
                   roc,
                   firstVisit: min,
