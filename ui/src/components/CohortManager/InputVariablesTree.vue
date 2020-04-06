@@ -35,6 +35,15 @@ import { actions, state, getters } from '@/store/modules/cohortManager/types';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { uniqBy } from 'lodash';
 
+var indexVars = function(dict, vars) {
+  vars.forEach(v => {
+    dict[v.id] = v;
+    if (v.children) {
+      indexVars(dict, v.children);
+    }
+  });
+};
+
 export default {
   props: {
     search: {
@@ -48,7 +57,9 @@ export default {
     dragging: false,
     hovering: false,
     observationVariables: [],
+    observationVariablesD: {},
     subjectVariables: [],
+    subjectVariablesD: {},
     propagateChanges: false,
     openSubj: [],
     openObs: [],
@@ -83,6 +94,16 @@ export default {
       //   .filter(variable => variable.observation_ontology !== null)
       //   .map(variable => variable.observation_ontology.id);
     },
+    observationVariables(newObsVars) {
+      // index by id
+      this.observationVariablesD = {};
+      indexVars(this.observationVariablesD, newObsVars);
+    },
+    subjectVariables(newSubjVars) {
+      // index by id
+      this.subjectVariablesD = {};
+      indexVars(this.subjectVariablesD, newSubjVars);
+    },
     selectedSubjectVariables(newSubjectVariables) {
       var ivt = this;
 
@@ -96,9 +117,11 @@ export default {
           if (!(s.id in openIds)) {
             if (s.children) {
               ivt.openSubj.push(s);
+              openIds[s.id] = true;
             }
             if (s.parent && !(s.parent.id in openIds)) {
               ivt.openSubj.push(s.parent);
+              openIds[s.parent.id] = true;
             }
           }
         });
@@ -122,7 +145,19 @@ export default {
         });
         newObservationVariables.forEach(s => {
           if (!(s.id in openIds)) {
-            ivt.openObs.push(s);
+            if (s.children) {
+              ivt.openObs.push(s);
+              openIds[s.id] = true;
+            }
+            if (s.parent && !(s.parent.id in openIds)) {
+              ivt.openObs.push(s.parent);
+              openIds[s.parent.id] = true;
+            }
+
+            if (s.parentID && !(s.parentID in openIds)) {
+              ivt.openObs.push(ivt.observationVariablesD[s.parentID]);
+              openIds[s.parentID] = true;
+            }
           }
         });
 
