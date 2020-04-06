@@ -94,7 +94,12 @@ export default {
         });
         newSubjectVariables.forEach(s => {
           if (!(s.id in openIds)) {
-            ivt.openSubj.push(s);
+            if (s.children) {
+              ivt.openSubj.push(s);
+            }
+            if (s.parent && !(s.parent.id in openIds)) {
+              ivt.openSubj.push(s.parent);
+            }
           }
         });
 
