@@ -97,7 +97,7 @@ class CohortOutputVariable(db.Model):
             # dimension_label = str(self.dimension_label)
         )
 
-        # Hack around ObservatonDimension not being JSON serializable and will want to clean this up.
+        # Hack around ObservationDimension not being JSON serializable and will want to clean this up.
         if self.dimension_label is ObservationDimension.left_y_axis:
             output_variable['dimension_label']  = "left_y_axis"
         elif self.dimension_label is ObservationDimension.right_y_axis:
