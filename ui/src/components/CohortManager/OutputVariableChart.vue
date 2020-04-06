@@ -16,13 +16,13 @@
             <span class="subtitle-1">{{ getVariableLabel(variable) }}</span>
           </v-layout>
         </span>
-        <!-- <v-btn
+        <v-btn
           flat
           class="subheading primary--text text--lighten-4"
           @click="clearFilter({ dimension })"
         >
           Reset
-        </v-btn> -->
+        </v-btn>
       </v-card-title>
 
       <ColumnChart
