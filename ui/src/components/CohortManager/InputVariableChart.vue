@@ -17,8 +17,11 @@
         </v-btn>
       </v-card-title>
       <v-layout fill-height>
+        <div v-if="variable.value_type === 'date'" class="pl-3">
+          Date types not supported.
+        </div>
         <ColumnChart
-          v-if="
+          v-else-if="
             (variable.type === 'subject' || variable.type === 'study') &&
               typeof unfilteredData[0][dimension] != 'number'
           "
