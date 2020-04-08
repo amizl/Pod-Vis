@@ -72,7 +72,7 @@
           >
             Rate of Change
             <HistogramChart
-              :id="`change-${dimensionName}`"
+              :id="`roc-${dimensionName}`"
               :dimension-name="`${variable.label} - Rate of Change`"
             />
           </v-flex>
