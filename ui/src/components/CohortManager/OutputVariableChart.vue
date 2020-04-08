@@ -19,7 +19,7 @@
         <v-btn
           flat
           class="subheading primary--text text--lighten-4"
-          @click="clearFilter({ dimension })"
+          @click="clearAllFilters({ dimension })"
         >
           Reset
         </v-btn>
@@ -76,6 +76,7 @@ export default {
     ...mapState('cohortManager', {
       pvals: state.PVALS,
       pval_threshold: state.PVAL_THRESHOLD,
+      dimensions: state.DIMENSIONS,
     }),
   },
   created() {
@@ -93,6 +94,16 @@ export default {
       addDimension: actions.ADD_DIMENSION,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    clearAllFilters(dim) {
+      this.clearFilter(dim);
+      // cover all the bases for the MultiChart/longitudinal case
+      this.clearFilter({ dimension: this.variable.label + ' - First Visit' });
+      this.clearFilter({ dimension: this.variable.label + ' - Last Visit' });
+      this.clearFilter({ dimension: this.variable.label + ' - Change' });
+      this.clearFilter({
+        dimension: this.variable.label + ' - Rate of Change',
+      });
+    },
     addDimensionHelper(variable) {
       var measure = null;
       var dimensionName = null;

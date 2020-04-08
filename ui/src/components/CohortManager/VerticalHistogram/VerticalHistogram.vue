@@ -317,7 +317,25 @@ export default {
       this.updateSelected();
       this.updateMean();
     },
-    selected() {
+    selected(newSel) {
+      // prevent loop
+      if (!newSel.length) {
+        return;
+      }
+
+      // check whether selection has been cleared, remove brush if so
+      if (this.hasSelection()) {
+        // assess whether the filter on our dimension has been cleared
+        const dim = this.dimensions[this.dimensionName];
+        if (typeof dim === 'undefined') {
+          this.clearSelection();
+        } else {
+          const cf = dim.currentFilter();
+          if (typeof cf === 'undefined') {
+            this.clearSelection();
+          }
+        }
+      }
       this.updateMean();
     },
     populationData() {
@@ -343,6 +361,11 @@ export default {
       addFilter: actions.ADD_FILTER,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    clearSelection() {
+      this.handle.attr('display', 'none');
+      select(this.$refs.brush).call(this.brush.move, null);
+      this.selected = [];
+    },
     updateSelected() {
       if (this.hasSelection()) {
         const f = this.filter;
@@ -433,14 +456,13 @@ export default {
       if (!event.sourceEvent) return;
       // Ignore empty selections.
       if (!event.selection) {
+        this.selected = [];
         this.clearFilter({
           dimension: this.dimensionName,
         });
         this.filter = undefined;
-        this.selected = [];
         return;
       }
-
       const [high, low] = this.getClosestBins();
 
       // Snap selections to closest bins
