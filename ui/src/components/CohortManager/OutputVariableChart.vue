@@ -16,6 +16,7 @@
             <span class="subtitle-1">{{ getVariableLabel(variable) }}</span>
           </v-layout>
         </span>
+        <v-spacer />
         <v-btn
           flat
           class="subheading primary--text text--lighten-4"
