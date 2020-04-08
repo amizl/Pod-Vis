@@ -3,7 +3,7 @@
     <v-layout column fill-height>
       <v-card-title class="subheading primary--text text--darken-4">
         {{
-          variable.type == 'observation'
+          variable.type == 'observation' && variable.is_longitudinal
             ? `${variable.parentLabel} - ${variable.label}`
             : variable.label
         }}
@@ -22,8 +22,9 @@
         </div>
         <ColumnChart
           v-else-if="
-            (variable.type === 'subject' || variable.type === 'study') &&
-              typeof unfilteredData[0][dimension] != 'number'
+            (!variable.is_longitudinal &&
+              variable.data_category === 'Categorical') ||
+              variable.type === 'study'
           "
           :id="variable.id"
           :dimension-name="dimension"
@@ -67,55 +68,66 @@ export default {
     }),
   },
   created() {
-    if (this.variable.type === 'observation') {
-      const measure = this.variable.id.split('-')[0];
-
-      const dimensionName = `${this.variable.parentLabel} - ${
-        this.variable.label
-      }`;
-
-      this.dimension = dimensionName;
-      const dimensionId = this.variable.parentID;
-
-      const payload = {
-        dimensionName,
-        accessor: d => {
-          const dimName = dimensionId;
-          return d[dimName][measure];
-        },
-      };
-      this.addDimension(payload);
-    } else {
-      let dimension;
-      let payload;
-      if (
-        this.variable.label === 'Study' ||
-        this.variable.label === 'Dataset'
-      ) {
-        dimension = this.variable.label;
-        payload = {
-          dimensionName: dimension, // GET STUDY NAME HERE...
-          accessor: d => d.study.study_name,
-        };
-      } else {
-        dimension = this.variable.label;
-        payload = {
-          dimensionName: dimension,
-          accessor: d => {
-            const dimName = dimension;
-            return d[dimName];
-          },
-        };
-      }
-      this.dimension = dimension;
-      this.addDimension(payload);
-    }
+    this.addDimensionHelper(this.variable);
   },
   methods: {
     ...mapActions('cohortManager', {
       addDimension: actions.ADD_DIMENSION,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    addDimensionHelper(variable) {
+      var dimensionName = null;
+      var payload = null;
+
+      // observation variable
+      if (this.variable.type === 'observation') {
+        var dimensionId = null;
+        var measure = null;
+
+        if (variable.is_longitudinal) {
+          measure = this.variable.id.split('-')[0];
+          dimensionName = `${this.variable.parentLabel} - ${
+            this.variable.label
+          }`;
+          dimensionId = this.variable.parentID;
+        } else {
+          measure = 'value';
+          dimensionName = variable.label;
+          dimensionId = variable.id;
+        }
+        payload = {
+          dimensionName,
+          accessor: d => {
+            const dimName = dimensionId;
+            return d[dimName][measure];
+          },
+        };
+      }
+      // subject variable
+      else {
+        if (
+          this.variable.label === 'Study' ||
+          this.variable.label === 'Dataset'
+        ) {
+          dimensionName = this.variable.label;
+          payload = {
+            dimensionName: dimensionName,
+            accessor: d => d.study.study_name,
+          };
+        } else {
+          dimensionName = this.variable.label;
+          payload = {
+            dimensionName: dimensionName,
+            accessor: d => {
+              const dimName = dimensionName;
+              return d[dimName];
+            },
+          };
+        }
+      }
+      this.dimension = dimensionName;
+      this.addDimension(payload);
+    },
   },
 };
 </script>
