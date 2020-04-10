@@ -107,6 +107,11 @@ class CohortOutputVariable(db.Model):
         elif self.dimension_label is ObservationDimension.roc:
             output_variable['dimension_label']  = "roc"
 
+        if self.dimension_label is None:
+            output_variable['is_longitudinal'] = False
+        else:
+            output_variable['is_longitudinal'] = True
+            
         if self.observation_ontology_id:
             output_variable['observation_ontology'] = self.observation_ontology.to_dict(include_parent=True)
         if self.subject_ontology_id:
