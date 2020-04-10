@@ -75,8 +75,9 @@ h6 {
   padding: 0.25em;
 }
 
+/*  background: rgb(236,118,188); */
 .highlight-var-row {
-  background: rgb(236,118,188);
+  background: rgb(236,177,212);
   border: 2px solid white;
 }
 
