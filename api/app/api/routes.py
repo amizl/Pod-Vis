@@ -945,6 +945,13 @@ def create_cohort():
                     observation_ontology_id = child_output_variable['parentID'],
                     dimension_label = dimension_label)
                 new_output_variable.save_to_db()
+        # variable from cross-sectional study
+        elif not output_variable['is_longitudinal']:
+            new_output_variable = models.CohortOutputVariable(
+                cohort.id,
+                observation_ontology_id = output_variable['id'],
+                dimension_label = None)
+            new_output_variable.save_to_db()
         else:
             if output_variable['label'] == 'First Visit':
                 dimension_label = 'left_y_axis'

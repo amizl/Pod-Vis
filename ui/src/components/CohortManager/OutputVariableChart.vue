@@ -28,13 +28,14 @@
 
       <ColumnChart
         v-if="
-          !variable.is_longitudinal && variable.data_category === 'Categorical'
+          variable.is_longitudinal === false &&
+            variable.data_category === 'Categorical'
         "
         :id="variable.id"
         :dimension-name="dimension"
       />
       <HistogramChart
-        v-else-if="!variable.is_longitudinal"
+        v-else-if="variable.is_longitudinal === false"
         :id="variable.id"
         :dimension-name="variable.label"
         :input-variable="false"

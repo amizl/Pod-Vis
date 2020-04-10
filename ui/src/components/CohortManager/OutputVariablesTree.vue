@@ -47,11 +47,15 @@ export default {
       if (this.hasUserSelectedCohort) {
         const selectedVars = [];
         this.vars.forEach(v => {
-          v.children.forEach(c => {
-            if (c.type === 'observation') {
-              selectedVars.push(c);
-            }
-          });
+          if (!('children' in v)) {
+            selectedVars.push(v);
+          } else {
+            v.children.forEach(c => {
+              if (c.type === 'observation') {
+                selectedVars.push(c);
+              }
+            });
+          }
         });
         this.selectedObservationVariables = selectedVars;
       }

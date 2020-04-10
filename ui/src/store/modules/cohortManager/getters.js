@@ -105,9 +105,14 @@ export default {
       : state.cohort.output_variables
           .filter(variable => variable.observation_ontology != null)
           .map(variable => {
-            const dimLabel = variable.dimension_label;
+            let dimLabel = 'value';
             let dimension = '';
             let label = '';
+
+            if ('dimension_label' in variable) {
+              dimLabel = variable.dimension_label;
+            }
+
             if (dimLabel === 'left_y_axis') {
               dimension = 'firstVisit';
               label = 'First Visit';
@@ -120,16 +125,30 @@ export default {
             } else if (dimLabel === 'change') {
               dimension = 'change';
               label = 'Change';
+            } else if (dimLabel === 'value') {
+              dimension = '';
+              label = variable.observation_ontology.label;
             }
 
-            return {
-              parentID: variable.observation_ontology_id,
-              parentLabel: variable.observation_ontology.label,
+            let var_id =
+              dimension === ''
+                ? variable.observation_ontology_id
+                : `${dimension}-${variable.observation_ontology_id}`;
+
+            let obs_var = {
               ...variable.observation_ontology,
-              id: `${dimension}-${variable.observation_ontology_id}`,
+              id: var_id,
               label,
+              is_longitudinal: variable.is_longitudinal,
               type: 'observation',
             };
+
+            if (dimension !== '') {
+              obs_var['parentID'] = variable.observation_ontology_id;
+              obs_var['parentLabel'] = variable.observation_ontology.label;
+            }
+
+            return obs_var;
           });
 
     const ALL_DIMENSIONS_SELECTED = 4;
