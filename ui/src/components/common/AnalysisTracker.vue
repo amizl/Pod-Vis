@@ -261,7 +261,7 @@ export default {
     currentStepStyle: {
       type: String,
       default:
-        'background: rgb(251,234,127,0.3); border-left: 1px dotted black; border-right: 1px dotted black; border-top: 1px dotted black;',
+        'background: rgb(247,216,206,0.5); border-left: 1px dotted black; border-right: 1px dotted black; border-top: 1px dotted black;',
       required: false,
     },
   },
