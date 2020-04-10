@@ -2,11 +2,27 @@
   <v-sheet color="white" height="100%" min-width="300px">
     <v-layout column fill-height>
       <v-card-title class="subheading primary--text text--darken-4">
-        {{
-          variable.type == 'observation' && variable.is_longitudinal
-            ? `${variable.parentLabel} - ${variable.label}`
-            : variable.label
-        }}
+        <span style="margin: 0em;">
+          <v-layout
+            align-center
+            style="background-color: white; padding: 0.4em 1.5em 0em 0.4em; border-radius: 0.5rem;"
+          >
+            <span style="padding:0em 0.5em 0em 0em">
+              <img v-if="variable.label !== 'Dataset'"
+                :src="'/images/' + variable.category + '-icon-128.png'"
+                :title="variable.category"
+                style="height:3em"
+            /></span>
+            <span class="subtitle-1">
+              {{
+                variable.type == 'observation' && variable.is_longitudinal
+                  ? `${variable.parentLabel} - ${variable.label}`
+                  : variable.label
+              }}
+            </span>
+          </v-layout>
+        </span>
+
         <v-spacer />
         <v-btn
           flat

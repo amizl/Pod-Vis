@@ -544,12 +544,18 @@ def get_collection(collection_id):
     collection_d = collection.to_dict(**kwargs)
 
     # add scale categories
-    get_scale_category = models.ObservationOntology.get_var_category_fn()
+    get_obs_scale_category = models.ObservationOntology.get_var_category_fn()
     for ov in collection_d['observation_variables']:
         if 'ontology' in ov:
             oo = ov['ontology']
-            oo['category'] = get_scale_category(oo['id'])
-    
+            oo['category'] = get_obs_scale_category(oo['id'])
+
+    get_subj_scale_category = models.SubjectOntology.get_var_category_fn()
+    for sv in collection_d['subject_variables']:
+        if 'ontology' in sv:
+            so = sv['ontology']
+            so['category'] = get_subj_scale_category(so['id'])
+            
     return jsonify(dict(success=True, collection=collection_d))
 
 @api.route("/collections/<int:collection_id>", methods=["DELETE"])
@@ -606,12 +612,18 @@ def get_all_cohorts():
     ]
     
     # add scale categories
-    get_scale_category = models.ObservationOntology.get_var_category_fn()
+    get_obs_scale_category = models.ObservationOntology.get_var_category_fn()
+    get_subj_scale_category = models.SubjectOntology.get_var_category_fn()
+
     for c in cohorts_l:
         for ov in c['output_variables']:
             if 'observation_ontology' in ov:
                 oo = ov['observation_ontology']
-                oo['category'] = get_scale_category(oo['id'])
+                oo['category'] = get_obs_scale_category(oo['id'])
+        for iv in c['input_variables']:
+            if 'subject_ontology' in iv:
+                so = iv['subject_ontology']
+                so['category'] = get_subj_scale_category(so['id'])
 
     return jsonify({
         "success": True,
@@ -1019,11 +1031,17 @@ def create_cohort():
     cohort_d = cohort.to_dict()
 
     # add scale categories
-    get_scale_category = models.ObservationOntology.get_var_category_fn()
+    get_obs_scale_category = models.ObservationOntology.get_var_category_fn()
     for ov in cohort_d['output_variables']:
         if 'observation_ontology' in ov:
             oo = ov['observation_ontology']
-            oo['category'] = get_scale_category(oo['id'])
+            oo['category'] = get_obs_scale_category(oo['id'])
+
+    get_subj_scale_category = models.SubjectOntology.get_var_category_fn()
+    for iv in cohort_d['input_variables']:
+        if 'subject_ontology' in iv:
+            so = iv['subject_ontology']
+            so['category'] = get_subj_scale_category(so['id'])
 
     return jsonify({
         "success": True,
