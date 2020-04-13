@@ -1,0 +1,1618 @@
+SubjectNum,Sex,Study,Race,Age At Diagnosis
+2,Female,UMD Parkinson's Disease Cohort,Black,85.0
+3,Male,UMD Parkinson's Disease Cohort,White,64.0
+4,Female,UMD Parkinson's Disease Cohort,Black,74.0
+5,Male,UMD Parkinson's Disease Cohort,White,68.0
+6,Female,UMD Parkinson's Disease Cohort,Black,76.0
+7,Male,UMD Parkinson's Disease Cohort,Black,41.0
+9,Female,UMD Parkinson's Disease Cohort,White,56.0
+11,Male,UMD Parkinson's Disease Cohort,White,71.0
+12,Female,UMD Parkinson's Disease Cohort,White,70.0
+13,Female,UMD Parkinson's Disease Cohort,Unknown Race,77.0
+14,Female,UMD Parkinson's Disease Cohort,Black,84.0
+15,Male,UMD Parkinson's Disease Cohort,White,39.0
+17,Male,UMD Parkinson's Disease Cohort,Black,76.0
+18,Female,UMD Parkinson's Disease Cohort,White,73.0
+19,Female,UMD Parkinson's Disease Cohort,White,58.0
+20,Male,UMD Parkinson's Disease Cohort,White,58.0
+21,Male,UMD Parkinson's Disease Cohort,Unknown Race,74.0
+23,Female,UMD Parkinson's Disease Cohort,White,66.0
+24,Female,UMD Parkinson's Disease Cohort,White,79.0
+25,Female,UMD Parkinson's Disease Cohort,White,50.0
+27,Male,UMD Parkinson's Disease Cohort,White,75.0
+31,Female,UMD Parkinson's Disease Cohort,White,66.0
+32,Female,UMD Parkinson's Disease Cohort,White,71.0
+34,Male,UMD Parkinson's Disease Cohort,White,75.0
+35,Male,UMD Parkinson's Disease Cohort,White,81.0
+36,Female,UMD Parkinson's Disease Cohort,Unknown Race,44.0
+38,Female,UMD Parkinson's Disease Cohort,White,65.0
+39,Female,UMD Parkinson's Disease Cohort,Unknown Race,62.0
+40,Female,UMD Parkinson's Disease Cohort,White,55.0
+41,Male,UMD Parkinson's Disease Cohort,White,81.0
+42,Male,UMD Parkinson's Disease Cohort,White,45.0
+45,Male,UMD Parkinson's Disease Cohort,White,46.0
+46,Female,UMD Parkinson's Disease Cohort,Unknown Race,67.0
+47,Male,UMD Parkinson's Disease Cohort,White,74.0
+48,Female,UMD Parkinson's Disease Cohort,White,57.0
+50,Female,UMD Parkinson's Disease Cohort,White,58.0
+51,Male,UMD Parkinson's Disease Cohort,Unknown Race,72.0
+52,Female,UMD Parkinson's Disease Cohort,White,49.0
+53,Female,UMD Parkinson's Disease Cohort,White,47.0
+56,Female,UMD Parkinson's Disease Cohort,White,59.0
+57,Male,UMD Parkinson's Disease Cohort,White,54.0
+59,Male,UMD Parkinson's Disease Cohort,White,63.0
+61,Male,UMD Parkinson's Disease Cohort,White,80.0
+62,Male,UMD Parkinson's Disease Cohort,White,52.0
+63,Female,UMD Parkinson's Disease Cohort,White,76.0
+64,Male,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+66,Male,UMD Parkinson's Disease Cohort,White,73.0
+67,Male,UMD Parkinson's Disease Cohort,White,71.0
+68,Male,UMD Parkinson's Disease Cohort,White,76.0
+70,Female,UMD Parkinson's Disease Cohort,White,42.0
+71,Male,UMD Parkinson's Disease Cohort,White,39.0
+72,Female,UMD Parkinson's Disease Cohort,White,81.0
+73,Male,UMD Parkinson's Disease Cohort,White,74.0
+76,Female,UMD Parkinson's Disease Cohort,White,50.0
+78,Male,UMD Parkinson's Disease Cohort,White,59.0
+79,Male,UMD Parkinson's Disease Cohort,White,81.0
+81,Male,UMD Parkinson's Disease Cohort,Native American or Alaska Native,62.0
+82,Female,UMD Parkinson's Disease Cohort,White,60.0
+83,Female,UMD Parkinson's Disease Cohort,White,72.0
+84,Male,UMD Parkinson's Disease Cohort,White,42.0
+86,Male,UMD Parkinson's Disease Cohort,White,67.0
+87,Female,UMD Parkinson's Disease Cohort,White,65.0
+88,Male,UMD Parkinson's Disease Cohort,White,44.0
+89,Female,UMD Parkinson's Disease Cohort,White,62.0
+91,Male,UMD Parkinson's Disease Cohort,White,60.0
+92,Female,UMD Parkinson's Disease Cohort,White,49.0
+93,Female,UMD Parkinson's Disease Cohort,White,80.0
+94,Male,UMD Parkinson's Disease Cohort,Black,61.0
+95,Female,UMD Parkinson's Disease Cohort,White,73.0
+96,Male,UMD Parkinson's Disease Cohort,White,76.0
+97,Female,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+99,Male,UMD Parkinson's Disease Cohort,White,82.0
+100,Male,UMD Parkinson's Disease Cohort,Unknown Race,59.0
+101,Male,UMD Parkinson's Disease Cohort,White,69.0
+103,Female,UMD Parkinson's Disease Cohort,White,37.0
+104,Female,UMD Parkinson's Disease Cohort,White,75.0
+107,Male,UMD Parkinson's Disease Cohort,White,46.0
+108,Female,UMD Parkinson's Disease Cohort,White,84.0
+109,Female,UMD Parkinson's Disease Cohort,Unknown Race,68.0
+110,Female,UMD Parkinson's Disease Cohort,White,55.0
+111,Male,UMD Parkinson's Disease Cohort,White,60.0
+113,Male,UMD Parkinson's Disease Cohort,White,65.0
+117,Male,UMD Parkinson's Disease Cohort,White,73.0
+118,Female,UMD Parkinson's Disease Cohort,White,75.0
+119,Male,UMD Parkinson's Disease Cohort,White,70.0
+120,Male,UMD Parkinson's Disease Cohort,White,87.0
+121,Male,UMD Parkinson's Disease Cohort,White,73.0
+122,Female,UMD Parkinson's Disease Cohort,Unknown Race,71.0
+124,Female,UMD Parkinson's Disease Cohort,White,52.0
+125,Male,UMD Parkinson's Disease Cohort,Unknown Race,74.0
+126,Male,UMD Parkinson's Disease Cohort,White,55.0
+127,Female,UMD Parkinson's Disease Cohort,White,71.0
+128,Female,UMD Parkinson's Disease Cohort,White,43.0
+129,Male,UMD Parkinson's Disease Cohort,Unknown Race,70.0
+130,Male,UMD Parkinson's Disease Cohort,Unknown Race,77.0
+131,Female,UMD Parkinson's Disease Cohort,Black,78.0
+136,Male,UMD Parkinson's Disease Cohort,Black,66.0
+138,Male,UMD Parkinson's Disease Cohort,White,62.0
+139,Male,UMD Parkinson's Disease Cohort,White,64.0
+142,Male,UMD Parkinson's Disease Cohort,White,57.0
+145,Male,UMD Parkinson's Disease Cohort,White,68.0
+147,Male,UMD Parkinson's Disease Cohort,Black,71.0
+148,Female,UMD Parkinson's Disease Cohort,White,30.0
+149,Female,UMD Parkinson's Disease Cohort,White,67.0
+152,Female,UMD Parkinson's Disease Cohort,White,56.0
+153,Female,UMD Parkinson's Disease Cohort,Unknown Race,46.0
+154,Female,UMD Parkinson's Disease Cohort,White,71.0
+155,Male,UMD Parkinson's Disease Cohort,White,61.0
+156,Female,UMD Parkinson's Disease Cohort,Black,77.0
+157,Male,UMD Parkinson's Disease Cohort,White,59.0
+158,Female,UMD Parkinson's Disease Cohort,White,63.0
+159,Male,UMD Parkinson's Disease Cohort,White,65.0
+161,Female,UMD Parkinson's Disease Cohort,White,52.0
+162,Female,UMD Parkinson's Disease Cohort,Black,75.0
+163,Female,UMD Parkinson's Disease Cohort,White,51.0
+165,Male,UMD Parkinson's Disease Cohort,White,53.0
+166,Female,UMD Parkinson's Disease Cohort,White,55.0
+167,Male,UMD Parkinson's Disease Cohort,White,65.0
+169,Male,UMD Parkinson's Disease Cohort,Unknown Race,58.0
+171,Male,UMD Parkinson's Disease Cohort,White,42.0
+172,Female,UMD Parkinson's Disease Cohort,Unknown Race,64.0
+173,Male,UMD Parkinson's Disease Cohort,White,43.0
+174,Male,UMD Parkinson's Disease Cohort,Unknown Race,61.0
+175,Male,UMD Parkinson's Disease Cohort,White,58.0
+176,Male,UMD Parkinson's Disease Cohort,White,56.0
+177,Female,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+179,Female,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+180,Male,UMD Parkinson's Disease Cohort,White,67.0
+181,Male,UMD Parkinson's Disease Cohort,White,49.0
+182,Male,UMD Parkinson's Disease Cohort,White,30.0
+183,Female,UMD Parkinson's Disease Cohort,White,53.0
+185,Male,UMD Parkinson's Disease Cohort,White,69.0
+186,Female,UMD Parkinson's Disease Cohort,White,33.0
+188,Female,UMD Parkinson's Disease Cohort,Black,68.0
+189,Male,UMD Parkinson's Disease Cohort,White,58.0
+190,Female,UMD Parkinson's Disease Cohort,Black,75.0
+191,Female,UMD Parkinson's Disease Cohort,White,77.0
+192,Male,UMD Parkinson's Disease Cohort,White,55.0
+193,Male,UMD Parkinson's Disease Cohort,White,57.0
+194,Male,UMD Parkinson's Disease Cohort,White,36.0
+195,Male,UMD Parkinson's Disease Cohort,White,78.0
+196,Male,UMD Parkinson's Disease Cohort,White,57.0
+197,Male,UMD Parkinson's Disease Cohort,Black,62.0
+198,Female,UMD Parkinson's Disease Cohort,Unknown Race,68.0
+199,Female,UMD Parkinson's Disease Cohort,White,53.0
+202,Male,UMD Parkinson's Disease Cohort,Unknown Race,61.0
+203,Male,UMD Parkinson's Disease Cohort,White,53.0
+204,Male,UMD Parkinson's Disease Cohort,White,61.0
+205,Male,UMD Parkinson's Disease Cohort,White,88.0
+206,Female,UMD Parkinson's Disease Cohort,White,66.0
+207,Female,UMD Parkinson's Disease Cohort,More than one race,54.0
+208,Female,UMD Parkinson's Disease Cohort,White,42.0
+209,Female,UMD Parkinson's Disease Cohort,White,59.0
+210,Female,UMD Parkinson's Disease Cohort,White,69.0
+211,Female,UMD Parkinson's Disease Cohort,White,75.0
+212,Male,UMD Parkinson's Disease Cohort,White,69.0
+214,Female,UMD Parkinson's Disease Cohort,White,57.0
+215,Female,UMD Parkinson's Disease Cohort,Black,59.0
+216,Male,UMD Parkinson's Disease Cohort,White,59.0
+217,Male,UMD Parkinson's Disease Cohort,White,47.0
+218,Male,UMD Parkinson's Disease Cohort,White,40.0
+219,Male,UMD Parkinson's Disease Cohort,White,49.0
+220,Male,UMD Parkinson's Disease Cohort,Unknown Race,79.0
+221,Female,UMD Parkinson's Disease Cohort,White,69.0
+222,Male,UMD Parkinson's Disease Cohort,White,68.0
+223,Female,UMD Parkinson's Disease Cohort,White,63.0
+224,Female,UMD Parkinson's Disease Cohort,Black,54.0
+225,Male,UMD Parkinson's Disease Cohort,White,67.0
+226,Male,UMD Parkinson's Disease Cohort,White,76.0
+229,Male,UMD Parkinson's Disease Cohort,White,53.0
+230,Female,UMD Parkinson's Disease Cohort,White,37.0
+231,Male,UMD Parkinson's Disease Cohort,White,63.0
+232,Male,UMD Parkinson's Disease Cohort,White,58.0
+233,Male,UMD Parkinson's Disease Cohort,White,57.0
+236,Male,UMD Parkinson's Disease Cohort,Unknown Race,43.0
+237,Male,UMD Parkinson's Disease Cohort,White,50.0
+238,Male,UMD Parkinson's Disease Cohort,White,68.0
+239,Male,UMD Parkinson's Disease Cohort,White,57.0
+240,Male,UMD Parkinson's Disease Cohort,White,76.0
+241,Female,UMD Parkinson's Disease Cohort,White,61.0
+242,Male,UMD Parkinson's Disease Cohort,White,40.0
+243,Male,UMD Parkinson's Disease Cohort,White,59.0
+244,Male,UMD Parkinson's Disease Cohort,White,50.0
+245,Female,UMD Parkinson's Disease Cohort,Unknown Race,39.0
+246,Male,UMD Parkinson's Disease Cohort,White,54.0
+247,Female,UMD Parkinson's Disease Cohort,White,57.0
+248,Male,UMD Parkinson's Disease Cohort,Black,60.0
+249,Male,UMD Parkinson's Disease Cohort,White,68.0
+250,Female,UMD Parkinson's Disease Cohort,White,69.0
+251,Male,UMD Parkinson's Disease Cohort,White,47.0
+252,Male,UMD Parkinson's Disease Cohort,Black,50.0
+253,Female,UMD Parkinson's Disease Cohort,White,67.0
+254,Male,UMD Parkinson's Disease Cohort,White,74.0
+256,Male,UMD Parkinson's Disease Cohort,White,54.0
+257,Male,UMD Parkinson's Disease Cohort,White,54.0
+258,Male,UMD Parkinson's Disease Cohort,White,57.0
+259,Male,UMD Parkinson's Disease Cohort,White,43.0
+261,Female,UMD Parkinson's Disease Cohort,White,73.0
+262,Male,UMD Parkinson's Disease Cohort,Unknown Race,70.0
+263,Male,UMD Parkinson's Disease Cohort,White,54.0
+264,Female,UMD Parkinson's Disease Cohort,White,62.0
+265,Male,UMD Parkinson's Disease Cohort,White,62.0
+266,Male,UMD Parkinson's Disease Cohort,White,71.0
+268,Male,UMD Parkinson's Disease Cohort,White,39.0
+271,Male,UMD Parkinson's Disease Cohort,White,70.0
+272,Male,UMD Parkinson's Disease Cohort,White,72.0
+273,Female,UMD Parkinson's Disease Cohort,White,64.0
+274,Male,UMD Parkinson's Disease Cohort,Unknown Race,88.0
+275,Male,UMD Parkinson's Disease Cohort,White,69.0
+277,Male,UMD Parkinson's Disease Cohort,White,49.0
+279,Female,UMD Parkinson's Disease Cohort,Black,69.0
+280,Male,UMD Parkinson's Disease Cohort,White,55.0
+281,Female,UMD Parkinson's Disease Cohort,Black,50.0
+282,Male,UMD Parkinson's Disease Cohort,White,48.0
+283,Female,UMD Parkinson's Disease Cohort,Unknown Race,49.0
+284,Male,UMD Parkinson's Disease Cohort,White,57.0
+286,Female,UMD Parkinson's Disease Cohort,White,75.0
+287,Female,UMD Parkinson's Disease Cohort,White,43.0
+288,Female,UMD Parkinson's Disease Cohort,White,57.0
+289,Female,UMD Parkinson's Disease Cohort,White,77.0
+290,Male,UMD Parkinson's Disease Cohort,White,64.0
+292,Male,UMD Parkinson's Disease Cohort,White,68.0
+293,Male,UMD Parkinson's Disease Cohort,White,69.0
+294,Female,UMD Parkinson's Disease Cohort,Black,43.0
+295,Male,UMD Parkinson's Disease Cohort,White,42.0
+296,Male,UMD Parkinson's Disease Cohort,White,47.0
+298,Female,UMD Parkinson's Disease Cohort,Black,49.0
+300,Male,UMD Parkinson's Disease Cohort,Unknown Race,68.0
+301,Female,UMD Parkinson's Disease Cohort,Black,66.0
+303,Male,UMD Parkinson's Disease Cohort,White,40.0
+304,Male,UMD Parkinson's Disease Cohort,White,50.0
+305,Male,UMD Parkinson's Disease Cohort,White,39.0
+306,Male,UMD Parkinson's Disease Cohort,White,58.0
+307,Female,UMD Parkinson's Disease Cohort,Unknown Race,72.0
+308,Female,UMD Parkinson's Disease Cohort,White,56.0
+309,Female,UMD Parkinson's Disease Cohort,Unknown Race,26.0
+310,Female,UMD Parkinson's Disease Cohort,White,64.0
+313,Male,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+314,Male,UMD Parkinson's Disease Cohort,White,71.0
+315,Female,UMD Parkinson's Disease Cohort,Black,62.0
+316,Female,UMD Parkinson's Disease Cohort,White,54.0
+317,Female,UMD Parkinson's Disease Cohort,White,53.0
+318,Male,UMD Parkinson's Disease Cohort,White,31.0
+319,Male,UMD Parkinson's Disease Cohort,White,64.0
+320,Male,UMD Parkinson's Disease Cohort,White,42.0
+321,Female,UMD Parkinson's Disease Cohort,Unknown Race,67.0
+322,Female,UMD Parkinson's Disease Cohort,White,65.0
+324,Male,UMD Parkinson's Disease Cohort,Unknown Race,67.0
+325,Male,UMD Parkinson's Disease Cohort,White,42.0
+326,Male,UMD Parkinson's Disease Cohort,White,45.0
+327,Female,UMD Parkinson's Disease Cohort,Native American or Alaska Native,70.0
+328,Female,UMD Parkinson's Disease Cohort,White,87.0
+329,Female,UMD Parkinson's Disease Cohort,White,57.0
+331,Male,UMD Parkinson's Disease Cohort,White,71.0
+332,Male,UMD Parkinson's Disease Cohort,White,65.0
+334,Female,UMD Parkinson's Disease Cohort,White,54.0
+337,Female,UMD Parkinson's Disease Cohort,Unknown Race,77.0
+338,Female,UMD Parkinson's Disease Cohort,White,65.0
+339,Female,UMD Parkinson's Disease Cohort,Black,64.0
+340,Female,UMD Parkinson's Disease Cohort,White,70.0
+341,Female,UMD Parkinson's Disease Cohort,White,65.0
+342,Male,UMD Parkinson's Disease Cohort,White,73.0
+343,Male,UMD Parkinson's Disease Cohort,White,54.0
+344,Female,UMD Parkinson's Disease Cohort,White,38.0
+345,Female,UMD Parkinson's Disease Cohort,White,51.0
+346,Male,UMD Parkinson's Disease Cohort,Unknown Race,59.0
+347,Male,UMD Parkinson's Disease Cohort,White,75.0
+348,Male,UMD Parkinson's Disease Cohort,White,54.0
+349,Male,UMD Parkinson's Disease Cohort,White,36.0
+350,Female,UMD Parkinson's Disease Cohort,White,71.0
+351,Male,UMD Parkinson's Disease Cohort,White,45.0
+352,Male,UMD Parkinson's Disease Cohort,White,47.0
+353,Female,UMD Parkinson's Disease Cohort,White,50.0
+354,Female,UMD Parkinson's Disease Cohort,White,60.0
+355,Male,UMD Parkinson's Disease Cohort,Black,29.0
+356,Male,UMD Parkinson's Disease Cohort,White,55.0
+357,Female,UMD Parkinson's Disease Cohort,White,76.0
+358,Male,UMD Parkinson's Disease Cohort,White,57.0
+359,Female,UMD Parkinson's Disease Cohort,Black,50.0
+360,Male,UMD Parkinson's Disease Cohort,White,58.0
+362,Female,UMD Parkinson's Disease Cohort,Unknown Race,33.0
+365,Male,UMD Parkinson's Disease Cohort,White,56.0
+366,Male,UMD Parkinson's Disease Cohort,White,68.0
+367,Male,UMD Parkinson's Disease Cohort,White,39.0
+368,Female,UMD Parkinson's Disease Cohort,White,58.0
+369,Female,UMD Parkinson's Disease Cohort,White,50.0
+370,Female,UMD Parkinson's Disease Cohort,White,64.0
+371,Male,UMD Parkinson's Disease Cohort,More than one race,59.0
+372,Male,UMD Parkinson's Disease Cohort,White,39.0
+373,Female,UMD Parkinson's Disease Cohort,White,52.0
+375,Male,UMD Parkinson's Disease Cohort,White,70.0
+377,Male,UMD Parkinson's Disease Cohort,Unknown Race,61.0
+378,Female,UMD Parkinson's Disease Cohort,White,69.0
+379,Female,UMD Parkinson's Disease Cohort,White,75.0
+381,Male,UMD Parkinson's Disease Cohort,White,79.0
+382,Female,UMD Parkinson's Disease Cohort,More than one race,64.0
+383,Female,UMD Parkinson's Disease Cohort,White,59.0
+384,Male,UMD Parkinson's Disease Cohort,White,54.0
+385,Male,UMD Parkinson's Disease Cohort,White,63.0
+386,Male,UMD Parkinson's Disease Cohort,Unknown Race,63.0
+387,Female,UMD Parkinson's Disease Cohort,White,47.0
+388,Male,UMD Parkinson's Disease Cohort,White,57.0
+389,Female,UMD Parkinson's Disease Cohort,White,46.0
+390,Male,UMD Parkinson's Disease Cohort,White,57.0
+391,Male,UMD Parkinson's Disease Cohort,White,51.0
+392,Female,UMD Parkinson's Disease Cohort,White,64.0
+393,Male,UMD Parkinson's Disease Cohort,White,56.0
+394,Male,UMD Parkinson's Disease Cohort,White,68.0
+395,Male,UMD Parkinson's Disease Cohort,White,40.0
+397,Male,UMD Parkinson's Disease Cohort,White,39.0
+398,Male,UMD Parkinson's Disease Cohort,White,65.0
+399,Male,UMD Parkinson's Disease Cohort,White,85.0
+400,Female,UMD Parkinson's Disease Cohort,White,81.0
+401,Male,UMD Parkinson's Disease Cohort,Unknown Race,65.0
+402,Male,UMD Parkinson's Disease Cohort,White,68.0
+403,Male,UMD Parkinson's Disease Cohort,Unknown Race,74.0
+404,Female,UMD Parkinson's Disease Cohort,White,37.0
+406,Male,UMD Parkinson's Disease Cohort,White,65.0
+407,Female,UMD Parkinson's Disease Cohort,White,58.0
+408,Female,UMD Parkinson's Disease Cohort,White,51.0
+410,Male,UMD Parkinson's Disease Cohort,Unknown Race,56.0
+411,Male,UMD Parkinson's Disease Cohort,White,67.0
+412,Female,UMD Parkinson's Disease Cohort,White,62.0
+413,Male,UMD Parkinson's Disease Cohort,White,72.0
+414,Male,UMD Parkinson's Disease Cohort,White,54.0
+415,Male,UMD Parkinson's Disease Cohort,White,75.0
+416,Female,UMD Parkinson's Disease Cohort,White,36.0
+417,Female,UMD Parkinson's Disease Cohort,White,66.0
+418,Female,UMD Parkinson's Disease Cohort,White,55.0
+419,Female,UMD Parkinson's Disease Cohort,White,54.0
+420,Male,UMD Parkinson's Disease Cohort,White,42.0
+421,Male,UMD Parkinson's Disease Cohort,White,60.0
+422,Male,UMD Parkinson's Disease Cohort,Black,75.0
+423,Female,UMD Parkinson's Disease Cohort,White,40.0
+424,Female,UMD Parkinson's Disease Cohort,White,65.0
+425,Male,UMD Parkinson's Disease Cohort,White,53.0
+426,Male,UMD Parkinson's Disease Cohort,White,36.0
+427,Male,UMD Parkinson's Disease Cohort,White,57.0
+428,Male,UMD Parkinson's Disease Cohort,White,57.0
+429,Male,UMD Parkinson's Disease Cohort,White,66.0
+430,Male,UMD Parkinson's Disease Cohort,Black,67.0
+431,Male,UMD Parkinson's Disease Cohort,White,58.0
+432,Male,UMD Parkinson's Disease Cohort,White,35.0
+433,Female,UMD Parkinson's Disease Cohort,White,60.0
+434,Male,UMD Parkinson's Disease Cohort,White,75.0
+435,Female,UMD Parkinson's Disease Cohort,White,50.0
+436,Male,UMD Parkinson's Disease Cohort,White,50.0
+437,Female,UMD Parkinson's Disease Cohort,White,58.0
+438,Male,UMD Parkinson's Disease Cohort,White,64.0
+439,Female,UMD Parkinson's Disease Cohort,White,66.0
+440,Male,UMD Parkinson's Disease Cohort,White,53.0
+441,Male,UMD Parkinson's Disease Cohort,White,50.0
+442,Female,UMD Parkinson's Disease Cohort,White,63.0
+443,Male,UMD Parkinson's Disease Cohort,White,56.0
+444,Male,UMD Parkinson's Disease Cohort,White,64.0
+445,Female,UMD Parkinson's Disease Cohort,White,54.0
+446,Male,UMD Parkinson's Disease Cohort,White,30.0
+447,Male,UMD Parkinson's Disease Cohort,White,57.0
+448,Male,UMD Parkinson's Disease Cohort,White,65.0
+449,Male,UMD Parkinson's Disease Cohort,White,55.0
+450,Female,UMD Parkinson's Disease Cohort,Black,72.0
+451,Male,UMD Parkinson's Disease Cohort,White,45.0
+452,Male,UMD Parkinson's Disease Cohort,White,69.0
+453,Male,UMD Parkinson's Disease Cohort,White,61.0
+454,Male,UMD Parkinson's Disease Cohort,White,51.0
+455,Female,UMD Parkinson's Disease Cohort,White,63.0
+456,Male,UMD Parkinson's Disease Cohort,White,49.0
+457,Male,UMD Parkinson's Disease Cohort,White,66.0
+458,Male,UMD Parkinson's Disease Cohort,White,56.0
+459,Female,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+460,Male,UMD Parkinson's Disease Cohort,White,65.0
+461,Male,UMD Parkinson's Disease Cohort,White,70.0
+462,Female,UMD Parkinson's Disease Cohort,White,50.0
+463,Male,UMD Parkinson's Disease Cohort,White,69.0
+464,Female,UMD Parkinson's Disease Cohort,White,52.0
+465,Male,UMD Parkinson's Disease Cohort,White,51.0
+466,Male,UMD Parkinson's Disease Cohort,White,53.0
+467,Male,UMD Parkinson's Disease Cohort,White,74.0
+468,Female,UMD Parkinson's Disease Cohort,White,64.0
+469,Male,UMD Parkinson's Disease Cohort,White,61.0
+470,Male,UMD Parkinson's Disease Cohort,White,64.0
+471,Female,UMD Parkinson's Disease Cohort,White,61.0
+473,Female,UMD Parkinson's Disease Cohort,White,56.0
+474,Male,UMD Parkinson's Disease Cohort,White,74.0
+475,Male,UMD Parkinson's Disease Cohort,White,78.0
+476,Male,UMD Parkinson's Disease Cohort,White,45.0
+477,Male,UMD Parkinson's Disease Cohort,White,63.0
+478,Male,UMD Parkinson's Disease Cohort,White,40.0
+480,Male,UMD Parkinson's Disease Cohort,White,64.0
+481,Male,UMD Parkinson's Disease Cohort,White,65.0
+482,Female,UMD Parkinson's Disease Cohort,White,73.0
+483,Male,UMD Parkinson's Disease Cohort,White,55.0
+484,Female,UMD Parkinson's Disease Cohort,White,51.0
+485,Female,UMD Parkinson's Disease Cohort,White,67.0
+486,Male,UMD Parkinson's Disease Cohort,White,47.0
+487,Male,UMD Parkinson's Disease Cohort,More than one race,60.0
+488,Female,UMD Parkinson's Disease Cohort,White,45.0
+489,Male,UMD Parkinson's Disease Cohort,White,43.0
+490,Male,UMD Parkinson's Disease Cohort,Black,44.0
+491,Male,UMD Parkinson's Disease Cohort,White,74.0
+492,Male,UMD Parkinson's Disease Cohort,White,57.0
+493,Male,UMD Parkinson's Disease Cohort,White,58.0
+494,Female,UMD Parkinson's Disease Cohort,White,61.0
+496,Male,UMD Parkinson's Disease Cohort,White,37.0
+497,Male,UMD Parkinson's Disease Cohort,White,47.0
+498,Male,UMD Parkinson's Disease Cohort,Unknown Race,41.0
+500,Male,UMD Parkinson's Disease Cohort,White,67.0
+501,Female,UMD Parkinson's Disease Cohort,White,64.0
+503,Male,UMD Parkinson's Disease Cohort,White,71.0
+504,Male,UMD Parkinson's Disease Cohort,White,53.0
+505,Male,UMD Parkinson's Disease Cohort,White,53.0
+506,Male,UMD Parkinson's Disease Cohort,White,53.0
+507,Male,UMD Parkinson's Disease Cohort,White,73.0
+508,Male,UMD Parkinson's Disease Cohort,White,61.0
+509,Female,UMD Parkinson's Disease Cohort,White,63.0
+510,Male,UMD Parkinson's Disease Cohort,White,50.0
+512,Male,UMD Parkinson's Disease Cohort,Unknown Race,59.0
+513,Female,UMD Parkinson's Disease Cohort,White,53.0
+514,Male,UMD Parkinson's Disease Cohort,White,43.0
+515,Male,UMD Parkinson's Disease Cohort,White,51.0
+516,Male,UMD Parkinson's Disease Cohort,White,51.0
+517,Male,UMD Parkinson's Disease Cohort,White,52.0
+518,Female,UMD Parkinson's Disease Cohort,White,80.0
+519,Male,UMD Parkinson's Disease Cohort,White,30.0
+520,Female,UMD Parkinson's Disease Cohort,White,49.0
+521,Male,UMD Parkinson's Disease Cohort,White,41.0
+522,Female,UMD Parkinson's Disease Cohort,White,54.0
+523,Male,UMD Parkinson's Disease Cohort,White,51.0
+524,Female,UMD Parkinson's Disease Cohort,White,70.0
+525,Female,UMD Parkinson's Disease Cohort,Unknown Race,56.0
+526,Male,UMD Parkinson's Disease Cohort,White,45.0
+527,Female,UMD Parkinson's Disease Cohort,White,46.0
+528,Male,UMD Parkinson's Disease Cohort,White,58.0
+529,Male,UMD Parkinson's Disease Cohort,White,73.0
+530,Male,UMD Parkinson's Disease Cohort,White,48.0
+531,Male,UMD Parkinson's Disease Cohort,White,55.0
+532,Male,UMD Parkinson's Disease Cohort,White,60.0
+533,Male,UMD Parkinson's Disease Cohort,White,
+536,Female,UMD Parkinson's Disease Cohort,More than one race,48.0
+537,Female,UMD Parkinson's Disease Cohort,White,44.0
+538,Female,UMD Parkinson's Disease Cohort,White,78.0
+539,Male,UMD Parkinson's Disease Cohort,More than one race,34.0
+540,Male,UMD Parkinson's Disease Cohort,White,27.0
+541,Female,UMD Parkinson's Disease Cohort,White,51.0
+542,Male,UMD Parkinson's Disease Cohort,White,46.0
+543,Male,UMD Parkinson's Disease Cohort,White,48.0
+544,Male,UMD Parkinson's Disease Cohort,White,51.0
+545,Male,UMD Parkinson's Disease Cohort,White,31.0
+546,Male,UMD Parkinson's Disease Cohort,White,43.0
+547,Female,UMD Parkinson's Disease Cohort,White,59.0
+548,Male,UMD Parkinson's Disease Cohort,White,61.0
+549,Male,UMD Parkinson's Disease Cohort,White,59.0
+550,Male,UMD Parkinson's Disease Cohort,White,50.0
+551,Female,UMD Parkinson's Disease Cohort,White,52.0
+552,Female,UMD Parkinson's Disease Cohort,Black,57.0
+553,Female,UMD Parkinson's Disease Cohort,White,54.0
+556,Male,UMD Parkinson's Disease Cohort,White,51.0
+557,Female,UMD Parkinson's Disease Cohort,White,72.0
+558,Male,UMD Parkinson's Disease Cohort,Black,63.0
+559,Male,UMD Parkinson's Disease Cohort,White,58.0
+560,Female,UMD Parkinson's Disease Cohort,Black,71.0
+561,Female,UMD Parkinson's Disease Cohort,White,46.0
+562,Female,UMD Parkinson's Disease Cohort,White,54.0
+563,Male,UMD Parkinson's Disease Cohort,White,73.0
+564,Male,UMD Parkinson's Disease Cohort,Unknown Race,69.0
+565,Male,UMD Parkinson's Disease Cohort,White,70.0
+566,Male,UMD Parkinson's Disease Cohort,White,61.0
+567,Male,UMD Parkinson's Disease Cohort,White,56.0
+568,Male,UMD Parkinson's Disease Cohort,Unknown Race,69.0
+570,Male,UMD Parkinson's Disease Cohort,White,50.0
+571,Male,UMD Parkinson's Disease Cohort,More than one race,48.0
+572,Male,UMD Parkinson's Disease Cohort,White,69.0
+573,Female,UMD Parkinson's Disease Cohort,White,73.0
+574,Male,UMD Parkinson's Disease Cohort,White,40.0
+576,Male,UMD Parkinson's Disease Cohort,White,36.0
+577,Male,UMD Parkinson's Disease Cohort,White,55.0
+578,Male,UMD Parkinson's Disease Cohort,White,65.0
+579,Male,UMD Parkinson's Disease Cohort,White,64.0
+580,Male,UMD Parkinson's Disease Cohort,White,56.0
+581,Male,UMD Parkinson's Disease Cohort,White,60.0
+582,Male,UMD Parkinson's Disease Cohort,White,62.0
+583,Female,UMD Parkinson's Disease Cohort,White,54.0
+584,Male,UMD Parkinson's Disease Cohort,White,58.0
+585,Female,UMD Parkinson's Disease Cohort,White,70.0
+586,Male,UMD Parkinson's Disease Cohort,White,48.0
+587,Male,UMD Parkinson's Disease Cohort,White,42.0
+588,Male,UMD Parkinson's Disease Cohort,White,38.0
+589,Male,UMD Parkinson's Disease Cohort,White,62.0
+590,Female,UMD Parkinson's Disease Cohort,White,58.0
+591,Male,UMD Parkinson's Disease Cohort,White,42.0
+592,Male,UMD Parkinson's Disease Cohort,White,70.0
+593,Female,UMD Parkinson's Disease Cohort,White,57.0
+594,Female,UMD Parkinson's Disease Cohort,White,60.0
+595,Female,UMD Parkinson's Disease Cohort,White,54.0
+596,Male,UMD Parkinson's Disease Cohort,White,64.0
+597,Male,UMD Parkinson's Disease Cohort,White,67.0
+598,Female,UMD Parkinson's Disease Cohort,White,57.0
+600,Male,UMD Parkinson's Disease Cohort,Black,67.0
+601,Male,UMD Parkinson's Disease Cohort,White,69.0
+602,Female,UMD Parkinson's Disease Cohort,White,63.0
+603,Male,UMD Parkinson's Disease Cohort,White,59.0
+604,Female,UMD Parkinson's Disease Cohort,White,54.0
+605,Male,UMD Parkinson's Disease Cohort,White,39.0
+606,Female,UMD Parkinson's Disease Cohort,White,49.0
+607,Male,UMD Parkinson's Disease Cohort,Asian,44.0
+608,Male,UMD Parkinson's Disease Cohort,White,74.0
+609,Male,UMD Parkinson's Disease Cohort,White,63.0
+610,Male,UMD Parkinson's Disease Cohort,White,78.0
+611,Male,UMD Parkinson's Disease Cohort,White,49.0
+612,Male,UMD Parkinson's Disease Cohort,White,58.0
+613,Male,UMD Parkinson's Disease Cohort,White,68.0
+614,Male,UMD Parkinson's Disease Cohort,White,58.0
+615,Male,UMD Parkinson's Disease Cohort,White,67.0
+616,Male,UMD Parkinson's Disease Cohort,White,68.0
+617,Female,UMD Parkinson's Disease Cohort,White,52.0
+618,Female,UMD Parkinson's Disease Cohort,Black,54.0
+619,Female,UMD Parkinson's Disease Cohort,White,69.0
+620,Male,UMD Parkinson's Disease Cohort,Black,66.0
+621,Male,UMD Parkinson's Disease Cohort,White,67.0
+622,Male,UMD Parkinson's Disease Cohort,White,47.0
+623,Male,UMD Parkinson's Disease Cohort,White,72.0
+624,Female,UMD Parkinson's Disease Cohort,More than one race,40.0
+625,Female,UMD Parkinson's Disease Cohort,Unknown Race,64.0
+626,Male,UMD Parkinson's Disease Cohort,White,30.0
+627,Male,UMD Parkinson's Disease Cohort,Unknown Race,51.0
+628,Female,UMD Parkinson's Disease Cohort,More than one race,52.0
+629,Male,UMD Parkinson's Disease Cohort,White,61.0
+630,Male,UMD Parkinson's Disease Cohort,White,57.0
+631,Female,UMD Parkinson's Disease Cohort,More than one race,72.0
+632,Male,UMD Parkinson's Disease Cohort,White,45.0
+633,Male,UMD Parkinson's Disease Cohort,Black,36.0
+634,Male,UMD Parkinson's Disease Cohort,White,49.0
+635,Female,UMD Parkinson's Disease Cohort,White,30.0
+637,Female,UMD Parkinson's Disease Cohort,White,59.0
+638,Female,UMD Parkinson's Disease Cohort,White,74.0
+639,Male,UMD Parkinson's Disease Cohort,White,73.0
+640,Male,UMD Parkinson's Disease Cohort,White,69.0
+641,Female,UMD Parkinson's Disease Cohort,White,59.0
+642,Male,UMD Parkinson's Disease Cohort,White,75.0
+643,Male,UMD Parkinson's Disease Cohort,White,66.0
+644,Male,UMD Parkinson's Disease Cohort,Unknown Race,56.0
+645,Male,UMD Parkinson's Disease Cohort,White,48.0
+646,Male,UMD Parkinson's Disease Cohort,White,53.0
+647,Male,UMD Parkinson's Disease Cohort,White,62.0
+648,Male,UMD Parkinson's Disease Cohort,White,72.0
+649,Male,UMD Parkinson's Disease Cohort,White,64.0
+650,Female,UMD Parkinson's Disease Cohort,White,85.0
+651,Male,UMD Parkinson's Disease Cohort,White,70.0
+652,Male,UMD Parkinson's Disease Cohort,White,47.0
+653,Female,UMD Parkinson's Disease Cohort,White,67.0
+654,Female,UMD Parkinson's Disease Cohort,White,54.0
+655,Male,UMD Parkinson's Disease Cohort,White,44.0
+656,Male,UMD Parkinson's Disease Cohort,White,76.0
+657,Male,UMD Parkinson's Disease Cohort,White,44.0
+658,Male,UMD Parkinson's Disease Cohort,White,62.0
+659,Male,UMD Parkinson's Disease Cohort,White,54.0
+660,Female,UMD Parkinson's Disease Cohort,White,69.0
+661,Male,UMD Parkinson's Disease Cohort,White,70.0
+663,Male,UMD Parkinson's Disease Cohort,White,62.0
+664,Male,UMD Parkinson's Disease Cohort,White,70.0
+665,Male,UMD Parkinson's Disease Cohort,White,64.0
+666,Female,UMD Parkinson's Disease Cohort,White,75.0
+667,Female,UMD Parkinson's Disease Cohort,White,48.0
+668,Male,UMD Parkinson's Disease Cohort,White,74.0
+669,Male,UMD Parkinson's Disease Cohort,Unknown Race,50.0
+670,Female,UMD Parkinson's Disease Cohort,White,60.0
+671,Female,UMD Parkinson's Disease Cohort,White,51.0
+672,Male,UMD Parkinson's Disease Cohort,White,65.0
+673,Male,UMD Parkinson's Disease Cohort,White,47.0
+674,Male,UMD Parkinson's Disease Cohort,White,43.0
+676,Male,UMD Parkinson's Disease Cohort,Unknown Race,63.0
+677,Male,UMD Parkinson's Disease Cohort,White,43.0
+678,Male,UMD Parkinson's Disease Cohort,White,42.0
+679,Male,UMD Parkinson's Disease Cohort,White,72.0
+680,Male,UMD Parkinson's Disease Cohort,White,56.0
+681,Male,UMD Parkinson's Disease Cohort,White,47.0
+682,Male,UMD Parkinson's Disease Cohort,White,63.0
+683,Female,UMD Parkinson's Disease Cohort,More than one race,77.0
+684,Female,UMD Parkinson's Disease Cohort,White,72.0
+685,Female,UMD Parkinson's Disease Cohort,White,53.0
+686,Male,UMD Parkinson's Disease Cohort,White,59.0
+687,Female,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+688,Female,UMD Parkinson's Disease Cohort,White,63.0
+689,Female,UMD Parkinson's Disease Cohort,White,55.0
+691,Male,UMD Parkinson's Disease Cohort,White,57.0
+692,Female,UMD Parkinson's Disease Cohort,White,45.0
+693,Male,UMD Parkinson's Disease Cohort,White,64.0
+694,Male,UMD Parkinson's Disease Cohort,White,80.0
+696,Male,UMD Parkinson's Disease Cohort,White,62.0
+697,Male,UMD Parkinson's Disease Cohort,White,70.0
+698,Male,UMD Parkinson's Disease Cohort,White,65.0
+699,Male,UMD Parkinson's Disease Cohort,White,66.0
+700,Male,UMD Parkinson's Disease Cohort,White,34.0
+701,Male,UMD Parkinson's Disease Cohort,White,70.0
+702,Female,UMD Parkinson's Disease Cohort,White,54.0
+703,Male,UMD Parkinson's Disease Cohort,White,49.0
+704,Male,UMD Parkinson's Disease Cohort,White,49.0
+705,Female,UMD Parkinson's Disease Cohort,White,58.0
+706,Male,UMD Parkinson's Disease Cohort,Unknown Race,80.0
+707,Male,UMD Parkinson's Disease Cohort,White,56.0
+708,Female,UMD Parkinson's Disease Cohort,White,57.0
+709,Female,UMD Parkinson's Disease Cohort,White,47.0
+710,Male,UMD Parkinson's Disease Cohort,White,59.0
+711,Female,UMD Parkinson's Disease Cohort,White,63.0
+712,Male,UMD Parkinson's Disease Cohort,White,57.0
+713,Male,UMD Parkinson's Disease Cohort,White,54.0
+714,Male,UMD Parkinson's Disease Cohort,White,26.0
+715,Female,UMD Parkinson's Disease Cohort,White,56.0
+716,Female,UMD Parkinson's Disease Cohort,White,71.0
+717,Male,UMD Parkinson's Disease Cohort,White,64.0
+718,Female,UMD Parkinson's Disease Cohort,White,80.0
+719,Female,UMD Parkinson's Disease Cohort,White,66.0
+720,Female,UMD Parkinson's Disease Cohort,White,56.0
+721,Male,UMD Parkinson's Disease Cohort,White,50.0
+722,Male,UMD Parkinson's Disease Cohort,Native American or Alaska Native,43.0
+723,Female,UMD Parkinson's Disease Cohort,Unknown Race,45.0
+725,Female,UMD Parkinson's Disease Cohort,White,49.0
+726,Female,UMD Parkinson's Disease Cohort,White,61.0
+727,Male,UMD Parkinson's Disease Cohort,White,69.0
+728,Male,UMD Parkinson's Disease Cohort,White,61.0
+729,Male,UMD Parkinson's Disease Cohort,Black,45.0
+730,Female,UMD Parkinson's Disease Cohort,White,77.0
+731,Female,UMD Parkinson's Disease Cohort,White,59.0
+732,Female,UMD Parkinson's Disease Cohort,White,59.0
+733,Female,UMD Parkinson's Disease Cohort,White,69.0
+734,Male,UMD Parkinson's Disease Cohort,White,75.0
+735,Male,UMD Parkinson's Disease Cohort,White,64.0
+736,Female,UMD Parkinson's Disease Cohort,White,57.0
+737,Male,UMD Parkinson's Disease Cohort,White,75.0
+738,Male,UMD Parkinson's Disease Cohort,Unknown Race,70.0
+739,Female,UMD Parkinson's Disease Cohort,White,59.0
+740,Male,UMD Parkinson's Disease Cohort,White,71.0
+741,Male,UMD Parkinson's Disease Cohort,White,76.0
+742,Female,UMD Parkinson's Disease Cohort,White,54.0
+743,Male,UMD Parkinson's Disease Cohort,White,65.0
+744,Male,UMD Parkinson's Disease Cohort,White,59.0
+745,Female,UMD Parkinson's Disease Cohort,White,45.0
+746,Male,UMD Parkinson's Disease Cohort,Black,49.0
+747,Female,UMD Parkinson's Disease Cohort,White,54.0
+748,Female,UMD Parkinson's Disease Cohort,White,60.0
+750,Female,UMD Parkinson's Disease Cohort,White,63.0
+752,Male,UMD Parkinson's Disease Cohort,White,67.0
+753,Female,UMD Parkinson's Disease Cohort,White,62.0
+754,Female,UMD Parkinson's Disease Cohort,White,66.0
+755,Male,UMD Parkinson's Disease Cohort,White,59.0
+756,Male,UMD Parkinson's Disease Cohort,White,47.0
+757,Male,UMD Parkinson's Disease Cohort,White,68.0
+758,Female,UMD Parkinson's Disease Cohort,White,61.0
+759,Female,UMD Parkinson's Disease Cohort,White,57.0
+760,Female,UMD Parkinson's Disease Cohort,White,72.0
+761,Male,UMD Parkinson's Disease Cohort,White,46.0
+763,Female,UMD Parkinson's Disease Cohort,White,65.0
+764,Female,UMD Parkinson's Disease Cohort,White,71.0
+765,Female,UMD Parkinson's Disease Cohort,White,53.0
+766,Female,UMD Parkinson's Disease Cohort,White,55.0
+767,Male,UMD Parkinson's Disease Cohort,White,64.0
+768,Male,UMD Parkinson's Disease Cohort,White,46.0
+769,Male,UMD Parkinson's Disease Cohort,White,48.0
+770,Female,UMD Parkinson's Disease Cohort,White,53.0
+771,Male,UMD Parkinson's Disease Cohort,White,54.0
+772,Male,UMD Parkinson's Disease Cohort,White,59.0
+773,Male,UMD Parkinson's Disease Cohort,White,39.0
+774,Male,UMD Parkinson's Disease Cohort,White,58.0
+775,Female,UMD Parkinson's Disease Cohort,White,70.0
+776,Female,UMD Parkinson's Disease Cohort,White,62.0
+777,Male,UMD Parkinson's Disease Cohort,Black,44.0
+778,Female,UMD Parkinson's Disease Cohort,White,65.0
+779,Female,UMD Parkinson's Disease Cohort,White,53.0
+780,Male,UMD Parkinson's Disease Cohort,Unknown Race,55.0
+781,Male,UMD Parkinson's Disease Cohort,White,60.0
+782,Male,UMD Parkinson's Disease Cohort,White,52.0
+783,Male,UMD Parkinson's Disease Cohort,White,70.0
+785,Male,UMD Parkinson's Disease Cohort,White,67.0
+786,Female,UMD Parkinson's Disease Cohort,White,71.0
+787,Male,UMD Parkinson's Disease Cohort,White,70.0
+788,Female,UMD Parkinson's Disease Cohort,White,70.0
+789,Male,UMD Parkinson's Disease Cohort,White,65.0
+790,Female,UMD Parkinson's Disease Cohort,White,69.0
+791,Male,UMD Parkinson's Disease Cohort,White,61.0
+792,Female,UMD Parkinson's Disease Cohort,White,49.0
+793,Female,UMD Parkinson's Disease Cohort,White,60.0
+794,Male,UMD Parkinson's Disease Cohort,White,59.0
+796,Male,UMD Parkinson's Disease Cohort,White,67.0
+797,Female,UMD Parkinson's Disease Cohort,White,68.0
+801,Male,UMD Parkinson's Disease Cohort,White,63.0
+802,Male,UMD Parkinson's Disease Cohort,White,67.0
+803,Male,UMD Parkinson's Disease Cohort,White,52.0
+804,Male,UMD Parkinson's Disease Cohort,White,41.0
+805,Male,UMD Parkinson's Disease Cohort,White,56.0
+806,Male,UMD Parkinson's Disease Cohort,White,43.0
+807,Male,UMD Parkinson's Disease Cohort,Unknown Race,62.0
+808,Female,UMD Parkinson's Disease Cohort,White,51.0
+809,Female,UMD Parkinson's Disease Cohort,White,53.0
+810,Male,UMD Parkinson's Disease Cohort,White,71.0
+811,Male,UMD Parkinson's Disease Cohort,White,55.0
+812,Female,UMD Parkinson's Disease Cohort,White,49.0
+814,Male,UMD Parkinson's Disease Cohort,White,62.0
+815,Female,UMD Parkinson's Disease Cohort,Unknown Race,47.0
+816,Female,UMD Parkinson's Disease Cohort,White,54.0
+817,Male,UMD Parkinson's Disease Cohort,White,67.0
+818,Female,UMD Parkinson's Disease Cohort,White,61.0
+819,Male,UMD Parkinson's Disease Cohort,White,51.0
+820,Male,UMD Parkinson's Disease Cohort,White,66.0
+821,Male,UMD Parkinson's Disease Cohort,White,61.0
+822,Male,UMD Parkinson's Disease Cohort,White,70.0
+823,Male,UMD Parkinson's Disease Cohort,White,63.0
+824,Female,UMD Parkinson's Disease Cohort,White,37.0
+825,Female,UMD Parkinson's Disease Cohort,White,41.0
+826,Male,UMD Parkinson's Disease Cohort,White,62.0
+827,Male,UMD Parkinson's Disease Cohort,White,48.0
+828,Female,UMD Parkinson's Disease Cohort,White,67.0
+829,Male,UMD Parkinson's Disease Cohort,White,75.0
+830,Female,UMD Parkinson's Disease Cohort,White,70.0
+831,Male,UMD Parkinson's Disease Cohort,White,71.0
+832,Male,UMD Parkinson's Disease Cohort,Unknown Race,63.0
+833,Male,UMD Parkinson's Disease Cohort,White,49.0
+834,Female,UMD Parkinson's Disease Cohort,White,66.0
+835,Male,UMD Parkinson's Disease Cohort,White,39.0
+836,Male,UMD Parkinson's Disease Cohort,White,56.0
+837,Male,UMD Parkinson's Disease Cohort,White,63.0
+838,Male,UMD Parkinson's Disease Cohort,More than one race,51.0
+839,Male,UMD Parkinson's Disease Cohort,White,49.0
+840,Female,UMD Parkinson's Disease Cohort,White,44.0
+841,Female,UMD Parkinson's Disease Cohort,White,57.0
+842,Male,UMD Parkinson's Disease Cohort,White,65.0
+843,Male,UMD Parkinson's Disease Cohort,More than one race,71.0
+844,Female,UMD Parkinson's Disease Cohort,White,58.0
+845,Female,UMD Parkinson's Disease Cohort,White,70.0
+846,Male,UMD Parkinson's Disease Cohort,White,52.0
+847,Male,UMD Parkinson's Disease Cohort,White,66.0
+848,Female,UMD Parkinson's Disease Cohort,Unknown Race,48.0
+849,Female,UMD Parkinson's Disease Cohort,Unknown Race,57.0
+850,Female,UMD Parkinson's Disease Cohort,White,55.0
+851,Female,UMD Parkinson's Disease Cohort,White,52.0
+852,Male,UMD Parkinson's Disease Cohort,White,81.0
+853,Male,UMD Parkinson's Disease Cohort,Unknown Race,72.0
+854,Male,UMD Parkinson's Disease Cohort,White,63.0
+855,Female,UMD Parkinson's Disease Cohort,White,59.0
+857,Male,UMD Parkinson's Disease Cohort,White,68.0
+858,Male,UMD Parkinson's Disease Cohort,White,67.0
+859,Female,UMD Parkinson's Disease Cohort,White,51.0
+860,Male,UMD Parkinson's Disease Cohort,White,63.0
+862,Male,UMD Parkinson's Disease Cohort,White,56.0
+863,Male,UMD Parkinson's Disease Cohort,White,69.0
+864,Male,UMD Parkinson's Disease Cohort,White,54.0
+865,Male,UMD Parkinson's Disease Cohort,White,69.0
+866,Male,UMD Parkinson's Disease Cohort,White,55.0
+867,Male,UMD Parkinson's Disease Cohort,White,57.0
+868,Male,UMD Parkinson's Disease Cohort,White,52.0
+870,Male,UMD Parkinson's Disease Cohort,White,48.0
+871,Male,UMD Parkinson's Disease Cohort,White,63.0
+872,Male,UMD Parkinson's Disease Cohort,White,68.0
+873,Male,UMD Parkinson's Disease Cohort,White,65.0
+874,Female,UMD Parkinson's Disease Cohort,White,74.0
+875,Female,UMD Parkinson's Disease Cohort,White,77.0
+876,Male,UMD Parkinson's Disease Cohort,White,38.0
+877,Male,UMD Parkinson's Disease Cohort,White,41.0
+879,Female,UMD Parkinson's Disease Cohort,White,77.0
+880,Female,UMD Parkinson's Disease Cohort,White,66.0
+881,Male,UMD Parkinson's Disease Cohort,White,66.0
+882,Female,UMD Parkinson's Disease Cohort,White,62.0
+884,Male,UMD Parkinson's Disease Cohort,White,44.0
+885,Male,UMD Parkinson's Disease Cohort,White,55.0
+886,Male,UMD Parkinson's Disease Cohort,Native American or Alaska Native,53.0
+887,Male,UMD Parkinson's Disease Cohort,White,71.0
+888,Female,UMD Parkinson's Disease Cohort,White,55.0
+889,Female,UMD Parkinson's Disease Cohort,White,61.0
+890,Female,UMD Parkinson's Disease Cohort,White,61.0
+891,Female,UMD Parkinson's Disease Cohort,Unknown Race,52.0
+892,Female,UMD Parkinson's Disease Cohort,White,41.0
+893,Male,UMD Parkinson's Disease Cohort,White,78.0
+894,Male,UMD Parkinson's Disease Cohort,White,63.0
+895,Male,UMD Parkinson's Disease Cohort,White,65.0
+896,Male,UMD Parkinson's Disease Cohort,White,57.0
+897,Male,UMD Parkinson's Disease Cohort,White,65.0
+898,Male,UMD Parkinson's Disease Cohort,White,69.0
+899,Female,UMD Parkinson's Disease Cohort,White,48.0
+900,Male,UMD Parkinson's Disease Cohort,White,48.0
+901,Female,UMD Parkinson's Disease Cohort,White,43.0
+902,Male,UMD Parkinson's Disease Cohort,White,60.0
+903,Male,UMD Parkinson's Disease Cohort,White,66.0
+904,Male,UMD Parkinson's Disease Cohort,White,61.0
+905,Male,UMD Parkinson's Disease Cohort,White,64.0
+906,Male,UMD Parkinson's Disease Cohort,White,69.0
+907,Female,UMD Parkinson's Disease Cohort,White,60.0
+908,Female,UMD Parkinson's Disease Cohort,Unknown Race,
+909,Male,UMD Parkinson's Disease Cohort,White,64.0
+910,Male,UMD Parkinson's Disease Cohort,White,73.0
+911,Male,UMD Parkinson's Disease Cohort,White,58.0
+912,Male,UMD Parkinson's Disease Cohort,White,56.0
+913,Male,UMD Parkinson's Disease Cohort,White,78.0
+914,Male,UMD Parkinson's Disease Cohort,White,74.0
+915,Female,UMD Parkinson's Disease Cohort,White,70.0
+916,Male,UMD Parkinson's Disease Cohort,White,73.0
+917,Male,UMD Parkinson's Disease Cohort,White,56.0
+918,Male,UMD Parkinson's Disease Cohort,White,64.0
+919,Male,UMD Parkinson's Disease Cohort,Unknown Race,48.0
+920,Female,UMD Parkinson's Disease Cohort,White,53.0
+921,Male,UMD Parkinson's Disease Cohort,White,49.0
+922,Male,UMD Parkinson's Disease Cohort,Black,66.0
+923,Female,UMD Parkinson's Disease Cohort,White,57.0
+924,Male,UMD Parkinson's Disease Cohort,White,71.0
+925,Male,UMD Parkinson's Disease Cohort,Unknown Race,73.0
+926,Male,UMD Parkinson's Disease Cohort,White,62.0
+928,Male,UMD Parkinson's Disease Cohort,White,41.0
+929,Female,UMD Parkinson's Disease Cohort,White,74.0
+930,Female,UMD Parkinson's Disease Cohort,Unknown Race,62.0
+932,Female,UMD Parkinson's Disease Cohort,White,62.0
+933,Male,UMD Parkinson's Disease Cohort,White,60.0
+934,Female,UMD Parkinson's Disease Cohort,White,55.0
+935,Male,UMD Parkinson's Disease Cohort,White,78.0
+936,Female,UMD Parkinson's Disease Cohort,White,53.0
+937,Female,UMD Parkinson's Disease Cohort,White,51.0
+938,Male,UMD Parkinson's Disease Cohort,White,63.0
+939,Female,UMD Parkinson's Disease Cohort,White,57.0
+940,Male,UMD Parkinson's Disease Cohort,White,67.0
+941,Female,UMD Parkinson's Disease Cohort,White,77.0
+943,Female,UMD Parkinson's Disease Cohort,White,45.0
+944,Female,UMD Parkinson's Disease Cohort,White,56.0
+945,Male,UMD Parkinson's Disease Cohort,Black,45.0
+946,Female,UMD Parkinson's Disease Cohort,White,67.0
+947,Female,UMD Parkinson's Disease Cohort,White,52.0
+948,Male,UMD Parkinson's Disease Cohort,White,62.0
+949,Male,UMD Parkinson's Disease Cohort,More than one race,76.0
+951,Male,UMD Parkinson's Disease Cohort,More than one race,81.0
+952,Male,UMD Parkinson's Disease Cohort,White,59.0
+953,Male,UMD Parkinson's Disease Cohort,White,63.0
+954,Male,UMD Parkinson's Disease Cohort,White,49.0
+955,Male,UMD Parkinson's Disease Cohort,Unknown Race,72.0
+956,Female,UMD Parkinson's Disease Cohort,White,63.0
+957,Male,UMD Parkinson's Disease Cohort,White,65.0
+958,Male,UMD Parkinson's Disease Cohort,Black,43.0
+959,Male,UMD Parkinson's Disease Cohort,White,78.0
+960,Male,UMD Parkinson's Disease Cohort,White,61.0
+961,Male,UMD Parkinson's Disease Cohort,White,62.0
+962,Female,UMD Parkinson's Disease Cohort,White,76.0
+963,Male,UMD Parkinson's Disease Cohort,White,78.0
+964,Male,UMD Parkinson's Disease Cohort,Unknown Race,59.0
+965,Male,UMD Parkinson's Disease Cohort,White,48.0
+966,Female,UMD Parkinson's Disease Cohort,White,66.0
+967,Male,UMD Parkinson's Disease Cohort,White,65.0
+968,Male,UMD Parkinson's Disease Cohort,White,68.0
+969,Female,UMD Parkinson's Disease Cohort,White,54.0
+970,Male,UMD Parkinson's Disease Cohort,White,72.0
+972,Male,UMD Parkinson's Disease Cohort,White,55.0
+973,Female,UMD Parkinson's Disease Cohort,White,55.0
+975,Male,UMD Parkinson's Disease Cohort,White,54.0
+976,Female,UMD Parkinson's Disease Cohort,White,56.0
+977,Male,UMD Parkinson's Disease Cohort,White,36.0
+978,Male,UMD Parkinson's Disease Cohort,White,65.0
+979,Female,UMD Parkinson's Disease Cohort,White,59.0
+980,Female,UMD Parkinson's Disease Cohort,White,73.0
+981,Male,UMD Parkinson's Disease Cohort,White,59.0
+982,Male,UMD Parkinson's Disease Cohort,White,49.0
+984,Female,UMD Parkinson's Disease Cohort,White,60.0
+986,Female,UMD Parkinson's Disease Cohort,White,63.0
+987,Female,UMD Parkinson's Disease Cohort,White,69.0
+988,Female,UMD Parkinson's Disease Cohort,White,65.0
+989,Female,UMD Parkinson's Disease Cohort,Black,70.0
+990,Male,UMD Parkinson's Disease Cohort,Unknown Race,51.0
+991,Female,UMD Parkinson's Disease Cohort,White,73.0
+992,Female,UMD Parkinson's Disease Cohort,White,50.0
+993,Male,UMD Parkinson's Disease Cohort,White,56.0
+994,Male,UMD Parkinson's Disease Cohort,White,47.0
+996,Female,UMD Parkinson's Disease Cohort,White,74.0
+997,Male,UMD Parkinson's Disease Cohort,White,75.0
+998,Male,UMD Parkinson's Disease Cohort,White,64.0
+999,Female,UMD Parkinson's Disease Cohort,White,72.0
+1000,Female,UMD Parkinson's Disease Cohort,White,64.0
+1001,Male,UMD Parkinson's Disease Cohort,White,59.0
+1003,Male,UMD Parkinson's Disease Cohort,White,65.0
+1004,Female,UMD Parkinson's Disease Cohort,White,69.0
+1005,Male,UMD Parkinson's Disease Cohort,White,60.0
+1006,Male,UMD Parkinson's Disease Cohort,White,64.0
+1007,Male,UMD Parkinson's Disease Cohort,White,60.0
+1008,Female,UMD Parkinson's Disease Cohort,Unknown Race,62.0
+1009,Male,UMD Parkinson's Disease Cohort,White,67.0
+1010,Male,UMD Parkinson's Disease Cohort,White,73.0
+1011,Male,UMD Parkinson's Disease Cohort,White,65.0
+1012,Male,UMD Parkinson's Disease Cohort,White,74.0
+1013,Female,UMD Parkinson's Disease Cohort,White,78.0
+1015,Female,UMD Parkinson's Disease Cohort,White,60.0
+1016,Male,UMD Parkinson's Disease Cohort,White,77.0
+1020,Male,UMD Parkinson's Disease Cohort,White,48.0
+1021,Male,UMD Parkinson's Disease Cohort,White,45.0
+1022,Female,UMD Parkinson's Disease Cohort,White,43.0
+1023,Male,UMD Parkinson's Disease Cohort,Unknown Race,65.0
+1025,Male,UMD Parkinson's Disease Cohort,Unknown Race,52.0
+1026,Female,UMD Parkinson's Disease Cohort,White,51.0
+1027,Female,UMD Parkinson's Disease Cohort,White,65.0
+1030,Male,UMD Parkinson's Disease Cohort,White,67.0
+1031,Female,UMD Parkinson's Disease Cohort,White,86.0
+1032,Male,UMD Parkinson's Disease Cohort,White,66.0
+1033,Male,UMD Parkinson's Disease Cohort,White,65.0
+1034,Female,UMD Parkinson's Disease Cohort,Unknown Race,71.0
+1035,Male,UMD Parkinson's Disease Cohort,Black,67.0
+1036,Male,UMD Parkinson's Disease Cohort,White,66.0
+1037,Male,UMD Parkinson's Disease Cohort,White,50.0
+1038,Male,UMD Parkinson's Disease Cohort,Unknown Race,53.0
+1039,Male,UMD Parkinson's Disease Cohort,White,53.0
+1040,Female,UMD Parkinson's Disease Cohort,White,45.0
+1041,Male,UMD Parkinson's Disease Cohort,White,54.0
+1042,Male,UMD Parkinson's Disease Cohort,White,
+1043,Male,UMD Parkinson's Disease Cohort,White,75.0
+1044,Male,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+1045,Male,UMD Parkinson's Disease Cohort,White,49.0
+1047,Female,UMD Parkinson's Disease Cohort,White,65.0
+1048,Male,UMD Parkinson's Disease Cohort,White,71.0
+1049,Male,UMD Parkinson's Disease Cohort,Black,59.0
+1050,Male,UMD Parkinson's Disease Cohort,White,77.0
+1051,Female,UMD Parkinson's Disease Cohort,White,48.0
+1052,Male,UMD Parkinson's Disease Cohort,Black,71.0
+1053,Female,UMD Parkinson's Disease Cohort,White,44.0
+1054,Female,UMD Parkinson's Disease Cohort,White,49.0
+1056,Male,UMD Parkinson's Disease Cohort,White,56.0
+1057,Female,UMD Parkinson's Disease Cohort,White,62.0
+1058,Male,UMD Parkinson's Disease Cohort,White,43.0
+1059,Female,UMD Parkinson's Disease Cohort,Unknown Race,71.0
+1060,Female,UMD Parkinson's Disease Cohort,White,53.0
+1061,Male,UMD Parkinson's Disease Cohort,White,62.0
+1062,Female,UMD Parkinson's Disease Cohort,White,58.0
+1063,Male,UMD Parkinson's Disease Cohort,White,38.0
+1064,Male,UMD Parkinson's Disease Cohort,White,51.0
+1065,Female,UMD Parkinson's Disease Cohort,White,61.0
+1066,Male,UMD Parkinson's Disease Cohort,White,50.0
+1067,Male,UMD Parkinson's Disease Cohort,White,77.0
+1068,Male,UMD Parkinson's Disease Cohort,White,58.0
+1070,Male,UMD Parkinson's Disease Cohort,White,43.0
+1071,Male,UMD Parkinson's Disease Cohort,White,68.0
+1072,Male,UMD Parkinson's Disease Cohort,Black,43.0
+1073,Female,UMD Parkinson's Disease Cohort,White,53.0
+1074,Female,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+1075,Male,UMD Parkinson's Disease Cohort,White,59.0
+1077,Male,UMD Parkinson's Disease Cohort,White,58.0
+1080,Female,UMD Parkinson's Disease Cohort,White,89.0
+1081,Male,UMD Parkinson's Disease Cohort,More than one race,35.0
+1082,Female,UMD Parkinson's Disease Cohort,White,60.0
+1085,Male,UMD Parkinson's Disease Cohort,Black,43.0
+1086,Male,UMD Parkinson's Disease Cohort,White,62.0
+1087,Female,UMD Parkinson's Disease Cohort,White,70.0
+1088,Male,UMD Parkinson's Disease Cohort,White,65.0
+1089,Male,UMD Parkinson's Disease Cohort,White,66.0
+1090,Female,UMD Parkinson's Disease Cohort,Native American or Alaska Native,66.0
+1091,Male,UMD Parkinson's Disease Cohort,White,64.0
+1092,Female,UMD Parkinson's Disease Cohort,White,47.0
+1094,Male,UMD Parkinson's Disease Cohort,Native American or Alaska Native,43.0
+1095,Male,UMD Parkinson's Disease Cohort,White,55.0
+1096,Female,UMD Parkinson's Disease Cohort,White,72.0
+1097,Female,UMD Parkinson's Disease Cohort,White,51.0
+1098,Male,UMD Parkinson's Disease Cohort,White,70.0
+1100,Female,UMD Parkinson's Disease Cohort,White,76.0
+1101,Male,UMD Parkinson's Disease Cohort,Unknown Race,62.0
+1102,Female,UMD Parkinson's Disease Cohort,White,58.0
+1103,Female,UMD Parkinson's Disease Cohort,White,63.0
+1104,Male,UMD Parkinson's Disease Cohort,Unknown Race,59.0
+1105,Male,UMD Parkinson's Disease Cohort,White,69.0
+1106,Female,UMD Parkinson's Disease Cohort,Unknown Race,47.0
+1107,Male,UMD Parkinson's Disease Cohort,White,64.0
+1108,Male,UMD Parkinson's Disease Cohort,White,60.0
+1110,Female,UMD Parkinson's Disease Cohort,White,68.0
+1111,Female,UMD Parkinson's Disease Cohort,Unknown Race,54.0
+1112,Male,UMD Parkinson's Disease Cohort,White,63.0
+1114,Male,UMD Parkinson's Disease Cohort,White,40.0
+1115,Female,UMD Parkinson's Disease Cohort,White,67.0
+1116,Male,UMD Parkinson's Disease Cohort,Unknown Race,65.0
+1117,Female,UMD Parkinson's Disease Cohort,White,76.0
+1118,Male,UMD Parkinson's Disease Cohort,White,61.0
+1119,Female,UMD Parkinson's Disease Cohort,White,35.0
+1120,Male,UMD Parkinson's Disease Cohort,White,53.0
+1121,Male,UMD Parkinson's Disease Cohort,Unknown Race,51.0
+1123,Male,UMD Parkinson's Disease Cohort,White,59.0
+1124,Female,UMD Parkinson's Disease Cohort,White,59.0
+1125,Male,UMD Parkinson's Disease Cohort,White,65.0
+1126,Male,UMD Parkinson's Disease Cohort,White,56.0
+1127,Male,UMD Parkinson's Disease Cohort,Unknown Race,63.0
+1128,Female,UMD Parkinson's Disease Cohort,Unknown Race,41.0
+1129,Female,UMD Parkinson's Disease Cohort,White,50.0
+1130,Female,UMD Parkinson's Disease Cohort,White,57.0
+1132,Female,UMD Parkinson's Disease Cohort,Unknown Race,58.0
+1134,Male,UMD Parkinson's Disease Cohort,White,76.0
+1135,Female,UMD Parkinson's Disease Cohort,White,67.0
+1137,Female,UMD Parkinson's Disease Cohort,White,64.0
+1138,Female,UMD Parkinson's Disease Cohort,White,68.0
+1139,Female,UMD Parkinson's Disease Cohort,Unknown Race,78.0
+1140,Female,UMD Parkinson's Disease Cohort,White,64.0
+1141,Male,UMD Parkinson's Disease Cohort,White,43.0
+1142,Male,UMD Parkinson's Disease Cohort,White,46.0
+1143,Male,UMD Parkinson's Disease Cohort,White,48.0
+1144,Male,UMD Parkinson's Disease Cohort,Unknown Race,58.0
+1145,Male,UMD Parkinson's Disease Cohort,Black,50.0
+1146,Female,UMD Parkinson's Disease Cohort,White,51.0
+1147,Male,UMD Parkinson's Disease Cohort,Black,49.0
+1149,Male,UMD Parkinson's Disease Cohort,White,61.0
+1150,Female,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+1151,Female,UMD Parkinson's Disease Cohort,White,74.0
+1152,Male,UMD Parkinson's Disease Cohort,White,48.0
+1153,Female,UMD Parkinson's Disease Cohort,White,59.0
+1154,Female,UMD Parkinson's Disease Cohort,White,54.0
+1155,Male,UMD Parkinson's Disease Cohort,White,53.0
+1156,Male,UMD Parkinson's Disease Cohort,White,60.0
+1157,Male,UMD Parkinson's Disease Cohort,White,64.0
+1158,Female,UMD Parkinson's Disease Cohort,White,66.0
+1159,Male,UMD Parkinson's Disease Cohort,White,70.0
+1160,Male,UMD Parkinson's Disease Cohort,White,61.0
+1161,Male,UMD Parkinson's Disease Cohort,Black,43.0
+1162,Male,UMD Parkinson's Disease Cohort,White,73.0
+1163,Male,UMD Parkinson's Disease Cohort,White,71.0
+1164,Female,UMD Parkinson's Disease Cohort,White,65.0
+1165,Female,UMD Parkinson's Disease Cohort,White,54.0
+1166,Male,UMD Parkinson's Disease Cohort,White,45.0
+1167,Male,UMD Parkinson's Disease Cohort,White,59.0
+1168,Male,UMD Parkinson's Disease Cohort,White,83.0
+1169,Female,UMD Parkinson's Disease Cohort,White,58.0
+1170,Male,UMD Parkinson's Disease Cohort,White,64.0
+1171,Male,UMD Parkinson's Disease Cohort,White,76.0
+1172,Male,UMD Parkinson's Disease Cohort,Unknown Race,91.0
+1173,Male,UMD Parkinson's Disease Cohort,White,72.0
+1175,Female,UMD Parkinson's Disease Cohort,White,53.0
+1176,Male,UMD Parkinson's Disease Cohort,White,66.0
+1177,Male,UMD Parkinson's Disease Cohort,Unknown Race,67.0
+1178,Female,UMD Parkinson's Disease Cohort,White,23.0
+1179,Male,UMD Parkinson's Disease Cohort,White,73.0
+1180,Male,UMD Parkinson's Disease Cohort,White,68.0
+1182,Female,UMD Parkinson's Disease Cohort,White,64.0
+1183,Female,UMD Parkinson's Disease Cohort,White,65.0
+1184,Male,UMD Parkinson's Disease Cohort,White,60.0
+1185,Male,UMD Parkinson's Disease Cohort,White,62.0
+1186,Female,UMD Parkinson's Disease Cohort,White,76.0
+1187,Male,UMD Parkinson's Disease Cohort,White,48.0
+1188,Male,UMD Parkinson's Disease Cohort,White,57.0
+1190,Male,UMD Parkinson's Disease Cohort,White,56.0
+1191,Male,UMD Parkinson's Disease Cohort,White,45.0
+1193,Female,UMD Parkinson's Disease Cohort,White,66.0
+1194,Male,UMD Parkinson's Disease Cohort,White,54.0
+1195,Female,UMD Parkinson's Disease Cohort,White,82.0
+1196,Female,UMD Parkinson's Disease Cohort,Unknown Race,82.0
+1197,Female,UMD Parkinson's Disease Cohort,Black,84.0
+1198,Male,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+1199,Female,UMD Parkinson's Disease Cohort,White,88.0
+1200,Female,UMD Parkinson's Disease Cohort,White,71.0
+1201,Male,UMD Parkinson's Disease Cohort,White,76.0
+1203,Female,UMD Parkinson's Disease Cohort,White,71.0
+1204,Male,UMD Parkinson's Disease Cohort,White,53.0
+1205,Male,UMD Parkinson's Disease Cohort,White,69.0
+1206,Female,UMD Parkinson's Disease Cohort,White,59.0
+1207,Male,UMD Parkinson's Disease Cohort,Black,54.0
+1209,Male,UMD Parkinson's Disease Cohort,White,54.0
+1210,Male,UMD Parkinson's Disease Cohort,White,55.0
+1211,Male,UMD Parkinson's Disease Cohort,White,75.0
+1212,Male,UMD Parkinson's Disease Cohort,White,64.0
+1213,Female,UMD Parkinson's Disease Cohort,White,84.0
+1216,Male,UMD Parkinson's Disease Cohort,White,30.0
+1217,Male,UMD Parkinson's Disease Cohort,Unknown Race,58.0
+1218,Male,UMD Parkinson's Disease Cohort,White,55.0
+1219,Male,UMD Parkinson's Disease Cohort,White,50.0
+1220,Female,UMD Parkinson's Disease Cohort,White,57.0
+1221,Female,UMD Parkinson's Disease Cohort,White,57.0
+1222,Male,UMD Parkinson's Disease Cohort,White,68.0
+1224,Male,UMD Parkinson's Disease Cohort,White,69.0
+1225,Male,UMD Parkinson's Disease Cohort,White,61.0
+1226,Female,UMD Parkinson's Disease Cohort,White,42.0
+1227,Male,UMD Parkinson's Disease Cohort,White,47.0
+1228,Male,UMD Parkinson's Disease Cohort,White,50.0
+1229,Male,UMD Parkinson's Disease Cohort,White,56.0
+1230,Female,UMD Parkinson's Disease Cohort,White,57.0
+1231,Male,UMD Parkinson's Disease Cohort,White,53.0
+1232,Female,UMD Parkinson's Disease Cohort,White,55.0
+1234,Male,UMD Parkinson's Disease Cohort,Unknown Race,64.0
+1236,Male,UMD Parkinson's Disease Cohort,White,58.0
+1237,Male,UMD Parkinson's Disease Cohort,Black,30.0
+1238,Female,UMD Parkinson's Disease Cohort,White,61.0
+1239,Female,UMD Parkinson's Disease Cohort,White,76.0
+1240,Female,UMD Parkinson's Disease Cohort,White,67.0
+1241,Female,UMD Parkinson's Disease Cohort,White,54.0
+1242,Female,UMD Parkinson's Disease Cohort,White,61.0
+1243,Male,UMD Parkinson's Disease Cohort,White,55.0
+1244,Female,UMD Parkinson's Disease Cohort,White,79.0
+1245,Female,UMD Parkinson's Disease Cohort,White,62.0
+1246,Male,UMD Parkinson's Disease Cohort,White,71.0
+1247,Female,UMD Parkinson's Disease Cohort,White,72.0
+1249,Male,UMD Parkinson's Disease Cohort,White,78.0
+1250,Male,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+1252,Female,UMD Parkinson's Disease Cohort,White,80.0
+1253,Female,UMD Parkinson's Disease Cohort,White,75.0
+1254,Male,UMD Parkinson's Disease Cohort,White,80.0
+1255,Male,UMD Parkinson's Disease Cohort,White,56.0
+1256,Female,UMD Parkinson's Disease Cohort,White,56.0
+1257,Male,UMD Parkinson's Disease Cohort,White,58.0
+1259,Male,UMD Parkinson's Disease Cohort,White,63.0
+1261,Female,UMD Parkinson's Disease Cohort,White,66.0
+1263,Female,UMD Parkinson's Disease Cohort,White,57.0
+1265,Male,UMD Parkinson's Disease Cohort,White,54.0
+1266,Female,UMD Parkinson's Disease Cohort,White,57.0
+1268,Female,UMD Parkinson's Disease Cohort,White,58.0
+1269,Male,UMD Parkinson's Disease Cohort,White,69.0
+1270,Male,UMD Parkinson's Disease Cohort,White,65.0
+1273,Male,UMD Parkinson's Disease Cohort,White,52.0
+1274,Male,UMD Parkinson's Disease Cohort,White,54.0
+1275,Female,UMD Parkinson's Disease Cohort,White,39.0
+1276,Female,UMD Parkinson's Disease Cohort,White,65.0
+1277,Male,UMD Parkinson's Disease Cohort,White,65.0
+1278,Male,UMD Parkinson's Disease Cohort,White,72.0
+1279,Female,UMD Parkinson's Disease Cohort,Asian,68.0
+1280,Female,UMD Parkinson's Disease Cohort,White,43.0
+1281,Male,UMD Parkinson's Disease Cohort,Unknown Race,76.0
+1283,Female,UMD Parkinson's Disease Cohort,White,48.0
+1284,Male,UMD Parkinson's Disease Cohort,White,72.0
+1285,Male,UMD Parkinson's Disease Cohort,More than one race,70.0
+1286,Female,UMD Parkinson's Disease Cohort,White,55.0
+1287,Male,UMD Parkinson's Disease Cohort,White,69.0
+1288,Male,UMD Parkinson's Disease Cohort,White,58.0
+1291,Male,UMD Parkinson's Disease Cohort,Unknown Race,50.0
+1292,Male,UMD Parkinson's Disease Cohort,White,69.0
+1293,Male,UMD Parkinson's Disease Cohort,White,69.0
+1294,Female,UMD Parkinson's Disease Cohort,White,66.0
+1295,Male,UMD Parkinson's Disease Cohort,White,76.0
+1296,Male,UMD Parkinson's Disease Cohort,White,69.0
+1297,Female,UMD Parkinson's Disease Cohort,White,43.0
+1298,Male,UMD Parkinson's Disease Cohort,Unknown Race,46.0
+1299,Female,UMD Parkinson's Disease Cohort,White,51.0
+1300,Male,UMD Parkinson's Disease Cohort,White,53.0
+1301,Female,UMD Parkinson's Disease Cohort,White,61.0
+1302,Male,UMD Parkinson's Disease Cohort,More than one race,55.0
+1303,Female,UMD Parkinson's Disease Cohort,White,82.0
+1304,Female,UMD Parkinson's Disease Cohort,White,41.0
+1305,Female,UMD Parkinson's Disease Cohort,White,65.0
+1306,Male,UMD Parkinson's Disease Cohort,White,57.0
+1307,Male,UMD Parkinson's Disease Cohort,White,59.0
+1308,Female,UMD Parkinson's Disease Cohort,White,68.0
+1309,Male,UMD Parkinson's Disease Cohort,White,74.0
+1310,Male,UMD Parkinson's Disease Cohort,White,56.0
+1311,Male,UMD Parkinson's Disease Cohort,White,68.0
+1313,Male,UMD Parkinson's Disease Cohort,White,72.0
+1314,Male,UMD Parkinson's Disease Cohort,White,53.0
+1315,Male,UMD Parkinson's Disease Cohort,White,55.0
+1316,Female,UMD Parkinson's Disease Cohort,White,65.0
+1317,Male,UMD Parkinson's Disease Cohort,White,53.0
+1318,Female,UMD Parkinson's Disease Cohort,White,79.0
+1319,Female,UMD Parkinson's Disease Cohort,White,53.0
+1320,Male,UMD Parkinson's Disease Cohort,White,63.0
+1322,Male,UMD Parkinson's Disease Cohort,White,61.0
+1323,Male,UMD Parkinson's Disease Cohort,White,43.0
+1325,Male,UMD Parkinson's Disease Cohort,White,72.0
+1326,Female,UMD Parkinson's Disease Cohort,White,64.0
+1327,Female,UMD Parkinson's Disease Cohort,White,91.0
+1328,Female,UMD Parkinson's Disease Cohort,White,61.0
+1329,Male,UMD Parkinson's Disease Cohort,More than one race,72.0
+1330,Male,UMD Parkinson's Disease Cohort,White,55.0
+1332,Female,UMD Parkinson's Disease Cohort,White,62.0
+1333,Male,UMD Parkinson's Disease Cohort,White,56.0
+1334,Male,UMD Parkinson's Disease Cohort,White,82.0
+1335,Male,UMD Parkinson's Disease Cohort,White,50.0
+1336,Male,UMD Parkinson's Disease Cohort,White,76.0
+1337,Female,UMD Parkinson's Disease Cohort,Black,63.0
+1338,Male,UMD Parkinson's Disease Cohort,White,47.0
+1339,Female,UMD Parkinson's Disease Cohort,White,71.0
+1340,Female,UMD Parkinson's Disease Cohort,White,87.0
+1342,Male,UMD Parkinson's Disease Cohort,White,58.0
+1343,Male,UMD Parkinson's Disease Cohort,White,56.0
+1344,Male,UMD Parkinson's Disease Cohort,White,45.0
+1345,Female,UMD Parkinson's Disease Cohort,Unknown Race,51.0
+1346,Male,UMD Parkinson's Disease Cohort,White,54.0
+1347,Female,UMD Parkinson's Disease Cohort,White,58.0
+1348,Male,UMD Parkinson's Disease Cohort,White,72.0
+1351,Male,UMD Parkinson's Disease Cohort,White,59.0
+1352,Male,UMD Parkinson's Disease Cohort,White,72.0
+1353,Female,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+1354,Male,UMD Parkinson's Disease Cohort,White,50.0
+1355,Female,UMD Parkinson's Disease Cohort,White,55.0
+1356,Male,UMD Parkinson's Disease Cohort,Unknown Race,62.0
+1358,Female,UMD Parkinson's Disease Cohort,White,70.0
+1359,Male,UMD Parkinson's Disease Cohort,White,61.0
+1362,Male,UMD Parkinson's Disease Cohort,White,58.0
+1363,Male,UMD Parkinson's Disease Cohort,White,83.0
+1366,Male,UMD Parkinson's Disease Cohort,White,54.0
+1369,Female,UMD Parkinson's Disease Cohort,White,66.0
+1370,Male,UMD Parkinson's Disease Cohort,White,57.0
+1371,Male,UMD Parkinson's Disease Cohort,More than one race,57.0
+1374,Male,UMD Parkinson's Disease Cohort,White,71.0
+1375,Female,UMD Parkinson's Disease Cohort,Black,39.0
+1376,Male,UMD Parkinson's Disease Cohort,White,53.0
+1377,Male,UMD Parkinson's Disease Cohort,Unknown Race,63.0
+1380,Male,UMD Parkinson's Disease Cohort,White,70.0
+1381,Male,UMD Parkinson's Disease Cohort,White,49.0
+1383,Male,UMD Parkinson's Disease Cohort,White,47.0
+1384,Male,UMD Parkinson's Disease Cohort,White,65.0
+1385,Male,UMD Parkinson's Disease Cohort,Native American or Alaska Native,63.0
+1387,Male,UMD Parkinson's Disease Cohort,White,55.0
+1388,Male,UMD Parkinson's Disease Cohort,White,61.0
+1391,Male,UMD Parkinson's Disease Cohort,White,40.0
+1392,Male,UMD Parkinson's Disease Cohort,Unknown Race,55.0
+1393,Male,UMD Parkinson's Disease Cohort,White,46.0
+1396,Male,UMD Parkinson's Disease Cohort,Unknown Race,72.0
+1398,Male,UMD Parkinson's Disease Cohort,White,46.0
+1400,Male,UMD Parkinson's Disease Cohort,White,57.0
+1406,Male,UMD Parkinson's Disease Cohort,White,63.0
+1407,Male,UMD Parkinson's Disease Cohort,Unknown Race,69.0
+1412,Female,UMD Parkinson's Disease Cohort,Unknown Race,53.0
+1413,Male,UMD Parkinson's Disease Cohort,White,54.0
+1414,Male,UMD Parkinson's Disease Cohort,White,74.0
+1419,Male,UMD Parkinson's Disease Cohort,White,71.0
+1420,Male,UMD Parkinson's Disease Cohort,More than one race,58.0
+1421,Male,UMD Parkinson's Disease Cohort,More than one race,76.0
+1423,Female,UMD Parkinson's Disease Cohort,Unknown Race,75.0
+1425,Female,UMD Parkinson's Disease Cohort,White,58.0
+1428,Female,UMD Parkinson's Disease Cohort,White,55.0
+1433,Male,UMD Parkinson's Disease Cohort,Unknown Race,48.0
+1440,Male,UMD Parkinson's Disease Cohort,White,60.0
+1441,Male,UMD Parkinson's Disease Cohort,White,64.0
+1447,Male,UMD Parkinson's Disease Cohort,Unknown Race,45.0
+1452,Male,UMD Parkinson's Disease Cohort,Unknown Race,69.0
+1453,Female,UMD Parkinson's Disease Cohort,White,56.0
+1454,Female,UMD Parkinson's Disease Cohort,White,57.0
+1455,Female,UMD Parkinson's Disease Cohort,White,70.0
+1459,Male,UMD Parkinson's Disease Cohort,White,68.0
+1461,Male,UMD Parkinson's Disease Cohort,Unknown Race,53.0
+1463,Male,UMD Parkinson's Disease Cohort,White,58.0
+1466,Female,UMD Parkinson's Disease Cohort,White,56.0
+1467,Female,UMD Parkinson's Disease Cohort,White,55.0
+1473,Male,UMD Parkinson's Disease Cohort,Unknown Race,69.0
+1475,Female,UMD Parkinson's Disease Cohort,White,63.0
+1477,Male,UMD Parkinson's Disease Cohort,White,53.0
+1479,Male,UMD Parkinson's Disease Cohort,White,53.0
+1481,Male,UMD Parkinson's Disease Cohort,White,68.0
+1483,Male,UMD Parkinson's Disease Cohort,More than one race,70.0
+1487,Male,UMD Parkinson's Disease Cohort,White,49.0
+1488,Male,UMD Parkinson's Disease Cohort,White,46.0
+1490,Male,UMD Parkinson's Disease Cohort,White,52.0
+1492,Male,UMD Parkinson's Disease Cohort,White,59.0
+1493,Male,UMD Parkinson's Disease Cohort,White,56.0
+1497,Female,UMD Parkinson's Disease Cohort,Unknown Race,68.0
+1498,Male,UMD Parkinson's Disease Cohort,White,52.0
+1499,Male,UMD Parkinson's Disease Cohort,White,68.0
+1500,Male,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+1501,Male,UMD Parkinson's Disease Cohort,More than one race,50.0
+1502,Female,UMD Parkinson's Disease Cohort,Unknown Race,45.0
+1504,Male,UMD Parkinson's Disease Cohort,White,68.0
+1505,Male,UMD Parkinson's Disease Cohort,Native American or Alaska Native,72.0
+1506,Male,UMD Parkinson's Disease Cohort,White,77.0
+1506,Female,UMD Parkinson's Disease Cohort,White,77.0
+1509,Female,UMD Parkinson's Disease Cohort,Unknown Race,46.0
+1510,Female,UMD Parkinson's Disease Cohort,White,73.0
+1513,Female,UMD Parkinson's Disease Cohort,White,57.0
+1517,Male,UMD Parkinson's Disease Cohort,Unknown Race,81.0
+1518,Male,UMD Parkinson's Disease Cohort,White,64.0
+1520,Male,UMD Parkinson's Disease Cohort,Unknown Race,62.0
+1521,Male,UMD Parkinson's Disease Cohort,White,42.0
+1522,Male,UMD Parkinson's Disease Cohort,Unknown Race,65.0
+1523,Male,UMD Parkinson's Disease Cohort,White,53.0
+1526,Male,UMD Parkinson's Disease Cohort,White,65.0
+1527,Male,UMD Parkinson's Disease Cohort,White,68.0
+1530,Male,UMD Parkinson's Disease Cohort,Unknown Race,40.0
+1533,Male,UMD Parkinson's Disease Cohort,More than one race,64.0
+1535,Female,UMD Parkinson's Disease Cohort,White,60.0
+1536,Male,UMD Parkinson's Disease Cohort,White,65.0
+1538,Male,UMD Parkinson's Disease Cohort,White,62.0
+1539,Female,UMD Parkinson's Disease Cohort,White,67.0
+1540,Female,UMD Parkinson's Disease Cohort,White,49.0
+1541,Male,UMD Parkinson's Disease Cohort,White,74.0
+1542,Male,UMD Parkinson's Disease Cohort,Unknown Race,56.0
+1543,Male,UMD Parkinson's Disease Cohort,Unknown Race,63.0
+1547,Male,UMD Parkinson's Disease Cohort,White,66.0
+1548,Male,UMD Parkinson's Disease Cohort,White,55.0
+1549,Female,UMD Parkinson's Disease Cohort,White,61.0
+1551,Male,UMD Parkinson's Disease Cohort,White,64.0
+1552,Female,UMD Parkinson's Disease Cohort,Unknown Race,34.0
+1556,Male,UMD Parkinson's Disease Cohort,White,50.0
+1557,Male,UMD Parkinson's Disease Cohort,Unknown Race,64.0
+1559,Male,UMD Parkinson's Disease Cohort,Unknown Race,58.0
+1560,Male,UMD Parkinson's Disease Cohort,Unknown Race,38.0
+1563,Male,UMD Parkinson's Disease Cohort,Unknown Race,61.0
+1564,Male,UMD Parkinson's Disease Cohort,White,59.0
+1565,Female,UMD Parkinson's Disease Cohort,Unknown Race,64.0
+1566,Male,UMD Parkinson's Disease Cohort,Unknown Race,76.0
+1567,Male,UMD Parkinson's Disease Cohort,Unknown Race,50.0
+1568,Female,UMD Parkinson's Disease Cohort,White,53.0
+1572,Female,UMD Parkinson's Disease Cohort,Unknown Race,58.0
+1573,Male,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+1575,Male,UMD Parkinson's Disease Cohort,Unknown Race,52.0
+1579,Male,UMD Parkinson's Disease Cohort,White,71.0
+1580,Male,UMD Parkinson's Disease Cohort,White,72.0
+1581,Male,UMD Parkinson's Disease Cohort,Unknown Race,87.0
+1584,Female,UMD Parkinson's Disease Cohort,White,70.0
+1586,Female,UMD Parkinson's Disease Cohort,Unknown Race,77.0
+1588,Male,UMD Parkinson's Disease Cohort,Unknown Race,56.0
+1590,Male,UMD Parkinson's Disease Cohort,Unknown Race,71.0
+1592,Female,UMD Parkinson's Disease Cohort,White,69.0
+1593,Male,UMD Parkinson's Disease Cohort,Unknown Race,67.0
+1594,Female,UMD Parkinson's Disease Cohort,White,63.0
+1595,Female,UMD Parkinson's Disease Cohort,White,72.0
+1596,Female,UMD Parkinson's Disease Cohort,Unknown Race,79.0
+1600,Male,UMD Parkinson's Disease Cohort,White,59.0
+1601,Male,UMD Parkinson's Disease Cohort,White,55.0
+1601,Female,UMD Parkinson's Disease Cohort,White,55.0
+1603,Male,UMD Parkinson's Disease Cohort,White,67.0
+1607,Male,UMD Parkinson's Disease Cohort,Unknown Race,59.0
+1612,Male,UMD Parkinson's Disease Cohort,More than one race,61.0
+1613,Male,UMD Parkinson's Disease Cohort,White,59.0
+1616,Male,UMD Parkinson's Disease Cohort,White,69.0
+1617,Male,UMD Parkinson's Disease Cohort,White,74.0
+1618,Male,UMD Parkinson's Disease Cohort,Unknown Race,46.0
+1619,Female,UMD Parkinson's Disease Cohort,White,65.0
+1621,Male,UMD Parkinson's Disease Cohort,Unknown Race,59.0
+1624,Female,UMD Parkinson's Disease Cohort,White,66.0
+1626,Female,UMD Parkinson's Disease Cohort,White,75.0
+1627,Male,UMD Parkinson's Disease Cohort,White,66.0
+1628,Male,UMD Parkinson's Disease Cohort,White,59.0
+1630,Female,UMD Parkinson's Disease Cohort,White,64.0
+1631,Male,UMD Parkinson's Disease Cohort,White,71.0
+1632,Female,UMD Parkinson's Disease Cohort,White,62.0
+1633,Male,UMD Parkinson's Disease Cohort,Unknown Race,70.0
+1637,Male,UMD Parkinson's Disease Cohort,White,56.0
+1638,Female,UMD Parkinson's Disease Cohort,Unknown Race,83.0
+1639,Female,UMD Parkinson's Disease Cohort,White,67.0
+1642,Male,UMD Parkinson's Disease Cohort,White,83.0
+1642,Female,UMD Parkinson's Disease Cohort,White,83.0
+1643,Female,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+1645,Male,UMD Parkinson's Disease Cohort,Unknown Race,48.0
+1647,Female,UMD Parkinson's Disease Cohort,White,47.0
+1652,Female,UMD Parkinson's Disease Cohort,White,49.0
+1653,Female,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+1657,Female,UMD Parkinson's Disease Cohort,White,50.0
+1658,Female,UMD Parkinson's Disease Cohort,More than one race,67.0
+1660,Female,UMD Parkinson's Disease Cohort,White,71.0
+1662,Female,UMD Parkinson's Disease Cohort,White,76.0
+1663,Female,UMD Parkinson's Disease Cohort,White,59.0
+1665,Female,UMD Parkinson's Disease Cohort,Unknown Race,71.0
+1666,Female,UMD Parkinson's Disease Cohort,White,53.0
+1667,Male,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+1672,Female,UMD Parkinson's Disease Cohort,White,60.0
+1674,Female,UMD Parkinson's Disease Cohort,Native American or Alaska Native,62.0
+1678,Male,UMD Parkinson's Disease Cohort,White,54.0
+1679,Male,UMD Parkinson's Disease Cohort,White,48.0
+1680,Male,UMD Parkinson's Disease Cohort,White,78.0
+1684,Female,UMD Parkinson's Disease Cohort,White,57.0
+1685,Male,UMD Parkinson's Disease Cohort,White,62.0
+1686,Male,UMD Parkinson's Disease Cohort,White,49.0
+1687,Male,UMD Parkinson's Disease Cohort,White,62.0
+1688,Male,UMD Parkinson's Disease Cohort,White,71.0
+1689,Male,UMD Parkinson's Disease Cohort,Unknown Race,68.0
+1690,Female,UMD Parkinson's Disease Cohort,White,63.0
+1691,Male,UMD Parkinson's Disease Cohort,White,72.0
+1692,Male,UMD Parkinson's Disease Cohort,White,65.0
+1693,Female,UMD Parkinson's Disease Cohort,White,60.0
+1697,Male,UMD Parkinson's Disease Cohort,White,71.0
+1700,Male,UMD Parkinson's Disease Cohort,White,54.0
+1700,Female,UMD Parkinson's Disease Cohort,White,54.0
+1701,Male,UMD Parkinson's Disease Cohort,White,68.0
+1702,Female,UMD Parkinson's Disease Cohort,White,72.0
+1704,Male,UMD Parkinson's Disease Cohort,White,60.0
+1705,Female,UMD Parkinson's Disease Cohort,White,77.0
+1706,Male,UMD Parkinson's Disease Cohort,Unknown Race,68.0
+1708,Male,UMD Parkinson's Disease Cohort,White,69.0
+1709,Male,UMD Parkinson's Disease Cohort,Unknown Race,63.0
+1713,Female,UMD Parkinson's Disease Cohort,White,52.0
+1714,Female,UMD Parkinson's Disease Cohort,White,70.0
+1717,Male,UMD Parkinson's Disease Cohort,White,51.0
+1718,Male,UMD Parkinson's Disease Cohort,Unknown Race,57.0
+1719,Male,UMD Parkinson's Disease Cohort,White,63.0
+1720,Female,UMD Parkinson's Disease Cohort,White,36.0
+1721,Female,UMD Parkinson's Disease Cohort,White,57.0
+1722,Male,UMD Parkinson's Disease Cohort,White,77.0
+1723,Male,UMD Parkinson's Disease Cohort,White,65.0
+1725,Female,UMD Parkinson's Disease Cohort,White,50.0
+1726,Male,UMD Parkinson's Disease Cohort,White,72.0
+1727,Female,UMD Parkinson's Disease Cohort,More than one race,60.0
+1728,Female,UMD Parkinson's Disease Cohort,White,70.0
+1729,Female,UMD Parkinson's Disease Cohort,Black,61.0
+1730,Male,UMD Parkinson's Disease Cohort,Unknown Race,54.0
+1733,Male,UMD Parkinson's Disease Cohort,Unknown Race,58.0
+1734,Male,UMD Parkinson's Disease Cohort,White,63.0
+1735,Male,UMD Parkinson's Disease Cohort,White,54.0
+1736,Male,UMD Parkinson's Disease Cohort,Unknown Race,49.0
+1737,Male,UMD Parkinson's Disease Cohort,White,58.0
+1738,Female,UMD Parkinson's Disease Cohort,White,55.0
+1739,Male,UMD Parkinson's Disease Cohort,White,57.0
+1740,Male,UMD Parkinson's Disease Cohort,Unknown Race,76.0
+1741,Female,UMD Parkinson's Disease Cohort,White,60.0
+1743,Male,UMD Parkinson's Disease Cohort,White,63.0
+1745,Male,UMD Parkinson's Disease Cohort,White,60.0
+1746,Male,UMD Parkinson's Disease Cohort,White,58.0
+1747,Female,UMD Parkinson's Disease Cohort,White,52.0
+1748,Female,UMD Parkinson's Disease Cohort,White,57.0
+1749,Male,UMD Parkinson's Disease Cohort,White,70.0
+1750,Female,UMD Parkinson's Disease Cohort,White,69.0
+1751,Male,UMD Parkinson's Disease Cohort,White,83.0
+1752,Male,UMD Parkinson's Disease Cohort,White,62.0
+1752,Female,UMD Parkinson's Disease Cohort,White,62.0
+1753,Female,UMD Parkinson's Disease Cohort,Unknown Race,42.0
+1756,Male,UMD Parkinson's Disease Cohort,White,49.0
+1757,Male,UMD Parkinson's Disease Cohort,White,70.0
+1758,Female,UMD Parkinson's Disease Cohort,More than one race,58.0
+1759,Male,UMD Parkinson's Disease Cohort,White,69.0
+1761,Male,UMD Parkinson's Disease Cohort,White,76.0
+1763,Male,UMD Parkinson's Disease Cohort,White,67.0
+1764,Male,UMD Parkinson's Disease Cohort,White,67.0
+1765,Male,UMD Parkinson's Disease Cohort,White,72.0
+1766,Male,UMD Parkinson's Disease Cohort,Unknown Race,33.0
+1767,Male,UMD Parkinson's Disease Cohort,White,40.0
+1768,Female,UMD Parkinson's Disease Cohort,White,63.0
+1769,Male,UMD Parkinson's Disease Cohort,More than one race,43.0
+1771,Male,UMD Parkinson's Disease Cohort,White,78.0
+1772,Male,UMD Parkinson's Disease Cohort,White,58.0
+1774,Male,UMD Parkinson's Disease Cohort,White,69.0
+1776,Female,UMD Parkinson's Disease Cohort,White,60.0
+1777,Female,UMD Parkinson's Disease Cohort,White,62.0
+1779,Male,UMD Parkinson's Disease Cohort,White,64.0
+1780,Male,UMD Parkinson's Disease Cohort,White,54.0
+1781,Female,UMD Parkinson's Disease Cohort,White,71.0
+1783,Male,UMD Parkinson's Disease Cohort,White,71.0
+1785,Female,UMD Parkinson's Disease Cohort,White,62.0
+1786,Male,UMD Parkinson's Disease Cohort,White,66.0
+1788,Male,UMD Parkinson's Disease Cohort,Unknown Race,82.0
+1789,Male,UMD Parkinson's Disease Cohort,White,64.0
+1790,Female,UMD Parkinson's Disease Cohort,Black,50.0
+1791,Female,UMD Parkinson's Disease Cohort,White,75.0
+1793,Male,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+1794,Male,UMD Parkinson's Disease Cohort,White,62.0
+1795,Male,UMD Parkinson's Disease Cohort,Unknown Race,69.0
+1796,Male,UMD Parkinson's Disease Cohort,Unknown Race,54.0
+1801,Male,UMD Parkinson's Disease Cohort,White,56.0
+1803,Male,UMD Parkinson's Disease Cohort,White,69.0
+1805,Female,UMD Parkinson's Disease Cohort,Unknown Race,46.0
+1806,Male,UMD Parkinson's Disease Cohort,More than one race,46.0
+1807,Female,UMD Parkinson's Disease Cohort,White,70.0
+1808,Male,UMD Parkinson's Disease Cohort,White,84.0
+1809,Male,UMD Parkinson's Disease Cohort,Native American or Alaska Native,75.0
+1810,Male,UMD Parkinson's Disease Cohort,White,60.0
+1811,Male,UMD Parkinson's Disease Cohort,Black,66.0
+1812,Female,UMD Parkinson's Disease Cohort,Black,58.0
+1813,Male,UMD Parkinson's Disease Cohort,White,43.0
+1815,Female,UMD Parkinson's Disease Cohort,White,66.0
+1817,Male,UMD Parkinson's Disease Cohort,Unknown Race,75.0
+1818,Male,UMD Parkinson's Disease Cohort,White,65.0
+1820,Male,UMD Parkinson's Disease Cohort,White,64.0
+1821,Male,UMD Parkinson's Disease Cohort,White,44.0
+1822,Female,UMD Parkinson's Disease Cohort,Unknown Race,71.0
+1823,Male,UMD Parkinson's Disease Cohort,White,79.0
+1824,Female,UMD Parkinson's Disease Cohort,White,42.0
+1825,Male,UMD Parkinson's Disease Cohort,Unknown Race,83.0
+1826,Male,UMD Parkinson's Disease Cohort,White,66.0
+1827,Female,UMD Parkinson's Disease Cohort,White,56.0
+1828,Male,UMD Parkinson's Disease Cohort,White,61.0
+1829,Female,UMD Parkinson's Disease Cohort,White,71.0
+1830,Male,UMD Parkinson's Disease Cohort,White,63.0
+1831,Female,UMD Parkinson's Disease Cohort,White,56.0
+1832,Male,UMD Parkinson's Disease Cohort,White,76.0
+1833,Female,UMD Parkinson's Disease Cohort,White,55.0
+1834,Male,UMD Parkinson's Disease Cohort,White,59.0
+1835,Female,UMD Parkinson's Disease Cohort,White,55.0
+1836,Female,UMD Parkinson's Disease Cohort,Unknown Race,57.0
+1837,Male,UMD Parkinson's Disease Cohort,White,71.0
+1838,Female,UMD Parkinson's Disease Cohort,Black,66.0
+1839,Female,UMD Parkinson's Disease Cohort,White,65.0
+1840,Female,UMD Parkinson's Disease Cohort,White,64.0
+1842,Male,UMD Parkinson's Disease Cohort,White,63.0
+1843,Female,UMD Parkinson's Disease Cohort,Unknown Race,83.0
+1845,Male,UMD Parkinson's Disease Cohort,Black,65.0
+1850,Male,UMD Parkinson's Disease Cohort,Unknown Race,48.0
+1851,Female,UMD Parkinson's Disease Cohort,Unknown Race,67.0
+1852,Male,UMD Parkinson's Disease Cohort,White,76.0
+1854,Female,UMD Parkinson's Disease Cohort,White,72.0
+1855,Female,UMD Parkinson's Disease Cohort,White,53.0
+1856,Male,UMD Parkinson's Disease Cohort,White,53.0
+1857,Male,UMD Parkinson's Disease Cohort,White,60.0
+1860,Female,UMD Parkinson's Disease Cohort,White,59.0
+1861,Male,UMD Parkinson's Disease Cohort,Black,67.0
+1862,Male,UMD Parkinson's Disease Cohort,White,68.0
+1863,Female,UMD Parkinson's Disease Cohort,Unknown Race,61.0
+1864,Male,UMD Parkinson's Disease Cohort,Unknown Race,68.0
+1865,Female,UMD Parkinson's Disease Cohort,Unknown Race,67.0
+1866,Male,UMD Parkinson's Disease Cohort,Unknown Race,52.0
+1867,Male,UMD Parkinson's Disease Cohort,White,82.0
+1868,Male,UMD Parkinson's Disease Cohort,White,62.0
+1869,Male,UMD Parkinson's Disease Cohort,Unknown Race,71.0
+1871,Female,UMD Parkinson's Disease Cohort,White,66.0
+1872,Female,UMD Parkinson's Disease Cohort,White,63.0
+1873,Male,UMD Parkinson's Disease Cohort,White,68.0
+1874,Female,UMD Parkinson's Disease Cohort,White,54.0
+1875,Male,UMD Parkinson's Disease Cohort,White,83.0
+1876,Male,UMD Parkinson's Disease Cohort,White,58.0
+1877,Male,UMD Parkinson's Disease Cohort,White,51.0
+1878,Female,UMD Parkinson's Disease Cohort,White,66.0
+1879,Male,UMD Parkinson's Disease Cohort,White,56.0
+1880,Male,UMD Parkinson's Disease Cohort,White,64.0
+1882,Female,UMD Parkinson's Disease Cohort,Unknown Race,70.0
+1884,Male,UMD Parkinson's Disease Cohort,Unknown Race,59.0
+1885,Male,UMD Parkinson's Disease Cohort,Black,71.0
+1887,Male,UMD Parkinson's Disease Cohort,White,79.0
+1888,Male,UMD Parkinson's Disease Cohort,White,68.0
+1889,Male,UMD Parkinson's Disease Cohort,White,61.0
+1890,Male,UMD Parkinson's Disease Cohort,White,73.0
+1891,Male,UMD Parkinson's Disease Cohort,White,64.0
+1892,Male,UMD Parkinson's Disease Cohort,White,55.0
+1893,Male,UMD Parkinson's Disease Cohort,White,56.0
+1896,Female,UMD Parkinson's Disease Cohort,White,68.0
+1897,Female,UMD Parkinson's Disease Cohort,White,69.0
+1898,Female,UMD Parkinson's Disease Cohort,Unknown Race,63.0
+1899,Male,UMD Parkinson's Disease Cohort,White,54.0
+1900,Female,UMD Parkinson's Disease Cohort,White,66.0
+1904,Male,UMD Parkinson's Disease Cohort,White,67.0
+1905,Male,UMD Parkinson's Disease Cohort,White,61.0
+1906,Male,UMD Parkinson's Disease Cohort,White,68.0
+1909,Male,UMD Parkinson's Disease Cohort,White,82.0
+1910,Male,UMD Parkinson's Disease Cohort,White,62.0
+1911,Female,UMD Parkinson's Disease Cohort,White,63.0
+1912,Female,UMD Parkinson's Disease Cohort,Unknown Race,74.0
+1913,Male,UMD Parkinson's Disease Cohort,White,54.0
+1914,Female,UMD Parkinson's Disease Cohort,Unknown Race,78.0
+1915,Male,UMD Parkinson's Disease Cohort,White,60.0
+1916,Male,UMD Parkinson's Disease Cohort,Black,55.0
+1917,Male,UMD Parkinson's Disease Cohort,White,84.0
+1918,Male,UMD Parkinson's Disease Cohort,Unknown Race,80.0
+1919,Female,UMD Parkinson's Disease Cohort,Unknown Race,58.0
+1921,Male,UMD Parkinson's Disease Cohort,White,58.0
+1922,Male,UMD Parkinson's Disease Cohort,White,54.0
+1923,Male,UMD Parkinson's Disease Cohort,White,52.0
+1924,Male,UMD Parkinson's Disease Cohort,White,52.0
+1925,Female,UMD Parkinson's Disease Cohort,Black,71.0
+1927,Male,UMD Parkinson's Disease Cohort,White,49.0
+1928,Male,UMD Parkinson's Disease Cohort,Unknown Race,69.0
+1929,Male,UMD Parkinson's Disease Cohort,White,62.0
+1930,Male,UMD Parkinson's Disease Cohort,Unknown Race,64.0
+1931,Female,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+1932,Female,UMD Parkinson's Disease Cohort,Unknown Race,70.0
+1933,Female,UMD Parkinson's Disease Cohort,Unknown Race,69.0
+1934,Male,UMD Parkinson's Disease Cohort,White,64.0
+1935,Male,UMD Parkinson's Disease Cohort,White,64.0
+1937,Male,UMD Parkinson's Disease Cohort,White,64.0
+1939,Male,UMD Parkinson's Disease Cohort,White,60.0
+1940,Male,UMD Parkinson's Disease Cohort,Unknown Race,75.0
+1941,Male,UMD Parkinson's Disease Cohort,Unknown Race,46.0
+1942,Male,UMD Parkinson's Disease Cohort,White,54.0
+1944,Male,UMD Parkinson's Disease Cohort,Black,56.0
+1945,Male,UMD Parkinson's Disease Cohort,Unknown Race,68.0
+1947,Male,UMD Parkinson's Disease Cohort,White,71.0
+1948,Female,UMD Parkinson's Disease Cohort,Black,59.0
+1949,Male,UMD Parkinson's Disease Cohort,White,75.0
+1950,Male,UMD Parkinson's Disease Cohort,White,67.0
+1952,Male,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+1953,Male,UMD Parkinson's Disease Cohort,White,57.0
+1954,Female,UMD Parkinson's Disease Cohort,Black,54.0
+1955,Male,UMD Parkinson's Disease Cohort,White,61.0
+1958,Male,UMD Parkinson's Disease Cohort,Black,47.0
+1959,Male,UMD Parkinson's Disease Cohort,White,65.0
+1960,Male,UMD Parkinson's Disease Cohort,White,72.0
+1961,Male,UMD Parkinson's Disease Cohort,White,67.0
+1962,Male,UMD Parkinson's Disease Cohort,White,66.0
+1963,Male,UMD Parkinson's Disease Cohort,White,61.0
+1964,Male,UMD Parkinson's Disease Cohort,Unknown Race,62.0
+1965,Male,UMD Parkinson's Disease Cohort,White,64.0
+1967,Male,UMD Parkinson's Disease Cohort,Unknown Race,76.0
+1969,Male,UMD Parkinson's Disease Cohort,White,47.0
+1970,Male,UMD Parkinson's Disease Cohort,White,69.0
+1971,Male,UMD Parkinson's Disease Cohort,White,49.0
+1972,Female,UMD Parkinson's Disease Cohort,White,76.0
+1973,Female,UMD Parkinson's Disease Cohort,White,49.0
+1974,Male,UMD Parkinson's Disease Cohort,White,70.0
+1975,Male,UMD Parkinson's Disease Cohort,Black,83.0
+1976,Female,UMD Parkinson's Disease Cohort,White,46.0
+1978,Male,UMD Parkinson's Disease Cohort,White,51.0
+1979,Male,UMD Parkinson's Disease Cohort,White,62.0
+1980,Female,UMD Parkinson's Disease Cohort,White,69.0
+1981,Male,UMD Parkinson's Disease Cohort,White,45.0
+1982,Male,UMD Parkinson's Disease Cohort,White,62.0
+1983,Male,UMD Parkinson's Disease Cohort,Unknown Race,83.0
+1984,Female,UMD Parkinson's Disease Cohort,Unknown Race,53.0
+1986,Female,UMD Parkinson's Disease Cohort,White,70.0
+1988,Female,UMD Parkinson's Disease Cohort,White,81.0
+1989,Female,UMD Parkinson's Disease Cohort,Black,67.0
+1990,Male,UMD Parkinson's Disease Cohort,White,69.0
+1991,Male,UMD Parkinson's Disease Cohort,White,72.0
+1993,Female,UMD Parkinson's Disease Cohort,White,56.0
+1994,Male,UMD Parkinson's Disease Cohort,White,60.0
+1996,Male,UMD Parkinson's Disease Cohort,White,80.0
+1997,Male,UMD Parkinson's Disease Cohort,White,44.0
+2002,Female,UMD Parkinson's Disease Cohort,Unknown Race,74.0
+2003,Female,UMD Parkinson's Disease Cohort,White,70.0
+2004,Female,UMD Parkinson's Disease Cohort,Unknown Race,64.0
+2006,Male,UMD Parkinson's Disease Cohort,White,67.0
+2007,Male,UMD Parkinson's Disease Cohort,Unknown Race,60.0
+2008,Male,UMD Parkinson's Disease Cohort,Unknown Race,61.0
+2010,Male,UMD Parkinson's Disease Cohort,White,53.0
+2011,Male,UMD Parkinson's Disease Cohort,White,77.0
+2013,Female,UMD Parkinson's Disease Cohort,Unknown Race,69.0
+2014,Female,UMD Parkinson's Disease Cohort,Unknown Race,46.0
+2016,Male,UMD Parkinson's Disease Cohort,Unknown Race,73.0
+2017,Female,UMD Parkinson's Disease Cohort,White,42.0
+2020,Female,UMD Parkinson's Disease Cohort,Unknown Race,64.0
+2024,Female,UMD Parkinson's Disease Cohort,Unknown Race,40.0
+2026,Male,UMD Parkinson's Disease Cohort,Unknown Race,55.0
+2031,Female,UMD Parkinson's Disease Cohort,Unknown Race,49.0
+2032,Male,UMD Parkinson's Disease Cohort,Unknown Race,41.0
+2033,Male,UMD Parkinson's Disease Cohort,Unknown Race,65.0
+2034,Female,UMD Parkinson's Disease Cohort,Unknown Race,56.0
+2035,Male,UMD Parkinson's Disease Cohort,Unknown Race,67.0
+2036,Male,UMD Parkinson's Disease Cohort,Unknown Race,53.0
+2037,Female,UMD Parkinson's Disease Cohort,Unknown Race,76.0
+2038,Male,UMD Parkinson's Disease Cohort,Unknown Race,52.0
+2039,Female,UMD Parkinson's Disease Cohort,Unknown Race,80.0
+2040,Female,UMD Parkinson's Disease Cohort,Unknown Race,62.0
+2041,Male,UMD Parkinson's Disease Cohort,Unknown Race,51.0
+2043,Male,UMD Parkinson's Disease Cohort,Unknown Race,40.0
+2044,Male,UMD Parkinson's Disease Cohort,Unknown Race,58.0
+2045,Female,UMD Parkinson's Disease Cohort,Unknown Race,64.0
+2046,Female,UMD Parkinson's Disease Cohort,Unknown Race,31.0
+2048,Male,UMD Parkinson's Disease Cohort,Unknown Race,61.0
+2049,Male,UMD Parkinson's Disease Cohort,Unknown Race,66.0
+2050,Male,UMD Parkinson's Disease Cohort,Unknown Race,40.0
+2051,Male,UMD Parkinson's Disease Cohort,Unknown Race,59.0
+2052,Female,UMD Parkinson's Disease Cohort,Unknown Race,65.0
+2053,Male,UMD Parkinson's Disease Cohort,Unknown Race,47.0
+2054,Female,UMD Parkinson's Disease Cohort,Unknown Race,34.0
+2055,Male,UMD Parkinson's Disease Cohort,Unknown Race,71.0
+2056,Male,UMD Parkinson's Disease Cohort,Unknown Race,59.0
+2058,Female,UMD Parkinson's Disease Cohort,White,54.0
+2059,Male,UMD Parkinson's Disease Cohort,White,80.0

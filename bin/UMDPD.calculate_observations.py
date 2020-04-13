@@ -86,7 +86,7 @@ def process_demographics(input_dir):
     df_demo = df_demo.loc[:, ['WinnowID', "agefirstvisit","PDdurationatfirstvisit", "daysfromfirstvisit","Gender", "Race"]]
 
     df_demo['Study'] = "UMD Parkinson's Disease Cohort"
-    df_demo['Gender'] = df_demo['Gender'].map(lambda x: 'Male' if x == 2 else 'Female')
+    df_demo['Gender'] = df_demo['Gender'].map(lambda x: 'Male' if x == 1 else 'Female')
     df_demo['Race'] = df_demo[['Race']].apply(assign_race, axis = 1)
 
     # Calculate some of the numeric properties such as age at diagnosis, age at diagnosis

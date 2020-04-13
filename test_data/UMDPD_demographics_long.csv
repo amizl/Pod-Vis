@@ -1,0 +1,6466 @@
+SubjectNum,SubjectVar,Value
+2,Sex,Female
+3,Sex,Male
+4,Sex,Female
+5,Sex,Male
+6,Sex,Female
+7,Sex,Male
+9,Sex,Female
+11,Sex,Male
+12,Sex,Female
+13,Sex,Female
+14,Sex,Female
+15,Sex,Male
+17,Sex,Male
+18,Sex,Female
+19,Sex,Female
+20,Sex,Male
+21,Sex,Male
+23,Sex,Female
+24,Sex,Female
+25,Sex,Female
+27,Sex,Male
+31,Sex,Female
+32,Sex,Female
+34,Sex,Male
+35,Sex,Male
+36,Sex,Female
+38,Sex,Female
+39,Sex,Female
+40,Sex,Female
+41,Sex,Male
+42,Sex,Male
+45,Sex,Male
+46,Sex,Female
+47,Sex,Male
+48,Sex,Female
+50,Sex,Female
+51,Sex,Male
+52,Sex,Female
+53,Sex,Female
+56,Sex,Female
+57,Sex,Male
+59,Sex,Male
+61,Sex,Male
+62,Sex,Male
+63,Sex,Female
+64,Sex,Male
+66,Sex,Male
+67,Sex,Male
+68,Sex,Male
+70,Sex,Female
+71,Sex,Male
+72,Sex,Female
+73,Sex,Male
+76,Sex,Female
+78,Sex,Male
+79,Sex,Male
+81,Sex,Male
+82,Sex,Female
+83,Sex,Female
+84,Sex,Male
+86,Sex,Male
+87,Sex,Female
+88,Sex,Male
+89,Sex,Female
+91,Sex,Male
+92,Sex,Female
+93,Sex,Female
+94,Sex,Male
+95,Sex,Female
+96,Sex,Male
+97,Sex,Female
+99,Sex,Male
+100,Sex,Male
+101,Sex,Male
+103,Sex,Female
+104,Sex,Female
+107,Sex,Male
+108,Sex,Female
+109,Sex,Female
+110,Sex,Female
+111,Sex,Male
+113,Sex,Male
+117,Sex,Male
+118,Sex,Female
+119,Sex,Male
+120,Sex,Male
+121,Sex,Male
+122,Sex,Female
+124,Sex,Female
+125,Sex,Male
+126,Sex,Male
+127,Sex,Female
+128,Sex,Female
+129,Sex,Male
+130,Sex,Male
+131,Sex,Female
+136,Sex,Male
+138,Sex,Male
+139,Sex,Male
+142,Sex,Male
+145,Sex,Male
+147,Sex,Male
+148,Sex,Female
+149,Sex,Female
+152,Sex,Female
+153,Sex,Female
+154,Sex,Female
+155,Sex,Male
+156,Sex,Female
+157,Sex,Male
+158,Sex,Female
+159,Sex,Male
+161,Sex,Female
+162,Sex,Female
+163,Sex,Female
+165,Sex,Male
+166,Sex,Female
+167,Sex,Male
+169,Sex,Male
+171,Sex,Male
+172,Sex,Female
+173,Sex,Male
+174,Sex,Male
+175,Sex,Male
+176,Sex,Male
+177,Sex,Female
+179,Sex,Female
+180,Sex,Male
+181,Sex,Male
+182,Sex,Male
+183,Sex,Female
+185,Sex,Male
+186,Sex,Female
+188,Sex,Female
+189,Sex,Male
+190,Sex,Female
+191,Sex,Female
+192,Sex,Male
+193,Sex,Male
+194,Sex,Male
+195,Sex,Male
+196,Sex,Male
+197,Sex,Male
+198,Sex,Female
+199,Sex,Female
+202,Sex,Male
+203,Sex,Male
+204,Sex,Male
+205,Sex,Male
+206,Sex,Female
+207,Sex,Female
+208,Sex,Female
+209,Sex,Female
+210,Sex,Female
+211,Sex,Female
+212,Sex,Male
+214,Sex,Female
+215,Sex,Female
+216,Sex,Male
+217,Sex,Male
+218,Sex,Male
+219,Sex,Male
+220,Sex,Male
+221,Sex,Female
+222,Sex,Male
+223,Sex,Female
+224,Sex,Female
+225,Sex,Male
+226,Sex,Male
+229,Sex,Male
+230,Sex,Female
+231,Sex,Male
+232,Sex,Male
+233,Sex,Male
+236,Sex,Male
+237,Sex,Male
+238,Sex,Male
+239,Sex,Male
+240,Sex,Male
+241,Sex,Female
+242,Sex,Male
+243,Sex,Male
+244,Sex,Male
+245,Sex,Female
+246,Sex,Male
+247,Sex,Female
+248,Sex,Male
+249,Sex,Male
+250,Sex,Female
+251,Sex,Male
+252,Sex,Male
+253,Sex,Female
+254,Sex,Male
+256,Sex,Male
+257,Sex,Male
+258,Sex,Male
+259,Sex,Male
+261,Sex,Female
+262,Sex,Male
+263,Sex,Male
+264,Sex,Female
+265,Sex,Male
+266,Sex,Male
+268,Sex,Male
+271,Sex,Male
+272,Sex,Male
+273,Sex,Female
+274,Sex,Male
+275,Sex,Male
+277,Sex,Male
+279,Sex,Female
+280,Sex,Male
+281,Sex,Female
+282,Sex,Male
+283,Sex,Female
+284,Sex,Male
+286,Sex,Female
+287,Sex,Female
+288,Sex,Female
+289,Sex,Female
+290,Sex,Male
+292,Sex,Male
+293,Sex,Male
+294,Sex,Female
+295,Sex,Male
+296,Sex,Male
+298,Sex,Female
+300,Sex,Male
+301,Sex,Female
+303,Sex,Male
+304,Sex,Male
+305,Sex,Male
+306,Sex,Male
+307,Sex,Female
+308,Sex,Female
+309,Sex,Female
+310,Sex,Female
+313,Sex,Male
+314,Sex,Male
+315,Sex,Female
+316,Sex,Female
+317,Sex,Female
+318,Sex,Male
+319,Sex,Male
+320,Sex,Male
+321,Sex,Female
+322,Sex,Female
+324,Sex,Male
+325,Sex,Male
+326,Sex,Male
+327,Sex,Female
+328,Sex,Female
+329,Sex,Female
+331,Sex,Male
+332,Sex,Male
+334,Sex,Female
+337,Sex,Female
+338,Sex,Female
+339,Sex,Female
+340,Sex,Female
+341,Sex,Female
+342,Sex,Male
+343,Sex,Male
+344,Sex,Female
+345,Sex,Female
+346,Sex,Male
+347,Sex,Male
+348,Sex,Male
+349,Sex,Male
+350,Sex,Female
+351,Sex,Male
+352,Sex,Male
+353,Sex,Female
+354,Sex,Female
+355,Sex,Male
+356,Sex,Male
+357,Sex,Female
+358,Sex,Male
+359,Sex,Female
+360,Sex,Male
+362,Sex,Female
+365,Sex,Male
+366,Sex,Male
+367,Sex,Male
+368,Sex,Female
+369,Sex,Female
+370,Sex,Female
+371,Sex,Male
+372,Sex,Male
+373,Sex,Female
+375,Sex,Male
+377,Sex,Male
+378,Sex,Female
+379,Sex,Female
+381,Sex,Male
+382,Sex,Female
+383,Sex,Female
+384,Sex,Male
+385,Sex,Male
+386,Sex,Male
+387,Sex,Female
+388,Sex,Male
+389,Sex,Female
+390,Sex,Male
+391,Sex,Male
+392,Sex,Female
+393,Sex,Male
+394,Sex,Male
+395,Sex,Male
+397,Sex,Male
+398,Sex,Male
+399,Sex,Male
+400,Sex,Female
+401,Sex,Male
+402,Sex,Male
+403,Sex,Male
+404,Sex,Female
+406,Sex,Male
+407,Sex,Female
+408,Sex,Female
+410,Sex,Male
+411,Sex,Male
+412,Sex,Female
+413,Sex,Male
+414,Sex,Male
+415,Sex,Male
+416,Sex,Female
+417,Sex,Female
+418,Sex,Female
+419,Sex,Female
+420,Sex,Male
+421,Sex,Male
+422,Sex,Male
+423,Sex,Female
+424,Sex,Female
+425,Sex,Male
+426,Sex,Male
+427,Sex,Male
+428,Sex,Male
+429,Sex,Male
+430,Sex,Male
+431,Sex,Male
+432,Sex,Male
+433,Sex,Female
+434,Sex,Male
+435,Sex,Female
+436,Sex,Male
+437,Sex,Female
+438,Sex,Male
+439,Sex,Female
+440,Sex,Male
+441,Sex,Male
+442,Sex,Female
+443,Sex,Male
+444,Sex,Male
+445,Sex,Female
+446,Sex,Male
+447,Sex,Male
+448,Sex,Male
+449,Sex,Male
+450,Sex,Female
+451,Sex,Male
+452,Sex,Male
+453,Sex,Male
+454,Sex,Male
+455,Sex,Female
+456,Sex,Male
+457,Sex,Male
+458,Sex,Male
+459,Sex,Female
+460,Sex,Male
+461,Sex,Male
+462,Sex,Female
+463,Sex,Male
+464,Sex,Female
+465,Sex,Male
+466,Sex,Male
+467,Sex,Male
+468,Sex,Female
+469,Sex,Male
+470,Sex,Male
+471,Sex,Female
+473,Sex,Female
+474,Sex,Male
+475,Sex,Male
+476,Sex,Male
+477,Sex,Male
+478,Sex,Male
+480,Sex,Male
+481,Sex,Male
+482,Sex,Female
+483,Sex,Male
+484,Sex,Female
+485,Sex,Female
+486,Sex,Male
+487,Sex,Male
+488,Sex,Female
+489,Sex,Male
+490,Sex,Male
+491,Sex,Male
+492,Sex,Male
+493,Sex,Male
+494,Sex,Female
+496,Sex,Male
+497,Sex,Male
+498,Sex,Male
+500,Sex,Male
+501,Sex,Female
+503,Sex,Male
+504,Sex,Male
+505,Sex,Male
+506,Sex,Male
+507,Sex,Male
+508,Sex,Male
+509,Sex,Female
+510,Sex,Male
+512,Sex,Male
+513,Sex,Female
+514,Sex,Male
+515,Sex,Male
+516,Sex,Male
+517,Sex,Male
+518,Sex,Female
+519,Sex,Male
+520,Sex,Female
+521,Sex,Male
+522,Sex,Female
+523,Sex,Male
+524,Sex,Female
+525,Sex,Female
+526,Sex,Male
+527,Sex,Female
+528,Sex,Male
+529,Sex,Male
+530,Sex,Male
+531,Sex,Male
+532,Sex,Male
+533,Sex,Male
+536,Sex,Female
+537,Sex,Female
+538,Sex,Female
+539,Sex,Male
+540,Sex,Male
+541,Sex,Female
+542,Sex,Male
+543,Sex,Male
+544,Sex,Male
+545,Sex,Male
+546,Sex,Male
+547,Sex,Female
+548,Sex,Male
+549,Sex,Male
+550,Sex,Male
+551,Sex,Female
+552,Sex,Female
+553,Sex,Female
+556,Sex,Male
+557,Sex,Female
+558,Sex,Male
+559,Sex,Male
+560,Sex,Female
+561,Sex,Female
+562,Sex,Female
+563,Sex,Male
+564,Sex,Male
+565,Sex,Male
+566,Sex,Male
+567,Sex,Male
+568,Sex,Male
+570,Sex,Male
+571,Sex,Male
+572,Sex,Male
+573,Sex,Female
+574,Sex,Male
+576,Sex,Male
+577,Sex,Male
+578,Sex,Male
+579,Sex,Male
+580,Sex,Male
+581,Sex,Male
+582,Sex,Male
+583,Sex,Female
+584,Sex,Male
+585,Sex,Female
+586,Sex,Male
+587,Sex,Male
+588,Sex,Male
+589,Sex,Male
+590,Sex,Female
+591,Sex,Male
+592,Sex,Male
+593,Sex,Female
+594,Sex,Female
+595,Sex,Female
+596,Sex,Male
+597,Sex,Male
+598,Sex,Female
+600,Sex,Male
+601,Sex,Male
+602,Sex,Female
+603,Sex,Male
+604,Sex,Female
+605,Sex,Male
+606,Sex,Female
+607,Sex,Male
+608,Sex,Male
+609,Sex,Male
+610,Sex,Male
+611,Sex,Male
+612,Sex,Male
+613,Sex,Male
+614,Sex,Male
+615,Sex,Male
+616,Sex,Male
+617,Sex,Female
+618,Sex,Female
+619,Sex,Female
+620,Sex,Male
+621,Sex,Male
+622,Sex,Male
+623,Sex,Male
+624,Sex,Female
+625,Sex,Female
+626,Sex,Male
+627,Sex,Male
+628,Sex,Female
+629,Sex,Male
+630,Sex,Male
+631,Sex,Female
+632,Sex,Male
+633,Sex,Male
+634,Sex,Male
+635,Sex,Female
+637,Sex,Female
+638,Sex,Female
+639,Sex,Male
+640,Sex,Male
+641,Sex,Female
+642,Sex,Male
+643,Sex,Male
+644,Sex,Male
+645,Sex,Male
+646,Sex,Male
+647,Sex,Male
+648,Sex,Male
+649,Sex,Male
+650,Sex,Female
+651,Sex,Male
+652,Sex,Male
+653,Sex,Female
+654,Sex,Female
+655,Sex,Male
+656,Sex,Male
+657,Sex,Male
+658,Sex,Male
+659,Sex,Male
+660,Sex,Female
+661,Sex,Male
+663,Sex,Male
+664,Sex,Male
+665,Sex,Male
+666,Sex,Female
+667,Sex,Female
+668,Sex,Male
+669,Sex,Male
+670,Sex,Female
+671,Sex,Female
+672,Sex,Male
+673,Sex,Male
+674,Sex,Male
+676,Sex,Male
+677,Sex,Male
+678,Sex,Male
+679,Sex,Male
+680,Sex,Male
+681,Sex,Male
+682,Sex,Male
+683,Sex,Female
+684,Sex,Female
+685,Sex,Female
+686,Sex,Male
+687,Sex,Female
+688,Sex,Female
+689,Sex,Female
+691,Sex,Male
+692,Sex,Female
+693,Sex,Male
+694,Sex,Male
+696,Sex,Male
+697,Sex,Male
+698,Sex,Male
+699,Sex,Male
+700,Sex,Male
+701,Sex,Male
+702,Sex,Female
+703,Sex,Male
+704,Sex,Male
+705,Sex,Female
+706,Sex,Male
+707,Sex,Male
+708,Sex,Female
+709,Sex,Female
+710,Sex,Male
+711,Sex,Female
+712,Sex,Male
+713,Sex,Male
+714,Sex,Male
+715,Sex,Female
+716,Sex,Female
+717,Sex,Male
+718,Sex,Female
+719,Sex,Female
+720,Sex,Female
+721,Sex,Male
+722,Sex,Male
+723,Sex,Female
+725,Sex,Female
+726,Sex,Female
+727,Sex,Male
+728,Sex,Male
+729,Sex,Male
+730,Sex,Female
+731,Sex,Female
+732,Sex,Female
+733,Sex,Female
+734,Sex,Male
+735,Sex,Male
+736,Sex,Female
+737,Sex,Male
+738,Sex,Male
+739,Sex,Female
+740,Sex,Male
+741,Sex,Male
+742,Sex,Female
+743,Sex,Male
+744,Sex,Male
+745,Sex,Female
+746,Sex,Male
+747,Sex,Female
+748,Sex,Female
+750,Sex,Female
+752,Sex,Male
+753,Sex,Female
+754,Sex,Female
+755,Sex,Male
+756,Sex,Male
+757,Sex,Male
+758,Sex,Female
+759,Sex,Female
+760,Sex,Female
+761,Sex,Male
+763,Sex,Female
+764,Sex,Female
+765,Sex,Female
+766,Sex,Female
+767,Sex,Male
+768,Sex,Male
+769,Sex,Male
+770,Sex,Female
+771,Sex,Male
+772,Sex,Male
+773,Sex,Male
+774,Sex,Male
+775,Sex,Female
+776,Sex,Female
+777,Sex,Male
+778,Sex,Female
+779,Sex,Female
+780,Sex,Male
+781,Sex,Male
+782,Sex,Male
+783,Sex,Male
+785,Sex,Male
+786,Sex,Female
+787,Sex,Male
+788,Sex,Female
+789,Sex,Male
+790,Sex,Female
+791,Sex,Male
+792,Sex,Female
+793,Sex,Female
+794,Sex,Male
+796,Sex,Male
+797,Sex,Female
+801,Sex,Male
+802,Sex,Male
+803,Sex,Male
+804,Sex,Male
+805,Sex,Male
+806,Sex,Male
+807,Sex,Male
+808,Sex,Female
+809,Sex,Female
+810,Sex,Male
+811,Sex,Male
+812,Sex,Female
+814,Sex,Male
+815,Sex,Female
+816,Sex,Female
+817,Sex,Male
+818,Sex,Female
+819,Sex,Male
+820,Sex,Male
+821,Sex,Male
+822,Sex,Male
+823,Sex,Male
+824,Sex,Female
+825,Sex,Female
+826,Sex,Male
+827,Sex,Male
+828,Sex,Female
+829,Sex,Male
+830,Sex,Female
+831,Sex,Male
+832,Sex,Male
+833,Sex,Male
+834,Sex,Female
+835,Sex,Male
+836,Sex,Male
+837,Sex,Male
+838,Sex,Male
+839,Sex,Male
+840,Sex,Female
+841,Sex,Female
+842,Sex,Male
+843,Sex,Male
+844,Sex,Female
+845,Sex,Female
+846,Sex,Male
+847,Sex,Male
+848,Sex,Female
+849,Sex,Female
+850,Sex,Female
+851,Sex,Female
+852,Sex,Male
+853,Sex,Male
+854,Sex,Male
+855,Sex,Female
+857,Sex,Male
+858,Sex,Male
+859,Sex,Female
+860,Sex,Male
+862,Sex,Male
+863,Sex,Male
+864,Sex,Male
+865,Sex,Male
+866,Sex,Male
+867,Sex,Male
+868,Sex,Male
+870,Sex,Male
+871,Sex,Male
+872,Sex,Male
+873,Sex,Male
+874,Sex,Female
+875,Sex,Female
+876,Sex,Male
+877,Sex,Male
+879,Sex,Female
+880,Sex,Female
+881,Sex,Male
+882,Sex,Female
+884,Sex,Male
+885,Sex,Male
+886,Sex,Male
+887,Sex,Male
+888,Sex,Female
+889,Sex,Female
+890,Sex,Female
+891,Sex,Female
+892,Sex,Female
+893,Sex,Male
+894,Sex,Male
+895,Sex,Male
+896,Sex,Male
+897,Sex,Male
+898,Sex,Male
+899,Sex,Female
+900,Sex,Male
+901,Sex,Female
+902,Sex,Male
+903,Sex,Male
+904,Sex,Male
+905,Sex,Male
+906,Sex,Male
+907,Sex,Female
+908,Sex,Female
+909,Sex,Male
+910,Sex,Male
+911,Sex,Male
+912,Sex,Male
+913,Sex,Male
+914,Sex,Male
+915,Sex,Female
+916,Sex,Male
+917,Sex,Male
+918,Sex,Male
+919,Sex,Male
+920,Sex,Female
+921,Sex,Male
+922,Sex,Male
+923,Sex,Female
+924,Sex,Male
+925,Sex,Male
+926,Sex,Male
+928,Sex,Male
+929,Sex,Female
+930,Sex,Female
+932,Sex,Female
+933,Sex,Male
+934,Sex,Female
+935,Sex,Male
+936,Sex,Female
+937,Sex,Female
+938,Sex,Male
+939,Sex,Female
+940,Sex,Male
+941,Sex,Female
+943,Sex,Female
+944,Sex,Female
+945,Sex,Male
+946,Sex,Female
+947,Sex,Female
+948,Sex,Male
+949,Sex,Male
+951,Sex,Male
+952,Sex,Male
+953,Sex,Male
+954,Sex,Male
+955,Sex,Male
+956,Sex,Female
+957,Sex,Male
+958,Sex,Male
+959,Sex,Male
+960,Sex,Male
+961,Sex,Male
+962,Sex,Female
+963,Sex,Male
+964,Sex,Male
+965,Sex,Male
+966,Sex,Female
+967,Sex,Male
+968,Sex,Male
+969,Sex,Female
+970,Sex,Male
+972,Sex,Male
+973,Sex,Female
+975,Sex,Male
+976,Sex,Female
+977,Sex,Male
+978,Sex,Male
+979,Sex,Female
+980,Sex,Female
+981,Sex,Male
+982,Sex,Male
+984,Sex,Female
+986,Sex,Female
+987,Sex,Female
+988,Sex,Female
+989,Sex,Female
+990,Sex,Male
+991,Sex,Female
+992,Sex,Female
+993,Sex,Male
+994,Sex,Male
+996,Sex,Female
+997,Sex,Male
+998,Sex,Male
+999,Sex,Female
+1000,Sex,Female
+1001,Sex,Male
+1003,Sex,Male
+1004,Sex,Female
+1005,Sex,Male
+1006,Sex,Male
+1007,Sex,Male
+1008,Sex,Female
+1009,Sex,Male
+1010,Sex,Male
+1011,Sex,Male
+1012,Sex,Male
+1013,Sex,Female
+1015,Sex,Female
+1016,Sex,Male
+1020,Sex,Male
+1021,Sex,Male
+1022,Sex,Female
+1023,Sex,Male
+1025,Sex,Male
+1026,Sex,Female
+1027,Sex,Female
+1030,Sex,Male
+1031,Sex,Female
+1032,Sex,Male
+1033,Sex,Male
+1034,Sex,Female
+1035,Sex,Male
+1036,Sex,Male
+1037,Sex,Male
+1038,Sex,Male
+1039,Sex,Male
+1040,Sex,Female
+1041,Sex,Male
+1042,Sex,Male
+1043,Sex,Male
+1044,Sex,Male
+1045,Sex,Male
+1047,Sex,Female
+1048,Sex,Male
+1049,Sex,Male
+1050,Sex,Male
+1051,Sex,Female
+1052,Sex,Male
+1053,Sex,Female
+1054,Sex,Female
+1056,Sex,Male
+1057,Sex,Female
+1058,Sex,Male
+1059,Sex,Female
+1060,Sex,Female
+1061,Sex,Male
+1062,Sex,Female
+1063,Sex,Male
+1064,Sex,Male
+1065,Sex,Female
+1066,Sex,Male
+1067,Sex,Male
+1068,Sex,Male
+1070,Sex,Male
+1071,Sex,Male
+1072,Sex,Male
+1073,Sex,Female
+1074,Sex,Female
+1075,Sex,Male
+1077,Sex,Male
+1080,Sex,Female
+1081,Sex,Male
+1082,Sex,Female
+1085,Sex,Male
+1086,Sex,Male
+1087,Sex,Female
+1088,Sex,Male
+1089,Sex,Male
+1090,Sex,Female
+1091,Sex,Male
+1092,Sex,Female
+1094,Sex,Male
+1095,Sex,Male
+1096,Sex,Female
+1097,Sex,Female
+1098,Sex,Male
+1100,Sex,Female
+1101,Sex,Male
+1102,Sex,Female
+1103,Sex,Female
+1104,Sex,Male
+1105,Sex,Male
+1106,Sex,Female
+1107,Sex,Male
+1108,Sex,Male
+1110,Sex,Female
+1111,Sex,Female
+1112,Sex,Male
+1114,Sex,Male
+1115,Sex,Female
+1116,Sex,Male
+1117,Sex,Female
+1118,Sex,Male
+1119,Sex,Female
+1120,Sex,Male
+1121,Sex,Male
+1123,Sex,Male
+1124,Sex,Female
+1125,Sex,Male
+1126,Sex,Male
+1127,Sex,Male
+1128,Sex,Female
+1129,Sex,Female
+1130,Sex,Female
+1132,Sex,Female
+1134,Sex,Male
+1135,Sex,Female
+1137,Sex,Female
+1138,Sex,Female
+1139,Sex,Female
+1140,Sex,Female
+1141,Sex,Male
+1142,Sex,Male
+1143,Sex,Male
+1144,Sex,Male
+1145,Sex,Male
+1146,Sex,Female
+1147,Sex,Male
+1149,Sex,Male
+1150,Sex,Female
+1151,Sex,Female
+1152,Sex,Male
+1153,Sex,Female
+1154,Sex,Female
+1155,Sex,Male
+1156,Sex,Male
+1157,Sex,Male
+1158,Sex,Female
+1159,Sex,Male
+1160,Sex,Male
+1161,Sex,Male
+1162,Sex,Male
+1163,Sex,Male
+1164,Sex,Female
+1165,Sex,Female
+1166,Sex,Male
+1167,Sex,Male
+1168,Sex,Male
+1169,Sex,Female
+1170,Sex,Male
+1171,Sex,Male
+1172,Sex,Male
+1173,Sex,Male
+1175,Sex,Female
+1176,Sex,Male
+1177,Sex,Male
+1178,Sex,Female
+1179,Sex,Male
+1180,Sex,Male
+1182,Sex,Female
+1183,Sex,Female
+1184,Sex,Male
+1185,Sex,Male
+1186,Sex,Female
+1187,Sex,Male
+1188,Sex,Male
+1190,Sex,Male
+1191,Sex,Male
+1193,Sex,Female
+1194,Sex,Male
+1195,Sex,Female
+1196,Sex,Female
+1197,Sex,Female
+1198,Sex,Male
+1199,Sex,Female
+1200,Sex,Female
+1201,Sex,Male
+1203,Sex,Female
+1204,Sex,Male
+1205,Sex,Male
+1206,Sex,Female
+1207,Sex,Male
+1209,Sex,Male
+1210,Sex,Male
+1211,Sex,Male
+1212,Sex,Male
+1213,Sex,Female
+1216,Sex,Male
+1217,Sex,Male
+1218,Sex,Male
+1219,Sex,Male
+1220,Sex,Female
+1221,Sex,Female
+1222,Sex,Male
+1224,Sex,Male
+1225,Sex,Male
+1226,Sex,Female
+1227,Sex,Male
+1228,Sex,Male
+1229,Sex,Male
+1230,Sex,Female
+1231,Sex,Male
+1232,Sex,Female
+1234,Sex,Male
+1236,Sex,Male
+1237,Sex,Male
+1238,Sex,Female
+1239,Sex,Female
+1240,Sex,Female
+1241,Sex,Female
+1242,Sex,Female
+1243,Sex,Male
+1244,Sex,Female
+1245,Sex,Female
+1246,Sex,Male
+1247,Sex,Female
+1249,Sex,Male
+1250,Sex,Male
+1252,Sex,Female
+1253,Sex,Female
+1254,Sex,Male
+1255,Sex,Male
+1256,Sex,Female
+1257,Sex,Male
+1259,Sex,Male
+1261,Sex,Female
+1263,Sex,Female
+1265,Sex,Male
+1266,Sex,Female
+1268,Sex,Female
+1269,Sex,Male
+1270,Sex,Male
+1273,Sex,Male
+1274,Sex,Male
+1275,Sex,Female
+1276,Sex,Female
+1277,Sex,Male
+1278,Sex,Male
+1279,Sex,Female
+1280,Sex,Female
+1281,Sex,Male
+1283,Sex,Female
+1284,Sex,Male
+1285,Sex,Male
+1286,Sex,Female
+1287,Sex,Male
+1288,Sex,Male
+1291,Sex,Male
+1292,Sex,Male
+1293,Sex,Male
+1294,Sex,Female
+1295,Sex,Male
+1296,Sex,Male
+1297,Sex,Female
+1298,Sex,Male
+1299,Sex,Female
+1300,Sex,Male
+1301,Sex,Female
+1302,Sex,Male
+1303,Sex,Female
+1304,Sex,Female
+1305,Sex,Female
+1306,Sex,Male
+1307,Sex,Male
+1308,Sex,Female
+1309,Sex,Male
+1310,Sex,Male
+1311,Sex,Male
+1313,Sex,Male
+1314,Sex,Male
+1315,Sex,Male
+1316,Sex,Female
+1317,Sex,Male
+1318,Sex,Female
+1319,Sex,Female
+1320,Sex,Male
+1322,Sex,Male
+1323,Sex,Male
+1325,Sex,Male
+1326,Sex,Female
+1327,Sex,Female
+1328,Sex,Female
+1329,Sex,Male
+1330,Sex,Male
+1332,Sex,Female
+1333,Sex,Male
+1334,Sex,Male
+1335,Sex,Male
+1336,Sex,Male
+1337,Sex,Female
+1338,Sex,Male
+1339,Sex,Female
+1340,Sex,Female
+1342,Sex,Male
+1343,Sex,Male
+1344,Sex,Male
+1345,Sex,Female
+1346,Sex,Male
+1347,Sex,Female
+1348,Sex,Male
+1351,Sex,Male
+1352,Sex,Male
+1353,Sex,Female
+1354,Sex,Male
+1355,Sex,Female
+1356,Sex,Male
+1358,Sex,Female
+1359,Sex,Male
+1362,Sex,Male
+1363,Sex,Male
+1366,Sex,Male
+1369,Sex,Female
+1370,Sex,Male
+1371,Sex,Male
+1374,Sex,Male
+1375,Sex,Female
+1376,Sex,Male
+1377,Sex,Male
+1380,Sex,Male
+1381,Sex,Male
+1383,Sex,Male
+1384,Sex,Male
+1385,Sex,Male
+1387,Sex,Male
+1388,Sex,Male
+1391,Sex,Male
+1392,Sex,Male
+1393,Sex,Male
+1396,Sex,Male
+1398,Sex,Male
+1400,Sex,Male
+1406,Sex,Male
+1407,Sex,Male
+1412,Sex,Female
+1413,Sex,Male
+1414,Sex,Male
+1419,Sex,Male
+1420,Sex,Male
+1421,Sex,Male
+1423,Sex,Female
+1425,Sex,Female
+1428,Sex,Female
+1433,Sex,Male
+1440,Sex,Male
+1441,Sex,Male
+1447,Sex,Male
+1452,Sex,Male
+1453,Sex,Female
+1454,Sex,Female
+1455,Sex,Female
+1459,Sex,Male
+1461,Sex,Male
+1463,Sex,Male
+1466,Sex,Female
+1467,Sex,Female
+1473,Sex,Male
+1475,Sex,Female
+1477,Sex,Male
+1479,Sex,Male
+1481,Sex,Male
+1483,Sex,Male
+1487,Sex,Male
+1488,Sex,Male
+1490,Sex,Male
+1492,Sex,Male
+1493,Sex,Male
+1497,Sex,Female
+1498,Sex,Male
+1499,Sex,Male
+1500,Sex,Male
+1501,Sex,Male
+1502,Sex,Female
+1504,Sex,Male
+1505,Sex,Male
+1506,Sex,Male
+1506,Sex,Female
+1509,Sex,Female
+1510,Sex,Female
+1513,Sex,Female
+1517,Sex,Male
+1518,Sex,Male
+1520,Sex,Male
+1521,Sex,Male
+1522,Sex,Male
+1523,Sex,Male
+1526,Sex,Male
+1527,Sex,Male
+1530,Sex,Male
+1533,Sex,Male
+1535,Sex,Female
+1536,Sex,Male
+1538,Sex,Male
+1539,Sex,Female
+1540,Sex,Female
+1541,Sex,Male
+1542,Sex,Male
+1543,Sex,Male
+1547,Sex,Male
+1548,Sex,Male
+1549,Sex,Female
+1551,Sex,Male
+1552,Sex,Female
+1556,Sex,Male
+1557,Sex,Male
+1559,Sex,Male
+1560,Sex,Male
+1563,Sex,Male
+1564,Sex,Male
+1565,Sex,Female
+1566,Sex,Male
+1567,Sex,Male
+1568,Sex,Female
+1572,Sex,Female
+1573,Sex,Male
+1575,Sex,Male
+1579,Sex,Male
+1580,Sex,Male
+1581,Sex,Male
+1584,Sex,Female
+1586,Sex,Female
+1588,Sex,Male
+1590,Sex,Male
+1592,Sex,Female
+1593,Sex,Male
+1594,Sex,Female
+1595,Sex,Female
+1596,Sex,Female
+1600,Sex,Male
+1601,Sex,Male
+1601,Sex,Female
+1603,Sex,Male
+1607,Sex,Male
+1612,Sex,Male
+1613,Sex,Male
+1616,Sex,Male
+1617,Sex,Male
+1618,Sex,Male
+1619,Sex,Female
+1621,Sex,Male
+1624,Sex,Female
+1626,Sex,Female
+1627,Sex,Male
+1628,Sex,Male
+1630,Sex,Female
+1631,Sex,Male
+1632,Sex,Female
+1633,Sex,Male
+1637,Sex,Male
+1638,Sex,Female
+1639,Sex,Female
+1642,Sex,Male
+1642,Sex,Female
+1643,Sex,Female
+1645,Sex,Male
+1647,Sex,Female
+1652,Sex,Female
+1653,Sex,Female
+1657,Sex,Female
+1658,Sex,Female
+1660,Sex,Female
+1662,Sex,Female
+1663,Sex,Female
+1665,Sex,Female
+1666,Sex,Female
+1667,Sex,Male
+1672,Sex,Female
+1674,Sex,Female
+1678,Sex,Male
+1679,Sex,Male
+1680,Sex,Male
+1684,Sex,Female
+1685,Sex,Male
+1686,Sex,Male
+1687,Sex,Male
+1688,Sex,Male
+1689,Sex,Male
+1690,Sex,Female
+1691,Sex,Male
+1692,Sex,Male
+1693,Sex,Female
+1697,Sex,Male
+1700,Sex,Male
+1700,Sex,Female
+1701,Sex,Male
+1702,Sex,Female
+1704,Sex,Male
+1705,Sex,Female
+1706,Sex,Male
+1708,Sex,Male
+1709,Sex,Male
+1713,Sex,Female
+1714,Sex,Female
+1717,Sex,Male
+1718,Sex,Male
+1719,Sex,Male
+1720,Sex,Female
+1721,Sex,Female
+1722,Sex,Male
+1723,Sex,Male
+1725,Sex,Female
+1726,Sex,Male
+1727,Sex,Female
+1728,Sex,Female
+1729,Sex,Female
+1730,Sex,Male
+1733,Sex,Male
+1734,Sex,Male
+1735,Sex,Male
+1736,Sex,Male
+1737,Sex,Male
+1738,Sex,Female
+1739,Sex,Male
+1740,Sex,Male
+1741,Sex,Female
+1743,Sex,Male
+1745,Sex,Male
+1746,Sex,Male
+1747,Sex,Female
+1748,Sex,Female
+1749,Sex,Male
+1750,Sex,Female
+1751,Sex,Male
+1752,Sex,Male
+1752,Sex,Female
+1753,Sex,Female
+1756,Sex,Male
+1757,Sex,Male
+1758,Sex,Female
+1759,Sex,Male
+1761,Sex,Male
+1763,Sex,Male
+1764,Sex,Male
+1765,Sex,Male
+1766,Sex,Male
+1767,Sex,Male
+1768,Sex,Female
+1769,Sex,Male
+1771,Sex,Male
+1772,Sex,Male
+1774,Sex,Male
+1776,Sex,Female
+1777,Sex,Female
+1779,Sex,Male
+1780,Sex,Male
+1781,Sex,Female
+1783,Sex,Male
+1785,Sex,Female
+1786,Sex,Male
+1788,Sex,Male
+1789,Sex,Male
+1790,Sex,Female
+1791,Sex,Female
+1793,Sex,Male
+1794,Sex,Male
+1795,Sex,Male
+1796,Sex,Male
+1801,Sex,Male
+1803,Sex,Male
+1805,Sex,Female
+1806,Sex,Male
+1807,Sex,Female
+1808,Sex,Male
+1809,Sex,Male
+1810,Sex,Male
+1811,Sex,Male
+1812,Sex,Female
+1813,Sex,Male
+1815,Sex,Female
+1817,Sex,Male
+1818,Sex,Male
+1820,Sex,Male
+1821,Sex,Male
+1822,Sex,Female
+1823,Sex,Male
+1824,Sex,Female
+1825,Sex,Male
+1826,Sex,Male
+1827,Sex,Female
+1828,Sex,Male
+1829,Sex,Female
+1830,Sex,Male
+1831,Sex,Female
+1832,Sex,Male
+1833,Sex,Female
+1834,Sex,Male
+1835,Sex,Female
+1836,Sex,Female
+1837,Sex,Male
+1838,Sex,Female
+1839,Sex,Female
+1840,Sex,Female
+1842,Sex,Male
+1843,Sex,Female
+1845,Sex,Male
+1850,Sex,Male
+1851,Sex,Female
+1852,Sex,Male
+1854,Sex,Female
+1855,Sex,Female
+1856,Sex,Male
+1857,Sex,Male
+1860,Sex,Female
+1861,Sex,Male
+1862,Sex,Male
+1863,Sex,Female
+1864,Sex,Male
+1865,Sex,Female
+1866,Sex,Male
+1867,Sex,Male
+1868,Sex,Male
+1869,Sex,Male
+1871,Sex,Female
+1872,Sex,Female
+1873,Sex,Male
+1874,Sex,Female
+1875,Sex,Male
+1876,Sex,Male
+1877,Sex,Male
+1878,Sex,Female
+1879,Sex,Male
+1880,Sex,Male
+1882,Sex,Female
+1884,Sex,Male
+1885,Sex,Male
+1887,Sex,Male
+1888,Sex,Male
+1889,Sex,Male
+1890,Sex,Male
+1891,Sex,Male
+1892,Sex,Male
+1893,Sex,Male
+1896,Sex,Female
+1897,Sex,Female
+1898,Sex,Female
+1899,Sex,Male
+1900,Sex,Female
+1904,Sex,Male
+1905,Sex,Male
+1906,Sex,Male
+1909,Sex,Male
+1910,Sex,Male
+1911,Sex,Female
+1912,Sex,Female
+1913,Sex,Male
+1914,Sex,Female
+1915,Sex,Male
+1916,Sex,Male
+1917,Sex,Male
+1918,Sex,Male
+1919,Sex,Female
+1921,Sex,Male
+1922,Sex,Male
+1923,Sex,Male
+1924,Sex,Male
+1925,Sex,Female
+1927,Sex,Male
+1928,Sex,Male
+1929,Sex,Male
+1930,Sex,Male
+1931,Sex,Female
+1932,Sex,Female
+1933,Sex,Female
+1934,Sex,Male
+1935,Sex,Male
+1937,Sex,Male
+1939,Sex,Male
+1940,Sex,Male
+1941,Sex,Male
+1942,Sex,Male
+1944,Sex,Male
+1945,Sex,Male
+1947,Sex,Male
+1948,Sex,Female
+1949,Sex,Male
+1950,Sex,Male
+1952,Sex,Male
+1953,Sex,Male
+1954,Sex,Female
+1955,Sex,Male
+1958,Sex,Male
+1959,Sex,Male
+1960,Sex,Male
+1961,Sex,Male
+1962,Sex,Male
+1963,Sex,Male
+1964,Sex,Male
+1965,Sex,Male
+1967,Sex,Male
+1969,Sex,Male
+1970,Sex,Male
+1971,Sex,Male
+1972,Sex,Female
+1973,Sex,Female
+1974,Sex,Male
+1975,Sex,Male
+1976,Sex,Female
+1978,Sex,Male
+1979,Sex,Male
+1980,Sex,Female
+1981,Sex,Male
+1982,Sex,Male
+1983,Sex,Male
+1984,Sex,Female
+1986,Sex,Female
+1988,Sex,Female
+1989,Sex,Female
+1990,Sex,Male
+1991,Sex,Male
+1993,Sex,Female
+1994,Sex,Male
+1996,Sex,Male
+1997,Sex,Male
+2002,Sex,Female
+2003,Sex,Female
+2004,Sex,Female
+2006,Sex,Male
+2007,Sex,Male
+2008,Sex,Male
+2010,Sex,Male
+2011,Sex,Male
+2013,Sex,Female
+2014,Sex,Female
+2016,Sex,Male
+2017,Sex,Female
+2020,Sex,Female
+2024,Sex,Female
+2026,Sex,Male
+2031,Sex,Female
+2032,Sex,Male
+2033,Sex,Male
+2034,Sex,Female
+2035,Sex,Male
+2036,Sex,Male
+2037,Sex,Female
+2038,Sex,Male
+2039,Sex,Female
+2040,Sex,Female
+2041,Sex,Male
+2043,Sex,Male
+2044,Sex,Male
+2045,Sex,Female
+2046,Sex,Female
+2048,Sex,Male
+2049,Sex,Male
+2050,Sex,Male
+2051,Sex,Male
+2052,Sex,Female
+2053,Sex,Male
+2054,Sex,Female
+2055,Sex,Male
+2056,Sex,Male
+2058,Sex,Female
+2059,Sex,Male
+2,Study,UMD Parkinson's Disease Cohort
+3,Study,UMD Parkinson's Disease Cohort
+4,Study,UMD Parkinson's Disease Cohort
+5,Study,UMD Parkinson's Disease Cohort
+6,Study,UMD Parkinson's Disease Cohort
+7,Study,UMD Parkinson's Disease Cohort
+9,Study,UMD Parkinson's Disease Cohort
+11,Study,UMD Parkinson's Disease Cohort
+12,Study,UMD Parkinson's Disease Cohort
+13,Study,UMD Parkinson's Disease Cohort
+14,Study,UMD Parkinson's Disease Cohort
+15,Study,UMD Parkinson's Disease Cohort
+17,Study,UMD Parkinson's Disease Cohort
+18,Study,UMD Parkinson's Disease Cohort
+19,Study,UMD Parkinson's Disease Cohort
+20,Study,UMD Parkinson's Disease Cohort
+21,Study,UMD Parkinson's Disease Cohort
+23,Study,UMD Parkinson's Disease Cohort
+24,Study,UMD Parkinson's Disease Cohort
+25,Study,UMD Parkinson's Disease Cohort
+27,Study,UMD Parkinson's Disease Cohort
+31,Study,UMD Parkinson's Disease Cohort
+32,Study,UMD Parkinson's Disease Cohort
+34,Study,UMD Parkinson's Disease Cohort
+35,Study,UMD Parkinson's Disease Cohort
+36,Study,UMD Parkinson's Disease Cohort
+38,Study,UMD Parkinson's Disease Cohort
+39,Study,UMD Parkinson's Disease Cohort
+40,Study,UMD Parkinson's Disease Cohort
+41,Study,UMD Parkinson's Disease Cohort
+42,Study,UMD Parkinson's Disease Cohort
+45,Study,UMD Parkinson's Disease Cohort
+46,Study,UMD Parkinson's Disease Cohort
+47,Study,UMD Parkinson's Disease Cohort
+48,Study,UMD Parkinson's Disease Cohort
+50,Study,UMD Parkinson's Disease Cohort
+51,Study,UMD Parkinson's Disease Cohort
+52,Study,UMD Parkinson's Disease Cohort
+53,Study,UMD Parkinson's Disease Cohort
+56,Study,UMD Parkinson's Disease Cohort
+57,Study,UMD Parkinson's Disease Cohort
+59,Study,UMD Parkinson's Disease Cohort
+61,Study,UMD Parkinson's Disease Cohort
+62,Study,UMD Parkinson's Disease Cohort
+63,Study,UMD Parkinson's Disease Cohort
+64,Study,UMD Parkinson's Disease Cohort
+66,Study,UMD Parkinson's Disease Cohort
+67,Study,UMD Parkinson's Disease Cohort
+68,Study,UMD Parkinson's Disease Cohort
+70,Study,UMD Parkinson's Disease Cohort
+71,Study,UMD Parkinson's Disease Cohort
+72,Study,UMD Parkinson's Disease Cohort
+73,Study,UMD Parkinson's Disease Cohort
+76,Study,UMD Parkinson's Disease Cohort
+78,Study,UMD Parkinson's Disease Cohort
+79,Study,UMD Parkinson's Disease Cohort
+81,Study,UMD Parkinson's Disease Cohort
+82,Study,UMD Parkinson's Disease Cohort
+83,Study,UMD Parkinson's Disease Cohort
+84,Study,UMD Parkinson's Disease Cohort
+86,Study,UMD Parkinson's Disease Cohort
+87,Study,UMD Parkinson's Disease Cohort
+88,Study,UMD Parkinson's Disease Cohort
+89,Study,UMD Parkinson's Disease Cohort
+91,Study,UMD Parkinson's Disease Cohort
+92,Study,UMD Parkinson's Disease Cohort
+93,Study,UMD Parkinson's Disease Cohort
+94,Study,UMD Parkinson's Disease Cohort
+95,Study,UMD Parkinson's Disease Cohort
+96,Study,UMD Parkinson's Disease Cohort
+97,Study,UMD Parkinson's Disease Cohort
+99,Study,UMD Parkinson's Disease Cohort
+100,Study,UMD Parkinson's Disease Cohort
+101,Study,UMD Parkinson's Disease Cohort
+103,Study,UMD Parkinson's Disease Cohort
+104,Study,UMD Parkinson's Disease Cohort
+107,Study,UMD Parkinson's Disease Cohort
+108,Study,UMD Parkinson's Disease Cohort
+109,Study,UMD Parkinson's Disease Cohort
+110,Study,UMD Parkinson's Disease Cohort
+111,Study,UMD Parkinson's Disease Cohort
+113,Study,UMD Parkinson's Disease Cohort
+117,Study,UMD Parkinson's Disease Cohort
+118,Study,UMD Parkinson's Disease Cohort
+119,Study,UMD Parkinson's Disease Cohort
+120,Study,UMD Parkinson's Disease Cohort
+121,Study,UMD Parkinson's Disease Cohort
+122,Study,UMD Parkinson's Disease Cohort
+124,Study,UMD Parkinson's Disease Cohort
+125,Study,UMD Parkinson's Disease Cohort
+126,Study,UMD Parkinson's Disease Cohort
+127,Study,UMD Parkinson's Disease Cohort
+128,Study,UMD Parkinson's Disease Cohort
+129,Study,UMD Parkinson's Disease Cohort
+130,Study,UMD Parkinson's Disease Cohort
+131,Study,UMD Parkinson's Disease Cohort
+136,Study,UMD Parkinson's Disease Cohort
+138,Study,UMD Parkinson's Disease Cohort
+139,Study,UMD Parkinson's Disease Cohort
+142,Study,UMD Parkinson's Disease Cohort
+145,Study,UMD Parkinson's Disease Cohort
+147,Study,UMD Parkinson's Disease Cohort
+148,Study,UMD Parkinson's Disease Cohort
+149,Study,UMD Parkinson's Disease Cohort
+152,Study,UMD Parkinson's Disease Cohort
+153,Study,UMD Parkinson's Disease Cohort
+154,Study,UMD Parkinson's Disease Cohort
+155,Study,UMD Parkinson's Disease Cohort
+156,Study,UMD Parkinson's Disease Cohort
+157,Study,UMD Parkinson's Disease Cohort
+158,Study,UMD Parkinson's Disease Cohort
+159,Study,UMD Parkinson's Disease Cohort
+161,Study,UMD Parkinson's Disease Cohort
+162,Study,UMD Parkinson's Disease Cohort
+163,Study,UMD Parkinson's Disease Cohort
+165,Study,UMD Parkinson's Disease Cohort
+166,Study,UMD Parkinson's Disease Cohort
+167,Study,UMD Parkinson's Disease Cohort
+169,Study,UMD Parkinson's Disease Cohort
+171,Study,UMD Parkinson's Disease Cohort
+172,Study,UMD Parkinson's Disease Cohort
+173,Study,UMD Parkinson's Disease Cohort
+174,Study,UMD Parkinson's Disease Cohort
+175,Study,UMD Parkinson's Disease Cohort
+176,Study,UMD Parkinson's Disease Cohort
+177,Study,UMD Parkinson's Disease Cohort
+179,Study,UMD Parkinson's Disease Cohort
+180,Study,UMD Parkinson's Disease Cohort
+181,Study,UMD Parkinson's Disease Cohort
+182,Study,UMD Parkinson's Disease Cohort
+183,Study,UMD Parkinson's Disease Cohort
+185,Study,UMD Parkinson's Disease Cohort
+186,Study,UMD Parkinson's Disease Cohort
+188,Study,UMD Parkinson's Disease Cohort
+189,Study,UMD Parkinson's Disease Cohort
+190,Study,UMD Parkinson's Disease Cohort
+191,Study,UMD Parkinson's Disease Cohort
+192,Study,UMD Parkinson's Disease Cohort
+193,Study,UMD Parkinson's Disease Cohort
+194,Study,UMD Parkinson's Disease Cohort
+195,Study,UMD Parkinson's Disease Cohort
+196,Study,UMD Parkinson's Disease Cohort
+197,Study,UMD Parkinson's Disease Cohort
+198,Study,UMD Parkinson's Disease Cohort
+199,Study,UMD Parkinson's Disease Cohort
+202,Study,UMD Parkinson's Disease Cohort
+203,Study,UMD Parkinson's Disease Cohort
+204,Study,UMD Parkinson's Disease Cohort
+205,Study,UMD Parkinson's Disease Cohort
+206,Study,UMD Parkinson's Disease Cohort
+207,Study,UMD Parkinson's Disease Cohort
+208,Study,UMD Parkinson's Disease Cohort
+209,Study,UMD Parkinson's Disease Cohort
+210,Study,UMD Parkinson's Disease Cohort
+211,Study,UMD Parkinson's Disease Cohort
+212,Study,UMD Parkinson's Disease Cohort
+214,Study,UMD Parkinson's Disease Cohort
+215,Study,UMD Parkinson's Disease Cohort
+216,Study,UMD Parkinson's Disease Cohort
+217,Study,UMD Parkinson's Disease Cohort
+218,Study,UMD Parkinson's Disease Cohort
+219,Study,UMD Parkinson's Disease Cohort
+220,Study,UMD Parkinson's Disease Cohort
+221,Study,UMD Parkinson's Disease Cohort
+222,Study,UMD Parkinson's Disease Cohort
+223,Study,UMD Parkinson's Disease Cohort
+224,Study,UMD Parkinson's Disease Cohort
+225,Study,UMD Parkinson's Disease Cohort
+226,Study,UMD Parkinson's Disease Cohort
+229,Study,UMD Parkinson's Disease Cohort
+230,Study,UMD Parkinson's Disease Cohort
+231,Study,UMD Parkinson's Disease Cohort
+232,Study,UMD Parkinson's Disease Cohort
+233,Study,UMD Parkinson's Disease Cohort
+236,Study,UMD Parkinson's Disease Cohort
+237,Study,UMD Parkinson's Disease Cohort
+238,Study,UMD Parkinson's Disease Cohort
+239,Study,UMD Parkinson's Disease Cohort
+240,Study,UMD Parkinson's Disease Cohort
+241,Study,UMD Parkinson's Disease Cohort
+242,Study,UMD Parkinson's Disease Cohort
+243,Study,UMD Parkinson's Disease Cohort
+244,Study,UMD Parkinson's Disease Cohort
+245,Study,UMD Parkinson's Disease Cohort
+246,Study,UMD Parkinson's Disease Cohort
+247,Study,UMD Parkinson's Disease Cohort
+248,Study,UMD Parkinson's Disease Cohort
+249,Study,UMD Parkinson's Disease Cohort
+250,Study,UMD Parkinson's Disease Cohort
+251,Study,UMD Parkinson's Disease Cohort
+252,Study,UMD Parkinson's Disease Cohort
+253,Study,UMD Parkinson's Disease Cohort
+254,Study,UMD Parkinson's Disease Cohort
+256,Study,UMD Parkinson's Disease Cohort
+257,Study,UMD Parkinson's Disease Cohort
+258,Study,UMD Parkinson's Disease Cohort
+259,Study,UMD Parkinson's Disease Cohort
+261,Study,UMD Parkinson's Disease Cohort
+262,Study,UMD Parkinson's Disease Cohort
+263,Study,UMD Parkinson's Disease Cohort
+264,Study,UMD Parkinson's Disease Cohort
+265,Study,UMD Parkinson's Disease Cohort
+266,Study,UMD Parkinson's Disease Cohort
+268,Study,UMD Parkinson's Disease Cohort
+271,Study,UMD Parkinson's Disease Cohort
+272,Study,UMD Parkinson's Disease Cohort
+273,Study,UMD Parkinson's Disease Cohort
+274,Study,UMD Parkinson's Disease Cohort
+275,Study,UMD Parkinson's Disease Cohort
+277,Study,UMD Parkinson's Disease Cohort
+279,Study,UMD Parkinson's Disease Cohort
+280,Study,UMD Parkinson's Disease Cohort
+281,Study,UMD Parkinson's Disease Cohort
+282,Study,UMD Parkinson's Disease Cohort
+283,Study,UMD Parkinson's Disease Cohort
+284,Study,UMD Parkinson's Disease Cohort
+286,Study,UMD Parkinson's Disease Cohort
+287,Study,UMD Parkinson's Disease Cohort
+288,Study,UMD Parkinson's Disease Cohort
+289,Study,UMD Parkinson's Disease Cohort
+290,Study,UMD Parkinson's Disease Cohort
+292,Study,UMD Parkinson's Disease Cohort
+293,Study,UMD Parkinson's Disease Cohort
+294,Study,UMD Parkinson's Disease Cohort
+295,Study,UMD Parkinson's Disease Cohort
+296,Study,UMD Parkinson's Disease Cohort
+298,Study,UMD Parkinson's Disease Cohort
+300,Study,UMD Parkinson's Disease Cohort
+301,Study,UMD Parkinson's Disease Cohort
+303,Study,UMD Parkinson's Disease Cohort
+304,Study,UMD Parkinson's Disease Cohort
+305,Study,UMD Parkinson's Disease Cohort
+306,Study,UMD Parkinson's Disease Cohort
+307,Study,UMD Parkinson's Disease Cohort
+308,Study,UMD Parkinson's Disease Cohort
+309,Study,UMD Parkinson's Disease Cohort
+310,Study,UMD Parkinson's Disease Cohort
+313,Study,UMD Parkinson's Disease Cohort
+314,Study,UMD Parkinson's Disease Cohort
+315,Study,UMD Parkinson's Disease Cohort
+316,Study,UMD Parkinson's Disease Cohort
+317,Study,UMD Parkinson's Disease Cohort
+318,Study,UMD Parkinson's Disease Cohort
+319,Study,UMD Parkinson's Disease Cohort
+320,Study,UMD Parkinson's Disease Cohort
+321,Study,UMD Parkinson's Disease Cohort
+322,Study,UMD Parkinson's Disease Cohort
+324,Study,UMD Parkinson's Disease Cohort
+325,Study,UMD Parkinson's Disease Cohort
+326,Study,UMD Parkinson's Disease Cohort
+327,Study,UMD Parkinson's Disease Cohort
+328,Study,UMD Parkinson's Disease Cohort
+329,Study,UMD Parkinson's Disease Cohort
+331,Study,UMD Parkinson's Disease Cohort
+332,Study,UMD Parkinson's Disease Cohort
+334,Study,UMD Parkinson's Disease Cohort
+337,Study,UMD Parkinson's Disease Cohort
+338,Study,UMD Parkinson's Disease Cohort
+339,Study,UMD Parkinson's Disease Cohort
+340,Study,UMD Parkinson's Disease Cohort
+341,Study,UMD Parkinson's Disease Cohort
+342,Study,UMD Parkinson's Disease Cohort
+343,Study,UMD Parkinson's Disease Cohort
+344,Study,UMD Parkinson's Disease Cohort
+345,Study,UMD Parkinson's Disease Cohort
+346,Study,UMD Parkinson's Disease Cohort
+347,Study,UMD Parkinson's Disease Cohort
+348,Study,UMD Parkinson's Disease Cohort
+349,Study,UMD Parkinson's Disease Cohort
+350,Study,UMD Parkinson's Disease Cohort
+351,Study,UMD Parkinson's Disease Cohort
+352,Study,UMD Parkinson's Disease Cohort
+353,Study,UMD Parkinson's Disease Cohort
+354,Study,UMD Parkinson's Disease Cohort
+355,Study,UMD Parkinson's Disease Cohort
+356,Study,UMD Parkinson's Disease Cohort
+357,Study,UMD Parkinson's Disease Cohort
+358,Study,UMD Parkinson's Disease Cohort
+359,Study,UMD Parkinson's Disease Cohort
+360,Study,UMD Parkinson's Disease Cohort
+362,Study,UMD Parkinson's Disease Cohort
+365,Study,UMD Parkinson's Disease Cohort
+366,Study,UMD Parkinson's Disease Cohort
+367,Study,UMD Parkinson's Disease Cohort
+368,Study,UMD Parkinson's Disease Cohort
+369,Study,UMD Parkinson's Disease Cohort
+370,Study,UMD Parkinson's Disease Cohort
+371,Study,UMD Parkinson's Disease Cohort
+372,Study,UMD Parkinson's Disease Cohort
+373,Study,UMD Parkinson's Disease Cohort
+375,Study,UMD Parkinson's Disease Cohort
+377,Study,UMD Parkinson's Disease Cohort
+378,Study,UMD Parkinson's Disease Cohort
+379,Study,UMD Parkinson's Disease Cohort
+381,Study,UMD Parkinson's Disease Cohort
+382,Study,UMD Parkinson's Disease Cohort
+383,Study,UMD Parkinson's Disease Cohort
+384,Study,UMD Parkinson's Disease Cohort
+385,Study,UMD Parkinson's Disease Cohort
+386,Study,UMD Parkinson's Disease Cohort
+387,Study,UMD Parkinson's Disease Cohort
+388,Study,UMD Parkinson's Disease Cohort
+389,Study,UMD Parkinson's Disease Cohort
+390,Study,UMD Parkinson's Disease Cohort
+391,Study,UMD Parkinson's Disease Cohort
+392,Study,UMD Parkinson's Disease Cohort
+393,Study,UMD Parkinson's Disease Cohort
+394,Study,UMD Parkinson's Disease Cohort
+395,Study,UMD Parkinson's Disease Cohort
+397,Study,UMD Parkinson's Disease Cohort
+398,Study,UMD Parkinson's Disease Cohort
+399,Study,UMD Parkinson's Disease Cohort
+400,Study,UMD Parkinson's Disease Cohort
+401,Study,UMD Parkinson's Disease Cohort
+402,Study,UMD Parkinson's Disease Cohort
+403,Study,UMD Parkinson's Disease Cohort
+404,Study,UMD Parkinson's Disease Cohort
+406,Study,UMD Parkinson's Disease Cohort
+407,Study,UMD Parkinson's Disease Cohort
+408,Study,UMD Parkinson's Disease Cohort
+410,Study,UMD Parkinson's Disease Cohort
+411,Study,UMD Parkinson's Disease Cohort
+412,Study,UMD Parkinson's Disease Cohort
+413,Study,UMD Parkinson's Disease Cohort
+414,Study,UMD Parkinson's Disease Cohort
+415,Study,UMD Parkinson's Disease Cohort
+416,Study,UMD Parkinson's Disease Cohort
+417,Study,UMD Parkinson's Disease Cohort
+418,Study,UMD Parkinson's Disease Cohort
+419,Study,UMD Parkinson's Disease Cohort
+420,Study,UMD Parkinson's Disease Cohort
+421,Study,UMD Parkinson's Disease Cohort
+422,Study,UMD Parkinson's Disease Cohort
+423,Study,UMD Parkinson's Disease Cohort
+424,Study,UMD Parkinson's Disease Cohort
+425,Study,UMD Parkinson's Disease Cohort
+426,Study,UMD Parkinson's Disease Cohort
+427,Study,UMD Parkinson's Disease Cohort
+428,Study,UMD Parkinson's Disease Cohort
+429,Study,UMD Parkinson's Disease Cohort
+430,Study,UMD Parkinson's Disease Cohort
+431,Study,UMD Parkinson's Disease Cohort
+432,Study,UMD Parkinson's Disease Cohort
+433,Study,UMD Parkinson's Disease Cohort
+434,Study,UMD Parkinson's Disease Cohort
+435,Study,UMD Parkinson's Disease Cohort
+436,Study,UMD Parkinson's Disease Cohort
+437,Study,UMD Parkinson's Disease Cohort
+438,Study,UMD Parkinson's Disease Cohort
+439,Study,UMD Parkinson's Disease Cohort
+440,Study,UMD Parkinson's Disease Cohort
+441,Study,UMD Parkinson's Disease Cohort
+442,Study,UMD Parkinson's Disease Cohort
+443,Study,UMD Parkinson's Disease Cohort
+444,Study,UMD Parkinson's Disease Cohort
+445,Study,UMD Parkinson's Disease Cohort
+446,Study,UMD Parkinson's Disease Cohort
+447,Study,UMD Parkinson's Disease Cohort
+448,Study,UMD Parkinson's Disease Cohort
+449,Study,UMD Parkinson's Disease Cohort
+450,Study,UMD Parkinson's Disease Cohort
+451,Study,UMD Parkinson's Disease Cohort
+452,Study,UMD Parkinson's Disease Cohort
+453,Study,UMD Parkinson's Disease Cohort
+454,Study,UMD Parkinson's Disease Cohort
+455,Study,UMD Parkinson's Disease Cohort
+456,Study,UMD Parkinson's Disease Cohort
+457,Study,UMD Parkinson's Disease Cohort
+458,Study,UMD Parkinson's Disease Cohort
+459,Study,UMD Parkinson's Disease Cohort
+460,Study,UMD Parkinson's Disease Cohort
+461,Study,UMD Parkinson's Disease Cohort
+462,Study,UMD Parkinson's Disease Cohort
+463,Study,UMD Parkinson's Disease Cohort
+464,Study,UMD Parkinson's Disease Cohort
+465,Study,UMD Parkinson's Disease Cohort
+466,Study,UMD Parkinson's Disease Cohort
+467,Study,UMD Parkinson's Disease Cohort
+468,Study,UMD Parkinson's Disease Cohort
+469,Study,UMD Parkinson's Disease Cohort
+470,Study,UMD Parkinson's Disease Cohort
+471,Study,UMD Parkinson's Disease Cohort
+473,Study,UMD Parkinson's Disease Cohort
+474,Study,UMD Parkinson's Disease Cohort
+475,Study,UMD Parkinson's Disease Cohort
+476,Study,UMD Parkinson's Disease Cohort
+477,Study,UMD Parkinson's Disease Cohort
+478,Study,UMD Parkinson's Disease Cohort
+480,Study,UMD Parkinson's Disease Cohort
+481,Study,UMD Parkinson's Disease Cohort
+482,Study,UMD Parkinson's Disease Cohort
+483,Study,UMD Parkinson's Disease Cohort
+484,Study,UMD Parkinson's Disease Cohort
+485,Study,UMD Parkinson's Disease Cohort
+486,Study,UMD Parkinson's Disease Cohort
+487,Study,UMD Parkinson's Disease Cohort
+488,Study,UMD Parkinson's Disease Cohort
+489,Study,UMD Parkinson's Disease Cohort
+490,Study,UMD Parkinson's Disease Cohort
+491,Study,UMD Parkinson's Disease Cohort
+492,Study,UMD Parkinson's Disease Cohort
+493,Study,UMD Parkinson's Disease Cohort
+494,Study,UMD Parkinson's Disease Cohort
+496,Study,UMD Parkinson's Disease Cohort
+497,Study,UMD Parkinson's Disease Cohort
+498,Study,UMD Parkinson's Disease Cohort
+500,Study,UMD Parkinson's Disease Cohort
+501,Study,UMD Parkinson's Disease Cohort
+503,Study,UMD Parkinson's Disease Cohort
+504,Study,UMD Parkinson's Disease Cohort
+505,Study,UMD Parkinson's Disease Cohort
+506,Study,UMD Parkinson's Disease Cohort
+507,Study,UMD Parkinson's Disease Cohort
+508,Study,UMD Parkinson's Disease Cohort
+509,Study,UMD Parkinson's Disease Cohort
+510,Study,UMD Parkinson's Disease Cohort
+512,Study,UMD Parkinson's Disease Cohort
+513,Study,UMD Parkinson's Disease Cohort
+514,Study,UMD Parkinson's Disease Cohort
+515,Study,UMD Parkinson's Disease Cohort
+516,Study,UMD Parkinson's Disease Cohort
+517,Study,UMD Parkinson's Disease Cohort
+518,Study,UMD Parkinson's Disease Cohort
+519,Study,UMD Parkinson's Disease Cohort
+520,Study,UMD Parkinson's Disease Cohort
+521,Study,UMD Parkinson's Disease Cohort
+522,Study,UMD Parkinson's Disease Cohort
+523,Study,UMD Parkinson's Disease Cohort
+524,Study,UMD Parkinson's Disease Cohort
+525,Study,UMD Parkinson's Disease Cohort
+526,Study,UMD Parkinson's Disease Cohort
+527,Study,UMD Parkinson's Disease Cohort
+528,Study,UMD Parkinson's Disease Cohort
+529,Study,UMD Parkinson's Disease Cohort
+530,Study,UMD Parkinson's Disease Cohort
+531,Study,UMD Parkinson's Disease Cohort
+532,Study,UMD Parkinson's Disease Cohort
+533,Study,UMD Parkinson's Disease Cohort
+536,Study,UMD Parkinson's Disease Cohort
+537,Study,UMD Parkinson's Disease Cohort
+538,Study,UMD Parkinson's Disease Cohort
+539,Study,UMD Parkinson's Disease Cohort
+540,Study,UMD Parkinson's Disease Cohort
+541,Study,UMD Parkinson's Disease Cohort
+542,Study,UMD Parkinson's Disease Cohort
+543,Study,UMD Parkinson's Disease Cohort
+544,Study,UMD Parkinson's Disease Cohort
+545,Study,UMD Parkinson's Disease Cohort
+546,Study,UMD Parkinson's Disease Cohort
+547,Study,UMD Parkinson's Disease Cohort
+548,Study,UMD Parkinson's Disease Cohort
+549,Study,UMD Parkinson's Disease Cohort
+550,Study,UMD Parkinson's Disease Cohort
+551,Study,UMD Parkinson's Disease Cohort
+552,Study,UMD Parkinson's Disease Cohort
+553,Study,UMD Parkinson's Disease Cohort
+556,Study,UMD Parkinson's Disease Cohort
+557,Study,UMD Parkinson's Disease Cohort
+558,Study,UMD Parkinson's Disease Cohort
+559,Study,UMD Parkinson's Disease Cohort
+560,Study,UMD Parkinson's Disease Cohort
+561,Study,UMD Parkinson's Disease Cohort
+562,Study,UMD Parkinson's Disease Cohort
+563,Study,UMD Parkinson's Disease Cohort
+564,Study,UMD Parkinson's Disease Cohort
+565,Study,UMD Parkinson's Disease Cohort
+566,Study,UMD Parkinson's Disease Cohort
+567,Study,UMD Parkinson's Disease Cohort
+568,Study,UMD Parkinson's Disease Cohort
+570,Study,UMD Parkinson's Disease Cohort
+571,Study,UMD Parkinson's Disease Cohort
+572,Study,UMD Parkinson's Disease Cohort
+573,Study,UMD Parkinson's Disease Cohort
+574,Study,UMD Parkinson's Disease Cohort
+576,Study,UMD Parkinson's Disease Cohort
+577,Study,UMD Parkinson's Disease Cohort
+578,Study,UMD Parkinson's Disease Cohort
+579,Study,UMD Parkinson's Disease Cohort
+580,Study,UMD Parkinson's Disease Cohort
+581,Study,UMD Parkinson's Disease Cohort
+582,Study,UMD Parkinson's Disease Cohort
+583,Study,UMD Parkinson's Disease Cohort
+584,Study,UMD Parkinson's Disease Cohort
+585,Study,UMD Parkinson's Disease Cohort
+586,Study,UMD Parkinson's Disease Cohort
+587,Study,UMD Parkinson's Disease Cohort
+588,Study,UMD Parkinson's Disease Cohort
+589,Study,UMD Parkinson's Disease Cohort
+590,Study,UMD Parkinson's Disease Cohort
+591,Study,UMD Parkinson's Disease Cohort
+592,Study,UMD Parkinson's Disease Cohort
+593,Study,UMD Parkinson's Disease Cohort
+594,Study,UMD Parkinson's Disease Cohort
+595,Study,UMD Parkinson's Disease Cohort
+596,Study,UMD Parkinson's Disease Cohort
+597,Study,UMD Parkinson's Disease Cohort
+598,Study,UMD Parkinson's Disease Cohort
+600,Study,UMD Parkinson's Disease Cohort
+601,Study,UMD Parkinson's Disease Cohort
+602,Study,UMD Parkinson's Disease Cohort
+603,Study,UMD Parkinson's Disease Cohort
+604,Study,UMD Parkinson's Disease Cohort
+605,Study,UMD Parkinson's Disease Cohort
+606,Study,UMD Parkinson's Disease Cohort
+607,Study,UMD Parkinson's Disease Cohort
+608,Study,UMD Parkinson's Disease Cohort
+609,Study,UMD Parkinson's Disease Cohort
+610,Study,UMD Parkinson's Disease Cohort
+611,Study,UMD Parkinson's Disease Cohort
+612,Study,UMD Parkinson's Disease Cohort
+613,Study,UMD Parkinson's Disease Cohort
+614,Study,UMD Parkinson's Disease Cohort
+615,Study,UMD Parkinson's Disease Cohort
+616,Study,UMD Parkinson's Disease Cohort
+617,Study,UMD Parkinson's Disease Cohort
+618,Study,UMD Parkinson's Disease Cohort
+619,Study,UMD Parkinson's Disease Cohort
+620,Study,UMD Parkinson's Disease Cohort
+621,Study,UMD Parkinson's Disease Cohort
+622,Study,UMD Parkinson's Disease Cohort
+623,Study,UMD Parkinson's Disease Cohort
+624,Study,UMD Parkinson's Disease Cohort
+625,Study,UMD Parkinson's Disease Cohort
+626,Study,UMD Parkinson's Disease Cohort
+627,Study,UMD Parkinson's Disease Cohort
+628,Study,UMD Parkinson's Disease Cohort
+629,Study,UMD Parkinson's Disease Cohort
+630,Study,UMD Parkinson's Disease Cohort
+631,Study,UMD Parkinson's Disease Cohort
+632,Study,UMD Parkinson's Disease Cohort
+633,Study,UMD Parkinson's Disease Cohort
+634,Study,UMD Parkinson's Disease Cohort
+635,Study,UMD Parkinson's Disease Cohort
+637,Study,UMD Parkinson's Disease Cohort
+638,Study,UMD Parkinson's Disease Cohort
+639,Study,UMD Parkinson's Disease Cohort
+640,Study,UMD Parkinson's Disease Cohort
+641,Study,UMD Parkinson's Disease Cohort
+642,Study,UMD Parkinson's Disease Cohort
+643,Study,UMD Parkinson's Disease Cohort
+644,Study,UMD Parkinson's Disease Cohort
+645,Study,UMD Parkinson's Disease Cohort
+646,Study,UMD Parkinson's Disease Cohort
+647,Study,UMD Parkinson's Disease Cohort
+648,Study,UMD Parkinson's Disease Cohort
+649,Study,UMD Parkinson's Disease Cohort
+650,Study,UMD Parkinson's Disease Cohort
+651,Study,UMD Parkinson's Disease Cohort
+652,Study,UMD Parkinson's Disease Cohort
+653,Study,UMD Parkinson's Disease Cohort
+654,Study,UMD Parkinson's Disease Cohort
+655,Study,UMD Parkinson's Disease Cohort
+656,Study,UMD Parkinson's Disease Cohort
+657,Study,UMD Parkinson's Disease Cohort
+658,Study,UMD Parkinson's Disease Cohort
+659,Study,UMD Parkinson's Disease Cohort
+660,Study,UMD Parkinson's Disease Cohort
+661,Study,UMD Parkinson's Disease Cohort
+663,Study,UMD Parkinson's Disease Cohort
+664,Study,UMD Parkinson's Disease Cohort
+665,Study,UMD Parkinson's Disease Cohort
+666,Study,UMD Parkinson's Disease Cohort
+667,Study,UMD Parkinson's Disease Cohort
+668,Study,UMD Parkinson's Disease Cohort
+669,Study,UMD Parkinson's Disease Cohort
+670,Study,UMD Parkinson's Disease Cohort
+671,Study,UMD Parkinson's Disease Cohort
+672,Study,UMD Parkinson's Disease Cohort
+673,Study,UMD Parkinson's Disease Cohort
+674,Study,UMD Parkinson's Disease Cohort
+676,Study,UMD Parkinson's Disease Cohort
+677,Study,UMD Parkinson's Disease Cohort
+678,Study,UMD Parkinson's Disease Cohort
+679,Study,UMD Parkinson's Disease Cohort
+680,Study,UMD Parkinson's Disease Cohort
+681,Study,UMD Parkinson's Disease Cohort
+682,Study,UMD Parkinson's Disease Cohort
+683,Study,UMD Parkinson's Disease Cohort
+684,Study,UMD Parkinson's Disease Cohort
+685,Study,UMD Parkinson's Disease Cohort
+686,Study,UMD Parkinson's Disease Cohort
+687,Study,UMD Parkinson's Disease Cohort
+688,Study,UMD Parkinson's Disease Cohort
+689,Study,UMD Parkinson's Disease Cohort
+691,Study,UMD Parkinson's Disease Cohort
+692,Study,UMD Parkinson's Disease Cohort
+693,Study,UMD Parkinson's Disease Cohort
+694,Study,UMD Parkinson's Disease Cohort
+696,Study,UMD Parkinson's Disease Cohort
+697,Study,UMD Parkinson's Disease Cohort
+698,Study,UMD Parkinson's Disease Cohort
+699,Study,UMD Parkinson's Disease Cohort
+700,Study,UMD Parkinson's Disease Cohort
+701,Study,UMD Parkinson's Disease Cohort
+702,Study,UMD Parkinson's Disease Cohort
+703,Study,UMD Parkinson's Disease Cohort
+704,Study,UMD Parkinson's Disease Cohort
+705,Study,UMD Parkinson's Disease Cohort
+706,Study,UMD Parkinson's Disease Cohort
+707,Study,UMD Parkinson's Disease Cohort
+708,Study,UMD Parkinson's Disease Cohort
+709,Study,UMD Parkinson's Disease Cohort
+710,Study,UMD Parkinson's Disease Cohort
+711,Study,UMD Parkinson's Disease Cohort
+712,Study,UMD Parkinson's Disease Cohort
+713,Study,UMD Parkinson's Disease Cohort
+714,Study,UMD Parkinson's Disease Cohort
+715,Study,UMD Parkinson's Disease Cohort
+716,Study,UMD Parkinson's Disease Cohort
+717,Study,UMD Parkinson's Disease Cohort
+718,Study,UMD Parkinson's Disease Cohort
+719,Study,UMD Parkinson's Disease Cohort
+720,Study,UMD Parkinson's Disease Cohort
+721,Study,UMD Parkinson's Disease Cohort
+722,Study,UMD Parkinson's Disease Cohort
+723,Study,UMD Parkinson's Disease Cohort
+725,Study,UMD Parkinson's Disease Cohort
+726,Study,UMD Parkinson's Disease Cohort
+727,Study,UMD Parkinson's Disease Cohort
+728,Study,UMD Parkinson's Disease Cohort
+729,Study,UMD Parkinson's Disease Cohort
+730,Study,UMD Parkinson's Disease Cohort
+731,Study,UMD Parkinson's Disease Cohort
+732,Study,UMD Parkinson's Disease Cohort
+733,Study,UMD Parkinson's Disease Cohort
+734,Study,UMD Parkinson's Disease Cohort
+735,Study,UMD Parkinson's Disease Cohort
+736,Study,UMD Parkinson's Disease Cohort
+737,Study,UMD Parkinson's Disease Cohort
+738,Study,UMD Parkinson's Disease Cohort
+739,Study,UMD Parkinson's Disease Cohort
+740,Study,UMD Parkinson's Disease Cohort
+741,Study,UMD Parkinson's Disease Cohort
+742,Study,UMD Parkinson's Disease Cohort
+743,Study,UMD Parkinson's Disease Cohort
+744,Study,UMD Parkinson's Disease Cohort
+745,Study,UMD Parkinson's Disease Cohort
+746,Study,UMD Parkinson's Disease Cohort
+747,Study,UMD Parkinson's Disease Cohort
+748,Study,UMD Parkinson's Disease Cohort
+750,Study,UMD Parkinson's Disease Cohort
+752,Study,UMD Parkinson's Disease Cohort
+753,Study,UMD Parkinson's Disease Cohort
+754,Study,UMD Parkinson's Disease Cohort
+755,Study,UMD Parkinson's Disease Cohort
+756,Study,UMD Parkinson's Disease Cohort
+757,Study,UMD Parkinson's Disease Cohort
+758,Study,UMD Parkinson's Disease Cohort
+759,Study,UMD Parkinson's Disease Cohort
+760,Study,UMD Parkinson's Disease Cohort
+761,Study,UMD Parkinson's Disease Cohort
+763,Study,UMD Parkinson's Disease Cohort
+764,Study,UMD Parkinson's Disease Cohort
+765,Study,UMD Parkinson's Disease Cohort
+766,Study,UMD Parkinson's Disease Cohort
+767,Study,UMD Parkinson's Disease Cohort
+768,Study,UMD Parkinson's Disease Cohort
+769,Study,UMD Parkinson's Disease Cohort
+770,Study,UMD Parkinson's Disease Cohort
+771,Study,UMD Parkinson's Disease Cohort
+772,Study,UMD Parkinson's Disease Cohort
+773,Study,UMD Parkinson's Disease Cohort
+774,Study,UMD Parkinson's Disease Cohort
+775,Study,UMD Parkinson's Disease Cohort
+776,Study,UMD Parkinson's Disease Cohort
+777,Study,UMD Parkinson's Disease Cohort
+778,Study,UMD Parkinson's Disease Cohort
+779,Study,UMD Parkinson's Disease Cohort
+780,Study,UMD Parkinson's Disease Cohort
+781,Study,UMD Parkinson's Disease Cohort
+782,Study,UMD Parkinson's Disease Cohort
+783,Study,UMD Parkinson's Disease Cohort
+785,Study,UMD Parkinson's Disease Cohort
+786,Study,UMD Parkinson's Disease Cohort
+787,Study,UMD Parkinson's Disease Cohort
+788,Study,UMD Parkinson's Disease Cohort
+789,Study,UMD Parkinson's Disease Cohort
+790,Study,UMD Parkinson's Disease Cohort
+791,Study,UMD Parkinson's Disease Cohort
+792,Study,UMD Parkinson's Disease Cohort
+793,Study,UMD Parkinson's Disease Cohort
+794,Study,UMD Parkinson's Disease Cohort
+796,Study,UMD Parkinson's Disease Cohort
+797,Study,UMD Parkinson's Disease Cohort
+801,Study,UMD Parkinson's Disease Cohort
+802,Study,UMD Parkinson's Disease Cohort
+803,Study,UMD Parkinson's Disease Cohort
+804,Study,UMD Parkinson's Disease Cohort
+805,Study,UMD Parkinson's Disease Cohort
+806,Study,UMD Parkinson's Disease Cohort
+807,Study,UMD Parkinson's Disease Cohort
+808,Study,UMD Parkinson's Disease Cohort
+809,Study,UMD Parkinson's Disease Cohort
+810,Study,UMD Parkinson's Disease Cohort
+811,Study,UMD Parkinson's Disease Cohort
+812,Study,UMD Parkinson's Disease Cohort
+814,Study,UMD Parkinson's Disease Cohort
+815,Study,UMD Parkinson's Disease Cohort
+816,Study,UMD Parkinson's Disease Cohort
+817,Study,UMD Parkinson's Disease Cohort
+818,Study,UMD Parkinson's Disease Cohort
+819,Study,UMD Parkinson's Disease Cohort
+820,Study,UMD Parkinson's Disease Cohort
+821,Study,UMD Parkinson's Disease Cohort
+822,Study,UMD Parkinson's Disease Cohort
+823,Study,UMD Parkinson's Disease Cohort
+824,Study,UMD Parkinson's Disease Cohort
+825,Study,UMD Parkinson's Disease Cohort
+826,Study,UMD Parkinson's Disease Cohort
+827,Study,UMD Parkinson's Disease Cohort
+828,Study,UMD Parkinson's Disease Cohort
+829,Study,UMD Parkinson's Disease Cohort
+830,Study,UMD Parkinson's Disease Cohort
+831,Study,UMD Parkinson's Disease Cohort
+832,Study,UMD Parkinson's Disease Cohort
+833,Study,UMD Parkinson's Disease Cohort
+834,Study,UMD Parkinson's Disease Cohort
+835,Study,UMD Parkinson's Disease Cohort
+836,Study,UMD Parkinson's Disease Cohort
+837,Study,UMD Parkinson's Disease Cohort
+838,Study,UMD Parkinson's Disease Cohort
+839,Study,UMD Parkinson's Disease Cohort
+840,Study,UMD Parkinson's Disease Cohort
+841,Study,UMD Parkinson's Disease Cohort
+842,Study,UMD Parkinson's Disease Cohort
+843,Study,UMD Parkinson's Disease Cohort
+844,Study,UMD Parkinson's Disease Cohort
+845,Study,UMD Parkinson's Disease Cohort
+846,Study,UMD Parkinson's Disease Cohort
+847,Study,UMD Parkinson's Disease Cohort
+848,Study,UMD Parkinson's Disease Cohort
+849,Study,UMD Parkinson's Disease Cohort
+850,Study,UMD Parkinson's Disease Cohort
+851,Study,UMD Parkinson's Disease Cohort
+852,Study,UMD Parkinson's Disease Cohort
+853,Study,UMD Parkinson's Disease Cohort
+854,Study,UMD Parkinson's Disease Cohort
+855,Study,UMD Parkinson's Disease Cohort
+857,Study,UMD Parkinson's Disease Cohort
+858,Study,UMD Parkinson's Disease Cohort
+859,Study,UMD Parkinson's Disease Cohort
+860,Study,UMD Parkinson's Disease Cohort
+862,Study,UMD Parkinson's Disease Cohort
+863,Study,UMD Parkinson's Disease Cohort
+864,Study,UMD Parkinson's Disease Cohort
+865,Study,UMD Parkinson's Disease Cohort
+866,Study,UMD Parkinson's Disease Cohort
+867,Study,UMD Parkinson's Disease Cohort
+868,Study,UMD Parkinson's Disease Cohort
+870,Study,UMD Parkinson's Disease Cohort
+871,Study,UMD Parkinson's Disease Cohort
+872,Study,UMD Parkinson's Disease Cohort
+873,Study,UMD Parkinson's Disease Cohort
+874,Study,UMD Parkinson's Disease Cohort
+875,Study,UMD Parkinson's Disease Cohort
+876,Study,UMD Parkinson's Disease Cohort
+877,Study,UMD Parkinson's Disease Cohort
+879,Study,UMD Parkinson's Disease Cohort
+880,Study,UMD Parkinson's Disease Cohort
+881,Study,UMD Parkinson's Disease Cohort
+882,Study,UMD Parkinson's Disease Cohort
+884,Study,UMD Parkinson's Disease Cohort
+885,Study,UMD Parkinson's Disease Cohort
+886,Study,UMD Parkinson's Disease Cohort
+887,Study,UMD Parkinson's Disease Cohort
+888,Study,UMD Parkinson's Disease Cohort
+889,Study,UMD Parkinson's Disease Cohort
+890,Study,UMD Parkinson's Disease Cohort
+891,Study,UMD Parkinson's Disease Cohort
+892,Study,UMD Parkinson's Disease Cohort
+893,Study,UMD Parkinson's Disease Cohort
+894,Study,UMD Parkinson's Disease Cohort
+895,Study,UMD Parkinson's Disease Cohort
+896,Study,UMD Parkinson's Disease Cohort
+897,Study,UMD Parkinson's Disease Cohort
+898,Study,UMD Parkinson's Disease Cohort
+899,Study,UMD Parkinson's Disease Cohort
+900,Study,UMD Parkinson's Disease Cohort
+901,Study,UMD Parkinson's Disease Cohort
+902,Study,UMD Parkinson's Disease Cohort
+903,Study,UMD Parkinson's Disease Cohort
+904,Study,UMD Parkinson's Disease Cohort
+905,Study,UMD Parkinson's Disease Cohort
+906,Study,UMD Parkinson's Disease Cohort
+907,Study,UMD Parkinson's Disease Cohort
+908,Study,UMD Parkinson's Disease Cohort
+909,Study,UMD Parkinson's Disease Cohort
+910,Study,UMD Parkinson's Disease Cohort
+911,Study,UMD Parkinson's Disease Cohort
+912,Study,UMD Parkinson's Disease Cohort
+913,Study,UMD Parkinson's Disease Cohort
+914,Study,UMD Parkinson's Disease Cohort
+915,Study,UMD Parkinson's Disease Cohort
+916,Study,UMD Parkinson's Disease Cohort
+917,Study,UMD Parkinson's Disease Cohort
+918,Study,UMD Parkinson's Disease Cohort
+919,Study,UMD Parkinson's Disease Cohort
+920,Study,UMD Parkinson's Disease Cohort
+921,Study,UMD Parkinson's Disease Cohort
+922,Study,UMD Parkinson's Disease Cohort
+923,Study,UMD Parkinson's Disease Cohort
+924,Study,UMD Parkinson's Disease Cohort
+925,Study,UMD Parkinson's Disease Cohort
+926,Study,UMD Parkinson's Disease Cohort
+928,Study,UMD Parkinson's Disease Cohort
+929,Study,UMD Parkinson's Disease Cohort
+930,Study,UMD Parkinson's Disease Cohort
+932,Study,UMD Parkinson's Disease Cohort
+933,Study,UMD Parkinson's Disease Cohort
+934,Study,UMD Parkinson's Disease Cohort
+935,Study,UMD Parkinson's Disease Cohort
+936,Study,UMD Parkinson's Disease Cohort
+937,Study,UMD Parkinson's Disease Cohort
+938,Study,UMD Parkinson's Disease Cohort
+939,Study,UMD Parkinson's Disease Cohort
+940,Study,UMD Parkinson's Disease Cohort
+941,Study,UMD Parkinson's Disease Cohort
+943,Study,UMD Parkinson's Disease Cohort
+944,Study,UMD Parkinson's Disease Cohort
+945,Study,UMD Parkinson's Disease Cohort
+946,Study,UMD Parkinson's Disease Cohort
+947,Study,UMD Parkinson's Disease Cohort
+948,Study,UMD Parkinson's Disease Cohort
+949,Study,UMD Parkinson's Disease Cohort
+951,Study,UMD Parkinson's Disease Cohort
+952,Study,UMD Parkinson's Disease Cohort
+953,Study,UMD Parkinson's Disease Cohort
+954,Study,UMD Parkinson's Disease Cohort
+955,Study,UMD Parkinson's Disease Cohort
+956,Study,UMD Parkinson's Disease Cohort
+957,Study,UMD Parkinson's Disease Cohort
+958,Study,UMD Parkinson's Disease Cohort
+959,Study,UMD Parkinson's Disease Cohort
+960,Study,UMD Parkinson's Disease Cohort
+961,Study,UMD Parkinson's Disease Cohort
+962,Study,UMD Parkinson's Disease Cohort
+963,Study,UMD Parkinson's Disease Cohort
+964,Study,UMD Parkinson's Disease Cohort
+965,Study,UMD Parkinson's Disease Cohort
+966,Study,UMD Parkinson's Disease Cohort
+967,Study,UMD Parkinson's Disease Cohort
+968,Study,UMD Parkinson's Disease Cohort
+969,Study,UMD Parkinson's Disease Cohort
+970,Study,UMD Parkinson's Disease Cohort
+972,Study,UMD Parkinson's Disease Cohort
+973,Study,UMD Parkinson's Disease Cohort
+975,Study,UMD Parkinson's Disease Cohort
+976,Study,UMD Parkinson's Disease Cohort
+977,Study,UMD Parkinson's Disease Cohort
+978,Study,UMD Parkinson's Disease Cohort
+979,Study,UMD Parkinson's Disease Cohort
+980,Study,UMD Parkinson's Disease Cohort
+981,Study,UMD Parkinson's Disease Cohort
+982,Study,UMD Parkinson's Disease Cohort
+984,Study,UMD Parkinson's Disease Cohort
+986,Study,UMD Parkinson's Disease Cohort
+987,Study,UMD Parkinson's Disease Cohort
+988,Study,UMD Parkinson's Disease Cohort
+989,Study,UMD Parkinson's Disease Cohort
+990,Study,UMD Parkinson's Disease Cohort
+991,Study,UMD Parkinson's Disease Cohort
+992,Study,UMD Parkinson's Disease Cohort
+993,Study,UMD Parkinson's Disease Cohort
+994,Study,UMD Parkinson's Disease Cohort
+996,Study,UMD Parkinson's Disease Cohort
+997,Study,UMD Parkinson's Disease Cohort
+998,Study,UMD Parkinson's Disease Cohort
+999,Study,UMD Parkinson's Disease Cohort
+1000,Study,UMD Parkinson's Disease Cohort
+1001,Study,UMD Parkinson's Disease Cohort
+1003,Study,UMD Parkinson's Disease Cohort
+1004,Study,UMD Parkinson's Disease Cohort
+1005,Study,UMD Parkinson's Disease Cohort
+1006,Study,UMD Parkinson's Disease Cohort
+1007,Study,UMD Parkinson's Disease Cohort
+1008,Study,UMD Parkinson's Disease Cohort
+1009,Study,UMD Parkinson's Disease Cohort
+1010,Study,UMD Parkinson's Disease Cohort
+1011,Study,UMD Parkinson's Disease Cohort
+1012,Study,UMD Parkinson's Disease Cohort
+1013,Study,UMD Parkinson's Disease Cohort
+1015,Study,UMD Parkinson's Disease Cohort
+1016,Study,UMD Parkinson's Disease Cohort
+1020,Study,UMD Parkinson's Disease Cohort
+1021,Study,UMD Parkinson's Disease Cohort
+1022,Study,UMD Parkinson's Disease Cohort
+1023,Study,UMD Parkinson's Disease Cohort
+1025,Study,UMD Parkinson's Disease Cohort
+1026,Study,UMD Parkinson's Disease Cohort
+1027,Study,UMD Parkinson's Disease Cohort
+1030,Study,UMD Parkinson's Disease Cohort
+1031,Study,UMD Parkinson's Disease Cohort
+1032,Study,UMD Parkinson's Disease Cohort
+1033,Study,UMD Parkinson's Disease Cohort
+1034,Study,UMD Parkinson's Disease Cohort
+1035,Study,UMD Parkinson's Disease Cohort
+1036,Study,UMD Parkinson's Disease Cohort
+1037,Study,UMD Parkinson's Disease Cohort
+1038,Study,UMD Parkinson's Disease Cohort
+1039,Study,UMD Parkinson's Disease Cohort
+1040,Study,UMD Parkinson's Disease Cohort
+1041,Study,UMD Parkinson's Disease Cohort
+1042,Study,UMD Parkinson's Disease Cohort
+1043,Study,UMD Parkinson's Disease Cohort
+1044,Study,UMD Parkinson's Disease Cohort
+1045,Study,UMD Parkinson's Disease Cohort
+1047,Study,UMD Parkinson's Disease Cohort
+1048,Study,UMD Parkinson's Disease Cohort
+1049,Study,UMD Parkinson's Disease Cohort
+1050,Study,UMD Parkinson's Disease Cohort
+1051,Study,UMD Parkinson's Disease Cohort
+1052,Study,UMD Parkinson's Disease Cohort
+1053,Study,UMD Parkinson's Disease Cohort
+1054,Study,UMD Parkinson's Disease Cohort
+1056,Study,UMD Parkinson's Disease Cohort
+1057,Study,UMD Parkinson's Disease Cohort
+1058,Study,UMD Parkinson's Disease Cohort
+1059,Study,UMD Parkinson's Disease Cohort
+1060,Study,UMD Parkinson's Disease Cohort
+1061,Study,UMD Parkinson's Disease Cohort
+1062,Study,UMD Parkinson's Disease Cohort
+1063,Study,UMD Parkinson's Disease Cohort
+1064,Study,UMD Parkinson's Disease Cohort
+1065,Study,UMD Parkinson's Disease Cohort
+1066,Study,UMD Parkinson's Disease Cohort
+1067,Study,UMD Parkinson's Disease Cohort
+1068,Study,UMD Parkinson's Disease Cohort
+1070,Study,UMD Parkinson's Disease Cohort
+1071,Study,UMD Parkinson's Disease Cohort
+1072,Study,UMD Parkinson's Disease Cohort
+1073,Study,UMD Parkinson's Disease Cohort
+1074,Study,UMD Parkinson's Disease Cohort
+1075,Study,UMD Parkinson's Disease Cohort
+1077,Study,UMD Parkinson's Disease Cohort
+1080,Study,UMD Parkinson's Disease Cohort
+1081,Study,UMD Parkinson's Disease Cohort
+1082,Study,UMD Parkinson's Disease Cohort
+1085,Study,UMD Parkinson's Disease Cohort
+1086,Study,UMD Parkinson's Disease Cohort
+1087,Study,UMD Parkinson's Disease Cohort
+1088,Study,UMD Parkinson's Disease Cohort
+1089,Study,UMD Parkinson's Disease Cohort
+1090,Study,UMD Parkinson's Disease Cohort
+1091,Study,UMD Parkinson's Disease Cohort
+1092,Study,UMD Parkinson's Disease Cohort
+1094,Study,UMD Parkinson's Disease Cohort
+1095,Study,UMD Parkinson's Disease Cohort
+1096,Study,UMD Parkinson's Disease Cohort
+1097,Study,UMD Parkinson's Disease Cohort
+1098,Study,UMD Parkinson's Disease Cohort
+1100,Study,UMD Parkinson's Disease Cohort
+1101,Study,UMD Parkinson's Disease Cohort
+1102,Study,UMD Parkinson's Disease Cohort
+1103,Study,UMD Parkinson's Disease Cohort
+1104,Study,UMD Parkinson's Disease Cohort
+1105,Study,UMD Parkinson's Disease Cohort
+1106,Study,UMD Parkinson's Disease Cohort
+1107,Study,UMD Parkinson's Disease Cohort
+1108,Study,UMD Parkinson's Disease Cohort
+1110,Study,UMD Parkinson's Disease Cohort
+1111,Study,UMD Parkinson's Disease Cohort
+1112,Study,UMD Parkinson's Disease Cohort
+1114,Study,UMD Parkinson's Disease Cohort
+1115,Study,UMD Parkinson's Disease Cohort
+1116,Study,UMD Parkinson's Disease Cohort
+1117,Study,UMD Parkinson's Disease Cohort
+1118,Study,UMD Parkinson's Disease Cohort
+1119,Study,UMD Parkinson's Disease Cohort
+1120,Study,UMD Parkinson's Disease Cohort
+1121,Study,UMD Parkinson's Disease Cohort
+1123,Study,UMD Parkinson's Disease Cohort
+1124,Study,UMD Parkinson's Disease Cohort
+1125,Study,UMD Parkinson's Disease Cohort
+1126,Study,UMD Parkinson's Disease Cohort
+1127,Study,UMD Parkinson's Disease Cohort
+1128,Study,UMD Parkinson's Disease Cohort
+1129,Study,UMD Parkinson's Disease Cohort
+1130,Study,UMD Parkinson's Disease Cohort
+1132,Study,UMD Parkinson's Disease Cohort
+1134,Study,UMD Parkinson's Disease Cohort
+1135,Study,UMD Parkinson's Disease Cohort
+1137,Study,UMD Parkinson's Disease Cohort
+1138,Study,UMD Parkinson's Disease Cohort
+1139,Study,UMD Parkinson's Disease Cohort
+1140,Study,UMD Parkinson's Disease Cohort
+1141,Study,UMD Parkinson's Disease Cohort
+1142,Study,UMD Parkinson's Disease Cohort
+1143,Study,UMD Parkinson's Disease Cohort
+1144,Study,UMD Parkinson's Disease Cohort
+1145,Study,UMD Parkinson's Disease Cohort
+1146,Study,UMD Parkinson's Disease Cohort
+1147,Study,UMD Parkinson's Disease Cohort
+1149,Study,UMD Parkinson's Disease Cohort
+1150,Study,UMD Parkinson's Disease Cohort
+1151,Study,UMD Parkinson's Disease Cohort
+1152,Study,UMD Parkinson's Disease Cohort
+1153,Study,UMD Parkinson's Disease Cohort
+1154,Study,UMD Parkinson's Disease Cohort
+1155,Study,UMD Parkinson's Disease Cohort
+1156,Study,UMD Parkinson's Disease Cohort
+1157,Study,UMD Parkinson's Disease Cohort
+1158,Study,UMD Parkinson's Disease Cohort
+1159,Study,UMD Parkinson's Disease Cohort
+1160,Study,UMD Parkinson's Disease Cohort
+1161,Study,UMD Parkinson's Disease Cohort
+1162,Study,UMD Parkinson's Disease Cohort
+1163,Study,UMD Parkinson's Disease Cohort
+1164,Study,UMD Parkinson's Disease Cohort
+1165,Study,UMD Parkinson's Disease Cohort
+1166,Study,UMD Parkinson's Disease Cohort
+1167,Study,UMD Parkinson's Disease Cohort
+1168,Study,UMD Parkinson's Disease Cohort
+1169,Study,UMD Parkinson's Disease Cohort
+1170,Study,UMD Parkinson's Disease Cohort
+1171,Study,UMD Parkinson's Disease Cohort
+1172,Study,UMD Parkinson's Disease Cohort
+1173,Study,UMD Parkinson's Disease Cohort
+1175,Study,UMD Parkinson's Disease Cohort
+1176,Study,UMD Parkinson's Disease Cohort
+1177,Study,UMD Parkinson's Disease Cohort
+1178,Study,UMD Parkinson's Disease Cohort
+1179,Study,UMD Parkinson's Disease Cohort
+1180,Study,UMD Parkinson's Disease Cohort
+1182,Study,UMD Parkinson's Disease Cohort
+1183,Study,UMD Parkinson's Disease Cohort
+1184,Study,UMD Parkinson's Disease Cohort
+1185,Study,UMD Parkinson's Disease Cohort
+1186,Study,UMD Parkinson's Disease Cohort
+1187,Study,UMD Parkinson's Disease Cohort
+1188,Study,UMD Parkinson's Disease Cohort
+1190,Study,UMD Parkinson's Disease Cohort
+1191,Study,UMD Parkinson's Disease Cohort
+1193,Study,UMD Parkinson's Disease Cohort
+1194,Study,UMD Parkinson's Disease Cohort
+1195,Study,UMD Parkinson's Disease Cohort
+1196,Study,UMD Parkinson's Disease Cohort
+1197,Study,UMD Parkinson's Disease Cohort
+1198,Study,UMD Parkinson's Disease Cohort
+1199,Study,UMD Parkinson's Disease Cohort
+1200,Study,UMD Parkinson's Disease Cohort
+1201,Study,UMD Parkinson's Disease Cohort
+1203,Study,UMD Parkinson's Disease Cohort
+1204,Study,UMD Parkinson's Disease Cohort
+1205,Study,UMD Parkinson's Disease Cohort
+1206,Study,UMD Parkinson's Disease Cohort
+1207,Study,UMD Parkinson's Disease Cohort
+1209,Study,UMD Parkinson's Disease Cohort
+1210,Study,UMD Parkinson's Disease Cohort
+1211,Study,UMD Parkinson's Disease Cohort
+1212,Study,UMD Parkinson's Disease Cohort
+1213,Study,UMD Parkinson's Disease Cohort
+1216,Study,UMD Parkinson's Disease Cohort
+1217,Study,UMD Parkinson's Disease Cohort
+1218,Study,UMD Parkinson's Disease Cohort
+1219,Study,UMD Parkinson's Disease Cohort
+1220,Study,UMD Parkinson's Disease Cohort
+1221,Study,UMD Parkinson's Disease Cohort
+1222,Study,UMD Parkinson's Disease Cohort
+1224,Study,UMD Parkinson's Disease Cohort
+1225,Study,UMD Parkinson's Disease Cohort
+1226,Study,UMD Parkinson's Disease Cohort
+1227,Study,UMD Parkinson's Disease Cohort
+1228,Study,UMD Parkinson's Disease Cohort
+1229,Study,UMD Parkinson's Disease Cohort
+1230,Study,UMD Parkinson's Disease Cohort
+1231,Study,UMD Parkinson's Disease Cohort
+1232,Study,UMD Parkinson's Disease Cohort
+1234,Study,UMD Parkinson's Disease Cohort
+1236,Study,UMD Parkinson's Disease Cohort
+1237,Study,UMD Parkinson's Disease Cohort
+1238,Study,UMD Parkinson's Disease Cohort
+1239,Study,UMD Parkinson's Disease Cohort
+1240,Study,UMD Parkinson's Disease Cohort
+1241,Study,UMD Parkinson's Disease Cohort
+1242,Study,UMD Parkinson's Disease Cohort
+1243,Study,UMD Parkinson's Disease Cohort
+1244,Study,UMD Parkinson's Disease Cohort
+1245,Study,UMD Parkinson's Disease Cohort
+1246,Study,UMD Parkinson's Disease Cohort
+1247,Study,UMD Parkinson's Disease Cohort
+1249,Study,UMD Parkinson's Disease Cohort
+1250,Study,UMD Parkinson's Disease Cohort
+1252,Study,UMD Parkinson's Disease Cohort
+1253,Study,UMD Parkinson's Disease Cohort
+1254,Study,UMD Parkinson's Disease Cohort
+1255,Study,UMD Parkinson's Disease Cohort
+1256,Study,UMD Parkinson's Disease Cohort
+1257,Study,UMD Parkinson's Disease Cohort
+1259,Study,UMD Parkinson's Disease Cohort
+1261,Study,UMD Parkinson's Disease Cohort
+1263,Study,UMD Parkinson's Disease Cohort
+1265,Study,UMD Parkinson's Disease Cohort
+1266,Study,UMD Parkinson's Disease Cohort
+1268,Study,UMD Parkinson's Disease Cohort
+1269,Study,UMD Parkinson's Disease Cohort
+1270,Study,UMD Parkinson's Disease Cohort
+1273,Study,UMD Parkinson's Disease Cohort
+1274,Study,UMD Parkinson's Disease Cohort
+1275,Study,UMD Parkinson's Disease Cohort
+1276,Study,UMD Parkinson's Disease Cohort
+1277,Study,UMD Parkinson's Disease Cohort
+1278,Study,UMD Parkinson's Disease Cohort
+1279,Study,UMD Parkinson's Disease Cohort
+1280,Study,UMD Parkinson's Disease Cohort
+1281,Study,UMD Parkinson's Disease Cohort
+1283,Study,UMD Parkinson's Disease Cohort
+1284,Study,UMD Parkinson's Disease Cohort
+1285,Study,UMD Parkinson's Disease Cohort
+1286,Study,UMD Parkinson's Disease Cohort
+1287,Study,UMD Parkinson's Disease Cohort
+1288,Study,UMD Parkinson's Disease Cohort
+1291,Study,UMD Parkinson's Disease Cohort
+1292,Study,UMD Parkinson's Disease Cohort
+1293,Study,UMD Parkinson's Disease Cohort
+1294,Study,UMD Parkinson's Disease Cohort
+1295,Study,UMD Parkinson's Disease Cohort
+1296,Study,UMD Parkinson's Disease Cohort
+1297,Study,UMD Parkinson's Disease Cohort
+1298,Study,UMD Parkinson's Disease Cohort
+1299,Study,UMD Parkinson's Disease Cohort
+1300,Study,UMD Parkinson's Disease Cohort
+1301,Study,UMD Parkinson's Disease Cohort
+1302,Study,UMD Parkinson's Disease Cohort
+1303,Study,UMD Parkinson's Disease Cohort
+1304,Study,UMD Parkinson's Disease Cohort
+1305,Study,UMD Parkinson's Disease Cohort
+1306,Study,UMD Parkinson's Disease Cohort
+1307,Study,UMD Parkinson's Disease Cohort
+1308,Study,UMD Parkinson's Disease Cohort
+1309,Study,UMD Parkinson's Disease Cohort
+1310,Study,UMD Parkinson's Disease Cohort
+1311,Study,UMD Parkinson's Disease Cohort
+1313,Study,UMD Parkinson's Disease Cohort
+1314,Study,UMD Parkinson's Disease Cohort
+1315,Study,UMD Parkinson's Disease Cohort
+1316,Study,UMD Parkinson's Disease Cohort
+1317,Study,UMD Parkinson's Disease Cohort
+1318,Study,UMD Parkinson's Disease Cohort
+1319,Study,UMD Parkinson's Disease Cohort
+1320,Study,UMD Parkinson's Disease Cohort
+1322,Study,UMD Parkinson's Disease Cohort
+1323,Study,UMD Parkinson's Disease Cohort
+1325,Study,UMD Parkinson's Disease Cohort
+1326,Study,UMD Parkinson's Disease Cohort
+1327,Study,UMD Parkinson's Disease Cohort
+1328,Study,UMD Parkinson's Disease Cohort
+1329,Study,UMD Parkinson's Disease Cohort
+1330,Study,UMD Parkinson's Disease Cohort
+1332,Study,UMD Parkinson's Disease Cohort
+1333,Study,UMD Parkinson's Disease Cohort
+1334,Study,UMD Parkinson's Disease Cohort
+1335,Study,UMD Parkinson's Disease Cohort
+1336,Study,UMD Parkinson's Disease Cohort
+1337,Study,UMD Parkinson's Disease Cohort
+1338,Study,UMD Parkinson's Disease Cohort
+1339,Study,UMD Parkinson's Disease Cohort
+1340,Study,UMD Parkinson's Disease Cohort
+1342,Study,UMD Parkinson's Disease Cohort
+1343,Study,UMD Parkinson's Disease Cohort
+1344,Study,UMD Parkinson's Disease Cohort
+1345,Study,UMD Parkinson's Disease Cohort
+1346,Study,UMD Parkinson's Disease Cohort
+1347,Study,UMD Parkinson's Disease Cohort
+1348,Study,UMD Parkinson's Disease Cohort
+1351,Study,UMD Parkinson's Disease Cohort
+1352,Study,UMD Parkinson's Disease Cohort
+1353,Study,UMD Parkinson's Disease Cohort
+1354,Study,UMD Parkinson's Disease Cohort
+1355,Study,UMD Parkinson's Disease Cohort
+1356,Study,UMD Parkinson's Disease Cohort
+1358,Study,UMD Parkinson's Disease Cohort
+1359,Study,UMD Parkinson's Disease Cohort
+1362,Study,UMD Parkinson's Disease Cohort
+1363,Study,UMD Parkinson's Disease Cohort
+1366,Study,UMD Parkinson's Disease Cohort
+1369,Study,UMD Parkinson's Disease Cohort
+1370,Study,UMD Parkinson's Disease Cohort
+1371,Study,UMD Parkinson's Disease Cohort
+1374,Study,UMD Parkinson's Disease Cohort
+1375,Study,UMD Parkinson's Disease Cohort
+1376,Study,UMD Parkinson's Disease Cohort
+1377,Study,UMD Parkinson's Disease Cohort
+1380,Study,UMD Parkinson's Disease Cohort
+1381,Study,UMD Parkinson's Disease Cohort
+1383,Study,UMD Parkinson's Disease Cohort
+1384,Study,UMD Parkinson's Disease Cohort
+1385,Study,UMD Parkinson's Disease Cohort
+1387,Study,UMD Parkinson's Disease Cohort
+1388,Study,UMD Parkinson's Disease Cohort
+1391,Study,UMD Parkinson's Disease Cohort
+1392,Study,UMD Parkinson's Disease Cohort
+1393,Study,UMD Parkinson's Disease Cohort
+1396,Study,UMD Parkinson's Disease Cohort
+1398,Study,UMD Parkinson's Disease Cohort
+1400,Study,UMD Parkinson's Disease Cohort
+1406,Study,UMD Parkinson's Disease Cohort
+1407,Study,UMD Parkinson's Disease Cohort
+1412,Study,UMD Parkinson's Disease Cohort
+1413,Study,UMD Parkinson's Disease Cohort
+1414,Study,UMD Parkinson's Disease Cohort
+1419,Study,UMD Parkinson's Disease Cohort
+1420,Study,UMD Parkinson's Disease Cohort
+1421,Study,UMD Parkinson's Disease Cohort
+1423,Study,UMD Parkinson's Disease Cohort
+1425,Study,UMD Parkinson's Disease Cohort
+1428,Study,UMD Parkinson's Disease Cohort
+1433,Study,UMD Parkinson's Disease Cohort
+1440,Study,UMD Parkinson's Disease Cohort
+1441,Study,UMD Parkinson's Disease Cohort
+1447,Study,UMD Parkinson's Disease Cohort
+1452,Study,UMD Parkinson's Disease Cohort
+1453,Study,UMD Parkinson's Disease Cohort
+1454,Study,UMD Parkinson's Disease Cohort
+1455,Study,UMD Parkinson's Disease Cohort
+1459,Study,UMD Parkinson's Disease Cohort
+1461,Study,UMD Parkinson's Disease Cohort
+1463,Study,UMD Parkinson's Disease Cohort
+1466,Study,UMD Parkinson's Disease Cohort
+1467,Study,UMD Parkinson's Disease Cohort
+1473,Study,UMD Parkinson's Disease Cohort
+1475,Study,UMD Parkinson's Disease Cohort
+1477,Study,UMD Parkinson's Disease Cohort
+1479,Study,UMD Parkinson's Disease Cohort
+1481,Study,UMD Parkinson's Disease Cohort
+1483,Study,UMD Parkinson's Disease Cohort
+1487,Study,UMD Parkinson's Disease Cohort
+1488,Study,UMD Parkinson's Disease Cohort
+1490,Study,UMD Parkinson's Disease Cohort
+1492,Study,UMD Parkinson's Disease Cohort
+1493,Study,UMD Parkinson's Disease Cohort
+1497,Study,UMD Parkinson's Disease Cohort
+1498,Study,UMD Parkinson's Disease Cohort
+1499,Study,UMD Parkinson's Disease Cohort
+1500,Study,UMD Parkinson's Disease Cohort
+1501,Study,UMD Parkinson's Disease Cohort
+1502,Study,UMD Parkinson's Disease Cohort
+1504,Study,UMD Parkinson's Disease Cohort
+1505,Study,UMD Parkinson's Disease Cohort
+1506,Study,UMD Parkinson's Disease Cohort
+1506,Study,UMD Parkinson's Disease Cohort
+1509,Study,UMD Parkinson's Disease Cohort
+1510,Study,UMD Parkinson's Disease Cohort
+1513,Study,UMD Parkinson's Disease Cohort
+1517,Study,UMD Parkinson's Disease Cohort
+1518,Study,UMD Parkinson's Disease Cohort
+1520,Study,UMD Parkinson's Disease Cohort
+1521,Study,UMD Parkinson's Disease Cohort
+1522,Study,UMD Parkinson's Disease Cohort
+1523,Study,UMD Parkinson's Disease Cohort
+1526,Study,UMD Parkinson's Disease Cohort
+1527,Study,UMD Parkinson's Disease Cohort
+1530,Study,UMD Parkinson's Disease Cohort
+1533,Study,UMD Parkinson's Disease Cohort
+1535,Study,UMD Parkinson's Disease Cohort
+1536,Study,UMD Parkinson's Disease Cohort
+1538,Study,UMD Parkinson's Disease Cohort
+1539,Study,UMD Parkinson's Disease Cohort
+1540,Study,UMD Parkinson's Disease Cohort
+1541,Study,UMD Parkinson's Disease Cohort
+1542,Study,UMD Parkinson's Disease Cohort
+1543,Study,UMD Parkinson's Disease Cohort
+1547,Study,UMD Parkinson's Disease Cohort
+1548,Study,UMD Parkinson's Disease Cohort
+1549,Study,UMD Parkinson's Disease Cohort
+1551,Study,UMD Parkinson's Disease Cohort
+1552,Study,UMD Parkinson's Disease Cohort
+1556,Study,UMD Parkinson's Disease Cohort
+1557,Study,UMD Parkinson's Disease Cohort
+1559,Study,UMD Parkinson's Disease Cohort
+1560,Study,UMD Parkinson's Disease Cohort
+1563,Study,UMD Parkinson's Disease Cohort
+1564,Study,UMD Parkinson's Disease Cohort
+1565,Study,UMD Parkinson's Disease Cohort
+1566,Study,UMD Parkinson's Disease Cohort
+1567,Study,UMD Parkinson's Disease Cohort
+1568,Study,UMD Parkinson's Disease Cohort
+1572,Study,UMD Parkinson's Disease Cohort
+1573,Study,UMD Parkinson's Disease Cohort
+1575,Study,UMD Parkinson's Disease Cohort
+1579,Study,UMD Parkinson's Disease Cohort
+1580,Study,UMD Parkinson's Disease Cohort
+1581,Study,UMD Parkinson's Disease Cohort
+1584,Study,UMD Parkinson's Disease Cohort
+1586,Study,UMD Parkinson's Disease Cohort
+1588,Study,UMD Parkinson's Disease Cohort
+1590,Study,UMD Parkinson's Disease Cohort
+1592,Study,UMD Parkinson's Disease Cohort
+1593,Study,UMD Parkinson's Disease Cohort
+1594,Study,UMD Parkinson's Disease Cohort
+1595,Study,UMD Parkinson's Disease Cohort
+1596,Study,UMD Parkinson's Disease Cohort
+1600,Study,UMD Parkinson's Disease Cohort
+1601,Study,UMD Parkinson's Disease Cohort
+1601,Study,UMD Parkinson's Disease Cohort
+1603,Study,UMD Parkinson's Disease Cohort
+1607,Study,UMD Parkinson's Disease Cohort
+1612,Study,UMD Parkinson's Disease Cohort
+1613,Study,UMD Parkinson's Disease Cohort
+1616,Study,UMD Parkinson's Disease Cohort
+1617,Study,UMD Parkinson's Disease Cohort
+1618,Study,UMD Parkinson's Disease Cohort
+1619,Study,UMD Parkinson's Disease Cohort
+1621,Study,UMD Parkinson's Disease Cohort
+1624,Study,UMD Parkinson's Disease Cohort
+1626,Study,UMD Parkinson's Disease Cohort
+1627,Study,UMD Parkinson's Disease Cohort
+1628,Study,UMD Parkinson's Disease Cohort
+1630,Study,UMD Parkinson's Disease Cohort
+1631,Study,UMD Parkinson's Disease Cohort
+1632,Study,UMD Parkinson's Disease Cohort
+1633,Study,UMD Parkinson's Disease Cohort
+1637,Study,UMD Parkinson's Disease Cohort
+1638,Study,UMD Parkinson's Disease Cohort
+1639,Study,UMD Parkinson's Disease Cohort
+1642,Study,UMD Parkinson's Disease Cohort
+1642,Study,UMD Parkinson's Disease Cohort
+1643,Study,UMD Parkinson's Disease Cohort
+1645,Study,UMD Parkinson's Disease Cohort
+1647,Study,UMD Parkinson's Disease Cohort
+1652,Study,UMD Parkinson's Disease Cohort
+1653,Study,UMD Parkinson's Disease Cohort
+1657,Study,UMD Parkinson's Disease Cohort
+1658,Study,UMD Parkinson's Disease Cohort
+1660,Study,UMD Parkinson's Disease Cohort
+1662,Study,UMD Parkinson's Disease Cohort
+1663,Study,UMD Parkinson's Disease Cohort
+1665,Study,UMD Parkinson's Disease Cohort
+1666,Study,UMD Parkinson's Disease Cohort
+1667,Study,UMD Parkinson's Disease Cohort
+1672,Study,UMD Parkinson's Disease Cohort
+1674,Study,UMD Parkinson's Disease Cohort
+1678,Study,UMD Parkinson's Disease Cohort
+1679,Study,UMD Parkinson's Disease Cohort
+1680,Study,UMD Parkinson's Disease Cohort
+1684,Study,UMD Parkinson's Disease Cohort
+1685,Study,UMD Parkinson's Disease Cohort
+1686,Study,UMD Parkinson's Disease Cohort
+1687,Study,UMD Parkinson's Disease Cohort
+1688,Study,UMD Parkinson's Disease Cohort
+1689,Study,UMD Parkinson's Disease Cohort
+1690,Study,UMD Parkinson's Disease Cohort
+1691,Study,UMD Parkinson's Disease Cohort
+1692,Study,UMD Parkinson's Disease Cohort
+1693,Study,UMD Parkinson's Disease Cohort
+1697,Study,UMD Parkinson's Disease Cohort
+1700,Study,UMD Parkinson's Disease Cohort
+1700,Study,UMD Parkinson's Disease Cohort
+1701,Study,UMD Parkinson's Disease Cohort
+1702,Study,UMD Parkinson's Disease Cohort
+1704,Study,UMD Parkinson's Disease Cohort
+1705,Study,UMD Parkinson's Disease Cohort
+1706,Study,UMD Parkinson's Disease Cohort
+1708,Study,UMD Parkinson's Disease Cohort
+1709,Study,UMD Parkinson's Disease Cohort
+1713,Study,UMD Parkinson's Disease Cohort
+1714,Study,UMD Parkinson's Disease Cohort
+1717,Study,UMD Parkinson's Disease Cohort
+1718,Study,UMD Parkinson's Disease Cohort
+1719,Study,UMD Parkinson's Disease Cohort
+1720,Study,UMD Parkinson's Disease Cohort
+1721,Study,UMD Parkinson's Disease Cohort
+1722,Study,UMD Parkinson's Disease Cohort
+1723,Study,UMD Parkinson's Disease Cohort
+1725,Study,UMD Parkinson's Disease Cohort
+1726,Study,UMD Parkinson's Disease Cohort
+1727,Study,UMD Parkinson's Disease Cohort
+1728,Study,UMD Parkinson's Disease Cohort
+1729,Study,UMD Parkinson's Disease Cohort
+1730,Study,UMD Parkinson's Disease Cohort
+1733,Study,UMD Parkinson's Disease Cohort
+1734,Study,UMD Parkinson's Disease Cohort
+1735,Study,UMD Parkinson's Disease Cohort
+1736,Study,UMD Parkinson's Disease Cohort
+1737,Study,UMD Parkinson's Disease Cohort
+1738,Study,UMD Parkinson's Disease Cohort
+1739,Study,UMD Parkinson's Disease Cohort
+1740,Study,UMD Parkinson's Disease Cohort
+1741,Study,UMD Parkinson's Disease Cohort
+1743,Study,UMD Parkinson's Disease Cohort
+1745,Study,UMD Parkinson's Disease Cohort
+1746,Study,UMD Parkinson's Disease Cohort
+1747,Study,UMD Parkinson's Disease Cohort
+1748,Study,UMD Parkinson's Disease Cohort
+1749,Study,UMD Parkinson's Disease Cohort
+1750,Study,UMD Parkinson's Disease Cohort
+1751,Study,UMD Parkinson's Disease Cohort
+1752,Study,UMD Parkinson's Disease Cohort
+1752,Study,UMD Parkinson's Disease Cohort
+1753,Study,UMD Parkinson's Disease Cohort
+1756,Study,UMD Parkinson's Disease Cohort
+1757,Study,UMD Parkinson's Disease Cohort
+1758,Study,UMD Parkinson's Disease Cohort
+1759,Study,UMD Parkinson's Disease Cohort
+1761,Study,UMD Parkinson's Disease Cohort
+1763,Study,UMD Parkinson's Disease Cohort
+1764,Study,UMD Parkinson's Disease Cohort
+1765,Study,UMD Parkinson's Disease Cohort
+1766,Study,UMD Parkinson's Disease Cohort
+1767,Study,UMD Parkinson's Disease Cohort
+1768,Study,UMD Parkinson's Disease Cohort
+1769,Study,UMD Parkinson's Disease Cohort
+1771,Study,UMD Parkinson's Disease Cohort
+1772,Study,UMD Parkinson's Disease Cohort
+1774,Study,UMD Parkinson's Disease Cohort
+1776,Study,UMD Parkinson's Disease Cohort
+1777,Study,UMD Parkinson's Disease Cohort
+1779,Study,UMD Parkinson's Disease Cohort
+1780,Study,UMD Parkinson's Disease Cohort
+1781,Study,UMD Parkinson's Disease Cohort
+1783,Study,UMD Parkinson's Disease Cohort
+1785,Study,UMD Parkinson's Disease Cohort
+1786,Study,UMD Parkinson's Disease Cohort
+1788,Study,UMD Parkinson's Disease Cohort
+1789,Study,UMD Parkinson's Disease Cohort
+1790,Study,UMD Parkinson's Disease Cohort
+1791,Study,UMD Parkinson's Disease Cohort
+1793,Study,UMD Parkinson's Disease Cohort
+1794,Study,UMD Parkinson's Disease Cohort
+1795,Study,UMD Parkinson's Disease Cohort
+1796,Study,UMD Parkinson's Disease Cohort
+1801,Study,UMD Parkinson's Disease Cohort
+1803,Study,UMD Parkinson's Disease Cohort
+1805,Study,UMD Parkinson's Disease Cohort
+1806,Study,UMD Parkinson's Disease Cohort
+1807,Study,UMD Parkinson's Disease Cohort
+1808,Study,UMD Parkinson's Disease Cohort
+1809,Study,UMD Parkinson's Disease Cohort
+1810,Study,UMD Parkinson's Disease Cohort
+1811,Study,UMD Parkinson's Disease Cohort
+1812,Study,UMD Parkinson's Disease Cohort
+1813,Study,UMD Parkinson's Disease Cohort
+1815,Study,UMD Parkinson's Disease Cohort
+1817,Study,UMD Parkinson's Disease Cohort
+1818,Study,UMD Parkinson's Disease Cohort
+1820,Study,UMD Parkinson's Disease Cohort
+1821,Study,UMD Parkinson's Disease Cohort
+1822,Study,UMD Parkinson's Disease Cohort
+1823,Study,UMD Parkinson's Disease Cohort
+1824,Study,UMD Parkinson's Disease Cohort
+1825,Study,UMD Parkinson's Disease Cohort
+1826,Study,UMD Parkinson's Disease Cohort
+1827,Study,UMD Parkinson's Disease Cohort
+1828,Study,UMD Parkinson's Disease Cohort
+1829,Study,UMD Parkinson's Disease Cohort
+1830,Study,UMD Parkinson's Disease Cohort
+1831,Study,UMD Parkinson's Disease Cohort
+1832,Study,UMD Parkinson's Disease Cohort
+1833,Study,UMD Parkinson's Disease Cohort
+1834,Study,UMD Parkinson's Disease Cohort
+1835,Study,UMD Parkinson's Disease Cohort
+1836,Study,UMD Parkinson's Disease Cohort
+1837,Study,UMD Parkinson's Disease Cohort
+1838,Study,UMD Parkinson's Disease Cohort
+1839,Study,UMD Parkinson's Disease Cohort
+1840,Study,UMD Parkinson's Disease Cohort
+1842,Study,UMD Parkinson's Disease Cohort
+1843,Study,UMD Parkinson's Disease Cohort
+1845,Study,UMD Parkinson's Disease Cohort
+1850,Study,UMD Parkinson's Disease Cohort
+1851,Study,UMD Parkinson's Disease Cohort
+1852,Study,UMD Parkinson's Disease Cohort
+1854,Study,UMD Parkinson's Disease Cohort
+1855,Study,UMD Parkinson's Disease Cohort
+1856,Study,UMD Parkinson's Disease Cohort
+1857,Study,UMD Parkinson's Disease Cohort
+1860,Study,UMD Parkinson's Disease Cohort
+1861,Study,UMD Parkinson's Disease Cohort
+1862,Study,UMD Parkinson's Disease Cohort
+1863,Study,UMD Parkinson's Disease Cohort
+1864,Study,UMD Parkinson's Disease Cohort
+1865,Study,UMD Parkinson's Disease Cohort
+1866,Study,UMD Parkinson's Disease Cohort
+1867,Study,UMD Parkinson's Disease Cohort
+1868,Study,UMD Parkinson's Disease Cohort
+1869,Study,UMD Parkinson's Disease Cohort
+1871,Study,UMD Parkinson's Disease Cohort
+1872,Study,UMD Parkinson's Disease Cohort
+1873,Study,UMD Parkinson's Disease Cohort
+1874,Study,UMD Parkinson's Disease Cohort
+1875,Study,UMD Parkinson's Disease Cohort
+1876,Study,UMD Parkinson's Disease Cohort
+1877,Study,UMD Parkinson's Disease Cohort
+1878,Study,UMD Parkinson's Disease Cohort
+1879,Study,UMD Parkinson's Disease Cohort
+1880,Study,UMD Parkinson's Disease Cohort
+1882,Study,UMD Parkinson's Disease Cohort
+1884,Study,UMD Parkinson's Disease Cohort
+1885,Study,UMD Parkinson's Disease Cohort
+1887,Study,UMD Parkinson's Disease Cohort
+1888,Study,UMD Parkinson's Disease Cohort
+1889,Study,UMD Parkinson's Disease Cohort
+1890,Study,UMD Parkinson's Disease Cohort
+1891,Study,UMD Parkinson's Disease Cohort
+1892,Study,UMD Parkinson's Disease Cohort
+1893,Study,UMD Parkinson's Disease Cohort
+1896,Study,UMD Parkinson's Disease Cohort
+1897,Study,UMD Parkinson's Disease Cohort
+1898,Study,UMD Parkinson's Disease Cohort
+1899,Study,UMD Parkinson's Disease Cohort
+1900,Study,UMD Parkinson's Disease Cohort
+1904,Study,UMD Parkinson's Disease Cohort
+1905,Study,UMD Parkinson's Disease Cohort
+1906,Study,UMD Parkinson's Disease Cohort
+1909,Study,UMD Parkinson's Disease Cohort
+1910,Study,UMD Parkinson's Disease Cohort
+1911,Study,UMD Parkinson's Disease Cohort
+1912,Study,UMD Parkinson's Disease Cohort
+1913,Study,UMD Parkinson's Disease Cohort
+1914,Study,UMD Parkinson's Disease Cohort
+1915,Study,UMD Parkinson's Disease Cohort
+1916,Study,UMD Parkinson's Disease Cohort
+1917,Study,UMD Parkinson's Disease Cohort
+1918,Study,UMD Parkinson's Disease Cohort
+1919,Study,UMD Parkinson's Disease Cohort
+1921,Study,UMD Parkinson's Disease Cohort
+1922,Study,UMD Parkinson's Disease Cohort
+1923,Study,UMD Parkinson's Disease Cohort
+1924,Study,UMD Parkinson's Disease Cohort
+1925,Study,UMD Parkinson's Disease Cohort
+1927,Study,UMD Parkinson's Disease Cohort
+1928,Study,UMD Parkinson's Disease Cohort
+1929,Study,UMD Parkinson's Disease Cohort
+1930,Study,UMD Parkinson's Disease Cohort
+1931,Study,UMD Parkinson's Disease Cohort
+1932,Study,UMD Parkinson's Disease Cohort
+1933,Study,UMD Parkinson's Disease Cohort
+1934,Study,UMD Parkinson's Disease Cohort
+1935,Study,UMD Parkinson's Disease Cohort
+1937,Study,UMD Parkinson's Disease Cohort
+1939,Study,UMD Parkinson's Disease Cohort
+1940,Study,UMD Parkinson's Disease Cohort
+1941,Study,UMD Parkinson's Disease Cohort
+1942,Study,UMD Parkinson's Disease Cohort
+1944,Study,UMD Parkinson's Disease Cohort
+1945,Study,UMD Parkinson's Disease Cohort
+1947,Study,UMD Parkinson's Disease Cohort
+1948,Study,UMD Parkinson's Disease Cohort
+1949,Study,UMD Parkinson's Disease Cohort
+1950,Study,UMD Parkinson's Disease Cohort
+1952,Study,UMD Parkinson's Disease Cohort
+1953,Study,UMD Parkinson's Disease Cohort
+1954,Study,UMD Parkinson's Disease Cohort
+1955,Study,UMD Parkinson's Disease Cohort
+1958,Study,UMD Parkinson's Disease Cohort
+1959,Study,UMD Parkinson's Disease Cohort
+1960,Study,UMD Parkinson's Disease Cohort
+1961,Study,UMD Parkinson's Disease Cohort
+1962,Study,UMD Parkinson's Disease Cohort
+1963,Study,UMD Parkinson's Disease Cohort
+1964,Study,UMD Parkinson's Disease Cohort
+1965,Study,UMD Parkinson's Disease Cohort
+1967,Study,UMD Parkinson's Disease Cohort
+1969,Study,UMD Parkinson's Disease Cohort
+1970,Study,UMD Parkinson's Disease Cohort
+1971,Study,UMD Parkinson's Disease Cohort
+1972,Study,UMD Parkinson's Disease Cohort
+1973,Study,UMD Parkinson's Disease Cohort
+1974,Study,UMD Parkinson's Disease Cohort
+1975,Study,UMD Parkinson's Disease Cohort
+1976,Study,UMD Parkinson's Disease Cohort
+1978,Study,UMD Parkinson's Disease Cohort
+1979,Study,UMD Parkinson's Disease Cohort
+1980,Study,UMD Parkinson's Disease Cohort
+1981,Study,UMD Parkinson's Disease Cohort
+1982,Study,UMD Parkinson's Disease Cohort
+1983,Study,UMD Parkinson's Disease Cohort
+1984,Study,UMD Parkinson's Disease Cohort
+1986,Study,UMD Parkinson's Disease Cohort
+1988,Study,UMD Parkinson's Disease Cohort
+1989,Study,UMD Parkinson's Disease Cohort
+1990,Study,UMD Parkinson's Disease Cohort
+1991,Study,UMD Parkinson's Disease Cohort
+1993,Study,UMD Parkinson's Disease Cohort
+1994,Study,UMD Parkinson's Disease Cohort
+1996,Study,UMD Parkinson's Disease Cohort
+1997,Study,UMD Parkinson's Disease Cohort
+2002,Study,UMD Parkinson's Disease Cohort
+2003,Study,UMD Parkinson's Disease Cohort
+2004,Study,UMD Parkinson's Disease Cohort
+2006,Study,UMD Parkinson's Disease Cohort
+2007,Study,UMD Parkinson's Disease Cohort
+2008,Study,UMD Parkinson's Disease Cohort
+2010,Study,UMD Parkinson's Disease Cohort
+2011,Study,UMD Parkinson's Disease Cohort
+2013,Study,UMD Parkinson's Disease Cohort
+2014,Study,UMD Parkinson's Disease Cohort
+2016,Study,UMD Parkinson's Disease Cohort
+2017,Study,UMD Parkinson's Disease Cohort
+2020,Study,UMD Parkinson's Disease Cohort
+2024,Study,UMD Parkinson's Disease Cohort
+2026,Study,UMD Parkinson's Disease Cohort
+2031,Study,UMD Parkinson's Disease Cohort
+2032,Study,UMD Parkinson's Disease Cohort
+2033,Study,UMD Parkinson's Disease Cohort
+2034,Study,UMD Parkinson's Disease Cohort
+2035,Study,UMD Parkinson's Disease Cohort
+2036,Study,UMD Parkinson's Disease Cohort
+2037,Study,UMD Parkinson's Disease Cohort
+2038,Study,UMD Parkinson's Disease Cohort
+2039,Study,UMD Parkinson's Disease Cohort
+2040,Study,UMD Parkinson's Disease Cohort
+2041,Study,UMD Parkinson's Disease Cohort
+2043,Study,UMD Parkinson's Disease Cohort
+2044,Study,UMD Parkinson's Disease Cohort
+2045,Study,UMD Parkinson's Disease Cohort
+2046,Study,UMD Parkinson's Disease Cohort
+2048,Study,UMD Parkinson's Disease Cohort
+2049,Study,UMD Parkinson's Disease Cohort
+2050,Study,UMD Parkinson's Disease Cohort
+2051,Study,UMD Parkinson's Disease Cohort
+2052,Study,UMD Parkinson's Disease Cohort
+2053,Study,UMD Parkinson's Disease Cohort
+2054,Study,UMD Parkinson's Disease Cohort
+2055,Study,UMD Parkinson's Disease Cohort
+2056,Study,UMD Parkinson's Disease Cohort
+2058,Study,UMD Parkinson's Disease Cohort
+2059,Study,UMD Parkinson's Disease Cohort
+2,Race,Black
+3,Race,White
+4,Race,Black
+5,Race,White
+6,Race,Black
+7,Race,Black
+9,Race,White
+11,Race,White
+12,Race,White
+13,Race,Unknown Race
+14,Race,Black
+15,Race,White
+17,Race,Black
+18,Race,White
+19,Race,White
+20,Race,White
+21,Race,Unknown Race
+23,Race,White
+24,Race,White
+25,Race,White
+27,Race,White
+31,Race,White
+32,Race,White
+34,Race,White
+35,Race,White
+36,Race,Unknown Race
+38,Race,White
+39,Race,Unknown Race
+40,Race,White
+41,Race,White
+42,Race,White
+45,Race,White
+46,Race,Unknown Race
+47,Race,White
+48,Race,White
+50,Race,White
+51,Race,Unknown Race
+52,Race,White
+53,Race,White
+56,Race,White
+57,Race,White
+59,Race,White
+61,Race,White
+62,Race,White
+63,Race,White
+64,Race,Unknown Race
+66,Race,White
+67,Race,White
+68,Race,White
+70,Race,White
+71,Race,White
+72,Race,White
+73,Race,White
+76,Race,White
+78,Race,White
+79,Race,White
+81,Race,Native American or Alaska Native
+82,Race,White
+83,Race,White
+84,Race,White
+86,Race,White
+87,Race,White
+88,Race,White
+89,Race,White
+91,Race,White
+92,Race,White
+93,Race,White
+94,Race,Black
+95,Race,White
+96,Race,White
+97,Race,Unknown Race
+99,Race,White
+100,Race,Unknown Race
+101,Race,White
+103,Race,White
+104,Race,White
+107,Race,White
+108,Race,White
+109,Race,Unknown Race
+110,Race,White
+111,Race,White
+113,Race,White
+117,Race,White
+118,Race,White
+119,Race,White
+120,Race,White
+121,Race,White
+122,Race,Unknown Race
+124,Race,White
+125,Race,Unknown Race
+126,Race,White
+127,Race,White
+128,Race,White
+129,Race,Unknown Race
+130,Race,Unknown Race
+131,Race,Black
+136,Race,Black
+138,Race,White
+139,Race,White
+142,Race,White
+145,Race,White
+147,Race,Black
+148,Race,White
+149,Race,White
+152,Race,White
+153,Race,Unknown Race
+154,Race,White
+155,Race,White
+156,Race,Black
+157,Race,White
+158,Race,White
+159,Race,White
+161,Race,White
+162,Race,Black
+163,Race,White
+165,Race,White
+166,Race,White
+167,Race,White
+169,Race,Unknown Race
+171,Race,White
+172,Race,Unknown Race
+173,Race,White
+174,Race,Unknown Race
+175,Race,White
+176,Race,White
+177,Race,Unknown Race
+179,Race,Unknown Race
+180,Race,White
+181,Race,White
+182,Race,White
+183,Race,White
+185,Race,White
+186,Race,White
+188,Race,Black
+189,Race,White
+190,Race,Black
+191,Race,White
+192,Race,White
+193,Race,White
+194,Race,White
+195,Race,White
+196,Race,White
+197,Race,Black
+198,Race,Unknown Race
+199,Race,White
+202,Race,Unknown Race
+203,Race,White
+204,Race,White
+205,Race,White
+206,Race,White
+207,Race,More than one race
+208,Race,White
+209,Race,White
+210,Race,White
+211,Race,White
+212,Race,White
+214,Race,White
+215,Race,Black
+216,Race,White
+217,Race,White
+218,Race,White
+219,Race,White
+220,Race,Unknown Race
+221,Race,White
+222,Race,White
+223,Race,White
+224,Race,Black
+225,Race,White
+226,Race,White
+229,Race,White
+230,Race,White
+231,Race,White
+232,Race,White
+233,Race,White
+236,Race,Unknown Race
+237,Race,White
+238,Race,White
+239,Race,White
+240,Race,White
+241,Race,White
+242,Race,White
+243,Race,White
+244,Race,White
+245,Race,Unknown Race
+246,Race,White
+247,Race,White
+248,Race,Black
+249,Race,White
+250,Race,White
+251,Race,White
+252,Race,Black
+253,Race,White
+254,Race,White
+256,Race,White
+257,Race,White
+258,Race,White
+259,Race,White
+261,Race,White
+262,Race,Unknown Race
+263,Race,White
+264,Race,White
+265,Race,White
+266,Race,White
+268,Race,White
+271,Race,White
+272,Race,White
+273,Race,White
+274,Race,Unknown Race
+275,Race,White
+277,Race,White
+279,Race,Black
+280,Race,White
+281,Race,Black
+282,Race,White
+283,Race,Unknown Race
+284,Race,White
+286,Race,White
+287,Race,White
+288,Race,White
+289,Race,White
+290,Race,White
+292,Race,White
+293,Race,White
+294,Race,Black
+295,Race,White
+296,Race,White
+298,Race,Black
+300,Race,Unknown Race
+301,Race,Black
+303,Race,White
+304,Race,White
+305,Race,White
+306,Race,White
+307,Race,Unknown Race
+308,Race,White
+309,Race,Unknown Race
+310,Race,White
+313,Race,Unknown Race
+314,Race,White
+315,Race,Black
+316,Race,White
+317,Race,White
+318,Race,White
+319,Race,White
+320,Race,White
+321,Race,Unknown Race
+322,Race,White
+324,Race,Unknown Race
+325,Race,White
+326,Race,White
+327,Race,Native American or Alaska Native
+328,Race,White
+329,Race,White
+331,Race,White
+332,Race,White
+334,Race,White
+337,Race,Unknown Race
+338,Race,White
+339,Race,Black
+340,Race,White
+341,Race,White
+342,Race,White
+343,Race,White
+344,Race,White
+345,Race,White
+346,Race,Unknown Race
+347,Race,White
+348,Race,White
+349,Race,White
+350,Race,White
+351,Race,White
+352,Race,White
+353,Race,White
+354,Race,White
+355,Race,Black
+356,Race,White
+357,Race,White
+358,Race,White
+359,Race,Black
+360,Race,White
+362,Race,Unknown Race
+365,Race,White
+366,Race,White
+367,Race,White
+368,Race,White
+369,Race,White
+370,Race,White
+371,Race,More than one race
+372,Race,White
+373,Race,White
+375,Race,White
+377,Race,Unknown Race
+378,Race,White
+379,Race,White
+381,Race,White
+382,Race,More than one race
+383,Race,White
+384,Race,White
+385,Race,White
+386,Race,Unknown Race
+387,Race,White
+388,Race,White
+389,Race,White
+390,Race,White
+391,Race,White
+392,Race,White
+393,Race,White
+394,Race,White
+395,Race,White
+397,Race,White
+398,Race,White
+399,Race,White
+400,Race,White
+401,Race,Unknown Race
+402,Race,White
+403,Race,Unknown Race
+404,Race,White
+406,Race,White
+407,Race,White
+408,Race,White
+410,Race,Unknown Race
+411,Race,White
+412,Race,White
+413,Race,White
+414,Race,White
+415,Race,White
+416,Race,White
+417,Race,White
+418,Race,White
+419,Race,White
+420,Race,White
+421,Race,White
+422,Race,Black
+423,Race,White
+424,Race,White
+425,Race,White
+426,Race,White
+427,Race,White
+428,Race,White
+429,Race,White
+430,Race,Black
+431,Race,White
+432,Race,White
+433,Race,White
+434,Race,White
+435,Race,White
+436,Race,White
+437,Race,White
+438,Race,White
+439,Race,White
+440,Race,White
+441,Race,White
+442,Race,White
+443,Race,White
+444,Race,White
+445,Race,White
+446,Race,White
+447,Race,White
+448,Race,White
+449,Race,White
+450,Race,Black
+451,Race,White
+452,Race,White
+453,Race,White
+454,Race,White
+455,Race,White
+456,Race,White
+457,Race,White
+458,Race,White
+459,Race,Unknown Race
+460,Race,White
+461,Race,White
+462,Race,White
+463,Race,White
+464,Race,White
+465,Race,White
+466,Race,White
+467,Race,White
+468,Race,White
+469,Race,White
+470,Race,White
+471,Race,White
+473,Race,White
+474,Race,White
+475,Race,White
+476,Race,White
+477,Race,White
+478,Race,White
+480,Race,White
+481,Race,White
+482,Race,White
+483,Race,White
+484,Race,White
+485,Race,White
+486,Race,White
+487,Race,More than one race
+488,Race,White
+489,Race,White
+490,Race,Black
+491,Race,White
+492,Race,White
+493,Race,White
+494,Race,White
+496,Race,White
+497,Race,White
+498,Race,Unknown Race
+500,Race,White
+501,Race,White
+503,Race,White
+504,Race,White
+505,Race,White
+506,Race,White
+507,Race,White
+508,Race,White
+509,Race,White
+510,Race,White
+512,Race,Unknown Race
+513,Race,White
+514,Race,White
+515,Race,White
+516,Race,White
+517,Race,White
+518,Race,White
+519,Race,White
+520,Race,White
+521,Race,White
+522,Race,White
+523,Race,White
+524,Race,White
+525,Race,Unknown Race
+526,Race,White
+527,Race,White
+528,Race,White
+529,Race,White
+530,Race,White
+531,Race,White
+532,Race,White
+533,Race,White
+536,Race,More than one race
+537,Race,White
+538,Race,White
+539,Race,More than one race
+540,Race,White
+541,Race,White
+542,Race,White
+543,Race,White
+544,Race,White
+545,Race,White
+546,Race,White
+547,Race,White
+548,Race,White
+549,Race,White
+550,Race,White
+551,Race,White
+552,Race,Black
+553,Race,White
+556,Race,White
+557,Race,White
+558,Race,Black
+559,Race,White
+560,Race,Black
+561,Race,White
+562,Race,White
+563,Race,White
+564,Race,Unknown Race
+565,Race,White
+566,Race,White
+567,Race,White
+568,Race,Unknown Race
+570,Race,White
+571,Race,More than one race
+572,Race,White
+573,Race,White
+574,Race,White
+576,Race,White
+577,Race,White
+578,Race,White
+579,Race,White
+580,Race,White
+581,Race,White
+582,Race,White
+583,Race,White
+584,Race,White
+585,Race,White
+586,Race,White
+587,Race,White
+588,Race,White
+589,Race,White
+590,Race,White
+591,Race,White
+592,Race,White
+593,Race,White
+594,Race,White
+595,Race,White
+596,Race,White
+597,Race,White
+598,Race,White
+600,Race,Black
+601,Race,White
+602,Race,White
+603,Race,White
+604,Race,White
+605,Race,White
+606,Race,White
+607,Race,Asian
+608,Race,White
+609,Race,White
+610,Race,White
+611,Race,White
+612,Race,White
+613,Race,White
+614,Race,White
+615,Race,White
+616,Race,White
+617,Race,White
+618,Race,Black
+619,Race,White
+620,Race,Black
+621,Race,White
+622,Race,White
+623,Race,White
+624,Race,More than one race
+625,Race,Unknown Race
+626,Race,White
+627,Race,Unknown Race
+628,Race,More than one race
+629,Race,White
+630,Race,White
+631,Race,More than one race
+632,Race,White
+633,Race,Black
+634,Race,White
+635,Race,White
+637,Race,White
+638,Race,White
+639,Race,White
+640,Race,White
+641,Race,White
+642,Race,White
+643,Race,White
+644,Race,Unknown Race
+645,Race,White
+646,Race,White
+647,Race,White
+648,Race,White
+649,Race,White
+650,Race,White
+651,Race,White
+652,Race,White
+653,Race,White
+654,Race,White
+655,Race,White
+656,Race,White
+657,Race,White
+658,Race,White
+659,Race,White
+660,Race,White
+661,Race,White
+663,Race,White
+664,Race,White
+665,Race,White
+666,Race,White
+667,Race,White
+668,Race,White
+669,Race,Unknown Race
+670,Race,White
+671,Race,White
+672,Race,White
+673,Race,White
+674,Race,White
+676,Race,Unknown Race
+677,Race,White
+678,Race,White
+679,Race,White
+680,Race,White
+681,Race,White
+682,Race,White
+683,Race,More than one race
+684,Race,White
+685,Race,White
+686,Race,White
+687,Race,Unknown Race
+688,Race,White
+689,Race,White
+691,Race,White
+692,Race,White
+693,Race,White
+694,Race,White
+696,Race,White
+697,Race,White
+698,Race,White
+699,Race,White
+700,Race,White
+701,Race,White
+702,Race,White
+703,Race,White
+704,Race,White
+705,Race,White
+706,Race,Unknown Race
+707,Race,White
+708,Race,White
+709,Race,White
+710,Race,White
+711,Race,White
+712,Race,White
+713,Race,White
+714,Race,White
+715,Race,White
+716,Race,White
+717,Race,White
+718,Race,White
+719,Race,White
+720,Race,White
+721,Race,White
+722,Race,Native American or Alaska Native
+723,Race,Unknown Race
+725,Race,White
+726,Race,White
+727,Race,White
+728,Race,White
+729,Race,Black
+730,Race,White
+731,Race,White
+732,Race,White
+733,Race,White
+734,Race,White
+735,Race,White
+736,Race,White
+737,Race,White
+738,Race,Unknown Race
+739,Race,White
+740,Race,White
+741,Race,White
+742,Race,White
+743,Race,White
+744,Race,White
+745,Race,White
+746,Race,Black
+747,Race,White
+748,Race,White
+750,Race,White
+752,Race,White
+753,Race,White
+754,Race,White
+755,Race,White
+756,Race,White
+757,Race,White
+758,Race,White
+759,Race,White
+760,Race,White
+761,Race,White
+763,Race,White
+764,Race,White
+765,Race,White
+766,Race,White
+767,Race,White
+768,Race,White
+769,Race,White
+770,Race,White
+771,Race,White
+772,Race,White
+773,Race,White
+774,Race,White
+775,Race,White
+776,Race,White
+777,Race,Black
+778,Race,White
+779,Race,White
+780,Race,Unknown Race
+781,Race,White
+782,Race,White
+783,Race,White
+785,Race,White
+786,Race,White
+787,Race,White
+788,Race,White
+789,Race,White
+790,Race,White
+791,Race,White
+792,Race,White
+793,Race,White
+794,Race,White
+796,Race,White
+797,Race,White
+801,Race,White
+802,Race,White
+803,Race,White
+804,Race,White
+805,Race,White
+806,Race,White
+807,Race,Unknown Race
+808,Race,White
+809,Race,White
+810,Race,White
+811,Race,White
+812,Race,White
+814,Race,White
+815,Race,Unknown Race
+816,Race,White
+817,Race,White
+818,Race,White
+819,Race,White
+820,Race,White
+821,Race,White
+822,Race,White
+823,Race,White
+824,Race,White
+825,Race,White
+826,Race,White
+827,Race,White
+828,Race,White
+829,Race,White
+830,Race,White
+831,Race,White
+832,Race,Unknown Race
+833,Race,White
+834,Race,White
+835,Race,White
+836,Race,White
+837,Race,White
+838,Race,More than one race
+839,Race,White
+840,Race,White
+841,Race,White
+842,Race,White
+843,Race,More than one race
+844,Race,White
+845,Race,White
+846,Race,White
+847,Race,White
+848,Race,Unknown Race
+849,Race,Unknown Race
+850,Race,White
+851,Race,White
+852,Race,White
+853,Race,Unknown Race
+854,Race,White
+855,Race,White
+857,Race,White
+858,Race,White
+859,Race,White
+860,Race,White
+862,Race,White
+863,Race,White
+864,Race,White
+865,Race,White
+866,Race,White
+867,Race,White
+868,Race,White
+870,Race,White
+871,Race,White
+872,Race,White
+873,Race,White
+874,Race,White
+875,Race,White
+876,Race,White
+877,Race,White
+879,Race,White
+880,Race,White
+881,Race,White
+882,Race,White
+884,Race,White
+885,Race,White
+886,Race,Native American or Alaska Native
+887,Race,White
+888,Race,White
+889,Race,White
+890,Race,White
+891,Race,Unknown Race
+892,Race,White
+893,Race,White
+894,Race,White
+895,Race,White
+896,Race,White
+897,Race,White
+898,Race,White
+899,Race,White
+900,Race,White
+901,Race,White
+902,Race,White
+903,Race,White
+904,Race,White
+905,Race,White
+906,Race,White
+907,Race,White
+908,Race,Unknown Race
+909,Race,White
+910,Race,White
+911,Race,White
+912,Race,White
+913,Race,White
+914,Race,White
+915,Race,White
+916,Race,White
+917,Race,White
+918,Race,White
+919,Race,Unknown Race
+920,Race,White
+921,Race,White
+922,Race,Black
+923,Race,White
+924,Race,White
+925,Race,Unknown Race
+926,Race,White
+928,Race,White
+929,Race,White
+930,Race,Unknown Race
+932,Race,White
+933,Race,White
+934,Race,White
+935,Race,White
+936,Race,White
+937,Race,White
+938,Race,White
+939,Race,White
+940,Race,White
+941,Race,White
+943,Race,White
+944,Race,White
+945,Race,Black
+946,Race,White
+947,Race,White
+948,Race,White
+949,Race,More than one race
+951,Race,More than one race
+952,Race,White
+953,Race,White
+954,Race,White
+955,Race,Unknown Race
+956,Race,White
+957,Race,White
+958,Race,Black
+959,Race,White
+960,Race,White
+961,Race,White
+962,Race,White
+963,Race,White
+964,Race,Unknown Race
+965,Race,White
+966,Race,White
+967,Race,White
+968,Race,White
+969,Race,White
+970,Race,White
+972,Race,White
+973,Race,White
+975,Race,White
+976,Race,White
+977,Race,White
+978,Race,White
+979,Race,White
+980,Race,White
+981,Race,White
+982,Race,White
+984,Race,White
+986,Race,White
+987,Race,White
+988,Race,White
+989,Race,Black
+990,Race,Unknown Race
+991,Race,White
+992,Race,White
+993,Race,White
+994,Race,White
+996,Race,White
+997,Race,White
+998,Race,White
+999,Race,White
+1000,Race,White
+1001,Race,White
+1003,Race,White
+1004,Race,White
+1005,Race,White
+1006,Race,White
+1007,Race,White
+1008,Race,Unknown Race
+1009,Race,White
+1010,Race,White
+1011,Race,White
+1012,Race,White
+1013,Race,White
+1015,Race,White
+1016,Race,White
+1020,Race,White
+1021,Race,White
+1022,Race,White
+1023,Race,Unknown Race
+1025,Race,Unknown Race
+1026,Race,White
+1027,Race,White
+1030,Race,White
+1031,Race,White
+1032,Race,White
+1033,Race,White
+1034,Race,Unknown Race
+1035,Race,Black
+1036,Race,White
+1037,Race,White
+1038,Race,Unknown Race
+1039,Race,White
+1040,Race,White
+1041,Race,White
+1042,Race,White
+1043,Race,White
+1044,Race,Unknown Race
+1045,Race,White
+1047,Race,White
+1048,Race,White
+1049,Race,Black
+1050,Race,White
+1051,Race,White
+1052,Race,Black
+1053,Race,White
+1054,Race,White
+1056,Race,White
+1057,Race,White
+1058,Race,White
+1059,Race,Unknown Race
+1060,Race,White
+1061,Race,White
+1062,Race,White
+1063,Race,White
+1064,Race,White
+1065,Race,White
+1066,Race,White
+1067,Race,White
+1068,Race,White
+1070,Race,White
+1071,Race,White
+1072,Race,Black
+1073,Race,White
+1074,Race,Unknown Race
+1075,Race,White
+1077,Race,White
+1080,Race,White
+1081,Race,More than one race
+1082,Race,White
+1085,Race,Black
+1086,Race,White
+1087,Race,White
+1088,Race,White
+1089,Race,White
+1090,Race,Native American or Alaska Native
+1091,Race,White
+1092,Race,White
+1094,Race,Native American or Alaska Native
+1095,Race,White
+1096,Race,White
+1097,Race,White
+1098,Race,White
+1100,Race,White
+1101,Race,Unknown Race
+1102,Race,White
+1103,Race,White
+1104,Race,Unknown Race
+1105,Race,White
+1106,Race,Unknown Race
+1107,Race,White
+1108,Race,White
+1110,Race,White
+1111,Race,Unknown Race
+1112,Race,White
+1114,Race,White
+1115,Race,White
+1116,Race,Unknown Race
+1117,Race,White
+1118,Race,White
+1119,Race,White
+1120,Race,White
+1121,Race,Unknown Race
+1123,Race,White
+1124,Race,White
+1125,Race,White
+1126,Race,White
+1127,Race,Unknown Race
+1128,Race,Unknown Race
+1129,Race,White
+1130,Race,White
+1132,Race,Unknown Race
+1134,Race,White
+1135,Race,White
+1137,Race,White
+1138,Race,White
+1139,Race,Unknown Race
+1140,Race,White
+1141,Race,White
+1142,Race,White
+1143,Race,White
+1144,Race,Unknown Race
+1145,Race,Black
+1146,Race,White
+1147,Race,Black
+1149,Race,White
+1150,Race,Unknown Race
+1151,Race,White
+1152,Race,White
+1153,Race,White
+1154,Race,White
+1155,Race,White
+1156,Race,White
+1157,Race,White
+1158,Race,White
+1159,Race,White
+1160,Race,White
+1161,Race,Black
+1162,Race,White
+1163,Race,White
+1164,Race,White
+1165,Race,White
+1166,Race,White
+1167,Race,White
+1168,Race,White
+1169,Race,White
+1170,Race,White
+1171,Race,White
+1172,Race,Unknown Race
+1173,Race,White
+1175,Race,White
+1176,Race,White
+1177,Race,Unknown Race
+1178,Race,White
+1179,Race,White
+1180,Race,White
+1182,Race,White
+1183,Race,White
+1184,Race,White
+1185,Race,White
+1186,Race,White
+1187,Race,White
+1188,Race,White
+1190,Race,White
+1191,Race,White
+1193,Race,White
+1194,Race,White
+1195,Race,White
+1196,Race,Unknown Race
+1197,Race,Black
+1198,Race,Unknown Race
+1199,Race,White
+1200,Race,White
+1201,Race,White
+1203,Race,White
+1204,Race,White
+1205,Race,White
+1206,Race,White
+1207,Race,Black
+1209,Race,White
+1210,Race,White
+1211,Race,White
+1212,Race,White
+1213,Race,White
+1216,Race,White
+1217,Race,Unknown Race
+1218,Race,White
+1219,Race,White
+1220,Race,White
+1221,Race,White
+1222,Race,White
+1224,Race,White
+1225,Race,White
+1226,Race,White
+1227,Race,White
+1228,Race,White
+1229,Race,White
+1230,Race,White
+1231,Race,White
+1232,Race,White
+1234,Race,Unknown Race
+1236,Race,White
+1237,Race,Black
+1238,Race,White
+1239,Race,White
+1240,Race,White
+1241,Race,White
+1242,Race,White
+1243,Race,White
+1244,Race,White
+1245,Race,White
+1246,Race,White
+1247,Race,White
+1249,Race,White
+1250,Race,Unknown Race
+1252,Race,White
+1253,Race,White
+1254,Race,White
+1255,Race,White
+1256,Race,White
+1257,Race,White
+1259,Race,White
+1261,Race,White
+1263,Race,White
+1265,Race,White
+1266,Race,White
+1268,Race,White
+1269,Race,White
+1270,Race,White
+1273,Race,White
+1274,Race,White
+1275,Race,White
+1276,Race,White
+1277,Race,White
+1278,Race,White
+1279,Race,Asian
+1280,Race,White
+1281,Race,Unknown Race
+1283,Race,White
+1284,Race,White
+1285,Race,More than one race
+1286,Race,White
+1287,Race,White
+1288,Race,White
+1291,Race,Unknown Race
+1292,Race,White
+1293,Race,White
+1294,Race,White
+1295,Race,White
+1296,Race,White
+1297,Race,White
+1298,Race,Unknown Race
+1299,Race,White
+1300,Race,White
+1301,Race,White
+1302,Race,More than one race
+1303,Race,White
+1304,Race,White
+1305,Race,White
+1306,Race,White
+1307,Race,White
+1308,Race,White
+1309,Race,White
+1310,Race,White
+1311,Race,White
+1313,Race,White
+1314,Race,White
+1315,Race,White
+1316,Race,White
+1317,Race,White
+1318,Race,White
+1319,Race,White
+1320,Race,White
+1322,Race,White
+1323,Race,White
+1325,Race,White
+1326,Race,White
+1327,Race,White
+1328,Race,White
+1329,Race,More than one race
+1330,Race,White
+1332,Race,White
+1333,Race,White
+1334,Race,White
+1335,Race,White
+1336,Race,White
+1337,Race,Black
+1338,Race,White
+1339,Race,White
+1340,Race,White
+1342,Race,White
+1343,Race,White
+1344,Race,White
+1345,Race,Unknown Race
+1346,Race,White
+1347,Race,White
+1348,Race,White
+1351,Race,White
+1352,Race,White
+1353,Race,Unknown Race
+1354,Race,White
+1355,Race,White
+1356,Race,Unknown Race
+1358,Race,White
+1359,Race,White
+1362,Race,White
+1363,Race,White
+1366,Race,White
+1369,Race,White
+1370,Race,White
+1371,Race,More than one race
+1374,Race,White
+1375,Race,Black
+1376,Race,White
+1377,Race,Unknown Race
+1380,Race,White
+1381,Race,White
+1383,Race,White
+1384,Race,White
+1385,Race,Native American or Alaska Native
+1387,Race,White
+1388,Race,White
+1391,Race,White
+1392,Race,Unknown Race
+1393,Race,White
+1396,Race,Unknown Race
+1398,Race,White
+1400,Race,White
+1406,Race,White
+1407,Race,Unknown Race
+1412,Race,Unknown Race
+1413,Race,White
+1414,Race,White
+1419,Race,White
+1420,Race,More than one race
+1421,Race,More than one race
+1423,Race,Unknown Race
+1425,Race,White
+1428,Race,White
+1433,Race,Unknown Race
+1440,Race,White
+1441,Race,White
+1447,Race,Unknown Race
+1452,Race,Unknown Race
+1453,Race,White
+1454,Race,White
+1455,Race,White
+1459,Race,White
+1461,Race,Unknown Race
+1463,Race,White
+1466,Race,White
+1467,Race,White
+1473,Race,Unknown Race
+1475,Race,White
+1477,Race,White
+1479,Race,White
+1481,Race,White
+1483,Race,More than one race
+1487,Race,White
+1488,Race,White
+1490,Race,White
+1492,Race,White
+1493,Race,White
+1497,Race,Unknown Race
+1498,Race,White
+1499,Race,White
+1500,Race,Unknown Race
+1501,Race,More than one race
+1502,Race,Unknown Race
+1504,Race,White
+1505,Race,Native American or Alaska Native
+1506,Race,White
+1506,Race,White
+1509,Race,Unknown Race
+1510,Race,White
+1513,Race,White
+1517,Race,Unknown Race
+1518,Race,White
+1520,Race,Unknown Race
+1521,Race,White
+1522,Race,Unknown Race
+1523,Race,White
+1526,Race,White
+1527,Race,White
+1530,Race,Unknown Race
+1533,Race,More than one race
+1535,Race,White
+1536,Race,White
+1538,Race,White
+1539,Race,White
+1540,Race,White
+1541,Race,White
+1542,Race,Unknown Race
+1543,Race,Unknown Race
+1547,Race,White
+1548,Race,White
+1549,Race,White
+1551,Race,White
+1552,Race,Unknown Race
+1556,Race,White
+1557,Race,Unknown Race
+1559,Race,Unknown Race
+1560,Race,Unknown Race
+1563,Race,Unknown Race
+1564,Race,White
+1565,Race,Unknown Race
+1566,Race,Unknown Race
+1567,Race,Unknown Race
+1568,Race,White
+1572,Race,Unknown Race
+1573,Race,Unknown Race
+1575,Race,Unknown Race
+1579,Race,White
+1580,Race,White
+1581,Race,Unknown Race
+1584,Race,White
+1586,Race,Unknown Race
+1588,Race,Unknown Race
+1590,Race,Unknown Race
+1592,Race,White
+1593,Race,Unknown Race
+1594,Race,White
+1595,Race,White
+1596,Race,Unknown Race
+1600,Race,White
+1601,Race,White
+1601,Race,White
+1603,Race,White
+1607,Race,Unknown Race
+1612,Race,More than one race
+1613,Race,White
+1616,Race,White
+1617,Race,White
+1618,Race,Unknown Race
+1619,Race,White
+1621,Race,Unknown Race
+1624,Race,White
+1626,Race,White
+1627,Race,White
+1628,Race,White
+1630,Race,White
+1631,Race,White
+1632,Race,White
+1633,Race,Unknown Race
+1637,Race,White
+1638,Race,Unknown Race
+1639,Race,White
+1642,Race,White
+1642,Race,White
+1643,Race,Unknown Race
+1645,Race,Unknown Race
+1647,Race,White
+1652,Race,White
+1653,Race,Unknown Race
+1657,Race,White
+1658,Race,More than one race
+1660,Race,White
+1662,Race,White
+1663,Race,White
+1665,Race,Unknown Race
+1666,Race,White
+1667,Race,Unknown Race
+1672,Race,White
+1674,Race,Native American or Alaska Native
+1678,Race,White
+1679,Race,White
+1680,Race,White
+1684,Race,White
+1685,Race,White
+1686,Race,White
+1687,Race,White
+1688,Race,White
+1689,Race,Unknown Race
+1690,Race,White
+1691,Race,White
+1692,Race,White
+1693,Race,White
+1697,Race,White
+1700,Race,White
+1700,Race,White
+1701,Race,White
+1702,Race,White
+1704,Race,White
+1705,Race,White
+1706,Race,Unknown Race
+1708,Race,White
+1709,Race,Unknown Race
+1713,Race,White
+1714,Race,White
+1717,Race,White
+1718,Race,Unknown Race
+1719,Race,White
+1720,Race,White
+1721,Race,White
+1722,Race,White
+1723,Race,White
+1725,Race,White
+1726,Race,White
+1727,Race,More than one race
+1728,Race,White
+1729,Race,Black
+1730,Race,Unknown Race
+1733,Race,Unknown Race
+1734,Race,White
+1735,Race,White
+1736,Race,Unknown Race
+1737,Race,White
+1738,Race,White
+1739,Race,White
+1740,Race,Unknown Race
+1741,Race,White
+1743,Race,White
+1745,Race,White
+1746,Race,White
+1747,Race,White
+1748,Race,White
+1749,Race,White
+1750,Race,White
+1751,Race,White
+1752,Race,White
+1752,Race,White
+1753,Race,Unknown Race
+1756,Race,White
+1757,Race,White
+1758,Race,More than one race
+1759,Race,White
+1761,Race,White
+1763,Race,White
+1764,Race,White
+1765,Race,White
+1766,Race,Unknown Race
+1767,Race,White
+1768,Race,White
+1769,Race,More than one race
+1771,Race,White
+1772,Race,White
+1774,Race,White
+1776,Race,White
+1777,Race,White
+1779,Race,White
+1780,Race,White
+1781,Race,White
+1783,Race,White
+1785,Race,White
+1786,Race,White
+1788,Race,Unknown Race
+1789,Race,White
+1790,Race,Black
+1791,Race,White
+1793,Race,Unknown Race
+1794,Race,White
+1795,Race,Unknown Race
+1796,Race,Unknown Race
+1801,Race,White
+1803,Race,White
+1805,Race,Unknown Race
+1806,Race,More than one race
+1807,Race,White
+1808,Race,White
+1809,Race,Native American or Alaska Native
+1810,Race,White
+1811,Race,Black
+1812,Race,Black
+1813,Race,White
+1815,Race,White
+1817,Race,Unknown Race
+1818,Race,White
+1820,Race,White
+1821,Race,White
+1822,Race,Unknown Race
+1823,Race,White
+1824,Race,White
+1825,Race,Unknown Race
+1826,Race,White
+1827,Race,White
+1828,Race,White
+1829,Race,White
+1830,Race,White
+1831,Race,White
+1832,Race,White
+1833,Race,White
+1834,Race,White
+1835,Race,White
+1836,Race,Unknown Race
+1837,Race,White
+1838,Race,Black
+1839,Race,White
+1840,Race,White
+1842,Race,White
+1843,Race,Unknown Race
+1845,Race,Black
+1850,Race,Unknown Race
+1851,Race,Unknown Race
+1852,Race,White
+1854,Race,White
+1855,Race,White
+1856,Race,White
+1857,Race,White
+1860,Race,White
+1861,Race,Black
+1862,Race,White
+1863,Race,Unknown Race
+1864,Race,Unknown Race
+1865,Race,Unknown Race
+1866,Race,Unknown Race
+1867,Race,White
+1868,Race,White
+1869,Race,Unknown Race
+1871,Race,White
+1872,Race,White
+1873,Race,White
+1874,Race,White
+1875,Race,White
+1876,Race,White
+1877,Race,White
+1878,Race,White
+1879,Race,White
+1880,Race,White
+1882,Race,Unknown Race
+1884,Race,Unknown Race
+1885,Race,Black
+1887,Race,White
+1888,Race,White
+1889,Race,White
+1890,Race,White
+1891,Race,White
+1892,Race,White
+1893,Race,White
+1896,Race,White
+1897,Race,White
+1898,Race,Unknown Race
+1899,Race,White
+1900,Race,White
+1904,Race,White
+1905,Race,White
+1906,Race,White
+1909,Race,White
+1910,Race,White
+1911,Race,White
+1912,Race,Unknown Race
+1913,Race,White
+1914,Race,Unknown Race
+1915,Race,White
+1916,Race,Black
+1917,Race,White
+1918,Race,Unknown Race
+1919,Race,Unknown Race
+1921,Race,White
+1922,Race,White
+1923,Race,White
+1924,Race,White
+1925,Race,Black
+1927,Race,White
+1928,Race,Unknown Race
+1929,Race,White
+1930,Race,Unknown Race
+1931,Race,Unknown Race
+1932,Race,Unknown Race
+1933,Race,Unknown Race
+1934,Race,White
+1935,Race,White
+1937,Race,White
+1939,Race,White
+1940,Race,Unknown Race
+1941,Race,Unknown Race
+1942,Race,White
+1944,Race,Black
+1945,Race,Unknown Race
+1947,Race,White
+1948,Race,Black
+1949,Race,White
+1950,Race,White
+1952,Race,Unknown Race
+1953,Race,White
+1954,Race,Black
+1955,Race,White
+1958,Race,Black
+1959,Race,White
+1960,Race,White
+1961,Race,White
+1962,Race,White
+1963,Race,White
+1964,Race,Unknown Race
+1965,Race,White
+1967,Race,Unknown Race
+1969,Race,White
+1970,Race,White
+1971,Race,White
+1972,Race,White
+1973,Race,White
+1974,Race,White
+1975,Race,Black
+1976,Race,White
+1978,Race,White
+1979,Race,White
+1980,Race,White
+1981,Race,White
+1982,Race,White
+1983,Race,Unknown Race
+1984,Race,Unknown Race
+1986,Race,White
+1988,Race,White
+1989,Race,Black
+1990,Race,White
+1991,Race,White
+1993,Race,White
+1994,Race,White
+1996,Race,White
+1997,Race,White
+2002,Race,Unknown Race
+2003,Race,White
+2004,Race,Unknown Race
+2006,Race,White
+2007,Race,Unknown Race
+2008,Race,Unknown Race
+2010,Race,White
+2011,Race,White
+2013,Race,Unknown Race
+2014,Race,Unknown Race
+2016,Race,Unknown Race
+2017,Race,White
+2020,Race,Unknown Race
+2024,Race,Unknown Race
+2026,Race,Unknown Race
+2031,Race,Unknown Race
+2032,Race,Unknown Race
+2033,Race,Unknown Race
+2034,Race,Unknown Race
+2035,Race,Unknown Race
+2036,Race,Unknown Race
+2037,Race,Unknown Race
+2038,Race,Unknown Race
+2039,Race,Unknown Race
+2040,Race,Unknown Race
+2041,Race,Unknown Race
+2043,Race,Unknown Race
+2044,Race,Unknown Race
+2045,Race,Unknown Race
+2046,Race,Unknown Race
+2048,Race,Unknown Race
+2049,Race,Unknown Race
+2050,Race,Unknown Race
+2051,Race,Unknown Race
+2052,Race,Unknown Race
+2053,Race,Unknown Race
+2054,Race,Unknown Race
+2055,Race,Unknown Race
+2056,Race,Unknown Race
+2058,Race,White
+2059,Race,White
+2,Age At Diagnosis,85.0
+3,Age At Diagnosis,64.0
+4,Age At Diagnosis,74.0
+5,Age At Diagnosis,68.0
+6,Age At Diagnosis,76.0
+7,Age At Diagnosis,41.0
+9,Age At Diagnosis,56.0
+11,Age At Diagnosis,71.0
+12,Age At Diagnosis,70.0
+13,Age At Diagnosis,77.0
+14,Age At Diagnosis,84.0
+15,Age At Diagnosis,39.0
+17,Age At Diagnosis,76.0
+18,Age At Diagnosis,73.0
+19,Age At Diagnosis,58.0
+20,Age At Diagnosis,58.0
+21,Age At Diagnosis,74.0
+23,Age At Diagnosis,66.0
+24,Age At Diagnosis,79.0
+25,Age At Diagnosis,50.0
+27,Age At Diagnosis,75.0
+31,Age At Diagnosis,66.0
+32,Age At Diagnosis,71.0
+34,Age At Diagnosis,75.0
+35,Age At Diagnosis,81.0
+36,Age At Diagnosis,44.0
+38,Age At Diagnosis,65.0
+39,Age At Diagnosis,62.0
+40,Age At Diagnosis,55.0
+41,Age At Diagnosis,81.0
+42,Age At Diagnosis,45.0
+45,Age At Diagnosis,46.0
+46,Age At Diagnosis,67.0
+47,Age At Diagnosis,74.0
+48,Age At Diagnosis,57.0
+50,Age At Diagnosis,58.0
+51,Age At Diagnosis,72.0
+52,Age At Diagnosis,49.0
+53,Age At Diagnosis,47.0
+56,Age At Diagnosis,59.0
+57,Age At Diagnosis,54.0
+59,Age At Diagnosis,63.0
+61,Age At Diagnosis,80.0
+62,Age At Diagnosis,52.0
+63,Age At Diagnosis,76.0
+64,Age At Diagnosis,60.0
+66,Age At Diagnosis,73.0
+67,Age At Diagnosis,71.0
+68,Age At Diagnosis,76.0
+70,Age At Diagnosis,42.0
+71,Age At Diagnosis,39.0
+72,Age At Diagnosis,81.0
+73,Age At Diagnosis,74.0
+76,Age At Diagnosis,50.0
+78,Age At Diagnosis,59.0
+79,Age At Diagnosis,81.0
+81,Age At Diagnosis,62.0
+82,Age At Diagnosis,60.0
+83,Age At Diagnosis,72.0
+84,Age At Diagnosis,42.0
+86,Age At Diagnosis,67.0
+87,Age At Diagnosis,65.0
+88,Age At Diagnosis,44.0
+89,Age At Diagnosis,62.0
+91,Age At Diagnosis,60.0
+92,Age At Diagnosis,49.0
+93,Age At Diagnosis,80.0
+94,Age At Diagnosis,61.0
+95,Age At Diagnosis,73.0
+96,Age At Diagnosis,76.0
+97,Age At Diagnosis,66.0
+99,Age At Diagnosis,82.0
+100,Age At Diagnosis,59.0
+101,Age At Diagnosis,69.0
+103,Age At Diagnosis,37.0
+104,Age At Diagnosis,75.0
+107,Age At Diagnosis,46.0
+108,Age At Diagnosis,84.0
+109,Age At Diagnosis,68.0
+110,Age At Diagnosis,55.0
+111,Age At Diagnosis,60.0
+113,Age At Diagnosis,65.0
+117,Age At Diagnosis,73.0
+118,Age At Diagnosis,75.0
+119,Age At Diagnosis,70.0
+120,Age At Diagnosis,87.0
+121,Age At Diagnosis,73.0
+122,Age At Diagnosis,71.0
+124,Age At Diagnosis,52.0
+125,Age At Diagnosis,74.0
+126,Age At Diagnosis,55.0
+127,Age At Diagnosis,71.0
+128,Age At Diagnosis,43.0
+129,Age At Diagnosis,70.0
+130,Age At Diagnosis,77.0
+131,Age At Diagnosis,78.0
+136,Age At Diagnosis,66.0
+138,Age At Diagnosis,62.0
+139,Age At Diagnosis,64.0
+142,Age At Diagnosis,57.0
+145,Age At Diagnosis,68.0
+147,Age At Diagnosis,71.0
+148,Age At Diagnosis,30.0
+149,Age At Diagnosis,67.0
+152,Age At Diagnosis,56.0
+153,Age At Diagnosis,46.0
+154,Age At Diagnosis,71.0
+155,Age At Diagnosis,61.0
+156,Age At Diagnosis,77.0
+157,Age At Diagnosis,59.0
+158,Age At Diagnosis,63.0
+159,Age At Diagnosis,65.0
+161,Age At Diagnosis,52.0
+162,Age At Diagnosis,75.0
+163,Age At Diagnosis,51.0
+165,Age At Diagnosis,53.0
+166,Age At Diagnosis,55.0
+167,Age At Diagnosis,65.0
+169,Age At Diagnosis,58.0
+171,Age At Diagnosis,42.0
+172,Age At Diagnosis,64.0
+173,Age At Diagnosis,43.0
+174,Age At Diagnosis,61.0
+175,Age At Diagnosis,58.0
+176,Age At Diagnosis,56.0
+177,Age At Diagnosis,66.0
+179,Age At Diagnosis,66.0
+180,Age At Diagnosis,67.0
+181,Age At Diagnosis,49.0
+182,Age At Diagnosis,30.0
+183,Age At Diagnosis,53.0
+185,Age At Diagnosis,69.0
+186,Age At Diagnosis,33.0
+188,Age At Diagnosis,68.0
+189,Age At Diagnosis,58.0
+190,Age At Diagnosis,75.0
+191,Age At Diagnosis,77.0
+192,Age At Diagnosis,55.0
+193,Age At Diagnosis,57.0
+194,Age At Diagnosis,36.0
+195,Age At Diagnosis,78.0
+196,Age At Diagnosis,57.0
+197,Age At Diagnosis,62.0
+198,Age At Diagnosis,68.0
+199,Age At Diagnosis,53.0
+202,Age At Diagnosis,61.0
+203,Age At Diagnosis,53.0
+204,Age At Diagnosis,61.0
+205,Age At Diagnosis,88.0
+206,Age At Diagnosis,66.0
+207,Age At Diagnosis,54.0
+208,Age At Diagnosis,42.0
+209,Age At Diagnosis,59.0
+210,Age At Diagnosis,69.0
+211,Age At Diagnosis,75.0
+212,Age At Diagnosis,69.0
+214,Age At Diagnosis,57.0
+215,Age At Diagnosis,59.0
+216,Age At Diagnosis,59.0
+217,Age At Diagnosis,47.0
+218,Age At Diagnosis,40.0
+219,Age At Diagnosis,49.0
+220,Age At Diagnosis,79.0
+221,Age At Diagnosis,69.0
+222,Age At Diagnosis,68.0
+223,Age At Diagnosis,63.0
+224,Age At Diagnosis,54.0
+225,Age At Diagnosis,67.0
+226,Age At Diagnosis,76.0
+229,Age At Diagnosis,53.0
+230,Age At Diagnosis,37.0
+231,Age At Diagnosis,63.0
+232,Age At Diagnosis,58.0
+233,Age At Diagnosis,57.0
+236,Age At Diagnosis,43.0
+237,Age At Diagnosis,50.0
+238,Age At Diagnosis,68.0
+239,Age At Diagnosis,57.0
+240,Age At Diagnosis,76.0
+241,Age At Diagnosis,61.0
+242,Age At Diagnosis,40.0
+243,Age At Diagnosis,59.0
+244,Age At Diagnosis,50.0
+245,Age At Diagnosis,39.0
+246,Age At Diagnosis,54.0
+247,Age At Diagnosis,57.0
+248,Age At Diagnosis,60.0
+249,Age At Diagnosis,68.0
+250,Age At Diagnosis,69.0
+251,Age At Diagnosis,47.0
+252,Age At Diagnosis,50.0
+253,Age At Diagnosis,67.0
+254,Age At Diagnosis,74.0
+256,Age At Diagnosis,54.0
+257,Age At Diagnosis,54.0
+258,Age At Diagnosis,57.0
+259,Age At Diagnosis,43.0
+261,Age At Diagnosis,73.0
+262,Age At Diagnosis,70.0
+263,Age At Diagnosis,54.0
+264,Age At Diagnosis,62.0
+265,Age At Diagnosis,62.0
+266,Age At Diagnosis,71.0
+268,Age At Diagnosis,39.0
+271,Age At Diagnosis,70.0
+272,Age At Diagnosis,72.0
+273,Age At Diagnosis,64.0
+274,Age At Diagnosis,88.0
+275,Age At Diagnosis,69.0
+277,Age At Diagnosis,49.0
+279,Age At Diagnosis,69.0
+280,Age At Diagnosis,55.0
+281,Age At Diagnosis,50.0
+282,Age At Diagnosis,48.0
+283,Age At Diagnosis,49.0
+284,Age At Diagnosis,57.0
+286,Age At Diagnosis,75.0
+287,Age At Diagnosis,43.0
+288,Age At Diagnosis,57.0
+289,Age At Diagnosis,77.0
+290,Age At Diagnosis,64.0
+292,Age At Diagnosis,68.0
+293,Age At Diagnosis,69.0
+294,Age At Diagnosis,43.0
+295,Age At Diagnosis,42.0
+296,Age At Diagnosis,47.0
+298,Age At Diagnosis,49.0
+300,Age At Diagnosis,68.0
+301,Age At Diagnosis,66.0
+303,Age At Diagnosis,40.0
+304,Age At Diagnosis,50.0
+305,Age At Diagnosis,39.0
+306,Age At Diagnosis,58.0
+307,Age At Diagnosis,72.0
+308,Age At Diagnosis,56.0
+309,Age At Diagnosis,26.0
+310,Age At Diagnosis,64.0
+313,Age At Diagnosis,66.0
+314,Age At Diagnosis,71.0
+315,Age At Diagnosis,62.0
+316,Age At Diagnosis,54.0
+317,Age At Diagnosis,53.0
+318,Age At Diagnosis,31.0
+319,Age At Diagnosis,64.0
+320,Age At Diagnosis,42.0
+321,Age At Diagnosis,67.0
+322,Age At Diagnosis,65.0
+324,Age At Diagnosis,67.0
+325,Age At Diagnosis,42.0
+326,Age At Diagnosis,45.0
+327,Age At Diagnosis,70.0
+328,Age At Diagnosis,87.0
+329,Age At Diagnosis,57.0
+331,Age At Diagnosis,71.0
+332,Age At Diagnosis,65.0
+334,Age At Diagnosis,54.0
+337,Age At Diagnosis,77.0
+338,Age At Diagnosis,65.0
+339,Age At Diagnosis,64.0
+340,Age At Diagnosis,70.0
+341,Age At Diagnosis,65.0
+342,Age At Diagnosis,73.0
+343,Age At Diagnosis,54.0
+344,Age At Diagnosis,38.0
+345,Age At Diagnosis,51.0
+346,Age At Diagnosis,59.0
+347,Age At Diagnosis,75.0
+348,Age At Diagnosis,54.0
+349,Age At Diagnosis,36.0
+350,Age At Diagnosis,71.0
+351,Age At Diagnosis,45.0
+352,Age At Diagnosis,47.0
+353,Age At Diagnosis,50.0
+354,Age At Diagnosis,60.0
+355,Age At Diagnosis,29.0
+356,Age At Diagnosis,55.0
+357,Age At Diagnosis,76.0
+358,Age At Diagnosis,57.0
+359,Age At Diagnosis,50.0
+360,Age At Diagnosis,58.0
+362,Age At Diagnosis,33.0
+365,Age At Diagnosis,56.0
+366,Age At Diagnosis,68.0
+367,Age At Diagnosis,39.0
+368,Age At Diagnosis,58.0
+369,Age At Diagnosis,50.0
+370,Age At Diagnosis,64.0
+371,Age At Diagnosis,59.0
+372,Age At Diagnosis,39.0
+373,Age At Diagnosis,52.0
+375,Age At Diagnosis,70.0
+377,Age At Diagnosis,61.0
+378,Age At Diagnosis,69.0
+379,Age At Diagnosis,75.0
+381,Age At Diagnosis,79.0
+382,Age At Diagnosis,64.0
+383,Age At Diagnosis,59.0
+384,Age At Diagnosis,54.0
+385,Age At Diagnosis,63.0
+386,Age At Diagnosis,63.0
+387,Age At Diagnosis,47.0
+388,Age At Diagnosis,57.0
+389,Age At Diagnosis,46.0
+390,Age At Diagnosis,57.0
+391,Age At Diagnosis,51.0
+392,Age At Diagnosis,64.0
+393,Age At Diagnosis,56.0
+394,Age At Diagnosis,68.0
+395,Age At Diagnosis,40.0
+397,Age At Diagnosis,39.0
+398,Age At Diagnosis,65.0
+399,Age At Diagnosis,85.0
+400,Age At Diagnosis,81.0
+401,Age At Diagnosis,65.0
+402,Age At Diagnosis,68.0
+403,Age At Diagnosis,74.0
+404,Age At Diagnosis,37.0
+406,Age At Diagnosis,65.0
+407,Age At Diagnosis,58.0
+408,Age At Diagnosis,51.0
+410,Age At Diagnosis,56.0
+411,Age At Diagnosis,67.0
+412,Age At Diagnosis,62.0
+413,Age At Diagnosis,72.0
+414,Age At Diagnosis,54.0
+415,Age At Diagnosis,75.0
+416,Age At Diagnosis,36.0
+417,Age At Diagnosis,66.0
+418,Age At Diagnosis,55.0
+419,Age At Diagnosis,54.0
+420,Age At Diagnosis,42.0
+421,Age At Diagnosis,60.0
+422,Age At Diagnosis,75.0
+423,Age At Diagnosis,40.0
+424,Age At Diagnosis,65.0
+425,Age At Diagnosis,53.0
+426,Age At Diagnosis,36.0
+427,Age At Diagnosis,57.0
+428,Age At Diagnosis,57.0
+429,Age At Diagnosis,66.0
+430,Age At Diagnosis,67.0
+431,Age At Diagnosis,58.0
+432,Age At Diagnosis,35.0
+433,Age At Diagnosis,60.0
+434,Age At Diagnosis,75.0
+435,Age At Diagnosis,50.0
+436,Age At Diagnosis,50.0
+437,Age At Diagnosis,58.0
+438,Age At Diagnosis,64.0
+439,Age At Diagnosis,66.0
+440,Age At Diagnosis,53.0
+441,Age At Diagnosis,50.0
+442,Age At Diagnosis,63.0
+443,Age At Diagnosis,56.0
+444,Age At Diagnosis,64.0
+445,Age At Diagnosis,54.0
+446,Age At Diagnosis,30.0
+447,Age At Diagnosis,57.0
+448,Age At Diagnosis,65.0
+449,Age At Diagnosis,55.0
+450,Age At Diagnosis,72.0
+451,Age At Diagnosis,45.0
+452,Age At Diagnosis,69.0
+453,Age At Diagnosis,61.0
+454,Age At Diagnosis,51.0
+455,Age At Diagnosis,63.0
+456,Age At Diagnosis,49.0
+457,Age At Diagnosis,66.0
+458,Age At Diagnosis,56.0
+459,Age At Diagnosis,60.0
+460,Age At Diagnosis,65.0
+461,Age At Diagnosis,70.0
+462,Age At Diagnosis,50.0
+463,Age At Diagnosis,69.0
+464,Age At Diagnosis,52.0
+465,Age At Diagnosis,51.0
+466,Age At Diagnosis,53.0
+467,Age At Diagnosis,74.0
+468,Age At Diagnosis,64.0
+469,Age At Diagnosis,61.0
+470,Age At Diagnosis,64.0
+471,Age At Diagnosis,61.0
+473,Age At Diagnosis,56.0
+474,Age At Diagnosis,74.0
+475,Age At Diagnosis,78.0
+476,Age At Diagnosis,45.0
+477,Age At Diagnosis,63.0
+478,Age At Diagnosis,40.0
+480,Age At Diagnosis,64.0
+481,Age At Diagnosis,65.0
+482,Age At Diagnosis,73.0
+483,Age At Diagnosis,55.0
+484,Age At Diagnosis,51.0
+485,Age At Diagnosis,67.0
+486,Age At Diagnosis,47.0
+487,Age At Diagnosis,60.0
+488,Age At Diagnosis,45.0
+489,Age At Diagnosis,43.0
+490,Age At Diagnosis,44.0
+491,Age At Diagnosis,74.0
+492,Age At Diagnosis,57.0
+493,Age At Diagnosis,58.0
+494,Age At Diagnosis,61.0
+496,Age At Diagnosis,37.0
+497,Age At Diagnosis,47.0
+498,Age At Diagnosis,41.0
+500,Age At Diagnosis,67.0
+501,Age At Diagnosis,64.0
+503,Age At Diagnosis,71.0
+504,Age At Diagnosis,53.0
+505,Age At Diagnosis,53.0
+506,Age At Diagnosis,53.0
+507,Age At Diagnosis,73.0
+508,Age At Diagnosis,61.0
+509,Age At Diagnosis,63.0
+510,Age At Diagnosis,50.0
+512,Age At Diagnosis,59.0
+513,Age At Diagnosis,53.0
+514,Age At Diagnosis,43.0
+515,Age At Diagnosis,51.0
+516,Age At Diagnosis,51.0
+517,Age At Diagnosis,52.0
+518,Age At Diagnosis,80.0
+519,Age At Diagnosis,30.0
+520,Age At Diagnosis,49.0
+521,Age At Diagnosis,41.0
+522,Age At Diagnosis,54.0
+523,Age At Diagnosis,51.0
+524,Age At Diagnosis,70.0
+525,Age At Diagnosis,56.0
+526,Age At Diagnosis,45.0
+527,Age At Diagnosis,46.0
+528,Age At Diagnosis,58.0
+529,Age At Diagnosis,73.0
+530,Age At Diagnosis,48.0
+531,Age At Diagnosis,55.0
+532,Age At Diagnosis,60.0
+536,Age At Diagnosis,48.0
+537,Age At Diagnosis,44.0
+538,Age At Diagnosis,78.0
+539,Age At Diagnosis,34.0
+540,Age At Diagnosis,27.0
+541,Age At Diagnosis,51.0
+542,Age At Diagnosis,46.0
+543,Age At Diagnosis,48.0
+544,Age At Diagnosis,51.0
+545,Age At Diagnosis,31.0
+546,Age At Diagnosis,43.0
+547,Age At Diagnosis,59.0
+548,Age At Diagnosis,61.0
+549,Age At Diagnosis,59.0
+550,Age At Diagnosis,50.0
+551,Age At Diagnosis,52.0
+552,Age At Diagnosis,57.0
+553,Age At Diagnosis,54.0
+556,Age At Diagnosis,51.0
+557,Age At Diagnosis,72.0
+558,Age At Diagnosis,63.0
+559,Age At Diagnosis,58.0
+560,Age At Diagnosis,71.0
+561,Age At Diagnosis,46.0
+562,Age At Diagnosis,54.0
+563,Age At Diagnosis,73.0
+564,Age At Diagnosis,69.0
+565,Age At Diagnosis,70.0
+566,Age At Diagnosis,61.0
+567,Age At Diagnosis,56.0
+568,Age At Diagnosis,69.0
+570,Age At Diagnosis,50.0
+571,Age At Diagnosis,48.0
+572,Age At Diagnosis,69.0
+573,Age At Diagnosis,73.0
+574,Age At Diagnosis,40.0
+576,Age At Diagnosis,36.0
+577,Age At Diagnosis,55.0
+578,Age At Diagnosis,65.0
+579,Age At Diagnosis,64.0
+580,Age At Diagnosis,56.0
+581,Age At Diagnosis,60.0
+582,Age At Diagnosis,62.0
+583,Age At Diagnosis,54.0
+584,Age At Diagnosis,58.0
+585,Age At Diagnosis,70.0
+586,Age At Diagnosis,48.0
+587,Age At Diagnosis,42.0
+588,Age At Diagnosis,38.0
+589,Age At Diagnosis,62.0
+590,Age At Diagnosis,58.0
+591,Age At Diagnosis,42.0
+592,Age At Diagnosis,70.0
+593,Age At Diagnosis,57.0
+594,Age At Diagnosis,60.0
+595,Age At Diagnosis,54.0
+596,Age At Diagnosis,64.0
+597,Age At Diagnosis,67.0
+598,Age At Diagnosis,57.0
+600,Age At Diagnosis,67.0
+601,Age At Diagnosis,69.0
+602,Age At Diagnosis,63.0
+603,Age At Diagnosis,59.0
+604,Age At Diagnosis,54.0
+605,Age At Diagnosis,39.0
+606,Age At Diagnosis,49.0
+607,Age At Diagnosis,44.0
+608,Age At Diagnosis,74.0
+609,Age At Diagnosis,63.0
+610,Age At Diagnosis,78.0
+611,Age At Diagnosis,49.0
+612,Age At Diagnosis,58.0
+613,Age At Diagnosis,68.0
+614,Age At Diagnosis,58.0
+615,Age At Diagnosis,67.0
+616,Age At Diagnosis,68.0
+617,Age At Diagnosis,52.0
+618,Age At Diagnosis,54.0
+619,Age At Diagnosis,69.0
+620,Age At Diagnosis,66.0
+621,Age At Diagnosis,67.0
+622,Age At Diagnosis,47.0
+623,Age At Diagnosis,72.0
+624,Age At Diagnosis,40.0
+625,Age At Diagnosis,64.0
+626,Age At Diagnosis,30.0
+627,Age At Diagnosis,51.0
+628,Age At Diagnosis,52.0
+629,Age At Diagnosis,61.0
+630,Age At Diagnosis,57.0
+631,Age At Diagnosis,72.0
+632,Age At Diagnosis,45.0
+633,Age At Diagnosis,36.0
+634,Age At Diagnosis,49.0
+635,Age At Diagnosis,30.0
+637,Age At Diagnosis,59.0
+638,Age At Diagnosis,74.0
+639,Age At Diagnosis,73.0
+640,Age At Diagnosis,69.0
+641,Age At Diagnosis,59.0
+642,Age At Diagnosis,75.0
+643,Age At Diagnosis,66.0
+644,Age At Diagnosis,56.0
+645,Age At Diagnosis,48.0
+646,Age At Diagnosis,53.0
+647,Age At Diagnosis,62.0
+648,Age At Diagnosis,72.0
+649,Age At Diagnosis,64.0
+650,Age At Diagnosis,85.0
+651,Age At Diagnosis,70.0
+652,Age At Diagnosis,47.0
+653,Age At Diagnosis,67.0
+654,Age At Diagnosis,54.0
+655,Age At Diagnosis,44.0
+656,Age At Diagnosis,76.0
+657,Age At Diagnosis,44.0
+658,Age At Diagnosis,62.0
+659,Age At Diagnosis,54.0
+660,Age At Diagnosis,69.0
+661,Age At Diagnosis,70.0
+663,Age At Diagnosis,62.0
+664,Age At Diagnosis,70.0
+665,Age At Diagnosis,64.0
+666,Age At Diagnosis,75.0
+667,Age At Diagnosis,48.0
+668,Age At Diagnosis,74.0
+669,Age At Diagnosis,50.0
+670,Age At Diagnosis,60.0
+671,Age At Diagnosis,51.0
+672,Age At Diagnosis,65.0
+673,Age At Diagnosis,47.0
+674,Age At Diagnosis,43.0
+676,Age At Diagnosis,63.0
+677,Age At Diagnosis,43.0
+678,Age At Diagnosis,42.0
+679,Age At Diagnosis,72.0
+680,Age At Diagnosis,56.0
+681,Age At Diagnosis,47.0
+682,Age At Diagnosis,63.0
+683,Age At Diagnosis,77.0
+684,Age At Diagnosis,72.0
+685,Age At Diagnosis,53.0
+686,Age At Diagnosis,59.0
+687,Age At Diagnosis,60.0
+688,Age At Diagnosis,63.0
+689,Age At Diagnosis,55.0
+691,Age At Diagnosis,57.0
+692,Age At Diagnosis,45.0
+693,Age At Diagnosis,64.0
+694,Age At Diagnosis,80.0
+696,Age At Diagnosis,62.0
+697,Age At Diagnosis,70.0
+698,Age At Diagnosis,65.0
+699,Age At Diagnosis,66.0
+700,Age At Diagnosis,34.0
+701,Age At Diagnosis,70.0
+702,Age At Diagnosis,54.0
+703,Age At Diagnosis,49.0
+704,Age At Diagnosis,49.0
+705,Age At Diagnosis,58.0
+706,Age At Diagnosis,80.0
+707,Age At Diagnosis,56.0
+708,Age At Diagnosis,57.0
+709,Age At Diagnosis,47.0
+710,Age At Diagnosis,59.0
+711,Age At Diagnosis,63.0
+712,Age At Diagnosis,57.0
+713,Age At Diagnosis,54.0
+714,Age At Diagnosis,26.0
+715,Age At Diagnosis,56.0
+716,Age At Diagnosis,71.0
+717,Age At Diagnosis,64.0
+718,Age At Diagnosis,80.0
+719,Age At Diagnosis,66.0
+720,Age At Diagnosis,56.0
+721,Age At Diagnosis,50.0
+722,Age At Diagnosis,43.0
+723,Age At Diagnosis,45.0
+725,Age At Diagnosis,49.0
+726,Age At Diagnosis,61.0
+727,Age At Diagnosis,69.0
+728,Age At Diagnosis,61.0
+729,Age At Diagnosis,45.0
+730,Age At Diagnosis,77.0
+731,Age At Diagnosis,59.0
+732,Age At Diagnosis,59.0
+733,Age At Diagnosis,69.0
+734,Age At Diagnosis,75.0
+735,Age At Diagnosis,64.0
+736,Age At Diagnosis,57.0
+737,Age At Diagnosis,75.0
+738,Age At Diagnosis,70.0
+739,Age At Diagnosis,59.0
+740,Age At Diagnosis,71.0
+741,Age At Diagnosis,76.0
+742,Age At Diagnosis,54.0
+743,Age At Diagnosis,65.0
+744,Age At Diagnosis,59.0
+745,Age At Diagnosis,45.0
+746,Age At Diagnosis,49.0
+747,Age At Diagnosis,54.0
+748,Age At Diagnosis,60.0
+750,Age At Diagnosis,63.0
+752,Age At Diagnosis,67.0
+753,Age At Diagnosis,62.0
+754,Age At Diagnosis,66.0
+755,Age At Diagnosis,59.0
+756,Age At Diagnosis,47.0
+757,Age At Diagnosis,68.0
+758,Age At Diagnosis,61.0
+759,Age At Diagnosis,57.0
+760,Age At Diagnosis,72.0
+761,Age At Diagnosis,46.0
+763,Age At Diagnosis,65.0
+764,Age At Diagnosis,71.0
+765,Age At Diagnosis,53.0
+766,Age At Diagnosis,55.0
+767,Age At Diagnosis,64.0
+768,Age At Diagnosis,46.0
+769,Age At Diagnosis,48.0
+770,Age At Diagnosis,53.0
+771,Age At Diagnosis,54.0
+772,Age At Diagnosis,59.0
+773,Age At Diagnosis,39.0
+774,Age At Diagnosis,58.0
+775,Age At Diagnosis,70.0
+776,Age At Diagnosis,62.0
+777,Age At Diagnosis,44.0
+778,Age At Diagnosis,65.0
+779,Age At Diagnosis,53.0
+780,Age At Diagnosis,55.0
+781,Age At Diagnosis,60.0
+782,Age At Diagnosis,52.0
+783,Age At Diagnosis,70.0
+785,Age At Diagnosis,67.0
+786,Age At Diagnosis,71.0
+787,Age At Diagnosis,70.0
+788,Age At Diagnosis,70.0
+789,Age At Diagnosis,65.0
+790,Age At Diagnosis,69.0
+791,Age At Diagnosis,61.0
+792,Age At Diagnosis,49.0
+793,Age At Diagnosis,60.0
+794,Age At Diagnosis,59.0
+796,Age At Diagnosis,67.0
+797,Age At Diagnosis,68.0
+801,Age At Diagnosis,63.0
+802,Age At Diagnosis,67.0
+803,Age At Diagnosis,52.0
+804,Age At Diagnosis,41.0
+805,Age At Diagnosis,56.0
+806,Age At Diagnosis,43.0
+807,Age At Diagnosis,62.0
+808,Age At Diagnosis,51.0
+809,Age At Diagnosis,53.0
+810,Age At Diagnosis,71.0
+811,Age At Diagnosis,55.0
+812,Age At Diagnosis,49.0
+814,Age At Diagnosis,62.0
+815,Age At Diagnosis,47.0
+816,Age At Diagnosis,54.0
+817,Age At Diagnosis,67.0
+818,Age At Diagnosis,61.0
+819,Age At Diagnosis,51.0
+820,Age At Diagnosis,66.0
+821,Age At Diagnosis,61.0
+822,Age At Diagnosis,70.0
+823,Age At Diagnosis,63.0
+824,Age At Diagnosis,37.0
+825,Age At Diagnosis,41.0
+826,Age At Diagnosis,62.0
+827,Age At Diagnosis,48.0
+828,Age At Diagnosis,67.0
+829,Age At Diagnosis,75.0
+830,Age At Diagnosis,70.0
+831,Age At Diagnosis,71.0
+832,Age At Diagnosis,63.0
+833,Age At Diagnosis,49.0
+834,Age At Diagnosis,66.0
+835,Age At Diagnosis,39.0
+836,Age At Diagnosis,56.0
+837,Age At Diagnosis,63.0
+838,Age At Diagnosis,51.0
+839,Age At Diagnosis,49.0
+840,Age At Diagnosis,44.0
+841,Age At Diagnosis,57.0
+842,Age At Diagnosis,65.0
+843,Age At Diagnosis,71.0
+844,Age At Diagnosis,58.0
+845,Age At Diagnosis,70.0
+846,Age At Diagnosis,52.0
+847,Age At Diagnosis,66.0
+848,Age At Diagnosis,48.0
+849,Age At Diagnosis,57.0
+850,Age At Diagnosis,55.0
+851,Age At Diagnosis,52.0
+852,Age At Diagnosis,81.0
+853,Age At Diagnosis,72.0
+854,Age At Diagnosis,63.0
+855,Age At Diagnosis,59.0
+857,Age At Diagnosis,68.0
+858,Age At Diagnosis,67.0
+859,Age At Diagnosis,51.0
+860,Age At Diagnosis,63.0
+862,Age At Diagnosis,56.0
+863,Age At Diagnosis,69.0
+864,Age At Diagnosis,54.0
+865,Age At Diagnosis,69.0
+866,Age At Diagnosis,55.0
+867,Age At Diagnosis,57.0
+868,Age At Diagnosis,52.0
+870,Age At Diagnosis,48.0
+871,Age At Diagnosis,63.0
+872,Age At Diagnosis,68.0
+873,Age At Diagnosis,65.0
+874,Age At Diagnosis,74.0
+875,Age At Diagnosis,77.0
+876,Age At Diagnosis,38.0
+877,Age At Diagnosis,41.0
+879,Age At Diagnosis,77.0
+880,Age At Diagnosis,66.0
+881,Age At Diagnosis,66.0
+882,Age At Diagnosis,62.0
+884,Age At Diagnosis,44.0
+885,Age At Diagnosis,55.0
+886,Age At Diagnosis,53.0
+887,Age At Diagnosis,71.0
+888,Age At Diagnosis,55.0
+889,Age At Diagnosis,61.0
+890,Age At Diagnosis,61.0
+891,Age At Diagnosis,52.0
+892,Age At Diagnosis,41.0
+893,Age At Diagnosis,78.0
+894,Age At Diagnosis,63.0
+895,Age At Diagnosis,65.0
+896,Age At Diagnosis,57.0
+897,Age At Diagnosis,65.0
+898,Age At Diagnosis,69.0
+899,Age At Diagnosis,48.0
+900,Age At Diagnosis,48.0
+901,Age At Diagnosis,43.0
+902,Age At Diagnosis,60.0
+903,Age At Diagnosis,66.0
+904,Age At Diagnosis,61.0
+905,Age At Diagnosis,64.0
+906,Age At Diagnosis,69.0
+907,Age At Diagnosis,60.0
+909,Age At Diagnosis,64.0
+910,Age At Diagnosis,73.0
+911,Age At Diagnosis,58.0
+912,Age At Diagnosis,56.0
+913,Age At Diagnosis,78.0
+914,Age At Diagnosis,74.0
+915,Age At Diagnosis,70.0
+916,Age At Diagnosis,73.0
+917,Age At Diagnosis,56.0
+918,Age At Diagnosis,64.0
+919,Age At Diagnosis,48.0
+920,Age At Diagnosis,53.0
+921,Age At Diagnosis,49.0
+922,Age At Diagnosis,66.0
+923,Age At Diagnosis,57.0
+924,Age At Diagnosis,71.0
+925,Age At Diagnosis,73.0
+926,Age At Diagnosis,62.0
+928,Age At Diagnosis,41.0
+929,Age At Diagnosis,74.0
+930,Age At Diagnosis,62.0
+932,Age At Diagnosis,62.0
+933,Age At Diagnosis,60.0
+934,Age At Diagnosis,55.0
+935,Age At Diagnosis,78.0
+936,Age At Diagnosis,53.0
+937,Age At Diagnosis,51.0
+938,Age At Diagnosis,63.0
+939,Age At Diagnosis,57.0
+940,Age At Diagnosis,67.0
+941,Age At Diagnosis,77.0
+943,Age At Diagnosis,45.0
+944,Age At Diagnosis,56.0
+945,Age At Diagnosis,45.0
+946,Age At Diagnosis,67.0
+947,Age At Diagnosis,52.0
+948,Age At Diagnosis,62.0
+949,Age At Diagnosis,76.0
+951,Age At Diagnosis,81.0
+952,Age At Diagnosis,59.0
+953,Age At Diagnosis,63.0
+954,Age At Diagnosis,49.0
+955,Age At Diagnosis,72.0
+956,Age At Diagnosis,63.0
+957,Age At Diagnosis,65.0
+958,Age At Diagnosis,43.0
+959,Age At Diagnosis,78.0
+960,Age At Diagnosis,61.0
+961,Age At Diagnosis,62.0
+962,Age At Diagnosis,76.0
+963,Age At Diagnosis,78.0
+964,Age At Diagnosis,59.0
+965,Age At Diagnosis,48.0
+966,Age At Diagnosis,66.0
+967,Age At Diagnosis,65.0
+968,Age At Diagnosis,68.0
+969,Age At Diagnosis,54.0
+970,Age At Diagnosis,72.0
+972,Age At Diagnosis,55.0
+973,Age At Diagnosis,55.0
+975,Age At Diagnosis,54.0
+976,Age At Diagnosis,56.0
+977,Age At Diagnosis,36.0
+978,Age At Diagnosis,65.0
+979,Age At Diagnosis,59.0
+980,Age At Diagnosis,73.0
+981,Age At Diagnosis,59.0
+982,Age At Diagnosis,49.0
+984,Age At Diagnosis,60.0
+986,Age At Diagnosis,63.0
+987,Age At Diagnosis,69.0
+988,Age At Diagnosis,65.0
+989,Age At Diagnosis,70.0
+990,Age At Diagnosis,51.0
+991,Age At Diagnosis,73.0
+992,Age At Diagnosis,50.0
+993,Age At Diagnosis,56.0
+994,Age At Diagnosis,47.0
+996,Age At Diagnosis,74.0
+997,Age At Diagnosis,75.0
+998,Age At Diagnosis,64.0
+999,Age At Diagnosis,72.0
+1000,Age At Diagnosis,64.0
+1001,Age At Diagnosis,59.0
+1003,Age At Diagnosis,65.0
+1004,Age At Diagnosis,69.0
+1005,Age At Diagnosis,60.0
+1006,Age At Diagnosis,64.0
+1007,Age At Diagnosis,60.0
+1008,Age At Diagnosis,62.0
+1009,Age At Diagnosis,67.0
+1010,Age At Diagnosis,73.0
+1011,Age At Diagnosis,65.0
+1012,Age At Diagnosis,74.0
+1013,Age At Diagnosis,78.0
+1015,Age At Diagnosis,60.0
+1016,Age At Diagnosis,77.0
+1020,Age At Diagnosis,48.0
+1021,Age At Diagnosis,45.0
+1022,Age At Diagnosis,43.0
+1023,Age At Diagnosis,65.0
+1025,Age At Diagnosis,52.0
+1026,Age At Diagnosis,51.0
+1027,Age At Diagnosis,65.0
+1030,Age At Diagnosis,67.0
+1031,Age At Diagnosis,86.0
+1032,Age At Diagnosis,66.0
+1033,Age At Diagnosis,65.0
+1034,Age At Diagnosis,71.0
+1035,Age At Diagnosis,67.0
+1036,Age At Diagnosis,66.0
+1037,Age At Diagnosis,50.0
+1038,Age At Diagnosis,53.0
+1039,Age At Diagnosis,53.0
+1040,Age At Diagnosis,45.0
+1041,Age At Diagnosis,54.0
+1043,Age At Diagnosis,75.0
+1044,Age At Diagnosis,66.0
+1045,Age At Diagnosis,49.0
+1047,Age At Diagnosis,65.0
+1048,Age At Diagnosis,71.0
+1049,Age At Diagnosis,59.0
+1050,Age At Diagnosis,77.0
+1051,Age At Diagnosis,48.0
+1052,Age At Diagnosis,71.0
+1053,Age At Diagnosis,44.0
+1054,Age At Diagnosis,49.0
+1056,Age At Diagnosis,56.0
+1057,Age At Diagnosis,62.0
+1058,Age At Diagnosis,43.0
+1059,Age At Diagnosis,71.0
+1060,Age At Diagnosis,53.0
+1061,Age At Diagnosis,62.0
+1062,Age At Diagnosis,58.0
+1063,Age At Diagnosis,38.0
+1064,Age At Diagnosis,51.0
+1065,Age At Diagnosis,61.0
+1066,Age At Diagnosis,50.0
+1067,Age At Diagnosis,77.0
+1068,Age At Diagnosis,58.0
+1070,Age At Diagnosis,43.0
+1071,Age At Diagnosis,68.0
+1072,Age At Diagnosis,43.0
+1073,Age At Diagnosis,53.0
+1074,Age At Diagnosis,66.0
+1075,Age At Diagnosis,59.0
+1077,Age At Diagnosis,58.0
+1080,Age At Diagnosis,89.0
+1081,Age At Diagnosis,35.0
+1082,Age At Diagnosis,60.0
+1085,Age At Diagnosis,43.0
+1086,Age At Diagnosis,62.0
+1087,Age At Diagnosis,70.0
+1088,Age At Diagnosis,65.0
+1089,Age At Diagnosis,66.0
+1090,Age At Diagnosis,66.0
+1091,Age At Diagnosis,64.0
+1092,Age At Diagnosis,47.0
+1094,Age At Diagnosis,43.0
+1095,Age At Diagnosis,55.0
+1096,Age At Diagnosis,72.0
+1097,Age At Diagnosis,51.0
+1098,Age At Diagnosis,70.0
+1100,Age At Diagnosis,76.0
+1101,Age At Diagnosis,62.0
+1102,Age At Diagnosis,58.0
+1103,Age At Diagnosis,63.0
+1104,Age At Diagnosis,59.0
+1105,Age At Diagnosis,69.0
+1106,Age At Diagnosis,47.0
+1107,Age At Diagnosis,64.0
+1108,Age At Diagnosis,60.0
+1110,Age At Diagnosis,68.0
+1111,Age At Diagnosis,54.0
+1112,Age At Diagnosis,63.0
+1114,Age At Diagnosis,40.0
+1115,Age At Diagnosis,67.0
+1116,Age At Diagnosis,65.0
+1117,Age At Diagnosis,76.0
+1118,Age At Diagnosis,61.0
+1119,Age At Diagnosis,35.0
+1120,Age At Diagnosis,53.0
+1121,Age At Diagnosis,51.0
+1123,Age At Diagnosis,59.0
+1124,Age At Diagnosis,59.0
+1125,Age At Diagnosis,65.0
+1126,Age At Diagnosis,56.0
+1127,Age At Diagnosis,63.0
+1128,Age At Diagnosis,41.0
+1129,Age At Diagnosis,50.0
+1130,Age At Diagnosis,57.0
+1132,Age At Diagnosis,58.0
+1134,Age At Diagnosis,76.0
+1135,Age At Diagnosis,67.0
+1137,Age At Diagnosis,64.0
+1138,Age At Diagnosis,68.0
+1139,Age At Diagnosis,78.0
+1140,Age At Diagnosis,64.0
+1141,Age At Diagnosis,43.0
+1142,Age At Diagnosis,46.0
+1143,Age At Diagnosis,48.0
+1144,Age At Diagnosis,58.0
+1145,Age At Diagnosis,50.0
+1146,Age At Diagnosis,51.0
+1147,Age At Diagnosis,49.0
+1149,Age At Diagnosis,61.0
+1150,Age At Diagnosis,66.0
+1151,Age At Diagnosis,74.0
+1152,Age At Diagnosis,48.0
+1153,Age At Diagnosis,59.0
+1154,Age At Diagnosis,54.0
+1155,Age At Diagnosis,53.0
+1156,Age At Diagnosis,60.0
+1157,Age At Diagnosis,64.0
+1158,Age At Diagnosis,66.0
+1159,Age At Diagnosis,70.0
+1160,Age At Diagnosis,61.0
+1161,Age At Diagnosis,43.0
+1162,Age At Diagnosis,73.0
+1163,Age At Diagnosis,71.0
+1164,Age At Diagnosis,65.0
+1165,Age At Diagnosis,54.0
+1166,Age At Diagnosis,45.0
+1167,Age At Diagnosis,59.0
+1168,Age At Diagnosis,83.0
+1169,Age At Diagnosis,58.0
+1170,Age At Diagnosis,64.0
+1171,Age At Diagnosis,76.0
+1172,Age At Diagnosis,91.0
+1173,Age At Diagnosis,72.0
+1175,Age At Diagnosis,53.0
+1176,Age At Diagnosis,66.0
+1177,Age At Diagnosis,67.0
+1178,Age At Diagnosis,23.0
+1179,Age At Diagnosis,73.0
+1180,Age At Diagnosis,68.0
+1182,Age At Diagnosis,64.0
+1183,Age At Diagnosis,65.0
+1184,Age At Diagnosis,60.0
+1185,Age At Diagnosis,62.0
+1186,Age At Diagnosis,76.0
+1187,Age At Diagnosis,48.0
+1188,Age At Diagnosis,57.0
+1190,Age At Diagnosis,56.0
+1191,Age At Diagnosis,45.0
+1193,Age At Diagnosis,66.0
+1194,Age At Diagnosis,54.0
+1195,Age At Diagnosis,82.0
+1196,Age At Diagnosis,82.0
+1197,Age At Diagnosis,84.0
+1198,Age At Diagnosis,66.0
+1199,Age At Diagnosis,88.0
+1200,Age At Diagnosis,71.0
+1201,Age At Diagnosis,76.0
+1203,Age At Diagnosis,71.0
+1204,Age At Diagnosis,53.0
+1205,Age At Diagnosis,69.0
+1206,Age At Diagnosis,59.0
+1207,Age At Diagnosis,54.0
+1209,Age At Diagnosis,54.0
+1210,Age At Diagnosis,55.0
+1211,Age At Diagnosis,75.0
+1212,Age At Diagnosis,64.0
+1213,Age At Diagnosis,84.0
+1216,Age At Diagnosis,30.0
+1217,Age At Diagnosis,58.0
+1218,Age At Diagnosis,55.0
+1219,Age At Diagnosis,50.0
+1220,Age At Diagnosis,57.0
+1221,Age At Diagnosis,57.0
+1222,Age At Diagnosis,68.0
+1224,Age At Diagnosis,69.0
+1225,Age At Diagnosis,61.0
+1226,Age At Diagnosis,42.0
+1227,Age At Diagnosis,47.0
+1228,Age At Diagnosis,50.0
+1229,Age At Diagnosis,56.0
+1230,Age At Diagnosis,57.0
+1231,Age At Diagnosis,53.0
+1232,Age At Diagnosis,55.0
+1234,Age At Diagnosis,64.0
+1236,Age At Diagnosis,58.0
+1237,Age At Diagnosis,30.0
+1238,Age At Diagnosis,61.0
+1239,Age At Diagnosis,76.0
+1240,Age At Diagnosis,67.0
+1241,Age At Diagnosis,54.0
+1242,Age At Diagnosis,61.0
+1243,Age At Diagnosis,55.0
+1244,Age At Diagnosis,79.0
+1245,Age At Diagnosis,62.0
+1246,Age At Diagnosis,71.0
+1247,Age At Diagnosis,72.0
+1249,Age At Diagnosis,78.0
+1250,Age At Diagnosis,60.0
+1252,Age At Diagnosis,80.0
+1253,Age At Diagnosis,75.0
+1254,Age At Diagnosis,80.0
+1255,Age At Diagnosis,56.0
+1256,Age At Diagnosis,56.0
+1257,Age At Diagnosis,58.0
+1259,Age At Diagnosis,63.0
+1261,Age At Diagnosis,66.0
+1263,Age At Diagnosis,57.0
+1265,Age At Diagnosis,54.0
+1266,Age At Diagnosis,57.0
+1268,Age At Diagnosis,58.0
+1269,Age At Diagnosis,69.0
+1270,Age At Diagnosis,65.0
+1273,Age At Diagnosis,52.0
+1274,Age At Diagnosis,54.0
+1275,Age At Diagnosis,39.0
+1276,Age At Diagnosis,65.0
+1277,Age At Diagnosis,65.0
+1278,Age At Diagnosis,72.0
+1279,Age At Diagnosis,68.0
+1280,Age At Diagnosis,43.0
+1281,Age At Diagnosis,76.0
+1283,Age At Diagnosis,48.0
+1284,Age At Diagnosis,72.0
+1285,Age At Diagnosis,70.0
+1286,Age At Diagnosis,55.0
+1287,Age At Diagnosis,69.0
+1288,Age At Diagnosis,58.0
+1291,Age At Diagnosis,50.0
+1292,Age At Diagnosis,69.0
+1293,Age At Diagnosis,69.0
+1294,Age At Diagnosis,66.0
+1295,Age At Diagnosis,76.0
+1296,Age At Diagnosis,69.0
+1297,Age At Diagnosis,43.0
+1298,Age At Diagnosis,46.0
+1299,Age At Diagnosis,51.0
+1300,Age At Diagnosis,53.0
+1301,Age At Diagnosis,61.0
+1302,Age At Diagnosis,55.0
+1303,Age At Diagnosis,82.0
+1304,Age At Diagnosis,41.0
+1305,Age At Diagnosis,65.0
+1306,Age At Diagnosis,57.0
+1307,Age At Diagnosis,59.0
+1308,Age At Diagnosis,68.0
+1309,Age At Diagnosis,74.0
+1310,Age At Diagnosis,56.0
+1311,Age At Diagnosis,68.0
+1313,Age At Diagnosis,72.0
+1314,Age At Diagnosis,53.0
+1315,Age At Diagnosis,55.0
+1316,Age At Diagnosis,65.0
+1317,Age At Diagnosis,53.0
+1318,Age At Diagnosis,79.0
+1319,Age At Diagnosis,53.0
+1320,Age At Diagnosis,63.0
+1322,Age At Diagnosis,61.0
+1323,Age At Diagnosis,43.0
+1325,Age At Diagnosis,72.0
+1326,Age At Diagnosis,64.0
+1327,Age At Diagnosis,91.0
+1328,Age At Diagnosis,61.0
+1329,Age At Diagnosis,72.0
+1330,Age At Diagnosis,55.0
+1332,Age At Diagnosis,62.0
+1333,Age At Diagnosis,56.0
+1334,Age At Diagnosis,82.0
+1335,Age At Diagnosis,50.0
+1336,Age At Diagnosis,76.0
+1337,Age At Diagnosis,63.0
+1338,Age At Diagnosis,47.0
+1339,Age At Diagnosis,71.0
+1340,Age At Diagnosis,87.0
+1342,Age At Diagnosis,58.0
+1343,Age At Diagnosis,56.0
+1344,Age At Diagnosis,45.0
+1345,Age At Diagnosis,51.0
+1346,Age At Diagnosis,54.0
+1347,Age At Diagnosis,58.0
+1348,Age At Diagnosis,72.0
+1351,Age At Diagnosis,59.0
+1352,Age At Diagnosis,72.0
+1353,Age At Diagnosis,60.0
+1354,Age At Diagnosis,50.0
+1355,Age At Diagnosis,55.0
+1356,Age At Diagnosis,62.0
+1358,Age At Diagnosis,70.0
+1359,Age At Diagnosis,61.0
+1362,Age At Diagnosis,58.0
+1363,Age At Diagnosis,83.0
+1366,Age At Diagnosis,54.0
+1369,Age At Diagnosis,66.0
+1370,Age At Diagnosis,57.0
+1371,Age At Diagnosis,57.0
+1374,Age At Diagnosis,71.0
+1375,Age At Diagnosis,39.0
+1376,Age At Diagnosis,53.0
+1377,Age At Diagnosis,63.0
+1380,Age At Diagnosis,70.0
+1381,Age At Diagnosis,49.0
+1383,Age At Diagnosis,47.0
+1384,Age At Diagnosis,65.0
+1385,Age At Diagnosis,63.0
+1387,Age At Diagnosis,55.0
+1388,Age At Diagnosis,61.0
+1391,Age At Diagnosis,40.0
+1392,Age At Diagnosis,55.0
+1393,Age At Diagnosis,46.0
+1396,Age At Diagnosis,72.0
+1398,Age At Diagnosis,46.0
+1400,Age At Diagnosis,57.0
+1406,Age At Diagnosis,63.0
+1407,Age At Diagnosis,69.0
+1412,Age At Diagnosis,53.0
+1413,Age At Diagnosis,54.0
+1414,Age At Diagnosis,74.0
+1419,Age At Diagnosis,71.0
+1420,Age At Diagnosis,58.0
+1421,Age At Diagnosis,76.0
+1423,Age At Diagnosis,75.0
+1425,Age At Diagnosis,58.0
+1428,Age At Diagnosis,55.0
+1433,Age At Diagnosis,48.0
+1440,Age At Diagnosis,60.0
+1441,Age At Diagnosis,64.0
+1447,Age At Diagnosis,45.0
+1452,Age At Diagnosis,69.0
+1453,Age At Diagnosis,56.0
+1454,Age At Diagnosis,57.0
+1455,Age At Diagnosis,70.0
+1459,Age At Diagnosis,68.0
+1461,Age At Diagnosis,53.0
+1463,Age At Diagnosis,58.0
+1466,Age At Diagnosis,56.0
+1467,Age At Diagnosis,55.0
+1473,Age At Diagnosis,69.0
+1475,Age At Diagnosis,63.0
+1477,Age At Diagnosis,53.0
+1479,Age At Diagnosis,53.0
+1481,Age At Diagnosis,68.0
+1483,Age At Diagnosis,70.0
+1487,Age At Diagnosis,49.0
+1488,Age At Diagnosis,46.0
+1490,Age At Diagnosis,52.0
+1492,Age At Diagnosis,59.0
+1493,Age At Diagnosis,56.0
+1497,Age At Diagnosis,68.0
+1498,Age At Diagnosis,52.0
+1499,Age At Diagnosis,68.0
+1500,Age At Diagnosis,66.0
+1501,Age At Diagnosis,50.0
+1502,Age At Diagnosis,45.0
+1504,Age At Diagnosis,68.0
+1505,Age At Diagnosis,72.0
+1506,Age At Diagnosis,77.0
+1506,Age At Diagnosis,77.0
+1509,Age At Diagnosis,46.0
+1510,Age At Diagnosis,73.0
+1513,Age At Diagnosis,57.0
+1517,Age At Diagnosis,81.0
+1518,Age At Diagnosis,64.0
+1520,Age At Diagnosis,62.0
+1521,Age At Diagnosis,42.0
+1522,Age At Diagnosis,65.0
+1523,Age At Diagnosis,53.0
+1526,Age At Diagnosis,65.0
+1527,Age At Diagnosis,68.0
+1530,Age At Diagnosis,40.0
+1533,Age At Diagnosis,64.0
+1535,Age At Diagnosis,60.0
+1536,Age At Diagnosis,65.0
+1538,Age At Diagnosis,62.0
+1539,Age At Diagnosis,67.0
+1540,Age At Diagnosis,49.0
+1541,Age At Diagnosis,74.0
+1542,Age At Diagnosis,56.0
+1543,Age At Diagnosis,63.0
+1547,Age At Diagnosis,66.0
+1548,Age At Diagnosis,55.0
+1549,Age At Diagnosis,61.0
+1551,Age At Diagnosis,64.0
+1552,Age At Diagnosis,34.0
+1556,Age At Diagnosis,50.0
+1557,Age At Diagnosis,64.0
+1559,Age At Diagnosis,58.0
+1560,Age At Diagnosis,38.0
+1563,Age At Diagnosis,61.0
+1564,Age At Diagnosis,59.0
+1565,Age At Diagnosis,64.0
+1566,Age At Diagnosis,76.0
+1567,Age At Diagnosis,50.0
+1568,Age At Diagnosis,53.0
+1572,Age At Diagnosis,58.0
+1573,Age At Diagnosis,60.0
+1575,Age At Diagnosis,52.0
+1579,Age At Diagnosis,71.0
+1580,Age At Diagnosis,72.0
+1581,Age At Diagnosis,87.0
+1584,Age At Diagnosis,70.0
+1586,Age At Diagnosis,77.0
+1588,Age At Diagnosis,56.0
+1590,Age At Diagnosis,71.0
+1592,Age At Diagnosis,69.0
+1593,Age At Diagnosis,67.0
+1594,Age At Diagnosis,63.0
+1595,Age At Diagnosis,72.0
+1596,Age At Diagnosis,79.0
+1600,Age At Diagnosis,59.0
+1601,Age At Diagnosis,55.0
+1601,Age At Diagnosis,55.0
+1603,Age At Diagnosis,67.0
+1607,Age At Diagnosis,59.0
+1612,Age At Diagnosis,61.0
+1613,Age At Diagnosis,59.0
+1616,Age At Diagnosis,69.0
+1617,Age At Diagnosis,74.0
+1618,Age At Diagnosis,46.0
+1619,Age At Diagnosis,65.0
+1621,Age At Diagnosis,59.0
+1624,Age At Diagnosis,66.0
+1626,Age At Diagnosis,75.0
+1627,Age At Diagnosis,66.0
+1628,Age At Diagnosis,59.0
+1630,Age At Diagnosis,64.0
+1631,Age At Diagnosis,71.0
+1632,Age At Diagnosis,62.0
+1633,Age At Diagnosis,70.0
+1637,Age At Diagnosis,56.0
+1638,Age At Diagnosis,83.0
+1639,Age At Diagnosis,67.0
+1642,Age At Diagnosis,83.0
+1642,Age At Diagnosis,83.0
+1643,Age At Diagnosis,60.0
+1645,Age At Diagnosis,48.0
+1647,Age At Diagnosis,47.0
+1652,Age At Diagnosis,49.0
+1653,Age At Diagnosis,60.0
+1657,Age At Diagnosis,50.0
+1658,Age At Diagnosis,67.0
+1660,Age At Diagnosis,71.0
+1662,Age At Diagnosis,76.0
+1663,Age At Diagnosis,59.0
+1665,Age At Diagnosis,71.0
+1666,Age At Diagnosis,53.0
+1667,Age At Diagnosis,66.0
+1672,Age At Diagnosis,60.0
+1674,Age At Diagnosis,62.0
+1678,Age At Diagnosis,54.0
+1679,Age At Diagnosis,48.0
+1680,Age At Diagnosis,78.0
+1684,Age At Diagnosis,57.0
+1685,Age At Diagnosis,62.0
+1686,Age At Diagnosis,49.0
+1687,Age At Diagnosis,62.0
+1688,Age At Diagnosis,71.0
+1689,Age At Diagnosis,68.0
+1690,Age At Diagnosis,63.0
+1691,Age At Diagnosis,72.0
+1692,Age At Diagnosis,65.0
+1693,Age At Diagnosis,60.0
+1697,Age At Diagnosis,71.0
+1700,Age At Diagnosis,54.0
+1700,Age At Diagnosis,54.0
+1701,Age At Diagnosis,68.0
+1702,Age At Diagnosis,72.0
+1704,Age At Diagnosis,60.0
+1705,Age At Diagnosis,77.0
+1706,Age At Diagnosis,68.0
+1708,Age At Diagnosis,69.0
+1709,Age At Diagnosis,63.0
+1713,Age At Diagnosis,52.0
+1714,Age At Diagnosis,70.0
+1717,Age At Diagnosis,51.0
+1718,Age At Diagnosis,57.0
+1719,Age At Diagnosis,63.0
+1720,Age At Diagnosis,36.0
+1721,Age At Diagnosis,57.0
+1722,Age At Diagnosis,77.0
+1723,Age At Diagnosis,65.0
+1725,Age At Diagnosis,50.0
+1726,Age At Diagnosis,72.0
+1727,Age At Diagnosis,60.0
+1728,Age At Diagnosis,70.0
+1729,Age At Diagnosis,61.0
+1730,Age At Diagnosis,54.0
+1733,Age At Diagnosis,58.0
+1734,Age At Diagnosis,63.0
+1735,Age At Diagnosis,54.0
+1736,Age At Diagnosis,49.0
+1737,Age At Diagnosis,58.0
+1738,Age At Diagnosis,55.0
+1739,Age At Diagnosis,57.0
+1740,Age At Diagnosis,76.0
+1741,Age At Diagnosis,60.0
+1743,Age At Diagnosis,63.0
+1745,Age At Diagnosis,60.0
+1746,Age At Diagnosis,58.0
+1747,Age At Diagnosis,52.0
+1748,Age At Diagnosis,57.0
+1749,Age At Diagnosis,70.0
+1750,Age At Diagnosis,69.0
+1751,Age At Diagnosis,83.0
+1752,Age At Diagnosis,62.0
+1752,Age At Diagnosis,62.0
+1753,Age At Diagnosis,42.0
+1756,Age At Diagnosis,49.0
+1757,Age At Diagnosis,70.0
+1758,Age At Diagnosis,58.0
+1759,Age At Diagnosis,69.0
+1761,Age At Diagnosis,76.0
+1763,Age At Diagnosis,67.0
+1764,Age At Diagnosis,67.0
+1765,Age At Diagnosis,72.0
+1766,Age At Diagnosis,33.0
+1767,Age At Diagnosis,40.0
+1768,Age At Diagnosis,63.0
+1769,Age At Diagnosis,43.0
+1771,Age At Diagnosis,78.0
+1772,Age At Diagnosis,58.0
+1774,Age At Diagnosis,69.0
+1776,Age At Diagnosis,60.0
+1777,Age At Diagnosis,62.0
+1779,Age At Diagnosis,64.0
+1780,Age At Diagnosis,54.0
+1781,Age At Diagnosis,71.0
+1783,Age At Diagnosis,71.0
+1785,Age At Diagnosis,62.0
+1786,Age At Diagnosis,66.0
+1788,Age At Diagnosis,82.0
+1789,Age At Diagnosis,64.0
+1790,Age At Diagnosis,50.0
+1791,Age At Diagnosis,75.0
+1793,Age At Diagnosis,66.0
+1794,Age At Diagnosis,62.0
+1795,Age At Diagnosis,69.0
+1796,Age At Diagnosis,54.0
+1801,Age At Diagnosis,56.0
+1803,Age At Diagnosis,69.0
+1805,Age At Diagnosis,46.0
+1806,Age At Diagnosis,46.0
+1807,Age At Diagnosis,70.0
+1808,Age At Diagnosis,84.0
+1809,Age At Diagnosis,75.0
+1810,Age At Diagnosis,60.0
+1811,Age At Diagnosis,66.0
+1812,Age At Diagnosis,58.0
+1813,Age At Diagnosis,43.0
+1815,Age At Diagnosis,66.0
+1817,Age At Diagnosis,75.0
+1818,Age At Diagnosis,65.0
+1820,Age At Diagnosis,64.0
+1821,Age At Diagnosis,44.0
+1822,Age At Diagnosis,71.0
+1823,Age At Diagnosis,79.0
+1824,Age At Diagnosis,42.0
+1825,Age At Diagnosis,83.0
+1826,Age At Diagnosis,66.0
+1827,Age At Diagnosis,56.0
+1828,Age At Diagnosis,61.0
+1829,Age At Diagnosis,71.0
+1830,Age At Diagnosis,63.0
+1831,Age At Diagnosis,56.0
+1832,Age At Diagnosis,76.0
+1833,Age At Diagnosis,55.0
+1834,Age At Diagnosis,59.0
+1835,Age At Diagnosis,55.0
+1836,Age At Diagnosis,57.0
+1837,Age At Diagnosis,71.0
+1838,Age At Diagnosis,66.0
+1839,Age At Diagnosis,65.0
+1840,Age At Diagnosis,64.0
+1842,Age At Diagnosis,63.0
+1843,Age At Diagnosis,83.0
+1845,Age At Diagnosis,65.0
+1850,Age At Diagnosis,48.0
+1851,Age At Diagnosis,67.0
+1852,Age At Diagnosis,76.0
+1854,Age At Diagnosis,72.0
+1855,Age At Diagnosis,53.0
+1856,Age At Diagnosis,53.0
+1857,Age At Diagnosis,60.0
+1860,Age At Diagnosis,59.0
+1861,Age At Diagnosis,67.0
+1862,Age At Diagnosis,68.0
+1863,Age At Diagnosis,61.0
+1864,Age At Diagnosis,68.0
+1865,Age At Diagnosis,67.0
+1866,Age At Diagnosis,52.0
+1867,Age At Diagnosis,82.0
+1868,Age At Diagnosis,62.0
+1869,Age At Diagnosis,71.0
+1871,Age At Diagnosis,66.0
+1872,Age At Diagnosis,63.0
+1873,Age At Diagnosis,68.0
+1874,Age At Diagnosis,54.0
+1875,Age At Diagnosis,83.0
+1876,Age At Diagnosis,58.0
+1877,Age At Diagnosis,51.0
+1878,Age At Diagnosis,66.0
+1879,Age At Diagnosis,56.0
+1880,Age At Diagnosis,64.0
+1882,Age At Diagnosis,70.0
+1884,Age At Diagnosis,59.0
+1885,Age At Diagnosis,71.0
+1887,Age At Diagnosis,79.0
+1888,Age At Diagnosis,68.0
+1889,Age At Diagnosis,61.0
+1890,Age At Diagnosis,73.0
+1891,Age At Diagnosis,64.0
+1892,Age At Diagnosis,55.0
+1893,Age At Diagnosis,56.0
+1896,Age At Diagnosis,68.0
+1897,Age At Diagnosis,69.0
+1898,Age At Diagnosis,63.0
+1899,Age At Diagnosis,54.0
+1900,Age At Diagnosis,66.0
+1904,Age At Diagnosis,67.0
+1905,Age At Diagnosis,61.0
+1906,Age At Diagnosis,68.0
+1909,Age At Diagnosis,82.0
+1910,Age At Diagnosis,62.0
+1911,Age At Diagnosis,63.0
+1912,Age At Diagnosis,74.0
+1913,Age At Diagnosis,54.0
+1914,Age At Diagnosis,78.0
+1915,Age At Diagnosis,60.0
+1916,Age At Diagnosis,55.0
+1917,Age At Diagnosis,84.0
+1918,Age At Diagnosis,80.0
+1919,Age At Diagnosis,58.0
+1921,Age At Diagnosis,58.0
+1922,Age At Diagnosis,54.0
+1923,Age At Diagnosis,52.0
+1924,Age At Diagnosis,52.0
+1925,Age At Diagnosis,71.0
+1927,Age At Diagnosis,49.0
+1928,Age At Diagnosis,69.0
+1929,Age At Diagnosis,62.0
+1930,Age At Diagnosis,64.0
+1931,Age At Diagnosis,60.0
+1932,Age At Diagnosis,70.0
+1933,Age At Diagnosis,69.0
+1934,Age At Diagnosis,64.0
+1935,Age At Diagnosis,64.0
+1937,Age At Diagnosis,64.0
+1939,Age At Diagnosis,60.0
+1940,Age At Diagnosis,75.0
+1941,Age At Diagnosis,46.0
+1942,Age At Diagnosis,54.0
+1944,Age At Diagnosis,56.0
+1945,Age At Diagnosis,68.0
+1947,Age At Diagnosis,71.0
+1948,Age At Diagnosis,59.0
+1949,Age At Diagnosis,75.0
+1950,Age At Diagnosis,67.0
+1952,Age At Diagnosis,60.0
+1953,Age At Diagnosis,57.0
+1954,Age At Diagnosis,54.0
+1955,Age At Diagnosis,61.0
+1958,Age At Diagnosis,47.0
+1959,Age At Diagnosis,65.0
+1960,Age At Diagnosis,72.0
+1961,Age At Diagnosis,67.0
+1962,Age At Diagnosis,66.0
+1963,Age At Diagnosis,61.0
+1964,Age At Diagnosis,62.0
+1965,Age At Diagnosis,64.0
+1967,Age At Diagnosis,76.0
+1969,Age At Diagnosis,47.0
+1970,Age At Diagnosis,69.0
+1971,Age At Diagnosis,49.0
+1972,Age At Diagnosis,76.0
+1973,Age At Diagnosis,49.0
+1974,Age At Diagnosis,70.0
+1975,Age At Diagnosis,83.0
+1976,Age At Diagnosis,46.0
+1978,Age At Diagnosis,51.0
+1979,Age At Diagnosis,62.0
+1980,Age At Diagnosis,69.0
+1981,Age At Diagnosis,45.0
+1982,Age At Diagnosis,62.0
+1983,Age At Diagnosis,83.0
+1984,Age At Diagnosis,53.0
+1986,Age At Diagnosis,70.0
+1988,Age At Diagnosis,81.0
+1989,Age At Diagnosis,67.0
+1990,Age At Diagnosis,69.0
+1991,Age At Diagnosis,72.0
+1993,Age At Diagnosis,56.0
+1994,Age At Diagnosis,60.0
+1996,Age At Diagnosis,80.0
+1997,Age At Diagnosis,44.0
+2002,Age At Diagnosis,74.0
+2003,Age At Diagnosis,70.0
+2004,Age At Diagnosis,64.0
+2006,Age At Diagnosis,67.0
+2007,Age At Diagnosis,60.0
+2008,Age At Diagnosis,61.0
+2010,Age At Diagnosis,53.0
+2011,Age At Diagnosis,77.0
+2013,Age At Diagnosis,69.0
+2014,Age At Diagnosis,46.0
+2016,Age At Diagnosis,73.0
+2017,Age At Diagnosis,42.0
+2020,Age At Diagnosis,64.0
+2024,Age At Diagnosis,40.0
+2026,Age At Diagnosis,55.0
+2031,Age At Diagnosis,49.0
+2032,Age At Diagnosis,41.0
+2033,Age At Diagnosis,65.0
+2034,Age At Diagnosis,56.0
+2035,Age At Diagnosis,67.0
+2036,Age At Diagnosis,53.0
+2037,Age At Diagnosis,76.0
+2038,Age At Diagnosis,52.0
+2039,Age At Diagnosis,80.0
+2040,Age At Diagnosis,62.0
+2041,Age At Diagnosis,51.0
+2043,Age At Diagnosis,40.0
+2044,Age At Diagnosis,58.0
+2045,Age At Diagnosis,64.0
+2046,Age At Diagnosis,31.0
+2048,Age At Diagnosis,61.0
+2049,Age At Diagnosis,66.0
+2050,Age At Diagnosis,40.0
+2051,Age At Diagnosis,59.0
+2052,Age At Diagnosis,65.0
+2053,Age At Diagnosis,47.0
+2054,Age At Diagnosis,34.0
+2055,Age At Diagnosis,71.0
+2056,Age At Diagnosis,59.0
+2058,Age At Diagnosis,54.0
+2059,Age At Diagnosis,80.0
