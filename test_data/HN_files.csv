@@ -1,0 +1,8 @@
+﻿Entity,File
+Project,HN_projects.csv
+Subject Ontology,HN_unique_subject_vars.csv
+Observation Ontology,HN_unique_obs.csv
+Subject Info,HN_demographics_long.csv
+Visit,HN_visit_info.csv
+Observations,HN_obs_long.csv
+Observations Summary,HN_obs_summary.csv
