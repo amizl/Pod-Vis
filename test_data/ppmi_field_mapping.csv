@@ -16,6 +16,7 @@ Disease Features,,subject_ontology,Enroll Date,ppmi_demographics.csv,Property,En
 Disease Features,,subject_ontology,Diagnosis Date,ppmi_demographics.csv,Property,Diagnosis Date,Diagnosis Date,Date,Continuous,,
 SubjectVisit,,subject_visit,event_date,ppmi_visit_info.csv,Property,VisitDate,VisitDate,Date,Continuous,,
 SubjectVisit,,subject_visit,visit_event,ppmi_visit_info.csv,Property,VisitCode,VisitCode,Char,Ordinal,,"BL,PW,RS1,SC,ST,U01,V01,V02,V03,V04,V05,V06,V07,V08,V09,V10,V11,V12,V13,V14,V15,V16"
+SubjectVisit,,subject_visit,Disease Duration At Visit,ppmi_visit_info.csv,Property,Disease Duration At Visit,Disease Duration At Visit,Decimal,Continuous,,
 SubjectVisit,,subject_visit,visit_num,ppmi_visit_info.csv,Property,VisitNumber,VisitNumber,Integer,Ordinal,,
 Cognitive,,observation_ontology,Semantic Fluency,ppmi_obs_long.csv,Observation,Testname,SemanticFluency,Decimal,Continuous,1,
 Cognitive,,observation_ontology,Benton Judgment of Line Orientation,ppmi_obs_long.csv,Observation,Testname,BentonJudgment,Decimal,Continuous,1,

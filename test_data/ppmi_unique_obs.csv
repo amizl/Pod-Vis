@@ -20,6 +20,7 @@ GDS_Score
 LNS_Total_Raw
 REM_RBD_Score
 REM_RBD_State
+SCOPA-AUT
 SDM
 STAI
 SemanticFluency
@@ -38,6 +39,7 @@ MDS_UPDRS_Total-Change
 MOCA-Change
 MSEADL-Change
 REM_RBD_Score-Change
+SCOPA-AUT-Change
 SDM-Change
 STAI-Change
 SemanticFluency-Change
@@ -55,6 +57,7 @@ MDS_UPDRS_Total-ROC
 MOCA-ROC
 MSEADL-ROC
 REM_RBD_Score-ROC
+SCOPA-AUT-ROC
 SDM-ROC
 STAI-ROC
 SemanticFluency-ROC

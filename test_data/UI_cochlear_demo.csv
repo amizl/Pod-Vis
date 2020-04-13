@@ -1,0 +1,1392 @@
+﻿SID,ImplantAgeYrs1,ear1,ear2,ear3,Laby1,Laby2,Laby3,UIHC1,UIHC2,UIHC3,Deceased,lAgeDeaf,rAgeDeaf,Type1,Type2,Type3,opdate1,opdate2,opdate3,condate1,condate2,condate3,gender,occup,maritalStatus,lPhysCauseLoss,rPhysCauseLoss,lAgeAidUse,rAgeAidUse
+1,,,,,,,,N,,,2,,,Nucleus CI 24R(CA),,,,,,,,,M,,,Unknown,Unknown,,
+4,,,L,,,,,N,Y,,2,,,,Nucleus CI 24RE(CA),,,11/7/20,,,12/7/20,,M,,,Unknown,Unknown,,
+5,,R,R,,,,,N,Y,,2,,,Nucleus CI22,Nucleus CI 24RE(CA),,,3/8/20,,,4/8/20,,M,,,Unknown,Unknown,,
+6,,L,R,,,,,N,Y,,2,,,Nucleus CI 24RE(CA),Nucleus CI512(CA),,,2/10/20,,,3/10/20,,F,,,Unknown,Unknown,,
+7,,,,,,,,N,,,2,68,68,,,,,,,,,,F,healthcare,1,Unknown,Unknown,,
+8,,,,,,,,N,,,2,4,4,,,,,,,,,,M,OSHA safety compliance officer,1,Unknown,Unknown,4,
+10,,L,L,,,,,Y,Y,,1,,,House Sigma,Nucleus CI22,,,12/1/84,,,1/1/85,,M,,,Head Trauma,,,
+11,,L,L,L,,,,N,Y,Y,2,,,Nucleus CI22,Nucleus CI22,Nucleus CI 24RE(CA),,8/1/91,9/8/20,,,10/8/20,M,,,Unknown,Unknown,,
+14,,,,,,,,N,,,2,,,,,,,,,,,,M,,,Unknown,Unknown,,
+15,43.7,R,,,,,,N,,,2,,,House Sigma,,,11/1/78,,,1/1/79,,,F,,,,,,
+16,60.1,R,,,,,,Y,,,2,,,House Sigma,,,4/1/81,,,6/1/81,,,F,,,Otosclerosis,,,
+17,62.3,R,,,,,,Y,,,2,,,House Sigma,,,8/1/81,,,10/1/81,,,F,,,Meningitis,,,
+18,65.3,L,,,,,,Y,,,2,,,House Sigma,,,10/1/81,,,11/1/81,,,F,,,Ototoxicity,,,
+19,59.8,L,L,,,,,Y,Y,Y,1,,,House Sigma,Nucleus CI22,,2/1/82,6/1/92,,4/1/82,7/1/92,,M,,,Unknown,,,
+20,64.2,L,R,,,,,Y,,,1,,,House Sigma,Nucleus CI 24M,,4/1/82,10/1/99,,6/1/82,11/1/99,,M,retired                       ,4,Otosclerosis,,,
+21,22.7,L,R,,,,,Y,,,2,,,Vienna,Nucleus CI 24R,,9/1/82,6/2/20,,9/1/82,7/2/20,,M,,,Head Trauma,,,
+22,55.6,R,,,,,,Y,,,2,,,Vienna,,,11/1/82,,,2/1/82,,,M,,,Otosclerosis,,,
+23,56.1,L,,,,,,Y,,,2,,,Vienna,,,5/1/83,,,6/1/83,,,M,,,Head Trauma,,,
+24,44.8,L,,,,,,Y,,,2,,,Nucleus CI22,,,5/1/83,,,6/1/83,,,M,,,Unknown,,,
+25,33.8,L,L,,,,,Y,,,2,,,Nucleus CI22,Nucleus CI22,,5/1/83,4/1/96,,6/1/83,5/1/96,,M,,,Coggan's Syndrome,,,
+26,52.1,L,,,,,,Y,,,2,,,Nucleus CI22,,,2/1/84,,,2/1/84,,,F,,,Meniere's,,,
+28,48.8,L,,,,,,Y,,,2,,,Nucleus CI22,,,11/1/84,,,1/1/85,,,F,,,Unknown,,,
+29,33,L,L,B,,,,Y,,,2,,,Nucleus CI22,Nucleus CI22,Nucleus CI 24RE(CA),2/1/85,9/1/89,6/6/20,3/1/85,11/1/89,7/6/20,M,,,Coggan's Syndrome,,,
+30,68.7,R,,,,,,Y,,,2,,,Nucleus CI22,,,12/1/85,,,1/1/86,,,M,letter carrier                ,4,Otosclerosis,,,
+31,61,L,,,,,,Y,,,1,,,Ineraid,,,1/1/86,,,3/1/86,,,M,,,Meningitis,,,
+32,30.2,L,,,,,,Y,,,2,,,Nucleus CI22,,,2/1/86,,,3/1/86,,,F,housewife                     ,1,Unknown,,,
+33,32.2,L,L,,,,,Y,Y,,2,,,Ineraid,Clarion HiFocus II-CII,,4/1/86,5/1/20,,5/1/86,6/1/20,,F,,,Hereditary-other,Infection,,
+34,67.8,L,L,,,,,Y,,,1,,,Ineraid,Clarion HiFocus II,,5/1/86,8/1/00,,6/1/86,9/1/00,,F,house wife                    ,1,Unknown,Other,,
+35,62.2,L,,,,,,Y,,,2,,,Nucleus CI22,,,5/1/86,,,6/1/86,,,F,none                          ,3,Meningitis,,,
+36,41.3,L,,,,,,Y,,,2,,,Nucleus CI22,,,5/1/86,,,7/1/86,,,F,teacher                       ,1,Unknown,,,
+37,70.9,R,R,R,,,,Y,,,1,,,Ineraid,Ineraid,Nucleus CI22,6/1/86,11/1/87,5/1/90,8/1/86,11/1/89,7/1/90,M,carpenter                     ,1,Head Trauma,,,
+38,44.6,L,,,,,,Y,,,1,,,Nucleus CI22,,,8/1/86,,,10/1/86,,,M,machine operator              ,3,Meningitis,,,26
+39,44.4,L,,,,,,Y,,,2,,,Nucleus CI22,,,8/1/86,,,9/1/86,,,M,weldor                        ,1,Head Trauma,,,
+40,66.8,R,,,,,,Y,,,1,,,Ineraid,,,9/1/86,,,10/1/86,,,F,,,Unknown,,,
+41,67.5,R,,,,,,Y,,,2,,,Nucleus CI22,,,10/1/86,,,12/1/86,,,F,,,Meningitis,,,
+42,28.9,R,R,,,,,Y,,,2,,,Nucleus CI22,Nucleus CI22,,11/1/86,5/1/91,,12/1/86,7/1/91,,F,,,Mondini Deformity,Other,,
+43,65,R,,,,,,Y,,,1,,,Ineraid,,,1/1/87,,,2/1/87,,,F,,,Ototoxicity,,,
+44,66.9,R,,,,,,Y,,,1,,,Nucleus CI22,,,1/1/87,,,3/1/87,,,F,,,Hereditary-other,,,
+45,65.2,R,,,,,,Y,,,1,,,Ineraid,,,4/1/87,,,5/1/87,,,M,,,Meningitis,,,
+46,52.1,R,,,,,,Y,,,1,,,Nucleus CI22,,,5/1/87,,,6/1/87,,,F,,,Unknown,Hereditary-other,,
+47,65.2,R,,,,,,Y,,,1,,,Ineraid,,,7/1/87,,,8/1/87,,,M,,,Noise Exposure,,,
+48,58.2,R,,,,,,Y,,,2,,,Nucleus CI22,,,7/1/87,,,8/1/87,,,F,,,Infection,,,
+49,58.8,R,R,,,,,Y,Y,,2,,,Ineraid,Nucleus CI 24R,,7/1/87,7/3/20,,8/1/87,8/3/20,,F,,1,Meniere's,,,
+50,27.9,L,L,,,,,Y,Y,,2,,,Nucleus CI22,Nucleus CI22,,8/1/87,1/1/88,,10/1/87,2/1/88,,M,"Counselor, Soc.Work           ",2,Head Trauma,,,
+51,23.2,L,,,,,,Y,,,2,,,Nucleus CI22,,,8/1/87,,,10/1/87,,,F,,,Unknown,,,
+54,58,R,,,,,,Y,,,2,,,Nucleus CI22,,,10/1/87,,,12/1/87,,,M,structural engineer           ,1,Meningitis,,,
+56,50.9,L,,,,,,Y,,,2,,,Ineraid,,,12/1/87,,,1/1/88,,,F,,,Mondini Deformity,,,
+57,42.2,L,L,,,,,Y,,,2,,,Nucleus CI22,Nucleus CI22,,12/1/87,4/1/92,,1/1/88,5/1/92,,M,designer                      ,1,Unknown,,,
+58,53.7,R,,,,,,Y,,,1,,,Nucleus CI22,,,1/1/88,,,2/1/88,,,M,disabled                      ,1,Ototoxicity,,48,
+59,63.5,L,,,,,,Y,,,1,,,Ineraid,,,2/1/88,,,3/1/88,,,M,office system analyst         ,2,Unknown,,27,
+61,38.1,R,R,L,,,,Y,Y,Y,2,,,Ineraid,Clarion HiRes 90K,Clarion HiRes 90K,3/1/88,8/3/20,11/5/20,4/1/88,9/3/20,12/5/20,M,,,Hereditary-other,,,
+62,50.2,L,,,,,,Y,,,2,,,Nucleus CI22,,,4/1/88,,,5/1/88,,,F,Deputy Auditor                ,1,Otosclerosis,,,
+63,15.8,L,,,,,,Y,,,2,,,Nucleus CI22,,,4/1/88,,,5/1/88,,,F,,,,,,
+65,32.9,L,R,,,,,Y,Y,,2,,,Ineraid,Clarion HiRes 90K,,7/1/88,5/5/20,,8/1/88,6/5/20,,F,,1,Otosclerosis,,,
+67,5.3,R,,,,,,Y,,,2,,,Nucleus CI22,,,8/1/88,,,9/1/88,,,F,,,,,,
+68,30.2,L,,,,,,Y,,,2,,,Nucleus CI22,,,9/1/88,,,10/1/88,,,M,machine operator              ,2,Head Trauma,,,
+69,33.4,L,R,,,,,Y,,,2,,,Ineraid,Nucleus CI 24M,,9/1/88,8/1/00,,10/1/88,9/1/00,,F,,,Unknown,,,
+70,46.7,L,,,,,,Y,,,2,,,Nucleus CI22,,,9/1/88,,,10/1/88,,,F,,,Ototoxicity,,,
+71,45.9,R,,,,,,Y,,,2,,,Nucleus CI22,,,9/1/88,,,10/1/88,,,F,,,Unknown,,,
+72,61.4,R,L,,,,,Y,Y,,2,,,Ineraid,Clarion HiRes 90K,,11/1/88,1/10/20,,1/1/89,2/10/20,,M,,,Otosclerosis,,,
+73,39.2,L,L,,,,,Y,Y,,2,,,Nucleus CI22,Nucleus CI 24RE(CA),,11/1/88,3/9/20,,12/1/88,4/9/20,,M,"Nursery,Landscaper            ",1,Meningitis,,7,
+76,55.2,L,,,,,,Y,,,2,,,Ineraid,,,3/1/89,,,7/1/89,,,M,disabled                      ,3,Unknown,Noise Exposure,,
+77,63.5,L,,,,,,Y,,,2,,,Nucleus CI22,,,4/1/89,,,5/1/89,,,F,housewife                     ,1,Unknown,,,
+80,50.9,R,R,,,,,Y,Y,,2,,,Ineraid,Nucleus CI 24R,,5/1/89,7/2/20,,6/1/89,8/2/20,,F,,,Unknown,,,
+81,43.9,L,L,,,,,Y,Y,,2,,,Nucleus CI22,Nucleus CI22,,5/1/89,8/1/89,,6/1/89,9/1/89,,F,MCDONALD'S SUP.               ,1,Hereditary-other,,,
+82,36.1,L,R,,,,,Y,N,,2,,,Ineraid,Clarion HiFocus II-CII,,6/1/89,6/1/20,,7/1/89,7/1/20,,M,,,Unknown,,,
+84,68.2,R,R,,,,,Y,,,2,,,Ineraid,Nucleus CI 24R,,6/1/89,6/3/20,,9/1/89,7/3/20,,F,,,Infection,,,
+86,66.5,R,R,,,,,Y,Y,,2,,,Nucleus CI22,Nucleus CI22,,7/1/89,3/1/90,,8/1/89,4/1/90,,F,,,Unknown,,,
+87,23.2,L,,,,,,Y,,,2,,,Nucleus CI22,,,7/1/89,,,8/1/89,,,M,stocker and sacker            ,2,Meningitis,,,
+89,50.5,R,,,,,,Y,,,1,,,Ineraid,,,8/1/89,,,9/1/89,,,M,,,Hereditary-other,,,
+90,69.5,L,,,,,,Y,,,1,,,Nucleus CI22,,,8/1/89,,,9/1/89,,,M,900,1,Otosclerosis,,,
+91,24.8,L,R,,,,,Y,Y,,2,,,Ineraid,Nucleus CI 24M,,8/1/89,10/1/99,,10/1/89,11/1/99,,M,tax clerk                     ,2,Unknown,,5,5
+93,52.4,R,,,,,,Y,,,2,,,Nucleus CI22,,,12/1/89,,,1/1/90,,,M,,,Hereditary-other,,,
+94,29.7,L,L,,,,,Y,,,2,,,Ineraid,Nucleus CI 24M,,12/1/89,3/1/00,,1/1/90,4/1/00,,F,,,Hereditary-other,,,
+95,43.2,R,R,,,,,Y,Y,,2,,,Nucleus CI22,Nucleus CI522 Straight electrode,,1/1/90,4/19/20,,2/1/90,5/19/20,,M,Office Supervisor             ,1,Meningitis,,,
+96,68.9,L,,,,,,Y,,,1,,,Ineraid,,,1/1/90,,,3/1/90,,,M,,,Unknown,,,
+98,73.4,R,,,,,,Y,,,1,,,Nucleus CI22,,,2/1/90,,,3/1/90,,,M,,,Unknown,Other,,
+100,66.3,R,,,,,,Y,,,2,,,Nucleus CI22,,,3/1/90,,,4/1/90,,,F,"stenographer, city clerk      ",4,Unknown,,25,
+101,59.2,L,,,,,,Y,,,2,,,Nucleus CI22,,,3/1/90,,,5/1/90,,,F,,,Meningitis,,,
+102,45.9,L,,,,,,Y,,,2,,,Ineraid,,,4/1/90,,,5/1/90,,,M,I.L. specialist               ,1,Unknown,,32,
+104,54.5,R,,,,,,Y,,,2,,,Nucleus CI22,,,5/1/90,,,6/1/90,,,M,,,Noise Exposure,Ototoxicity,,
+105,72.5,L,,,,,,Y,,,1,,,Ineraid,,,6/1/90,,,7/1/90,,,M,turkey farmer                 ,4,Unknown,,37,37
+106,62,L,,,,,,Y,,,2,,,Nucleus CI22,,,6/1/90,,,8/1/90,,,F,housewife                     ,1,Unknown,Other,,
+108,63.2,R,L,,,,,Y,,,1,,,Ineraid,Clarion HiFocus 1.2/I-CII,,7/1/90,6/1/20,,9/1/90,7/1/20,,M,CONSTRUCTION                  ,1,Noise Exposure,,53,
+112,58.2,L,,,,,,Y,,,2,,,Nucleus CI22,,,11/1/90,,,12/1/90,,,F,,,Unknown,,,
+113,41.1,R,,,,,,Y,,,2,,,Nucleus CI22,,,11/1/90,,,12/1/90,,,F,Medical Technologist          ,2,Mondini Deformity,,5,5
+117,71.8,L,,,,,,Y,,,2,,,Nucleus CI22,,,12/1/90,,,1/1/91,,,F,,,Unknown,,,
+119,24.5,L,,,,,,Y,,,2,,,Nucleus CI22,,,2/1/91,,,3/1/91,,,F,,,Meningitis,,,
+120,41.2,R,,,,,,Y,,,1,,,Nucleus CI22,,,2/1/91,,,3/1/91,,,M,Media Coordinator             ,1,Radiation,,28,28
+124,63.5,R,R,,,,,Y,,,1,,,Nucleus CI22,Nucleus CI22,,3/1/91,7/1/91,,5/1/91,9/1/91,,M,"Comb. Welder ""A""              ",4,,,,
+130,68.7,L,,,,,,Y,,,1,,,Nucleus CI22,,,10/1/91,,,12/1/91,,,F,900,4,Otosclerosis,,,
+132,12,R,,,,,,Y,,,2,,,Nucleus CI22,,,12/1/91,,,1/1/92,,,F,,,,,,
+137,5.1,R,,,,,,Y,,,2,,,Nucleus CI22,,,6/1/92,,,7/1/92,,,M,,,,,,
+138,31.5,L,R,R,,,,Y,Y,Y,2,,,Clarion Radial Bipolar/Standard 1.0,Clarion HiRes 90K,Clarion HiRes 90K,7/1/92,7/4/20,9/7/20,8/1/92,8/4/20,10/7/20,F,seamstress                    ,1,Unknown,,,
+139,25.8,L,R,,,,,Y,Y,,2,,,Clarion Radial Bipolar/Standard 1.0,Clarion HiRes 90K,,7/1/92,9/5/20,,8/1/92,10/5/20,,F,Elemetary teacher             ,1,Unknown,,,
+140,59.8,L,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,7/1/92,,,9/1/92,,,M,ruth packing co.              ,1,Unknown,,,
+141,39.3,R,L,L,,,,Y,Y,Y,2,,,Clarion Radial Bipolar/Standard 1.0,Clarion HiRes 90K,Clarion HiRes 90K Mid-Scala,7/1/92,2/6/20,1/16/20,8/1/92,3/6/20,2/16/20,F,Clerk @ warehouse             ,1,Other,,,
+142,64.8,L,,,,,,Y,,,2,,,Nucleus CI22,,,8/1/92,,,9/1/92,,,F,,,Meningitis,,,
+144,50.8,R,,,,,,Y,,,2,,,Nucleus CI22,,,8/1/92,,,10/1/92,,,F,Registered Nurse              ,3,Autoimmune Sensorineural Loss,,49,49
+148,6.4,R,,,,,,Y,,,2,,,Nucleus CI22,,,10/1/92,,,12/1/92,,,M,,,,,,
+151,74.8,L,,,,,,Y,,,1,,,Clarion Radial Bipolar/Standard 1.0,,,11/1/92,,,1/1/93,,,M,retired                       ,1,Unknown,,,
+152,72.6,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,11/1/92,,,3/1/93,,,F,Housewife                     ,1,Unknown,,54,54
+153,54.7,L,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,11/1/92,,,12/1/92,,,F,none                          ,1,Hereditary-other,,,
+154,47.6,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,11/1/92,,,1/1/93,,,M,Design Engineer               ,1,Unknown,,,
+155,72.8,L,,,,,,Y,,,1,,,Clarion Radial Bipolar/Standard 1.0,,,11/1/92,,,2/1/93,,,M,retired                       ,1,Unknown,Noise Exposure,,
+158,33.2,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,3/1/93,,,4/1/93,,,F,Nurse Assistant               ,1,Meningitis,,,
+162,36.5,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,3/1/93,,,5/1/93,,,F,homemaker                     ,3,Unknown,,,31
+163,51.3,L,,,,,,Y,,,1,,,Clarion Radial Bipolar/Standard 1.0,,,4/1/93,,,5/1/93,,,F,IRS tax examiner              ,2,Infection,,,
+164,74.5,L,,,,,,Y,,,1,,,Clarion Radial Bipolar/Standard 1.0,,,4/1/93,,,6/1/93,,,F,Beautician                    ,3,Ototoxicity,,,
+165,29.9,R,R,,,,,Y,Y,,2,,,Clarion Radial Bipolar/Standard 1.0,Clarion HiRes 90K Mid-Scala,,4/1/93,2/16/20,,6/1/93,3/16/20,,M,Carpenter                     ,1,Autoimmune Sensorineural Loss,,,
+166,62.1,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,5/1/93,,,6/1/93,,,M,executive                     ,1,Other,,,
+168,42.8,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,7/1/93,,,8/1/93,,,F,Internal Auditor              ,1,Unknown,,,
+169,54.2,R,,,,,,Y,,,1,,,Clarion Radial Bipolar/Standard 1.0,,,7/1/93,,,8/1/93,,,M,,1,Noise Exposure,Otosclerosis,,
+170,28.6,L,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,7/1/93,,,8/1/93,,,M,Teacher                       ,3,Rubella,,,
+173,40.1,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,11/1/93,,,12/1/93,,,M,POSTAL WORKER                 ,1,Meniere's,,,
+174,36.9,L,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,11/1/93,,,12/1/93,,,F,"nurse's,kitchen aide          ",1,Otosclerosis,,,
+176,55.9,L,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,12/1/93,,,1/1/94,,,F,TYPOGRAPHER                   ,2,Other,,,
+177,46.3,L,,,,,,Y,,,2,,,Nucleus CI22,,,12/1/93,,,2/1/94,,,M,Machinist                     ,2,Unknown,,5,5
+179,51.7,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,1/1/94,,,2/1/94,,,M,GENERAL MECHANIC              ,1,Unknown,,,
+181,57.4,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,3/1/94,,,4/1/94,,,M,HEAVY EQUIP. OPERAT.          ,1,Noise Exposure,,45,45
+185,45.9,L,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,5/1/94,,,6/1/94,,,M,student                       ,,Unknown,Hereditary-other,,
+186,16.5,L,,,,,,Y,,,2,,,Nucleus CI22,,,6/1/94,,,7/1/94,,,F,,,,,,
+188,70.5,L,,,,,,Y,,,1,,,Clarion Radial Bipolar/Standard 1.0,,,6/1/94,,,7/1/94,,,F,housewife                     ,1,Otosclerosis,,,
+189,69.4,R,,,,,,Y,,,1,,,Clarion Radial Bipolar/Standard 1.0,,,6/1/94,,,8/1/94,,,F,retired-crafts volunteer      ,2,Hereditary-other,,,
+192,59.3,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,9/1/94,,,10/1/94,,,F,disability/none               ,1,Unknown,,,
+193,66.9,L,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,9/1/94,,,10/1/94,,,F,homemaker                     ,1,Coggan's Syndrome,,,
+194,30.8,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,9/1/94,,,11/1/94,,,F,teacher/student               ,2,Hereditary-other,,,
+195,58.2,R,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.2,,,11/1/94,,,12/1/94,,,F,KEY DATA OPERATOR             ,3,Unknown,,,11
+197,58.1,L,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,11/1/94,,,12/1/94,,,M,FARMER                        ,3,Otosclerosis,,,
+198,26.4,L,R,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,Clarion HiRes 90K with Helix,,12/1/94,6/7/20,,1/1/95,7/7/20,,M,STUDENT                       ,1,Head Trauma,,,
+200,48.6,R,L,,,,,Y,Y,,2,,,Clarion Radial Bipolar/Standard 1.0,Clarion HiRes 90K,,2/1/95,10/8/20,,3/1/95,11/8/20,,M,FARM HAND                     ,1,Unknown,,4,4
+202,20,L,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,3/1/95,,,4/1/95,,,M,STUDENT                       ,2,Head Trauma,,,
+203,48.7,L,,,,,,Y,,,2,,,Clarion Radial Bipolar/Standard 1.0,,,3/1/95,,,5/1/95,,,F,Secretary                     ,1,Unknown,,,
+205,44,R,,,,,,Y,,,2,,,Nucleus CI22,,,6/1/95,,,7/1/95,,,M,RESIDNT TRTMT WORKER          ,1,Hereditary-other,,4,4
+211,40.4,R,,,,,,Y,,,2,,,Nucleus CI22,,,1/1/96,,,2/1/96,,,F,,,Head Trauma,,,
+214,41.8,L,,,,,,Y,,,2,,,Nucleus ABI 24M,,,4/1/96,,,5/1/96,,,M,,,Acoustic Neuronna,,,
+219,21.9,R,,,,,,Y,,,2,,,Nucleus CI22,,,8/1/96,,,9/1/96,,,M,,,Unknown,,,
+220,5.3,R,L,,,,,N,Y,,2,,,Nucleus CI22,Nucleus CI422,,9/1/96,9/14/20,,10/1/96,10/14/20,,F,,,Unknown,Unknown,,
+221,36,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,9/1/96,,,11/1/96,,,F,record specialist             ,2,Hereditary-other,,5,5
+222,70.5,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,11/1/96,,,12/1/96,,,M,farmer                        ,1,Unknown,,62,62
+223,51.3,L,R,,,,,Y,Y,,2,,,Nucleus CI 24M,Nucleus CI 24R,,11/1/96,9/3/20,,12/1/96,10/3/20,,F,office manager                ,1,,,5,5
+224,42.2,R,L,,,,,N,Y,,2,,,Nucleus CI 24M,Nucleus CI512(CA),,12/1/96,5/10/20,,1/1/97,6/10/20,,M,,,,,,
+226,28.9,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,12/1/96,,,1/1/97,,,F,student                       ,2,Other,Ototoxicity,,
+227,58.1,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,12/1/96,,,1/1/97,,,M,retired                       ,1,,,37,37
+228,38.2,L,,,,,,Y,,,2,34,34,Clarion Radial Bipolar/Standard 1.2,,,12/1/96,,,1/1/97,,,F,drafter,1,Hereditary-other,,24,24
+229,31.2,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,1/1/97,,,2/1/97,,,M,labor-maint                   ,2,Head Trauma,,,23
+230,73.2,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,1/1/97,,,2/1/97,,,F,retired                       ,1,,,62,62
+232,68.8,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,1/1/97,,,2/1/97,,,F,homemaker                     ,4,Unknown,,,
+233,10.8,L,L,,,,,Y,Y,,2,,,Clarion Radial Bipolar/Standard 1.2,Clarion HiRes 90K Mid-Scala,,1/1/97,11/14/20,,2/1/97,12/14/20,,F,,,,,,
+235,74.1,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,3/1/97,,,4/1/97,,,F,,1,Unknown,,,
+236,75.5,R,,,,,,Y,,,1,,,Nucleus CI 24M,,,3/1/97,,,4/1/97,,,M,,1,Unknown,,62,62
+238,69.6,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,4/1/97,,,5/1/97,,,F,,4,Hereditary-other,,37,37
+243,39.6,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,6/1/97,,,7/1/97,,,F,Teacher Associate             ,2,Unknown,,,
+244,47.8,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,6/1/97,,,7/1/97,,,F,DISABLE                       ,3,,,19,19
+245,37.7,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,6/1/97,,,7/1/97,,,M,,,Other,,,
+246,69.2,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,7/1/97,,,8/1/97,,,M,,1,Infection,,,
+249,76.9,L,,,,,,Y,,,1,,,Nucleus CI 24M,,,9/1/97,,,10/1/97,,,M,RETIRED farm                  ,1,Infection,,,
+252,69.3,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,10/1/97,,,11/1/97,,,M,retired                       ,1,Otosclerosis,,,50
+253,70.8,R,,,,,,Y,,,1,,,Nucleus CI 24M,,,10/1/97,,,11/1/97,,,M,Renovate/Sell cars            ,1,,,,
+254,74.7,R,,,,,,Y,,,1,,,Nucleus CI 24M,,,11/1/97,,,12/1/97,,,F,,1,Head Trauma,Unknown,,
+256,51.4,L,,,,,,Y,,,1,,,Nucleus CI 24M,,,12/1/97,,,1/1/98,,,F,HOUSEWIFE                     ,1,,,49,
+257,45.8,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,12/1/97,,,1/1/98,,,M,WISC DIV VOCATIONAL           ,3,Unknown,,,
+259,36.3,B,,,,,,Y,,,2,,,Nucleus CI 24M,,,12/1/97,,,1/1/98,,,F,PROJECT MANAGER               ,1,,,30,
+260,41.8,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,1/1/98,,,2/1/98,,,F,homemaker                     ,1,Unknown,,4,4
+261,51.6,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,1/1/98,,,2/1/98,,,M,DISABLED                      ,1,Unknown,Head Trauma,16,
+263,50.5,R,,,,,,Y,,,1,,,Nucleus CI 24M,,,1/1/98,,,3/1/98,,,M,DELIVERY PERSON               ,2,Other,,,
+265,36.6,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,2/1/98,,,4/1/98,,,M,,,,,,
+266,49.4,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,3/1/98,,,4/1/98,,,M,housewife                     ,1,,,,
+268,76.4,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,4/1/98,,,5/1/98,,,F,HOME MAKER                    ,4,,,,
+271,42.4,L,R,,,,,Y,Y,,2,,,Nucleus CI 24M,Nucleus CI532,,5/1/98,8/18/20,,6/1/98,9/18/20,,F,ARTIST/TEACHER                ,1,Unknown,,,
+272,80.8,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,6/1/98,,,7/1/98,,,F,Housewife                     ,4,Meniere's,,,
+273,3,L,R,,,,,N,N,,2,,,Nucleus CI22,Nucleus CI 24RE(CA),,7/1/98,8/7/20,,,,,M,,,,,,
+276,81.4,L,L,,,,,Y,,,1,,,Nucleus CI 24M,Nucleus CI 24M,,8/1/98,9/1/00,,10/1/98,10/1/00,,F,N/A                           ,2,Unknown,,60,60
+278,44.7,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,8/1/98,,,9/1/98,,,F,CASHIER                       ,3,,,,
+279,72.6,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,8/1/98,,,9/1/98,,,M,FARMER                        ,1,Noise Exposure,,,
+281,32.1,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,9/1/98,,,10/1/98,,,M,farming                       ,2,Unknown,,,
+282,68.9,B,,,,,,Y,,,2,,,Nucleus CI 24M,,,9/1/98,,,10/1/98,,,M,retired minister              ,1,Hereditary-other,Meniere's,,
+283,10.5,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,9/1/98,,,10/1/98,,,F,,,,,,
+284,26.7,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,9/1/98,,,10/1/98,,,M,,,Unknown,,,
+285,65.3,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,10/1/98,,,11/1/98,,,M,,1,Hereditary-other,,,
+287,50.1,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,11/1/98,,,12/1/98,,,M,PSYCHOLOGIST                  ,1,Hereditary-other,,,
+288,34,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,11/1/98,,,12/1/98,,,F,SUPERVISOR                    ,2,Rubella,,,
+291,49.1,L,,,,,,Y,,,1,,,Nucleus CI 24M,,,12/1/98,,,1/1/99,,,F,,3,,,,
+293,37.8,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,12/1/98,,,1/1/99,,,M,,1,Meningitis,,,
+295,68.4,R,,,,,,N,,,2,,,House Alpha,,,1/1/99,,,1/1/99,,,F,,,,,,
+296,40.9,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,1/1/99,,,2/1/99,,,F,,,Hereditary-other,,,
+298,43.2,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,1/1/99,,,2/1/99,,,M,MAINTENANCE                   ,2,Unknown,,,
+300,35.4,B,,,,,,Y,,,2,,,Nucleus CI 24M,,,1/1/99,,,3/1/99,,,F,home maker                    ,1,,,,
+301,77.2,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,1/1/99,,,3/1/99,,,F,,4,Otosclerosis,,,
+304,55.7,B,,,,,,Y,,,2,,,Nucleus CI 24M,,,3/1/99,,,4/1/99,,,F,clerical                      ,1,Unknown,,,
+305,74.1,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,3/1/99,,,4/1/99,,,F,lab x-ray tech                ,3,Other,,,
+306,79.8,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,3/1/99,,,4/1/99,,,F,retired                       ,2,Otosclerosis,,,
+307,75.5,L,,,,,,Y,,,1,,,Nucleus CI 24M,,,4/1/99,,,5/1/99,,,F,retires                       ,1,Hereditary-other,,,
+314,71.9,L,,,,,,Y,,,1,,,Nucleus CI 24M,,,5/1/99,,,6/1/99,,,F,,,Unknown,,,
+315,43.5,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,5/1/99,,,6/1/99,,,F,accounts payable clerk        ,1,Hereditary-other,,12,12
+316,59.7,B,,,,,,Y,,,1,,,Nucleus CI 24M,,,6/1/99,,,7/1/99,,,F,teacher                       ,4,Other,,,
+317,21.6,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,6/1/99,,,7/1/99,,,F,,,Ototoxicity,,,
+318,51.9,B,,,,,,Y,,,2,,,Nucleus CI 24M,,,7/1/99,,,8/1/99,,,F,housewife                     ,,Unknown,,,
+319,45.7,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,7/1/99,,,9/1/99,,,F,HOUSEWIFE                     ,1,Hereditary-other,,,
+321,75.4,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,9/1/99,,,10/1/99,,,F,,4,Unknown,Ototoxicity,,
+322,68.2,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,9/1/99,,,10/1/99,,,F,,1,Otosclerosis,,20,20
+323,34,R,R,L,,,,Y,Y,Y,2,33,33,Nucleus EAS1,Nucleus CI 24R,Nucleus CI 24RE(CA),9/1/99,6/1/00,8/6/20,10/1/99,7/1/00,9/6/20,M,college professor             ,2,Hereditary-other,,,
+324,59.2,B,,,,,,Y,,,2,,,Nucleus CI 24M,,,9/1/99,,,11/1/99,,,F,retired                       ,2,,,,
+325,1.7,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,11/1/99,,,12/1/99,,,M,,,,,,
+327,75.2,B,,,,,,Y,,,2,,,Nucleus CI 24M,,,11/1/99,,,12/1/99,,,F,retired                       ,1,,,,
+329,39.7,R,L,R,,,,Y,Y,Y,2,,,Nucleus EAS1,Nucleus CI 24RE(CA),Nucleus CI422,12/1/99,6/8/20,3/14/20,1/1/00,7/8/20,3/14/20,M,farmer                        ,1,Hereditary-other,Noise Exposure,,
+330,39.2,L,,,,,,Y,,,2,,,Nucleus CI 24M,,,12/1/99,,,1/1/00,,,F,none                          ,3,Unknown,,,
+331,6.2,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,12/1/99,,,1/1/00,,,M,,,,,,
+334,62.7,B,,,,,,Y,,,1,,,Nucleus CI 24M,,,1/1/00,,,2/1/00,,,M,retired                       ,1,Noise Exposure,Hereditary-other,,
+335,56.2,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,1/1/00,,,2/1/00,,,F,program technician            ,1,Autoimmune Sensorineural Loss,,45,45
+336,31.2,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,2/1/00,,,3/1/00,,,F,"Big Ten Mart ""Asst..          ",2,Enlarged Vestibular Aquaducts,,,
+337,71,B,,,,,,Y,,,2,,,Nucleus CI 24M,,,2/1/00,,,3/1/00,,,M,retired farmer                ,1,Meniere's,,60,60
+338,69.6,L,L,,,,,Y,,,2,,,Nucleus EAS1,Nucleus CI 24R,,2/1/00,5/2/20,,3/1/00,6/2/20,,M,retired,1,Noise Exposure,,64,64
+340,45.1,L,,,,,,Y,,,1,,,Nucleus CI 24R,,,2/1/00,,,3/1/00,,,M,,,,,,
+344,46.9,R,,,,,,Y,,,2,,,Nucleus CI 24M,,,5/1/00,,,6/1/00,,,M,heavy equipment oper          ,1,,,,
+345,83.2,L,,,,,,Y,,,1,,,Nucleus CI 24R,,,5/1/00,,,6/1/00,,,M,,,Unknown,,,
+346,52.8,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,5/1/00,,,6/1/00,,,M,superintendent                ,4,Unknown,,49,49
+348,75.4,R,,,,,,Y,,,1,,,Nucleus CI 24R,,,5/1/00,,,7/1/00,,,F,retired nurse                 ,2,,,75,75
+349,58.8,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,6/1/00,,,7/1/00,,,F,secretary                     ,1,Hereditary-other,,,
+350,80,L,,,,,,Y,,,1,,,Nucleus CI 24R,,,6/1/00,,,7/1/00,,,F,interior decorator            ,,Hereditary-other,,,
+351,79.2,R,,,,,,Y,,,1,,,Nucleus CI 24R,,,6/1/00,,,7/1/00,,,M,retired                       ,1,,,66,66
+352,42.8,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,7/1/00,,,8/1/00,,,M,,,Unknown,,,
+353,86.3,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,7/1/00,,,8/1/00,,,M,,1,,,57,57
+354,66.5,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,8/1/00,,,9/1/00,,,F,retired                       ,1,Hereditary-other,,,
+358,65.2,L,,,,,,Y,,,2,,,Clarion HiFocus II,,,9/1/00,,,10/1/00,,,M,carpenter-custodian           ,1,Noise Exposure,,,
+360,68.5,L,,,,,,Y,,,2,,,Clarion HiFocus II,,,9/1/00,,,10/1/00,,,F,none                          ,4,Unknown,,13.5,13.5
+362,62.9,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,9/1/00,,,10/1/00,,,M,,,Head Trauma,,,
+364,39.1,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,10/1/00,,,11/1/00,,,M,n/a - disabled                ,3,Hereditary-other,,,
+366,56.8,R,,,,,,Y,,,2,,,Nucleus EAS2,,,1/1/20,,,2/1/20,,,F,,,,,,
+367,73.5,R,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,1/1/20,,,2/1/20,,,M,Veterinarian                  ,,Unknown,,,
+368,69.8,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,1/1/20,,,2/1/20,,,F,,,Hereditary-other,,,
+369,52.5,R,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,2/1/20,,,3/1/20,,,M,farmer                        ,1,Unknown,,3,3
+370,44.9,R,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,2/1/20,,,3/1/20,,,F,clerical                      ,1,Unknown,,,
+371,45.7,L,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,2/1/20,,,3/1/20,,,F,housewife                     ,3,Hereditary-other,,,
+378,51,L,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,5/1/20,,,6/1/20,,,M,Technical Illustrator         ,1,Meniere's,,,
+379,64.8,L,B,,,,,Y,Y,,2,,,Clarion HiFocus 1.2/I-CII,Clarion HiRes 90K,,5/1/20,1/9/20,,6/1/20,2/9/20,,M,,1,Autoimmune Sensorineural Loss,,,
+381,25.3,R,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,6/1/20,,,7/1/20,,,F,,1,Unknown,,,
+382,68,L,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,6/1/20,,,7/1/20,,,F,Retired                       ,1,Unknown,,,
+383,79.2,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,6/1/20,,,7/1/20,,,M,,1,Hereditary-other,,74,74
+384,67.1,R,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,6/1/20,,,7/1/20,,,M,Retired clergy                ,1,Meniere's,,,
+385,54.1,B,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,7/1/20,,,8/1/20,,,M,Brick Layer                   ,1,Enlarged Vestibular Aquaducts,,,
+387,25.7,B,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,7/1/20,,,8/1/20,,,F,Dental Assistant              ,2,Hereditary-Connexon26,,,
+388,67.3,B,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,7/1/20,,,8/1/20,,,M,Drive School Bus              ,1,Noise Exposure,,,
+389,32.5,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,7/1/20,,,8/1/20,,,F,homemaker                     ,1,Unknown,,29,
+391,62.6,R,,,,,,Y,,,1,,,Clarion HiFocus II-CII,,,7/1/20,,,8/1/20,,,M,maintenance worker            ,1,Radiation,,,
+392,72.6,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,8/1/20,,,10/1/20,,,M,part time cleaning            ,1,Unknown,Other,,
+395,66.2,B,,,,,,Y,,,1,,,Clarion HiFocus II-CII,,,8/1/20,,,9/1/20,,,F,Homemaker                     ,1,Otosclerosis,,,
+396,76.7,R,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,8/1/20,,,9/1/20,,,F,,,Hereditary-other,,,
+397,90.8,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,8/1/20,,,10/1/20,,,F,,1,Unknown,,,
+398,51.2,L,,,,,,Y,,,2,,,Nucleus EAS2,,,9/1/20,,,10/1/20,,,M,,,,,,
+399,71.3,R,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,9/1/20,,,10/1/20,,,F,,4,Unknown,,,
+402,76.5,B,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,9/1/20,,,10/1/20,,,M,,1,Otosclerosis,,,
+403,60.8,B,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,9/1/20,,,10/1/20,,,F,,1,Unknown,,,
+404,73.7,L,,,,,,Y,,,1,,,Clarion HiFocus II-CII,,,10/1/20,,,11/1/20,,,M,mechanic                      ,1,Noise Exposure,,,
+405,9.2,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,10/1/20,,,11/1/20,,,M,,,,,,
+406,77,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,10/1/20,,,11/1/20,,,F,Homemaker                     ,4,Unknown,,,
+408,47.7,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,10/1/20,,,11/1/20,,,M,Golf Course Superintendent    ,1,Infection,,,
+410,83.2,R,,,,,,Y,,,1,,,Clarion HiFocus II-CII,,,10/1/20,,,11/1/20,,,F,,,Infection,,,
+413,67.2,R,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,11/1/20,,,12/1/20,,,M,sales                         ,1,Unknown,,,
+414,74.8,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,11/1/20,,,12/1/20,,,F,,4,Other,,,
+415,46.8,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,11/1/20,,,1/2/20,,,F,,,Hereditary-other,,,
+417,82,L,,,,,,Y,,,1,,,Nucleus CI 24R,,,1/2/20,,,1/2/20,,,M,,1,Hereditary-other,,,
+418,79.3,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,1/2/20,,,2/2/20,,,F,School Nurse                  ,1,Unknown,,,
+419,58.7,B,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,1/2/20,,,2/2/20,,,F,Accountant                    ,1,Hereditary-other,,,
+420,36.9,L,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,1/2/20,,,2/2/20,,,F,Senior Technical Writer       ,1,Unknown,,,
+421,29.8,R,,,,,,Y,,,2,,,Nucleus EAS2,,,1/2/20,,,2/2/20,,,F,Physical Therapist Assitant   ,3,Unknown,,,
+423,58.8,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,2/2/20,,,3/2/20,,,M,High School Band Director     ,1,Otosclerosis,,,
+424,67.8,B,,,,,,Y,,,1,,,Clarion HiFocus 1.2/I-CII,,,2/2/20,,,3/2/20,,,F,housewife                     ,1,Unknown,,,
+426,40.3,B,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,2/2/20,,,3/2/20,,,F,custodian                     ,1,Unknown,,,
+427,89.1,L,,,,,,Y,,,1,,,Clarion HiFocus II-CII,,,2/2/20,,,4/2/20,,,F,Teacher                       ,1,Unknown,,,
+428,73.6,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,3/2/20,,,4/2/20,,,M,,1,Meniere's,,,
+431,34.4,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,3/2/20,,,4/2/20,,,F,unemployed                    ,2,Unknown,,,
+432,17.8,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,3/2/20,,,4/2/20,,,F,Nurses aide                   ,2,Hereditary-other,,,
+434,76.8,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,3/2/20,,,4/2/20,,,F,,1,Unknown,,,
+436,68.7,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,4/2/20,,,4/2/20,,,F,,1,Unknown,,,
+437,70.2,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,4/2/20,,,5/2/20,,,M,,1,Hereditary-other,,,
+438,49.2,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,4/2/20,,,5/2/20,,,M,,,Other,,,
+439,43.1,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,4/2/20,,,5/2/20,,,M,Photographer                  ,2,Other,,,
+440,70.9,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,4/2/20,,,5/2/20,,,F,,4,Otosclerosis,,,
+441,67.5,R,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,4/2/20,,,5/2/20,,,F,,1,Unknown,,,
+442,74,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,5/2/20,,,6/2/20,,,M,Priest                        ,2,Other,,,
+443,29.3,R,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,5/2/20,,,6/2/20,,,M,student                       ,2,Unknown,Unknown,,
+445,52.5,B,,,,,,Y,,,2,,,Nucleus CI 24R,,,5/2/20,,,6/2/20,,,F,"RN, LMSW, NCE                 ",1,Unknown,,,
+446,37.9,R,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,6/2/20,,,7/2/20,,,M,Designer                      ,2,Unknown,,,
+449,81.9,R,,,,,,Y,,,1,,,Clarion HiFocus II-CII,,,6/2/20,,,7/2/20,,,F,,,Otosclerosis,,,
+450,63.5,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,6/2/20,,,7/2/20,,,M,farmer                        ,1,Other,,,
+452,38.5,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,7/2/20,,,8/2/20,,,F,Rehabilitation Counselor      ,2,Unknown,,,
+453,75,R,,,,,,Y,,,1,,,Nucleus CI 24R,,,7/2/20,,,8/2/20,,,M,,,Noise Exposure,,,
+455,57,L,R,,,,,Y,Y,,2,,,Nucleus EAS2,Nucleus CI 24RE(CA),,7/2/20,8/4/20,,8/2/20,9/4/20,,F,Educator - Reading Support    ,4,Autoimmune Sensorineural Loss,,,
+456,70.3,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,7/2/20,,,8/2/20,,,F,work in chicken house,4,Unknown,,26,
+457,68.9,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,8/2/20,,,9/2/20,,,M,,1,Unknown,,,
+458,46.7,B,,,,,,Y,,,2,,,Nucleus CI 24R,,,8/2/20,,,9/2/20,,,M,Business Manager              ,1,Unknown,,,
+459,18.1,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,8/2/20,,,,,,M,,,,,,
+460,75.2,L,,,,,,Y,,,2,56,56,Nucleus CI 24R,,,8/2/20,,,9/2/20,,,M,C + N W. R.R. Conductor,1,Unknown,,55,
+461,67.6,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,8/2/20,,,10/2/20,,,M,,1,Unknown,,49,49
+462,55.3,B,,,,,,Y,,,2,,,Nucleus CI 24R,,,8/2/20,,,9/2/20,,,F,Health Info Management Tech   ,1,Enlarged Vestibular Aquaducts,,,
+463,69.1,R,,,,,,Y,,,1,,,Nucleus CI 24R,,,8/2/20,,,9/2/20,,,M,Farmer,3,Unknown,,50,50
+464,67.4,R,,,,,,Y,,,1,,,Nucleus CI 24R,,,9/2/20,,,10/2/20,,,F,housewife                     ,1,Hereditary-other,,,
+465,48.7,R,L,,,,,Y,Y,,2,,,Nucleus CI 24R,Nucleus CI 24RE(CA),,9/2/20,1/9/20,,10/2/20,2/9/20,,F,sales-hardware                ,1,Head Trauma,,23,
+467,57.8,L,R,,,,,Y,Y,,2,,,Nucleus CI 24R,Nucleus CI512(CA),,9/2/20,10/9/20,,10/2/20,11/9/20,,F,Secretary                     ,1,Otosclerosis,,,
+468,51.2,B,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,10/2/20,,,11/2/20,,,M,Mechanical Engineer           ,1,Hereditary-other,,14,
+469,43,B,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,10/2/20,,,11/2/20,,,F,Health Access Rep             ,3,Hereditary-other,,36,
+470,78.5,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,10/2/20,,,11/2/20,,,M,Teacher-Coach                 ,4,Noise Exposure,,,
+471,75.7,R,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,10/2/20,,,11/2/20,,,M,,1,Hereditary-other,,,18
+472,59,R,L,,,,,Y,Y,,2,,,Clarion HiFocus II-CII,Clarion HiRes 90K,,10/2/20,2/9/20,,11/2/20,3/9/20,,F,teacher-counselor             ,1,Unknown,,50,50
+473,76.8,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,10/2/20,,,11/2/20,,,F,,,,,,
+474,57.5,L,,,,,,Y,,,2,,,Clarion HiFocus II-CII,,,10/2/20,,,11/2/20,,,F,Medical Clerk,1,Unknown,,5,5
+476,47.4,R,,,,,,Y,,,2,42,42,Clarion HiFocus II-CII,,,10/2/20,,,11/2/20,,,F,Outside sales,2,,,,22
+478,76.2,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,11/2/20,,,12/2/20,,,M,,1,Unknown,,,
+479,56.1,B,,,,,,Y,,,2,,,Nucleus CI 24R,,,11/2/20,,,12/2/20,,,F,Facilitator/Trainer           ,2,Unknown,,,
+480,90.2,R,,,,,,Y,,,1,,,Clarion HiFocus II-CII,,,11/2/20,,,12/2/20,,,M,,,Unknown,,,
+481,54.8,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,11/2/20,,,12/2/20,,,M,Not working                   ,2,Unknown,,,
+483,79.3,L,,,,,,Y,,,1,,,Nucleus CI 24R,,,12/2/20,,,1/3/20,,,F,homemaker                     ,1,Unknown,,,45
+484,47.8,R,,,,,,Y,,,2,46,46,Nucleus CI 24R,,,12/2/20,,,1/3/20,,,F,homemaker,1,Other,,,44
+488,50,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,1/3/20,,,2/3/20,,,M,Farmer                        ,1,Unknown,,,
+489,90.2,L,,,,,,Y,,,1,,,Clarion HiFocus 1.2/I-CII,,,1/3/20,,,2/3/20,,,M,Farmer                        ,4,Unknown,,72,72
+490,60.8,R,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,1/3/20,,,3/3/20,,,F,Housewife                     ,1,Hereditary-other,Ototoxicity,28,28
+491,74.5,R,,,,,,Y,,,1,,,Nucleus CI 24R,,,2/3/20,,,3/3/20,,,M,,,Unknown,,,
+493,43.2,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,2/3/20,,,3/3/20,,,F,Housekeeper,2,Enlarged Vestibular Aquaducts,,24,
+494,64.2,R,,,,,,Y,,,2,,,Nucleus EAS2,,,2/3/20,,,3/3/20,,,M,,1,Unknown,,,
+495,81.8,R,,,,,,Y,,,1,,,Nucleus CI 24R,,,2/3/20,,,3/3/20,,,M,farmer                        ,1,Noise Exposure,,52,
+498,65.8,L,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,3/3/20,,,4/3/20,,,M,mechanic                      ,1,Unknown,,,
+499,73.1,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,3/3/20,,,5/3/20,,,F,,4,Unknown,Unknown,64,64
+500,71.5,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,4/3/20,,,4/3/20,,,F,Homemaker,1,Hereditary-other,,62,62
+501,43.2,L,,,,,,Y,,,2,1,1,Nucleus CI 24R,,,4/3/20,,,5/3/20,,,F,Labor,1,,,5,
+502,32.9,B,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,4/3/20,,,5/3/20,,,F,Billing Specialist            ,1,Hereditary-other,,25,25
+504,75.1,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,5/3/20,,,6/3/20,,,F,homemaker,1,,,46,46
+505,58.7,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,5/3/20,,,6/3/20,,,M,,,Unknown,Unknown,,
+506,74.2,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,5/3/20,,,6/3/20,,,F,homemaker                     ,1,Other,,,
+508,47.9,R,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,5/3/20,,,6/3/20,,,F,Accting & Reconciliation Clk  ,2,Unknown,Unknown,3,3
+509,14.8,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,5/3/20,,,6/3/20,,,F,,,Unknown,Unknown,,
+510,48,R,,,,,,Y,,,2,,,Nucleus EAS2,,,5/3/20,,,6/3/20,,,M,Engineer                      ,2,Hereditary-other,,38,38
+511,33.9,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,5/3/20,,,6/3/20,,,M,Athletic Admin.               ,2,Other,,,
+512,22.2,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,5/3/20,,,6/3/20,,,F,,,,,,
+513,26.6,L,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,5/3/20,,,6/3/20,,,F,IT Application Analysist - Lea,2,,,6,
+515,79.8,R,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,6/3/20,,,7/3/20,,,F,,1,Unknown,Unknown,61,
+516,62.4,R,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,6/3/20,,,7/3/20,,,M,,1,,,,
+517,54.3,R,,,,,,Y,,,1,,,Nucleus CI 24R,,,6/3/20,,,7/3/20,,,M,,,Unknown,Unknown,,
+518,64.2,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,7/3/20,,,8/3/20,,,F,Farmwife; church custodian    ,1,Unknown,Unknown,25,
+519,43.8,R,L,,,,,Y,Y,,2,,,Clarion HiFocus 1.2/I-CII,Clarion HiRes 90K,,7/3/20,2/12/20,,8/3/20,2/12/20,,M,Compensation Analyst          ,1,Unknown,Unknown,21,21
+520,61.5,R,,,,,,Y,,,2,,,Clarion HiFocus 1.2/I-CII,,,7/3/20,,,8/3/20,,,F,,3,,,,13
+521,74.9,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,7/3/20,,,8/3/20,,,M,,,,,,
+522,55.3,L,,,,,,Y,,,1,,,Nucleus CI 24R,,,7/3/20,,,8/3/20,,,M,Self employed                 ,4,Unknown,Unknown,45,45
+523,30.1,B,,,,,,Y,,,2,,,Clarion HiRes 90K,,,7/3/20,,,8/3/20,,,M,,,Unknown,Unknown,,
+524,52.8,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,7/3/20,,,8/3/20,,,F,Homemaker                     ,1,Unknown,Unknown,,14
+525,59,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,7/3/20,,,8/3/20,,,M,Laboror Coop Elevator         ,2,Other,Unknown,,8
+526,42.8,L,R,,,,,Y,Y,,2,,,Clarion HiFocus II-CII,Clarion HiRes 90K,,8/3/20,11/8/20,,9/3/20,12/8/20,,F,Vocational Rehab Counselor    ,1,Unknown,Unknown,4,4
+527,47.7,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,8/3/20,,,9/3/20,,,M,,,Unknown,Unknown,,
+530,82.8,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,8/3/20,,,9/3/20,,,F,Teacher,1,Unknown,Unknown,78,78
+531,65.7,R,,,,,,Y,,,1,,,Nucleus CI 24R,,,8/3/20,,,9/3/20,,,M,tow truck driver              ,1,Unknown,Unknown,45,
+534,36,R,,,,,,Y,,,2,1.5,1.5,Nucleus CI 24R,,,9/3/20,,,10/3/20,,,F,Accountant,2,,,1.5,1.5
+535,77.8,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,9/3/20,,,10/3/20,,,M,Retired                       ,4,Unknown,Unknown,50,
+536,68.5,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,9/3/20,,,10/3/20,,,F,Self Employed                 ,1,Unknown,Unknown,,48
+537,79.7,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,9/3/20,,,10/3/20,,,M,,1,Unknown,Unknown,57,
+538,32.2,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,10/3/20,,,11/3/20,,,M,Social Security,2,Unknown,Unknown,5,
+540,49.1,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,10/3/20,,,11/3/20,,,F,,,Unknown,Unknown,,
+541,75.3,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,10/3/20,,,11/3/20,,,M,Farming,4,Unknown,Unknown,55,55
+543,74.8,R,R,,,,,Y,,,2,,,Clarion HiRes 90K,Clarion HiRes 90K,,10/3/20,7/7/20,,11/3/20,8/7/20,,M,Tool Maker                    ,1,Meniere's,Unknown,50,50
+544,57.4,L,L,R,,,,Y,Y,Y,2,,,Clarion HiRes 90K,Clarion HiRes 90K,Clarion HiRes 90K,11/3/20,8/5/20,11/12/20,12/3/20,9/5/20,12/12/20,M,contractor                    ,1,Unknown,Unknown,7,7
+545,37.5,R,R,,,,,Y,,,2,15,15,Clarion HiRes 90K,Clarion HiRes 90K,,11/3/20,4/5/20,,12/3/20,5/5/20,,F,Home mother of 2 girls,3,Unknown,Unknown,9,
+547,84.7,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,11/3/20,,,12/3/20,,,F,,4,Unknown,Unknown,,50
+549,69.3,L,,,,,,Y,,,2,,,Nucleus EAS2,,,11/3/20,,,12/3/20,,,M,dentist                       ,1,Unknown,Unknown,50,50
+550,82.8,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,11/3/20,,,12/3/20,,,M,,1,Unknown,Unknown,,
+551,81.8,L,,,,,,Y,,,1,,,Clarion HiRes 90K,,,12/3/20,,,12/3/20,,,M,,,Unknown,Unknown,,
+553,63.2,R,,,,,,Y,,,2,,,Nucleus CI 24R,,,12/3/20,,,1/4/20,,,M,machinist,1,,,19,19
+554,70.9,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,12/3/20,,,1/4/20,,,M,self employed                 ,1,Unknown,Unknown,,65
+555,65,B,,,,,,Y,,,2,,,Clarion HiRes 90K,,,12/3/20,,,1/4/20,,,M,Environmental Consultant      ,1,Other,Unknown,,50
+556,55.1,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,12/3/20,,,1/4/20,,,F,Logistics Management Spec.    ,3,Unknown,Unknown,,40
+557,57.6,L,L,,,,,Y,,,2,,,Clarion HiRes 90K,Clarion HiRes 90K,,1/4/20,1/6/20,,2/4/20,2/6/20,,F,Retired                       ,4,Unknown,Unknown,50,50
+558,59,L,,,,,,Y,,,2,,,Nucleus CI 24R(CA),,,1/4/20,,,2/4/20,,,M,College Professor             ,1,Unknown,Unknown,56,
+560,65.9,R,,,,,,Y,,,2,,,Nucleus EAS2,,,1/4/20,,,2/4/20,,,F,,1,Unknown,Unknown,45,45
+561,80.2,R,R,,,,,Y,Y,,1,,,Clarion HiRes 90K,Clarion HiRes 90K,,1/4/20,10/5/20,,3/4/20,11/5/20,,F,retired counselor             ,4,Unknown,Unknown,69,
+563,85.9,L,,,,,,Y,,,2,,,Nucleus CI522 Straight electrode,,,3/18/20,,,4/18/20,,,F,,,Unknown,Unknown,,
+566,19.6,R,,,,,,Y,,,2,,,Nucleus EAS2,,,3/4/20,,,4/4/20,,,F,student                       ,2,Unknown,Unknown,8,8
+567,61,R,L,,,,,Y,Y,,2,60,60,Nucleus CI 24R(CA),Nucleus CI 24RE(CA),,3/4/20,10/12/20,,4/4/20,11/12/20,,M,Over the road truck driver,1,Unknown,Unknown,60,
+569,65.7,L,,,,,,Y,,,2,,,Nucleus EAS2,,,3/4/20,,,4/4/20,,,F,Homemaker                     ,1,Unknown,Unknown,,
+570,84.7,L,,,,,,Y,,,1,,,Clarion HiRes 90K,,,3/4/20,,,4/4/20,,,F,,4,Unknown,Unknown,,48
+571,65.8,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,3/4/20,,,4/4/20,,,M,Farmer                        ,1,Unknown,Unknown,45,45
+572,44.8,R,,,,,,Y,,,2,,,Nucleus CI 24R(CA),,,4/4/20,,,5/4/20,,,F,housekeeper                   ,3,Hereditary-other,Unknown,,27
+573,72,L,,,,,,Y,Y,,2,,,Clarion HiRes Ultra Slim J,,,9/18/20,,,10/18/20,,,F,Retired,2,Unknown,Unknown,27,27
+574,35.3,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,4/4/20,,,5/4/20,,,M,Factory,1,Unknown,Unknown,17,
+577,66.9,B,L,,,,,Y,Y,,2,,,Clarion HiRes 90K,Clarion HiRes 90K,,5/4/20,3/17/20,,6/4/20,4/17/20,,F,teacher                       ,1,Unknown,Unknown,28,28
+579,66.3,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,5/4/20,,,6/4/20,,,F,,3,Unknown,Unknown,,26
+580,48.6,B,,,N,,,Y,,,2,19,19,Clarion HiRes 90K,,,5/4/20,,,6/4/20,,,M,Printer's Helper,2,Unknown,Unknown,7,7
+583,85.7,L,L,,,,,Y,Y,,2,16,16,Clarion HiRes 90K,Clarion HiRes 90K,,5/4/20,11/7/20,,6/4/20,12/7/20,,F,hair dresser,4,Unknown,Unknown,35,35
+584,85.8,L,,,,,,Y,,,2,70,70,Nucleus CI532,,,11/18/20,,,12/18/20,,,F,,4,Unknown,Unknown,70,70
+585,57.3,B,R,,,,,Y,Y,,2,,,Clarion HiRes 90K,Clarion HiRes 90K,,6/4/20,9/7/20,,6/4/20,10/7/20,,M,,1,Unknown,Unknown,42,
+586,67.1,R,R,,,,,Y,Y,,2,,,Clarion HiRes 90K,Clarion HiRes 90K,,6/4/20,5/6/20,,7/4/20,6/6/20,,F,,1,Unknown,Unknown,46,46
+588,43.4,R,L,,,,,Y,Y,,2,7,7,Clarion HiRes 90K,Clarion HiRes 90K,,6/4/20,9/9/20,,7/4/20,10/9/20,,F,disability advocate,2,Unknown,Unknown,,5
+589,54.8,B,R,,,,,Y,Y,,2,26,26,Clarion HiRes 90K,Clarion HiRes 90K,,6/4/20,11/16/20,,7/4/20,12/16/20,,M,Plumber                       ,3,Autoimmune Sensorineural Loss,Unknown,26,
+590,51.4,R,,,,,,Y,,,2,31,31,Nucleus CI 24R(CA),,,7/4/20,,,8/4/20,,,M,missionary,1,Unknown,Unknown,40,40
+591,32,B,L,R,,,,Y,Y,Y,2,,,Clarion HiRes 90K,Clarion HiRes 90K,Clarion HiRes Ultra CI Focus MS Electrode,7/4/20,12/8/20,10/18/20,8/4/20,12/8/20,11/18/20,M,Operations Analyst            ,1,Meningitis,Unknown,3,3
+593,19.7,R,R,,,,,Y,,,2,0,0,Clarion HiRes 90K,Clarion HiRes 90K,,7/4/20,7/7/20,,8/4/20,8/7/20,,M,Student,2,Unknown,Unknown,2,2
+595,79.7,L,,,,,,Y,,,1,,,Clarion HiRes 90K,,,7/4/20,,,8/4/20,,,M,,1,Unknown,Unknown,,50
+597,53.7,R,R,B,,,,Y,Y,Y,2,,,Clarion HiRes 90K,Clarion HiRes 90K,Nucleus CI 24RE(CA),8/4/20,3/9/20,7/9/20,9/4/20,4/9/20,8/9/20,M,Dental Technician             ,1,Other,Unknown,,33
+600,65.5,L,,,,,,Y,,,1,,,Clarion HiRes 90K,,,9/4/20,,,9/4/20,,,F,,,Unknown,Unknown,,
+601,71.8,R,R,,,,,Y,Y,,2,,,Clarion HiRes 90K,Clarion HiRes 90K,,9/4/20,6/12/20,,10/4/20,7/12/20,,F,housewife                     ,1,,,45,45
+602,57.2,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,9/4/20,,,10/4/20,,,M,,,Unknown,Unknown,,
+603,68.2,L,,,,,,Y,,,2,,,Nucleus CI 24R(CA),,,9/4/20,,,10/4/20,,,F,,1,Otosclerosis,Unknown,,7
+604,70.3,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,9/4/20,,,10/4/20,,,F,,4,Hereditary-other,Unknown,40,40
+605,89.3,L,,,,,,Y,,,1,,,Clarion HiRes 90K,,,9/4/20,,,10/4/20,,,F,,4,Unknown,Unknown,70,
+606,47.1,R,,,,,,Y,,,2,,,Nucleus EAS2,,,10/4/20,,,11/4/20,,,M,,,,,,
+607,44.2,L,,,,,,Y,,,2,,,Nucleus CI 24R(CA),,,10/4/20,,,11/4/20,,,M,Truck Driver                  ,3,Other,Unknown,,9
+608,85.4,L,,,,,,Y,,,1,,,Nucleus CI 24R(CA),,,10/4/20,,,11/4/20,,,M,,1,Unknown,Unknown,36,36
+609,80.2,R,,,,,,Y,,,2,,,Nucleus CI 24R(CA),,,10/4/20,,,11/4/20,,,M,,,Unknown,Unknown,,
+610,67.2,R,,,,,,Y,,,2,65,65,Nucleus CI 24R(CA),,,10/4/20,,,11/4/20,,,M,,1,Unknown,Unknown,60,60
+611,34.2,L,,,,,,Y,,,2,,,Nucleus CI 24R,,,10/4/20,,,11/4/20,,,F,Nurse's aid,1,Unknown,Unknown,,
+613,51.5,R,L,,,N,,Y,Y,,2,41,41,Nucleus EAS2,Nucleus Hybrid L24,,11/4/20,2/17/20,,12/4/20,3/17/20,,M,Self Employed,1,Unknown,Unknown,35,35
+614,72.4,R,R,,,,,Y,Y,,2,,,Nucleus CI 24R(CA),Nucleus CI 24RE(CA),,11/4/20,5/5/20,,12/4/20,6/5/20,,M,electrician                   ,1,Unknown,Unknown,,53
+616,27.4,R,R,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,Clarion HiRes 90K,,11/4/20,9/6/20,,12/4/20,10/6/20,,M,Auto Body Laborer,2,Unknown,Unknown,15,
+617,39.2,L,,,,,,Y,,,2,1,1,Nucleus CI 24R(CA),,,12/4/20,,,1/5/20,,,F,Consultant,1,Unknown,Unknown,1.5,
+618,20.5,B,,,,,,Y,,,2,,,Nucleus CI 24R(CA),,,12/4/20,,,1/5/20,,,M,custodian,2,Coggan's Syndrome,Unknown,,
+620,65.9,L,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,12/4/20,,,1/5/20,,,F,,1,Unknown,Unknown,50,
+622,39.3,R,R,,,,,Y,Y,,2,,,Clarion HiRes 90K with Helix,Clarion HiRes 90K with Helix,,12/4/20,9/8/20,,1/5/20,,,F,material handler              ,1,Other,Unknown,,4
+624,44,L,L,,,,,Y,Y,,2,,,Clarion HiRes 90K with Helix,Clarion HiRes Ultra CI Focus MS Electrode,,1/5/20,10/8/20,,2/5/20,11/8/20,,F,homemaker,1,Unknown,Unknown,,2
+625,63.8,R,,,,,,Y,,,2,62,62,Nucleus CI 24R(CA),,,1/5/20,,,2/5/20,,,F,disabled,1,Unknown,Unknown,,12
+626,77.6,L,,,,,,Y,,,2,,,Nucleus CI 24R(CA),,,1/5/20,,,2/5/20,,,F,,4,Hereditary-other,Unknown,70,70
+627,84,L,,,,,,Y,,,1,,,Nucleus CI 24R(CA),,,1/5/20,,,2/5/20,,,F,,2,Unknown,Unknown,,35
+628,70.9,B,L,,,,,Y,Y,,2,,,Clarion HiRes 90K with Helix,Clarion HiRes 90K with Helix,,1/5/20,4/8/20,,3/5/20,5/8/20,,F,housewife                     ,1,Hereditary-other,Unknown,,61
+631,62.5,L,,,,,,Y,,,1,,,Clarion HiRes 90K,,,2/5/20,,,3/5/20,,,F,,,Unknown,Unknown,,
+634,70.7,L,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,3/5/20,,,3/5/20,,,M,Farmer                        ,1,Noise Exposure,Hereditary-other,60,60
+635,73.9,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,3/5/20,,,4/5/20,,,M,contruction                   ,1,Hereditary-other,Unknown,39,39
+636,60.8,R,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,3/5/20,,,4/5/20,,,M,Dentist                       ,3,Unknown,,,
+637,68.3,R,,,,,,Y,,,1,,,Clarion HiRes 90K with Helix,,,3/5/20,,,4/5/20,,,M,,1,Unknown,Unknown,,45
+639,84.9,R,,,,,,Y,,,1,,,Clarion HiRes 90K with Helix,,,3/5/20,,,5/5/20,,,F,,4,Otosclerosis,Unknown,35,35
+640,38.7,L,L,,,,,Y,Y,,2,,,Clarion HiRes 90K,Clarion HiRes 90K,,4/5/20,9/11/20,,5/5/20,10/11/20,,M,,2,,,,
+641,77.4,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,4/5/20,,,5/5/20,,,F,,2,Unknown,Unknown,72,72
+643,65.1,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,4/5/20,,,6/5/20,,,M,Retired Educator              ,1,Noise Exposure,Unknown,46,46
+644,75.6,R,R,,,,,Y,Y,,2,,,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),,4/5/20,3/8/20,,5/5/20,4/8/20,,M,,,Unknown,Unknown,,
+645,37.4,B,R,B,N,N,N,Y,Y,Y,2,34,34,Clarion HiRes 90K,Clarion HiRes 90K,Clarion HiRes Ultra CI Focus MS Electrode,4/5/20,1/6/20,1/17/20,5/5/20,2/6/20,2/17/20,M,construction,2,,,33,33
+646,69.2,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,5/5/20,,,6/5/20,,,M,,1,Unknown,Unknown,,52
+647,73.9,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,6/5/20,,,6/5/20,,,M,Retired R.R.                  ,1,Meniere's,Unknown,,
+648,45.6,R,L,,,,,Y,Y,,2,,,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),,6/5/20,5/7/20,,6/5/20,6/7/20,,F,Registered Nurse              ,2,Unknown,Unknown,32,32
+649,44.7,B,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,6/5/20,,,6/5/20,,,F,teacher                       ,1,Unknown,Unknown,5,5
+650,55.1,R,,,,,,Y,,,2,,,Nucleus EAS3,,,6/5/20,,,7/5/20,,,F,Activities Specialist         ,1,Noise Exposure,Unknown,39,39
+651,60,L,R,,,,,Y,Y,,2,,,Nucleus EAS3,Nucleus CI522 Straight electrode,,6/5/20,7/16/20,,7/5/20,8/16/20,,F,Deli Manager                  ,1,Unknown,Unknown,42,42
+652,49.8,L,,,,,,Y,,,2,45,45,Nucleus CI 24RE(CA),,,6/5/20,,,7/5/20,,,F,none,2,Unknown,Unknown,13,
+653,69.6,B,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,6/5/20,,,7/5/20,,,F,Retired Nurse Aid,4,Unknown,Unknown,35,35
+654,75.7,R,,,,,,Y,,,2,,,Nucleus EAS3,,,7/5/20,,,8/5/20,,,M,computer design               ,1,Unknown,Unknown,,
+655,50.9,R,,,,,,Y,,,2,45,45,Nucleus CI 24RE(CA),,,7/5/20,,,8/5/20,,,F,disabled,2,Unknown,Unknown,,
+656,43.1,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,7/5/20,,,8/5/20,,,F,Repair Technician             ,1,Unknown,Noise Exposure,41,
+658,64.4,R,,,,,,Y,,,2,54,54,Nucleus CI 24RE(CA),,,8/5/20,,,9/5/20,,,F,seamstress,2,Unknown,Unknown,,19
+660,68.6,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,8/5/20,,,9/5/20,,,M,,1,Unknown,Unknown,50,50
+662,73,L,,,,,,Y,,,1,,,Nucleus CI 24RE(CA),,,8/5/20,,,9/5/20,,,F,House wife,4,Unknown,Unknown,,57
+663,67.8,L,,,,,,Y,,,1,,,Nucleus CI 24RE(CA),,,9/5/20,,,10/5/20,,,F,,,Unknown,Unknown,,
+664,53.7,,,,,,,Y,,,2,,,,,,9/5/20,,,,,,F,,,Unknown,Unknown,,
+665,50.1,R,L,,,,,Y,Y,,2,,,Nucleus EAS3,Nucleus Hybrid L24,,9/5/20,5/17/20,,10/5/20,6/17/20,,F,Dental Assistant              ,1,Autoimmune Sensorineural Loss,,43,43
+668,74.4,L,,,,,,Y,,,2,,,Nucleus EAS3,,,9/5/20,,,10/5/20,,,M,Lawyer                        ,1,Hereditary-other,Unknown,40,
+669,53.1,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,10/5/20,,,11/5/20,,,M,Truckdriver                   ,1,Unknown,Hereditary-other,11,11
+670,81.4,B,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,10/5/20,,,11/5/20,,,F,,1,Unknown,Unknown,,45
+671,72.8,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,10/5/20,,,11/5/20,,,M,Farming                       ,1,Noise Exposure,Unknown,55,55
+672,70.7,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,11/5/20,,,12/5/20,,,F,Teacher,1,Unknown,Unknown,,
+673,59.2,L,,,,,,Y,,,2,57,53,Clarion HiRes 90K,,,11/5/20,,,12/5/20,,,F,homemaker,4,Unknown,Unknown,,
+674,22.5,L,,,,,,Y,,,2,0,0,Nucleus CI 24RE(CA),,,12/5/20,,,1/5/20,,,M,Custodian,2,Unknown,Unknown,0.7,0.7
+676,68.1,R,R,,,,,Y,Y,,1,,,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),,1/6/20,4/6/20,,2/6/20,5/6/20,,M,,1,Unknown,Unknown,66,
+677,62.5,B,R,L,,,,Y,Y,Y,2,,,Clarion HiRes 90K,Clarion HiRes 90K,Clarion HiRes Ultra CI Focus MS Electrode,1/6/20,6/8/20,8/18/20,2/6/20,7/8/20,9/18/20,F,Retired Teacher               ,1,Noise Exposure,Unknown,,40
+678,49.2,R,,,,,,Y,,,2,,,Nucleus EAS3,,,1/6/20,,,2/6/20,,,M,Factory Worker                ,3,Unknown,Unknown,45,45
+679,65.6,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,1/6/20,,,2/6/20,,,M,Mechanic                      ,1,Unknown,Unknown,38,
+680,74.9,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,1/6/20,,,2/6/20,,,F,Innkeeper,3,Unknown,Unknown,,
+681,53.8,L,,,,,,Y,,,2,34,34,Clarion HiRes 90K,,,1/6/20,,,2/6/20,,,F,custodian,2,Unknown,Unknown,,34
+682,74.5,R,,,,,,Y,,,2,50,50,Clarion HiRes 90K,,,1/6/20,,,2/6/20,,,F,,1,Unknown,Unknown,,
+683,71,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,2/6/20,,,3/6/20,,,M,Track and cross country coach ,1,Unknown,Unknown,,50
+684,26.5,R,R,,,,,Y,Y,,2,1.5,1.5,Clarion HiRes 90K,Clarion HiRes 90K Mid-Scala,,2/6/20,3/14/20,,3/6/20,4/14/20,,F,Factory/student,2,Unknown,Unknown,1,1
+685,65.7,L,,,,,,Y,,,1,,,Nucleus CI 24RE(CA),,,2/6/20,,,3/6/20,,,F,,4,Unknown,Unknown,50,50
+686,69.2,R,,,,,,Y,,,2,64,64,Clarion HiRes 90K,,,3/6/20,,,4/6/20,,,F,,4,Unknown,Unknown,48,48
+688,75.2,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,3/6/20,,,4/6/20,,,F,School Teacher,1,Unknown,Unknown,52,52
+689,51.2,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,4/6/20,,,5/6/20,,,F,Accountant                    ,1,Hereditary-other,Unknown,43,43
+690,74,R,,,,,,Y,,,2,,,Nucleus EAS3,,,4/6/20,,,6/6/20,,,M,Retired farmer                ,1,Unknown,Noise Exposure,61,
+691,23,L,R,,,,,Y,Y,,2,,,Clarion HiRes 90K,Clarion HiRes 90K Mid-Scala,,4/6/20,7/14/20,,5/6/20,8/14/20,,M,student,2,Unknown,Unknown,4,4
+692,69.6,B,,,,,,Y,,,2,,,Clarion HiRes 90K,,,4/6/20,,,5/6/20,,,F,Housewife                     ,1,Hereditary-other,Unknown,55,
+693,55.7,R,,,,,,Y,,,2,,,Nucleus EAS3,,,5/6/20,,,6/6/20,,,F,manager                       ,1,Unknown,Unknown,43,43
+694,77.6,R,,,,,,Y,,,2,77,77,Nucleus CI 24RE(CA),,,5/6/20,,,6/6/20,,,M,Farm and Factory work,4,Unknown,Unknown,,
+696,59.2,B,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,6/6/20,,,7/6/20,,,F,none,1,Unknown,Unknown,,
+698,62.7,L,R,,,,,Y,,,2,,,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),,6/6/20,7/7/20,,7/6/20,8/7/20,,F,paraeducator,1,Unknown,Unknown,,
+699,32.3,L,,,,,,Y,,,2,1.5,1.5,Nucleus CI 24RE(CA),,,6/6/20,,,8/6/20,,,F,Hair Stylist,1,Unknown,Unknown,1.5,1.5
+700,75,L,,,,,,Y,,,1,72,72,Clarion HiRes 90K with Helix,,,6/6/20,,,7/6/20,,,M,,4,Unknown,Unknown,48,48
+701,72.2,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,7/6/20,,,8/6/20,,,M,Retired clergy,1,Unknown,Unknown,,
+703,63.6,L,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,7/6/20,,,8/6/20,,,F,Homemaker,1,Unknown,Unknown,9,
+705,24.8,L,,,,,,Y,,,2,1,1,Nucleus CI 24RE(CA),,,7/6/20,,,8/6/20,,,F,student/stay at home mom,3,Unknown,Unknown,2,2
+706,51.1,L,,,,,,Y,,,2,,,Nucleus EAS3,,,7/6/20,,,8/6/20,,,F,Manager                       ,3,Hereditary-other,Unknown,50,50
+707,23.9,L,,,,,,Y,,,2,1,1,Nucleus CI 24RE(CA),,,7/6/20,,,8/6/20,,,M,Autocollision,2,Unknown,Unknown,4,4
+709,44,R,L,,,,,Y,Y,,2,,4,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),,8/6/20,4/9/20,,9/6/20,5/9/20,,M,Route sales rep.,3,Unknown,Unknown,,
+710,58.7,R,L,,,,,Y,Y,,2,1,1,Nucleus CI 24RE(CA),Nucleus CI512(CA),,8/6/20,1/11/20,,9/6/20,2/11/20,,M,,1,Unknown,Unknown,5,5
+711,80.6,R,,,,,,Y,,,2,,,Nucleus EAS3,,,8/6/20,,,9/6/20,,,F,,1,Unknown,Unknown,68,68
+712,82,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,9/6/20,,,10/6/20,,,M,,,Unknown,Unknown,,
+713,63.8,L,,,,,,Y,,,2,,,Nucleus EAS3,,,9/6/20,,,10/6/20,,,M,wallpaper hanger/painter      ,2,Noise Exposure,Unknown,42,42
+714,75.8,R,,,,,,Y,,,2,74,74,Clarion HiRes 90K,,,9/6/20,,,10/6/20,,,F,,1,Unknown,Unknown,,64
+717,50.1,B,,,,,,Y,,,2,,,Clarion HiRes 90K,,,9/6/20,,,10/6/20,,,M,housekeeping aid              ,1,Unknown,Unknown,25,25
+718,66.8,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,9/6/20,,,10/6/20,,,F,,1,Unknown,Unknown,,42
+719,44,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,9/6/20,,,10/6/20,,,M,,,Unknown,Unknown,,
+720,76.8,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,10/6/20,,,11/6/20,,,M,,,Unknown,Unknown,,
+721,43.3,L,,,,,,Y,,,2,23,23,Clarion HiRes 90K,,,10/6/20,,,11/6/20,,,F,SSI Disability,2,Unknown,Unknown,10,
+723,80.5,L,,,,,,Y,,,2,80,80,Nucleus CI 24RE(CA),,,10/6/20,,,11/6/20,,,F,,4,Unknown,Unknown,56,56
+724,86.9,L,,,,,,Y,,,1,,,Clarion HiRes 90K,,,10/6/20,,,11/6/20,,,M,,,Unknown,Unknown,,
+725,84.8,L,L,,,,,Y,Y,,2,,,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),,10/6/20,5/8/20,,11/6/20,6/8/20,,F,,4,Unknown,Unknown,55,55
+726,24.5,R,L,,,N,,Y,Y,,2,4,4,Clarion HiRes 90K,Clarion HiRes Ultra CI Focus MS Electrode,,10/6/20,4/17/20,,11/6/20,5/17/20,,M,,2,Unknown,Unknown,8,8
+728,82.6,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,11/6/20,,,11/6/20,,,F,,4,Unknown,Unknown,,
+730,53.5,L,R,,,,,Y,Y,,2,,,Nucleus EAS3,Nucleus Hybrid L24,,12/6/20,5/17/20,,1/7/20,6/17/20,,F,,,Unknown,Unknown,,
+731,78.9,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,12/6/20,,,1/7/20,,,M,,2,Unknown,Unknown,58,58
+732,81.8,R,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,12/6/20,,,1/7/20,,,F,,4,Unknown,Unknown,,62
+733,73.2,L,,,,,,Y,,,1,,,Clarion HiRes 90K,,,12/6/20,,,1/7/20,,,F,,,Unknown,Unknown,,
+734,39.3,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,12/6/20,,,1/7/20,,,F,cook,2,Unknown,Unknown,5,
+735,67.4,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,1/7/20,,,2/7/20,,,M,Truck driver,1,Unknown,Unknown,,
+739,78.3,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,1/7/20,,,2/7/20,,,F,housewife,4,Unknown,Unknown,71,
+741,75.7,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,1/7/20,,,2/7/20,,,M,,1,Unknown,Unknown,30,30
+743,36.8,L,,,,,,Y,,,2,2,2,Nucleus CI 24RE(CA),,,2/7/20,,,3/7/20,,,F,CNA,1,Unknown,Unknown,3,
+744,50.3,L,L,R,,,,Y,,Y,2,,,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),Nucleus CI422,2/7/20,5/7/20,9/12/20,3/7/20,5/7/20,10/12/20,M,Eng. Technician,1,Unknown,Unknown,,26
+746,36.1,R,,,,,,Y,,,2,32,32,Nucleus CI 24RE(CA),,,3/7/20,,,4/7/20,,,F,Teacher's aide/ housekeeping,2,Unknown,Unknown,4,4
+747,74,R,,,,,,Y,,,2,32,32,Clarion HiRes 90K,,,3/7/20,,,3/7/20,,,M,Own lawn care and snow removal,1,Unknown,Unknown,30,30
+748,69.6,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,3/7/20,,,4/7/20,,,M,,1,Unknown,Unknown,37,
+749,57.2,B,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,3/7/20,,,4/7/20,,,F,K-12 Principal                ,1,Hereditary-other,,41,41
+751,27.1,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,3/7/20,,,4/7/20,,,F,,,Unknown,Unknown,,
+753,88.2,L,,,,,,Y,,,1,,,Clarion HiRes 90K,,,4/7/20,,,5/7/20,,,M,Retired farmer,4,Unknown,Unknown,,
+754,61.8,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,4/7/20,,,5/7/20,,,F,,,Unknown,Unknown,,
+757,82.9,L,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,4/7/20,,,5/7/20,,,M,Firestone,1,Unknown,Unknown,74,74
+758,34,R,L,,,N,,Y,Y,,2,2,2,Clarion HiRes 90K with Helix,Clarion HiRes 90K Mid-Scala,,4/7/20,5/15/20,,5/7/20,6/15/20,,F,Housekeeper,2,Unknown,Unknown,,
+759,69.7,L,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,4/7/20,,,5/7/20,,,M,,,Unknown,Unknown,,
+760,53.9,B,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,5/7/20,,,5/7/20,,,F,Office Manager                ,4,Autoimmune Sensorineural Loss,Hereditary-other,48,48
+761,80.7,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,5/7/20,,,6/7/20,,,F,RN,4,Unknown,Unknown,,63
+762,77.2,B,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,5/7/20,,,6/7/20,,,M,clergeman                     ,2,Unknown,Unknown,,56
+764,82.6,L,,,,,,Y,,,2,79,79,Clarion HiRes 90K with Helix,,,5/7/20,,,6/7/20,,,M,Accountant,1,Unknown,Unknown,,80
+765,65.4,L,,,,,,Y,,,2,64,64,Clarion HiRes 90K with Helix,,,5/7/20,,,6/7/20,,,M,Retired,2,Unknown,Unknown,,
+766,55.1,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,5/7/20,,,6/7/20,,,M,,,Unknown,Unknown,,
+768,71.3,L,,,,,,Y,,,1,,,Clarion HiRes 90K with Helix,,,6/7/20,,,7/7/20,,,F,,,Unknown,Unknown,,
+769,78.8,L,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,6/7/20,,,7/7/20,,,M,farmer,1,Unknown,Unknown,60,60
+770,83.9,L,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,6/7/20,,,7/7/20,,,F,,4,Unknown,Unknown,,
+772,68.9,L,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,6/7/20,,,7/7/20,,,F,,1,Unknown,Unknown,,24
+774,53,B,L,,,,,Y,Y,,2,,,Clarion HiRes 90K with Helix,Clarion HiRes 90K,,7/7/20,3/8/20,,8/7/20,4/8/20,,M,Laborer                       ,1,Noise Exposure,Unknown,37,37
+776,50.3,L,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,7/7/20,,,8/7/20,,,M,,,Unknown,Unknown,,
+780,58.2,B,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,8/7/20,,,9/7/20,,,F,Kitchen Manager               ,1,Unknown,Unknown,33,33
+781,73.7,B,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,8/7/20,,,9/7/20,,,F,Secretary                     ,1,Unknown,Unknown,57,
+783,40.7,R,,,,,,Y,,,2,33,33,Nucleus CI 24RE(CA),,,8/7/20,,,9/7/20,,,F,technical writer,1,Unknown,Unknown,20,20
+785,60.5,B,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,9/7/20,,,10/7/20,,,M,,1,Hereditary-other,Unknown,47,47
+787,77.7,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,9/7/20,,,10/7/20,,,F,owner and manager of retail business,4,Unknown,Unknown,,43
+788,77.3,R,,,,,,Y,,,2,62,62,Clarion HiRes 90K with Helix,,,10/7/20,,,11/7/20,,,M,,1,Unknown,Unknown,,59
+789,67.1,L,,,,,,Y,,,1,,,Clarion HiRes 90K with Helix,,,10/7/20,,,11/7/20,,,F,House wife,1,,,60,
+791,70.3,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,11/7/20,,,11/7/20,,,F,Home maker,1,Unknown,Unknown,40,40
+792,86.2,R,,,,,,Y,,,1,76,76,Clarion HiRes 90K with Helix,,,11/7/20,,,12/7/20,,,F,Dietition,4,,,59,
+794,35.8,L,,,,,,Y,,,2,1,1,Nucleus CI 24RE(CA),,,11/7/20,,,12/7/20,,,M,heavy construction/driver/laborer,1,Unknown,Unknown,5,
+797,52.7,L,R,,,,,Y,Y,,2,47,47,Nucleus CI 24RE(CA),Nucleus CI512(CA),,12/7/20,4/10/20,,1/8/20,5/10/20,,F,Assistant Manager,1,Unknown,Unknown,35,35
+800,69.8,R,,,,,,Y,,,2,67,67,Clarion HiRes 90K with Helix,,,1/8/20,,,1/8/20,,,M,truck driver,1,Unknown,Unknown,61,
+802,28.6,R,,,,,,Y,,,2,28,28,Nucleus CI 24RE(CA),,,1/8/20,,,2/8/20,,,F,Rehabilitation Counselor,1,Unknown,Unknown,,
+803,73.8,B,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,1/8/20,,,1/8/20,,,F,,1,Unknown,Unknown,,
+804,75.3,L,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,1/8/20,,,2/8/20,,,F,,1,Unknown,Unknown,,
+806,79.8,L,,,,,,Y,,,2,70,0,Clarion HiRes 90K with Helix,,,2/8/20,,,3/8/20,,,M,,1,Unknown,Unknown,70,
+809,83.5,L,R,,,,,Y,Y,,2,,,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),,2/8/20,10/12/20,,3/8/20,11/12/20,,M,RETIRED                       ,3,,Unknown,47,47
+810,50.8,R,,,,,,Y,,,2,2,2,Nucleus CI 24RE(CA),,,3/8/20,,,4/8/20,,,F,Master Scheduler,1,Unknown,Unknown,5,5
+811,68.2,R,,,,,,Y,,,2,64,64,Clarion HiRes 90K with Helix,,,4/8/20,,,5/8/20,,,F,Retired,1,Unknown,Unknown,,38
+812,74.2,L,,,,,,Y,,,2,63,63,Clarion HiRes 90K with Helix,,,4/8/20,,,5/8/20,,,M,,1,Unknown,Unknown,52,52
+813,71.2,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,4/8/20,,,5/8/20,,,M,Hotel Maintance,1,Unknown,Unknown,,60
+816,76.6,R,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,5/8/20,,,6/8/20,,,M,,,Unknown,Unknown,,
+818,48.2,B,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,5/8/20,,,6/8/20,,,F,speech-language pathologist   ,1,Unknown,Unknown,20,20
+819,43.6,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,5/8/20,,,6/8/20,,,M,,,Unknown,Unknown,,
+820,61.1,R,,,,,,Y,,,2,57,57,Nucleus Hybrid S12,,,6/8/20,,,7/8/20,,,F,,,Unknown,Unknown,51,50
+821,60.8,R,,,,,,Y,,,2,52,42,Nucleus Hybrid S12,,,6/8/20,,,6/8/20,,,M,,,Unknown,Unknown,52,40
+822,77.1,L,,,,,,Y,,,1,,,Clarion HiRes 90K with Helix,,,6/8/20,,,7/8/20,,,M,,,Unknown,Unknown,,
+823,51,R,,,,,,Y,,,2,,,Clarion HiRes 90K with Helix,,,6/8/20,,,7/8/20,,,M,,,Unknown,Unknown,,
+824,78.8,L,,,,,,Y,,,1,,,Clarion HiRes 90K,,,6/8/20,,,7/8/20,,,F,homemaker,1,Unknown,Unknown,,77
+826,18.8,B,,,,,,Y,,,2,0,0,Nucleus CI 24RE(CA),,,7/8/20,,,8/8/20,,,M,student,2,Unknown,Unknown,1,1
+828,79.1,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,7/8/20,,,8/8/20,,,F,Specialist/Special Ed.,1,Unknown,Unknown,32,32
+829,84.2,R,,,,,,Y,,,2,82,82,Nucleus CI 24RE(CA),,,7/8/20,,,8/8/20,,,F,,4,Unknown,Unknown,74,74
+830,80.8,L,,,,,,Y,,,2,73,73,Clarion HiRes 90K,,,7/8/20,,,8/8/20,,,M,Pastor - Emeritis,1,Unknown,Unknown,69,69
+832,73.2,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,8/8/20,,,9/8/20,,,M,,2,Unknown,Unknown,45,45
+833,69.8,L,L,,,,,Y,Y,,2,1,1,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),,8/8/20,11/11/20,,9/8/20,12/11/20,,M,Auto Body Tech,1,Unknown,Unknown,6,
+834,66.7,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,8/8/20,,,9/8/20,,,M,,2,Unknown,Unknown,,20
+837,73.8,R,,,,,,Y,,,2,68,68,Nucleus CI 24RE(CA),,,9/8/20,,,10/8/20,,,M,,1,Unknown,Unknown,,60
+838,65.3,L,,,,,,Y,,,2,40,40,Nucleus Hybrid S12,,,9/8/20,,,10/8/20,,,M,,,Unknown,Unknown,55,55
+839,85.3,L,,,,,,Y,,,2,43,43,Nucleus CI 24RE(CA),,,9/8/20,,,10/8/20,,,M,,4,Unknown,Unknown,48,48
+842,87,L,,,,,,Y,,,2,86,86,Nucleus CI 24RE(CA),,,10/8/20,,,11/8/20,,,M,,1,Unknown,Unknown,77,77
+843,62,B,,,,,,Y,,,1,61,54,Nucleus CI 24RE(CA),,,10/8/20,,,11/8/20,,,M,Construction Superintendent,1,Unknown,Unknown,56,50
+844,65.2,L,,,,,,Y,,,2,57,64,Nucleus CI 24RE(CA),,,10/8/20,,,11/8/20,,,M,,1,Unknown,Unknown,,
+846,82.1,L,,,,,,Y,,,2,76,79,Clarion HiRes 90K,,,10/8/20,,,11/8/20,,,M,,1,Unknown,Unknown,71,71
+847,81,L,,,,,,Y,,,1,64,63,Clarion HiRes 90K with Helix,,,10/8/20,,,11/8/20,,,M,,1,Unknown,Unknown,64,
+848,60.8,L,L,,,,,Y,Y,,2,56,56,Nucleus Hybrid S12,Nucleus Hybrid L24,,10/8/20,3/10/20,,12/8/20,3/10/20,,F,,,Unknown,Unknown,52,52
+849,75.5,L,,,,,,Y,,,2,70,70,Nucleus CI 24RE(CA),,,10/8/20,,,11/8/20,,,M,Semi-retired,1,Unknown,Unknown,35,40
+850,52.5,R,,,,,,N,,,2,,,Nucleus CI 24R(CA),,,10/8/20,,,,,,F,,,Unknown,Unknown,,
+851,68.4,R,R,,,,,Y,Y,,2,,,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),,10/8/20,4/9/20,,11/8/20,5/9/20,,M,,2,Unknown,Unknown,55,55
+852,69.1,B,,,,,,Y,,,2,51,47,Clarion HiRes 90K,,,11/8/20,,,11/8/20,,,M,Construction,1,Unknown,Unknown,48,48
+854,83.2,R,,,,,,Y,,,2,,80,Clarion HiRes 90K,,,11/8/20,,,12/8/20,,,M,,4,Unknown,Unknown,55,
+856,47.7,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,11/8/20,,,12/8/20,,,F,,,Unknown,Unknown,,
+857,67.9,R,,,,,,Y,,,2,66,66,Clarion HiRes 90K,,,12/8/20,,,1/9/20,,,M,Retired,3,Unknown,Unknown,,
+858,62.7,L,R,,,,,N,Y,,2,62,62,Nucleus CI 24RE(CA),Nucleus CI512(CA),,12/8/20,7/10/20,,12/8/20,8/10/20,,M,On disability,1,Unknown,Unknown,61,61
+859,57.4,L,R,,,,,Y,Y,,2,25,9,Nucleus CI 24RE(CA),Nucleus CI522 Straight electrode,,12/8/20,2/16/20,,1/9/20,3/16/20,,M,salesman,2,,,,47
+861,75,L,,,,,,Y,,,2,74,19,Clarion HiRes 90K,,,1/9/20,,,2/9/20,,,M,John Deere,1,Unknown,Unknown,70,
+862,86.5,L,,,,,,Y,,,1,85,82,Clarion HiRes 90K,,,1/9/20,,,2/9/20,,,M,,1,Unknown,Unknown,75,75
+863,46.2,R,,,,,,Y,,,2,45,45,Nucleus CI 24RE(CA),,,1/9/20,,,2/9/20,,,M,Regional Auditing Manager,1,Unknown,Unknown,45,45
+864,77.7,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,1/9/20,,,2/9/20,,,M,farmer,1,Unknown,Unknown,69,69
+865,64.5,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,1/9/20,,,2/9/20,,,M,Farmer,1,Unknown,Unknown,,60
+866,61.1,L,,,,,,Y,,,2,58,58,Nucleus CI 24RE(CA),,,1/9/20,,,2/9/20,,,M,farmer,1,Coggan's Syndrome,Unknown,46,46
+867,54.1,R,,,,,,Y,,,2,,,Nucleus Hybrid S12,,,1/9/20,,,2/9/20,,,M,"Salesman, farmer",1,Unknown,Unknown,49,
+868,38.3,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,2/9/20,,,3/9/20,,,F,Registered Dietitian,2,Unknown,Unknown,11,11
+869,72.3,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,2/9/20,,,3/9/20,,,F,teacher,1,Unknown,Unknown,70,
+870,73.3,L,,,,,,Y,,,2,77,79,Clarion HiRes 90K,,,2/9/20,,,3/9/20,,,M,Steamfitter,1,Unknown,Unknown,65,65
+871,70.4,L,,,,,,Y,,,2,64,,Nucleus CI 24RE(CA),,,2/9/20,,,3/9/20,,,M,,1,Unknown,Unknown,,55
+872,59.2,R,L,,,,,Y,Y,,2,,,Clarion HiRes 90K,Clarion HiRes 90K,,2/9/20,2/13/20,,3/9/20,3/13/20,,M,Carpenter,3,Unknown,Unknown,,7
+873,47.6,L,R,,,,,Y,Y,,2,47,47,Nucleus CI 24RE(CA),Nucleus CI532,,2/9/20,3/19/20,,3/9/20,4/19/20,,F,,3,Unknown,Unknown,11,11
+875,62.8,L,,,,,,Y,,,2,40,51,Nucleus Hybrid S12,,,3/9/20,,,4/9/20,,,F,Registered Nurse,1,Unknown,Unknown,38,
+878,40.1,L,R,,,,,Y,Y,,2,39,,Nucleus CI 24RE(CA),Nucleus CI422,,4/9/20,1/13/20,,4/9/20,2/13/20,,F,Teacher,1,Unknown,Unknown,5,14
+881,65.8,B,,,,,,Y,,,2,50,65,Clarion HiRes 90K,,,4/9/20,,,4/9/20,,,M,,1,Unknown,Unknown,50,55
+883,78.2,R,,,,,,Y,,,1,,,Clarion HiRes 90K,,,5/9/20,,,5/9/20,,,F,,,Unknown,Unknown,,
+884,70.2,L,,,,,,Y,,,2,50,50,Clarion HiRes 90K,,,5/9/20,,,6/9/20,,,M,walmart maintenance,1,Unknown,Unknown,35,35
+885,72.3,R,,,,,,Y,,,2,69,69,Clarion HiRes 90K,,,5/9/20,,,6/9/20,,,F,farm wife and nurses aid,1,Unknown,Unknown,58,58
+886,49.9,R,L,,,,,Y,Y,,2,35,25,Nucleus CI 24RE(CA),Nucleus CI512(CA),,5/9/20,5/11/20,,6/9/20,6/11/20,,F,Goodrich Source Inspector,1,Unknown,Unknown,11,11
+888,74.7,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,6/9/20,,,6/9/20,,,F,,4,Unknown,Unknown,58,58
+890,46.8,L,R,,,,,Y,Y,,2,,,Clarion HiRes 90K,Clarion HiRes 90K,,6/9/20,10/11/20,,7/9/20,11/11/20,,F,LPN,1,Unknown,Unknown,40,40
+891,49.3,R,L,,,,,Y,Y,,2,,48,Nucleus CI 24RE(CA),Nucleus CI512(CA),,6/9/20,9/11/20,,7/9/20,9/11/20,,F,Teacher,3,Unknown,Unknown,30,30
+894,80.3,R,,,,,,Y,,,2,75,75,Clarion HiRes 90K,,,7/9/20,,,8/9/20,,,F,,2,Unknown,Unknown,56,60
+895,76.3,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,7/9/20,,,8/9/20,,,M,,,Unknown,Unknown,,
+897,59,B,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,7/9/20,,,8/9/20,,,M,Factory Worker,1,Unknown,Unknown,,
+900,23,R,,,,,,Y,,,2,17,17,Nucleus Hybrid L24,,,8/9/20,,,9/9/20,,,M,Student,2,Unknown,Unknown,18,21
+902,79.4,R,,,,,,Y,,,2,46,46,Clarion HiRes 90K,,,8/9/20,,,9/9/20,,,F,,1,Unknown,Unknown,,
+903,58.7,R,,,,,,Y,,,2,27,59,Clarion HiRes 90K,,,8/9/20,,,9/9/20,,,M,equipment operator,1,Unknown,Unknown,,
+904,78.2,R,,,,,,Y,,,2,,25,Nucleus CI512(CA),,,9/9/20,,,10/9/20,,,F,,1,Unknown,Unknown,60,
+906,44.2,L,R,,N,,,Y,Y,,2,,,Nucleus CI512(CA),Nucleus CI512(CA),,9/9/20,12/15/20,,10/9/20,1/16/20,,M,,,Unknown,Unknown,,
+907,68.5,R,,,,,,Y,,,2,62,67,Nucleus CI512(CA),,,9/9/20,,,10/9/20,,,M,,1,Unknown,Unknown,,
+908,50.8,B,,,,,,Y,,,2,42,,Clarion HiRes 90K,,,9/9/20,,,10/9/20,,,F,N/A,3,Rubella,Unknown,3,3
+909,83.6,L,,,,,,Y,,,2,70,70,Nucleus CI512(CA),,,9/9/20,,,10/9/20,,,F,Retired,4,Unknown,Unknown,45,45
+910,81,L,,,,,,Y,,,2,30,30,Clarion HiRes 90K,,,9/9/20,,,10/9/20,,,F,,4,Unknown,Unknown,16,16
+911,84.6,L,,,,,,Y,,,2,80,80,Clarion HiRes 90K,,,10/9/20,,,10/9/20,,,M,Tool Maker,1,Unknown,Unknown,62,62
+913,58.5,L,,,,,,Y,,,2,,,Nucleus Hybrid S12,,,10/9/20,,,11/9/20,,,F,,1,Unknown,Unknown,52,52
+914,65.7,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,10/9/20,,,11/9/20,,,F,,,Unknown,Unknown,,
+915,85.2,R,,,,,,Y,,,2,,80,Nucleus CI512(CA),,,10/9/20,,,11/9/20,,,M,,1,Unknown,Unknown,50,50
+918,58.5,L,R,,,,,Y,Y,,2,30,30,Clarion HiRes 90K,Clarion HiRes 90K,,11/9/20,5/10/20,,12/9/20,6/10/20,,F,,1,Unknown,Unknown,45,45
+919,60.2,B,,,,,,Y,,,2,48,44,Nucleus CI512(CA),,,11/9/20,,,12/9/20,,,M,Farmer/owns machinary repair shop,1,Unknown,Unknown,21,21
+923,37.9,L,,,,,,Y,,,2,31,31,Nucleus CI512(CA),,,12/9/20,,,1/10/20,,,M,Elevator operator,1,Unknown,Unknown,29,29
+924,81.5,L,,,,,,Y,,,2,65,72,Clarion HiRes 90K,,,12/9/20,,,1/10/20,,,F,,4,Unknown,Unknown,42,42
+925,46.1,R,L,R,,,,Y,Y,Y,2,40,40,Nucleus CI512(CA),Nucleus CI512(CA),Nucleus CI 24RE(CA),1/10/20,6/11/20,2/14/20,1/9/20,6/11/20,3/14/20,M,Student,1,Unknown,Unknown,35,35
+926,63.4,R,R,,,,,Y,Y,,2,60,60,Nucleus Hybrid S12,Nucleus CI422,,1/10/20,11/13/20,,2/10/20,12/13/20,,M,scientist,1,Unknown,Unknown,50,52
+927,21.9,R,L,,,,,Y,Y,,2,2,2,Nucleus CI512(CA),Nucleus CI422,,1/10/20,11/12/20,,2/10/20,12/12/20,,M,Tool and Die,2,Unknown,Unknown,2,2
+928,49.5,R,,,,,,Y,,,2,,40,Nucleus CI512(CA),,,1/10/20,,,3/10/20,,,F,Packer,1,Unknown,Unknown,22,14
+929,82.7,L,,,,,,Y,,,2,0,49,Clarion HiRes 90K,,,1/10/20,,,2/10/20,,,F,housewife,1,Unknown,Unknown,80,
+930,32.2,L,,,,,,Y,,,2,,,Nucleus CI512(CA),,,2/10/20,,,3/10/20,,,F,,,Unknown,Unknown,,
+931,40.6,L,L,,,,,Y,Y,,2,36,36,Clarion HiRes 90K,Clarion HiRes 90K,,2/10/20,11/13/20,,3/10/20,12/13/20,,F,,2,Unknown,Unknown,5,
+932,65.5,L,,,,,,Y,,,2,56,56,Nucleus CI512(CA),,,2/10/20,,,3/10/20,,,F,Grants bookkeeper,4,Unknown,Unknown,,
+933,56.8,R,,,,,,Y,,,2,,,Nucleus CI512(CA),,,2/10/20,,,3/10/20,,,M,,,Unknown,Unknown,,
+934,52.3,R,,,,,,Y,,,2,30,23,Nucleus CI512(CA),,,2/10/20,,,3/10/20,,,F,Teacher,1,Unknown,Unknown,23,23
+935,57.8,B,,,,,,Y,,,2,57,43,Nucleus CI512(CA),,,2/10/20,,,3/10/20,,,M,disabled,1,Unknown,Unknown,,48
+936,43.8,B,,,,,,Y,,,2,6,6,Nucleus CI512(CA),,,3/10/20,,,4/10/20,,,F,Book Store Clerk,2,Unknown,Unknown,6,6
+937,45.1,R,,,,,,Y,,,2,37,32,Nucleus Hybrid S12,,,3/10/20,,,4/10/20,,,F,administrative/clerical,2,Unknown,Unknown,32,32
+938,56.7,L,R,R,,,,Y,Y,Y,2,,,Nucleus CI512(CA),Nucleus CI512(CA),Nucleus CI 24RE(CA),3/10/20,4/11/20,5/13/20,4/10/20,5/11/20,6/13/20,M,Registered Nurse,1,Unknown,Unknown,,
+939,78.7,L,,,,,,Y,,,2,70,70,Clarion HiRes 90K,,,3/10/20,,,4/10/20,,,M,,1,Unknown,Unknown,52,
+940,25.3,R,R,L,N,N,,Y,Y,Y,2,,,Nucleus CI512(CA),Nucleus CI 24RE(CA),Nucleus CI532,3/10/20,3/14/20,9/17/20,4/10/20,4/14/20,10/17/20,F,,3,Unknown,Unknown,,
+942,36.8,B,,,,,,Y,,,2,36,36,Nucleus CI512(CA),,,3/10/20,,,4/10/20,,,M,Cashier,1,Unknown,Unknown,12,10
+943,37.6,R,L,L,,,,Y,Y,Y,2,,,Nucleus CI512(CA),Nucleus CI512(CA),Nucleus CI512(CA),3/10/20,11/10/20,7/11/20,4/10/20,12/10/20,8/11/20,F,Factory Laborer,3,Unknown,Unknown,6,6
+944,69.5,R,,,,,,Y,,,2,,,Nucleus CI512(CA),,,4/10/20,,,4/10/20,,,M,,,Unknown,Unknown,,
+945,57.4,L,R,,,,,Y,Y,Y,2,,,Clarion HiRes 90K,Nucleus CI512(CA),,4/10/20,11/15/20,2/16/20,5/10/20,,3/16/20,F,custodian,1,Unknown,Unknown,22,18
+946,79.2,R,,,,,,Y,,,2,60,60,Clarion HiRes 90K,,,4/10/20,,,5/10/20,,,M,,1,Unknown,Unknown,74,74
+948,69,L,,,,,,Y,,,2,60,,Clarion HiRes 90K,,,4/10/20,,,5/10/20,,,F,Secretary,4,Unknown,Unknown,50,50
+949,57.2,R,,,,,,Y,,,2,,,Nucleus CI512(CA),,,4/10/20,,,5/10/20,,,F,,,Unknown,Unknown,,
+950,18,R,,,,,,Y,,,2,,,Nucleus CI512(CA),,,4/10/20,,,5/10/20,,,F,,,Unknown,Unknown,,
+951,41,R,,,,,,Y,,,2,40,40,Nucleus Hybrid L24,,,5/10/20,,,6/10/20,,,F,teacher,1,Unknown,Unknown,17,17
+952,78.1,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,5/10/20,,,6/10/20,,,F,,,Unknown,Unknown,,
+953,82.1,R,,,,,,Y,,,2,75,75,Clarion HiRes 90K,,,5/10/20,,,6/10/20,,,F,,4,Unknown,Unknown,,24
+955,54.4,L,,,,,,Y,,,2,,,Nucleus Hybrid L24,,,5/10/20,,,6/10/20,,,F,receptionist,1,Autoimmune Sensorineural Loss,Unknown,53,53
+956,72.2,L,,,,,,Y,,,2,67,67,Clarion HiRes 90K,,,5/10/20,,,6/10/20,,,F,Factory worker,1,Unknown,Unknown,51,51
+957,72.3,R,,,,,,Y,,,2,63,,Clarion HiRes 90K,,,6/10/20,,,7/10/20,,,F,,3,Unknown,Unknown,63,63
+958,73.9,L,,,,,,Y,,,2,73,8,Clarion HiRes 90K,,,6/10/20,,,6/10/20,,,F,,4,Unknown,Unknown,10,0
+960,75.9,R,,,,,,Y,,,2,75,75,Nucleus CI512(CA),,,6/10/20,,,7/10/20,,,M,Appraisor,4,Unknown,Unknown,55,
+962,75.7,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,6/10/20,,,7/10/20,,,M,,,Unknown,Unknown,,
+964,56.8,R,,,,,,Y,,,2,,,Nucleus CI512(CA),,,6/10/20,,,7/10/20,,,M,"Maintenance, custodial",1,Unknown,Unknown,,
+968,74.2,R,,,,,,Y,,,2,72,70,Clarion HiRes 90K,,,6/10/20,,,7/10/20,,,F,Accountant,1,Unknown,Unknown,36,36
+969,51.2,R,,,,,,Y,,,2,50,47,Clarion HiRes 90K,,,7/10/20,,,8/10/20,,,M,manager- lumber yard,1,Unknown,Unknown,50,46
+970,75.2,L,,,,,,Y,,,2,74,35,Clarion HiRes 90K,,,7/10/20,,,8/10/20,,,M,Asplundh Tree Co,3,Unknown,Unknown,,
+971,66.6,R,,,,,,Y,,,2,36,36,Nucleus CI512(CA),,,7/10/20,,,8/10/20,,,F,,3,Unknown,Unknown,,19
+972,79.2,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,8/10/20,,,9/10/20,,,M,,1,Unknown,Unknown,,
+975,31.1,L,,,,,,Y,,,2,31,31,Clarion HiRes 90K,,,9/10/20,,,9/10/20,,,M,,2,Unknown,Unknown,,
+976,71.7,R,,,,,,Y,,,2,33,33,Clarion HiRes 90K,,,9/10/20,,,10/10/20,,,F,Homemaker,1,Unknown,Unknown,,25
+977,57.2,R,,,,,,Y,,,2,52,52,Nucleus CI512(CA),,,9/10/20,,,10/10/20,,,F,Program Manager,1,Unknown,Unknown,52,52
+978,69.1,B,,,,,,Y,,,2,,,Clarion HiRes 90K,,,10/10/20,,,11/10/20,,,M,,1,Noise Exposure,Unknown,55,55
+979,82.3,L,,,,,,Y,,,2,81,65,Clarion HiRes 90K,,,10/10/20,,,11/10/20,,,F,,1,Unknown,Unknown,65,65
+981,73.8,L,,,,,,Y,,,2,,60,Nucleus CI512(CA),,,11/10/20,,,11/10/20,,,M,funeral director,1,Unknown,Unknown,36,36
+983,63.8,R,,,,,,Y,,,2,60,57,Nucleus CI512(CA),,,11/10/20,,,12/10/20,,,F,SELF-EMPLOYED,1,Unknown,Unknown,55,
+984,51.5,L,L,,,N,,Y,Y,,2,10,10,Clarion HiRes 90K,Clarion HiRes 90K,,11/10/20,9/14/20,,12/10/20,,,F,disability retirement,2,Unknown,Unknown,10,10
+986,50.7,R,,,,,,Y,,,2,,,Nucleus CI512(CA),,,12/10/20,,,1/11/20,,,F,,,Unknown,Unknown,,
+987,41.2,L,,,,,,Y,,,2,25,25,Nucleus Hybrid S12,,,12/10/20,,,1/11/20,,,F,,,Unknown,Unknown,29,29
+989,38.8,L,,,,,,Y,,,2,38,38,Nucleus CI512(CA),,,1/11/20,,,2/11/20,,,F,,2,Unknown,Unknown,10,10
+990,31.8,L,,,,,,Y,,,2,31,,Nucleus CI512(CA),,,1/11/20,,,2/11/20,,,M,Grocery retail,2,Unknown,Unknown,2,2
+991,68.5,R,,,,,,Y,,,2,,,Nucleus CI512(CA),,,1/11/20,,,2/11/20,,,F,Day Care Director,1,Unknown,Unknown,58,58
+992,76,L,,,,,,Y,,,2,,,Nucleus CI512(CA),,,1/11/20,,,3/11/20,,,F,housewife,1,Unknown,Unknown,55,50
+993,31.7,L,,,,,,Y,,,2,30,30,Nucleus CI512(CA),,,1/11/20,,,2/11/20,,,F,Restaurant manager,1,Unknown,Unknown,,
+994,21.2,R,,,,,,Y,,,2,,,Nucleus CI512(CA),,,1/11/20,,,2/11/20,,,M,work at Hope Haven,,Unknown,Unknown,2,2
+995,83.5,R,,,,,,Y,,,2,78,78,Nucleus CI512(CA),,,2/11/20,,,3/11/20,,,F,,4,Unknown,Unknown,74,69
+996,69.2,R,,,,,,Y,,,2,,,Nucleus CI512(CA),,,2/11/20,,,3/11/20,,,M,retired,3,Unknown,Unknown,,
+999,54.6,B,,,,,,Y,,,2,52,54,Nucleus CI512(CA),,,3/11/20,,,4/11/20,,,M,Ag Parts (Receiving),2,Unknown,Unknown,48,50
+1000,62.4,L,,,,,,Y,,,2,20,20,Nucleus CI512(CA),,,3/11/20,,,4/11/20,,,F,publishing,1,Unknown,Unknown,,19
+1003,57.9,L,,,,,,Y,,,2,56,,Nucleus CI512(CA),,,3/11/20,,,4/11/20,,,F,Elem Librarian,1,Unknown,Unknown,,
+1004,78.7,R,,,,,,Y,,,2,75,78,Nucleus CI512(CA),,,3/11/20,,,4/11/20,,,F,,1,Unknown,Unknown,,
+1006,35.2,R,R,,,,,Y,Y,,2,2,2,Nucleus CI512(CA),Nucleus CI 24RE(CA),,4/11/20,1/12/20,,4/11/20,1/12/20,,M,,3,Unknown,Unknown,3,3
+1007,50,L,,,L,,,Y,,,2,48,,Nucleus CI512(CA),,,4/11/20,,,4/11/20,,,M,Cerro Gordo County,1,Meniere's,Unknown,48,
+1008,52.7,B,R,,,,,Y,Y,,2,51,52,Nucleus CI512(CA),Nucleus CI 24RE(CA),,4/11/20,1/12/20,,4/11/20,2/12/20,,F,Fulfillment/Lead support clerk,1,Unknown,Unknown,,
+1009,79.1,L,L,,,,,Y,Y,,2,78,78,Nucleus CI512(CA),Nucleus CI 24RE(CA),,4/11/20,3/12/20,,5/11/20,3/12/20,,M,retired farmer,1,Unknown,Unknown,,63
+1010,20.9,R,,,,,,Y,,,2,3,3,Nucleus CI512(CA),,,4/11/20,,,5/11/20,,,M,dairy farm hand,2,Unknown,Unknown,5,5
+1011,76.2,R,,,,,,Y,,,2,70,70,Nucleus CI512(CA),,,4/11/20,,,5/11/20,,,M,,1,Unknown,Unknown,68,68
+1013,74.5,L,,,,,,Y,,,2,74,69,Nucleus CI512(CA),,,4/11/20,,,5/11/20,,,M,,1,Unknown,Unknown,,
+1015,70.2,R,,,,,,Y,,,2,,,Nucleus CI512(CA),,,5/11/20,,,6/11/20,,,F,,4,Unknown,Unknown,67,67
+1016,84.9,R,,,,,,Y,,,2,70,84,Nucleus CI512(CA),,,5/11/20,,,6/11/20,,,F,,1,Unknown,Unknown,54,54
+1017,54.1,L,,,,,,Y,,,2,,,Nucleus CI512(CA),,,6/11/20,,,6/11/20,,,F,Homemaker,1,Unknown,Unknown,,
+1021,24.8,R,L,,,,,Y,Y,,2,24,24,Nucleus CI512(CA),Nucleus CI532,,6/11/20,6/16/20,,7/11/20,7/16/20,,F,Lead Teacher,1,Unknown,Unknown,5,5
+1022,75.3,R,R,,,,,Y,Y,,2,62,60,Nucleus CI512(CA),Nucleus CI 24RE(CA),,6/11/20,5/14/20,,7/11/20,7/14/20,,M,Physician,1,Unknown,Unknown,45,45
+1023,44.8,R,,,,,,Y,,,2,25,,Nucleus CI512(CA),,,7/11/20,,,7/11/20,,,F,Secretary,1,Unknown,Unknown,5,5
+1024,58.2,R,,,,,,Y,,,2,55,45,Nucleus CI512(CA),,,7/11/20,,,8/11/20,,,F,homemaker,1,Unknown,Unknown,55,9
+1025,73.2,L,,,,,,Y,,,2,,,Nucleus CI512(CA),,,7/11/20,,,8/11/20,,,M,Builder,1,Unknown,Unknown,,
+1027,54.6,L,,,,,,Y,,,2,,,Nucleus Hybrid S12,,,7/11/20,,,8/11/20,,,F,M.D.-OB-Gyn,2,Unknown,Unknown,34,34
+1028,77.2,R,,,,,,Y,,,2,75,70,Nucleus CI512(CA),,,8/11/20,,,9/11/20,,,F,Retired,4,Unknown,Unknown,25,27
+1029,69.7,L,L,,,,,Y,Y,,2,69,,Nucleus CI512(CA),Nucleus CI 24RE(CA),,8/11/20,5/12/20,,9/11/20,6/12/20,,M,Retired,1,Unknown,Unknown,61,69
+1030,83.2,R,,,,,,Y,,,2,73,83,Nucleus CI512(CA),,,8/11/20,,,9/11/20,,,M,,1,Unknown,Unknown,70,70
+1031,22.1,L,L,,,,,Y,Y,,2,,,Nucleus CI512(CA),Nucleus CI 24RE(CA),,8/11/20,5/13/20,,9/11/20,6/13/20,,F,,,Unknown,Unknown,,
+1032,64.1,R,L,,,,,Y,Y,,2,,48,Nucleus Hybrid L24,Nucleus 632,,9/11/20,9/19/20,,9/11/20,9/19/20,,M,Retired factory worker/self-employed handyman,1,Unknown,Unknown,48,48
+1033,63.8,R,L,,,,,Y,Y,,2,62,58,Nucleus CI 24RE(CA),Nucleus CI 24RE(CA),,9/11/20,1/12/20,,10/11/20,2/12/20,,M,,1,Head Trauma,Unknown,57,
+1034,50.6,B,,,,,,Y,,,2,35,35,Nucleus CI 24RE(CA),,,9/11/20,,,10/11/20,,,M,building maintenance,2,Unknown,Unknown,26,26
+1038,54.4,B,,,,,,Y,,,2,53,50,Nucleus CI 24RE(CA),,,10/11/20,,,11/11/20,,,M,Factory Worker,3,Unknown,Unknown,50,
+1039,74.1,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,10/11/20,,,11/11/20,,,F,,,Unknown,Unknown,,
+1040,62.8,L,,,,,,Y,,,2,60,60,Nucleus Hybrid L24,,,10/11/20,,,11/11/20,,,M,Dairyman,1,Unknown,Unknown,40,40
+1042,36.3,B,,,,,,Y,,,2,,,Clarion HiRes 90K,,,10/11/20,,,11/11/20,,,F,,,Unknown,Unknown,,
+1043,81.8,L,,,,,,Y,,,2,82,82,Clarion HiRes 90K,,,10/11/20,,,11/11/20,,,F,Retired,4,Unknown,Unknown,77,77
+1044,67.3,L,,,,,,Y,,,2,60,60,Nucleus CI 24RE(CA),,,11/11/20,,,12/11/20,,,M,,1,Unknown,Unknown,50,55
+1045,78.5,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,11/11/20,,,12/11/20,,,F,,4,,,48,52
+1047,40.6,R,R,,,,,Y,Y,,2,,,Nucleus Hybrid L24,Nucleus CI 24RE(CA),,12/11/20,5/14/20,,1/12/20,5/14/20,,F,Facilities,1,Unknown,Unknown,1.5,1.5
+1048,55.8,R,,,R,,,Y,,,2,,,Nucleus CI 24RE(CA),,,12/11/20,,,1/12/20,,,F,,,Unknown,,,
+1049,47.2,R,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,12/11/20,,,1/12/20,,,M,,1,,,4,4
+1050,47.5,L,,,,,,Y,,,2,,,Clarion HiRes 90K,,,12/11/20,,,1/12/20,,,F,RM processor,1,Unknown,Unknown,,5
+1052,72.2,R,,,,,,Y,,,2,45,69,Clarion HiRes 90K,,,1/12/20,,,1/12/20,,,M,Farming,1,Unknown,Unknown,,60
+1053,42.1,R,,,,,,Y,,,2,2,2,Clarion HiRes 90K,,,1/12/20,,,2/12/20,,,M,Student,2,Unknown,Unknown,3,3
+1055,71.3,R,,,,,,Y,,,,,69,Nucleus CI 24RE(CA),,,1/12/20,,,2/12/20,,,F,RN,4,Unknown,Unknown,67,67
+1056,26.5,R,,,,,,Y,,,2,,18,Nucleus CI 24RE(CA),,,1/12/20,,,2/12/20,,,F,Paraeducator,2,Unknown,Unknown,3,3
+1057,57.4,L,,,L,,,Y,,,2,56,,Nucleus CI 24RE(CA),,,1/12/20,,,2/12/20,,,F,Administrative Asst.,1,Meniere's,Unknown,,
+1058,75.2,L,,,,,,Y,,,2,40,20,Clarion HiRes 90K,,,1/12/20,,,2/12/20,,,M,Farmer,1,Unknown,Unknown,71,43
+1059,28.2,B,,,,,,Y,,,2,17,27,Nucleus CI 24RE(CA),,,1/12/20,,,2/12/20,,,F,insurance/student,2,Unknown,Unknown,6,6
+1060,62.3,R,,,,,,Y,,,2,,48,Nucleus Hybrid L24,,,1/12/20,,,2/12/20,,,M,retired,1,Unknown,Unknown,,35
+1061,78,R,,,,,,Y,,,2,,74,Clarion HiRes 90K,,,2/12/20,,,3/12/20,,,F,Telephone operator and health aid,4,Unknown,Unknown,48,
+1062,59.4,R,,,,,,Y,,,2,,,Nucleus Hybrid L24,,,2/12/20,,,2/12/20,,,F,housewife,1,Unknown,Unknown,49,49
+1063,57.9,L,,,,,,Y,,,2,54,,Clarion HiRes 90K,,,2/12/20,,,3/12/20,,,M,Experimental mechanic,1,Unknown,,57,
+1065,29.4,R,,,,,,Y,,,2,,,Clarion HiRes 90K,,,3/12/20,,,4/12/20,,,F,,,Unknown,Unknown,,
+1066,90.2,L,,,,,,Y,,,2,85,85,Nucleus CI 24RE(CA),,,3/12/20,,,4/12/20,,,F,,4,Unknown,Unknown,75,75
+1069,18.1,L,,,,,,Y,,,2,8,,Clarion HiRes 90K,,,3/12/20,,,4/12/20,,,M,Student,2,Unknown,Unknown,1.6,1.6
+1070,51.3,L,,,,,,Y,,,2,,46,Clarion HiRes 90K,,,4/12/20,,,5/12/20,,,F,Homemaker,1,Unknown,Unknown,47,
+1071,48.6,R,,,,,,Y,,,2,,48,Clarion HiRes 90K,,,4/12/20,,,5/12/20,,,F,UIHC-cancer research,,Unknown,Unknown,,
+1077,37.2,L,,,,,,Y,,,2,35,,Clarion HiRes 90K,,,5/12/20,,,6/12/20,,,F,Assistant food manager at Kwik Star,2,Unknown,Unknown,,31
+1078,52.1,L,,,L,,,Y,,,2,50,,Nucleus CI422,,,5/12/20,,,6/12/20,,,F,Pharmacy tech,1,Unknown,Unknown,,
+1079,71.2,L,,,,,,Y,,,2,,,Nucleus CI422,,,5/12/20,,,6/12/20,,,F,Certified Med Aide,4,Unknown,Unknown,7,
+1081,94.2,L,,,,,,Y,,,2,,,Nucleus CI 24RE(CA),,,5/12/20,,,6/12/20,,,F,,4,Unknown,Unknown,65,65
+1082,51.9,L,,,,,,Y,,,2,36,23,Clarion HiRes 90K,,,5/12/20,,,6/12/20,,,M,Production,1,Unknown,Unknown,30,30
+1085,52.2,R,,,,,,Y,,,,,35,Clarion HiRes 90K,,,6/12/20,,,7/12/20,,,F,Home health aide & maintenance,1,Unknown,Unknown,,
+1086,42.2,R,,,R,,,Y,,,,,38,Nucleus CI422,,,6/12/20,,,7/12/20,,,F,Unemployed since 10/18/2009,3,Unknown,,,
+1087,60.6,L,,,,,,Y,,,,,,Nucleus CI422,,,6/12/20,,,7/12/20,,,M,,,Unknown,Unknown,,
+1088,41.2,L,,,,,,Y,,,,40,40,Clarion HiRes 90K,,,6/12/20,,,7/12/20,,,F,Professor,2,Unknown,Unknown,22,22
+1089,28.5,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,6/12/20,,,7/12/20,,,M,17,1,Unknown,Unknown,,17
+1090,65.5,L,,,,,,Y,,,,55,60,Clarion HiRes 90K,,,6/12/20,,,7/12/20,,,M,,1,Unknown,Unknown,54,54
+1091,33.3,R,,,,,,Y,,,2,,,Nucleus Hybrid L24,,,6/12/20,,,7/12/20,,,F,Case coordinator,1,Unknown,Unknown,2,2
+1092,55.8,R,,,,,,Y,,,,,55,Clarion HiRes 90K,,,6/12/20,,,7/12/20,,,M,Insurance Agent,1,Unknown,Unknown,,54
+1093,47.5,L,,,,,,Y,,,,0,0,Nucleus CI422,,,6/12/20,,,7/12/20,,,F,Childcare/Teacher assistant,2,Unknown,Unknown,5,5
+1094,75.1,R,,,,,,Y,,,,,74,Clarion HiRes 90K,,,6/12/20,,,7/12/20,,,M,Mechanical Engineer-John Deere,1,Unknown,Unknown,74,
+1095,49.4,R,,,R,,,Y,,,,,48,Clarion HiRes 90K,,,6/12/20,,,7/12/20,,,F,teacher,1,Unknown,,,40
+1096,58.8,R,,,,,,Y,,,,56,50,Clarion HiRes 90K,,,7/12/20,,,8/12/20,,,M,unemployed,3,Unknown,Unknown,50,
+1097,27.2,L,,,,,,Y,,,,,,Nucleus CI422,,,7/12/20,,,8/12/20,,,F,,,Unknown,Unknown,,
+1098,45,L,,,,,,Y,,,,,,Nucleus CI422,,,7/12/20,,,8/12/20,,,F,,1,Unknown,Unknown,,
+1099,63.8,R,,,,,,Y,,,,56,56,Clarion HiRes 90K,,,7/12/20,,,8/12/20,,,M,Cook Tank Operator,2,Unknown,Unknown,59,59
+1100,54.1,R,,,,,,Y,,,,5,5,Clarion HiRes 90K,,,7/12/20,,,8/12/20,,,M,,3,Unknown,Unknown,,
+1101,38.6,R,L,,,,,Y,Y,,,5,5,Nucleus CI422,Nucleus CI422,,8/12/20,4/13/20,,8/12/20,5/13/20,,F,Homemaker/student,1,Unknown,Unknown,5,5
+1103,77.7,L,,,,,,Y,,,,74,77,Clarion HiRes 90K,,,8/12/20,,,9/12/20,,,M,,1,Unknown,Unknown,,74
+1104,83.1,L,,,,,,Y,,,,,,Nucleus CI422,,,8/12/20,,,9/12/20,,,M,,2,Unknown,Unknown,,
+1107,59.4,R,,,,,,Y,,,,50,50,Clarion HiRes 90K,,,9/12/20,,,10/12/20,,,M,Self,3,Unknown,Unknown,33,28
+1108,56.6,R,,,,,,Y,,,,,56,Nucleus CI422,,,9/12/20,,,10/12/20,,,F,Telecom manager,1,Unknown,Unknown,,
+1109,61.7,L,,,L,,,Y,,,,60,,Nucleus CI422,,,9/12/20,,,10/12/20,,,M,Truck Driver,1,Meniere's,Unknown,60,60
+1111,74.3,L,,,,,,Y,,,,,,Nucleus CI422,,,10/12/20,,,11/12/20,,,M,,1,Unknown,Unknown,36,36
+1112,52.2,R,,,,,,Y,,,,0,0,Clarion HiRes 90K,,,9/12/20,,,10/12/20,,,M,Contract Specialist,2,Unknown,Unknown,48,5
+1113,25.3,L,R,,,,,Y,Y,,,18,18,Nucleus CI422,Nucleus CI422,,9/12/20,3/13/20,,10/12/20,4/13/20,,F,Student,2,Unknown,Unknown,2,2
+1114,91.1,L,L,,,,,Y,Y,,,,,Clarion HiRes 90K,Clarion HiRes 90K,,9/12/20,2/18/20,,10/12/20,2/18/20,,F,,3,Unknown,Unknown,77,77
+1115,63.9,R,,,R,,,Y,,,,,61,Clarion HiRes 90K,,,10/12/20,,,11/12/20,,,F,Accountant,1,Unknown,,,62
+1116,81.7,L,,,,,,Y,,,,80,70,Clarion HiRes 90K,,,5/12/20,,,6/12/20,,,M,,4,Unknown,Unknown,20,20
+1118,49.9,R,,,,,,Y,,,,40,40,Clarion HiRes 90K,,,10/12/20,,,11/12/20,,,F,Cleaner,3,Unknown,Unknown,30,30
+1119,45.2,L,,,L,,,Y,,,,,,Nucleus CI422,,,10/12/20,,,11/12/20,,,M,,,Unknown,Unknown,,
+1122,53.6,R,,,,,,Y,,,,,53,Clarion HiRes 90K,,,10/12/20,,,11/12/20,,,M,Engineer,1,Unknown,Unknown,,
+1124,32.2,R,,,,,,Y,,,,,28,Clarion HiRes 90K,,,11/12/20,,,11/12/20,,,M,Student/clerk,1,Unknown,Unknown,,31
+1125,80,R,,,,,,Y,,,,78,78,Clarion HiRes 90K,,,11/12/20,,,12/12/20,,,M,Retired,1,Unknown,Unknown,64,64
+1126,46.3,L,,,,,,Y,,,,,,Nucleus Hybrid L24,,,11/12/20,,,12/12/20,,,F,Accountant,1,Unknown,Unknown,19,19
+1132,58.4,L,,,L,,,Y,,,,55,,Nucleus CI422,,,11/12/20,,,12/12/20,,,M,Sales,1,Meniere's,Unknown,57,57
+1133,61.4,R,L,,,,,Y,Y,,,55,50,Nucleus CI 24RE(CA),Nucleus CI22,,5/12/20,11/12/20,,6/12/20,12/12/20,,F,Bookkeeper,1,Unknown,Unknown,31,31
+1134,91.7,R,,,,,,Y,,,,80,80,Clarion HiRes 90K,,,11/12/20,,,12/12/20,,,F,Registered Nurse,1,Unknown,Unknown,60,60
+1135,51.9,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,11/12/20,,,12/12/20,,,F,Sales Administration,1,Unknown,Unknown,33,33
+1136,63.2,R,,,R,,,Y,,,,,60,Nucleus CI422,,,11/12/20,,,1/13/20,,,F,Administrative Assistant,1,Unknown,,,
+1138,83.8,R,,,,,,Y,,,,78,78,Nucleus CI422,,,3/13/20,,,4/13/20,,,M,Nestle Maintenance,1,Unknown,Unknown,,
+1139,74.2,L,,,,,,Y,,,,64,62,Nucleus CI422,,,11/12/20,,,1/13/20,,,M,,1,Unknown,Unknown,59,59
+1140,61.9,L,,,,,,Y,,,,57,59,Clarion HiRes 90K,,,11/12/20,,,1/13/20,,,M,Retired,1,Unknown,Unknown,,58
+1142,48.3,R,,,,,,Y,,,,,,Nucleus CI422,,,12/12/20,,,1/13/20,,,F,RN (not working),1,Unknown,Unknown,,
+1143,78.1,L,,,,,,Y,,,,60,60,Nucleus CI422,,,11/12/20,,,1/13/20,,,M,Engineer,1,Unknown,Unknown,45,45
+1144,64.5,R,,,,,,Y,,,,60,60,Clarion HiRes 90K,,,12/12/20,,,1/13/20,,,F,Housewife,4,Unknown,Unknown,36,37
+1147,63.5,L,,,,,,Y,,,,,,Nucleus CI422,,,12/12/20,,,1/13/20,,,F,,1,Unknown,Unknown,,
+1149,64.1,L,,,,,,Y,,,,,,Nucleus CI422,,,12/12/20,,,1/13/20,,,F,,,Unknown,Unknown,,
+1150,31.7,L,,,,,,Y,,,,30,,Nucleus CI 24RE(CA),,,1/13/20,,,2/13/20,,,F,Homemaker,3,Unknown,Unknown,29,29
+1151,61.3,R,,,,,,Y,,,,,0,Clarion HiRes 90K,,,4/12/20,,,5/12/20,,,M,Supervisor,1,Unknown,Unknown,4,
+1152,45.8,R,R,,,,,Y,Y,,,41,41,Clarion HiRes 90K,Clarion HiRes 90K,,5/12/20,2/13/20,,6/12/20,3/13/20,,M,Disabled,2,Unknown,Unknown,42,42
+1153,72.9,R,,,,,,Y,,,,63,71,Clarion HiRes 90K,,,9/12/20,,,,,,M,farmer,1,Unknown,Unknown,,62
+1154,82.4,L,,,,,,Y,,,,70,75,Nucleus CI422,,,1/13/20,,,2/13/20,,,M,,1,Unknown,Unknown,67,67
+1156,81.8,R,,,,,,Y,,,,,,Nucleus CI422,,,1/13/20,,,2/13/20,,,M,Management,4,Unknown,Unknown,60,60
+1157,73.2,L,,,,,,Y,,,,,,Nucleus CI422,,,1/13/20,,,2/13/20,,,F,,4,Unknown,Unknown,,42
+1158,,,,,,,,,,,,,,,,,,,,,,,M,,,Unknown,Unknown,,
+1163,72.7,R,,,,,,Y,,,,45,45,Clarion HiRes 90K,,,2/13/20,,,3/13/20,,,M,Sawmill laborer,1,Unknown,Unknown,21,45
+1164,81,L,,,,,,Y,,,,8,51,Clarion HiRes 90K,,,2/13/20,,,3/13/20,,,M,,1,Unknown,Unknown,65,65
+1165,73,L,,,,,,Y,,,,65,,Nucleus CI422,,,2/13/20,,,3/13/20,,,F,Homemaker,1,Unknown,Unknown,38,
+1166,76,R,,,,,,Y,,,,,75,Clarion HiRes 90K,,,2/13/20,,,3/13/20,,,F,Retired,2,Unknown,Unknown,43,23
+1167,64.4,R,,,R,,,Y,,,,,64,Nucleus CI422,,,2/13/20,,,3/13/20,,,M,,1,Unknown,,59,47
+1168,64.5,R,,,,,,Y,,,,,64,Clarion HiRes 90K,,,2/13/20,,,3/13/20,,,M,,1,Unknown,Unknown,,
+1171,48.4,R,,,,,,Y,,,,42,39,Nucleus CI422,,,2/13/20,,,3/13/20,,,F,Accounting,1,Unknown,Unknown,38,
+1174,28.9,R,,,,,,Y,,,,,28,Nucleus CI422,,,3/13/20,,,4/13/20,,,F,Teacher,2,Unknown,Unknown,22,22
+1176,63.9,R,,,R,,,Y,,,,,63,Nucleus CI422,,,3/13/20,,,4/13/20,,,F,Homemaker,1,Unknown,,,
+1177,84.1,R,,,,,,Y,,,,65,65,Nucleus CI422,,,3/13/20,,,4/13/20,,,F,House Wife,2,Unknown,Unknown,65,65
+1178,59.1,L,,,,,,Y,,,,58,,Nucleus CI 24RE(CA),,,3/13/20,,,4/13/20,,,F,Service Specialist-Whirpool,1,Unknown,Unknown,,
+1179,72.6,L,,,N,,,Y,,,,60,60,Clarion HiRes 90K,,,4/13/20,,,5/13/20,,,M,Business owner-installed gutters,3,Unknown,Unknown,62,62
+1181,77.7,R,,,,,,Y,,,,35,,Clarion HiRes 90K,,,4/13/20,,,5/13/20,,,M,Power Plant,4,Unknown,Unknown,36,36
+1183,69.1,R,,,,,,Y,,,,,,Nucleus CI422,,,4/13/20,,,5/13/20,,,F,,1,Unknown,Unknown,59,59
+1184,36.8,L,,,,,,Y,,,,31,,Nucleus CI422,,,5/13/20,,,5/13/20,,,M,Periodontist,1,Unknown,Unknown,31,
+1185,35.4,L,,,,,,Y,,,,,,Clarion HiRes 90K,,,5/13/20,,,6/13/20,,,F,Drafter,1,Unknown,Unknown,2,2
+1186,58.1,L,,,,,,Y,,,,45,,Nucleus CI422,,,6/13/20,,,7/13/20,,,F,Speech Language Pathologist,2,Unknown,Unknown,,33
+1187,69.8,L,,,,,,Y,,,,69,51,Nucleus CI 24RE(CA),,,5/13/20,,,6/13/20,,,F,Teacher/Teacher's aid,1,Unknown,Unknown,69,
+1188,42.3,L,R,,N,,,Y,Y,,,38,38,Clarion HiRes 90K,Clarion HiRes 90K,,5/13/20,10/13/20,,6/13/20,11/13/20,,F,R.N.,1,Unknown,Unknown,16,16
+1189,53.8,R,,,,,,Y,,,,,,Nucleus CI422,,,5/13/20,,,6/13/20,,,M,,,,,,
+1190,72.2,R,,,,,,Y,,,,,,Nucleus CI422,,,5/13/20,,,6/13/20,,,F,,1,Unknown,Unknown,45,45
+1191,40.7,L,L,R,,,,Y,Y,,,20,20,Nucleus CI422,Nucleus CI522 Straight electrode,Nucleus 632,5/13/20,5/19/20,7/19/20,6/13/20,5/19/20,8/19/20,M,Ace Hardware,1,Unknown,Unknown,,
+1192,68.5,R,,,,,,Y,,,,68,68,Nucleus CI422,,,5/13/20,,,6/13/20,,,F,,3,Unknown,Unknown,,
+1193,58.6,L,,,,,,Y,,,,57,,Clarion HiRes 90K,,,5/13/20,,,7/13/20,,,M,Safety Consultant,1,Unknown,Unknown,,
+1194,79.3,L,,,,,,Y,,,,60,60,Nucleus CI 24RE(CA),,,6/13/20,,,7/13/20,,,M,,1,Unknown,Unknown,45,50
+1195,85.6,L,,,,,,Y,,,,,,Nucleus CI422,,,6/13/20,,,7/13/20,,,F,,,,,,
+1196,50.8,L,,,,,,Y,,,,,,Nucleus CI422,,,6/13/20,,,7/13/20,,,F,Volunteer @ Red Cross,3,Unknown,Unknown,,25
+1197,59.5,L,,,,,,Y,,,,49,49,Clarion HiRes 90K,,,6/13/20,,,7/13/20,,,M,Counselor,1,Unknown,Unknown,40,48
+1199,59.2,R,,,,,,Y,,,,57,57,Nucleus Hybrid L24,,,2/13/20,,,3/13/20,,,M,Electronic Tech,1,Unknown,Unknown,39,39
+1200,42,R,,,,,,Y,,,,0,0,Nucleus Hybrid L24,,,6/13/20,,,7/13/20,,,F,Attorney,1,Unknown,Unknown,2,2
+1202,38.4,L,,,,,,Y,,,,37,13,Nucleus CI422,,,6/13/20,,,7/13/20,,,M,Unemployed/disabled,2,Unknown,Unknown,37,13
+1203,65.7,L,L,,,,,Y,Y,,,,,Nucleus CI422,Nucleus CI422,,6/13/20,12/13/20,,7/13/20,1/14/20,,F,,,,,,
+1204,54,L,,,,,,Y,,,,50,50,Nucleus CI422,,,6/13/20,,,7/13/20,,,F,Claims adjuster,1,Unknown,Unknown,50,50
+1207,80.1,R,,,,,,Y,,,,75,66,Clarion HiRes 90K Mid-Scala,,,7/13/20,,,8/13/20,,,M,,1,Unknown,Unknown,56,56
+1208,84.8,R,,,,,,Y,,,,50,50,Clarion HiRes 90K Mid-Scala,,,6/13/20,,,7/13/20,,,F,Real Estate Broker,4,Unknown,Unknown,20,20
+1209,62.9,R,,,,,,Y,,,,32,32,Nucleus CI 24RE(CA),,,7/13/20,,,8/13/20,,,M,,3,Unknown,Unknown,,
+1210,72.8,L,,,,,,Y,,,,63,63,Nucleus CI422,,,7/13/20,,,8/13/20,,,F,Elementary teacher,1,Unknown,Unknown,30,40
+1211,73.2,L,,,,,,Y,,,,60,32,Nucleus CI422,,,7/13/20,,,8/13/20,,,M,Homemaker/R.N.,1,Unknown,Unknown,32,
+1214,,,,,,,,,,,,,,,,,,,,,,,M,,,,,,
+1215,71.1,L,,,,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,8/13/20,,,8/13/20,,,F,,,Unknown,Unknown,,
+1216,48.4,R,,,,,,Y,,,,,20,Clarion HiRes 90K Mid-Scala,,,8/13/20,,,9/13/20,,,M,"Farm Hand, Truck Driver",1,Unknown,Unknown,36,
+1218,65.3,R,,,,,,Y,,,,33,,Clarion HiRes 90K Mid-Scala,,,8/13/20,,,9/13/20,,,M,retired,1,Unknown,Unknown,33,33
+1219,77.6,R,,,,,,Y,,,,10,10,Nucleus CI 24RE(CA),,,8/13/20,,,9/13/20,,,M,Retired Farmer,1,Unknown,Unknown,9,59
+1220,60.5,R,,,,,,Y,,,,10,10,Clarion HiRes 90K Mid-Scala,,,9/13/20,,,10/13/20,,,F,Registered Dietician,1,Unknown,Unknown,5,5
+1221,23.9,L,,,,,,Y,,,,23,23,Nucleus CI422,,,9/13/20,,,10/13/20,,,F,,2,Unknown,Unknown,9,9
+1222,76.8,L,,,,,,Y,,,,60,60,Clarion HiRes 90K Mid-Scala,,,9/13/20,,,10/13/20,,,M,NAPA Auto Parts Driver,4,Unknown,Unknown,50,50
+1223,78.8,R,,,,,,Y,,,,70,65,Nucleus CI422,,,9/13/20,,,10/13/20,,,M,,1,Unknown,Unknown,50,50
+1224,72.2,R,,,,,,Y,,,,,,Nucleus CI422,,,9/13/20,,,10/13/20,,,M,,1,Unknown,Unknown,60,50
+1225,73.9,L,,,,,,Y,,,,50,55,Clarion HiRes 90K Mid-Scala,,,9/13/20,,,10/13/20,,,M,,1,Unknown,Unknown,50,55
+1226,62.7,L,R,,,,,Y,Y,,,,,Clarion HiRes 90K Mid-Scala,Clarion HiRes Ultra CI Focus MS Electrode,,9/13/20,6/19/20,,9/13/20,7/19/20,,F,Housewife,1,Unknown,Unknown,55,55
+1227,84.2,R,,,,,,Y,,,,83,83,Clarion HiRes 90K Mid-Scala,,,9/13/20,,,11/13/20,,,M,RR Agent,1,Unknown,Unknown,35,35
+1228,57.6,R,,,,,,Y,,,,,,Nucleus Hybrid S12,,,9/13/20,,,10/13/20,,,M,Professor,1,Unknown,Unknown,30,30
+1229,64,R,,,,,,Y,,,,,60,Clarion HiRes 90K Mid-Scala,,,9/13/20,,,10/13/20,,,F,RN,1,Unknown,Unknown,60,60
+1230,46.9,R,,,,,,Y,,,,,41,Nucleus CI422,,,10/13/20,,,11/13/20,,,M,unemployed,1,Unknown,Unknown,,
+1232,81,R,,,,,,Y,,,,80,80,Clarion HiRes 90K Mid-Scala,,,10/13/20,,,11/13/20,,,M,Retired,1,Unknown,Unknown,66,66
+1235,59.4,R,,,,,,Y,,,,56,48,Nucleus CI422,,,10/13/20,,,11/13/20,,,F,Cosmetologist,1,Unknown,Unknown,55,48
+1236,41.6,L,,,,,,Y,,,,30,,Clarion HiRes 90K Mid-Scala,,,10/13/20,,,11/13/20,,,M,Senior Chemical Operator,1,Unknown,Unknown,2,2
+1239,82.5,R,,,,,,Y,,,,75,71,Nucleus CI422,,,11/13/20,,,12/13/20,,,M,Beekeeper,1,Unknown,Unknown,1960,1960
+1240,78.9,R,,,,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,10/13/20,,,11/13/20,,,M,Minister,1,Unknown,Unknown,55,55
+1241,66.2,B,,,,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,10/13/20,,,11/13/20,,,M,,1,Unknown,,49,49
+1242,61.5,L,L,,,,,Y,Y,,,40,40,Nucleus Hybrid L24,Nucleus CI422,,11/13/20,9/14/20,,12/13/20,10/14/20,,M,,1,Unknown,Unknown,30,30
+1243,73,R,,,,,,Y,,,,70,70,Nucleus CI422,,,11/13/20,,,12/13/20,,,M,farmer and shuttle driver,1,Unknown,Unknown,62,62
+1246,20.1,R,,,,,,Y,,,,10,10,Clarion HiRes 90K Mid-Scala,,,11/13/20,,,12/13/20,,,F,College Student,2,Unknown,Unknown,3,3
+1247,72.8,L,,,,,,Y,,,,71,,Nucleus CI422,,,11/13/20,,,12/13/20,,,F,,4,Unknown,Unknown,,72
+1248,62.8,R,,,,,,Y,,,,61,58,Clarion HiRes 90K Mid-Scala,,,11/13/20,,,12/13/20,,,M,Tech support,1,Unknown,Unknown,55,54
+1249,55.2,L,,,,,,Y,,,,52,,Nucleus Hybrid L24,,,11/13/20,,,12/13/20,,,F,Veterinarian,1,Unknown,Unknown,45,45
+1250,59.2,L,,,,,,Y,,,,50,50,Nucleus Hybrid S12,,,11/13/20,,,12/13/20,,,M,self,1,Unknown,Unknown,35,35
+1251,80.6,L,,,,,,Y,,,,80,,Nucleus CI422,,,12/13/20,,,1/14/20,,,F,,4,Unknown,Unknown,62,62
+1252,49.3,L,R,,,,,Y,Y,,,0,0,Clarion HiRes 90K Mid-Scala,Clarion HiRes 90K Mid-Scala,,12/13/20,4/14/20,,1/14/20,5/14/20,,M,Sawyer/Foreman,1,Unknown,Unknown,3,3
+1254,33.1,L,,,,,,Y,,,,,,Nucleus Hybrid S12,,,12/13/20,,,1/14/20,,,F,Audience Engagment Coordinator,2,Unknown,Unknown,,
+1256,55,R,,,,,,Y,,,,,,Nucleus CI422,,,12/13/20,,,1/14/20,,,M,production manager,1,Unknown,Unknown,12,5
+1257,64.9,R,,,,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,12/13/20,,,1/14/20,,,F,,,,,,
+1258,58.1,L,,,,,,Y,,,,25,25,Nucleus CI422,,,12/13/20,,,1/14/20,,,F,,2,Unknown,Unknown,7,7
+1259,55,L,R,,,,,Y,Y,,,45,50,Clarion HiRes 90K Mid-Scala,Clarion HiRes 90K Mid-Scala,,12/13/20,11/15/20,,1/14/20,12/15/20,,F,,1,,,26,30
+1260,54.7,R,,,,,,Y,,,,0,0,Nucleus CI 24RE(CA),,,1/14/20,,,2/14/20,,,F,Dietary Aide Part Time,1,Unknown,Unknown,1.5,1.5
+1261,70.2,L,,,,,,Y,,,,16,25,Clarion HiRes 90K Mid-Scala,,,1/14/20,,,2/14/20,,,M,retired,1,Unknown,Unknown,,32
+1262,31.4,R,,,,,,Y,,,,,,Nucleus CI 24RE(CA),,,1/14/20,,,1/14/20,,,F,,,,,,
+1263,71.4,R,,,,,,Y,,,,70,70,Nucleus CI422,,,1/14/20,,,2/14/20,,,M,,1,Unknown,Unknown,44,44
+1265,57.7,L,,,,,,Y,,,,45,45,Nucleus Hybrid L24,,,1/14/20,,,2/14/20,,,M,Substation electrician,3,Unknown,Unknown,50,50
+1266,42.9,L,,,,,,Y,,,,3,3,Nucleus CI422,,,1/14/20,,,2/14/20,,,M,Vending Pepsico,1,Unknown,Unknown,3,
+1267,30.2,L,R,,,,,Y,Y,,,,,Clarion HiRes 90K,Clarion HiRes 90K,,1/14/20,3/15/20,,2/14/20,4/15/20,,M,,,,,,
+1268,80.7,L,,,,,,Y,,,,,,Nucleus CI422,,,1/14/20,,,3/14/20,,,F,,4,Unknown,Unknown,,
+1269,47.6,R,L,,,,,N,Y,,,40,40,Clarion HiRes 90K Mid-Scala,Clarion HiRes 90K Mid-Scala,,7/13/20,2/14/20,,8/13/20,3/14/20,,F,benefit enroller,1,Unknown,Unknown,30,30
+1270,77.9,R,,,,,,Y,,,,67,57,Nucleus CI422,,,2/14/20,,,3/14/20,,,M,Physican/Professor,3,Unknown,Unknown,39,39
+1271,71.3,R,,,,,,Y,,,,69,69,Nucleus CI422,,,2/14/20,,,3/14/20,,,M,,1,Unknown,Unknown,62,62
+1272,63.5,L,,,,,,Y,,,,,,Nucleus CI 24RE(CA),,,2/14/20,,,3/14/20,,,F,,,Unknown,Unknown,,
+1273,78.2,R,,,,,,Y,,,,,,Nucleus CI422,,,2/14/20,,,3/14/20,,,F,,4,Unknown,Unknown,73,70
+1274,52.8,L,,,,,,Y,,,,52,37,Clarion HiRes 90K Mid-Scala,,,3/14/20,,,4/14/20,,,M,unemployed,2,Unknown,Unknown,24,24
+1277,55.3,L,,,,,,Y,,,,,,Nucleus CI422,,,3/14/20,,,4/14/20,,,F,factory worker Nordstrom,1,Unknown,Unknown,4,4
+1278,36.5,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,3/14/20,,,4/14/20,,,F,Para Educator,1,Unknown,Unknown,12,12
+1279,56.9,L,,,,,,Y,,,,,,Med-El Concert Flex 24,,,2/14/20,,,3/14/20,,,M,,,,,,
+1280,72.5,L,,,,,,Y,,,,69,,Nucleus CI422,,,3/14/20,,,4/14/20,,,M,Computer Operator,1,Unknown,Unknown,67,67
+1281,59.2,R,,,,,,Y,,,,,58,Nucleus CI422,,,3/14/20,,,4/14/20,,,F,Postal Clerk,1,Unknown,Unknown,,
+1282,64.1,R,,,,,,Y,,,,,63,Nucleus CI422,,,3/14/20,,,4/14/20,,,M,Machinists,1,Unknown,Unknown,49,56
+1283,70.2,L,,,,,,Y,,,,,,Nucleus CI422,,,3/14/20,,,4/14/20,,,M,,,Unknown,Unknown,,
+1284,57,L,,,,,,Y,,,,40,40,Nucleus CI422,,,4/14/20,,,5/14/20,,,F,Office,1,Unknown,Unknown,28,28
+1285,84.7,L,,,,,,Y,,,,,,Nucleus CI422,,,4/14/20,,,5/14/20,,,M,M.D.,4,Unknown,Unknown,60,65
+1287,58.3,R,,,,,,Y,,,,0,0,Nucleus CI422,,,4/14/20,,,5/14/20,,,F,,2,Unknown,Unknown,4,4
+1289,71.7,L,,,,,,Y,Y,,,,,Nucleus CI422,,,4/14/20,10/14/20,,5/14/20,,,M,,,,,,
+1290,63.2,R,,,,,,Y,,,,,40,Nucleus CI422,,,4/14/20,,,5/14/20,,,F,,3,Unknown,Unknown,,38
+1291,66.5,L,,,,,,Y,,,,10,10,Nucleus CI422,,,4/14/20,,,5/14/20,,,M,,1,Unknown,Unknown,14,14
+1292,78.8,L,,,,,,Y,,,,,,Med-El Concert Flex 24,,,4/14/20,,,5/14/20,,,M,,4,Unknown,Unknown,,63
+1293,47.7,R,,,R,,,Y,,,,,,Nucleus CI 24RE(CA),,,5/14/20,,,6/14/20,,,F,,,Unknown,Unknown,,
+1295,88.6,R,,,,,,Y,,,,,,Nucleus CI422,,,5/14/20,,,6/14/20,,,F,,,,,,
+1296,56.6,R,,,,,,Y,,,,24,24,Nucleus Hybrid L24,,,5/14/20,,,6/14/20,,,F,Self employed; grocery clerk; cleaning @ JD dealer,1,Unknown,Unknown,24,24
+1297,59.9,L,,,,,,Y,,,,57,55,Clarion HiRes 90K Mid-Scala,,,5/14/20,,,5/14/20,,,M,writer,1,Unknown,Unknown,54,
+1298,40.9,R,,,N,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,5/14/20,,,5/14/20,,,M,,,,,,
+1299,67.8,R,,,,,,Y,,,,,60,Med-El Concert Flex 24,,,5/14/20,,,6/14/20,,,F,,1,Unknown,Unknown,50,60
+1300,58.7,L,,,,,,Y,,,,,,Nucleus CI422,,,5/14/20,,,6/14/20,,,M,Laborer,2,Unknown,Unknown,30,30
+1302,35.9,R,,,N,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,5/14/20,,,6/14/20,,,M,,,,,,
+1305,65.8,R,,,,,,Y,,,,65,66,Nucleus CI422,,,5/14/20,,,6/14/20,,,M,,1,Unknown,Unknown,51,51
+1306,78.5,R,,,,,,Y,,,,77,77,Nucleus CI422,,,5/14/20,,,6/14/20,,,F,,4,Unknown,Unknown,64,64
+1308,70.7,L,,,,,,Y,,,,,,Nucleus CI422,,,6/14/20,,,7/14/20,,,F,,,Unknown,Unknown,,
+1309,54.2,L,,,L,,,Y,,,,50,,Clarion HiRes 90K Mid-Scala,,,6/14/20,,,7/14/20,,,M,farmer/wood worker,1,Unknown,Unknown,48,
+1310,66.5,L,,,N,,,Y,,,,34,34,Nucleus CI422,,,6/14/20,,,7/14/20,,,F,elementary teacher,1,Unknown,Unknown,34,34
+1311,49.8,L,,,N,,,Y,,,,42,45,Nucleus Hybrid L24,,,6/14/20,,,7/14/20,,,M,Unemployed Engineer,2,Unknown,Unknown,29,29
+1315,63.3,L,,,,,,Y,,,,0,0,Nucleus CI422,,,6/14/20,,,7/14/20,,,M,North Star Part time,1,Unknown,Unknown,4,
+1316,87.7,L,,,,,,Y,,,,82,,Clarion HiRes 90K Mid-Scala,,,6/14/20,9/17/20,,7/14/20,,,M,,1,Unknown,Unknown,83,83
+1318,19.8,L,,,,,,Y,,,,10,,Med-El Concert Flex 24,,,6/14/20,,,7/14/20,,,M,Student,2,Unknown,Unknown,,17
+1320,82.6,L,,,,,,Y,,,,38,,Med-El Concert Flex 24,,,7/14/20,,,8/14/20,,,M,,1,Unknown,Unknown,,47
+1321,70.9,R,,,,,,Y,,,,60,50,Nucleus CI422,,,7/14/20,,,8/14/20,,,F,retired principal,2,Unknown,Unknown,59,59
+1322,51.2,L,,,,,,Y,,,,50,,Nucleus CI422,,,7/14/20,,,8/14/20,,,M,Store Manager,1,Unknown,Unknown,,
+1323,45.3,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,7/14/20,,,8/14/20,,,F,Registered Nurse,1,Unknown,Unknown,16,4
+1324,54.9,L,,,,,,Y,,,,,,Nucleus CI422,,,7/14/20,,,8/14/20,,,F,none,1,Unknown,Unknown,19,
+1325,69,L,,,,,,Y,,,,,,Nucleus CI422,,,7/14/20,,,8/14/20,,,M,,,,,,
+1326,66.5,L,,,,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,7/14/20,,,8/14/20,,,M,,,Unknown,Unknown,,
+1327,83,L,,,,,,Y,,,,,,Nucleus CI422,,,7/14/20,,,8/14/20,,,M,,1,Unknown,Unknown,72,72
+1333,48.9,R,L,,,,,Y,Y,,,,,Nucleus Hybrid L24,Nucleus CI522 Straight electrode,,7/14/20,7/19/20,,8/14/20,8/19/20,,F,Containment Coordinator,3,Unknown,Unknown,47,47
+1334,21.5,L,,,,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,7/14/20,,,8/14/20,,,M,,,,,,
+1335,56.3,L,,,,,,Y,,,,,,Nucleus CI422,,,8/14/20,,,8/14/20,,,F,,,,,,
+1336,60.3,L,,,,,,Y,,,,0,0,Nucleus CI422,,,8/14/20,,,8/14/20,,,M,disabled,2,Unknown,Unknown,5,5
+1337,77.9,R,,,,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,8/14/20,,,9/14/20,,,M,Printer Service Tech,1,Unknown,Unknown,22,22
+1339,87.3,R,,,,,,Y,,,,85,85,Nucleus CI422,,,8/14/20,,,9/14/20,,,M,retired attorney,4,Unknown,Unknown,84,84
+1340,84.9,R,R,,,,,Y,Y,,,82,80,Nucleus CI422,Nucleus CI512(CA),,8/14/20,12/18/20,,9/14/20,1/19/20,,F,"Chairman of Board Mercy Medical Center Foundation, Cedar Rapids",2,Unknown,Unknown,65,65
+1341,53.4,R,L,,,,,Y,Y,,,,,Nucleus Hybrid L24,Nucleus Hybrid L24,,8/14/20,9/18/20,,9/14/20,10/18/20,,F,Manager,1,Unknown,Unknown,42,42
+1342,18,L,R,,,,,Y,Y,,,,,Nucleus Hybrid L24,Nucleus Hybrid L24,,8/14/20,1/19/20,,9/14/20,1/19/20,,M,,,Unknown,Unknown,,
+1344,66.7,R,,,,,,Y,,,,37,37,Clarion HiRes 90K Mid-Scala,,,8/14/20,,,9/14/20,,,M,n/a - panio turner tech,1,Unknown,Unknown,34,34
+1345,66.1,R,,,,,,Y,,,,50,50,Nucleus CI422,,,8/14/20,,,9/14/20,,,M,,1,Unknown,Unknown,23,23
+1346,62.6,L,,,,,,Y,,,,38,,Nucleus CI422,,,8/14/20,,,9/14/20,,,M,,1,Unknown,Unknown,,58
+1349,37.9,L,,,,,,Y,,,,,,Nucleus CI422,,,9/14/20,,,10/14/20,,,F,,,,,,
+1350,82.9,L,,,L,,,Y,,,,,,Nucleus CI422,,,9/14/20,,,10/14/20,,,M,,,,,,
+1351,60.7,R,,,,,,Y,,,,,,Nucleus CI422,,,9/14/20,,,10/14/20,,,M,Gardener,3,Unknown,Unknown,25,6
+1352,78.6,R,,,,,,Y,,,,,,Nucleus CI422,,,9/14/20,,,10/14/20,,,M,Physical Therapist,1,Unknown,Unknown,43,43
+1353,69,R,,,N,,,Y,,,,69,59,Nucleus CI422,,,11/14/20,,,12/14/20,,,M,OTR Truck Driver,1,Unknown,Unknown,59,59
+1355,37.8,L,R,,,,,Y,Y,,,,,Med-El Concert Flex 24,Med-El Synchrony Flex 28,,9/14/20,7/15/20,,10/14/20,8/15/20,,M,,,,,,
+1356,69.1,L,,,,,,Y,,,,65,65,Med-El Concert Flex 24,,,9/14/20,,,10/14/20,,,F,,1,Unknown,Unknown,50,50
+1357,48.2,L,,,,,,Y,,,,37,,Nucleus CI422,,,9/14/20,,,10/14/20,,,M,Sales,1,Meniere's,Unknown,,
+1359,72.4,L,,,,,,Y,,,,65,40,Nucleus CI422,,,9/14/20,,,10/14/20,,,F,,4,Unknown,Unknown,44,
+1360,69.8,R,,,,,,Y,,,,,,Nucleus CI 24RE(CA),,,10/14/20,,,10/14/20,,,M,,,,,,
+1361,79.8,L,,,,,,Y,,,,65,73,Clarion HiRes 90K,,,4/13/20,,,5/13/20,,,M,Farmer,1,Unknown,Unknown,60,70
+1362,66.5,L,L,,,,,Y,Y,,,55,,Nucleus Hybrid L24,Nucleus CI422,,10/14/20,7/15/20,,10/14/20,8/15/20,,M,,1,Unknown,Unknown,50,50
+1363,53.6,R,,,,,,Y,,,,50,50,Nucleus CI422,,,10/14/20,,,11/14/20,,,F,unable,1,Unknown,Unknown,28,21
+1365,74.7,L,,,,,,Y,,,,62,62,Nucleus CI422,,,6/15/20,,,7/15/20,,,M,,1,Unknown,Unknown,62,62
+1366,47.3,R,,,,,,Y,,,,,,Nucleus CI422,,,10/14/20,,,11/14/20,,,M,Foreman,3,Unknown,Unknown,30,30
+1367,34.8,R,,,,,,Y,,,,,21,Nucleus CI422,,,10/14/20,,,11/14/20,,,F,House wife,1,Unknown,Unknown,34,
+1368,46.2,R,,,,,,Y,,,,40,40,Nucleus CI422,,,10/14/20,,,11/14/20,,,F,License MFT,1,Unknown,Unknown,9,9
+1369,79.9,R,,,,,,Y,,,,74,77,Nucleus CI422,,,10/14/20,,,11/14/20,,,M,,1,Unknown,Unknown,,
+1370,85.8,R,,,,,,Y,,,,55,50,Clarion HiRes 90K Mid-Scala,,,10/14/20,,,11/14/20,,,M,,1,Unknown,Unknown,45,40
+1371,69.2,R,,,,,,Y,,,,,,Nucleus CI422,,,10/14/20,,,11/14/20,,,M,,1,Unknown,Unknown,50,52
+1372,80,R,,,,,,Y,,,,,39,Clarion HiRes 90K Mid-Scala,,,10/14/20,,,11/14/20,,,M,,1,Unknown,Unknown,20,20
+1373,43.4,L,,,,,,Y,,,,,,Med-El Concert Flex 24,,,10/14/20,,,12/14/20,,,F,,,Unknown,Unknown,,
+1383,74,R,,,,,,Y,,,,,,Nucleus CI422,,,11/14/20,,,12/14/20,,,F,,,,,,
+1384,33.4,L,R,,,,,Y,Y,,,22,22,Nucleus Hybrid L24,Nucleus Hybrid L24,,11/14/20,7/19/20,,12/14/20,8/19/20,,F,Senior Security Coordinator,1,Unknown,Unknown,21,21
+1385,52,L,,,,,,Y,,,,19,,Nucleus CI422,,,11/14/20,,,12/14/20,,,M,Welder/Pipe fitter,1,Unknown,Unknown,22,22
+1386,62.2,R,,,,,,Y,,,,,61,Med-El Concert Flex 24,,,11/14/20,,,12/14/20,,,M,accountant,1,Unknown,Unknown,,
+1387,24.6,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,11/14/20,,,12/14/20,,,F,,,Unknown,Unknown,,
+1388,86,L,L,,,,,Y,Y,,,,,Nucleus CI422,Nucleus CI512(CA),,1/15/20,6/16/20,,2/15/20,7/16/20,,M,,,,,,
+1391,56.1,L,,,,,,Y,,,,,,Nucleus CI422,,,11/14/20,,,12/14/20,,,M,,,Unknown,Unknown,,
+1392,54.1,L,,,,,,Y,,,,,,Nucleus Hybrid L24,,,12/14/20,,,1/15/20,,,M,,,Unknown,Unknown,,
+1393,79.9,L,,,,,,Y,,,,,,Nucleus CI422,,,12/14/20,,,1/15/20,,,F,Part-time Bookkeeper and later Dietary,4,Unknown,Unknown,65,65
+1394,72.7,L,L,L,N,N,N,Y,Y,Y,,,,Med-El Concert Flex 24,Med-El Concert Flex 28,Med-El Synchrony Standard,12/14/20,1/15/20,3/15/20,1/15/20,,4/15/20,F,Registered nurse,1,Unknown,Unknown,5,
+1396,56.7,L,,,N,,,Y,,,,,,Med-El Concert Flex 28,,,12/14/20,,,1/15/20,,,M,,,,,,
+1397,39.1,R,,,N,,,Y,,,,,,Nucleus CI 24RE(CA),,,12/14/20,,,1/15/20,,,F,,,Unknown,Unknown,,
+1399,64.8,R,,,N,,,Y,,,,,,Nucleus Hybrid S12,,,12/14/20,,,1/15/20,,,F,Professional senior decision analyst,1,Unknown,Unknown,44,42
+1401,77.8,R,,,,,,Y,,,,,,Nucleus CI422,,,12/14/20,,,1/15/20,,,M,Retired,1,Unknown,Unknown,30,
+1403,64.7,L,,,L,,,Y,,,,,,Nucleus CI 24RE(CA),,,12/14/20,,,1/15/20,,,F,,,Unknown,Unknown,,
+1404,26.6,L,,,,,,Y,,,,,,Nucleus CI422,,,12/14/20,,,1/15/20,,,F,,,,,,
+1405,74.2,L,,,,,,Y,,,,70,70,Nucleus CI422,,,1/15/20,,,1/15/20,,,F,,1,Unknown,Unknown,60,60
+1406,62.2,L,,,,,,Y,,,,55,55,Med-El Concert Flex 28,,,1/15/20,,,2/15/20,,,F,,3,Unknown,Unknown,5,5
+1407,74.6,L,,,,,,Y,,,,60,65,Nucleus CI422,,,1/15/20,,,2/15/20,,,M,firefighter,1,Unknown,Unknown,40,40
+1408,,L,,,,,,N,,,,,,,,,,,,8/12/20,,,F,,,,,,
+1409,21.8,L,,,L,,,Y,,,,,,Med-El Concert Flex 28,,,1/15/20,,,3/15/20,,,M,,,,,,
+1410,69.2,L,,,,,,Y,,,,5,5,Med-El Concert Flex 28,,,2/15/20,,,3/15/20,,,M,,1,Unknown,Unknown,5,5
+1411,66.9,R,,,,,,Y,,,,,,Nucleus CI422,,,2/15/20,,,3/15/20,,,M,Engineer,3,Unknown,Unknown,40,40
+1412,73.3,R,,,,,,Y,,,,59,59,Nucleus CI422,,,2/15/20,,,3/15/20,,,M,,1,Unknown,Unknown,56,56
+1413,37.3,L,,,,,,Y,,,,29,29,Nucleus CI512(CA),,,3/15/20,,,4/15/20,,,M,Pastor,1,Unknown,Unknown,18,18
+1414,40.9,R,,,,,,Y,,,,,40,Nucleus CI422,,,3/15/20,,,4/15/20,,,F,Teacher,1,Unknown,Unknown,,
+1415,62.7,L,,,,,,Y,,,,,,Med-El Concert Flex 28,,,3/15/20,,,4/15/20,,,F,,,,,,
+1416,50.2,L,R,,,,,Y,Y,,,0,0,Nucleus CI512(CA),Nucleus CI512(CA),,3/15/20,11/15/20,,4/15/20,12/15/20,,F,Medical claims Assistant,2,Unknown,Unknown,8,1.5
+1417,91.8,L,,,,,,Y,,,,89,88,Nucleus CI422,,,3/15/20,,,4/15/20,,,F,,4,Unknown,Unknown,67,67
+1418,69.9,R,,,,,,Y,,,,,,Nucleus CI422,,,3/15/20,,,4/15/20,,,M,.,1,Unknown,Unknown,40,50
+1419,56.2,R,,,,,,Y,,,,50,5,Nucleus CI512(CA),,,3/15/20,,,4/15/20,,,M,Mailhandler-USPS,2,Unknown,Unknown,32,6
+1420,42.5,R,,,,,,Y,,,,,39,Nucleus CI422,,,3/15/20,,,4/15/20,,,M,residential remodeling,3,Unknown,Unknown,,
+1421,64.3,R,,,,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,3/15/20,,,4/15/20,,,M,,,Unknown,Unknown,,
+1422,50.8,R,,,,,,Y,,,,,50,Nucleus Hybrid L24,,,3/15/20,,,4/15/20,,,F,Administrator/Accountant,1,Unknown,Unknown,43,43
+1423,64.2,L,,,,,,Y,,,,,,Nucleus Hybrid L24,,,3/15/20,,,4/15/20,,,M,Factory Assembly,1,Unknown,Unknown,54,54
+1424,57.7,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,3/15/20,,,4/15/20,,,F,Homemaker,1,Unknown,Unknown,27,27
+1425,79.1,R,,,,,,Y,,,,70,70,Nucleus CI422,,,3/15/20,,,5/15/20,,,M,,4,Unknown,Unknown,55,50
+1426,57.3,L,,,,,,Y,,,,57,,Nucleus CI422,,,3/15/20,,,4/15/20,,,M,Farmer,1,Unknown,Unknown,,57
+1427,57.5,L,,,,,,Y,,,,,,Nucleus Hybrid L24,,,3/15/20,,,4/15/20,,,M,auditor,1,Unknown,Unknown,10,5
+1428,73.8,R,,,,,,Y,,,,70,70,Clarion HiRes 90K Mid-Scala,,,4/15/20,,,5/15/20,,,M,retired,1,Unknown,Unknown,65,65
+1429,,R,,,,,,Y,,,,,,Nucleus CI512(CA),,,,,,,,,M,,,,,,
+1431,71.9,R,,,,,,Y,,,,,,Nucleus CI422,,,5/15/20,,,6/15/20,,,F,,1,Unknown,Unknown,64,64
+1433,62.2,L,,,,,,Y,,,,,,Nucleus Hybrid L24,,,5/15/20,,,6/15/20,,,F,Intructional Technology Coach,1,Unknown,Unknown,29,29
+1434,87.4,L,,,,,,Y,,,,,,Nucleus CI422,,,5/15/20,,,6/15/20,,,M,,1,Unknown,Unknown,30,30
+1435,73.6,R,,,,,,Y,,,,,,Nucleus CI422,,,5/15/20,,,6/15/20,,,F,,,Unknown,Unknown,,
+1436,21.5,L,,,,,,Y,,,,15,15,Nucleus Hybrid L24,,,5/15/20,,,6/15/20,,,F,housekeeper,2,Unknown,Unknown,12,12
+1437,67.2,R,,,,,,Y,,,,65,65,Med-El Concert Flex 24,,,5/15/20,,,6/15/20,,,F,Barber,1,Unknown,Unknown,66,66
+1438,57.4,L,,,,,,Y,,,,,,Nucleus CI422,,,6/15/20,,,7/15/20,,,F,,,Unknown,Unknown,,
+1439,80,R,,,,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,6/15/20,,,7/15/20,,,M,,,,,,
+1440,74,R,,,,,,Y,,,,72,72,Nucleus CI422,,,6/15/20,,,7/15/20,,,M,,1,Unknown,Unknown,70,70
+1443,78.3,R,,,,,,Y,,,,,,Nucleus CI422,,,6/15/20,,,7/15/20,,,M,,1,Unknown,Unknown,62,62
+1444,69.5,L,,,,,,N,,,,,,,,,2/14/20,,,3/14/20,,,M,,,,,,
+1445,71.4,L,,,,,,Y,,,,,,Nucleus CI422,,,6/15/20,,,7/15/20,,,F,Registered Nurse,4,Unknown,Unknown,36,36
+1446,62.3,R,,,,,,Y,,,,,,Nucleus CI512(CA),,,6/15/20,,,7/15/20,,,M,,,,,,
+1447,32.4,L,,,,,,Y,,,,28,28,Nucleus CI512(CA),,,6/15/20,,,7/15/20,,,F,,1,Unknown,Unknown,,
+1448,73.7,R,,,,,,Y,,,,73,47,Nucleus CI512(CA),,,6/15/20,,,7/15/20,,,F,,1,Unknown,Unknown,69,69
+1449,58.6,R,,,,,,Y,,,,,,Nucleus CI512(CA),,,6/15/20,,,7/15/20,,,M,Laborer,1,Unknown,Unknown,,54
+1451,76.7,R,,,,,,Y,,,,,,Nucleus CI422,,,7/15/20,,,8/15/20,,,M,,1,Unknown,Unknown,68,68
+1459,69.3,R,,,,,,Y,,,,67,65,Nucleus Hybrid L24,,,6/15/20,,,7/15/20,,,M,Farmer,1,Unknown,Unknown,62,62
+1460,52.8,L,,,,,,Y,,,,,,Nucleus CI512(CA),,,7/15/20,,,8/15/20,,,F,,,,,,
+1461,61.2,R,,,,,,Y,,,,2,2,Nucleus CI512(CA),,,7/15/20,,,8/15/20,,,F,housewife,1,Unknown,Unknown,11,5
+1462,56.2,L,,,,,,Y,,,,,,Nucleus CI512(CA),,,7/15/20,,,8/15/20,,,M,John Deere,2,Unknown,Unknown,54,54
+1463,92.4,L,,,,,,Y,,,,85,85,Nucleus CI422,,,8/15/20,,,8/15/20,,,M,-,4,Unknown,Unknown,,65
+1464,73.3,L,,,,,,Y,,,,,23,Nucleus CI512(CA),,,8/15/20,,,9/15/20,,,F,house wife,1,Unknown,Unknown,52,52
+1465,63.8,R,,,,,,Y,,,,,,Nucleus CI512(CA),,,8/15/20,,,9/15/20,,,F,,,,,,
+1466,25.1,R,,,,,,Y,,,,,,Nucleus CI512(CA),,,8/15/20,,,9/15/20,,,F,Clerical,2,Unknown,Unknown,0.7,0.7
+1468,66.2,R,,,,,,Y,,,,,50,Nucleus CI512(CA),,,9/15/20,,,10/15/20,,,F,Retired,1,Unknown,Unknown,43,43
+1469,55.2,R,,,,,,Y,,,,,18,Nucleus CI512(CA),,,9/15/20,,,10/15/20,,,F,Disabled,3,Unknown,Unknown,15,15
+1470,78.7,L,,,,,,Y,,,,,,Nucleus CI512(CA),,,9/15/20,,,10/15/20,,,M,,1,Unknown,Unknown,32,30
+1471,57,L,,,,,,Y,,,,,,Med-El Synchrony Flex 28,,,9/15/20,,,10/15/20,,,F,,,Unknown,Unknown,,
+1473,72.3,L,,,,,,Y,,,,62,62,Nucleus CI422,,,9/15/20,,,10/15/20,,,M,,1,Unknown,Unknown,40,40
+1474,66.8,R,,,,,,Y,,,,,,Nucleus CI512(CA),,,9/15/20,,,10/15/20,,,F,Dietary Aide,3,Unknown,Unknown,,
+1475,78.6,R,,,,,,Y,,,,,2,Nucleus CI512(CA),,,9/15/20,,,10/15/20,,,F,,4,Unknown,Unknown,7,
+1476,77,L,,,,,,Y,,,,70,70,Nucleus CI422,,,9/15/20,,,10/15/20,,,F,,4,Unknown,Unknown,64,64
+1477,58.1,L,,,,,,Y,,,,52,52,Nucleus Hybrid L24,,,9/15/20,,,10/15/20,,,F,Records Mgmt Specialist,1,Unknown,Unknown,47,47
+1478,84.7,L,,,,,,Y,,,,84,76,Med-El Synchrony Flex 24,,,9/15/20,,,10/15/20,,,F,Retired,4,Unknown,Unknown,84,
+1479,59.7,R,L,,,,,Y,Y,,,40,40,Clarion HiRes 90K Mid-Scala,Clarion HiRes 90K,,9/15/20,5/16/20,,10/15/20,6/16/20,,F,Home Care Aide,3,Unknown,Unknown,12,12
+1480,73.9,R,,,,,,Y,,,,40,67,Nucleus CI522 Straight electrode,,,9/15/20,,,10/15/20,,,F,,1,Meniere's,Unknown,,47
+1482,29.4,L,,,,,,Y,,,,2.5,2.5,Nucleus Hybrid L24,,,10/15/20,,,10/15/20,,,M,Grad Student,2,Unknown,Unknown,4,4
+1485,80,R,,,,,,Y,,,,75,75,Nucleus CI522 Straight electrode,,,10/15/20,,,11/15/20,,,M,Machine Maintenance,1,Unknown,Unknown,50,50
+1487,76,L,,,,,,Y,,,,65,,Nucleus CI522 Straight electrode,,,10/15/20,,,11/15/20,,,F,Former Medical Coordinator,1,Unknown,Unknown,58,58
+1488,51.2,R,,,,,,Y,,,,,,Clarion HiRes 90K,,,12/15/20,,,1/16/20,,,F,,,Unknown,Unknown,,
+1489,62.8,R,,,,,,Y,,,,58,58,Nucleus CI522 Straight electrode,,,11/15/20,,,12/15/20,,,M,Disabled,1,Unknown,Unknown,45,45
+1491,65.6,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,11/15/20,,,12/15/20,,,M,Unemployed,1,Unknown,Unknown,50,50
+1492,74.9,L,,,,,,Y,,,,,,Nucleus CI512(CA),,,11/15/20,,,12/15/20,,,M,,,,,,
+1493,75.4,L,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,11/15/20,,,12/15/20,,,M,,1,Unknown,Unknown,55,55
+1495,73,R,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,11/15/20,,,12/15/20,,,M,,,,,,
+1496,78.4,L,,,,,,Y,,,,78,78,Nucleus CI522 Straight electrode,,,11/15/20,,,12/15/20,,,F,Retired  Edward Jones Branch Office Adminstrator,1,Unknown,Unknown,68,68
+1497,52.1,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,12/15/20,,,12/15/20,,,M,Farmer,1,Unknown,Unknown,35,35
+1498,34.9,R,,,,,,Y,,,,,5,Med-El Synchrony Flex 28,,,12/15/20,,,1/16/20,,,M,,,Head Trauma,,8,
+1499,57.4,L,,,,,,Y,,,,,,Nucleus CI512(CA),,,12/15/20,,,1/15/20,,,M,,,,,,
+1500,38.8,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,12/15/20,,,1/16/20,,,M,Farm Manager,1,Unknown,Unknown,16,16
+1501,61,L,R,,,,,Y,Y,,,,,Nucleus CI512(CA),Nucleus CI532,,12/15/20,12/18/20,,1/16/20,11/19/20,,F,,,,,,
+1503,72.5,R,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,12/15/20,,,1/16/20,,,F,,,,,,
+1504,47.9,R,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,12/15/20,,,1/16/20,,,M,,,,,,
+1505,67.8,L,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,1/16/20,,,2/16/20,,,F,,,,,,
+1506,79.7,R,,,,,,Y,,,,57,,Nucleus CI522 Straight electrode,,,2/16/20,,,3/16/20,,,F,,4,Unknown,Unknown,,41
+1507,72.5,R,,,,,,Y,,,,65,65,Nucleus CI512(CA),,,2/16/20,,,3/16/20,,,F,Property Manager,4,Unknown,Unknown,40,40
+1508,53.2,R,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,2/16/20,,,3/16/20,,,M,,,,,,
+1509,77.1,L,,,,,,Y,,,,74,,Nucleus CI512(CA),,,2/16/20,,,3/16/20,,,F,Retired Housewife,1,Unknown,Unknown,65,65
+1510,38.1,L,,,,,,Y,,,,30,,Nucleus CI522 Straight electrode,,,2/16/20,,,3/16/20,,,M,Weld inspector,1,Other,Unknown,,
+1512,55.7,L,,,,,,Y,,,,30,30,Nucleus Hybrid L24,,,2/16/20,,,3/16/20,,,F,School bus driver,1,Unknown,Unknown,,43
+1513,77.8,R,,,,,,Y,,,,,52,Nucleus CI512(CA),,,2/16/20,,,3/16/20,,,M,,1,Unknown,Unknown,59,75
+1514,63,R,,,,,,Y,,,,,,Nucleus Hybrid S12-RW,,,2/16/20,,,3/16/20,,,M,,,,,,
+1515,64.7,L,,,,,,Y,,,,,,Nucleus Hybrid L24,,,3/16/20,,,3/16/20,,,F,,1,Unknown,Unknown,41,41
+1517,25.3,L,,,,,,Y,,,,,,Med-El Synchrony Standard,,,3/16/20,,,4/16/20,,,F,,,,,,
+1518,89.7,L,,,,,,Y,,,,,,Nucleus CI512(CA),,,3/16/20,,,4/16/20,,,F,,4,Unknown,Unknown,47,47
+1519,75,R,,,,,,Y,,,,74,74,Nucleus Hybrid L24,,,3/16/20,,,4/16/20,,,M,None,1,Unknown,Unknown,67,67
+1521,70.2,R,,,,,,Y,,,,69,69,Nucleus Hybrid L24,,,4/16/20,,,4/16/20,,,F,,1,Unknown,Unknown,51,51
+1522,57.2,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,4/16/20,,,5/16/20,,,M,,,,,,
+1523,61.3,L,,,,,,Y,,,,61,,Med-El Synchrony Flex 24,,,4/16/20,,,5/16/20,,,F,Homemaker,1,Acoustic Neuronna,Unknown,,
+1525,36,R,,,,,,Y,,,,,,Nucleus CI512(CA),,,4/16/20,,,4/16/20,,,F,,,,,,
+1527,64,L,,,,,,Y,,,,,,Nucleus CI532,,,4/16/20,,,5/16/20,,,M,,,,,,
+1528,73.6,R,R,,,,,Y,Y,,,,62,Nucleus CI512(CA),Nucleus CI512(CA),,4/16/20,9/16/20,,5/16/20,10/16/20,,M,,1,Noise Exposure,Unknown,,53
+1529,47,L,,,,,,Y,,,,42,,Nucleus CI 24RE(CA),,,4/16/20,,,5/16/20,,,M,Electrical Engineer,1,Unknown,Unknown,,
+1530,82.3,L,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,3/16/20,,,4/16/20,,,F,,1,Unknown,Unknown,55,55
+1531,81,L,,,,,,Y,,,,75,,Med-El Synchrony Flex 24,,,4/16/20,,,5/16/20,,,F,housewife,4,Unknown,Unknown,70,70
+1533,31.4,R,,,N,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,5/16/20,,,6/16/20,,,F,,,,,,
+1534,64.8,R,,,,,,Y,,,,,,Nucleus Hybrid S12-RW,,,5/16/20,,,6/16/20,,,M,,,,,,
+1535,73.3,L,,,,,,Y,,,,29,29,Med-El Synchrony Flex 24,,,5/16/20,,,6/16/20,,,M,Retired,1,Unknown,Unknown,53,53
+1544,69.3,L,,,,,,Y,,,,67,67,Nucleus CI522 Straight electrode,,,6/16/20,,,7/16/20,,,F,Retired,1,Unknown,Unknown,53,53
+1545,84.5,L,,,,,,Y,,,,35,,Nucleus Hybrid L24,,,6/16/20,,,7/16/20,,,M,,1,Unknown,Unknown,,65
+1546,68.1,R,,,,,,Y,,,,50,57,Nucleus Hybrid L24,,,6/18/20,,,7/18/20,,,F,BS Manager,1,Unknown,Unknown,50,50
+1548,83.8,L,,,,,,Y,,,,69,69,Nucleus CI532,,,6/16/20,,,7/16/20,,,M,,4,Unknown,Unknown,60,60
+1549,76.8,R,,,,,,Y,,,,,70,Nucleus Hybrid L24,,,6/16/20,,,7/16/20,,,F,,1,Hereditary-other,Noise Exposure,60,60
+1550,65.8,R,,,,,,N,,,,,,Nucleus Hybrid L24,,,6/16/20,,,7/16/20,,,M,,,,,,
+1552,44.2,R,,,,,,Y,,,,,,Clarion HiRes 90K Mid-Scala,,,7/16/20,,,8/16/20,,,F,,,,,,
+1553,71.2,L,,,,,,N,,,,60,,Nucleus Hybrid L24,,,11/15/20,,,12/15/20,,,M,,2,Head Trauma,Noise Exposure,56,56
+1554,67.8,R,R,,,,,N,N,,,30,30,Nucleus Hybrid L24,Nucleus CI522 Straight electrode,,3/16/20,11/16/20,,4/16/20,12/16/20,,M,Mechanic,1,Unknown,Unknown,25,25
+1555,82.1,R,,,,,,N,,,,,,Nucleus Hybrid L24,,,6/16/20,,,7/16/20,,,M,Farmer,1,Hereditary-other,Noise Exposure,36,36
+1556,70.1,R,,,,,,N,,,,,,Nucleus Hybrid L24,,,3/16/20,,,4/16/20,,,M,Carpenter,1,Unknown,Unknown,54,56
+1557,60.9,L,,,,,,Y,,,,60,,Nucleus CI532,,,7/16/20,,,8/16/20,,,F,Retired,2,Meniere's,Unknown,48,46
+1561,74.9,R,,,,,,Y,,,,,70,Nucleus Hybrid L24,,,8/16/20,,,9/16/20,,,M,Educator,1,Unknown,Unknown,60,60
+1562,75.2,R,,,N,,,Y,,,,,73,Nucleus Hybrid L24,,,8/16/20,,,9/16/20,,,F,Reg. Nurse,4,Unknown,Unknown,64,64
+1563,65,R,,,N,,,Y,,,,,,Nucleus Hybrid L24,,,8/16/20,,,9/16/20,,,M,Farmer,1,Unknown,Unknown,56,56
+1565,25,R,L,,N,N,,Y,Y,,,24,12,Nucleus CI532,Nucleus CI532,,8/16/20,3/17/20,,9/16/20,4/17/20,,F,Stay-at-home mom,1,Unknown,Unknown,12,
+1567,35.4,L,,,N,,,Y,,,,,,Nucleus Hybrid L24,,,8/16/20,,,9/16/20,,,M,,,,,,
+1568,66.9,L,,,N,,,Y,,,,50,,Nucleus CI522 Straight electrode,,,8/16/20,,,9/16/20,,,M,Retired Educator,1,Meniere's,Unknown,41,41
+1569,76.5,R,,,N,,,Y,,,,,75,Clarion HiRes 90K Mid-Scala,,,9/16/20,,,10/16/20,,,F,Teacher,1,Unknown,Unknown,73,73
+1570,75.5,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,9/16/20,,,10/16/20,,,F,,2,Unknown,Unknown,73,73
+1571,81.9,R,,,,,,Y,,,,70,60,Nucleus CI532,,,9/16/20,,,10/16/20,,,M,Farmer,1,,Unknown,70,60
+1572,42.1,R,,,,,,Y,,,,42,32,Nucleus CI532,,,9/16/20,,,10/16/20,,,M,Disabled,1,Unknown,Unknown,24,20
+1573,80.5,R,,,,,,Y,,,,78,80,Nucleus CI512(CA),,,9/16/20,,,10/16/20,,,M,Store Manager,1,Unknown,Unknown,,78
+1574,75.2,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,9/16/20,,,10/16/20,,,F,,4,Unknown,Unknown,40,40
+1576,64.1,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,10/16/20,,,11/16/20,,,M,John Deere,1,Unknown,Unknown,49,49
+1577,78.2,L,,,,,,Y,,,,70,74,Nucleus CI532,,,10/16/20,,,10/16/20,,,M,Appraiser,3,Unknown,Unknown,65,65
+1578,73.8,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,10/16/20,,,11/16/20,,,M,,,,,,
+1579,76.9,L,,,N,,,Y,,,,,,Nucleus CI512(CA),,,10/16/20,,,11/16/20,,,M,,4,Unknown,Unknown,57,
+1580,45.6,R,,,,,,Y,,,,5,45,Nucleus CI522 Straight electrode,,,11/16/20,,,12/16/20,,,F,"Teacher, Director of Theatre",1,Unknown,Unknown,45,
+1581,82.9,L,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,10/16/20,,,11/16/20,,,M,,,,,,
+1582,72.4,R,,,N,,,Y,,,,,,Nucleus CI522 Straight electrode,,,10/16/20,,,11/16/20,,,M,,,,,,
+1583,56.6,B,,,N,,,Y,,,,50,50,Nucleus CI532,,,10/16/20,,,11/16/20,,,F,,1,Unknown,Unknown,35,35
+1584,83.4,L,,,N,,,Y,,,,,,Nucleus Hybrid L24,,,11/16/20,,,12/16/20,,,M,Orthopedic surgeon,1,Unknown,Unknown,,
+1585,78.2,R,,,N,,,Y,,,,35,35,Nucleus CI532,,,11/16/20,,,12/16/20,,,M,,1,Infection,Unknown,16,16
+1586,90.9,R,,,N,,,Y,,,,75,65,Nucleus CI522 Straight electrode,,,11/16/20,,,12/16/20,,,M,Physician,1,Unknown,Unknown,82,82
+1587,74.2,R,,,N,,,Y,,,,,,Nucleus Hybrid L24,,,11/16/20,,,12/16/20,,,M,Farmer,1,Unknown,Unknown,55,55
+1588,24.3,R,L,,N,,,Y,Y,,,,,Nucleus CI532,Nucleus CI532,,11/16/20,3/18/20,,12/16/20,3/18/20,,F,Marketer,2,Unknown,Unknown,5,5
+1589,58.4,R,,,,,,Y,,,,57,57,Nucleus CI532,,,11/16/20,,,12/16/20,,,F,Disabled/Unemployed,2,Unknown,Unknown,,
+1592,53.2,L,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,11/16/20,,,12/16/20,,,F,Teacher,2,Unknown,Unknown,6,
+1593,32.4,R,,,N,,,Y,,,,32,30,Nucleus CI522 Straight electrode,,,11/16/20,,,12/16/20,,,F,in-home elderly care; private caregiver,1,Unknown,Unknown,13,13
+1594,54,R,,,N,,,Y,,,,,,Nucleus Hybrid L24,,,12/16/20,,,12/16/20,,,F,,,,,,
+1595,,,,,,,,N,,,,,,,,,,,,,,,F,,,,,,
+1598,18.7,L,,,,,,Y,,,,3,3,Nucleus CI532,,,11/16/20,,,12/16/20,,,M,Student,2,Unknown,Unknown,3,3
+1599,64.8,L,,,N,,,Y,,,,,,Nucleus Hybrid S12-RW,,,12/16/20,,,12/16/20,,,F,Music Therapist,1,Unknown,Unknown,42,42
+1600,34.2,R,,,N,,,Y,,,,,,Nucleus CI522 Straight electrode,,,12/16/20,,,1/17/20,,,F,General Retail Worker,2,Unknown,Unknown,3,3
+1601,82.5,R,,,N,,,Y,,,,,,Med-El Synchrony Flex 24,,,12/16/20,,,1/17/20,,,M,Professor of Geology,1,Unknown,Unknown,66,66
+1602,43.1,L,,,N,,,Y,,,,42,,Med-El Synchrony Flex 24,,,12/16/20,,,12/16/20,,,F,Hairstylist,1,Unknown,Unknown,,
+1603,30.8,R,,,N,,,Y,,,,2.5,2.5,Nucleus CI522 Straight electrode,,,11/16/20,,,12/16/20,,,F,Case Manager,1,Unknown,Unknown,3.5,3.5
+1604,73.9,R,R,,,,,Y,Y,,,33,,Med-El Synchrony Flex 24,Med-El Synchrony Flex 28,,12/16/20,4/19/20,,1/17/20,5/19/20,,M,,3,Unknown,Unknown,33,33
+1605,80.3,L,,,N,,,Y,,,,74,,Nucleus CI532,,,12/16/20,,,1/17/20,,,F,,1,Unknown,Unknown,54,54
+1606,77.2,L,,,N,,,Y,,,,,,Nucleus CI532,,,12/16/20,,,1/17/20,,,M,,,,,,
+1607,35.3,R,,,N,,,Y,,,,,,Nucleus CI532,,,12/16/20,,,1/17/20,,,M,,,,,,
+1608,77.9,R,,,N,,,Y,,,,,,Med-El Synchrony Flex 24,,,12/16/20,,,1/17/20,,,M,,,,,,
+1609,77.3,R,,,,,,Y,,,,,76,Clarion HiRes 90K Mid-Scala,,,1/17/20,,,2/17/20,,,M,,4,Unknown,Unknown,,
+1610,34.6,L,,,,,,Y,,,,,,Nucleus CI532,,,1/17/20,,,2/17/20,,,M,,,,,,
+1612,40.8,R,,,,,,Y,,,,3,3,Med-El Synchrony Flex 24,,,3/17/20,,,3/17/20,,,F,Homemaker/Self employed farming,1,Unknown,Unknown,3,3
+1613,82.3,R,,,N,,,Y,,,,,,Nucleus CI532,,,1/18/20,,,2/17/20,,,M,,,,,,
+1614,72.2,L,,,N,,,Y,,,,68,70,Nucleus CI532,,,1/17/20,,,2/17/20,,,M,Retired,1,Unknown,Unknown,,
+1616,83.2,L,,,N,,,Y,,,,82,,Nucleus CI532,,,1/17/20,,,2/17/20,,,M,,1,Unknown,Unknown,,45
+1618,75.2,R,,,N,,,Y,,,,,,Nucleus CI522 Straight electrode,,,1/17/20,,,2/17/20,,,F,Episcopal Deacon,1,Unknown,Unknown,64,64
+1619,68.1,R,,,N,,,Y,,,,67,67,Med-El Synchrony Flex 24,,,1/17/20,,,2/17/20,,,F,,1,Unknown,Unknown,36,36
+1620,70.9,L,,,N,,,Y,,,,,,Nucleus Hybrid L24,,,1/17/20,,,2/17/20,,,M,Retired,1,Unknown,Unknown,60,60
+1621,82.4,L,,,,,,Y,,,,75,75,Med-El Synchrony Flex 24,,,1/17/20,,,2/17/20,,,F,Housewife,1,Unknown,Unknown,63,63
+1622,39.5,L,,,,,,Y,,,,30,30,Med-El Synchrony Flex 24,,,1/17/20,,,2/17/20,,,M,Unemployed,1,Unknown,Unknown,22,22
+1623,49.3,R,,,N,,,Y,,,,3,3,Nucleus CI532,,,2/17/20,,,3/17/20,,,F,Homemaker,3,Unknown,Unknown,3,3
+1625,33,R,L,,,,,Y,Y,,,,,Med-El Synchrony Flex 24,Med-El Synchrony Flex 28,,2/17/20,1/19/20,,2/17/20,2/19/20,,F,,,,,,
+1626,67.7,R,,,,,,Y,,,,,,Med-El Synchrony Flex 24,,,2/17/20,,,3/17/20,,,M,,,,,,
+1627,82.4,L,,,N,,,Y,,,,80,80,Med-El Synchrony Flex 24,,,2/17/20,,,3/17/20,,,F,,4,Unknown,Unknown,66,65
+1628,54.2,L,,,N,,,Y,,,,,,Nucleus Hybrid L24,,,2/17/20,,,3/17/20,,,M,,,,,,
+1629,69.8,R,,,N,,,Y,,,,,,Med-El Synchrony Flex 24,,,2/17/20,,,3/17/20,,,F,,,,,,
+1630,81.6,L,,,N,,,Y,,,,75,75,Nucleus CI522 Straight electrode,,,2/17/20,,,3/17/20,,,M,Retired,1,Unknown,Unknown,50,50
+1631,86.3,R,,,,,,N,,,,,,Clarion HiRes 90K Mid-Scala,,,11/15/20,,,11/15/20,,,M,,,Unknown,Unknown,,
+1632,78.1,R,,,,,,N,,,,,,Nucleus CI422,,,1/15/20,,,2/15/20,,,M,,,Unknown,Unknown,,
+1633,57.5,L,,,N,,,Y,,,,56,56,Nucleus CI532,,,3/17/20,,,4/17/20,,,F,Homemaker,1,Unknown,Unknown,,
+1634,70.3,L,,,N,,,Y,,,,,,Nucleus CI532,,,3/17/20,,,4/17/20,,,M,,,Unknown,Unknown,,
+1636,72.4,L,,,,,,Y,,,,,,Clarion HiRes 90K,,,8/12/20,,,8/12/20,,,M,,,Unknown,Unknown,,
+1638,46.3,L,,,,,,Y,,,,,,Nucleus CI532,,,3/17/20,,,4/17/20,,,F,,,,,,
+1640,49.7,L,R,,,,,Y,Y,,,35,40,Nucleus CI532,Nucleus CI532,,3/17/20,9/17/20,,4/17/20,10/17/20,,F,,3,Unknown,Unknown,,
+1641,67.3,R,,,,,,Y,,,,,,Nucleus CI532,,,3/17/20,,,4/17/20,,,F,,,Unknown,Unknown,,
+1642,43.9,L,,,N,,,Y,,,,43,,Nucleus CI512(CA),,,4/17/20,,,5/17/20,,,F,,1,Unknown,Unknown,,
+1643,69.6,L,,,,,,Y,,,,65,65,Nucleus Hybrid L24,,,3/17/20,,,4/17/20,,,F,retired teacher,1,Unknown,Unknown,59,59
+1644,46.8,L,,,N,,,Y,,,,5,5,Nucleus CI532,,,4/17/20,,,5/17/20,,,M,Disabled,1,Unknown,Unknown,5,5
+1645,67.4,R,,,N,,,Y,,,,10,63,Nucleus CI532,,,4/17/20,,,5/17/20,,,F,Cashier,1,Unknown,Unknown,,55
+1646,65.8,R,,,N,,,Y,,,,,,Nucleus Hybrid L24,,,4/17/20,,,5/17/20,,,F,,,Unknown,Unknown,,
+1647,77.2,R,,,N,,,Y,,,,,,Nucleus Hybrid L24,,,4/17/20,,,5/17/20,,,M,,1,Unknown,Unknown,40,40
+1648,,,,,,,,,,,,50,50,,,,,,,,,,M,,,Unknown,Unknown,,
+1649,72.5,L,,,N,,,Y,,,,60,,Nucleus CI532,,,5/17/20,,,6/17/20,,,M,,1,Unknown,Unknown,32,60
+1650,81,R,,,N,,,Y,,,,79,75,Nucleus CI532,,,5/17/20,,,5/17/20,,,M,,1,Unknown,Unknown,65,65
+1651,59.7,R,L,,N,,,Y,Y,,,0,0,Med-El Synchrony Flex 24,Med-El Synchrony Flex 20,,4/17/20,5/18/20,,5/17/20,5/18/20,,M,Disabled,2,Unknown,Unknown,3,3
+1652,73.9,L,,,,,,N,,,,,,Clarion HiRes 90K,,,7/13/20,,,8/13/20,,,M,,,,,,
+1653,73,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,5/17/20,,,6/17/20,,,F,,4,Unknown,Unknown,40,40
+1654,79.4,R,,,N,,,Y,,,,,,Med-El Synchrony Flex 20,,,5/17/20,,,6/17/20,,,M,,,Unknown,Unknown,,
+1656,79.2,L,,,N,,,Y,,,,,,Nucleus CI532,,,6/17/20,,,6/17/20,,,M,,,Unknown,Unknown,,
+1657,18.3,L,,,N,,,Y,,,,,,Nucleus Hybrid L24,,,6/17/20,,,6/17/20,,,M,,,Unknown,Unknown,,
+1664,,,,,,,,,,,,,,,,,,,,,,,M,,,Unknown,Unknown,,
+1665,75.2,R,,,,,,Y,,,,50,50,Nucleus CI512(CA),,,6/17/20,,,6/17/20,,,F,Factory Worker,2,Unknown,Unknown,7,7
+1666,27.3,R,,,,,,Y,,,,,,Nucleus CI532,,,6/17/20,,,6/17/20,,,F,,,Unknown,Unknown,,
+1667,87.2,R,,,,,,Y,,,,,,Med-El Synchrony Flex 20,,,6/17/20,,,6/17/20,,,M,,,,,,
+1669,31.6,R,,,,,,Y,,,,,,Nucleus CI532,,,6/17/20,,,7/17/20,,,F,,,Unknown,Unknown,,
+1670,50.7,L,,,,,,Y,,,,,,Nucleus CI532,,,6/17/20,,,7/17/20,,,M,,,,,,
+1671,62.9,L,,,,,,Y,,,,62,,Nucleus CI532,,,6/17/20,,,7/17/20,,,M,Architect & Resturant owner (Can't work right now),,Unknown,Unknown,,
+1672,68.6,R,R,,,,,Y,Y,,,67,65,Nucleus Hybrid L24,Nucleus CI522 Straight electrode,,7/17/20,1/19/20,,8/17/20,1/19/20,,M,Retired,1,Unknown,Unknown,55,55
+1673,76,L,,,,,,Y,,,,73,73,Nucleus CI532,,,7/17/20,,,8/17/20,,,M,,1,Unknown,Unknown,70,70
+1674,81.6,L,,,,,,Y,,,,71,79,Nucleus Hybrid L24,,,5/17/20,,,6/17/20,,,F,Retired registered nurse,1,Unknown,Unknown,80,75
+1676,48.6,L,,,,,,Y,,,,,,Nucleus CI512(CA),,,7/17/20,,,7/17/20,,,F,,,,,,
+1677,26,L,,,,,,Y,,,,25,,Nucleus CI532,,,7/17/20,,,8/17/20,,,F,Food Worker at UIHC,2,Unknown,Unknown,12,25
+1678,83.2,R,,,,,,Y,,,,60,50,Nucleus CI532,,,7/17/20,,,8/17/20,,,F,Retired,1,Unknown,Unknown,66,66
+1679,81.5,L,,,,,,Y,,,,,,Med-El Synchrony Flex 20,,,7/17/20,,,8/17/20,,,M,,,Unknown,Unknown,,
+1680,68,L,,,,,,Y,,,,62,62,Nucleus CI532,,,7/17/20,,,8/17/20,,,F,retired,3,Unknown,Unknown,50,45
+1681,83.9,,,,,,,N,,,,,,Nucleus CI 24RE(CA),,,5/14/20,,,6/14/20,,,F,,,Unknown,Unknown,,
+1682,58.9,R,L,,,,,Y,Y,,,,,Nucleus CI532,Nucleus CI532,,8/17/20,2/19/20,,9/17/20,3/19/20,,M,,,Unknown,Unknown,,
+1683,79.6,L,,,,,,Y,,,,0,0,Nucleus CI532,,,8/17/20,,,9/17/20,,,F,,1,Unknown,Unknown,35,
+1684,77.4,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,8/17/20,,,9/17/20,,,M,Artist,1,Unknown,Unknown,40,40
+1685,71.6,R,,,,,,Y,,,,,59,Nucleus CI532,,,8/17/20,,,9/17/20,,,F,Home Health Worker,4,Unknown,Unknown,45,45
+1686,49.2,L,,,,,,Y,,,,,,Med-El Synchrony Flex 20,,,8/17/20,,,9/17/20,,,F,HyVee,3,Unknown,Unknown,36,36
+1687,56.2,R,,,,,,Y,,,,14,,Nucleus CI532,,,9/17/20,,,10/17/20,,,F,Sales Rep,1,Unknown,Unknown,,18
+1689,54.2,L,,,,,,Y,,,,,,Nucleus CI532,,,9/17/20,,,10/17/20,,,F,,,Unknown,Unknown,,
+1690,40.3,R,,,,,,Y,,,,,,Nucleus CI532,,,10/17/20,,,11/17/20,,,M,,,Unknown,Unknown,,
+1691,75.2,L,,,,,,Y,,,,72,72,Nucleus CI532,,,10/17/20,,,10/17/20,,,M,,1,Unknown,Unknown,61,61
+1692,37.7,L,,,,,,Y,,,,1,1,Clarion HiRes Ultra Slim J,,,10/17/20,,,11/17/20,,,M,Doctor of Chiropractic,1,Unknown,Unknown,2,2
+1693,67.6,R,,,,,,Y,,,,,,Med-El Synchrony Flex 20,,,10/17/20,,,11/17/20,,,M,,,Unknown,Unknown,,
+1694,76.5,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,10/17/20,,,11/17/20,,,F,Housewife,1,Unknown,Unknown,15,
+1695,77.6,R,,,,,,Y,,,,65,65,Nucleus CI522 Straight electrode,,,12/17/20,,,1/18/20,,,M,John Deere,4,Unknown,Unknown,38,38
+1697,78.1,L,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,12/17/20,,,1/18/20,,,M,,1,Unknown,Unknown,55,55
+1698,81.1,R,,,,,,Y,,,,71,71,Nucleus CI532,,,11/17/20,,,12/17/20,,,F,house wife & motel maid,1,Unknown,Unknown,,
+1699,80.3,L,,,,,,Y,,,,,,Nucleus CI532,,,11/17/20,,,11/17/20,,,M,,,Unknown,Unknown,,
+1700,48.2,L,,,,,,Y,,,,,,Nucleus CI532,,,11/17/20,,,12/17/20,,,F,,2,Unknown,Unknown,1,1
+1701,69.2,R,,,,,,Y,,,,,,Med-El Synchrony Flex 20,,,12/17/20,,,1/18/20,,,M,,,Unknown,Unknown,,
+1704,64.9,R,,,,,,Y,,,,,64,Nucleus Hybrid L24,,,1/18/20,,,2/18/20,,,F,,1,Unknown,Unknown,,
+1706,60.5,L,,,,,,Y,,,,,,Nucleus Hybrid S12-RW,,,12/17/20,,,1/18/20,,,F,"Education Admin (retired), Analyst, ACT-P/T",1,Unknown,Unknown,49,49
+1707,75.3,L,,,,,,Y,,,,,,Nucleus CI532,,,12/17/20,,,1/18/20,,,M,,4,Unknown,Unknown,50,50
+1708,82.8,L,,,,,,Y,,,,,,Med-El Synchrony Flex 24,,,1/18/20,,,2/18/20,,,M,,,Unknown,Unknown,,
+1709,40.4,R,,,,,,Y,,,,,39,Nucleus Hybrid L24,,,1/18/20,,,2/18/20,,,F,Homemaker,1,Unknown,Unknown,,
+1710,86.7,R,,,,,,Y,,,,78,78,Med-El Synchrony Flex 20,,,1/18/20,,,2/18/20,,,F,accounting division office work/accounting support,4,Unknown,Unknown,,55
+1711,68.8,R,,,,,,Y,,,,64,64,Nucleus Hybrid L24,,,1/18/20,,,2/18/20,,,M,Carpenter,1,Unknown,Unknown,48,48
+1712,55.5,R,,,,,,Y,,,,55,55,Nucleus Hybrid S12-RW,,,4/18/20,,,5/18/20,,,F,Speech-language pathologist,1,Unknown,Unknown,52,52
+1716,,,,,,,,,,,,,,,,,,,,,,,F,,,Unknown,Unknown,,
+1717,,,,,,,,,,,,93,93,,,,,,,,,,M,retired farmer,4,Unknown,Unknown,65,65
+1719,37.2,L,,,,,,Y,,,,,,Nucleus CI512(CA),,,3/18/20,,,4/18/20,,,M,,,Unknown,Unknown,,
+1720,20.5,R,,,,,,Y,,,,0.5,0.5,Nucleus CI532,,,2/18/20,,,3/18/20,,,M,,2,Unknown,Unknown,1,1
+1721,56.6,R,,,,,,Y,,,,5,5,Nucleus CI532,,,2/18/20,,,3/18/20,,,F,none,2,Unknown,Unknown,6,6
+1722,18.4,L,,,,,,Y,,,,,2013,Med-El Synchrony Flex 28,,,1/18/20,,,2/18/20,,,M,dishwasher,2,Unknown,Unknown,7,
+1723,29.7,R,,,,,,Y,,,,,29,Nucleus CI532,,,3/18/20,,,3/18/20,,,M,Medical Sales,1,Unknown,Unknown,,
+1724,25.5,L,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,3/18/20,,,4/18/20,,,F,,,Unknown,Unknown,,
+1725,58.6,L,,,,,,Y,,,,10,10,Nucleus CI532,,,1/18/20,,,2/18/20,,,F,N/A,2,Unknown,Unknown,10,5
+1727,70.7,R,,,,,,Y,,,,62,62,Med-El Synchrony Flex 24,,,11/17/20,,,12/17/20,,,M,insurance,1,Unknown,Unknown,62,62
+1728,87.2,L,,,,,,Y,,,,78,80,Nucleus CI522 Straight electrode,,,11/17/20,,,12/17/20,,,M,,1,Unknown,Unknown,61,66
+1729,86.8,L,,,,,,Y,,,,60,86,Nucleus CI532,,,1/18/20,,,2/18/20,,,M,,1,Unknown,Unknown,60,60
+1730,92.7,L,,,,,,Y,,,,90,90,Clarion HiRes Ultra CI Focus MS Electrode,,,3/18/20,,,4/18/20,,,F,Clerk,4,Unknown,Unknown,55,55
+1731,43.2,R,,,,,,Y,,,,22,42,Clarion HiRes Ultra Slim J,,,4/18/20,,,5/18/20,,,M,,2,Unknown,Unknown,,32
+1732,85.8,L,,,,,,Y,,,,84,84,Nucleus CI522 Straight electrode,,,4/18/20,,,4/18/20,,,F,retail manager,4,Unknown,Unknown,73,73
+1733,68.2,L,,,,,,Y,,,,60,,Nucleus CI532,,,4/18/20,,,5/18/20,,,F,retired,1,Unknown,Unknown,55,55
+1734,89.4,R,,,,,,Y,,,,,65,Clarion HiRes Ultra Slim J,,,4/18/20,,,5/18/20,,,M,,1,Unknown,Unknown,78,78
+1735,73.6,L,,,,,,Y,,,,50,,Nucleus CI532,,,4/18/20,,,5/18/20,,,F,Teacher,1,Unknown,Unknown,,60
+1736,70.8,R,,,,,,Y,,,,,50,Nucleus CI532,,,3/18/20,,,4/18/20,,,M,part time security,2,Unknown,Unknown,50,
+1737,75.8,L,,,,,,Y,,,,,,Nucleus CI532,,,2/18/20,,,3/18/20,,,M,,,Unknown,Unknown,,
+1738,74.6,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,3/18/20,,,4/18/20,,,M,Labor,4,Unknown,Unknown,60,60
+1739,24.2,R,,,,,,Y,,,,0,0,Nucleus CI512(CA),,,3/18/20,,,4/18/20,,,F,Walgreens,2,Unknown,Unknown,,
+1740,70.9,L,,,,,,Y,,,,65,,Nucleus CI532,,,1/18/20,,,2/18/20,,,M,,1,Unknown,Unknown,40,50
+1741,53.9,R,,,,,,N,Y,,,,,Nucleus CI512(CA),Nucleus CI512(CA),,1/11/20,2/18/20,,2/11/20,3/18/20,,F,,,Unknown,Unknown,,
+1742,77.2,R,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,1/18/20,,,2/18/20,,,M,Farming,1,Unknown,Unknown,69,
+1743,54,R,,,,,,Y,,,,,53,Nucleus CI532,,,12/17/20,,,1/18/20,,,F,housekeeper,2,Unknown,Unknown,,
+1744,64.2,L,,,,,,Y,,,,,,Nucleus Hybrid L24,,,4/18/20,,,5/18/20,,,M,IT Professional,1,Unknown,Unknown,47,47
+1745,41.4,L,,,,,,Y,,,,30,13,Nucleus CI532,,,1/18/20,,,2/18/20,,,M,Handicap workshop,2,Unknown,Unknown,5,5
+1746,77.2,L,,,,,,Y,,,,,,Nucleus CI522 Straight electrode,,,1/18/20,,,2/18/20,,,M,,4,Unknown,Unknown,40,40
+1747,38.1,R,,,,,,Y,,,,,,Nucleus CI532,,,11/17/20,,,12/17/20,,,M,Truck Driver,1,Unknown,Unknown,1.5,1.5
+1748,85,L,,,,,,Y,,,,,,Nucleus CI532,,,11/17/20,,,12/17/20,,,F,,,Unknown,Unknown,,
+1749,,,,,,,,,,,,,,,,,,,,,,,M,,1,Unknown,Unknown,40,40
+1751,71.4,R,,,,,,Y,,,,,,Nucleus Hybrid L24,,,5/18/20,,,6/18/20,,,M,,,Unknown,Unknown,,
+1752,76.7,R,,,,,,Y,,,,,,Nucleus CI512(CA),,,11/15/20,,,12/15/20,,,F,,,,,,
+1754,,R,L,,,,,N,N,,,,,Nucleus CI422,Nucleus CI522 Straight electrode,,,,,8/15/20,1/16/20,,F,,,Unknown,Unknown,,
+1758,82.2,R,,,,,,Y,,,,81,79,Clarion HiRes Ultra Slim J,,,5/18/20,,,6/18/20,,,M,,4,Unknown,Unknown,80,80
+1759,68.8,L,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,5/18/20,,,6/18/20,,,F,,,Unknown,Unknown,,
+1760,65.7,L,,,,,,Y,,,,65,55,,,,5/18/20,,,6/18/20,,,F,,4,Unknown,Unknown,,
+1761,82.2,R,,,,,,Y,,,,75,,Nucleus CI532,,,5/18/20,,,6/18/20,,,M,printer,1,Unknown,Unknown,56,
+1763,65.8,R,,,,,,N,,,,,,Clarion HiRes 90K Mid-Scala,,,10/13/20,,,11/13/20,,,M,,,Unknown,Unknown,,
+1764,68.2,L,R,,,,,Y,Y,,,,,Nucleus CI532,Nucleus CI532,,6/16/20,6/18/20,,7/16/20,6/18/20,,M,,2,Unknown,Unknown,60,60
+1765,88.8,L,,,,,,Y,,,,85,85,Clarion HiRes Ultra Slim J,,,6/18/20,,,6/18/20,,,M,Dentist,1,Unknown,Unknown,70,70
+1766,81.3,L,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,6/18/20,,,7/18/20,,,F,Secretary,4,Unknown,Unknown,,80
+1767,81.1,L,L,,,,,Y,Y,,,55,55,Clarion HiRes Ultra Slim J,Clarion HiRes Ultra CI Focus MS Electrode,,6/18/20,8/19/20,,6/18/20,8/19/20,,M,retired police officer,1,Unknown,Unknown,57,57
+1768,46.4,R,,,,,,Y,,,,44,45,Clarion HiRes Ultra Slim J,,,6/18/20,,,6/18/20,,,M,,2,Unknown,Unknown,,
+1771,30.7,R,,,,,,Y,,,,0,0,Nucleus CI532,,,6/18/20,,,7/18/20,,,M,graphic coordinator,2,Unknown,Unknown,1,1
+1772,45.3,R,,,,,,Y,,,,44,10,Nucleus Hybrid L24,,,5/14/20,,,5/14/20,,,M,Factory Worker,1,Unknown,Unknown,12,
+1773,64.2,L,R,,,,,Y,Y,,,55,63,Nucleus CI522 Straight electrode,Nucleus CI522 Straight electrode,,7/18/20,4/19/20,,8/18/20,4/19/20,,M,Farmer,1,Unknown,Unknown,55,55
+1774,73,L,,,,,,Y,,,,65,65,Clarion HiRes Ultra Slim J,,,6/18/20,,,7/18/20,,,M,Retired truck driver,1,Unknown,Unknown,53,53
+1775,39.5,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,7/18/20,,,8/18/20,,,M,Electrical Technician,1,Unknown,Unknown,28,28
+1776,53.6,R,,,,,,Y,,,,,52,Clarion HiRes Ultra Slim J,,,7/18/20,,,8/18/20,,,F,pharmacist,1,Unknown,Unknown,47,47
+1777,77.3,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,8/18/20,,,8/18/20,,,M,,,Unknown,Unknown,,
+1778,21.3,L,,,,,,Y,,,,,,Nucleus CI532,,,7/18/20,,,8/18/20,,,F,,,,,,
+1779,74.4,R,,,,,,Y,,,,70,70,Nucleus CI532,,,7/18/20,,,8/18/20,,,F,,4,Unknown,Unknown,40,40
+1782,55.4,L,,,,,,Y,,,,,,Med-El Synchrony Standard,,,8/18/20,,,9/18/20,,,F,,,,,,
+1783,48.3,L,,,,,,Y,,,,5,5,Nucleus CI532,,,8/18/20,,,9/18/20,,,M,Unemployed,2,Unknown,Unknown,3,3
+1784,68.5,R,,,,,,Y,,,,67,68,Nucleus CI512(CA),,,8/18/20,,,9/18/20,,,F,retired,3,Unknown,Unknown,,67
+1785,88.2,L,,,,,,Y,,,,85,,Nucleus CI532,,,8/18/20,,,9/18/20,,,M,,1,Unknown,Unknown,40,41
+1786,86,L,,,,,,Y,,,,70,,Nucleus CI532,,,8/18/20,,,9/18/20,,,M,,1,Unknown,Unknown,70,70
+1787,57.3,R,,,,,,Y,,,,47,45,Nucleus CI532,,,8/18/20,,,9/18/20,,,F,Sales/Customer Service,4,Unknown,Unknown,35,35
+1789,31.6,R,L,,,,,N,Y,,,,,Med-El Concert Flex 24,Med-El Synchrony Flex 24,,10/12/20,1/19/20,,11/12/20,2/19/20,,F,,,Unknown,Unknown,,
+1790,78.5,L,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,11/18/20,,,11/18/20,,,F,,1,Unknown,Unknown,71,71
+1791,79.9,R,,,,,,,,,,,,Clarion HiRes Ultra Slim J,,,9/18/20,,,10/18/20,,,F,,,Unknown,Unknown,,
+1792,36.2,R,,,,,,Y,,,,,,Nucleus Hybrid S12-RW,,,10/18/20,,,11/18/20,,,M,Laborer,1,Unknown,Unknown,27,27
+1793,56.9,R,,,,,,Y,,,,,56,Nucleus CI512(CA),,,8/18/20,,,9/18/20,,,F,Service Clerk,2,Unknown,Unknown,56,
+1794,75.8,L,,,,,,Y,,,,,,Nucleus CI532,,,9/18/20,,,10/18/20,,,M,,1,Unknown,Unknown,38,41
+1795,86.3,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,8/18/20,,,9/18/20,,,F,,,Unknown,Unknown,,
+1799,63.8,L,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,8/18/20,,,9/18/20,,,F,,,Unknown,Unknown,,
+1800,76.7,L,,,,,,Y,,,,76,76,Nucleus CI532,,,10/18/20,,,11/18/20,,,M,retired,1,Unknown,Unknown,68,62
+1801,54,R,,,,,,Y,,,,,53,Clarion HiRes Ultra Slim J,,,12/18/20,,,1/19/20,,,F,program manager at non-profit,1,Unknown,Unknown,,
+1802,,,,,,,,N,,,,,,Clarion Enhanced Bipolar 1.2,,,,,,6/1/98,,,F,,,,,,
+1805,75.5,L,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,11/18/20,,,12/18/20,,,F,Office worker,1,Unknown,Unknown,65,65
+1806,87.2,L,,,,,,Y,,,,84,84,Clarion HiRes Ultra Slim J,,,11/18/20,,,12/18/20,,,M,retired,1,Unknown,Unknown,55,55
+1807,74.2,R,,,,,,Y,,,,,55,Clarion HiRes Ultra Slim J,,,11/18/20,,,12/18/20,,,M,Retired,1,Unknown,Unknown,30,20
+1808,84.4,L,,,,,,Y,,,,,,Nucleus CI532,,,11/18/20,,,12/18/20,,,M,,1,Unknown,Unknown,44,44
+1809,58.4,L,,,,,,Y,,,,55,,Nucleus CI532,,,11/18/20,,,12/18/20,,,F,Hy-Vee Market Grill,3,Unknown,Unknown,44,58
+1810,32.7,R,,,,,,Y,,,,,,Nucleus CI532,,,11/18/20,,,12/18/20,,,F,,,Unknown,Unknown,,
+1811,85.7,R,,,,,,Y,,,,72,75,Nucleus CI532,,,11/18/20,,,12/18/20,,,M,executive,1,Unknown,Unknown,72,60
+1812,84,L,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,10/18/20,,,11/18/20,,,M,,1,Unknown,Unknown,75,75
+1813,56.2,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,9/18/20,,,10/18/20,,,F,"Loan Officer, VP",1,Unknown,Unknown,40,40
+1814,61.2,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,9/18/20,,,10/18/20,,,M,,,Unknown,Unknown,,
+1815,83.4,R,,,,,,Y,,,,83,83,Nucleus CI532,,,9/18/20,,,10/18/20,,,F,Retired elementary teacher,1,Unknown,Unknown,70,
+1816,87.8,L,,,,,,Y,,,,83,83,Nucleus CI522 Straight electrode,,,9/18/20,,,10/18/20,,,M,,1,Unknown,Unknown,60,51
+1817,79.1,R,,,,,,Y,,,,,72,Clarion HiRes Ultra Slim J,,,9/18/20,,,10/18/20,,,F,Retired,4,Unknown,Unknown,73,73
+1818,32.4,L,,,,,,Y,,,,,,Nucleus CI512(CA),,,10/18/20,,,11/18/20,,,F,,,Unknown,Unknown,,
+1821,37.6,R,,,,,,Y,,,,,36,Nucleus CI532,,,10/18/20,,,11/18/20,,,M,Self Employed,1,Unknown,Unknown,29,
+1822,41.8,R,,,,,,Y,,,,40,40,Nucleus CI532,,,11/18/20,,,12/18/20,,,F,N/A,4,Unknown,Unknown,,
+1823,82.8,R,R,,,,,Y,Y,,,,72,Nucleus CI532,Nucleus 632,,11/18/20,9/19/20,,12/18/20,9/19/20,,M,,1,Unknown,Unknown,72,72
+1824,53.8,L,,,,,,Y,,,,,,Nucleus CI512(CA),,,11/18/20,,,12/18/20,,,M,,,,,,
+1825,62.2,L,,,,,,Y,,,,,,Nucleus CI532,,,11/18/20,,,12/18/20,,,M,CPA,1,Unknown,Unknown,18,18
+1828,71.9,R,,,,,,Y,,,,49,43,Clarion HiRes Ultra Slim J,,,1/19/20,,,2/19/20,,,M,Lawn Care,1,Unknown,Unknown,50,
+1829,46.6,L,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,12/18/20,,,1/19/20,,,M,Reporter,1,Unknown,Unknown,30,30
+1830,44.6,R,,,,,,Y,,,,,44,Clarion HiRes Ultra Slim J,,,9/18/20,,,10/18/20,,,F,Office Manager,3,Unknown,Unknown,7,7
+1831,,,,,,,,,,,,,,,,,,,,,,,F,,,Unknown,Unknown,,
+1832,77.1,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,12/18/20,,,1/19/20,,,M,,1,Unknown,Unknown,72,72
+1833,73.3,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,1/19/20,,,1/19/20,,,F,,1,Unknown,Unknown,50,50
+1834,77.8,L,,,,,,Y,,,,76,76,Clarion HiRes Ultra Slim J,,,1/19/20,,,2/19/20,,,F,home maker,1,Unknown,Unknown,68,68
+1835,82.5,R,,,,,,Y,,,,73,71,Clarion HiRes Ultra Slim J,,,2/19/20,,,3/18/20,,,M,Retired,1,Unknown,Unknown,48,46
+1836,42.4,L,,,,,,Y,,,,30,30,Clarion HiRes Ultra Slim J,,,1/19/20,,,3/19/20,,,M,Disabled,1,Unknown,Unknown,20,18
+1837,81.6,L,,,,,,Y,,,,78,,Nucleus CI532,,,1/19/20,,,2/19/20,,,M,Retired,1,Unknown,Unknown,75,75
+1838,67.4,R,,,,,,Y,,,,60,60,Clarion HiRes Ultra Slim J,,,1/19/20,,,2/19/20,,,M,,1,Unknown,Unknown,63,63
+1839,82.8,R,,,,,,Y,,,,82,82,Clarion HiRes Ultra Slim J,,,1/19/20,,,2/19/20,,,M,Farmer,1,Unknown,Unknown,,
+1840,52.2,R,L,,,,,Y,Y,,,,,Nucleus CI532,Nucleus CI532,,1/19/20,6/19/20,,1/19/20,7/19/20,,F,,,Unknown,Unknown,,
+1841,82.8,R,,,,,,Y,,,,,,Nucleus CI532,,,12/18/20,,,12/18/20,,,M,,,Unknown,Unknown,,
+1842,61.1,R,,,,,,Y,,,,,,Nucleus CI532,,,12/18/20,,,1/19/20,,,F,,,Unknown,Unknown,,
+1843,36.5,L,,,,,,Y,Y,,,22,22,Clarion HiRes Ultra CI Focus MS Electrode,Clarion HiRes Ultra CI Focus MS Electrode,,12/18/20,6/19/20,,1/19/20,7/19/20,,F,N/A,2,Unknown,Unknown,8,8
+1847,77.3,L,,,,,,Y,,,,75,75,Clarion HiRes Ultra Slim J,,,3/19/20,,,4/19/20,,,F,,4,Unknown,Unknown,45,45
+1848,72,R,,,,,,Y,,,,,71,Clarion HiRes Ultra CI Focus MS Electrode,,,3/19/20,,,4/19/20,,,M,Farmer,3,Unknown,Unknown,55,55
+1852,74.8,L,,,,,,Y,,,,74,64,Nucleus CI532,,,3/19/20,,,4/19/20,,,F,Medical technologist clinical lab,1,Unknown,Unknown,,
+1853,18.8,L,R,,,,,Y,Y,,,,,Nucleus CI532,Nucleus CI532,,3/19/20,6/19/20,,4/19/20,6/19/20,,F,,,Unknown,Unknown,,
+1854,62.8,L,R,,,,,Y,Y,,,61,61,Nucleus CI532,Nucleus CI532,,3/19/20,6/19/20,,4/19/20,7/19/20,,F,Kitchen Manager,1,Unknown,Unknown,58,58
+1855,30.8,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,3/19/20,,,4/19/20,,,M,,,Unknown,Unknown,,
+1856,34.1,L,,,,,,Y,,,,,,Nucleus CI532,,,2/19/20,,,3/19/20,,,F,,,Unknown,Unknown,,
+1857,58.2,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,2/19/20,,,3/19/20,,,M,,,Unknown,Unknown,,
+1858,84.6,L,,,,,,Y,,,,77,77,Nucleus CI532,,,2/19/20,,,3/19/20,,,M,Veterinarian,1,Unknown,Unknown,50,50
+1859,71.8,L,,,,,,Y,,,,,,Nucleus CI532,,,2/19/20,,,3/19/20,,,F,accounting,1,Unknown,Unknown,25,25
+1860,73.7,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,2/19/20,,,3/19/20,,,F,,1,Unknown,Unknown,65,65
+1861,41.4,R,,,,,,Y,,,,,,Nucleus CI532,,,2/19/20,,,3/19/20,,,M,,,Unknown,Unknown,,
+1862,35.8,L,,,,,,Y,,,,10,10,Nucleus CI532,,,2/19/20,,,3/19/20,,,F,,1,Unknown,Unknown,5,5
+1863,80.8,R,,,,,,Y,,,,,,Nucleus CI532,,,2/19/20,,,3/19/20,,,F,,,Unknown,Unknown,,
+1866,28.1,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,3/19/20,,,4/19/20,,,M,,,Unknown,Unknown,,
+1867,41.9,,,,,,,N,,,,,,,,,6/14/20,,,7/14/20,,,F,,,Unknown,Unknown,,
+1868,73.2,L,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,6/19/20,,,7/19/20,,,M,,1,Unknown,Unknown,59,59
+1870,80.1,R,,,,,,Y,,,,80,80,Nucleus CI532,,,4/19/20,,,5/19/20,,,M,Retired (Sheet metal),1,Unknown,Unknown,,
+1871,73.4,R,,,,,,Y,,,,,70,Nucleus CI532,,,4/19/20,,,5/19/20,,,M,Aircraft Dealer,1,Unknown,Unknown,50,50
+1872,61.1,R,,,,,,Y,,,,0,0,Clarion HiRes Ultra Slim J,,,4/19/20,,,5/19/20,,,M,Civil Service,1,Unknown,Unknown,5,5
+1874,74,L,,,,,,Y,,,,64,64,Nucleus CI532,,,4/19/20,,,5/19/20,,,M,,1,Unknown,Unknown,12,12
+1875,93.2,L,,,,,,Y,,,,70,70,Clarion HiRes Ultra Slim J,,,4/19/20,,,5/19/20,,,M,,1,Unknown,Unknown,70,70
+1876,42,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,4/19/20,,,5/19/20,,,F,Background Investigator,1,Unknown,Unknown,3,3
+1877,74.7,R,,,,,,Y,,,,65,65,Clarion HiRes Ultra Slim J,,,4/19/20,,,5/19/20,,,M,Retired PT Driver,1,Unknown,Unknown,35,35
+1882,,,,,,,,,,,,,,,,,,,,,,,F,,,Unknown,Unknown,,
+1883,52.7,R,,,,,,Y,,,,,53,Nucleus CI532,,,5/19/20,,,6/19/20,,,F,Hearing instrument specialist,1,Unknown,Unknown,45,45
+1885,64.1,L,,,,,,Y,,,,,,Med-El Synchrony Flex 24,,,7/19/20,,,8/19/20,,,F,,,Unknown,Unknown,,
+1886,,,,,,,,,,,,,,,,,,,,,,,F,,,,,,
+1887,80.2,R,,,,,,Y,,,,,,Nucleus CI532,,,5/19/20,,,6/19/20,,,M,,,Unknown,Unknown,,
+1888,87.8,L,,,,,,Y,,,,,,Nucleus CI532,,,5/19/20,,,5/19/20,,,F,,,Unknown,Unknown,,
+1889,69.6,R,,,,,,Y,,,,,,Nucleus CI532,,,4/19/20,,,5/19/20,,,M,Plumber,,Unknown,Unknown,69,69
+1891,72.9,L,,,,,,Y,,,,70,70,Clarion HiRes Ultra Slim J,,,5/19/20,,,6/19/20,,,M,Retired,1,Unknown,Unknown,53,64
+1893,,,,,,,,N,,,,,,Clarion HiRes Ultra Slim J,,,,,,12/16/20,,,F,,,Unknown,Unknown,,
+1894,10,R,,,,,,N,,,,,,Nucleus CI 24R,,,5/3/20,,,5/3/20,,,M,,,Unknown,Unknown,,
+1895,69.8,L,,,,,,Y,,,,54,54,Clarion HiRes Ultra Slim J,,,5/19/20,,,6/19/20,,,F,tour/travel director,1,Unknown,Unknown,54,54
+1896,64.7,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,5/19/20,,,7/19/20,,,M,,,Unknown,Unknown,,
+1897,87.2,R,,,,,,Y,,,,45,45,Nucleus CI532,,,5/19/20,,,7/19/20,,,F,,4,Unknown,Unknown,1967,1967
+1898,55.1,L,,,,,,Y,,,,,,Clarion HiRes Ultra CI Focus MS Electrode,,,5/19/20,,,5/19/20,,,F,Caregiver,3,Unknown,Unknown,5,5
+1905,83.9,L,,,,,,Y,,,,83,83,Nucleus CI532,,,6/19/20,,,7/19/20,,,M,,1,Unknown,Unknown,,51
+1906,18.6,L,,,,,,Y,,,,,,Nucleus CI532,,,6/19/20,,,7/19/20,,,F,Student,2,Unknown,Unknown,5,5
+1907,39,R,,,,,,Y,,,,31,28,Clarion HiRes Ultra CI Focus MS Electrode,,,6/19/20,,,7/19/20,,,M,Seroer(?) Admin,2,Unknown,Unknown,21,21
+1911,,,,,,,,,,,,,,,,,,,,,,,M,,,,,,
+1912,70.2,R,,,,,,Y,,,,57,57,Clarion HiRes Ultra Slim J,,,8/19/20,,,9/19/20,,,M,"self-employed, semi-retired",1,Unknown,Unknown,58,58
+1914,,R,R,,,,,,,,,,,,,,,,,5/11/20,8/14/20,,M,,,,,,
+1915,,R,,,,,,,,,,,,,,,,,,11/15/20,,,F,,,Unknown,Unknown,,
+1917,45.3,R,,,,,,Y,,,,44,44,Nucleus 632,,,7/19/20,,,8/19/20,,,M,Veterinarian,1,Unknown,Unknown,38,38
+1919,88.2,L,,,,,,Y,,,,85,,Clarion HiRes Ultra CI Focus MS Electrode,,,7/19/20,,,8/19/20,,,F,,4,Unknown,Unknown,45,45
+1920,83.5,R,,,,,,Y,,,,74,74,Nucleus 632,,,7/19/20,,,8/19/20,,,M,,1,Unknown,Unknown,73,73
+1921,72.8,R,,,,,,Y,,,,24,24,Nucleus 632,,,7/19/20,,,8/19/20,,,F,,1,Unknown,Unknown,6,6
+1924,91.2,R,,,,,,Y,,,,,,Clarion HiRes Ultra Slim J,,,8/19/20,,,9/19/20,,,M,,,Unknown,Unknown,,
+1925,86.4,L,,,,,,Y,,,,,84,Nucleus 632,,,8/19/20,,,9/19/20,,,M,teacher,1,Unknown,Unknown,,83
+1926,86.8,L,,,,,,Y,,,,82,5,Nucleus 632,,,8/19/20,,,8/19/20,,,M,Electrician,4,Unknown,Unknown,15,15
+1927,59.7,R,,,,,,Y,,,,,58,Nucleus 632,,,8/19/20,,,9/19/20,,,M,Farmer,1,Unknown,Unknown,45,53
+1928,65.4,L,,,,,,Y,,,,1,1,Clarion HiRes Ultra Slim J,,,8/19/20,,,9/19/20,,,M,Farmer,1,Unknown,Unknown,,
+1935,,,,,,,,,,,,,,,,,,,,,,,F,,,Unknown,Unknown,,
+1936,,,,,,,,,,,,,,,,,,,,,,,M,,,Unknown,Unknown,,
+1938,,,,,,,,,,,,,,,,,,,,,,,M,,,Unknown,Unknown,,
+1939,25.6,L,,,,,,Y,,,,,,Nucleus 632,,,9/19/20,,,10/19/20,,,F,,,,,,
+1941,63.3,L,,,,,,Y,,,,,,Med-El Synchrony Flex 24,,,7/19/20,,,8/19/20,,,M,,,Unknown,Unknown,,
+1942,54,L,,,,,,Y,,,,53,48,Nucleus 612,,,9/19/20,,,10/19/20,,,M,electrician,1,Unknown,Unknown,51,51
+1943,,,,,,,,,,,,,65,,,,,,,,,,F,,1,Unknown,Unknown,,
+1944,,,,,,,,,,,,,62,,,,,,,,,,M,,1,Unknown,Unknown,,
+1945,,,,,,,,,,,,41,,,,,,,,,,,M,sheet metal worker,1,Unknown,Unknown,41,
+1946,,L,,,,,,N,,,,,,Clarion HiRes 90K,,,,,,11/13/20,,,M,,,Unknown,Unknown,,
+1947,93.3,R,,,,,,Y,,,,,,Nucleus 632,,,9/19/20,,,10/19/20,,,M,,,Unknown,Unknown,,
+1948,62.1,L,,,,,,Y,,,,60,60,Nucleus 632,,,9/19/20,,,9/19/20,,,F,Home,1,Unknown,Unknown,60,60
+1949,75.1,R,,,,,,Y,,,,72,72,Clarion HiRes Ultra Slim J,,,8/19/20,,,9/19/20,,,M,Railroad Pipefitter,1,Unknown,Unknown,60,60
+1953,59.4,L,,,,,,Y,,,,,,Nucleus 632,,,9/19/20,,,9/19/20,,,M,,,Unknown,Unknown,,
+1957,87.6,L,,,,,,Y,,,,,,Nucleus 632,,,9/19/20,,,10/19/20,,,F,,,Unknown,Unknown,,
+1958,58.6,R,,,,,,Y,,,,,,Nucleus 632,,,10/19/20,,,10/19/20,,,F,,,Unknown,Unknown,,
+1961,,,,,,,,,,,,60,60,,,,,,,,,,M,Tool & Die maker,1,Unknown,Unknown,54,41

@@ -13,6 +13,7 @@ SubjectNum,Testname,Value
 3001,MOCA-Change,1.0
 3001,MSEADL-Change,-10.0
 3001,REM_RBD_Score-Change,8.0
+3001,SCOPA-AUT-Change,5.0
 3001,SDM-Change,0.0
 3001,STAI-Change,18.0
 3001,SemanticFluency-Change,7.0
@@ -29,6 +30,7 @@ SubjectNum,Testname,Value
 3100,MDS_UPDRS_Total-Change,-3.0
 3100,MOCA-Change,-2.0
 3100,REM_RBD_Score-Change,1.0
+3100,SCOPA-AUT-Change,10.0
 3100,SDM-Change,-7.0
 3100,STAI-Change,-25.0
 3100,SemanticFluency-Change,-11.0
@@ -46,6 +48,7 @@ SubjectNum,Testname,Value
 3400,MOCA-Change,-3.0
 3400,MSEADL-Change,-30.0
 3400,REM_RBD_Score-Change,-9.0
+3400,SCOPA-AUT-Change,14.0
 3400,SDM-Change,-22.0
 3400,STAI-Change,-1.0
 3400,SemanticFluency-Change,-8.0
@@ -63,6 +66,7 @@ SubjectNum,Testname,Value
 3407,MOCA-Change,-2.0
 3407,MSEADL-Change,-10.0
 3407,REM_RBD_Score-Change,1.0
+3407,SCOPA-AUT-Change,2.0
 3407,SDM-Change,-12.0
 3407,STAI-Change,7.0
 3407,SemanticFluency-Change,-15.0
@@ -80,6 +84,7 @@ SubjectNum,Testname,Value
 3001,MOCA-ROC,0.12
 3001,MSEADL-ROC,-1.24
 3001,REM_RBD_Score-ROC,1.0
+3001,SCOPA-AUT-ROC,0.62
 3001,SDM-ROC,0.0
 3001,STAI-ROC,2.25
 3001,SemanticFluency-ROC,1.0
@@ -96,6 +101,7 @@ SubjectNum,Testname,Value
 3100,MDS_UPDRS_Total-ROC,-0.59
 3100,MOCA-ROC,-0.39
 3100,REM_RBD_Score-ROC,0.2
+3100,SCOPA-AUT-ROC,1.97
 3100,SDM-ROC,-1.38
 3100,STAI-ROC,-4.92
 3100,SemanticFluency-ROC,-2.17
@@ -113,6 +119,7 @@ SubjectNum,Testname,Value
 3400,MOCA-ROC,-0.37
 3400,MSEADL-ROC,-3.3
 3400,REM_RBD_Score-ROC,-0.99
+3400,SCOPA-AUT-ROC,1.54
 3400,SDM-ROC,-2.42
 3400,STAI-ROC,-0.11
 3400,SemanticFluency-ROC,-0.98
@@ -130,6 +137,7 @@ SubjectNum,Testname,Value
 3407,MOCA-ROC,-0.22
 3407,MSEADL-ROC,-1.09
 3407,REM_RBD_Score-ROC,0.11
+3407,SCOPA-AUT-ROC,0.22
 3407,SDM-ROC,-1.32
 3407,STAI-ROC,0.77
 3407,SemanticFluency-ROC,-1.86
