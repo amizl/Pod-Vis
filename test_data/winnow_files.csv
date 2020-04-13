@@ -1,0 +1,8 @@
+Entity,File
+Project,winnow_projects.csv
+Subject Ontology,winnow_unique_subject_vars.csv
+Observation Ontology,winnow_unique_obs.csv
+Subject Info,winnow_demographics_long.csv
+Visit,winnow_visit_info.csv
+Observations,winnow_obs_long.csv
+Observations Summary,winnow_obs_summary.csv
