@@ -1194,7 +1194,7 @@ def update_subject_visit(cursor, subject_visit_id, visit_code, visit_date, disea
     query = "update subject_visit set visit_event = %s, event_date = %s, disease_status = %s where id = %s"
     print("Executing query: {}".format(query))
     try:
-        cursor.execute(query,visit_code, (visit_date, disease_status, subject_visit_id))
+        cursor.execute(query, (visit_code, visit_date, disease_status, subject_visit_id))
 
     except Exception as e:
         print(e)
