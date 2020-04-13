@@ -163,7 +163,7 @@ def process_demographics(input_dir):
     return df_demo
 
 
-# The biospecimen file has a few of the genetic test result. We will be filtering the file for these and
+# The biospecimen file has a few of the genetic test reslt. We will be filtering the file for these and
 # returning the values for these tests
 def process_biospecimen(filename):
     # Read the input as a pandas dataframe
@@ -828,8 +828,9 @@ def main():
     df_grouped_tests_summary.to_csv(args.output_dir + filename, index = False)
 
     # Before printing the subject visits calculate the age at visit
-    df_unique_sub_visits = df_unique_sub_visits.merge(df_demo.loc[:, ['SubjectNum', 'Birthdate']], how="inner", on = ['SubjectNum'])
+    df_unique_sub_visits = df_unique_sub_visits.merge(df_demo.loc[:, ['SubjectNum', 'Birthdate', 'Diagnosis Date']], how="inner", on = ['SubjectNum'])
     df_unique_sub_visits['AgeAtVisit'] = round((df_unique_sub_visits['VisitDate'] - df_unique_sub_visits['Birthdate']).dt.days/365.25, 1) 
+    df_unique_sub_visits['Disease Duration At Visit'] = round((df_unique_sub_visits['VisitDate'] - df_unique_sub_visits['Diagnosis Date']).dt.days/365.25, 0 )
     # pp.pprint(df_unique_sub_visits)
     
     # Print a table of visit information

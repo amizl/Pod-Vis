@@ -12,6 +12,7 @@ import argparse
 import re
 import sys
 import csv
+import os
 import mysql.connector
 import pandas as pd
 import pprint as pp
@@ -50,11 +51,11 @@ def main():
         sys.exit()
 
     # Read the input file which gives the mapping between entities and the files with the data
-    df_entity_file_map = pd.read_csv(args.input_file) 
-    # pp.pprint(df_entity_file_map)
+    df_entity_file_map = pd.read_csv(args.input_file, index_col="Entity")
+    pp.pprint(df_entity_file_map)
 
     # Read the input file which gives the mapping between column names and database field names
-    df_col_names_field_map = pd.read_csv(args.mapping_file, index_col="Ontology Label") 
+    df_col_names_field_map = pd.read_csv(args.mapping_file, index_col="Ontology Label")
     pp.pprint(df_col_names_field_map)
 
     # Read the info from some of the tables as data frames
@@ -75,15 +76,17 @@ def main():
     # Loop through the entity_file_map and process each file
     # The order is important as processing project, subject ontology, and observation ontology 
     # before any other records are created is important
+    has_longitudinal_data = False
+    
     entities = ["Project", "Subject Ontology", "Observation Ontology", "Subject Info", "Visit", "Observations", "Observations Summary"]
     for entity in entities:
-        entity_file = df_entity_file_map.loc[df_entity_file_map['Entity'] == entity]['File'].item()
+        entity_file = df_entity_file_map.loc[entity]['File']
         pp.pprint(entity_file)
-        entity_file = args.input_dir + entity_file
+        entity_file = os.path.join(args.input_dir, entity_file)
         print("Processing entity: %s file: %s" % (entity, entity_file))
         if entity is "Project":
             print("Processing project and studies .....")
-            process_projects_and_studies(cursor, conn, entity_file, df_project_info, df_study_info, df_col_names_field_map)
+            has_longitudinal_data = process_projects_and_studies(cursor, conn, entity_file, df_project_info, df_study_info, df_col_names_field_map)
         elif entity is "Subject Ontology":
             print("Processing subject ontology .....")
             process_subject_ontology(cursor, conn, entity_file, subject_ont, df_col_names_field_map)
@@ -93,7 +96,7 @@ def main():
         elif entity is "Subject Info":
             print("Processing subject information .....")
             process_subject_info(cursor, conn, entity_file, study_map, subject_ont, df_col_names_field_map)
-            exit()
+            #exit()
         elif entity is "Visit":
             print("Processing visit information .....")
             process_subject_visits(cursor, conn, entity_file, df_col_names_field_map)
@@ -101,18 +104,21 @@ def main():
             print("Processing observations information .....")
             process_subject_observations(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
         elif entity is "Observations Summary":
-            print("Processing observations summary information .....")
-            process_subject_obs_summary(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
-
-
+            print("Processing observations summary information, has_longitudinal_data=" + str(has_longitudinal_data) + " .....")
+            if has_longitudinal_data:
+                process_subject_obs_summary(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
+            else:
+                continue
+                
 # Process the subject visits file to create or update entries inthe subject_visit table
 # tables. The file has the following columns:
 # SubjectNum,VisitCode,VisitDate
+
 def process_subject_visits(cursor, conn, visit_file, df_col_names_field_map):
 
     pp.pprint(subject_map)
 
-    # Open the file an iterate over the list
+    # Open the file and iterate over the list
     with open(visit_file) as ifh:
 
         reader = csv.DictReader(ifh)
@@ -132,6 +138,7 @@ def process_subject_visits(cursor, conn, visit_file, df_col_names_field_map):
                 subject_id = subject_info["id"]
             else:
                 print("Cannot find subject num {} in subject map. Skipping entry .....".format(subject_num))
+                continue
 
             print("Processing subject: {} ID: {} Visit Code: {} Visit Date: {} Visit Num: {}".format(subject_num, subject_id, visit_code, visit_date, visit_num))
 
@@ -189,7 +196,7 @@ def process_subject_observations(cursor, conn, obs_file, observation_ont, df_col
     pp.pprint(colname_to_fields)
     pp.pprint(colname_to_data_type)
 
-    # Open the file an iterate over the list
+    # Open the file and iterate over the list
     with open(obs_file) as ifh:
 
         reader = csv.DictReader(ifh)
@@ -277,7 +284,7 @@ def process_subject_obs_summary(cursor, conn, obs_file, observation_ont, df_col_
     pp.pprint(colname_to_fields)
     pp.pprint(colname_to_data_type)
 
-    # Open the file an iterate over the list
+    # Open the file and iterate over the list
     with open(obs_file) as ifh:
 
         reader = csv.DictReader(ifh)
@@ -326,9 +333,11 @@ def process_subject_obs_summary(cursor, conn, obs_file, observation_ont, df_col_
 # tables. The file has the following columns:
 # project_name	project_description	primary_diease	study_name	longitudinal	study_description
 def process_projects_and_studies(cursor, conn, project_file, df_project_info, df_study_info, df_col_names_field_map):
+    has_longitudinal_data = False
 
-    # Open the file an iterate over the list
-    with open(project_file) as ifh:
+    # Open the file and iterate over the list
+    with open(project_file, encoding = 'utf-8-sig') as ifh:
+
         # dialect = csv.Sniffer().sniff(ifh.read(1024))
         # ifh.seek(0)
         # next(ifh) # Skip the header line
@@ -338,14 +347,17 @@ def process_projects_and_studies(cursor, conn, project_file, df_project_info, df
         # Process the remaining lines
         for row in reader:
             # from ppmi_projects.csv
+            ##does longitudinal need to be changed?##
             pp.pprint(row)
             project_name = row['project_name']
             project_description = row['project_description']
-            primary_disease = row['primary_diease']
+            primary_disease = row['primary_disease']
             study_name = row['study_name']
             longitudinal = row['longitudinal']
             study_description = row['study_description'] 
-
+            if longitudinal == '1':
+                has_longitudinal_data = True
+                
             # project and study values are:
             print("Project: {}\nProject desc: {}\nPrimary Disease: {}\nStudy Name: {}\nStudy Description: {}\nLongitudinal: {}".format(project_name, project_description,
                                                                                                                                         primary_disease, study_name,
@@ -385,12 +397,14 @@ def process_projects_and_studies(cursor, conn, project_file, df_project_info, df
             else:
                 study_id = study_map[study_name]
 
+    return has_longitudinal_data
+                
 # Process the subject ontology file to create or update entries in the 'subject_ontology'
 # table. The file has the following columns:
 # Observations
 def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col_names_field_map):
 
-    # Open the file an iterate over the list
+    # Open the file and iterate over the list
     with open(subject_ont_file) as ifh:
         # dialect = csv.Sniffer().sniff(ifh.read(1024))
         # ifh.seek(0)
@@ -403,7 +417,12 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
             subject_var = row['Observations']
             print("Processing variable: {}".format(subject_var))
 
+
             # Look for this observation in the field map
+            #if df_col_names_field_map.isin([subject_var]).any().empty:
+             #   print("Variable {} is not in mapping file, skipping ....".format(subject_var))
+              #  continue
+
             map_row = df_col_names_field_map.loc[subject_var]
             database_entity = map_row['Database Entity']
             value_type = map_row['Type']
@@ -463,7 +482,7 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
                 # As the subject_ont ID does not exist in the database create it
                 subject_ont_id = create_subject_ontology_term(cursor, subject_var, parent_id, value_type, data_category)
                 conn.commit()
-                subject_ont[subject_var] = {'id': category_id, 'parent_id': parent_id}
+                subject_ont[subject_var] = {'id': subject_ont_id, 'parent_id': parent_id}
             else:
                 # As the ontology ID exists, update the ontology record
                 update_subject_ontology_term(cursor, subject_ont_id, subject_var, parent_id, value_type, data_category) 
@@ -474,8 +493,8 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
 # table. The file has the following columns:
 # Observations
 def process_observation_ontology(cursor, conn, observation_ont_file, observation_ont, df_col_names_field_map):
-
-    # Open the file an iterate over the list
+    #pp.pprint(df_col_names_field_map)
+    # Open the file and iterate over the list
     with open(observation_ont_file) as ifh:
         # dialect = csv.Sniffer().sniff(ifh.read(1024))
         # ifh.seek(0)
@@ -560,7 +579,7 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                     # As the observation_ont ID does not exist in the database create it
                     observation_ont_id = create_observation_ontology_term(cursor, observation_term, parent_id, value_type, data_category, flip_axis)
                     conn.commit()
-                    observation_ont[observation_term] = {'id': category_id, 'parent_id': parent_id}
+                    observation_ont[observation_term] = {'id': observation_ont_id, 'parent_id': parent_id}
                 else:
                     # As the ontology ID exists, update the ontology record
                     update_observation_ontology_term(cursor, observation_ont_id, observation_term, parent_id, value_type, data_category, flip_axis) 
@@ -571,7 +590,7 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
 # the subject from the demographics file with the following columns
 # SubjectNum,SubjectVar,Value
 # project_name	project_description	primary_diease	study_name	longitudinal	study_description
-def process_subject_info(cursor, conn, project_file, study_map, subject_ont, df_col_names_field_map):
+def process_subject_info(cursor, conn, subject_file, study_map, subject_ont, df_col_names_field_map):
 
     pp.pprint(study_map)
     pp.pprint(subject_ont)
@@ -588,23 +607,21 @@ def process_subject_info(cursor, conn, project_file, study_map, subject_ont, df_
         colname_to_data_type[col_name] = data_type
 
     pp.pprint(colname_to_fields)
+    subject_vars = []
 
-    # Open the file an iterate over the list
-    with open(project_file) as ifh:
+    # Open the file and iterate over the list
+    with open(subject_file) as ifh:
         reader = csv.DictReader(ifh)
 
-        # Process the remaining lines
         for row in reader:
-            # from ppmi_projects.csv
-            # pp.pprint(row)
             subject_num = row['SubjectNum']
             subject_var = row['SubjectVar']
             value = row['Value']
 
-            print("Processing subject num: {} variable: {} value: {}".format(subject_num, subject_var, value))
-
             # If the subject variable is "Study" then create an entry in the subject table
             if subject_var == "Study":
+                print("Processing subject num: {} variable: {} value: {}".format(subject_num, subject_var, value))
+
                 if value in study_map.keys(): 
                     study_id = study_map[value] 
                 else:
@@ -620,50 +637,59 @@ def process_subject_info(cursor, conn, project_file, study_map, subject_ont, df_
                 
                 # Add entry in subject map    
                 subject_map[subject_num] = {"id": subject_id, "study_id": study_id}
+
+            # If the subject variable is not "Study" then save the row for processing after all subjects are created
             else:
-                # For the column name lookup the field name
-                if subject_var in colname_to_fields: 
-                    sub_ont_label = colname_to_fields[subject_var]
-                    value_type = colname_to_data_type[subject_var]
-                else:
-                    print ("Could not find subject variable {} in colname to fields. Skipping ....".format(subject_var))
-                    continue
+                subject_vars.append((subject_num, subject_var, value))
 
-                # As the subject variable is not "Study" create an entry in the subject_attribute
-                # table
-                if sub_ont_label in subject_ont.keys(): 
-                    subject_ont_id = subject_ont[sub_ont_label]["id"]
-                else:
-                    print ("Could not find subject variable {} in subject ontology. Skipping ....".format(sub_ont_label))
-                    continue
+        # Process everything except "Study" variable assignments
+        for sv in subject_vars:
+            (subject_num, subject_var, value) = sv
+            print("Processing subject num: {} variable: {} value: {}".format(subject_num, subject_var, value))
 
-                if subject_num in subject_map.keys(): 
-                    study_id = subject_map[subject_num]["study_id"]
-                    subject_id = subject_map[subject_num]["id"] 
-                else:
-                    print ("Could not find subject {} in subject map. Skipping ....".format(subject_num))
-                    continue
+            # For the column name look up the field name
+            if subject_var in colname_to_fields: 
+                sub_ont_label = colname_to_fields[subject_var]
+                value_type = colname_to_data_type[subject_var]
+            else:
+                print ("Could not find subject variable {} in colname to fields. Skipping ....".format(subject_var))
+                continue
 
-                # Check to see if this subject attribute already exists, in which case update it,
-                # else add it
-                print("Processing variable {} with value: {} for subject ID: {} with subject ont : {}".format(sub_ont_label, value, subject_id, subject_ont_id))
-                subj_attr_id = get_subject_attribute(cursor, subject_id, subject_ont_id)
-                if (subj_attr_id == 0):
-                    # Add the entry for this subject attribute
-                    add_subject_attribute(cursor, subject_id, subject_ont_id, value, value_type)
-                    conn.commit()
-                else:
-                    # As this entry already exists, update the fields
-                    update_subject_attribute(cursor, subject_id, subject_ont_id, value, value_type)
-                    conn.commit()
+            # As the subject variable is not "Study" create an entry in the subject_attribute
+            # table
+            if sub_ont_label in subject_ont.keys(): 
+                subject_ont_id = subject_ont[sub_ont_label]["id"]
+            else:
+                print ("Could not find subject variable {} in subject ontology. Skipping ....".format(sub_ont_label))
+                continue
+
+            if subject_num in subject_map.keys(): 
+                study_id = subject_map[subject_num]["study_id"]
+                subject_id = subject_map[subject_num]["id"] 
+            else:
+                print ("Could not find subject {} in subject map. Skipping ....".format(subject_num))
+                continue
+
+            # Check to see if this subject attribute already exists, in which case update it,
+            # else add it
+            print("Processing variable {} with value: {} for subject ID: {} with subject ont : {}".format(sub_ont_label, value, subject_id, subject_ont_id))
+            subj_attr_id = get_subject_attribute(cursor, subject_id, subject_ont_id)
+            if (subj_attr_id == 0):
+                # Add the entry for this subject attribute
+                add_subject_attribute(cursor, subject_id, subject_ont_id, value, value_type)
+                conn.commit()
+            else:
+                # As this entry already exists, update the fields
+                update_subject_attribute(cursor, subject_id, subject_ont_id, value, value_type)
+                conn.commit()
 
 def get_subject_attribute(cursor, subject_id, subject_ont_id):
     attr_id = 0
 
-    query = "SELECT id FROM subject_attribute where subject_id = {} and subject_ontology_id = {}".format(subject_id, subject_ont_id)
+    query = "SELECT id FROM subject_attribute where subject_id = %s and subject_ontology_id = %s"
     print("Executing query: '{}'".format(query))
     try:
-        cursor.execute(query)
+        cursor.execute(query, (subject_id, subject_ont_id))
 
         row = cursor.fetchone()
         if row is not None:
@@ -677,54 +703,56 @@ def get_subject_attribute(cursor, subject_id, subject_ont_id):
     return attr_id    
 
 def add_subject_attribute(cursor, subject_id, ont_id, val, val_type):
+    query_args = ()
     if val_type == 'Char':
-        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type) VALUES ({}, {}, '{}', '{}')"
-        query = query.format(subject_id, ont_id, val, val_type)
+        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type) VALUES (%s, %s, %s, %s)"
+        query_args = (subject_id, ont_id, val, val_type)
     elif val_type == 'Decimal':
         dec_value = Decimal(val)
-        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type, dec_value) VALUES ({}, {}, '{}', '{}', {})"
-        query = query.format(subject_id, ont_id, val, val_type, dec_value)
+        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type, dec_value) VALUES (%s, %s, %s, %s, %s)"
+        query_args = (subject_id, ont_id, val, val_type, dec_value)
     elif val_type == 'Integer':
         int_value = int(val)
-        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type, int_value) VALUES ({}, {}, '{}', '{}', {})"
-        query = query.format(subject_id, ont_id, val, val_type, int_value)
+        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type, int_value) VALUES (%s, %s, %s, %s, %s)"
+        query_args = (subject_id, ont_id, val, val_type, int_value)
     elif val_type == 'Date':
-        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type, date_value) VALUES ({}, {}, '{}', '{}', '{}')"
-        query = query.format(subject_id, ont_id, val, val_type, val)
+        query = "INSERT INTO subject_attribute (subject_id, subject_ontology_id, value, value_type, date_value) VALUES (%s, %s, %s, %s, %s)"
+        query_args = (subject_id, ont_id, val, val_type, val)
     else:
         print("Unknown value type {} skipping this entry".format(val_type))
         return
 
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, query_args)
 
     except Exception as e:
         print(e)
         sys.exit()
 
 def update_subject_attribute(cursor, subject_id, ont_id, val, val_type):
+    query_args = ()
     if val_type == 'Char':
-        query = "UPDATE subject_attribute SET value = '{}', value_type = '{}' where subject_id = {} and subject_ontology_id = {}"
-        query = query.format(val, val_type, subject_id, ont_id)
+        query = "UPDATE subject_attribute SET value = %s, value_type = %s where subject_id = %s and subject_ontology_id = %s"
+        query_args = (val, val_type, subject_id, ont_id)
     elif val_type == 'Decimal':
         dec_value = Decimal(val)
-        query = "UPDATE subject_attribute SET value = '{}', value_type = '{}', dec_value = {} where subject_id = {} and subject_ontology_id = {}"
-        query = query.format(val, val_type, dec_value, subject_id, ont_id)
+        query = "UPDATE subject_attribute SET value = %s, value_type = %s, dec_value = %s where subject_id = %s and subject_ontology_id = %s"
+        query_args = (val, val_type, dec_value, subject_id, ont_id)
     elif val_type == 'Integer':
         int_value = int(val)
-        query = "UPDATE subject_attribute SET value = '{}', value_type = '{}', int_value = {} where subject_id = {} and subject_ontology_id = {}"
-        query = query.format(val, val_type, int_value, subject_id, ont_id)
+        query = "UPDATE subject_attribute SET value = %s, value_type = %s, int_value = %s where subject_id = %s and subject_ontology_id = %s"
+        query_args = (val, val_type, int_value, subject_id, ont_id)
     elif val_type == 'Date':
-        query = "UPDATE subject_attribute SET value = '{}', value_type = '{}', date_value = '{}' where subject_id = {} and subject_ontology_id = {}"
-        query = query.format(val, val_type, val, subject_id, ont_id)
+        query = "UPDATE subject_attribute SET value = %s, value_type = %s, date_value = %s where subject_id = %s and subject_ontology_id = %s"
+        query_args = (val, val_type, val, subject_id, ont_id)
     else:
         print("Unknown value type {} skipping this entry".format(val_type))
         return
 
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, query_args)
 
     except Exception as e:
         print(e)
@@ -732,12 +760,10 @@ def update_subject_attribute(cursor, subject_id, ont_id, val, val_type):
 
 def get_subject_ontology(cursor, label):
     ont_id = 0
-    label = label.replace("'", "''")
-
-    query = "SELECT id, label, parent_id FROM subject_ontology where label = '{}'".format(label)
+    query = "SELECT id, label, parent_id FROM subject_ontology where label = %s"
     print("Executing query: '{}'".format(query))
     try:
-        cursor.execute(query)
+        cursor.execute(query, (label,))
 
         row = cursor.fetchone()
         if row is not None:
@@ -751,25 +777,26 @@ def get_subject_ontology(cursor, label):
 
 # Method to create and entry in the subject ontology table
 def create_subject_ontology_term(cursor, term, parent_id = None, value_type = None, data_category = None):
+    query_args = ()
     ont_id = 0
     # Sometimes value_type or data_category are missing when the label is a parent
     # in such cases skip inserting these columns
     if (value_type is None or data_category is None):
         # If the parent ID is None this must me a top level term so do not set parent ID
         if parent_id is None:
-            query = "INSERT INTO subject_ontology (label) VALUES ('{}')"
-            query = query.format(term)
+            query = "INSERT INTO subject_ontology (label) VALUES (%s)"
+            query_args = (term,)
         else:
-            query = "INSERT INTO subject_ontology (label, parent_id) VALUES ('{}', {})"
-            query = query.format(term, parent_id)
+            query = "INSERT INTO subject_ontology (label, parent_id) VALUES (%s, %s)"
+            query_args = (term, parent_id)
 
     else:
-        query = "INSERT INTO subject_ontology (label, value_type, data_category, parent_id) VALUES ('{}', '{}', '{}', {})"
-        query = query.format(term, value_type, data_category, parent_id)
+        query = "INSERT INTO subject_ontology (label, value_type, data_category, parent_id) VALUES (%s, %s, %s, %s)"
+        query_args = (term, value_type, data_category, parent_id)
 
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, query_args)
         ont_id = cursor.lastrowid
 
     except Exception as e:
@@ -781,24 +808,25 @@ def create_subject_ontology_term(cursor, term, parent_id = None, value_type = No
 
 # Method to update and entry in the subject ontology table
 def update_subject_ontology_term(cursor, subject_ont_id, term, parent_id = None, value_type = None, data_category = None):
+    query_args = ()
     # Sometimes value_type or data_category are missing when the label is a parent
     # in such cases skip inserting these columns
     if (value_type is None or data_category is None):
         # If the parent ID is None this must me a top level term so do not set parent ID
         if parent_id is None:
-            query = "UPDATE subject_ontology set label = '{}' where id = {}"
-            query = query.format(term, subject_ont_id)
+            query = "UPDATE subject_ontology set label = %s where id = %s"
+            query_args = (term, subject_ont_id)
         else:
-            query = "UPDATE subject_ontology set label = '{}', parent_id = {} where id = {}"
-            query = query.format(term, parent_id, subject_ont_id)
+            query = "UPDATE subject_ontology set label = %s, parent_id = %s where id = %s"
+            query_args = (term, parent_id, subject_ont_id)
 
     else:
-        query = "UPDATE subject_ontology set label = '{}', value_type = '{}', data_category = '{}', parent_id = {} where id = {}"
-        query = query.format(term, value_type, data_category, parent_id, subject_ont_id)
+        query = "UPDATE subject_ontology set label = %s, value_type = %s, data_category = %s, parent_id = %s where id = %s"
+        query_args = (term, value_type, data_category, parent_id, subject_ont_id)
 
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, query_args)
 
     except Exception as e:
         print(e)
@@ -808,12 +836,10 @@ def update_subject_ontology_term(cursor, subject_ont_id, term, parent_id = None,
 
 def get_observation_ontology(cursor, label):
     ont_id = 0
-    label = label.replace("'", "''")
-
-    query = "SELECT id, label, parent_id FROM observation_ontology where label = '{}'".format(label)
+    query = "SELECT id, label, parent_id FROM observation_ontology where label = %s"
     print("Executing query: '{}'".format(query))
     try:
-        cursor.execute(query)
+        cursor.execute(query, (label,))
 
         row = cursor.fetchone()
         if row is not None:
@@ -828,6 +854,7 @@ def get_observation_ontology(cursor, label):
 # Method to create and entry in the observation ontology table
 def create_observation_ontology_term(cursor, term, parent_id = None, value_type = None, 
                                         data_category = None, flip_axis = 0):
+    query_args = ()
     # If flip axis is nan then set to zero
     if str(flip_axis) == 'nan':
         flip_axis = 0
@@ -838,19 +865,19 @@ def create_observation_ontology_term(cursor, term, parent_id = None, value_type 
     if (value_type is None or data_category is None):
         # If the parent ID is None this must me a top level term so do not set parent ID
         if parent_id is None:
-            query = "INSERT INTO observation_ontology (label) VALUES ('{}')"
-            query = query.format(term)
+            query = "INSERT INTO observation_ontology (label) VALUES (%s)"
+            query_args = (term,)
         else:
-            query = "INSERT INTO observation_ontology (label, parent_id) VALUES ('{}', {})"
-            query = query.format(term, parent_id)
+            query = "INSERT INTO observation_ontology (label, parent_id) VALUES (%s, %s)"
+            query_args = (term, parent_id)
 
     else:
-        query = "INSERT INTO observation_ontology (label, value_type, data_category, parent_id, flip_axis) VALUES ('{}', '{}', '{}', {}, {})"
-        query = query.format(term, value_type, data_category, parent_id, flip_axis)
+        query = "INSERT INTO observation_ontology (label, value_type, data_category, parent_id, flip_axis) VALUES (%s, %s, %s, %s, %s)"
+        query_args = (term, value_type, data_category, parent_id, flip_axis)
 
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, query_args)
         ont_id = cursor.lastrowid
 
     except Exception as e:
@@ -863,7 +890,8 @@ def create_observation_ontology_term(cursor, term, parent_id = None, value_type 
 # Method to update and entry in the observation ontology table
 def update_observation_ontology_term(cursor, observation_ont_id, term, parent_id = None, value_type = None, 
                                         data_category = None, flip_axis = 0):
-
+    query_args = ()
+    
     # If flip axis is nan then set to zero
     if str(flip_axis) == 'nan':
         flip_axis = 0
@@ -873,19 +901,19 @@ def update_observation_ontology_term(cursor, observation_ont_id, term, parent_id
     if (value_type is None or data_category is None):
         # If the parent ID is None this must me a top level term so do not set parent ID
         if parent_id is None:
-            query = "UPDATE observation_ontology set label = '{}' where id = {}"
-            query = query.format(term, observation_ont_id)
+            query = "UPDATE observation_ontology set label = %s where id = %s"
+            query_args = (term, observation_ont_id)
         else:
-            query = "UPDATE observation_ontology set label = '{}', parent_id = {} where id = {}"
-            query = query.format(term, parent_id, observation_ont_id)
+            query = "UPDATE observation_ontology set label = %s, parent_id = %s where id = %s"
+            query_args = (term, parent_id, observation_ont_id)
 
     else:
-        query = "UPDATE observation_ontology set label = '{}', value_type = '{}', data_category = '{}', parent_id = {}, flip_axis = {} where id = {}"
-        query = query.format(term, value_type, data_category, parent_id, flip_axis, observation_ont_id)
+        query = "UPDATE observation_ontology set label = %s, value_type = %s, data_category = %s, parent_id = %s, flip_axis = %s where id = %s"
+        query_args = (term, value_type, data_category, parent_id, flip_axis, observation_ont_id)
 
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, query_args)
 
     except Exception as e:
         print(e)
@@ -899,12 +927,13 @@ def add_observation_ontology_term(cursor, ont, term, parent_id=None):
     ont[term] = {'id': cursor.lastrowid, 'parent_id': parent_id}
 
 # Method that checks for the study in the database and returns the study ID, else zero
-def get_study_entry(cursor, study_name, label):
+def get_study_entry(cursor, study_name, project_id):
     study_id = 0
     # First check if this entry already exists in which case just read the study ID and return it
-    query = "SELECT id FROM study where study_name = '{}' AND project_id = {}".format(study_name.replace("'", "''"), project_id)
+    query = "SELECT id FROM study where study_name = %s AND project_id = %s"
     try:
-        cursor.execute(query)
+        print("Executing query: '{}'".format(query))
+        cursor.execute(query, (study_name, project_id))
 
         row = cursor.fetchone()
         if row is not None:
@@ -919,14 +948,10 @@ def get_study_entry(cursor, study_name, label):
 # Method that inserts the study in the database and returns the study ID
 def create_study_entry(cursor, study_name, longitudinal, study_description, project_id):
     study_id = 0
-    # because the study name, description might have an apostrophe escape it
-    study_name = study_name.replace("'", "''")
-    study_description = study_description.replace("'", "''")
-
-    query = "insert into study (study_name, description, longitudinal, project_id) values ('{}', '{}', {}, {})".format(study_name, study_description, longitudinal, project_id)
+    query = "insert into study (study_name, description, longitudinal, project_id) values (%s, %s, %s, %s)"
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, (study_name, study_description, longitudinal, project_id))
         study_id = cursor.lastrowid
 
     except Exception as e:
@@ -939,14 +964,10 @@ def create_study_entry(cursor, study_name, longitudinal, study_description, proj
 
 # Method that updates the study in the database and returns the study ID
 def update_study_entry(cursor, study_id, study_name, longitudinal, study_description, project_id):
-    # because the study name, description might have an apostrophe escape it
-    study_name = study_name.replace("'", "''")
-    study_description = study_description.replace("'", "''")
-
-    query = "update study set study_name = '{}', description = '{}', longitudinal = {}, project_id = {} where id = {}".format(study_name, study_description, longitudinal, project_id, study_id)
+    query = "update study set study_name = %s, description = %s, longitudinal = %s, project_id = %s where id = %s"
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, (study_name, study_description, longitudinal, project_id, study_id))
 
     except Exception as e:
         print(e)
@@ -957,13 +978,10 @@ def update_study_entry(cursor, study_id, study_name, longitudinal, study_descrip
 # Method that retrieves a project ID if a project with the specified name exists
 def get_project_entry(cursor, project_name):
     project_id = 0
-    # because the project name, description, or disease name might have an apostrophe escape it
-    project_name = project_name.replace("'", "''")
-
-    query = "select id from project where project_name = '{}'".format(project_name)
+    query = "select id from project where project_name = %s"
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, (project_name, ))
 
         row = cursor.fetchone()
         if row is not None:
@@ -979,15 +997,10 @@ def get_project_entry(cursor, project_name):
 # Method that inserts the project in the database and returns the project ID
 def create_project_entry(cursor, project_name, primary_disease, project_description):
     project_id = 0
-    # because the project name, description, or disease name might have an apostrophe escape it
-    project_name = project_name.replace("'", "''")
-    primary_disease = primary_disease.replace("'", "''")
-    project_description = project_description.replace("'", "''")
-
-    query = "insert into project (project_name, project_description, primary_diease) values ('{}', '{}', '{}')".format(project_name, project_description, primary_disease)
+    query = "insert into project (project_name, description, primary_disease) values (%s, %s, %s)"
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, (project_name, project_description, primary_disease))
         project_id = cursor.lastrowid
 
     except Exception as e:
@@ -999,15 +1012,10 @@ def create_project_entry(cursor, project_name, primary_disease, project_descript
 
 # Method that update the project in the database 
 def update_project_entry(cursor, project_id, project_name, primary_disease, project_description):
-    # because the project name, description, or disease name might have an apostrophe escape it
-    project_name = project_name.replace("'", "''")
-    primary_disease = primary_disease.replace("'", "''")
-    project_description = project_description.replace("'", "''")
-
-    query = "update project set project_name = '{}', description = '{}', primary_disease = '{}' where id = {}".format(project_name, project_description, primary_disease, project_id)
+    query = "update project set project_name = %s, description = %s, primary_disease = %s where id = %s"
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, (project_name, project_description, primary_disease, project_id))
 
     except Exception as e:
         print(e)
@@ -1018,10 +1026,10 @@ def update_project_entry(cursor, project_id, project_name, primary_disease, proj
 # Method that inserts the subject in the database and returns the subject ID
 def create_subject_entry(cursor, subject_num, study_id):
     subject_id = 0
-    query = "insert into subject (subject_num, study_id) values ('{}', {})".format(subject_num, study_id)
+    query = "insert into subject (subject_num, study_id) values (%s, %s)"
     print("Executing query: {}".format(query))
     try:
-        cursor.execute(query)
+        cursor.execute(query, (subject_num, study_id))
         subject_id = cursor.lastrowid
 
     except Exception as e:
@@ -1033,28 +1041,29 @@ def create_subject_entry(cursor, subject_num, study_id):
 
 # Method that inserts the observation in the database and returns the observation ID
 def create_subject_observation(cursor, subject_visit_id, obs_ont_id, value, value_type):
+    query_args = ()
     observation_id = 0    
     if value_type == 'Char':
-        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type) VALUES ({}, {}, '{}', '{}')"
-        query = query.format(subject_visit_id, obs_ont_id, value, value_type)
+        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type) VALUES (%s, %s, %s, %s)"
+        query_args = (subject_visit_id, obs_ont_id, value, value_type)
     elif value_type == 'Decimal':
         dec_value = Decimal(value)
-        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, dec_value) VALUES ({}, {}, '{}', '{}', {})"
-        query = query.format(subject_visit_id, obs_ont_id, value, value_type, dec_value)
+        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, dec_value) VALUES (%s, %s, %s, %s, %s)"
+        query_args = (subject_visit_id, obs_ont_id, value, value_type, dec_value)
     elif value_type == 'Integer':
         int_value = int(value)
-        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, int_value) VALUES ({}, {}, '{}', '{}', {})"
-        query = query.format(subject_visit_id, obs_ont_id, value, value_type, int_value)
+        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, int_value) VALUES (%s, %s, %s, %s, %s)"
+        query_args = (subject_visit_id, obs_ont_id, value, value_type, int_value)
     elif value_type == 'Date':
-        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, date_value) VALUES ({}, {}, '{}', '{}', '{}')"
-        query = query.format(subject_visit_id, obs_ont_id, value, value_type, value)
+        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, date_value) VALUES (%s, %s, %s, %s, %s)"
+        query_args = (subject_visit_id, obs_ont_id, value, value_type, value)
     else:
         print("Unknown value type {} skipping this entry".format(value_type))
         return
 
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, query_args)
         observation_id = cursor.lastrowid
 
     except Exception as e:
@@ -1067,27 +1076,28 @@ def create_subject_observation(cursor, subject_visit_id, obs_ont_id, value, valu
 
 # Method that update the observation in the database and returns the observation ID
 def update_subject_observation(cursor, subject_visit_id, obs_ont_id, value, value_type):
+    query_args = ()
     if value_type == 'Char':
-        query = "update observation set value = '{}', value_type = '{}' where subject_visit_id = {} and observation_ontology_id = {}"
-        query = query.format(value, value_type, subject_visit_id, obs_ont_id)
+        query = "update observation set value = %s, value_type = %s where subject_visit_id = %s and observation_ontology_id = %s"
+        query_args = (value, value_type, subject_visit_id, obs_ont_id)
     elif value_type == 'Decimal':
         dec_value = Decimal(value)
-        query = "update observation set value = '{}', value_type = '{}', dec_value = {} where subject_visit_id = {} and observation_ontology_id = {}"
-        query = query.format(value, value_type, subject_visit_id, obs_ont_id, dec_value)
+        query = "update observation set value = %s, value_type = %s, dec_value = %s where subject_visit_id = %s and observation_ontology_id = %s"
+        query_args = (value, value_type, subject_visit_id, obs_ont_id, dec_value)
     elif value_type == 'Integer':
         int_value = int(value)
-        query = "update observation set value = '{}', value_type = '{}', int_value = {} where subject_visit_id = {} and observation_ontology_id = {}"
-        query = query.format(value, value_type, subject_visit_id, obs_ont_id, int_value)
+        query = "update observation set value = %s, value_type = %s, int_value = %s where subject_visit_id = %s and observation_ontology_id = %s"
+        query_args = (value, value_type, subject_visit_id, obs_ont_id, int_value)
     elif value_type == 'Date':
-        query = "update observation set value = '{}', value_type = '{}', date_value = '{}' where subject_visit_id = {} and observation_ontology_id = {}"
-        query = query.format(subject_visit_id, obs_ont_id, value, value_type, value)
+        query = "update observation set value = %s, value_type = %s, date_value = %s where subject_visit_id = %s and observation_ontology_id = %s"
+        query_args = (subject_visit_id, obs_ont_id, value, value_type, value)
     else:
         print("Unknown value type {} skipping this entry".format(value_type))
         return
 
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, query_args)
 
     except Exception as e:
         print(e)
@@ -1097,28 +1107,29 @@ def update_subject_observation(cursor, subject_visit_id, obs_ont_id, value, valu
 
 # Method that inserts the observation_summary in the database and returns the observation_summary ID
 def create_subject_obs_summary(cursor, subject_id, obs_ont_id, value, value_type):
+    query_args = ()
     obs_summary_id = 0    
     if value_type == 'Char':
-        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type) VALUES ({}, {}, '{}', '{}')"
-        query = query.format(subject_id, obs_ont_id, value, value_type)
+        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type) VALUES (%s, %s, %s, %s)"
+        query_args = (subject_id, obs_ont_id, value, value_type)
     elif value_type == 'Decimal':
         dec_value = Decimal(value)
-        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, dec_value) VALUES ({}, {}, '{}', '{}', {})"
-        query = query.format(subject_id, obs_ont_id, value, value_type, dec_value)
+        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, dec_value) VALUES (%s, %s, %s, %s, %s)"
+        query_args = (subject_id, obs_ont_id, value, value_type, dec_value)
     elif value_type == 'Integer':
         int_value = int(value)
-        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, int_value) VALUES ({}, {}, '{}', '{}', {})"
-        query = query.format(subject_id, obs_ont_id, value, value_type, int_value)
+        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, int_value) VALUES (%s, %s, %s, %s, %s)"
+        query_args = (subject_id, obs_ont_id, value, value_type, int_value)
     elif value_type == 'Date':
-        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, date_value) VALUES ({}, {}, '{}', '{}', '{}')"
-        query = query.format(subject_id, obs_ont_id, value, value_type, value)
+        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, date_value) VALUES (%s, %s, %s, %s, %s)"
+        query_args = (subject_id, obs_ont_id, value, value_type, value)
     else:
         print("Unknown value type {} skipping this entry".format(value_type))
         return
 
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, query_args)
         obs_summary_id = cursor.lastrowid
 
     except Exception as e:
@@ -1131,27 +1142,28 @@ def create_subject_obs_summary(cursor, subject_id, obs_ont_id, value, value_type
 
 # Method that update the observation summary in the database 
 def update_subject_obs_summary(cursor, subject_id, obs_ont_id, value, value_type):
+    query_args = ()
     if value_type == 'Char':
-        query = "update observation_summary set value = '{}', value_type = '{}' where subject_id = {} and observation_ontology_id = {}"
-        query = query.format(value, value_type, subject_id, obs_ont_id)
+        query = "update observation_summary set value = %s, value_type = %s where subject_id = %s and observation_ontology_id = %s"
+        query_args = (value, value_type, subject_id, obs_ont_id)
     elif value_type == 'Decimal':
         dec_value = Decimal(value)
-        query = "update observation_summary set value = '{}', value_type = '{}', dec_value = {} where subject_id = {} and observation_ontology_id = {}"
-        query = query.format(value, value_type, subject_id, obs_ont_id, dec_value)
+        query = "update observation_summary set value = %s, value_type = %s, dec_value = %s where subject_id = %s and observation_ontology_id = %s"
+        query_args = (value, value_type, subject_id, obs_ont_id, dec_value)
     elif value_type == 'Integer':
         int_value = int(value)
-        query = "update observation_summary set value = '{}', value_type = '{}', int_value = {} where subject_id = {} and observation_ontology_id = {}"
-        query = query.format(value, value_type, subject_id, obs_ont_id, int_value)
+        query = "update observation_summary set value = %s, value_type = %s, int_value = %s where subject_id = %s and observation_ontology_id = %s"
+        query_args = (value, value_type, subject_id, obs_ont_id, int_value)
     elif value_type == 'Date':
-        query = "update observation_summary set value = '{}', value_type = '{}', date_value = '{}' where subject_id = {} and observation_ontology_id = {}"
-        query = query.format(subject_id, obs_ont_id, value, value_type, value)
+        query = "update observation_summary set value = %s, value_type = %s, date_value = %s where subject_id = %s and observation_ontology_id = %s"
+        query_args = (subject_id, obs_ont_id, value, value_type, value)
     else:
         print("Unknown value type {} skipping this entry".format(value_type))
         return
 
     try:
         print("Executing query: '{}'".format(query))
-        cursor.execute(query)
+        cursor.execute(query, query_args)
 
     except Exception as e:
         print(e)
@@ -1162,11 +1174,12 @@ def update_subject_obs_summary(cursor, subject_id, obs_ont_id, value, value_type
 # Method that inserts the visit in the database and returns the visit ID
 def create_subject_visit(cursor, subject_id, visit_num, visit_code, visit_date, disease_status):
     visit_id = 0
-    query = "insert into subject_visit (visit_num, subject_id, visit_event, event_date, disease_status) values ({}, {}, '{}', '{}', '{}')"
-    query = query.format(visit_num, subject_id, visit_code, visit_date, disease_status)
+    if visit_date == '':
+        visit_date = None
+    query = "insert into subject_visit (visit_num, subject_id, visit_event, event_date, disease_status) values (%s, %s, %s, %s, %s)"
     print("Executing query: {}".format(query))
     try:
-        cursor.execute(query)
+        cursor.execute(query, (visit_num, subject_id, visit_code, visit_date, disease_status))
         visit_id = cursor.lastrowid
 
     except Exception as e:
@@ -1178,11 +1191,10 @@ def create_subject_visit(cursor, subject_id, visit_num, visit_code, visit_date, 
 
 # Method that updates the visit in the database and returns the visit ID
 def update_subject_visit(cursor, subject_visit_id, visit_code, visit_date, disease_status):
-    query = "update subject_visit set visit_event = '{}', event_date = '{}', disease_status = '{}' where id = {}"
-    query = query.format(visit_code, visit_date, disease_status, subject_visit_id)
+    query = "update subject_visit set visit_event = %s, event_date = %s, disease_status = %s where id = %s"
     print("Executing query: {}".format(query))
     try:
-        cursor.execute(query)
+        cursor.execute(query,visit_code, (visit_date, disease_status, subject_visit_id))
 
     except Exception as e:
         print(e)
@@ -1194,10 +1206,10 @@ def update_subject_visit(cursor, subject_visit_id, visit_code, visit_date, disea
 def get_subject_observation(cursor, subject_visit_id, obs_ont_id):
     observation_id = 0
     # First check if this observation already exists in which case just read the observation ID and return it
-    query = "SELECT id FROM observation where observation_ontology_id = {} AND subject_visit_id = {}".format(obs_ont_id, subject_visit_id)
+    query = "SELECT id FROM observation where observation_ontology_id = %s AND subject_visit_id = %s"
     print("Executing query: {}".format(query))
     try:
-        cursor.execute(query)
+        cursor.execute(query, (obs_ont_id, subject_visit_id))
 
         row = cursor.fetchone()
         if row is not None:
@@ -1213,10 +1225,10 @@ def get_subject_observation(cursor, subject_visit_id, obs_ont_id):
 def get_subject_obs_summary(cursor, subject_id, obs_ont_id):
     obs_summary_id = 0
     # First check if this observation summary already exists in which case just read the observation summary ID and return it
-    query = "SELECT id FROM observation_summary where observation_ontology_id = {} AND subject_id = {}".format(obs_ont_id, subject_id)
+    query = "SELECT id FROM observation_summary where observation_ontology_id = %s AND subject_id = %s"
     print("Executing query: {}".format(query))
     try:
-        cursor.execute(query)
+        cursor.execute(query, (obs_ont_id, subject_id))
 
         row = cursor.fetchone()
         if row is not None:
@@ -1302,10 +1314,10 @@ def get_study_info(conn):
 def get_subject_visit(cursor, subject_id, visit_num):
     visit_id = 0
     # First check if this visit already exists in which case just read the visit ID and return it
-    query = "SELECT id FROM subject_visit where visit_num = {} AND subject_id = {}".format(visit_num, subject_id)
+    query = "SELECT id FROM subject_visit where visit_num = %s AND subject_id = %s"
     try:
         print("Executing query: {}".format(query))
-        cursor.execute(query)
+        cursor.execute(query, (visit_num, subject_id))
 
         row = cursor.fetchone()
         if row is not None:
@@ -1320,10 +1332,10 @@ def get_subject_visit(cursor, subject_id, visit_num):
 def get_subject_entry(cursor, subject_num, study_id):
     subject_id = 0
     # First check if this entry already exists in which case just read the subject ID and return it
-    query = "SELECT id FROM subject where subject_num = '{}' AND study_id = {}".format(subject_num, study_id)
+    query = "SELECT id FROM subject where subject_num = %s AND study_id = %s"
     print ("Executing query: {}".format(query))
     try:
-        cursor.execute(query)
+        cursor.execute(query, (subject_num, study_id))
 
         row = cursor.fetchone()
         if row is not None:
