@@ -1,8 +1,0 @@
-Entity,File
-Project,UMDPD_projects.csv
-Subject Ontology,UMDPD_unique_subject_vars.csv
-Observation Ontology,UMDPD_unique_obs.csv
-Subject Info,UMDPD_demographics_long.csv
-Visit,UMDPD_visit_info.csv
-Observations,UMDPD_obs_long.csv
-Observations Summary,UMDPD_obs_summary.csv
