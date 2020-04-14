@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-toolbar card dense flat :color="getToolbarColor()" class="rounded-lg">
+    <v-toolbar card dense flat :class="getToolbarClass()" class="rounded-lg">
       <v-toolbar-items>
         <output-variables-dialog @dialogOpened="opened" />
       </v-toolbar-items>
@@ -94,11 +94,11 @@ export default {
       }
       this.highlight(this.subset);
     },
-    getToolbarColor() {
+    getToolbarClass() {
       if (this.highlighted) {
-        return 'rgb(247,216,206,0.5)';
+        return 'toolbar_step_highlight'
       } else {
-        return 'white';
+        return '';
       }
     },
     opened() {

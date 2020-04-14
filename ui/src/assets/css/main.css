@@ -125,3 +125,15 @@ a.v-list__tile.primary span {
 div.v-stepper__content {
     padding: 10px 24px 10px;
 }
+
+/* AnalysisTracker highlight style */
+.tracker_step_highlight {
+    background: rgb(247,216,206,0.5) !important;
+    border-left: 1px dotted black;
+    border-right: 1px dotted black;
+    border-top: 1px dotted black;
+}
+
+.toolbar_step_highlight {
+    background: rgb(247,216,206,0.5) !important;
+}
