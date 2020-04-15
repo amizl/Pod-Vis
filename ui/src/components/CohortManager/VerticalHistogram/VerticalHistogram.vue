@@ -621,7 +621,7 @@ export default {
       return barWidth;
     },
     getOpacity(subset) {
-      return 0.7;
+      return 1;
     },
     resizeChart() {
       this.height = 300;
