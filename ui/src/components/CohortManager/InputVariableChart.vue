@@ -8,7 +8,8 @@
             style="background-color: white; padding: 0.4em 1.5em 0em 0.4em; border-radius: 0.5rem;"
           >
             <span style="padding:0em 0.5em 0em 0em">
-              <img v-if="variable.label !== 'Dataset'"
+              <img
+                v-if="variable.label !== 'Dataset'"
                 :src="'/images/' + variable.category + '-icon-128.png'"
                 :title="variable.category"
                 style="height:3em"

@@ -79,11 +79,7 @@
     </v-stepper>
 
     <!-- substep trackers -->
-    <v-stepper
-      v-if="step === '2'"
-      :value="substep"
-      model="substep"
-    >
+    <v-stepper v-if="step === '2'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step :complete="substep !== '2.1' || step === '3'" step="2.1"
           >Choose Datasets
@@ -106,12 +102,9 @@
       </v-stepper-header>
     </v-stepper>
 
-    <v-stepper v-if="step === '3'"
-      :value="substep"
-      model="substep"
-    >
+    <v-stepper v-if="step === '3'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
-        <v-stepper-step 
+        <v-stepper-step
           :complete="inputVariables.length > 0 || substep >= 3.4"
           step="3.1"
           >Choose Predictor Variables</v-stepper-step
@@ -187,11 +180,7 @@
       </v-stepper-items>
     </v-stepper>
 
-    <v-stepper
-      v-if="step === '4'"
-      :value="substep"
-      model="substep"
-    >
+    <v-stepper v-if="step === '4'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step step="4.1"
           >Choose a variable from the One-Way ANOVA table (top), then click on
@@ -202,11 +191,7 @@
       </v-stepper-header>
     </v-stepper>
 
-    <v-stepper
-      v-if="step === '5'"
-      :value="substep"
-      model="substep"
-    >
+    <v-stepper v-if="step === '5'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step step="5.1"
           >Explore all the data for a chosen variable and set of cohorts. Click

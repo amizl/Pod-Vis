@@ -26,7 +26,7 @@
               ? xScale(bin.length)
               : 0
           "
-          fill="#F8D580"
+          :fill="colors['population']"
           :opacity="getOpacity('population')"
         />
         <!-- Plot population minus selected cohort -->
@@ -42,7 +42,7 @@
               : 0
           "
           :width="getNonCohortWidth(left, bin)"
-          fill="#3FB551"
+          :fill="colors['nonCohort']"
           :opacity="getOpacity('non-cohort')"
         />
         <rect
@@ -57,7 +57,7 @@
               : 0
           "
           :width="getCohortWidth(left, bin)"
-          fill="#3F51B5"
+          :fill="colors['cohort']"
           :opacity="getOpacity('cohort')"
         />
 
@@ -121,6 +121,7 @@ import { axisTop, axisLeft, axisRight } from 'd3-axis';
 import resize from 'vue-resize-directive';
 // Components
 // import AnimatedRect from './HistogramBar.vue';
+import { colors } from '@/utils/colors';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -197,6 +198,7 @@ export default {
       populationCounts: {},
       mean: undefined,
       populationMean: undefined,
+      colors: colors,
     };
   },
   computed: {

@@ -22,17 +22,22 @@
       <v-toolbar-items>
         <!-- TODO...filters? -->
         <span class="subheading primary--text mt-3 mr-3">Show:</span>
-        <v-btn-toggle v-model="subset" mandatory @change="doHighlightChange()">
+        <v-btn-toggle
+          v-model="subset"
+          mandatory
+          style="background: rgb(255,255,255,0)"
+          @change="doHighlightChange()"
+        >
           <v-btn
             text
-            color="primary"
+            :color="colors['cohort']"
             class="white--text mr-2 py-1"
             value="cohort"
             >Cohort</v-btn
           >
           <v-btn
             text
-            color="#3FB551"
+            :color="colors['nonCohort']"
             class="white--text mr-2 py-1"
             value="non-cohort"
             >Non-Cohort</v-btn
@@ -52,6 +57,7 @@
 import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
 import OutputVariablesDialog from '@/components/CohortManager/OutputVariablesDialog.vue';
+import { colors } from '@/utils/colors';
 
 export default {
   components: {
@@ -70,6 +76,7 @@ export default {
   data() {
     return {
       subset: 'cohort',
+      colors: colors,
     };
   },
   computed: {
@@ -96,7 +103,7 @@ export default {
     },
     getToolbarClass() {
       if (this.highlighted) {
-        return 'toolbar_step_highlight'
+        return 'toolbar_step_highlight';
       } else {
         return '';
       }

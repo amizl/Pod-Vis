@@ -18,7 +18,7 @@
               : 0
           "
           :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
-          fill="#F8D580"
+          :fill="colors['population']"
           :opacity="getOpacity('population')"
         />
         <rect
@@ -33,7 +33,7 @@
               : 0
           "
           :height="getNonCohortHeight(bin)"
-          fill="#3FB551"
+          :fill="colors['nonCohort']"
           :opacity="getOpacity('non-cohort')"
         />
         <rect
@@ -48,7 +48,7 @@
               : 0
           "
           :height="getCohortHeight(bin)"
-          fill="#3F51B5"
+          :fill="colors['cohort']"
           :opacity="getOpacity('cohort')"
         />
         <!-- Cohort Mean -->
@@ -107,6 +107,7 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import resize from 'vue-resize-directive';
 // Components
 // import AnimatedRect from './HistogramBar.vue';
+import { colors } from '@/utils/colors';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -179,6 +180,7 @@ export default {
       populationData: [],
       selection: [],
       populationCounts: {},
+      colors: colors,
     };
   },
   computed: {
