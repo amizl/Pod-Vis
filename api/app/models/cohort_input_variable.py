@@ -111,6 +111,11 @@ class CohortInputVariable(db.Model):
 
         if self.observation_ontology_id:
             input_variable['observation_ontology'] = self.observation_ontology.to_dict(include_parent=True)
+            if self.dimension_label is None:
+                input_variable['is_longitudinal'] = False
+            else:
+                input_variable['is_longitudinal'] = True
+
         if self.subject_ontology_id:
             input_variable['subject_ontology'] = self.subject_ontology.to_dict(include_parent=True)
         if self.study_id:

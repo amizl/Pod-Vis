@@ -66,7 +66,7 @@ export default {
     //         ...variable.observation_ontology,
     //         type: 'observation',
     //       }));
-    const outputVariables = !state.cohort.input_variables
+    const inputVariables = !state.cohort.input_variables
       ? []
       : state.cohort.input_variables
           .filter(variable => variable.observation_ontology != null)
@@ -94,10 +94,11 @@ export default {
               ...variable.observation_ontology,
               id: `${dimension}-${variable.observation_ontology_id}`,
               label,
+              is_longitudinal: variable.is_longitudinal,
               type: 'observation',
             };
           });
-    return outputVariables;
+    return inputVariables;
   },
   [getters.FIND_COHORT_OBSERVATION_OUTPUT_VARIABLES]: state => {
     const outputVariables = !state.cohort.output_variables
