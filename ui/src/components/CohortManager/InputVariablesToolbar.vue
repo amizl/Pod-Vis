@@ -103,9 +103,9 @@ export default {
     },
   },
   watch: {
-    filteredData(oldData, newData) {
-      const startValue = newData.length;
-      const endValue = oldData.length;
+    filteredData(newData, oldData) {
+      const startValue = oldData.length;
+      const endValue = newData.length;
       const vm = this;
       function animate() {
         if (TWEEN.update()) {
