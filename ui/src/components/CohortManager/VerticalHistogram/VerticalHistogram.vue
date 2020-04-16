@@ -67,10 +67,10 @@
           r="7"
           :cx="left ? w : 0"
           :cy="mean"
-	  :fill="colors['cohort-circle-fill']"
+          :fill="colors['cohort-circle-fill']"
           :stroke="colors['cohort-circle-stroke']"
-	  :stroke-width="colors['cohort-circle-stroke-width']"
-	  :fill-opacity="colors['cohort-circle-fill-opacity']"
+          :stroke-width="colors['cohort-circle-stroke-width']"
+          :fill-opacity="colors['cohort-circle-fill-opacity']"
         >
           <title>Cohort mean value</title>
         </circle>
@@ -82,8 +82,8 @@
           :cy="populationMean"
           :fill="colors['population-circle-fill']"
           :stroke="colors['population-circle-stroke']"
-	  :stroke-width="colors['population-circle-stroke-width']"
-	  :fill-opacity="colors['population-circle-fill-opacity']"
+          :stroke-width="colors['population-circle-stroke-width']"
+          :fill-opacity="colors['population-circle-fill-opacity']"
         >
           <title>Population mean value</title>
         </circle>
