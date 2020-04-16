@@ -232,7 +232,7 @@ class Collection(db.Model):
 
             # Categorical observations
             if (study.study.longitudinal == 0) or (last_obs_category == 'Categorical'):
-                obs_val = group_rows[0]['value'],
+                obs_val = group_rows[0]['value']
                 if group_rows[0]['value_type'] == 'int':
                     obs_val = group_rows[0]['int_value']
                 elif group_rows[0]['value_type'] == 'decimal':
