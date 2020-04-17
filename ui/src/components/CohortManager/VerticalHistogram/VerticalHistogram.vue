@@ -187,9 +187,9 @@ export default {
       height: 0,
       margin: {
         top: 20,
-        right: 25,
+        right: 30,
         bottom: 10,
-        left: 25,
+        left: 30,
       },
       filter: undefined,
       selected: [],

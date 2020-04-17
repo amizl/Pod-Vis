@@ -13,7 +13,7 @@
       ref="canvas"
       :width="computedWidth"
       :height="computedHeight"
-      style="padding: 0px 0px 8px 0px; margin: 0px;"
+      style="padding: 0px 5px 8px 5px; margin: 0px;"
     >
     </canvas>
     <!-- Last visit histogram -->
