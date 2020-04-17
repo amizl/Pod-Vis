@@ -8,15 +8,15 @@
       <v-icon left>save</v-icon> SAVE COHORT
     </v-btn>
     <!-- SAVE COLLECTION FORM DIALOG -->
-    <v-dialog v-model="dialog" width="500">
+    <v-dialog v-model="dialog" width="500" persistent>
       <v-card class="rounded-lg">
         <v-card-title primary-title>
           <span class="primary--text title pl-2">Save Cohort</span>
         </v-card-title>
-        <!-- <v-sheet class="pa-3 background"> </v-sheet> -->
         <v-card-text>
           <v-form ref="form" v-model="valid" @submit.prevent="onSaveCohort">
             <v-text-field
+              ref="vtf"
               v-model="cohortName"
               :rules="[() => !!cohortName || 'Cohort name is required.']"
               prepend-inner-icon="table_chart"
@@ -76,6 +76,11 @@ export default {
     }),
   },
   watch: {
+    dialog(val) {
+      if (val) {
+        this.showing();
+      }
+    },
     cohort(newCohort) {
       if (
         newCohort.label != 'Choose Cohort' &&
@@ -89,6 +94,11 @@ export default {
     ...mapActions('cohortManager', {
       saveCohort: actions.SAVE_COHORT,
     }),
+    showing() {
+      this.$nextTick(function() {
+        this.$refs.vtf.focus();
+      });
+    },
     async onSaveCohort() {
       const { cohortName } = this;
       if (this.$refs.form.validate()) {
