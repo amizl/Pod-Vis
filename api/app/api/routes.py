@@ -1045,6 +1045,9 @@ def create_cohort():
         if 'subject_ontology' in iv:
             so = iv['subject_ontology']
             so['category'] = get_subj_scale_category(so['id'])
+        if 'observation_ontology' in iv:
+            oo = iv['observation_ontology']
+            oo['category'] = get_obs_scale_category(oo['id'])
 
     return jsonify({
         "success": True,
