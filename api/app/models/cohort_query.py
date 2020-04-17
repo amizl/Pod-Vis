@@ -1,5 +1,6 @@
 from . import db
 import enum
+import sys
 
 class CohortQuery(db.Model):
     __tablename__ = "cohort_query"
@@ -20,9 +21,9 @@ class CohortQuery(db.Model):
         self.cohort_id = cohort_id
         self.input_variable_id = input_variable_id
 
-        if value:
+        if value is not None:
             self.value = value
-        elif min_value and max_value:
+        elif min_value is not None and max_value is not None:
             self.min_value = min_value
             self.max_value = max_value
         else:
