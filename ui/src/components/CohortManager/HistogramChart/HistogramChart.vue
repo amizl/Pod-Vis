@@ -160,6 +160,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    variable: {
+      type: Object,
+      required: false,
+    },
   },
   data() {
     return {
@@ -195,6 +199,20 @@ export default {
       highlightedSubset: state.HIGHLIGHTED_SUBSET,
       cohort: state.COHORT,
     }),
+    num_bins() {
+      var ext = extent(this.populationData);
+      var diff = ext[1] - ext[0];
+
+      if (
+        this.variable &&
+        this.variable.value_type === 'decimal' &&
+        diff < 30
+      ) {
+        return diff + 1;
+      } else {
+        return 30;
+      }
+    },
     w() {
       const { left, right } = this.margin;
       const { width } = this;
@@ -224,7 +242,7 @@ export default {
       return histogram()
         .value(d => +d)
         .domain(this.xScale.domain())
-        .thresholds(this.xScale.ticks(30));
+        .thresholds(this.xScale.ticks(this.num_bins));
     },
     popBins() {
       const popBins = this.hist(this.populationData);
@@ -491,9 +509,8 @@ export default {
       const [low, high] = this.selection.map(this.xScale.invert);
       const { x0, x1 } = bin;
 
-      // Pad the high number as this might be a decimal
-      // and can cause some bars to not be colored in range
-      const PADDING = 1;
+      // padding must be adaptive - set to half the bin width/height
+      const PADDING = (x1 - x0) / 2.0;
       // Check that bin is within selection range
       if (
         low - PADDING <= x0 &&

@@ -51,6 +51,7 @@
           v-else
           :id="variable.id"
           :dimension-name="dimension"
+          :variable="variable"
           input-variable
         />
       </v-layout>

@@ -39,6 +39,7 @@
         :id="variable.id"
         :dimension-name="variable.label"
         :input-variable="false"
+        :variable="variable"
       />
       <MultiChart
         v-else

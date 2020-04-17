@@ -6,6 +6,7 @@
       left
       :dimension-name="`${variable.label} - First Visit`"
       :y-domain="maxValueBetweenDimensions"
+      :variable="variable"
     />
     <!-- Parallel Coordinates -->
     <canvas
@@ -20,6 +21,7 @@
       :id="`lastVisit-${dimensionName}`"
       :dimension-name="`${variable.label} - Last Visit`"
       :y-domain="maxValueBetweenDimensions"
+      :variable="variable"
     />
   </v-flex>
 </template>

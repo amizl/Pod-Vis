@@ -174,6 +174,10 @@ export default {
       type: Number,
       required: true,
     },
+    variable: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
@@ -208,6 +212,13 @@ export default {
       dimensions: state.DIMENSIONS,
       highlightedSubset: state.HIGHLIGHTED_SUBSET,
     }),
+    num_bins() {
+      if (this.variable.value_type === 'decimal' && this.yDomain < 30) {
+        return this.yDomain + 1;
+      } else {
+        return 30;
+      }
+    },
     w() {
       const { left, right } = this.margin;
       const { width } = this;
@@ -237,7 +248,7 @@ export default {
       return histogram()
         .value(d => +d)
         .domain(this.yScale.domain())
-        .thresholds(this.yScale.ticks(30));
+        .thresholds(this.yScale.ticks(this.num_bins));
     },
     popBins() {
       const popBins = this.hist(this.populationData);
@@ -251,11 +262,6 @@ export default {
     },
     bins() {
       return this.hist(this.data);
-      // return histogram()
-      //   .domain(this.xScale.domain())
-      //   .thresholds(this.xScale.ticks(30))(this.data);
-      // .domain(this.cohortXScale.domain())
-      // .thresholds(this.cohortXScale.ticks(30))(this.data);
     },
     popMinusBins() {
       // subtract bins from population bins to get popMinusBins
@@ -512,20 +518,8 @@ export default {
       this.selection = this.getClosestBins();
     },
     getFill(bin) {
-      if (this.selection) {
-        const [high, low] = this.selection.map(this.yScale.invert);
-        const { x0, x1 } = bin;
-
-        // Pad the high number as this might be a decimal
-        // and can cause some bars to not be colored in range
-        const PADDING = 1;
-        // Check that bin is within selection range
-        if (
-          low - PADDING <= x0 &&
-          low - PADDING <= x1 &&
-          high + PADDING >= x0 &&
-          high + PADDING >= x1
-        ) {
+      if (this.hasSelection()) {
+        if (this.isBinSelected(bin)) {
           return '#3F51B5';
         }
         return '#E8EAF6';
@@ -544,16 +538,10 @@ export default {
       const [high, low] = this.selection.map(this.yScale.invert);
       const { x0, x1 } = bin;
 
-      // Pad the high number as this might be a decimal
-      // and can cause some bars to not be colored in range
-      const PADDING = 1;
+      // padding must be adaptive - set to half the bin width/height
+      const PADDING = (x1 - x0) / 2.0;
       // Check that bin is within selection range
-      if (
-        low - PADDING <= x0 &&
-        low - PADDING <= x1 &&
-        high + PADDING >= x0 &&
-        high + PADDING >= x1
-      ) {
+      if (low - PADDING <= x0 && high + PADDING >= x1) {
         return true;
       }
       return false;
