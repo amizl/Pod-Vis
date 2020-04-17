@@ -430,28 +430,28 @@ export default {
      */
     getClosestBins() {
       const { selection } = event;
-      const [low, high] = selection.map(this.yScale.invert);
-
-      // Get closest bin to our lower selection
-      const closestBinToLow = this.bins
-        .map(bin => bin.x0)
-        .map(x0 => Math.abs(x0 - low))
-        .reduce((acc, currVal) => Math.min(acc, currVal));
-      const newLowIdx = this.bins.findIndex(
-        bin => Math.abs(bin.x0 - low) === closestBinToLow
-      );
-      const newLow = this.bins[newLowIdx].x0;
-      // Get closest bin to our higher selection
-      const closestBinToHigh = this.bins
+      const [upper, lower] = selection.map(this.yScale.invert);
+      // TODO - this does not yet support flip_axis
+      // Get closest bin to our upper selection (i.e., higher up on the screen)
+      const closestBinToUpper = this.bins
         .map(bin => bin.x1)
-        .map(x1 => Math.abs(x1 - high))
+        .map(x1 => Math.abs(x1 - upper))
         .reduce((acc, currVal) => Math.min(acc, currVal));
-      const newHighIdx = this.bins.findIndex(
-        bin => Math.abs(bin.x1 - high) === closestBinToHigh
+      const newUpperIdx = this.bins.findIndex(
+        bin => Math.abs(bin.x1 - upper) === closestBinToUpper
       );
-      const newHigh = this.bins[newHighIdx].x1;
+      const newUpper = this.bins[newUpperIdx].x1;
 
-      return [newLow, newHigh].map(this.yScale);
+      // Get closest bin to our lower selection (i.e., lower down on the screen)
+      const closestBinToLower = this.bins
+        .map(bin => bin.x0)
+        .map(x0 => Math.abs(x0 - lower))
+        .reduce((acc, currVal) => Math.min(acc, currVal));
+      const newLowerIdx = this.bins.findIndex(
+        bin => Math.abs(bin.x0 - lower) === closestBinToLower
+      );
+      const newLower = this.bins[newLowerIdx].x0;
+      return [newUpper, newLower].map(this.yScale);
     },
     brushedData() {
       // Only transition after input.
