@@ -27,14 +27,18 @@
             <v-text-field
               ref="vtf"
               v-model="cohortName"
-              :rules="[() => !!cohortName || 'Cohort name is required.']"
+              :rules="[
+                () => !!cohortName || 'Cohort name is required.',
+                () =>
+                  !cohortNames.includes(cohortName) ||
+                  'A cohort with that name already exists.',
+              ]"
               prepend-inner-icon="table_chart"
               label="Please name your cohort."
               box
               flat
               background-color="grey lighten-4"
               class="mt-2"
-              hide-details
             >
             </v-text-field>
           </v-form>
@@ -69,6 +73,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    cohorts: {
+      type: Array,
+      default: [],
+    },
   },
   data: () => ({
     cohortName: '',
@@ -82,8 +90,12 @@ export default {
     }),
     ...mapGetters('cohortManager', {
       hasUserFilteredInputVariables: getters.HAS_USER_FILTERED_INPUT_VARIABLES,
-      hasUserFilteredOutputVariables: getters.HAS_USER_FILTERED_OUTPUT_VARIABLES,
+      hasUserFilteredOutputVariables:
+        getters.HAS_USER_FILTERED_OUTPUT_VARIABLES,
     }),
+    cohortNames() {
+      return this.cohorts.map(c => c.label);
+    },
   },
   watch: {
     dialog(val) {

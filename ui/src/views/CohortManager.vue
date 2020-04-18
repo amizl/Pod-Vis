@@ -17,7 +17,10 @@
       <v-spacer></v-spacer>
 
       <delete-cohort-button @cohortDeleted="cohortDeleted" />
-      <save-cohort-button @cohortSaved="cohortSaved" />
+      <save-cohort-button
+        :cohorts="this.collection_cohorts"
+        @cohortSaved="cohortSaved"
+      />
 
       <v-tooltip top color="primary">
         <template v-slot:activator="{ on }">
@@ -60,6 +63,10 @@
     <v-layout v-if="collection.is_longitudinal" row class="mt-2 pa-0">
       <v-flex xs6> <analytics-table :disabled="true" /> </v-flex>
     </v-layout>
+
+    <v-layout v-if="false" row class="mt-2 pa-0">
+      <v-flex xs6> <cohort-table /> </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -69,6 +76,7 @@ import { actions, state, getters } from '@/store/modules/cohortManager/types';
 
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import CohortSelection from '@/components/CohortManager/CohortSelection.vue';
+import CohortTable from '@/components/CohortManager/CohortTable.vue';
 import AnalyticsTable from '@/components/CohortManager/AnalyticsTable.vue';
 import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
@@ -81,6 +89,7 @@ export default {
   components: {
     AnalysisTracker,
     CohortSelection,
+    CohortTable,
     InputVariables,
     OutputVariables,
     AnalyticsTable,
