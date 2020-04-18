@@ -16,9 +16,11 @@ export function makeHierarchy(data) {
 }
 
 export function getInputVariablesFromQueries(queries, inputVariables) {
-  return Object.keys(queries).map(variable => ({
-    query: queries[variable],
-    variable: inputVariables.find(inputVar => {
+  var inputVars = [];
+
+  Object.keys(queries).forEach(variable => {
+    var query = queries[variable];
+    var variable = inputVariables.find(inputVar => {
       const { label, type } = inputVar;
       if (type === 'study' || type === 'subject') {
         return label === variable;
@@ -27,8 +29,13 @@ export function getInputVariablesFromQueries(queries, inputVariables) {
       const { parentLabel } = inputVar;
       const obsLabel = `${parentLabel} - ${label}`;
       return obsLabel === variable;
-    }),
-  }));
+    });
+    if (variable) {
+      inputVars.push({ query: query, variable: variable });
+    }
+  });
+
+  return inputVars;
 }
 
 export function getCohortSubjectIds(data, c) {

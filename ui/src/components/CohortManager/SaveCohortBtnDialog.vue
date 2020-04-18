@@ -12,6 +12,15 @@
       <v-card class="rounded-lg">
         <v-card-title primary-title>
           <span class="primary--text title pl-2">Save Cohort</span>
+
+          <span
+            v-if="hasUserFilteredOutputVariables"
+            class="red--text title pl-2 pt-4"
+          >
+            WARNING:<br clear="both" /><br clear="both" />Outcome variable
+            filters will not be saved with the cohort unless they are moved to
+            the INPUT VARIABLES section.
+          </span>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" v-model="valid" @submit.prevent="onSaveCohort">
@@ -73,6 +82,7 @@ export default {
     }),
     ...mapGetters('cohortManager', {
       hasUserFilteredInputVariables: getters.HAS_USER_FILTERED_INPUT_VARIABLES,
+      hasUserFilteredOutputVariables: getters.HAS_USER_FILTERED_OUTPUT_VARIABLES,
     }),
   },
   watch: {
