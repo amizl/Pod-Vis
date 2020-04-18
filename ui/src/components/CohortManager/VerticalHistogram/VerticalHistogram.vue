@@ -484,6 +484,10 @@ export default {
       const newFilter = {
         dimension: this.dimensionName,
         filter: d => d >= invertedLow && d < invertedHigh,
+        query: {
+          minValue: invertedLow,
+          maxValue: invertedHigh,
+        },
       };
       this.addFilter(newFilter);
       // assumes at most 1 filter, which appears to be the case
@@ -507,11 +511,12 @@ export default {
       }
 
       // Appropriately place brush handles
+      var tx = this.width;
       this.handle
         .attr('display', null)
         .attr(
           'transform',
-          (d, i) => `translate(${this.width},${selection[i]}) rotate(90)`
+          (d, i) => `translate(${tx},${selection[i]}) rotate(90)`
         );
 
       // Set remap our selection to snap to closest bins
@@ -613,7 +618,7 @@ export default {
     },
     resizeChart() {
       this.height = 300;
-      this.width = 100;
+      this.width = 120;
     },
   },
 };

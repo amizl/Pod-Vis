@@ -205,7 +205,7 @@ export default {
     }),
     resizeChart() {
       this.height = 300;
-      this.width = 200;
+      this.width = 180;
     },
     drawCurve({ firstVisitCoordinates, lastVisitCoordinates }, color, alpha) {
       const { context } = this;
