@@ -53,22 +53,16 @@ export let colors = {
 export let colors = {
     'cohort': '#3F51B5',
     'cohort-circle-fill': '#1B33B5',
-    'cohort-circle-fill-opacity': '1',
-    'cohort-circle-stroke': '#7680B5',
+    'cohort-circle-fill-opacity': '0.8',
+    'cohort-circle-stroke': '#769eb5', 
     'cohort-circle-stroke-width': '2',
     
     'population': '#B8D6FF', 
     'population-circle-fill': '#85B9FF',
-    'population-circle-fill-opacity': '1',
-    'population-circle-stroke': "#FFFFFF",
+    'population-circle-fill-opacity': '0.8',
+    'population-circle-stroke': "#E1FFE1",
     'population-circle-stroke-width': '2',
 
-    /*
-    'population-circle-fill': "#F88123",
-  'population-circle-fill-opacity': '0.8',
-  'population-circle-stroke': "#f8d537",
-  'population-circle-stroke-width': '2',
-*/
     'nonCohort': '#3FB551',
 };
 
