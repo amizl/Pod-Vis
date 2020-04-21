@@ -27,7 +27,8 @@
             <v-chip
               disabled
               :color="getNumSubjectsColor(getStudyCount(dataset.id))"
-              class="primary--text title ma-2"
+              :text-color="getNumSubjectsTextColor(getStudyCount(dataset.id))"
+              class="title ma-2"
               >{{ getStudyCount(dataset.id) + ' selected' }}</v-chip
             >
           </th>
@@ -85,6 +86,11 @@
 <script>
 import axios from 'axios';
 import HistogramSparkline from '@/components/DatasetManager/HistogramSparkline.vue';
+import {
+  colors,
+  getNumSubjectsColor,
+  getNumSubjectsTextColor,
+} from '@/utils/colors';
 
 export default {
   components: {
@@ -125,6 +131,7 @@ export default {
           sortable: true,
         },
       ],
+      colors: colors,
     };
   },
   watch: {
@@ -205,6 +212,8 @@ export default {
     this.isLoading = false;
   },
   methods: {
+    getNumSubjectsColor,
+    getNumSubjectsTextColor,
     /**
      * If dataset id is an array of ids, we want to
      * call the API endpoint that gets their intersecting
@@ -259,6 +268,14 @@ export default {
       return count;
     },
 
+    getStudyVariableColor(nSubjects) {
+      if (nSubjects <= 25) {
+        return '#F83008';
+      } else {
+        return 'black';
+      }
+    },
+
     getStudyCount(study_id) {
       if (study_id in this.subject_counts) {
         return this.subject_counts[study_id];
@@ -297,30 +314,6 @@ export default {
         });
       });
       return nSubjects;
-    },
-
-    /**
-     * Return the color corresponding to a given number of subjects. Used to indicate
-     * when a given cohort/dataset has few/very few subjects.
-     */
-    getNumSubjectsColor(nSubjects) {
-      if (nSubjects <= 10) {
-        return '#F83008';
-      } else if (nSubjects <= 25) {
-        return '#F8B108';
-      } else {
-        return '#FAE1A6';
-      }
-    },
-
-    getStudyVariableColor(nSubjects) {
-      if (nSubjects <= 10) {
-        return '#F83008';
-      } else if (nSubjects <= 25) {
-        return '#F8B108';
-      } else {
-        return 'black';
-      }
     },
   },
 };
