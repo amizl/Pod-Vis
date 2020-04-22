@@ -8,12 +8,12 @@ import numpy as np
 import pprint
 import datetime as dt
 
-scale_file_map = {'demographics' : "HN_input.csv",
-                   'First Occurrence' : "HN_input.csv",
-                   'First Treatment': "HN_input.csv",
-                   'failure1': "HN_input.csv",
-                   'failure2': "HN_input.csv",
-                   'status': "HN_input.csv"}
+scale_file_map = {'demographics' : "HN_input_mod.csv",
+                   'First Occurrence' : "HN_input_mod.csv",
+                   'First Treatment': "HN_input_mod.csv",
+                   'failure1': "HN_input_mod.csv",
+                   'failure2': "HN_input_mod.csv",
+                   'death': "HN_input_mod.csv"}
                    
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -43,31 +43,16 @@ def assign_drinking(row):
     else:
         return "Unknown"
 
-def assign_statusnum(row):
-    if (row["fullstatus#"] == 1):
-        return "Alive w/o disease"
-    elif (row["fullstatus#"] == 2):
-        return "Alive w/ disease"
-    elif (row["fullstatus#"] == 3):
-        return "Dead w/o disease"
-    elif (row["fullstatus#"] == 4):
-        return "Dead w/ disease"
-    elif (row["fullstatus#"] == 5):
-        return "Alive unknown disease status"
-    elif (row["fullstatus#"] == 6):
-        return "Dead unknown disease status"
-    else:
-        return "Unknown"
 
 def process_demographics(input_dir):
 
-    data_filename = "HN_input.csv"
+    data_filename = "HN_input_mod.csv"
 
     # Read the input as a pandas dataframe
     df_demo = pd.read_csv(input_dir + data_filename)
 
     # Subset the frame for the columns needed
-    df_demo = df_demo.loc[:, ["lab code", "Reg: 1st contact Date", "Race", "Gender", "Birthdate", "Ever smoker", "Ever drinker", "Dx Date1", "fullstatus#", "Date of Death", "Last f/u"]]
+    df_demo = df_demo.loc[:, ["lab code", "Reg: 1st contact Date", "Race", "Gender", "Birthdate", "Ever smoker", "Ever drinker", "Dx Date1", "Last f/u"]]
 
     #pp.pprint(df_demo)
 
@@ -77,12 +62,11 @@ def process_demographics(input_dir):
     df_demo['Gender'] = df_demo["Gender"].map(lambda x: 'Female' if x == 2 else 'Male')
     df_demo['Ever smoker'] = df_demo[["Ever smoker"]].apply(assign_smoking, axis = 1)
     df_demo['Ever drinker'] = df_demo[["Ever drinker"]].apply(assign_drinking, axis = 1)
-    df_demo['fullstatus#'] = df_demo[["fullstatus#"]].apply(assign_statusnum, axis = 1)
 
     # Process some of the dates to assume the first of the month allow date operations
     # and then convert the datetime string to date
 
-    df_demo[['Reg: 1st contact Date', 'Birthdate', 'Dx Date1', "Date of Death", "Last f/u"]] = df_demo[['Reg: 1st contact Date', 'Birthdate', 'Dx Date1', "Date of Death", "Last f/u"]].apply(lambda x: pd.to_datetime(x, format='%-m/%-d/%Y', errors='coerce'))
+    df_demo[['Reg: 1st contact Date', 'Birthdate', 'Dx Date1', "Last f/u"]] = df_demo[['Reg: 1st contact Date', 'Birthdate', 'Dx Date1', "Last f/u"]].apply(lambda x: pd.to_datetime(x, format='%m/%d/%Y', errors='coerce'))
 
     # Calculate some of the numeric properties such as age at enrollemnt, age at diagnosis
     df_demo['Age At Enrollment'] = round((df_demo['Reg: 1st contact Date'] - df_demo['Birthdate']).dt.days/365.25, 1) 
@@ -90,12 +74,11 @@ def process_demographics(input_dir):
 
     # Remove some of the unwanted columns from the demographic variables
     df_demo = df_demo.loc[:, ['lab code', 'Study', 'Race', 'Birthdate', 'Gender', 'Ever smoker', 'Ever drinker', 'Age At Enrollment', 
-                              'Age At Diagnosis', 'Dx Date1', 'Reg: 1st contact Date', 'fullstatus#', "Last f/u", "Date of Death"]]
+                              'Age At Diagnosis', 'Dx Date1', 'Reg: 1st contact Date', "Last f/u"]]
     df_demo = df_demo.rename(columns={"lab code": "SubjectNum",  
                             "Gender": "Sex",
                             "Reg: 1st contact Date": "Enroll Date",
                             "Dx Date1": "Diagnosis Date",
-                            "fullstatus#": "Status",
                             "Last f/u": "Date of Last Follow Up"
                             }, 
                             errors="raise")
@@ -327,7 +310,7 @@ def process_failure1(filename):
     df['TX2'] = df[["TX2"]].apply(assign_treatmentmod2, axis = 1)
     df['Initial Failure Type1'] = df[["Initial Failure Type1"]].apply(assign_failuretype1, axis = 1)
 
-    df[['Failure date1','Tx End1']] = df[['Failure date1','Tx End1']].apply(lambda x: pd.to_datetime(x, format='%-m/%-d/%Y', errors='coerce'))
+    df[['Failure date1','Tx End1']] = df[['Failure date1','Tx End1']].apply(lambda x: pd.to_datetime(x, format='%m/%d/%Y', errors='coerce'))
 
     df["Time to 1st failure"] = round((df["Failure date1"] - df["Tx End1"]).dt.days/365.25, 1)
 
@@ -364,7 +347,7 @@ def process_failure2(filename):
 
     df['Failure Type2'] = df[["Failure Type2"]].apply(assign_failuretype2, axis = 1)
 
-    df[['Failure date2','Tx End2']] = df[['Failure date2','Tx End2']].apply(lambda x: pd.to_datetime(x, format='%-m/%-d/%Y', errors='coerce'))
+    df[['Failure date2','Tx End2']] = df[['Failure date2','Tx End2']].apply(lambda x: pd.to_datetime(x, format='%m/%d/%Y', errors='coerce'))
 
     df["Time to second failure"] = round((df["Failure date2"] - df["Tx End2"]).dt.days/365.2, 1)
 
@@ -372,6 +355,42 @@ def process_failure2(filename):
     df = df.groupby(['lab code']).first().reset_index()
     df = df.rename(columns={"lab code": "SubjectNum", 
                             "Failure Type2": "2nd Failure Type"}, 
+                            errors="raise")
+    return df
+
+def assign_statusnum(row):
+    if (row["fullstatus#"] == 1):
+        return "Alive w/o disease"
+    elif (row["fullstatus#"] == 2):
+        return "Alive w/ disease"
+    elif (row["fullstatus#"] == 3):
+        return "Dead w/o disease"
+    elif (row["fullstatus#"] == 4):
+        return "Dead w/ disease"
+    elif (row["fullstatus#"] == 5):
+        return "Alive unk disease"
+    elif (row["fullstatus#"] == 6):
+        return "Dead unk disease"
+    else:
+        return "Unknown"
+
+def process_death(filename):
+    df = pd.read_csv(filename)
+
+    df = df.loc[:, ['lab code','Reg: 1st contact Date', 'Date of Death', 'Birthdate', 'fullstatus#']]
+
+    df[["Reg: 1st contact Date", "Date of Death", "Birthdate"]] = df[["Reg: 1st contact Date", "Date of Death", "Birthdate"]].apply(lambda x: pd.to_datetime(x, format='%m/%d/%Y', errors='coerce'))
+
+    df["Time to death"] = round((df["Date of Death"] - df["Reg: 1st contact Date"]).dt.days/365.2, 1)
+
+    df["Age at death"] = round((df["Date of Death"] - df["Birthdate"]).dt.days/365.2, 1)
+
+    df['fullstatus#'] = df[["fullstatus#"]].apply(assign_statusnum, axis = 1)
+
+    df = df.loc[:, ["lab code", "Date of Death", "Time to death", "Age at death", "fullstatus#"]]
+    df = df.groupby(['lab code']).first().reset_index()
+    df = df.rename(columns={"lab code": "SubjectNum",
+                            "fullstatus#": "Status"}, 
                             errors="raise")
     return df
 
@@ -409,6 +428,9 @@ def main():
             print("Processing Second Failure")
             df_failure2 = process_failure2(args.input_dir + filename)
             # pp.pprint(df_mds_updrs1_2.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
+        elif (scale == 'death'):
+            print("Processing Death")
+            df_death = process_death(args.input_dir + filename)
         
 
     labels = ["SubjectNum", "Occurrence #", "Tumor Site", "Tumor Stage", "Nodal Stage", "Metastasis", "Overall Stage"]
@@ -416,6 +438,7 @@ def main():
     df_all_vars = df_all_vars.merge(df_first_treatment, how="outer", on = ['SubjectNum'])
     df_all_vars = df_all_vars.merge(df_failure1, how="outer", on = ['SubjectNum'])
     df_all_vars = df_all_vars.merge(df_failure2, how="outer", on = ['SubjectNum'])
+    df_all_vars = df_all_vars.merge(df_death, how="outer", on = ['SubjectNum'])
     df_all_vars["VisitNum"] = 1
     df_all_vars["VisitCode"] = 1
 

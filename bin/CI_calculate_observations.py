@@ -89,7 +89,7 @@ def process_demographics(input_dir):
                             "lAgeDeaf", "rAgeDeaf", "ear1", "ear2", "ear3", "Type1", "Type2", "Type3", "lPhysCauseLoss", "rPhysCauseLoss", "lAgeAidUse", "rAgeAidUse"]]
 
     # Recode some of the variables such as gender, race
-    df_demo['Study'] = "University of Iowa Cochlear Implant Patients"
+    df_demo['Study'] = "University of Iowa CI Patients"
     df_demo["maritalStatus"] = df_demo[["maritalStatus"]].apply(assign_maritalStatus, axis = 1)
     df_demo['gender'] = df_demo['gender'].map(lambda x: 'Male' if x == "M" else 'Female')
     #pp.pprint(df_demo)
@@ -145,127 +145,127 @@ def process_YrsEdu(filename):
 
 def assign_Amplification(row):
     if (row['AmplificationRight'] == 1) and (row["AmplificationLeft"] == 1):
-        return "No hearing amplification"
+        return "None"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 1):
-        return "Right sided hearing aid only"
+        return "R HA only"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 1):
-        return "Right sided cochlear implant only"
+        return "R CI only"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 2):
-        return "Left sided hearing aid only"
+        return "L HA only"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 3):
-        return "Left sided cochlear implant only"
+        return "L CI only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 2):
-        return "Bilateral hearing aids"
+        return "Bilateral HAs"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 3):
-        return "Right sided hearing aid, left sided cochlear implant"
+        return "R HA, L CI"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 2):
-        return "Right sided cochlear implant, left sided hearing aid"
+        return "R CI, L HA"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 3):
-        return "Bilateral cochlear implants"
+        return "Bilateral CIs"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 1):
-        return "Right sided natural acoustic only"
+        return "R natural acoustic only"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 2):
-        return "Right sided natural acoustic, left sided hearing aid"
+        return "R natural acoustic, L HA"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 3):
-        return "Right sided natural acoustic, left sided cochlear implant"
+        return "R natural acoustic, L CI"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 4):
         return "Bilateral natural acoustic"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 1):
-        return "Right sided cochlear implant and hearing aid only"
+        return "R CI & HA only"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 2):
-        return "Right sided cochlear implant and hearing aid, left sided hearing aid"
+        return "R CI & HA, L HA"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 3:
-        return "Right sided cochlear implant and hearing aid, left sided cochlear implant"
+        return "R CI & HA, L CI"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 4):
-        return "Right sided cochlear implant and hearing aid, left sided natural acoustic"
+        return "R CI & HA, L natural acoustic"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 5):
-        return "Right sided cochlear implant and hearing aid, left sided cochlear implant and hearing aid"
+        return "Bilateral CI & HA"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 5):
-        return "Left sided cochlear implant and hearing aid only"
+        return "L CI & HA only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 5):
-        return "Right sided hearing aid, left sided cochlear implant and hearing aid"
+        return "R HA, L CI & HA"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 5):
-        return "Right sided cochlear implant, left sided cochlear implant and hearing aid"
+        return "R CI, L CI & HA"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 5):
-        return "Right sided natural acoustic, left sided cochlear implant and hearing aid"
+        return "R natural acoustic, L CI & HA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 1):
-        return "Right sided natural acoustic and cochlear implant only"
+        return "R natural acoustic & CI only"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 2):
-        return "Right sided natural acoustic and cochlear implant, left sided hearing aid"
+        return "R natural acoustic & CI, L HA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 3):
-        return "Right sided natural acoustic and cochlear implant, left sided cochlear implant"
+        return "R natural acoustic & CI, L CI"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 4):
-        return "Right sided natural acoustic and cochlear implant, left sided natural acoustic"
+        return "R natural acoustic & CI, L natural acoustic"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 5):
-        return "Right sided natural acoustic and cochlear implant, left sided cochlear implant and hearing aid"
+        return "R natural acoustic & CI, L CI & HA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 6):
-        return "Bilateral natural acoustic and cochlear implant"
+        return "Bilateral natural acoustic & CI"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 6):
-        return "Left sided natural acoustic and cochlear implant only"
+        return "L natural acoustic & CI only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 6):
-        return "Rigth sided hearing aid, left sided natural acoustic and cochlear implant"
+        return "R HA, L natural acoustic & CI"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 6):
-        return "Right sided cochlear implant, left sided natural acoustic and cochlear implant"
+        return "R CI, L natural acoustic & CI"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 6):
-        return "Right sided natural acoustic, left sided natural acoustic and cochlear implant"
+        return "R natural acoustic, L natural acoustic & CI"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 6):
-        return "Right sided cochlear implant and hearing aid, left sided natural acoustic and cochlear implant"
+        return "R CI & HA, L natural acoustic & CI"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 1):
-        return "Right sided CROS only"
+        return "R CROS only"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 2):
-        return "Right sided CROS, left sided hearing aid"
+        return "R CROS, L HA"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 3):
-        return "Right sided CROS, left sided cochlear implant"
+        return "R CROS, L CI"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 4):
-        return "Right sided CROS, left sided natural acoustic"
+        return "R CROS, L natural acoustic"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 5):
-        return "Right sided CROS, left sided cochlear implant and hearing aid"
+        return "R CROS, L CI & HA"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 6):
-        return "Right sided CROS, left sided natural acoustic and cochlear implant"
+        return "R CROS, L natural acoustic & CI"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 7):
         return "Bilateral CROS"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 7):
-        return "Left sided CROS only"
+        return "L CROS only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 7):
-        return "Right sided hearing aid, left sided CROS"
+        return "R HA, L CROS"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 7):
-        return "Right sided cochlear implant, left sided CROS"
+        return "R CI, L CROS"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 7):
-        return "Right sided natural acoustic, left sided CROS"
+        return "R natural acoustic, L CROS"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 7):
-        return "Right sided cochlear implant and hearing aid, left sided CROS"
+        return "R CI & HA, L CROS"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 7):
-        return "Right sided natural acoustic and cochlear implant, left sided CROS"
+        return "R natural acoustic & CI, L CROS"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 1):
-        return "Right sided BAHA only"
+        return "R BAHA only"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 2):
-        return "Right sided BAHA, left sided hearing aid"
+        return "R BAHA, L HA"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 3):
-        return "Right sided BAHA, left sided cochlear implant"
+        return "R BAHA, L CI"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 4):
-        return "Right sided BAHA, left sided natural acoustic"
+        return "R BAHA, L natural acoustic"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 5):
-        return "Right sided BAHA, left sided cochlear implant and hearing aid"
+        return "R BAHA, L CI & HA"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 6):
-        return "Right sided BAHA, left sided natural acoustic and cochlear implant"
+        return "R BAHA, L natural acoustic & CI"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 7):
-        return "Right sided BAHA, left sided CROS"
+        return "R BAHA, L CROS"
     if (row["AmplificationRight"] == 8) and row (row["AmplificationLeft"] == 8):
         return "Bilateral BAHAs"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 8):
-        return "Left sided BAHA only"
+        return "L BAHA only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 8):
-        return "Right sided hearing aid, left sided BAHA"
+        return "R HA, L BAHA"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 8):
-        return "Right sided cochlear implant, left sided BAHA"
+        return "R CI, L BAHA"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 8):
-        return "Right sided natural acoustic, left sided BAHA"
+        return "R natural acoustic, L BAHA"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 8):
-        return "Right sided cochlear implant and hearing aid, left sided BAHA"
+        return "R CI & HA, L BAHA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 8):
-        return "Right sided natural acoustic and cochlear implant, left sided BAHA"
+        return "R natural acoustic & CI, L BAHA"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 8):
-        return "Right sided CROS, left sided BAHA"
+        return "R CROS, L BAHA"
     else:
         return "Unknown amplification"
 
@@ -281,7 +281,7 @@ def process_CNC_word(filename):
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['SID', 'PostIntervention', 'DateCreated']).first().reset_index()
     df = df.rename(columns={"SID": "SubjectNum", 
-                            "Post Intervention": "Months since Cochlear Implantation", 
+                            "Post Intervention": "Months since CIation", 
                             "DateCreated": "Visit Date",
                             "AmplificationLeft": "Type of Amplification Left Ear",
                             "AmplificationRight": "Type of Amplification Right Ear",
@@ -295,107 +295,107 @@ def assign_Amplification(row):
     if (row['AmplificationRight'] == 1) and (row["AmplificationLeft"] == 1):
         return "No hearing amplification"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 1):
-        return "Right sided hearing aid only"
+        return "Right sided HA only"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 1):
-        return "Right sided cochlear implant only"
+        return "Right sided CI only"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 2):
-        return "Left sided hearing aid only"
+        return "Left sided HA only"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 3):
-        return "Left sided cochlear implant only"
+        return "Left sided CI only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 2):
-        return "Bilateral hearing aids"
+        return "Bilateral HAs"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 3):
-        return "Right sided hearing aid, left sided cochlear implant"
+        return "Right sided HA, left sided CI"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 2):
-        return "Right sided cochlear implant, left sided hearing aid"
+        return "Right sided CI, left sided HA"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 3):
-        return "Bilateral cochlear implants"
+        return "Bilateral CIs"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 1):
         return "Right sided natural acoustic only"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 2):
-        return "Right sided natural acoustic, left sided hearing aid"
+        return "Right sided natural acoustic, left sided HA"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 3):
-        return "Right sided natural acoustic, left sided cochlear implant"
+        return "Right sided natural acoustic, left sided CI"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 4):
         return "Bilateral natural acoustic"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 1):
-        return "Right sided cochlear implant and hearing aid only"
+        return "Right sided CI and HA only"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 2):
-        return "Right sided cochlear implant and hearing aid, left sided hearing aid"
+        return "Right sided CI and HA, left sided HA"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 3:
-        return "Right sided cochlear implant and hearing aid, left sided cochlear implant"
+        return "Right sided CI and HA, left sided CI"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 4):
-        return "Right sided cochlear implant and hearing aid, left sided natural acoustic"
+        return "Right sided CI and HA, left sided natural acoustic"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 5):
-        return "Right sided cochlear implant and hearing aid, left sided cochlear implant and hearing aid"
+        return "Right sided CI and HA, left sided CI and HA"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 5):
-        return "Left sided cochlear implant and hearing aid only"
+        return "Left sided CI and HA only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 5):
-        return "Right sided hearing aid, left sided cochlear implant and hearing aid"
+        return "Right sided HA, left sided CI and HA"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 5):
-        return "Right sided cochlear implant, left sided cochlear implant and hearing aid"
+        return "Right sided CI, left sided CI and HA"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 5):
-        return "Right sided natural acoustic, left sided cochlear implant and hearing aid"
+        return "Right sided natural acoustic, left sided CI and HA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 1):
-        return "Right sided natural acoustic and cochlear implant only"
+        return "Right sided natural acoustic and CI only"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 2):
-        return "Right sided natural acoustic and cochlear implant, left sided hearing aid"
+        return "Right sided natural acoustic and CI, left sided HA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 3):
-        return "Right sided natural acoustic and cochlear implant, left sided cochlear implant"
+        return "Right sided natural acoustic and CI, left sided CI"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 4):
-        return "Right sided natural acoustic and cochlear implant, left sided natural acoustic"
+        return "Right sided natural acoustic and CI, left sided natural acoustic"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 5):
-        return "Right sided natural acoustic and cochlear implant, left sided cochlear implant and hearing aid"
+        return "Right sided natural acoustic and CI, left sided CI and HA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 6):
-        return "Bilateral natural acoustic and cochlear implant"
+        return "Bilateral natural acoustic and CI"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 6):
-        return "Left sided natural acoustic and cochlear implant only"
+        return "Left sided natural acoustic and CI only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 6):
-        return "Rigth sided hearing aid, left sided natural acoustic and cochlear implant"
+        return "Rigth sided HA, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 6):
-        return "Right sided cochlear implant, left sided natural acoustic and cochlear implant"
+        return "Right sided CI, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 6):
-        return "Right sided natural acoustic, left sided natural acoustic and cochlear implant"
+        return "Right sided natural acoustic, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 6):
-        return "Right sided cochlear implant and hearing aid, left sided natural acoustic and cochlear implant"
+        return "Right sided CI and HA, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 1):
         return "Right sided CROS only"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 2):
-        return "Right sided CROS, left sided hearing aid"
+        return "Right sided CROS, left sided HA"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 3):
-        return "Right sided CROS, left sided cochlear implant"
+        return "Right sided CROS, left sided CI"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 4):
         return "Right sided CROS, left sided natural acoustic"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 5):
-        return "Right sided CROS, left sided cochlear implant and hearing aid"
+        return "Right sided CROS, left sided CI and HA"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 6):
-        return "Right sided CROS, left sided natural acoustic and cochlear implant"
+        return "Right sided CROS, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 7):
         return "Bilateral CROS"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 7):
         return "Left sided CROS only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 7):
-        return "Right sided hearing aid, left sided CROS"
+        return "Right sided HA, left sided CROS"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 7):
-        return "Right sided cochlear implant, left sided CROS"
+        return "Right sided CI, left sided CROS"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 7):
         return "Right sided natural acoustic, left sided CROS"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 7):
-        return "Right sided cochlear implant and hearing aid, left sided CROS"
+        return "Right sided CI and HA, left sided CROS"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 7):
-        return "Right sided natural acoustic and cochlear implant, left sided CROS"
+        return "Right sided natural acoustic and CI, left sided CROS"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 1):
         return "Right sided BAHA only"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 2):
-        return "Right sided BAHA, left sided hearing aid"
+        return "Right sided BAHA, left sided HA"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 3):
-        return "Right sided BAHA, left sided cochlear implant"
+        return "Right sided BAHA, left sided CI"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 4):
         return "Right sided BAHA, left sided natural acoustic"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 5):
-        return "Right sided BAHA, left sided cochlear implant and hearing aid"
+        return "Right sided BAHA, left sided CI and HA"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 6):
-        return "Right sided BAHA, left sided natural acoustic and cochlear implant"
+        return "Right sided BAHA, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 7):
         return "Right sided BAHA, left sided CROS"
     if (row["AmplificationRight"] == 8) and row (row["AmplificationLeft"] == 8):
@@ -403,15 +403,15 @@ def assign_Amplification(row):
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 8):
         return "Left sided BAHA only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 8):
-        return "Right sided hearing aid, left sided BAHA"
+        return "Right sided HA, left sided BAHA"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 8):
-        return "Right sided cochlear implant, left sided BAHA"
+        return "Right sided CI, left sided BAHA"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 8):
         return "Right sided natural acoustic, left sided BAHA"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 8):
-        return "Right sided cochlear implant and hearing aid, left sided BAHA"
+        return "Right sided CI and HA, left sided BAHA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 8):
-        return "Right sided natural acoustic and cochlear implant, left sided BAHA"
+        return "Right sided natural acoustic and CI, left sided BAHA"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 8):
         return "Right sided CROS, left sided BAHA"
     else:
@@ -429,7 +429,7 @@ def process_CNC_phoneme(filename):
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['SID', 'PostIntervention', 'DateCreated']).first().reset_index()
     df = df.rename(columns={"SID": "SubjectNum", 
-                            "Post Intervention": "Months since Cochlear Implantation", 
+                            "Post Intervention": "Months since CIation", 
                             "DateCreated": "Visit Date",
                             "CncPhon_Percent": "CNC Phoneme Percentage Correct"}, 
                             errors="raise")
@@ -442,107 +442,107 @@ def assign_Amplification(row):
     if (row['AmplificationRight'] == 1) and (row["AmplificationLeft"] == 1):
         return "No hearing amplification"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 1):
-        return "Right sided hearing aid only"
+        return "Right sided HA only"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 1):
-        return "Right sided cochlear implant only"
+        return "Right sided CI only"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 2):
-        return "Left sided hearing aid only"
+        return "Left sided HA only"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 3):
-        return "Left sided cochlear implant only"
+        return "Left sided CI only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 2):
-        return "Bilateral hearing aids"
+        return "Bilateral HAs"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 3):
-        return "Right sided hearing aid, left sided cochlear implant"
+        return "Right sided HA, left sided CI"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 2):
-        return "Right sided cochlear implant, left sided hearing aid"
+        return "Right sided CI, left sided HA"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 3):
-        return "Bilateral cochlear implants"
+        return "Bilateral CIs"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 1):
         return "Right sided natural acoustic only"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 2):
-        return "Right sided natural acoustic, left sided hearing aid"
+        return "Right sided natural acoustic, left sided HA"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 3):
-        return "Right sided natural acoustic, left sided cochlear implant"
+        return "Right sided natural acoustic, left sided CI"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 4):
         return "Bilateral natural acoustic"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 1):
-        return "Right sided cochlear implant and hearing aid only"
+        return "Right sided CI and HA only"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 2):
-        return "Right sided cochlear implant and hearing aid, left sided hearing aid"
+        return "Right sided CI and HA, left sided HA"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 3:
-        return "Right sided cochlear implant and hearing aid, left sided cochlear implant"
+        return "Right sided CI and HA, left sided CI"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 4):
-        return "Right sided cochlear implant and hearing aid, left sided natural acoustic"
+        return "Right sided CI and HA, left sided natural acoustic"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 5):
-        return "Right sided cochlear implant and hearing aid, left sided cochlear implant and hearing aid"
+        return "Right sided CI and HA, left sided CI and HA"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 5):
-        return "Left sided cochlear implant and hearing aid only"
+        return "Left sided CI and HA only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 5):
-        return "Right sided hearing aid, left sided cochlear implant and hearing aid"
+        return "Right sided HA, left sided CI and HA"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 5):
-        return "Right sided cochlear implant, left sided cochlear implant and hearing aid"
+        return "Right sided CI, left sided CI and HA"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 5):
-        return "Right sided natural acoustic, left sided cochlear implant and hearing aid"
+        return "Right sided natural acoustic, left sided CI and HA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 1):
-        return "Right sided natural acoustic and cochlear implant only"
+        return "Right sided natural acoustic and CI only"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 2):
-        return "Right sided natural acoustic and cochlear implant, left sided hearing aid"
+        return "Right sided natural acoustic and CI, left sided HA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 3):
-        return "Right sided natural acoustic and cochlear implant, left sided cochlear implant"
+        return "Right sided natural acoustic and CI, left sided CI"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 4):
-        return "Right sided natural acoustic and cochlear implant, left sided natural acoustic"
+        return "Right sided natural acoustic and CI, left sided natural acoustic"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 5):
-        return "Right sided natural acoustic and cochlear implant, left sided cochlear implant and hearing aid"
+        return "Right sided natural acoustic and CI, left sided CI and HA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 6):
-        return "Bilateral natural acoustic and cochlear implant"
+        return "Bilateral natural acoustic and CI"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 6):
-        return "Left sided natural acoustic and cochlear implant only"
+        return "Left sided natural acoustic and CI only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 6):
-        return "Rigth sided hearing aid, left sided natural acoustic and cochlear implant"
+        return "Rigth sided HA, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 6):
-        return "Right sided cochlear implant, left sided natural acoustic and cochlear implant"
+        return "Right sided CI, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 6):
-        return "Right sided natural acoustic, left sided natural acoustic and cochlear implant"
+        return "Right sided natural acoustic, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 6):
-        return "Right sided cochlear implant and hearing aid, left sided natural acoustic and cochlear implant"
+        return "Right sided CI and HA, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 1):
         return "Right sided CROS only"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 2):
-        return "Right sided CROS, left sided hearing aid"
+        return "Right sided CROS, left sided HA"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 3):
-        return "Right sided CROS, left sided cochlear implant"
+        return "Right sided CROS, left sided CI"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 4):
         return "Right sided CROS, left sided natural acoustic"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 5):
-        return "Right sided CROS, left sided cochlear implant and hearing aid"
+        return "Right sided CROS, left sided CI and HA"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 6):
-        return "Right sided CROS, left sided natural acoustic and cochlear implant"
+        return "Right sided CROS, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 7):
         return "Bilateral CROS"
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 7):
         return "Left sided CROS only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 7):
-        return "Right sided hearing aid, left sided CROS"
+        return "Right sided HA, left sided CROS"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 7):
-        return "Right sided cochlear implant, left sided CROS"
+        return "Right sided CI, left sided CROS"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 7):
         return "Right sided natural acoustic, left sided CROS"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 7):
-        return "Right sided cochlear implant and hearing aid, left sided CROS"
+        return "Right sided CI and HA, left sided CROS"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 7):
-        return "Right sided natural acoustic and cochlear implant, left sided CROS"
+        return "Right sided natural acoustic and CI, left sided CROS"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 1):
         return "Right sided BAHA only"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 2):
-        return "Right sided BAHA, left sided hearing aid"
+        return "Right sided BAHA, left sided HA"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 3):
-        return "Right sided BAHA, left sided cochlear implant"
+        return "Right sided BAHA, left sided CI"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 4):
         return "Right sided BAHA, left sided natural acoustic"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 5):
-        return "Right sided BAHA, left sided cochlear implant and hearing aid"
+        return "Right sided BAHA, left sided CI and HA"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 6):
-        return "Right sided BAHA, left sided natural acoustic and cochlear implant"
+        return "Right sided BAHA, left sided natural acoustic and CI"
     if (row["AmplificationRight"] == 8) and (row["AmplificationLeft"] == 7):
         return "Right sided BAHA, left sided CROS"
     if (row["AmplificationRight"] == 8) and row (row["AmplificationLeft"] == 8):
@@ -550,15 +550,15 @@ def assign_Amplification(row):
     if (row["AmplificationRight"] == 1) and (row["AmplificationLeft"] == 8):
         return "Left sided BAHA only"
     if (row["AmplificationRight"] == 2) and (row["AmplificationLeft"] == 8):
-        return "Right sided hearing aid, left sided BAHA"
+        return "Right sided HA, left sided BAHA"
     if (row["AmplificationRight"] == 3) and (row["AmplificationLeft"] == 8):
-        return "Right sided cochlear implant, left sided BAHA"
+        return "Right sided CI, left sided BAHA"
     if (row["AmplificationRight"] == 4) and (row["AmplificationLeft"] == 8):
         return "Right sided natural acoustic, left sided BAHA"
     if (row["AmplificationRight"] == 5) and (row["AmplificationLeft"] == 8):
-        return "Right sided cochlear implant and hearing aid, left sided BAHA"
+        return "Right sided CI and HA, left sided BAHA"
     if (row["AmplificationRight"] == 6) and (row["AmplificationLeft"] == 8):
-        return "Right sided natural acoustic and cochlear implant, left sided BAHA"
+        return "Right sided natural acoustic and CI, left sided BAHA"
     if (row["AmplificationRight"] == 7) and (row["AmplificationLeft"] == 8):
         return "Right sided CROS, left sided BAHA"
     else:
@@ -600,7 +600,7 @@ def process_AZBio(filename):
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['SID', 'PostIntervention', 'DateCreated']).first().reset_index()
     df = df.rename(columns={"SID": "SubjectNum", 
-                            "Post Intervention": "Months since Cochlear Implantation", 
+                            "Post Intervention": "Months since CIation", 
                             "DateCreated": "Visit Date",
                             "AmplificationLeft": "Type of Amplification Left Ear",
                             "AmplificationRight": "Type of Amplification Right Ear",
