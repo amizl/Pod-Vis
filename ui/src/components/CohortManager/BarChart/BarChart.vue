@@ -13,7 +13,7 @@
           :y="yScale(d.value)"
           :width="xScale.bandwidth()"
           :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
-          fill="#FAE1A6"
+          :fill="colors['population']"
           :tooltip="barTooltip"
           @click.native="userClickedBar(d.key)"
         />
@@ -63,6 +63,7 @@ import { schemeCategory10 } from 'd3-scale-chromatic';
 import resize from 'vue-resize-directive';
 // Components
 import BarRect from './BarRect.vue';
+import { colors } from '@/utils/colors';
 
 const PX_PER_LABEL_LINE = 15;
 const N_LABEL_LINES = 4;
@@ -125,6 +126,7 @@ export default {
       dimension: null,
       group: [],
       data: [],
+      colors: colors,
     };
   },
   computed: {
@@ -226,16 +228,9 @@ export default {
     }),
     getFill(key) {
       if (!this.selected.length || this.selected.includes(key)) {
-        // if (key == 'female') {
-        //   return '#FFC0CB';
-        // } else if (key == 'male') {
-        //   return '#3498DB';
-        // } else {
-        //   return this.colorScale(key);
-        // }
-        return '#3F51B5';
+        return colors['cohort'];
       }
-      return '#FAE1A6';
+      return colors['population'];
     },
     userClickedBar(key) {
       if (this.selected.includes(key)) {

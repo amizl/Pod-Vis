@@ -20,6 +20,7 @@ export const state = {
 // Getters
 export const getters = {
   HAS_USER_FILTERED_INPUT_VARIABLES: 'hasUserFilteredInputVariables',
+  HAS_USER_FILTERED_OUTPUT_VARIABLES: 'hasUserFilteredOutputVariables',
   HAS_USER_SELECTED_COHORT: 'hasUserSelectedCohort',
   FIND_COHORT_QUERY: 'findCohortQuery',
   //  FIND_COHORT_STUDY_INPUT_VARIABLES: 'findCohortStudyInputVariables',

@@ -1047,7 +1047,11 @@ def create_subject_observation(cursor, subject_visit_id, obs_ont_id, value, valu
         query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type) VALUES (%s, %s, %s, %s)"
         query_args = (subject_visit_id, obs_ont_id, value, value_type)
     elif value_type == 'Decimal':
-        dec_value = Decimal(value)
+        try:
+            dec_value = Decimal(value)
+        except InvalidOperation:
+            print("WARN: invalid Decimal value '" + value + "', inserting NULL")
+            dec_value = None
         query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, dec_value) VALUES (%s, %s, %s, %s, %s)"
         query_args = (subject_visit_id, obs_ont_id, value, value_type, dec_value)
     elif value_type == 'Integer':

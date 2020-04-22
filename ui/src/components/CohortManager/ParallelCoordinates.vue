@@ -6,13 +6,14 @@
       left
       :dimension-name="`${variable.label} - First Visit`"
       :y-domain="maxValueBetweenDimensions"
+      :variable="variable"
     />
     <!-- Parallel Coordinates -->
     <canvas
       ref="canvas"
       :width="computedWidth"
       :height="computedHeight"
-      style="padding: 0px 0px 8px 0px; margin: 0px;"
+      style="padding: 0px 5px 8px 5px; margin: 0px;"
     >
     </canvas>
     <!-- Last visit histogram -->
@@ -20,6 +21,7 @@
       :id="`lastVisit-${dimensionName}`"
       :dimension-name="`${variable.label} - Last Visit`"
       :y-domain="maxValueBetweenDimensions"
+      :variable="variable"
     />
   </v-flex>
 </template>
@@ -32,6 +34,7 @@ import { select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
 import { max } from 'd3-array';
 // import { line, curveMonotoneX } from 'd3-shape';
+import { colors } from '@/utils/colors';
 import VerticalHistogram from '@/components/CohortManager/VerticalHistogram/VerticalHistogram.vue';
 
 export default {
@@ -202,7 +205,7 @@ export default {
     }),
     resizeChart() {
       this.height = 300;
-      this.width = 200;
+      this.width = 180;
     },
     drawCurve({ firstVisitCoordinates, lastVisitCoordinates }, color, alpha) {
       const { context } = this;
@@ -225,14 +228,18 @@ export default {
       context.stroke();
     },
     drawUnfiltered() {
-      this.populationPaths.forEach(path => this.drawCurve(path, '#F8D580', 1));
+      this.populationPaths.forEach(path =>
+        this.drawCurve(path, colors['population'], 1)
+      );
     },
     drawFiltered() {
       if (this.highlightedSubset === 'cohort') {
-        this.cohortPaths.forEach(path => this.drawCurve(path, '#3F51B5', 0.45));
+        this.cohortPaths.forEach(path =>
+          this.drawCurve(path, colors['cohort'], 0.45)
+        );
       } else {
         this.nonCohortPaths.forEach(path =>
-          this.drawCurve(path, '#3FB551', 0.45)
+          this.drawCurve(path, colors['nonCohort'], 0.45)
         );
       }
     },

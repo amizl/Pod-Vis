@@ -166,8 +166,7 @@ class Collection(db.Model):
         obs_ids = [obs_var.ontology.id for obs_var in self.observation_variables]
 
         # subject -> study mapping
-        sys.stderr.write("study list = " + str(study_ids))
-        sys.stderr.flush()
+
         studyid2study= {}
         for study in self.studies:
             studyid2study[study.study_id] = study
@@ -227,16 +226,23 @@ class Collection(db.Model):
             # skip subjects with only one measurement/visit, but only for longitudinal studies
             study = subjid2study[subject_id]
             n = len(group_rows)
+
             if (n <= 1) and (study.study.longitudinal == 1):
                 return
 
             # Categorical observations
-            if last_obs_category == 'Categorical':
+            if (study.study.longitudinal == 0) or (last_obs_category == 'Categorical'):
+                obs_val = group_rows[0]['value']
+                if group_rows[0]['value_type'] == 'int':
+                    obs_val = group_rows[0]['int_value']
+                elif group_rows[0]['value_type'] == 'decimal':
+                    obs_val = group_rows[0]['dec_value']
+
                 observations.append(
                     dict(
                         subject_id=subject_id,
                         observation=obs_id,
-                        value=group_rows[0]['value'],
+                        value=obs_val,
                         roc=None,
                         change=None,
                         min=None,

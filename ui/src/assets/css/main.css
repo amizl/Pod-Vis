@@ -125,3 +125,41 @@ a.v-list__tile.primary span {
 div.v-stepper__content {
     padding: 10px 24px 10px;
 }
+
+/* AnalysisTracker highlight style - original color scheme */
+/*
+.tracker_step_highlight {
+    background: rgb(247,216,206,0.5) !important;
+    border-left: 1px dotted black;
+    border-right: 1px dotted black;
+    border-top: 1px dotted black;
+}
+
+.toolbar_step_highlight {
+    background: rgb(247,216,206,0.5) !important;
+}
+*/
+/* AnalysisTracker highlight style - END original color scheme */
+
+/* AnalysisTracker highlight style - silver/grey color scheme */
+
+.tracker_step_highlight {
+    background: rgb(209,211,212,1) !important;
+    border-left: 1px dotted black;
+    border-right: 1px dotted black;
+    border-top: 1px dotted black;
+}
+
+.toolbar_step_highlight {
+    background: rgb(209,211,212,1) !important;
+}
+
+div.v-stepper__step--inactive span.v-stepper__step__step {
+    background: rgb(147,149,152,1) !important;
+}
+
+span.v-stepper__step__step.primary {
+    background: #3f51b5 !important;
+}
+
+/* AnalysisTracker highlight style - END silver/grey color scheme */

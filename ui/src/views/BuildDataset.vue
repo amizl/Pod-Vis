@@ -10,7 +10,8 @@
         <v-chip
           disabled
           :color="getNumSubjectsColor(numSubjects)"
-          class="primary--text title ma-2"
+          :text-color="getNumSubjectsTextColor(numSubjects)"
+          class="title ma-2"
           >TOTAL SAMPLE: {{ numSubjects }} subjects selected</v-chip
         >
       </v-toolbar-items>
@@ -119,6 +120,11 @@ import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import SharedVariableTable from '@/components/DatasetManager/SharedVariableTable.vue';
 import UnsharedVariableTable from '@/components/DatasetManager/UnsharedVariableTable.vue';
 import SaveCollectionBtnDialog from '@/components/BuildDataset/SaveCollectionBtnDialog.vue';
+import {
+  colors,
+  getNumSubjectsColor,
+  getNumSubjectsTextColor,
+} from '@/utils/colors';
 
 export default {
   components: {
@@ -144,6 +150,7 @@ export default {
     numSubjects: 0,
     numObservationVars: 0,
     numSubjectVars: 0,
+    colors: colors,
   }),
   computed: {
     ...mapState('datasetManager', {
@@ -160,6 +167,8 @@ export default {
     ...mapActions('datasetManager', {
       addSelectedDatasetsToCohorts: actions.ADD_SELECTED_DATASETS_TO_COHORTS,
     }),
+    getNumSubjectsColor,
+    getNumSubjectsTextColor,
     goBack() {
       this.$router.go(-1);
     },
@@ -181,17 +190,6 @@ export default {
     },
     updateNumSubjectVars(ns) {
       this.numSubjectVars = ns;
-    },
-
-    // TODO - duplicated from SharedVariableTable.vue
-    getNumSubjectsColor(nSubjects) {
-      if (nSubjects <= 10) {
-        return '#F83008';
-      } else if (nSubjects <= 25) {
-        return '#F8B108';
-      } else {
-        return '#FAE1A6';
-      }
     },
   },
 };

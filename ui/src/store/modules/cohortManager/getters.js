@@ -1,15 +1,24 @@
 import { nest } from 'd3-collection';
 import { getters, state as stateTypes } from './types';
+import { makeHierarchy, getInputVariablesFromQueries } from '@/utils/helpers';
 
 export default {
   [getters.HAS_USER_FILTERED_INPUT_VARIABLES]: state => {
-    const NO_QUERIES = 0;
     const queries = state[stateTypes.QUERIES];
+    const inputVars = state[stateTypes.INPUT_VARIABLES];
+    const q2m = getInputVariablesFromQueries(queries, inputVars);
+    return q2m.length > 0;
+  },
+  [getters.HAS_USER_FILTERED_OUTPUT_VARIABLES]: state => {
+    const queries = state[stateTypes.QUERIES];
+    const inputVars = state[stateTypes.INPUT_VARIABLES];
+    const outputVars = state[stateTypes.OUTPUT_VARIABLES];
 
-    return (
-      Object.entries(queries).length > NO_QUERIES &&
-      queries.constructor === Object
-    );
+    var nQueries = Object.entries(queries).length;
+    const q2m = getInputVariablesFromQueries(queries, inputVars);
+    var nInputVarQueries = q2m.length;
+
+    return nInputVarQueries < nQueries;
   },
   [getters.HAS_USER_SELECTED_COHORT]: state => {
     const cohort = state[stateTypes.COHORT];
@@ -66,7 +75,7 @@ export default {
     //         ...variable.observation_ontology,
     //         type: 'observation',
     //       }));
-    const outputVariables = !state.cohort.input_variables
+    const inputVariables = !state.cohort.input_variables
       ? []
       : state.cohort.input_variables
           .filter(variable => variable.observation_ontology != null)
@@ -94,10 +103,11 @@ export default {
               ...variable.observation_ontology,
               id: `${dimension}-${variable.observation_ontology_id}`,
               label,
+              is_longitudinal: variable.is_longitudinal,
               type: 'observation',
             };
           });
-    return outputVariables;
+    return inputVariables;
   },
   [getters.FIND_COHORT_OBSERVATION_OUTPUT_VARIABLES]: state => {
     const outputVariables = !state.cohort.output_variables

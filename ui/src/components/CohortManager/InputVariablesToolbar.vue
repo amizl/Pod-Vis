@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-toolbar card dense flat :color="getToolbarColor()" class="rounded-lg">
+    <v-toolbar card dense flat :class="getToolbarClass()" class="rounded-lg">
       <v-toolbar-items>
         <input-variables-dialog @dialogOpened="opened" />
       </v-toolbar-items>
@@ -20,10 +20,16 @@
       >
       <v-spacer />
       <v-toolbar-items>
-        <v-chip disabled color="#3F51B5" class="white--text title"
+        <v-chip
+          disabled
+          class="white--text title"
+          :style="'background: ' + colors['cohort']"
           >Selected Cohort - {{ animatedNumber }}</v-chip
         >
-        <v-chip disabled color="#FAE1A6" class="primary--text title"
+        <v-chip
+          disabled
+          class="primary--text title"
+          :style="'background: ' + colors['population']"
           >Study Population - {{ unfilteredData.length }}</v-chip
         >
       </v-toolbar-items>
@@ -64,6 +70,7 @@ import InputVariablesDialog from '@/components/CohortManager/InputVariablesDialo
 import { mapState } from 'vuex';
 import { state } from '@/store/modules/cohortManager/types';
 import TWEEN from '@tweenjs/tween.js';
+import { colors } from '@/utils/colors';
 
 export default {
   components: {
@@ -82,6 +89,7 @@ export default {
   data() {
     return {
       tweenData: 0,
+      colors: colors,
     };
   },
   computed: {
@@ -95,9 +103,9 @@ export default {
     },
   },
   watch: {
-    filteredData(oldData, newData) {
-      const startValue = newData.length;
-      const endValue = oldData.length;
+    filteredData(newData, oldData) {
+      const startValue = oldData.length;
+      const endValue = newData.length;
       const vm = this;
       function animate() {
         if (TWEEN.update()) {
@@ -137,11 +145,11 @@ export default {
         .start();
       animate();
     },
-    getToolbarColor() {
+    getToolbarClass() {
       if (this.highlighted) {
-        return 'rgb(247,216,206,0.5)';
+        return 'toolbar_step_highlight';
       } else {
-        return 'white';
+        return '';
       }
     },
     opened() {

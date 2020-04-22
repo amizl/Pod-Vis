@@ -79,13 +79,8 @@
     </v-stepper>
 
     <!-- substep trackers -->
-    <v-stepper
-      v-if="step === '2'"
-      :value="substep"
-      model="substep"
-      :style="currentStepStyle"
-    >
-      <v-stepper-header>
+    <v-stepper v-if="step === '2'" :value="substep" model="substep">
+      <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step :complete="substep !== '2.1' || step === '3'" step="2.1"
           >Choose Datasets
           <span
@@ -107,13 +102,8 @@
       </v-stepper-header>
     </v-stepper>
 
-    <v-stepper
-      v-if="step === '3'"
-      :value="substep"
-      model="substep"
-      :style="currentStepStyle"
-    >
-      <v-stepper-header>
+    <v-stepper v-if="step === '3'" :value="substep" model="substep">
+      <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step
           :complete="inputVariables.length > 0 || substep >= 3.4"
           step="3.1"
@@ -190,13 +180,8 @@
       </v-stepper-items>
     </v-stepper>
 
-    <v-stepper
-      v-if="step === '4'"
-      :value="substep"
-      model="substep"
-      :style="currentStepStyle"
-    >
-      <v-stepper-header>
+    <v-stepper v-if="step === '4'" :value="substep" model="substep">
+      <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step step="4.1"
           >Choose a variable from the One-Way ANOVA table (top), then click on
           one of the p-values in the Tukey/Range HSD test table (bottom) to
@@ -206,13 +191,8 @@
       </v-stepper-header>
     </v-stepper>
 
-    <v-stepper
-      v-if="step === '5'"
-      :value="substep"
-      model="substep"
-      :style="currentStepStyle"
-    >
-      <v-stepper-header>
+    <v-stepper v-if="step === '5'" :value="substep" model="substep">
+      <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step step="5.1"
           >Explore all the data for a chosen variable and set of cohorts. Click
           on an outcome variable in the Summary View (top) then choose one or
@@ -256,12 +236,6 @@ export default {
     },
     collectionId: {
       type: Number,
-      required: false,
-    },
-    currentStepStyle: {
-      type: String,
-      default:
-        'background: rgb(247,216,206,0.5); border-left: 1px dotted black; border-right: 1px dotted black; border-top: 1px dotted black;',
       required: false,
     },
   },
@@ -314,14 +288,14 @@ export default {
       this.$router.push('/datasets');
     },
     stepStyle(step) {
-      if (step === this.step) {
-        return this.currentStepStyle + ' cursor: pointer;';
-      } else {
-        return 'cursor: pointer;';
-      }
+      return 'cursor: pointer;';
     },
     stepClass(step) {
-      return 'pb-2';
+      if (step === this.step) {
+        return 'tracker_step_highlight pb-2';
+      } else {
+        return 'pb-2';
+      }
     },
     // Transitions between major steps
     gotoHomepage() {

@@ -26,7 +26,7 @@
               ? xScale(bin.length)
               : 0
           "
-          fill="#F8D580"
+          :fill="colors['population']"
           :opacity="getOpacity('population')"
         />
         <!-- Plot population minus selected cohort -->
@@ -42,7 +42,7 @@
               : 0
           "
           :width="getNonCohortWidth(left, bin)"
-          fill="#3FB551"
+          :fill="colors['nonCohort']"
           :opacity="getOpacity('non-cohort')"
         />
         <rect
@@ -57,7 +57,7 @@
               : 0
           "
           :width="getCohortWidth(left, bin)"
-          fill="#3F51B5"
+          :fill="colors['cohort']"
           :opacity="getOpacity('cohort')"
         />
 
@@ -67,10 +67,10 @@
           r="7"
           :cx="left ? w : 0"
           :cy="mean"
-          fill="blue"
-          stroke="#2bdb60"
-          stroke-width="2"
-          fill-opacity=".8"
+          :fill="colors['cohort-circle-fill']"
+          :stroke="colors['cohort-circle-stroke']"
+          :stroke-width="colors['cohort-circle-stroke-width']"
+          :fill-opacity="colors['cohort-circle-fill-opacity']"
         >
           <title>Cohort mean value</title>
         </circle>
@@ -80,10 +80,10 @@
           r="7"
           :cx="left ? w : 0"
           :cy="populationMean"
-          stroke="#f8d537"
-          fill="#F88123"
-          stroke-width="2"
-          fill-opacity=".8"
+          :fill="colors['population-circle-fill']"
+          :stroke="colors['population-circle-stroke']"
+          :stroke-width="colors['population-circle-stroke-width']"
+          :fill-opacity="colors['population-circle-fill-opacity']"
         >
           <title>Population mean value</title>
         </circle>
@@ -121,6 +121,7 @@ import { axisTop, axisLeft, axisRight } from 'd3-axis';
 import resize from 'vue-resize-directive';
 // Components
 // import AnimatedRect from './HistogramBar.vue';
+import { colors } from '@/utils/colors';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -173,6 +174,10 @@ export default {
       type: Number,
       required: true,
     },
+    variable: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
@@ -182,9 +187,9 @@ export default {
       height: 0,
       margin: {
         top: 20,
-        right: 25,
+        right: 30,
         bottom: 10,
-        left: 25,
+        left: 30,
       },
       filter: undefined,
       selected: [],
@@ -197,6 +202,7 @@ export default {
       populationCounts: {},
       mean: undefined,
       populationMean: undefined,
+      colors: colors,
     };
   },
   computed: {
@@ -206,6 +212,13 @@ export default {
       dimensions: state.DIMENSIONS,
       highlightedSubset: state.HIGHLIGHTED_SUBSET,
     }),
+    num_bins() {
+      if (this.variable.value_type === 'decimal' && this.yDomain < 30) {
+        return this.yDomain + 1;
+      } else {
+        return 30;
+      }
+    },
     w() {
       const { left, right } = this.margin;
       const { width } = this;
@@ -235,7 +248,7 @@ export default {
       return histogram()
         .value(d => +d)
         .domain(this.yScale.domain())
-        .thresholds(this.yScale.ticks(30));
+        .thresholds(this.yScale.ticks(this.num_bins));
     },
     popBins() {
       const popBins = this.hist(this.populationData);
@@ -249,11 +262,6 @@ export default {
     },
     bins() {
       return this.hist(this.data);
-      // return histogram()
-      //   .domain(this.xScale.domain())
-      //   .thresholds(this.xScale.ticks(30))(this.data);
-      // .domain(this.cohortXScale.domain())
-      // .thresholds(this.cohortXScale.ticks(30))(this.data);
     },
     popMinusBins() {
       // subtract bins from population bins to get popMinusBins
@@ -428,28 +436,28 @@ export default {
      */
     getClosestBins() {
       const { selection } = event;
-      const [low, high] = selection.map(this.yScale.invert);
-
-      // Get closest bin to our lower selection
-      const closestBinToLow = this.bins
-        .map(bin => bin.x0)
-        .map(x0 => Math.abs(x0 - low))
-        .reduce((acc, currVal) => Math.min(acc, currVal));
-      const newLowIdx = this.bins.findIndex(
-        bin => Math.abs(bin.x0 - low) === closestBinToLow
-      );
-      const newLow = this.bins[newLowIdx].x0;
-      // Get closest bin to our higher selection
-      const closestBinToHigh = this.bins
+      const [upper, lower] = selection.map(this.yScale.invert);
+      // TODO - this does not yet support flip_axis
+      // Get closest bin to our upper selection (i.e., higher up on the screen)
+      const closestBinToUpper = this.bins
         .map(bin => bin.x1)
-        .map(x1 => Math.abs(x1 - high))
+        .map(x1 => Math.abs(x1 - upper))
         .reduce((acc, currVal) => Math.min(acc, currVal));
-      const newHighIdx = this.bins.findIndex(
-        bin => Math.abs(bin.x1 - high) === closestBinToHigh
+      const newUpperIdx = this.bins.findIndex(
+        bin => Math.abs(bin.x1 - upper) === closestBinToUpper
       );
-      const newHigh = this.bins[newHighIdx].x1;
+      const newUpper = this.bins[newUpperIdx].x1;
 
-      return [newLow, newHigh].map(this.yScale);
+      // Get closest bin to our lower selection (i.e., lower down on the screen)
+      const closestBinToLower = this.bins
+        .map(bin => bin.x0)
+        .map(x0 => Math.abs(x0 - lower))
+        .reduce((acc, currVal) => Math.min(acc, currVal));
+      const newLowerIdx = this.bins.findIndex(
+        bin => Math.abs(bin.x0 - lower) === closestBinToLower
+      );
+      const newLower = this.bins[newLowerIdx].x0;
+      return [newUpper, newLower].map(this.yScale);
     },
     brushedData() {
       // Only transition after input.
@@ -476,6 +484,10 @@ export default {
       const newFilter = {
         dimension: this.dimensionName,
         filter: d => d >= invertedLow && d < invertedHigh,
+        query: {
+          minValue: invertedLow,
+          maxValue: invertedHigh,
+        },
       };
       this.addFilter(newFilter);
       // assumes at most 1 filter, which appears to be the case
@@ -499,31 +511,20 @@ export default {
       }
 
       // Appropriately place brush handles
+      var tx = this.width;
       this.handle
         .attr('display', null)
         .attr(
           'transform',
-          (d, i) => `translate(${this.width},${selection[i]}) rotate(90)`
+          (d, i) => `translate(${tx},${selection[i]}) rotate(90)`
         );
 
       // Set remap our selection to snap to closest bins
       this.selection = this.getClosestBins();
     },
     getFill(bin) {
-      if (this.selection) {
-        const [high, low] = this.selection.map(this.yScale.invert);
-        const { x0, x1 } = bin;
-
-        // Pad the high number as this might be a decimal
-        // and can cause some bars to not be colored in range
-        const PADDING = 1;
-        // Check that bin is within selection range
-        if (
-          low - PADDING <= x0 &&
-          low - PADDING <= x1 &&
-          high + PADDING >= x0 &&
-          high + PADDING >= x1
-        ) {
+      if (this.hasSelection()) {
+        if (this.isBinSelected(bin)) {
           return '#3F51B5';
         }
         return '#E8EAF6';
@@ -542,16 +543,10 @@ export default {
       const [high, low] = this.selection.map(this.yScale.invert);
       const { x0, x1 } = bin;
 
-      // Pad the high number as this might be a decimal
-      // and can cause some bars to not be colored in range
-      const PADDING = 1;
+      // padding must be adaptive - set to half the bin width/height
+      const PADDING = (x1 - x0) / 2.0;
       // Check that bin is within selection range
-      if (
-        low - PADDING <= x0 &&
-        low - PADDING <= x1 &&
-        high + PADDING >= x0 &&
-        high + PADDING >= x1
-      ) {
+      if (low - PADDING <= x0 && high + PADDING >= x1) {
         return true;
       }
       return false;
@@ -619,11 +614,11 @@ export default {
       return barWidth;
     },
     getOpacity(subset) {
-      return 0.7;
+      return 1;
     },
     resizeChart() {
       this.height = 300;
-      this.width = 100;
+      this.width = 120;
     },
   },
 };

@@ -8,6 +8,7 @@ from ..auth.exceptions import AuthFailure
 from .. import models
 import pandas as pd
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
+import sys
 
 @api.route('/subjects')
 def get_all_subjects():
@@ -624,7 +625,10 @@ def get_all_cohorts():
             if 'subject_ontology' in iv:
                 so = iv['subject_ontology']
                 so['category'] = get_subj_scale_category(so['id'])
-
+            if 'observation_ontology' in iv:
+                oo = iv['observation_ontology']
+                oo['category'] = get_obs_scale_category(oo['id'])
+                
     return jsonify({
         "success": True,
         "cohorts": cohorts_l
@@ -877,6 +881,10 @@ def compute_mannwhitneyu():
 
     pvals = []
     for output_variable in output_variables:
+        # test doesn't apply to longitudinal categorical variables
+        if output_variable['data_category'] == 'Categorical':
+            continue
+        
         # Output variables that are simply "change" or "firstVisit" will have the
         # id of "change-208" or "firstVisit-208". We want to detect this so we can
         # use the correct id
@@ -893,7 +901,7 @@ def compute_mannwhitneyu():
             if unfiltered_data[0].get(variable_id) is None:
                 continue
 
-            filtered_sample = [data.get(variable_id).get('change') for data in filtered_data]
+        filtered_sample = [data.get(variable_id).get('change') for data in filtered_data]
         unfiltered_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
         # TODO - use of 'None' default for alternative is deprecated, see https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html
         stats, pval = mannwhitneyu(filtered_sample, unfiltered_sample)
@@ -1042,6 +1050,9 @@ def create_cohort():
         if 'subject_ontology' in iv:
             so = iv['subject_ontology']
             so['category'] = get_subj_scale_category(so['id'])
+        if 'observation_ontology' in iv:
+            oo = iv['observation_ontology']
+            oo['category'] = get_obs_scale_category(oo['id'])
 
     return jsonify({
         "success": True,

@@ -31,6 +31,7 @@
               :id="`firstVisit-${dimensionName}`"
               class="ma-1"
               :dimension-name="`${variable.label} - First Visit`"
+              :variable="variable"
             />
           </v-flex>
           <v-flex
@@ -43,6 +44,7 @@
               :id="`lastVisit-${dimensionName}`"
               class="ma-1"
               :dimension-name="`${variable.label} - Last Visit`"
+              :variable="variable"
             />
           </v-flex>
         </v-layout>
@@ -61,6 +63,7 @@
             <HistogramChart
               :id="`change-${dimensionName}`"
               :dimension-name="`${variable.label} - Change`"
+              :variable="variable"
             />
           </v-flex>
           <v-flex
@@ -74,6 +77,7 @@
             <HistogramChart
               :id="`roc-${dimensionName}`"
               :dimension-name="`${variable.label} - Rate of Change`"
+              :variable="variable"
             />
           </v-flex>
         </v-layout>
