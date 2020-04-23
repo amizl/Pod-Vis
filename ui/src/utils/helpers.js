@@ -3,16 +3,23 @@ import crossfilter from 'crossfilter2';
 
 export function makeHierarchy(data) {
   const ontologies = data.map(obs => obs.ontology);
+  ontologies.forEach(o => {
+    if (!o.parent) {
+      o.parent = null;
+    }
+  });
+
   const parents = uniqBy(
-    ontologies.map(ontology => ontology.parent),
+    ontologies.map(ontology => (ontology.parent ? ontology.parent : ontology)),
     'label'
-  ).map(parent => ({
+  );
+
+  return parents.map(parent => ({
     ...parent,
     children: ontologies.filter(
-      ontology => ontology.parent.label === parent.label
+      ontology => ontology.parent && ontology.parent.label === parent.label
     ),
   }));
-  return parents;
 }
 
 export function getInputVariablesFromQueries(queries, inputVariables) {

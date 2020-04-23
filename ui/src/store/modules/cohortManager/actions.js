@@ -32,14 +32,16 @@ export default {
       const { data } = await axios.get(
         `/api/collections/${collectionId}?include=studies&include=variables`
       );
-      // massage collection data... here
 
+      // massage collection data... here
       const subjectVariables = makeHierarchy(data.collection.subject_variables);
 
       subjectVariables.forEach(subjectVariable => {
-        subjectVariable.children.forEach(child => {
-          child.type = 'subject';
-        });
+        if (subjectVariable.children) {
+          subjectVariable.children.forEach(child => {
+            child.type = 'subject';
+          });
+        }
       });
 
       // determine whether this is longitudinal or cross-sectional data
@@ -51,6 +53,7 @@ export default {
       const observationVariables = makeHierarchy(
         data.collection.observation_variables
       );
+
       // TODO:
       // These fields are hard-coded and will inevitably need to be changed.
       // For example, firstVisit and lastVisit are stored in the database as
