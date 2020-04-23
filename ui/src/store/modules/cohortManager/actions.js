@@ -42,6 +42,9 @@ export default {
             child.type = 'subject';
           });
         }
+	  if (subjectVariable.label === 'Dataset') {
+	      subjectVariable.type = 'subject';
+	  }
       });
 
       // determine whether this is longitudinal or cross-sectional data
@@ -104,14 +107,18 @@ export default {
       data.collection.subject_variables = subjectVariables;
       data.collection.observation_variables = observationVariables;
       commit(mutations.SET_COLLECTION, data.collection);
-    } catch ({ response }) {
+    } catch (e) {
       // Something went wrong...
       // user didn't have access to collection? collection not found?
       // Display notification via notifcation snackbar? Reroute? Display msg in cohort manager?
       // TODO...
 
       // Currently displays error message.
-      const notification = new ErrorNotification(response.data.error);
+	let err = e;
+	if (('response' in e) && ('data' in e.response)) {
+	    err = e.response.data.error;
+	}
+	const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     } finally {
       commit(mutations.SET_LOADING, false);
