@@ -556,7 +556,7 @@ def get_collection(collection_id):
         if 'ontology' in sv:
             so = sv['ontology']
             so['category'] = get_subj_scale_category(so['id'])
-            
+
     return jsonify(dict(success=True, collection=collection_d))
 
 @api.route("/collections/<int:collection_id>", methods=["DELETE"])
