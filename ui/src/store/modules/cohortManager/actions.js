@@ -42,9 +42,9 @@ export default {
             child.type = 'subject';
           });
         }
-	  if (subjectVariable.label === 'Dataset') {
-	      subjectVariable.type = 'subject';
-	  }
+        if (subjectVariable.label === 'Dataset') {
+          subjectVariable.type = 'subject';
+        }
       });
 
       // determine whether this is longitudinal or cross-sectional data
@@ -114,11 +114,11 @@ export default {
       // TODO...
 
       // Currently displays error message.
-	let err = e;
-	if (('response' in e) && ('data' in e.response)) {
-	    err = e.response.data.error;
-	}
-	const notification = new ErrorNotification(err);
+      let err = e;
+      if ('response' in e && 'data' in e.response) {
+        err = e.response.data.error;
+      }
+      const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     } finally {
       commit(mutations.SET_LOADING, false);
