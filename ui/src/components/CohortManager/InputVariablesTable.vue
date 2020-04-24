@@ -12,7 +12,7 @@
         <td style="font-size:0.9rem;">{{ props.item.label }}</td>
         <td>
           <v-checkbox
-            v-model="props.item.selected"
+            v-model="props.item.inSelected"
             hide-details
             @change="masterCbChange(props.item)"
           ></v-checkbox>
@@ -20,7 +20,7 @@
         <td>
           <v-checkbox
             v-if="props.item.has_first_and_last"
-            v-model="props.item.children[0].selected"
+            v-model="props.item.children[0].inSelected"
             hide-details
             @change="cbChange"
           ></v-checkbox>
@@ -28,7 +28,7 @@
         <td>
           <v-checkbox
             v-if="props.item.has_first_and_last"
-            v-model="props.item.children[1].selected"
+            v-model="props.item.children[1].inSelected"
             hide-details
             @change="cbChange"
           ></v-checkbox>
@@ -39,7 +39,7 @@
               props.item.has_first_and_last &&
                 props.item.data_category !== 'Categorical'
             "
-            v-model="props.item.children[2].selected"
+            v-model="props.item.children[2].inSelected"
             hide-details
             @change="cbChange"
           ></v-checkbox>
@@ -50,7 +50,7 @@
               props.item.has_first_and_last &&
                 props.item.data_category !== 'Categorical'
             "
-            v-model="props.item.children[3].selected"
+            v-model="props.item.children[3].inSelected"
             hide-details
             @change="cbChange"
           ></v-checkbox>
@@ -138,11 +138,11 @@ export default {
       this.inputVariables.forEach(iv => {
         if (iv.children) {
           iv.children.forEach(cv => {
-            cv.selected = cv.id in selectedVarsD;
+            cv.inSelected = cv.id in selectedVarsD;
           });
         }
 
-        iv.selected = iv.id in selectedVarsD;
+        iv.inSelected = iv.id in selectedVarsD;
       });
     },
   },
@@ -167,14 +167,14 @@ export default {
         if (iv.children && iv.children.length > 0) {
           let allSelected = true;
           iv.children.forEach(cv => {
-            if (cv.selected) {
+            if (cv.inSelected) {
               selectedInputVars.push(cv);
             } else {
               allSelected = false;
             }
           });
-          iv.selected = allSelected;
-        } else if (iv.selected) {
+          iv.inSelected = allSelected;
+        } else if (iv.inSelected) {
           selectedInputVars.push(iv);
         }
       });
@@ -189,7 +189,7 @@ export default {
       // check/uncheck all child variables to match the master checkbox
       if (v.children) {
         v.children.forEach(c => {
-          c.selected = v.selected;
+          c.inSelected = v.inSelected;
         });
       }
       this.$nextTick(() => this.updateSelectedVars());
