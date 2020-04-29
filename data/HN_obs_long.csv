@@ -92,7 +92,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 6,1,1,Research lab p16,p16 unknown
 6,1,1,Metastasis,M0
 6,1,1,Occurrence #,1st primary
-6,1,1,Time to 1st failure,2.1
+6,1,1,Time to 1st Failure,2.1
 6,1,1,2nd Failure Type,no known failure
 7,1,1,Age at death,74.7
 7,1,1,Date of Death,2009-08-02 00:00:00
@@ -162,7 +162,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 11,1,1,2nd Failure Type,no known failure
 11,1,1,Treatment Modality,CTX-RT
 11,1,1,Research lab p16,p16 unknown
-11,1,1,Time to 1st failure,0.5
+11,1,1,Time to 1st Failure,0.5
 11,1,1,1st Failure Initial Chemotherapy Agent,Cis/doce
 11,1,1,Metastasis,M0
 11,1,1,Age at death,49.2
@@ -229,7 +229,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 15,1,1,Nodal Stage,N0
 15,1,1,Date of Death,1996-08-30 00:00:00
 15,1,1,Occurrence #,1st primary
-15,1,1,Time to 1st failure,0.1
+15,1,1,Time to 1st Failure,0.1
 15,1,1,Overall Stage,I
 15,1,1,Tumor Stage,T1
 15,1,1,Tumor Site,oropharynx
@@ -321,7 +321,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 21,1,1,Occurrence #,1st primary
 21,1,1,Research lab HPV,HPV negative
 21,1,1,Clinical lab p16,p16 unkown
-21,1,1,Time to 1st failure,0.4
+21,1,1,Time to 1st Failure,0.4
 21,1,1,Treatment Modality,CTX-RT
 21,1,1,Research lab p16,p16 negative
 21,1,1,Overall Stage,III
@@ -380,7 +380,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 24,1,1,Research lab HPV,HPV positive
 24,1,1,Overall Stage,IVa
 24,1,1,Age at death,67.6
-25,1,1,Time to 1st failure,1.9
+25,1,1,Time to 1st Failure,1.9
 25,1,1,1st Failure Type,locoregional
 25,1,1,Tumor Stage,T1
 25,1,1,Overall Stage,I
@@ -400,7 +400,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 26,1,1,1st Failure Site,oropharynx
 26,1,1,Research lab HPV,HPV unknown
 26,1,1,Radiation Dosage,70.2
-26,1,1,Time to 1st failure,0.6
+26,1,1,Time to 1st Failure,0.6
 26,1,1,Overall Stage,IVa
 26,1,1,Tumor Site,oropharynx
 26,1,1,2nd Failure Type,no known failure
@@ -439,7 +439,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 28,1,1,Occurrence #,1st primary
 28,1,1,Treatment Modality,Sx & RT
 28,1,1,Nodal Stage,N3
-28,1,1,Time to 1st failure,1.4
+28,1,1,Time to 1st Failure,1.4
 28,1,1,Time to death,1.9
 28,1,1,Date of Death,2003-01-05 00:00:00
 28,1,1,Tumor Stage,T1
@@ -531,7 +531,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 34,1,1,Occurrence #,1st primary
 34,1,1,Treatment Modality,CTX-RT
 34,1,1,Date of Death,1999-09-12 00:00:00
-34,1,1,Time to 1st failure,0.3
+34,1,1,Time to 1st Failure,0.3
 34,1,1,Nodal Stage,N2
 34,1,1,Overall Stage,IVa
 34,1,1,Time to death,0.7
@@ -542,7 +542,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 34,1,1,Status,Dead w/ disease
 35,1,1,Initial Chemotherapy Agent,carbo/doce
 35,1,1,2nd Failure Type,no known failure
-35,1,1,Time to 1st failure,0.2
+35,1,1,Time to 1st Failure,0.2
 35,1,1,Overall Stage,IVa
 35,1,1,Tumor Site,oropharynx
 35,1,1,Time to death,0.8
@@ -588,7 +588,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 37,1,1,Age at death,65.8
 37,1,1,Metastasis,M0
 37,1,1,Nodal Stage,N2
-37,1,1,Time to 1st failure,5.3
+37,1,1,Time to 1st Failure,5.3
 38,1,1,Age at death,75.0
 38,1,1,Research lab HPV,HPV unknown
 38,1,1,Research lab p16,p16 unknown
@@ -615,7 +615,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 39,1,1,Tumor Site,oropharynx
 39,1,1,Tumor Stage,T4a
 39,1,1,1st Failure Type,locoregional
-39,1,1,Time to 1st failure,0.1
+39,1,1,Time to 1st Failure,0.1
 39,1,1,Initial Chemotherapy Agent,carbo/doce
 39,1,1,Treatment Modality,CTX-RT
 39,1,1,Clinical lab p16,p16 unkown
@@ -627,7 +627,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 39,1,1,Nodal Stage,N3
 39,1,1,Metastasis,M0
 40,1,1,Metastasis,M0
-40,1,1,Time to 1st failure,0.2
+40,1,1,Time to 1st Failure,0.2
 40,1,1,Clinical lab p16,p16 unkown
 40,1,1,Date of Death,2004-06-26 00:00:00
 40,1,1,Research lab HPV,HPV unknown
@@ -671,7 +671,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 42,1,1,Status,Dead w/ disease
 42,1,1,Nodal Stage,N1
 42,1,1,Tumor Stage,T4a
-42,1,1,Time to 1st failure,0.3
+42,1,1,Time to 1st Failure,0.3
 42,1,1,Radiation Dosage,70.2
 42,1,1,Occurrence #,recurrence
 42,1,1,Metastasis,M0
@@ -864,7 +864,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 55,1,1,Tumor Site,oral cavity
 55,1,1,2nd Failure Type,no known failure
 55,1,1,Age at death,58.0
-55,1,1,Time to 1st failure,0.0
+55,1,1,Time to 1st Failure,0.0
 55,1,1,Date of Death,1995-07-14 00:00:00
 55,1,1,Research lab HPV,HPV negative
 55,1,1,Radiation Dosage,65
@@ -959,7 +959,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 60,1,1,2nd Failure Type,no known failure
 61,1,1,Metastasis,M0
 61,1,1,Initial Chemotherapy Agent,cis
-61,1,1,Time to 1st failure,2.0
+61,1,1,Time to 1st Failure,2.0
 61,1,1,Tumor Site,oropharynx
 61,1,1,Treatment Modality,CTX-RT
 61,1,1,Clinical lab p16,p16 unkown
@@ -988,7 +988,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 62,1,1,Tumor Site,oropharynx
 62,1,1,2nd Failure Type,no known failure
 62,1,1,Status,Alive w/ disease
-62,1,1,Time to 1st failure,0.3
+62,1,1,Time to 1st Failure,0.3
 62,1,1,Metastasis,M0
 62,1,1,Nodal Stage,N1
 63,1,1,Nodal Stage,N2
@@ -1000,7 +1000,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 63,1,1,Age at death,53.6
 63,1,1,Time to death,2.8
 63,1,1,Clinical lab p16,p16 unkown
-63,1,1,Time to 1st failure,1.0
+63,1,1,Time to 1st Failure,1.0
 63,1,1,Tumor Stage,T1
 63,1,1,Status,Dead w/ disease
 63,1,1,Initial Chemotherapy Agent,carbo/PTX
@@ -1130,7 +1130,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 71,1,1,Clinical lab p16,p16 unkown
 71,1,1,Overall Stage,IVa
 71,1,1,2nd Failure Type,no known failure
-71,1,1,Time to 1st failure,0.3
+71,1,1,Time to 1st Failure,0.3
 71,1,1,Nodal Stage,N2
 71,1,1,Occurrence #,1st primary
 71,1,1,Status,Alive w/o disease
@@ -1207,7 +1207,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 76,1,1,1st Failure Type,locoregional
 76,1,1,Nodal Stage,N2
 76,1,1,Clinical lab p16,p16 unkown
-76,1,1,Time to 1st failure,0.4
+76,1,1,Time to 1st Failure,0.4
 76,1,1,Radiation Dosage,70.2
 76,1,1,Research lab p16,p16 positive
 76,1,1,Tumor Site,oropharynx
@@ -1271,7 +1271,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 80,1,1,Radiation Dosage,unknown
 80,1,1,Time to death,1.1
 80,1,1,1st Failure Site,oropharynx
-80,1,1,Time to 1st failure,0.6
+80,1,1,Time to 1st Failure,0.6
 80,1,1,Metastasis,M0
 80,1,1,Tumor Stage,T4a
 80,1,1,1st Failure Type,locoregional
@@ -1287,7 +1287,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 80,1,1,Status,Dead w/ disease
 80,1,1,Overall Stage,IVa
 81,1,1,Overall Stage,IVa
-81,1,1,Time to 1st failure,1.7
+81,1,1,Time to 1st Failure,1.7
 81,1,1,Nodal Stage,N2
 81,1,1,2nd Failure Type,no known failure
 81,1,1,1st Failure Type,distant
@@ -1353,7 +1353,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 84,1,1,1st Failure Treatment Modality,Sx
 84,1,1,Treatment Modality,CTX-RT
 84,1,1,2nd Failure Type,no known failure
-84,1,1,Time to 1st failure,0.4
+84,1,1,Time to 1st Failure,0.4
 84,1,1,Status,Alive w/o disease
 84,1,1,Metastasis,M0
 84,1,1,Initial Chemotherapy Agent,carbo/doce/cetux
@@ -1378,7 +1378,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 85,1,1,1st Failure Treatment Modality,CTX
 85,1,1,1st Failure Type,locoregional
 85,1,1,2nd Failure Type,no known failure
-85,1,1,Time to 1st failure,0.4
+85,1,1,Time to 1st Failure,0.4
 85,1,1,Clinical lab p16,p16 unkown
 85,1,1,Date of Death,1996-04-18 00:00:00
 86,1,1,Tumor Stage,Unknown
@@ -1404,7 +1404,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 87,1,1,2nd Failure Type,no known failure
 87,1,1,1st Failure Site,oropharynx
 87,1,1,Nodal Stage,N0
-87,1,1,Time to 1st failure,1.4
+87,1,1,Time to 1st Failure,1.4
 87,1,1,Treatment Modality,CTX-RT
 87,1,1,Research lab p16,p16 unknown
 87,1,1,Initial Chemotherapy Agent,cis/carbo
@@ -1640,7 +1640,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 103,1,1,Time to death,1.3
 103,1,1,Metastasis,M0
 103,1,1,1st Failure Type,locoregional and distant
-103,1,1,Time to 1st failure,0.3
+103,1,1,Time to 1st Failure,0.3
 103,1,1,Treatment Modality,CTX-RT
 103,1,1,Tumor Site,oropharynx
 103,1,1,Overall Stage,IVa
@@ -1671,7 +1671,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 104,1,1,Age at death,36.9
 104,1,1,Occurrence #,1st primary
 104,1,1,Date of Death,2005-10-01 00:00:00
-104,1,1,Time to 1st failure,0.1
+104,1,1,Time to 1st Failure,0.1
 105,1,1,Tumor Site,oropharynx
 105,1,1,Age at death,66.2
 105,1,1,Treatment Modality,CTX-RT
@@ -1809,7 +1809,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 113,1,1,Research lab HPV,HPV unknown
 113,1,1,1st Failure Type,locoregional
 113,1,1,Tumor Stage,T4a
-113,1,1,Time to 1st failure,1.0
+113,1,1,Time to 1st Failure,1.0
 113,1,1,Time to death,2.2
 113,1,1,Initial Chemotherapy Agent,carbo/doce
 113,1,1,Tumor Site,oropharynx
@@ -1931,7 +1931,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 120,1,1,Status,Dead unk disease
 120,1,1,Treatment Modality,CTX-RT
 120,1,1,Age at death,54.3
-120,1,1,Time to 1st failure,0.8
+120,1,1,Time to 1st Failure,0.8
 120,1,1,Nodal Stage,N2
 120,1,1,Time to death,1.0
 120,1,1,2nd Failure Type,no known failure
@@ -2017,7 +2017,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 126,1,1,Time to death,1.4
 126,1,1,Metastasis,M0
 126,1,1,Nodal Stage,N2
-126,1,1,Time to 1st failure,1.0
+126,1,1,Time to 1st Failure,1.0
 126,1,1,Clinical lab p16,p16 unkown
 126,1,1,Tumor Stage,T4a
 126,1,1,Occurrence #,1st primary
@@ -2058,7 +2058,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 128,1,1,Research lab p16,p16 positive
 128,1,1,Research lab HPV,HPV positive
 128,1,1,Clinical lab p16,p16 unkown
-128,1,1,Time to 1st failure,1.0
+128,1,1,Time to 1st Failure,1.0
 128,1,1,Metastasis,M0
 128,1,1,Tumor Site,oropharynx
 128,1,1,Initial Chemotherapy Agent,PTX/cap
@@ -2068,7 +2068,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 129,1,1,Occurrence #,1st primary
 129,1,1,1st Failure Site,oropharynx
 129,1,1,Treatment Modality,CTX-RT
-129,1,1,Time to 1st failure,0.5
+129,1,1,Time to 1st Failure,0.5
 129,1,1,Status,Dead w/ disease
 129,1,1,Metastasis,M0
 129,1,1,2nd Failure Type,no known failure
@@ -2092,7 +2092,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 130,1,1,Research lab p16,p16 positive
 130,1,1,Status,Dead unk disease
 130,1,1,Tumor Stage,T3
-130,1,1,Time to 1st failure,0.2
+130,1,1,Time to 1st Failure,0.2
 130,1,1,Age at death,47.6
 130,1,1,Time to death,1.7
 130,1,1,1st Failure Type,locoregional
@@ -2216,7 +2216,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 138,1,1,Metastasis,M0
 138,1,1,Research lab p16,p16 negative
 138,1,1,1st Failure Type,locoregional and distant
-138,1,1,Time to 1st failure,0.4
+138,1,1,Time to 1st Failure,0.4
 138,1,1,Overall Stage,IVa
 138,1,1,Tumor Stage,T3
 138,1,1,Time to death,0.7
@@ -2410,7 +2410,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 150,1,1,1st Failure Type,locoregional
 150,1,1,2nd Failure Type,no known failure
 150,1,1,Metastasis,M0
-150,1,1,Time to 1st failure,1.9
+150,1,1,Time to 1st Failure,1.9
 150,1,1,Time to death,2.7
 150,1,1,Tumor Stage,T4a
 151,1,1,Age at death,85.9
@@ -2447,13 +2447,13 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 152,1,1,1st Failure Type,locoregional
 152,1,1,Tumor Stage,T3
 152,1,1,Nodal Stage,N2
-152,1,1,Time to 1st failure,0.1
+152,1,1,Time to 1st Failure,0.1
 153,1,1,Age at death,60.9
 153,1,1,Time to death,3.9
 153,1,1,Research lab p16,p16 positive
 153,1,1,Occurrence #,1st primary
 153,1,1,1st Failure Type,distant
-153,1,1,Time to 1st failure,0.9
+153,1,1,Time to 1st Failure,0.9
 153,1,1,Treatment Modality,CTX-RT
 153,1,1,Research lab HPV,HPV unknown
 153,1,1,Tumor Site,oropharynx
@@ -2468,7 +2468,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 153,1,1,Date of Death,2007-07-29 00:00:00
 153,1,1,Overall Stage,IVa
 154,1,1,Research lab p16,p16 negative
-154,1,1,Time to 1st failure,0.2
+154,1,1,Time to 1st Failure,0.2
 154,1,1,Clinical lab p16,p16 unkown
 154,1,1,Metastasis,M0
 154,1,1,Age at death,51.8
@@ -2544,7 +2544,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 158,1,1,1st Failure Site,oropharynx
 158,1,1,Research lab HPV,HPV unknown
 158,1,1,2nd Failure Type,no known failure
-158,1,1,Time to 1st failure,1.2
+158,1,1,Time to 1st Failure,1.2
 158,1,1,Tumor Site,oropharynx
 158,1,1,Occurrence #,1st primary
 158,1,1,1st Failure Treatment Modality,Sx
@@ -2739,7 +2739,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 170,1,1,Radiation Dosage,70.2
 170,1,1,Status,Dead w/ disease
 170,1,1,Tumor Stage,T2
-170,1,1,Time to 1st failure,1.3
+170,1,1,Time to 1st Failure,1.3
 170,1,1,Treatment Modality,CTX-RT
 170,1,1,Date of Death,2004-07-29 00:00:00
 170,1,1,Tumor Site,oropharynx
@@ -2751,7 +2751,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 171,1,1,Occurrence #,1st primary
 171,1,1,Research lab p16,p16 negative
 171,1,1,Tumor Site,oropharynx
-171,1,1,Time to 1st failure,1.0
+171,1,1,Time to 1st Failure,1.0
 171,1,1,Age at death,65.6
 171,1,1,Time to death,1.6
 171,1,1,Clinical lab p16,p16 unkown
@@ -2769,7 +2769,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 172,1,1,2nd Failure Type,no known failure
 172,1,1,Clinical lab p16,p16 unkown
 172,1,1,Age at death,57.2
-172,1,1,Time to 1st failure,0.5
+172,1,1,Time to 1st Failure,0.5
 172,1,1,Tumor Stage,T4a
 172,1,1,Tumor Site,oropharynx
 172,1,1,Research lab p16,p16 negative
@@ -2795,7 +2795,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 173,1,1,Treatment Modality,Sx
 173,1,1,1st Failure Type,locoregional
 173,1,1,Tumor Site,oropharynx
-173,1,1,Time to 1st failure,-0.0
+173,1,1,Time to 1st Failure,-0.0
 173,1,1,Nodal Stage,N2
 173,1,1,2nd Failure Type,no known failure
 173,1,1,Status,Alive unk disease
@@ -2845,7 +2845,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 176,1,1,Radiation Dosage,70.2
 176,1,1,Tumor Site,oropharynx
 176,1,1,Nodal Stage,N2
-176,1,1,Time to 1st failure,0.6
+176,1,1,Time to 1st Failure,0.6
 176,1,1,Overall Stage,IVa
 176,1,1,Treatment Modality,CTX-RT
 176,1,1,Time to death,1.7
@@ -2881,7 +2881,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 178,1,1,Time to death,0.7
 178,1,1,Tumor Stage,T4a
 178,1,1,Metastasis,M0
-178,1,1,Time to 1st failure,0.4
+178,1,1,Time to 1st Failure,0.4
 178,1,1,2nd Failure Type,no known failure
 178,1,1,Treatment Modality,CTX-RT
 179,1,1,1st Failure Type,no known failure
@@ -2911,7 +2911,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 180,1,1,1st Failure Treatment Modality,Sx
 180,1,1,Tumor Site,oropharynx
 180,1,1,Age at death,71.9
-180,1,1,Time to 1st failure,0.1
+180,1,1,Time to 1st Failure,0.1
 180,1,1,Radiation Dosage,70.2
 180,1,1,1st Failure Site,oropharynx
 180,1,1,Overall Stage,IVa
@@ -2935,7 +2935,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 181,1,1,Metastasis,M0
 181,1,1,Occurrence #,1st primary
 181,1,1,Treatment Modality,Sx & CTX-RT
-181,1,1,Time to 1st failure,0.3
+181,1,1,Time to 1st Failure,0.3
 181,1,1,Research lab HPV,HPV unknown
 181,1,1,1st Failure Type,locoregional
 181,1,1,Radiation Dosage,70.2
@@ -2943,7 +2943,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 182,1,1,1st Failure Type,locoregional
 182,1,1,Metastasis,M0
 182,1,1,Research lab HPV,HPV negative
-182,1,1,Time to 1st failure,0.1
+182,1,1,Time to 1st Failure,0.1
 182,1,1,Age at death,67.9
 182,1,1,Tumor Site,oropharynx
 182,1,1,Occurrence #,1st primary
@@ -3000,7 +3000,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 185,1,1,Tumor Stage,T4b
 185,1,1,1st Failure Site,oropharynx
 185,1,1,Treatment Modality,CTX-RT
-185,1,1,Time to 1st failure,0.3
+185,1,1,Time to 1st Failure,0.3
 185,1,1,Time to death,1.1
 185,1,1,Radiation Dosage,70.2
 185,1,1,Status,Dead w/ disease
@@ -3249,7 +3249,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 201,1,1,1st Failure Type,locoregional
 201,1,1,2nd Failure Type,no known failure
 201,1,1,Occurrence #,1st primary
-201,1,1,Time to 1st failure,0.3
+201,1,1,Time to 1st Failure,0.3
 201,1,1,Treatment Modality,CTX-RT
 201,1,1,Clinical lab p16,p16 unkown
 201,1,1,Overall Stage,IVa
@@ -3363,7 +3363,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 207,1,1,Research lab p16,p16 unknown
 207,1,1,Time to death,2.5
 207,1,1,2nd Failure Type,no known failure
-207,1,1,Time to 1st failure,1.3
+207,1,1,Time to 1st Failure,1.3
 207,1,1,1st Failure Second Line Chemotherapy Agent,unk
 207,1,1,1st Failure Treatment Modality,CTX
 207,1,1,Occurrence #,1st primary
@@ -3418,7 +3418,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 210,1,1,Treatment Modality,CTX-RT
 210,1,1,Metastasis,M0
 210,1,1,Radiation Dosage,70.2
-210,1,1,Time to 1st failure,0.1
+210,1,1,Time to 1st Failure,0.1
 210,1,1,Nodal Stage,N2
 210,1,1,2nd Failure Type,no known failure
 211,1,1,Tumor Site,oropharynx
@@ -3476,7 +3476,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 214,1,1,Metastasis,M0
 214,1,1,Nodal Stage,N2
 214,1,1,Radiation Dosage,70.2
-214,1,1,Time to 1st failure,0.2
+214,1,1,Time to 1st Failure,0.2
 214,1,1,Occurrence #,1st primary
 214,1,1,Research lab p16,p16 unknown
 214,1,1,Research lab HPV,HPV unknown
@@ -3524,7 +3524,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 217,1,1,Research lab HPV,HPV unknown
 217,1,1,1st Failure Radiation Dosage,60
 217,1,1,Treatment Modality,CTX-RT
-217,1,1,Time to 1st failure,0.3
+217,1,1,Time to 1st Failure,0.3
 217,1,1,Clinical lab p16,p16 unkown
 217,1,1,Metastasis,M0
 217,1,1,Occurrence #,1st primary
@@ -3563,7 +3563,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 219,1,1,Clinical lab p16,p16 unkown
 219,1,1,Age at death,62.5
 219,1,1,Status,Dead w/ disease
-219,1,1,Time to 1st failure,0.4
+219,1,1,Time to 1st Failure,0.4
 219,1,1,Research lab p16,p16 negative
 219,1,1,Occurrence #,1st primary
 219,1,1,Metastasis,M0
@@ -3581,7 +3581,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 220,1,1,Treatment Modality,RT
 220,1,1,Time to death,0.5
 220,1,1,Nodal Stage,N2
-220,1,1,Time to 1st failure,0.1
+220,1,1,Time to 1st Failure,0.1
 220,1,1,Metastasis,M0
 220,1,1,Research lab p16,p16 negative
 220,1,1,Status,Dead w/ disease
@@ -3653,7 +3653,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 224,1,1,Treatment Modality,CTX-RT
 224,1,1,Metastasis,M0
 224,1,1,Research lab p16,p16 unknown
-224,1,1,Time to 1st failure,0.6
+224,1,1,Time to 1st Failure,0.6
 224,1,1,Age at death,42.5
 224,1,1,1st Failure Site,oropharynx
 224,1,1,2nd Failure Type,no known failure
@@ -3696,7 +3696,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 227,1,1,Occurrence #,1st primary
 227,1,1,Radiation Dosage,70.2
 227,1,1,Date of Death,1996-09-01 00:00:00
-227,1,1,Time to 1st failure,0.1
+227,1,1,Time to 1st Failure,0.1
 227,1,1,Research lab p16,p16 negative
 227,1,1,Metastasis,M0
 227,1,1,Clinical lab p16,p16 unkown
@@ -3730,7 +3730,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 228,1,1,1st Failure Initial Chemotherapy Agent,cis/doce
 228,1,1,Occurrence #,1st primary
 228,1,1,Treatment Modality,RT
-228,1,1,Time to 1st failure,0.7
+228,1,1,Time to 1st Failure,0.7
 228,1,1,1st Failure Treatment Modality,CTX
 229,1,1,Status,Dead unk disease
 229,1,1,Nodal Stage,N1
@@ -3759,7 +3759,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 230,1,1,2nd Failure Type,no known failure
 230,1,1,Time to death,2.0
 230,1,1,Overall Stage,IVa
-230,1,1,Time to 1st failure,1.4
+230,1,1,Time to 1st Failure,1.4
 230,1,1,Treatment Modality,Sx & RT
 230,1,1,Status,Dead w/ disease
 230,1,1,Occurrence #,1st primary
@@ -3790,7 +3790,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 232,1,1,Second Line Chemotherapy Agent,carb
 232,1,1,Overall Stage,IVb
 232,1,1,Radiation Dosage,70.2
-232,1,1,Time to 1st failure,0.2
+232,1,1,Time to 1st Failure,0.2
 232,1,1,Clinical lab p16,p16 unkown
 232,1,1,Status,Dead w/ disease
 232,1,1,Metastasis,M0
@@ -3822,7 +3822,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 234,1,1,Occurrence #,1st primary
 234,1,1,Date of Death,2004-07-29 00:00:00
 234,1,1,Radiation Dosage,70.2
-234,1,1,Time to 1st failure,0.7
+234,1,1,Time to 1st Failure,0.7
 234,1,1,Metastasis,M0
 234,1,1,Treatment Modality,CTX-RT
 234,1,1,Tumor Site,oropharynx
@@ -3903,7 +3903,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 238,1,1,Radiation Dosage,76.8
 238,1,1,Nodal Stage,N0
 238,1,1,1st Failure Type,locoregional
-238,1,1,Time to 1st failure,0.8
+238,1,1,Time to 1st Failure,0.8
 238,1,1,Time to death,2.3
 239,1,1,Time to death,0.7
 239,1,1,Nodal Stage,N3
@@ -3920,7 +3920,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 239,1,1,Initial Chemotherapy Agent,carbo
 239,1,1,Metastasis,M0
 239,1,1,Research lab HPV,HPV negative
-239,1,1,Time to 1st failure,0.1
+239,1,1,Time to 1st Failure,0.1
 239,1,1,Clinical lab p16,p16 unkown
 239,1,1,Date of Death,1994-07-01 00:00:00
 239,1,1,1st Failure Type,locoregional
@@ -4038,7 +4038,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 247,1,1,Status,Dead w/ disease
 247,1,1,Occurrence #,1st primary
 247,1,1,Date of Death,2006-11-01 00:00:00
-247,1,1,Time to 1st failure,0.2
+247,1,1,Time to 1st Failure,0.2
 247,1,1,Initial Chemotherapy Agent,PTX
 247,1,1,Treatment Modality,CTX-RT
 247,1,1,Research lab HPV,HPV negative
@@ -4104,7 +4104,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 250,1,1,Age at death,67.5
 250,1,1,Date of Death,2008-03-16 00:00:00
 251,1,1,Tumor Stage,T4a
-251,1,1,Time to 1st failure,1.7
+251,1,1,Time to 1st Failure,1.7
 251,1,1,Occurrence #,1st primary
 251,1,1,1st Failure Treatment Modality,CTX
 251,1,1,2nd Failure Type,no known failure
@@ -4123,7 +4123,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 251,1,1,Treatment Modality,Sx & RT
 251,1,1,Date of Death,1996-02-13 00:00:00
 251,1,1,Status,Dead w/ disease
-252,1,1,Time to 1st failure,1.8
+252,1,1,Time to 1st Failure,1.8
 252,1,1,Overall Stage,IVa
 252,1,1,Radiation Dosage,70.2
 252,1,1,Research lab HPV,HPV negative
@@ -4161,13 +4161,13 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 253,1,1,Time to death,7.7
 253,1,1,Overall Stage,IVa
 253,1,1,2nd Failure Type,no known failure
-253,1,1,Time to 1st failure,0.8
+253,1,1,Time to 1st Failure,0.8
 253,1,1,Occurrence #,1st primary
 254,1,1,1st Failure Site,oropharynx
 254,1,1,Time to death,3.8
 254,1,1,Nodal Stage,N0
 254,1,1,Treatment Modality,RT
-254,1,1,Time to 1st failure,2.1
+254,1,1,Time to 1st Failure,2.1
 254,1,1,Age at death,61.2
 254,1,1,Status,Dead w/ disease
 254,1,1,2nd Failure Type,no known failure
@@ -4240,7 +4240,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 258,1,1,Research lab HPV,HPV positive
 258,1,1,Status,Alive w/o disease
 258,1,1,Treatment Modality,Sx & RT
-258,1,1,Time to 1st failure,0.7
+258,1,1,Time to 1st Failure,0.7
 258,1,1,Tumor Site,oropharynx
 258,1,1,1st Failure Site,oropharynx
 258,1,1,1st Failure Treatment Modality,Sx
@@ -4281,7 +4281,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 260,1,1,Age at death,58.4
 260,1,1,Research lab HPV,HPV unknown
 260,1,1,Metastasis,M0
-260,1,1,Time to 1st failure,0.5
+260,1,1,Time to 1st Failure,0.5
 260,1,1,Research lab p16,p16 positive
 261,1,1,Occurrence #,1st primary
 261,1,1,Research lab HPV,HPV unknown
@@ -4310,7 +4310,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 262,1,1,Metastasis,M0
 262,1,1,Tumor Site,oropharynx
 262,1,1,Overall Stage,IVa
-262,1,1,Time to 1st failure,0.2
+262,1,1,Time to 1st Failure,0.2
 262,1,1,Status,Dead w/ disease
 262,1,1,Clinical lab p16,p16 unkown
 262,1,1,1st Failure Site,oropharynx
@@ -4332,7 +4332,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 263,1,1,Clinical lab p16,p16 unkown
 263,1,1,Overall Stage,IVc
 263,1,1,Status,Dead w/ disease
-263,1,1,Time to 1st failure,0.0
+263,1,1,Time to 1st Failure,0.0
 263,1,1,Tumor Stage,T4a
 263,1,1,Radiation Dosage,50
 263,1,1,Treatment Modality,CTX-RT
@@ -4361,7 +4361,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 264,1,1,Radiation Dosage,45
 264,1,1,Research lab HPV,HPV unknown
 264,1,1,Treatment Modality,CTX-RT
-264,1,1,Time to 1st failure,0.1
+264,1,1,Time to 1st Failure,0.1
 265,1,1,Treatment Modality,Unknown
 265,1,1,Research lab p16,p16 positive
 265,1,1,Tumor Stage,T2
@@ -4386,7 +4386,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 266,1,1,Tumor Stage,T4a
 266,1,1,Status,Dead w/ disease
 266,1,1,Radiation Dosage,70.2
-266,1,1,Time to 1st failure,10.4
+266,1,1,Time to 1st Failure,10.4
 266,1,1,Age at death,46.9
 266,1,1,1st Failure Site,oropharynx
 266,1,1,Research lab p16,p16 negative
@@ -4434,7 +4434,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 268,1,1,Tumor Stage,T2
 268,1,1,Treatment Modality,CTX-RT
 268,1,1,Initial Chemotherapy Agent,carbo/doce
-269,1,1,Time to 1st failure,0.6
+269,1,1,Time to 1st Failure,0.6
 269,1,1,Research lab HPV,HPV negative
 269,1,1,Treatment Modality,CTX-RT
 269,1,1,2nd Failure Type,no known failure
@@ -4567,7 +4567,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 277,1,1,Tumor Stage,T4a
 277,1,1,Research lab HPV,HPV unknown
 277,1,1,Radiation Dosage,unknown
-277,1,1,Time to 1st failure,0.1
+277,1,1,Time to 1st Failure,0.1
 277,1,1,Treatment Modality,CTX-RT
 277,1,1,Clinical lab p16,p16 unkown
 277,1,1,Status,Dead w/o disease
@@ -4695,7 +4695,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 284,1,1,Status,Dead w/ disease
 284,1,1,Overall Stage,IVa
 284,1,1,Tumor Stage,T4a
-284,1,1,Time to 1st failure,0.4
+284,1,1,Time to 1st Failure,0.4
 284,1,1,Occurrence #,Unknown
 284,1,1,Radiation Dosage,70.2
 284,1,1,Date of Death,1999-03-04 00:00:00
@@ -4731,7 +4731,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 286,1,1,Time to death,2.4
 286,1,1,Research lab HPV,HPV unknown
 286,1,1,Clinical lab p16,p16 unkown
-286,1,1,Time to 1st failure,2.0
+286,1,1,Time to 1st Failure,2.0
 286,1,1,Tumor Stage,T2
 286,1,1,Metastasis,M0
 286,1,1,Tumor Site,oropharynx
@@ -4939,7 +4939,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 299,1,1,Clinical lab p16,p16 unkown
 299,1,1,Date of Death,2003-06-28 00:00:00
 299,1,1,Status,Dead w/ disease
-299,1,1,Time to 1st failure,1.5
+299,1,1,Time to 1st Failure,1.5
 299,1,1,Research lab p16,p16 unknown
 299,1,1,1st Failure Type,locoregional
 299,1,1,Overall Stage,IVa
@@ -5011,7 +5011,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 303,1,1,Radiation Dosage,70.2
 303,1,1,Overall Stage,IVa
 303,1,1,Age at death,73.7
-303,1,1,Time to 1st failure,0.7
+303,1,1,Time to 1st Failure,0.7
 303,1,1,Treatment Modality,CTX-RT
 304,1,1,Tumor Site,oropharynx
 304,1,1,Tumor Stage,T2
@@ -5100,7 +5100,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 309,1,1,Clinical lab p16,p16 unkown
 309,1,1,Treatment Modality,RT
 309,1,1,Radiation Dosage,72
-309,1,1,Time to 1st failure,0.2
+309,1,1,Time to 1st Failure,0.2
 309,1,1,Overall Stage,IVa
 309,1,1,Nodal Stage,N2
 309,1,1,Age at death,81.6
@@ -5277,7 +5277,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 320,1,1,Tumor Site,oropharynx
 320,1,1,Metastasis,M0
 320,1,1,Clinical lab p16,p16 unkown
-320,1,1,Time to 1st failure,0.8
+320,1,1,Time to 1st Failure,0.8
 320,1,1,Status,Dead w/ disease
 320,1,1,Time to death,3.3
 320,1,1,Date of Death,2009-05-10 00:00:00
@@ -5377,7 +5377,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 326,1,1,2nd Failure Type,no known failure
 326,1,1,Metastasis,M0
 326,1,1,Age at death,45.4
-326,1,1,Time to 1st failure,0.2
+326,1,1,Time to 1st Failure,0.2
 326,1,1,Nodal Stage,N2
 326,1,1,Tumor Stage,T4a
 326,1,1,Occurrence #,recurrence
@@ -5418,7 +5418,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 329,1,1,Initial Chemotherapy Agent,carbo/doce
 329,1,1,Time to death,2.2
 329,1,1,Age at death,47.3
-329,1,1,Time to 1st failure,0.8
+329,1,1,Time to 1st Failure,0.8
 329,1,1,Treatment Modality,CTX-RT
 329,1,1,Nodal Stage,N2
 329,1,1,Status,Dead w/ disease
@@ -5437,7 +5437,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 330,1,1,Tumor Site,oropharynx
 330,1,1,2nd Failure Type,no known failure
 330,1,1,1st Failure Initial Chemotherapy Agent,carbo/doce
-330,1,1,Time to 1st failure,0.8
+330,1,1,Time to 1st Failure,0.8
 330,1,1,Overall Stage,II
 330,1,1,Research lab HPV,HPV unknown
 330,1,1,Metastasis,M0
@@ -5461,7 +5461,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 331,1,1,Occurrence #,1st primary
 331,1,1,Age at death,67.6
 331,1,1,Clinical lab p16,p16 unkown
-331,1,1,Time to 1st failure,0.5
+331,1,1,Time to 1st Failure,0.5
 331,1,1,Overall Stage,III
 331,1,1,Treatment Modality,CTX-RT
 331,1,1,Status,Dead w/ disease
@@ -5555,7 +5555,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 337,1,1,Research lab p16,p16 unknown
 337,1,1,Age at death,77.9
 337,1,1,Clinical lab p16,p16 unkown
-337,1,1,Time to 1st failure,0.7
+337,1,1,Time to 1st Failure,0.7
 337,1,1,Date of Death,1999-06-16 00:00:00
 337,1,1,Research lab HPV,HPV unknown
 337,1,1,Occurrence #,1st primary
@@ -5617,7 +5617,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 341,1,1,Overall Stage,III
 341,1,1,Clinical lab p16,p16 unkown
 341,1,1,Research lab p16,p16 negative
-341,1,1,Time to 1st failure,3.0
+341,1,1,Time to 1st Failure,3.0
 341,1,1,1st Failure Type,locoregional
 341,1,1,Tumor Site,oropharynx
 341,1,1,Age at death,55.8
@@ -5691,7 +5691,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 345,1,1,Research lab p16,p16 unknown
 345,1,1,Status,Dead w/o disease
 345,1,1,Research lab HPV,HPV unknown
-346,1,1,Time to 1st failure,0.0
+346,1,1,Time to 1st Failure,0.0
 346,1,1,Nodal Stage,N2
 346,1,1,1st Failure Type,locoregional
 346,1,1,Clinical lab p16,p16 unkown
@@ -5745,7 +5745,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 349,1,1,Overall Stage,IVa
 349,1,1,Research lab HPV,HPV positive
 349,1,1,Nodal Stage,N2
-349,1,1,Time to 1st failure,0.1
+349,1,1,Time to 1st Failure,0.1
 349,1,1,Status,Dead unk disease
 349,1,1,2nd Failure Type,no known failure
 349,1,1,Age at death,68.4
@@ -5809,7 +5809,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 352,1,1,Research lab HPV,HPV negative
 352,1,1,Status,Dead w/ disease
 352,1,1,Tumor Site,oropharynx
-352,1,1,Time to 1st failure,0.3
+352,1,1,Time to 1st Failure,0.3
 352,1,1,Age at death,52.8
 352,1,1,Nodal Stage,N3
 352,1,1,Occurrence #,1st primary
@@ -5825,7 +5825,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 353,1,1,Status,Dead w/ disease
 353,1,1,Nodal Stage,N2
 353,1,1,1st Failure Type,distant
-353,1,1,Time to 1st failure,2.3
+353,1,1,Time to 1st Failure,2.3
 353,1,1,Tumor Site,oropharynx
 353,1,1,Metastasis,M0
 353,1,1,Overall Stage,IVa
@@ -5973,7 +5973,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 362,1,1,1st Failure Radiation Dosage,60
 362,1,1,Overall Stage,I
 362,1,1,Status,Dead w/o disease
-362,1,1,Time to 1st failure,0.1
+362,1,1,Time to 1st Failure,0.1
 362,1,1,1st Failure Initial Chemotherapy Agent,carbo/doce
 362,1,1,Treatment Modality,RT
 362,1,1,Date of Death,2006-10-09 00:00:00
@@ -6003,7 +6003,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 364,1,1,Time to death,3.3
 364,1,1,1st Failure Type,locoregional
 364,1,1,Treatment Modality,Sx & RT
-364,1,1,Time to 1st failure,0.1
+364,1,1,Time to 1st Failure,0.1
 364,1,1,Nodal Stage,N0
 364,1,1,Research lab HPV,HPV negative
 364,1,1,Clinical lab p16,p16 unkown
@@ -6087,7 +6087,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 369,1,1,Initial Chemotherapy Agent,carbo/doce
 369,1,1,Occurrence #,1st primary
 369,1,1,Radiation Dosage,70.2
-369,1,1,Time to 1st failure,1.1
+369,1,1,Time to 1st Failure,1.1
 369,1,1,Tumor Stage,T4a
 369,1,1,Research lab HPV,HPV negative
 369,1,1,Time to death,1.8
@@ -6113,7 +6113,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 370,1,1,Overall Stage,IVa
 370,1,1,Status,Alive w/o disease
 370,1,1,Nodal Stage,N2
-371,1,1,Time to 1st failure,0.3
+371,1,1,Time to 1st Failure,0.3
 371,1,1,Age at death,64.8
 371,1,1,Initial Chemotherapy Agent,unknown
 371,1,1,Date of Death,1999-07-10 00:00:00
@@ -6145,7 +6145,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 372,1,1,Metastasis,M0
 372,1,1,Occurrence #,1st primary
 373,1,1,Overall Stage,IVa
-373,1,1,Time to 1st failure,1.7
+373,1,1,Time to 1st Failure,1.7
 373,1,1,Treatment Modality,Sx
 373,1,1,Tumor Site,oropharynx
 373,1,1,Research lab HPV,HPV positive
@@ -6197,7 +6197,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 376,1,1,Initial Chemotherapy Agent,cis/doce
 376,1,1,Occurrence #,1st primary
 376,1,1,1st Failure Type,distant
-376,1,1,Time to 1st failure,0.2
+376,1,1,Time to 1st Failure,0.2
 376,1,1,Clinical lab p16,p16 unkown
 376,1,1,Tumor Stage,T1
 376,1,1,Time to death,1.5
@@ -6409,7 +6409,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 388,1,1,Initial Chemotherapy Agent,Cis
 389,1,1,Date of Death,1993-11-15 00:00:00
 389,1,1,Nodal Stage,N2
-389,1,1,Time to 1st failure,0.0
+389,1,1,Time to 1st Failure,0.0
 389,1,1,Research lab HPV,HPV negative
 389,1,1,Occurrence #,1st primary
 389,1,1,Treatment Modality,CTX-RT
@@ -6439,7 +6439,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 390,1,1,Nodal Stage,N2
 390,1,1,Age at death,54.9
 390,1,1,Date of Death,2000-06-07 00:00:00
-390,1,1,Time to 1st failure,0.8
+390,1,1,Time to 1st Failure,0.8
 390,1,1,Tumor Site,oropharynx
 390,1,1,Research lab HPV,HPV negative
 390,1,1,Occurrence #,1st primary
@@ -6450,7 +6450,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 391,1,1,Tumor Site,oropharynx
 391,1,1,1st Failure Type,distant
 391,1,1,Initial Chemotherapy Agent,cis
-391,1,1,Time to 1st failure,0.9
+391,1,1,Time to 1st Failure,0.9
 391,1,1,2nd Failure Type,no known failure
 391,1,1,Research lab HPV,HPV negative
 391,1,1,Tumor Stage,T3
@@ -6497,7 +6497,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 394,1,1,1st Failure Treatment Modality,Sx & CTX
 394,1,1,Date of Death,2007-09-15 00:00:00
 394,1,1,Overall Stage,IVa
-394,1,1,Time to 1st failure,0.8
+394,1,1,Time to 1st Failure,0.8
 394,1,1,Status,Dead w/ disease
 394,1,1,1st Failure Type,locoregional
 394,1,1,Research lab p16,p16 unknown
@@ -6560,7 +6560,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 397,1,1,Research lab p16,p16 negative
 397,1,1,Date of Death,1993-07-15 00:00:00
 397,1,1,2nd Failure Type,no known failure
-397,1,1,Time to 1st failure,0.1
+397,1,1,Time to 1st Failure,0.1
 397,1,1,Treatment Modality,RT
 397,1,1,Overall Stage,IVa
 397,1,1,Tumor Site,oropharynx
@@ -6595,7 +6595,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 399,1,1,1st Failure Treatment Modality,Sx & CTX
 399,1,1,Clinical lab p16,p16 unkown
 399,1,1,Age at death,51.8
-399,1,1,Time to 1st failure,0.4
+399,1,1,Time to 1st Failure,0.4
 399,1,1,Treatment Modality,CTX-RT
 399,1,1,Overall Stage,IVa
 399,1,1,Initial Chemotherapy Agent,carbo/doce
@@ -6630,7 +6630,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 401,1,1,1st Failure Treatment Modality,Sx & RT
 401,1,1,1st Failure Type,locoregional
 401,1,1,Overall Stage,III
-401,1,1,Time to 1st failure,1.5
+401,1,1,Time to 1st Failure,1.5
 401,1,1,Tumor Stage,T3
 401,1,1,Metastasis,M0
 401,1,1,Status,Dead w/ disease
@@ -6686,7 +6686,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 404,1,1,Date of Death,2003-10-21 00:00:00
 404,1,1,1st Failure Type,locoregional
 404,1,1,Radiation Dosage,72
-404,1,1,Time to 1st failure,0.3
+404,1,1,Time to 1st Failure,0.3
 404,1,1,Time to death,0.7
 404,1,1,2nd Failure Type,no known failure
 404,1,1,Research lab HPV,HPV unknown
@@ -6842,7 +6842,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 414,1,1,Research lab p16,p16 unknown
 414,1,1,Status,Dead w/ disease
 415,1,1,Overall Stage,IVa
-415,1,1,Time to 1st failure,4.9
+415,1,1,Time to 1st Failure,4.9
 415,1,1,Status,Dead unk disease
 415,1,1,Treatment Modality,CTX-RT
 415,1,1,Tumor Site,oral cavity
@@ -6894,12 +6894,12 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 417,1,1,Initial Chemotherapy Agent,cap/doce/gemcitabine
 417,1,1,2nd Failure Type,no known failure
 417,1,1,Status,Dead unk disease
-417,1,1,Time to 1st failure,0.8
+417,1,1,Time to 1st Failure,0.8
 417,1,1,Research lab p16,p16 unknown
 418,1,1,Nodal Stage,N0
 418,1,1,2nd Failure Type,no known failure
 418,1,1,Occurrence #,1st primary
-418,1,1,Time to 1st failure,1.5
+418,1,1,Time to 1st Failure,1.5
 418,1,1,Status,Dead unk disease
 418,1,1,Research lab HPV,HPV unknown
 418,1,1,Tumor Stage,T1
@@ -6915,7 +6915,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 418,1,1,Overall Stage,I
 419,1,1,Radiation Dosage,72.6
 419,1,1,Research lab p16,p16 unknown
-419,1,1,Time to 1st failure,4.8
+419,1,1,Time to 1st Failure,4.8
 419,1,1,Metastasis,M0
 419,1,1,Status,Alive w/ disease
 419,1,1,Tumor Stage,T2
@@ -6957,7 +6957,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 421,1,1,Research lab HPV,HPV negative
 421,1,1,Tumor Stage,T4a
 421,1,1,Clinical lab p16,p16 unkown
-421,1,1,Time to 1st failure,1.9
+421,1,1,Time to 1st Failure,1.9
 421,1,1,Tumor Site,oropharynx
 421,1,1,Time to death,4.3
 422,1,1,Metastasis,Unknown
@@ -7132,7 +7132,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 433,1,1,Nodal Stage,N2
 433,1,1,Date of Death,2003-08-10 00:00:00
 433,1,1,Status,Dead w/ disease
-433,1,1,Time to 1st failure,1.3
+433,1,1,Time to 1st Failure,1.3
 433,1,1,Treatment Modality,CTX-RT
 433,1,1,Radiation Dosage,72
 433,1,1,Overall Stage,IVa
@@ -7144,7 +7144,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 433,1,1,Occurrence #,1st primary
 434,1,1,1st Failure Type,locoregional
 434,1,1,Research lab p16,p16 negative
-434,1,1,Time to 1st failure,0.6
+434,1,1,Time to 1st Failure,0.6
 434,1,1,Nodal Stage,N0
 434,1,1,Treatment Modality,RT
 434,1,1,Overall Stage,II
@@ -7162,7 +7162,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 434,1,1,Date of Death,1995-05-31 00:00:00
 435,1,1,Nodal Stage,N3
 435,1,1,Overall Stage,IVb
-435,1,1,Time to 1st failure,0.6
+435,1,1,Time to 1st Failure,0.6
 435,1,1,Research lab p16,p16 unknown
 435,1,1,Age at death,53.1
 435,1,1,Initial Chemotherapy Agent,carbo/doce
@@ -7180,7 +7180,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 435,1,1,1st Failure Type,locoregional and distant
 435,1,1,Treatment Modality,CTX-RT
 436,1,1,1st Failure Treatment Modality,Sx & CTX-RT
-436,1,1,Time to 1st failure,5.1
+436,1,1,Time to 1st Failure,5.1
 436,1,1,Clinical lab p16,p16 unkown
 436,1,1,Radiation Dosage,76.8
 436,1,1,Nodal Stage,N0
@@ -7219,7 +7219,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 438,1,1,Tumor Site,oropharynx
 438,1,1,1st Failure Type,locoregional and distant
 438,1,1,Metastasis,M0
-438,1,1,Time to 1st failure,-0.2
+438,1,1,Time to 1st Failure,-0.2
 438,1,1,Occurrence #,1st primary
 438,1,1,2nd Failure Type,no known failure
 438,1,1,Date of Death,2008-04-13 00:00:00
@@ -7337,12 +7337,12 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 445,1,1,2nd Failure Type,no known failure
 445,1,1,Tumor Stage,T4a
 445,1,1,Radiation Dosage,702
-445,1,1,Time to 1st failure,7.8
+445,1,1,Time to 1st Failure,7.8
 445,1,1,Nodal Stage,N0
 446,1,1,Nodal Stage,N2
 446,1,1,Time to death,2.9
 446,1,1,Tumor Site,oropharynx
-446,1,1,Time to 1st failure,0.2
+446,1,1,Time to 1st Failure,0.2
 446,1,1,Age at death,57.6
 446,1,1,Radiation Dosage,70
 446,1,1,Metastasis,M0
@@ -7448,7 +7448,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 452,1,1,Radiation Dosage,unknown
 452,1,1,Research lab p16,p16 unknown
 452,1,1,Date of Death,2004-09-17 00:00:00
-452,1,1,Time to 1st failure,0.1
+452,1,1,Time to 1st Failure,0.1
 452,1,1,Occurrence #,1st primary
 452,1,1,Status,Dead w/ disease
 452,1,1,Research lab HPV,HPV unknown
@@ -7571,7 +7571,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 460,1,1,1st Failure Type,locoregional
 460,1,1,Date of Death,2002-10-04 00:00:00
 460,1,1,Research lab HPV,HPV unknown
-460,1,1,Time to 1st failure,0.8
+460,1,1,Time to 1st Failure,0.8
 460,1,1,Nodal Stage,N0
 460,1,1,Tumor Site,oropharynx
 460,1,1,Occurrence #,1st primary
@@ -7690,7 +7690,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 467,1,1,Age at death,42.5
 467,1,1,Research lab p16,p16 negative
 467,1,1,Treatment Modality,CTX-RT
-467,1,1,Time to 1st failure,0.1
+467,1,1,Time to 1st Failure,0.1
 467,1,1,Time to death,0.5
 467,1,1,Radiation Dosage,70.2
 468,1,1,Nodal Stage,N0
@@ -7774,7 +7774,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 472,1,1,Date of Death,2005-01-24 00:00:00
 472,1,1,1st Failure Type,no known failure
 472,1,1,Status,Dead unk disease
-473,1,1,Time to 1st failure,0.6
+473,1,1,Time to 1st Failure,0.6
 473,1,1,Occurrence #,1st primary
 473,1,1,Time to death,1.2
 473,1,1,Tumor Stage,T2
@@ -7865,7 +7865,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 478,1,1,Status,Dead unk disease
 478,1,1,Tumor Stage,T4a
 479,1,1,Research lab p16,p16 unknown
-479,1,1,Time to 1st failure,0.2
+479,1,1,Time to 1st Failure,0.2
 479,1,1,Treatment Modality,Sx
 479,1,1,Age at death,81.8
 479,1,1,Tumor Site,oral cavity
@@ -7961,7 +7961,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 487,1,1,Overall Stage,IVa
 487,1,1,Age at death,50.9
 487,1,1,2nd Failure Type,no known failure
-487,1,1,Time to 1st failure,0.5
+487,1,1,Time to 1st Failure,0.5
 487,1,1,Treatment Modality,Sx & CTX-RT
 487,1,1,Research lab HPV,HPV unknown
 487,1,1,Initial Chemotherapy Agent,cis
@@ -8009,10 +8009,10 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 490,1,1,Status,Dead w/ disease
 490,1,1,Nodal Stage,N3
 490,1,1,Age at death,48.9
-490,1,1,Time to 1st failure,0.8
+490,1,1,Time to 1st Failure,0.8
 490,1,1,Treatment Modality,CTX-RT
 490,1,1,Overall Stage,IVb
-491,1,1,Time to 1st failure,-1.2
+491,1,1,Time to 1st Failure,-1.2
 491,1,1,Nodal Stage,N2
 491,1,1,Treatment Modality,CTX-RT
 491,1,1,2nd Failure Type,no known failure
@@ -8069,12 +8069,12 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 493,1,1,Metastasis,M0
 493,1,1,Nodal Stage,N2
 493,1,1,Age at death,57.3
-493,1,1,Time to 1st failure,2.4
+493,1,1,Time to 1st Failure,2.4
 493,1,1,Research lab HPV,HPV positive
 493,1,1,Initial Chemotherapy Agent,Carbo/PTX
 494,1,1,1st Failure Treatment Modality,Sx & CTX-RT
 494,1,1,1st Failure Initial Chemotherapy Agent,carbo/doce
-494,1,1,Time to 1st failure,0.6
+494,1,1,Time to 1st Failure,0.6
 494,1,1,Clinical lab p16,p16 unkown
 494,1,1,1st Failure Type,locoregional
 494,1,1,Initial Chemotherapy Agent,carbo/PTX
@@ -8113,7 +8113,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 495,1,1,Treatment Modality,CTX-RT
 495,1,1,Initial Chemotherapy Agent,doce/Carbo
 495,1,1,Clinical lab p16,p16 unkown
-495,1,1,Time to 1st failure,3.5
+495,1,1,Time to 1st Failure,3.5
 495,1,1,1st Failure Initial Chemotherapy Agent,cis/doce
 495,1,1,Radiation Dosage,70.2
 495,1,1,Overall Stage,IVb
@@ -8229,7 +8229,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 503,1,1,Tumor Stage,T4a
 505,1,1,1st Failure Radiation Dosage,63
 505,1,1,Research lab HPV,HPV unknown
-505,1,1,Time to 1st failure,1.9
+505,1,1,Time to 1st Failure,1.9
 505,1,1,Treatment Modality,Sx
 505,1,1,Status,Dead w/ disease
 505,1,1,Date of Death,2010-06-28 00:00:00
@@ -8267,7 +8267,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 507,1,1,Research lab HPV,HPV unknown
 507,1,1,1st Failure Treatment Modality,Sx
 507,1,1,Tumor Stage,T1
-507,1,1,Time to 1st failure,1.2
+507,1,1,Time to 1st Failure,1.2
 507,1,1,Metastasis,M0
 507,1,1,1st Failure Site,oral cavity
 507,1,1,2nd Failure Type,no known failure
@@ -8298,7 +8298,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 509,1,1,Occurrence #,1st primary
 510,1,1,Clinical lab p16,p16 unkown
 510,1,1,Overall Stage,IVa
-510,1,1,Time to 1st failure,0.2
+510,1,1,Time to 1st Failure,0.2
 510,1,1,Tumor Stage,T4a
 510,1,1,1st Failure Site,oral cavity
 510,1,1,Occurrence #,1st primary
@@ -8365,7 +8365,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 514,1,1,Nodal Stage,N0
 514,1,1,Tumor Stage,T4a
 514,1,1,2nd Failure Type,no known failure
-514,1,1,Time to 1st failure,0.3
+514,1,1,Time to 1st Failure,0.3
 514,1,1,Time to death,0.4
 514,1,1,Status,Dead w/ disease
 514,1,1,Research lab p16,p16 unknown
@@ -8396,7 +8396,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 516,1,1,Nodal Stage,N2
 516,1,1,2nd Failure Type,no known failure
 516,1,1,Overall Stage,IVa
-516,1,1,Time to 1st failure,0.8
+516,1,1,Time to 1st Failure,0.8
 516,1,1,1st Failure Type,locoregional and distant
 516,1,1,Clinical lab p16,p16 unkown
 516,1,1,Research lab HPV,HPV unknown
@@ -8418,7 +8418,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 517,1,1,Nodal Stage,N0
 517,1,1,1st Failure Initial Chemotherapy Agent,unknown
 517,1,1,1st Failure Site,oral cavity
-517,1,1,Time to 1st failure,6.6
+517,1,1,Time to 1st Failure,6.6
 517,1,1,1st Failure Type,locoregional
 517,1,1,2nd Failure Type,no known failure
 517,1,1,Overall Stage,IVa
@@ -8532,7 +8532,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 526,1,1,Occurrence #,recurrence
 526,1,1,Tumor Stage,T4a
 526,1,1,Overall Stage,IVa
-526,1,1,Time to 1st failure,0.0
+526,1,1,Time to 1st Failure,0.0
 526,1,1,Research lab p16,p16 unknown
 526,1,1,Metastasis,M0
 526,1,1,Treatment Modality,CTX
@@ -8556,7 +8556,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 527,1,1,Clinical lab p16,p16 unkown
 527,1,1,Research lab p16,p16 unknown
 527,1,1,Tumor Stage,T4a
-527,1,1,Time to 1st failure,0.9
+527,1,1,Time to 1st Failure,0.9
 527,1,1,Status,Dead unk disease
 527,1,1,Age at death,81.8
 527,1,1,Date of Death,2008-08-16 00:00:00
@@ -8625,7 +8625,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 532,1,1,Metastasis,M0
 532,1,1,1st Failure Treatment Modality,CTX-RT
 532,1,1,Initial Chemotherapy Agent,carbo/PTX/amifostine
-532,1,1,Time to 1st failure,0.5
+532,1,1,Time to 1st Failure,0.5
 532,1,1,Date of Death,2003-08-09 00:00:00
 532,1,1,1st Failure Site,oral cavity
 532,1,1,Age at death,66.3
@@ -8695,7 +8695,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 536,1,1,Occurrence #,1st primary
 536,1,1,Status,Dead w/ disease
 536,1,1,Clinical lab p16,p16 unkown
-536,1,1,Time to 1st failure,0.5
+536,1,1,Time to 1st Failure,0.5
 536,1,1,Research lab p16,p16 unknown
 536,1,1,Age at death,87.7
 536,1,1,2nd Failure Type,no known failure
@@ -8837,7 +8837,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 545,1,1,Tumor Stage,T1
 545,1,1,1st Failure Treatment Modality,Sx
 545,1,1,2nd Failure Type,no known failure
-545,1,1,Time to 1st failure,2.9
+545,1,1,Time to 1st Failure,2.9
 545,1,1,Occurrence #,1st primary
 546,1,1,Date of Death,2004-09-11 00:00:00
 546,1,1,Age at death,55.9
@@ -8929,7 +8929,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 552,1,1,Overall Stage,II
 552,1,1,Time to death,7.5
 552,1,1,Tumor Stage,T2
-552,1,1,Time to 1st failure,6.9
+552,1,1,Time to 1st Failure,6.9
 552,1,1,Treatment Modality,Sx
 552,1,1,Research lab HPV,HPV unknown
 552,1,1,Clinical lab p16,p16 unkown
@@ -8947,7 +8947,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 553,1,1,Research lab p16,p16 unknown
 553,1,1,Clinical lab p16,p16 unkown
 553,1,1,Age at death,80.4
-553,1,1,Time to 1st failure,1.3
+553,1,1,Time to 1st Failure,1.3
 553,1,1,2nd Failure Type,no known failure
 553,1,1,Status,Dead unk disease
 553,1,1,Nodal Stage,N0
@@ -8971,7 +8971,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 555,1,1,Status,Alive unk disease
 555,1,1,Occurrence #,1st primary
 555,1,1,Metastasis,M0
-555,1,1,Time to 1st failure,7.1
+555,1,1,Time to 1st Failure,7.1
 555,1,1,Clinical lab p16,p16 unkown
 555,1,1,2nd Failure Type,no known failure
 555,1,1,Research lab HPV,HPV unknown
@@ -9090,7 +9090,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 563,1,1,Status,Dead w/ disease
 563,1,1,Date of Death,2010-12-02 00:00:00
 563,1,1,Age at death,62.4
-563,1,1,Time to 1st failure,3.6
+563,1,1,Time to 1st Failure,3.6
 563,1,1,Tumor Stage,T1
 563,1,1,Occurrence #,1st primary
 563,1,1,1st Failure Type,locoregional
@@ -9138,7 +9138,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 566,1,1,2nd Failure Type,no known failure
 566,1,1,Tumor Stage,T4b
 566,1,1,Overall Stage,IVb
-566,1,1,Time to 1st failure,0.6
+566,1,1,Time to 1st Failure,0.6
 566,1,1,1st Failure Radiation Dosage,59.4
 566,1,1,Tumor Site,oral cavity
 566,1,1,Nodal Stage,N1
@@ -9207,7 +9207,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 570,1,1,Metastasis,M0
 570,1,1,Age at death,92.5
 570,1,1,Overall Stage,I
-570,1,1,Time to 1st failure,0.9
+570,1,1,Time to 1st Failure,0.9
 570,1,1,Tumor Stage,T1
 570,1,1,2nd Failure Type,no known failure
 570,1,1,Status,Dead unk disease
@@ -9242,7 +9242,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 572,1,1,Radiation Dosage,60
 572,1,1,Clinical lab p16,p16 unkown
 572,1,1,Tumor Stage,T4a
-572,1,1,Time to 1st failure,0.4
+572,1,1,Time to 1st Failure,0.4
 572,1,1,Research lab HPV,HPV unknown
 572,1,1,1st Failure Type,locoregional
 573,1,1,Status,Alive w/o disease
@@ -9303,7 +9303,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 576,1,1,1st Failure Type,distant
 576,1,1,Occurrence #,1st primary
 576,1,1,Clinical lab p16,p16 unkown
-576,1,1,Time to 1st failure,5.5
+576,1,1,Time to 1st Failure,5.5
 576,1,1,Treatment Modality,Sx & RT
 576,1,1,Status,Dead unk disease
 577,1,1,Tumor Stage,T1
@@ -9444,7 +9444,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 587,1,1,Overall Stage,I
 587,1,1,Nodal Stage,N0
 588,1,1,Clinical lab p16,p16 unkown
-588,1,1,Time to 1st failure,1.5
+588,1,1,Time to 1st Failure,1.5
 588,1,1,2nd Failure Type,no known failure
 588,1,1,Research lab HPV,HPV unknown
 588,1,1,Occurrence #,1st primary
@@ -9465,7 +9465,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 589,1,1,Treatment Modality,Sx
 589,1,1,Time to death,1.4
 589,1,1,Status,Alive unk disease
-589,1,1,Time to 1st failure,1.1
+589,1,1,Time to 1st Failure,1.1
 589,1,1,Occurrence #,1st primary
 589,1,1,Overall Stage,IVa
 589,1,1,Research lab p16,p16 unknown
@@ -9520,7 +9520,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 592,1,1,Research lab p16,p16 unknown
 592,1,1,Date of Death,2011-09-02 00:00:00
 592,1,1,Treatment Modality,Sx & RT
-592,1,1,Time to 1st failure,4.5
+592,1,1,Time to 1st Failure,4.5
 592,1,1,Status,Dead unk disease
 592,1,1,1st Failure Radiation Dosage,69.6
 592,1,1,Research lab HPV,HPV unknown
@@ -9536,13 +9536,13 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 593,1,1,Status,Alive unk disease
 593,1,1,Tumor Site,oral cavity
 593,1,1,Tumor Stage,T2
-593,1,1,Time to 1st failure,1.2
+593,1,1,Time to 1st Failure,1.2
 593,1,1,Research lab p16,p16 unknown
 593,1,1,Clinical lab p16,p16 unkown
 593,1,1,Metastasis,M0
 593,1,1,1st Failure Treatment Modality,Sx
 593,1,1,1st Failure Site,oral cavity
-594,1,1,Time to 1st failure,0.5
+594,1,1,Time to 1st Failure,0.5
 594,1,1,Status,Dead w/ disease
 594,1,1,Date of Death,2006-07-01 00:00:00
 594,1,1,Metastasis,M0
@@ -9585,7 +9585,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 596,1,1,Tumor Stage,T4a
 596,1,1,Treatment Modality,Sx & CTX
 596,1,1,2nd Failure Type,no known failure
-596,1,1,Time to 1st failure,-0.0
+596,1,1,Time to 1st Failure,-0.0
 596,1,1,Metastasis,M0
 596,1,1,Research lab p16,p16 unknown
 596,1,1,Overall Stage,IVb
@@ -9620,7 +9620,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 598,1,1,2nd Failure Type,no known failure
 598,1,1,Clinical lab p16,p16 unkown
 598,1,1,Status,Alive w/ disease
-598,1,1,Time to 1st failure,2.7
+598,1,1,Time to 1st Failure,2.7
 598,1,1,Occurrence #,1st primary
 598,1,1,Metastasis,M0
 599,1,1,Metastasis,M0
@@ -9681,7 +9681,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 602,1,1,1st Failure Site,oral cavity
 602,1,1,Metastasis,M0
 602,1,1,Radiation Dosage,59.4
-602,1,1,Time to 1st failure,5.4
+602,1,1,Time to 1st Failure,5.4
 602,1,1,Clinical lab p16,p16 unkown
 602,1,1,Research lab p16,p16 unknown
 602,1,1,1st Failure Treatment Modality,Sx & CTX-RT
@@ -9719,7 +9719,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 605,1,1,Tumor Site,oral cavity
 605,1,1,Date of Death,2006-08-22 00:00:00
 605,1,1,2nd Failure Type,no known failure
-605,1,1,Time to 1st failure,3.0
+605,1,1,Time to 1st Failure,3.0
 605,1,1,Metastasis,M0
 605,1,1,Nodal Stage,N1
 605,1,1,Time to death,5.6
@@ -9880,7 +9880,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 615,1,1,Metastasis,M0
 615,1,1,Research lab HPV,HPV unknown
 616,1,1,Status,Dead w/ disease
-616,1,1,Time to 1st failure,0.9
+616,1,1,Time to 1st Failure,0.9
 616,1,1,Occurrence #,recurrence
 616,1,1,Treatment Modality,Sx
 616,1,1,Tumor Stage,T2
@@ -10241,7 +10241,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 640,1,1,2nd Failure Type,no known failure
 640,1,1,Second Line Chemotherapy Agent,cap
 640,1,1,Initial Chemotherapy Agent,carbo/PTX
-640,1,1,Time to 1st failure,0.4
+640,1,1,Time to 1st Failure,0.4
 642,1,1,Overall Stage,III
 642,1,1,Nodal Stage,N0
 642,1,1,1st Failure Type,no known failure
@@ -10272,7 +10272,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 643,1,1,Metastasis,M0
 643,1,1,Research lab HPV,HPV unknown
 644,1,1,Overall Stage,IVa
-644,1,1,Time to 1st failure,0.7
+644,1,1,Time to 1st Failure,0.7
 644,1,1,Occurrence #,1st primary
 644,1,1,1st Failure Treatment Modality,CTX
 644,1,1,Date of Death,2004-09-15 00:00:00
@@ -10327,7 +10327,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 647,1,1,2nd Failure Type,no known failure
 647,1,1,1st Failure Type,locoregional
 647,1,1,Clinical lab p16,p16 unkown
-647,1,1,Time to 1st failure,4.0
+647,1,1,Time to 1st Failure,4.0
 647,1,1,Treatment Modality,Sx
 647,1,1,Research lab p16,p16 unknown
 647,1,1,Nodal Stage,N0
@@ -10454,7 +10454,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 655,1,1,Research lab HPV,HPV unknown
 655,1,1,2nd Failure Type,no known failure
 655,1,1,Clinical lab p16,p16 unkown
-655,1,1,Time to 1st failure,1.0
+655,1,1,Time to 1st Failure,1.0
 655,1,1,Overall Stage,II
 655,1,1,Status,Alive w/o disease
 655,1,1,Research lab p16,p16 unknown
@@ -10465,7 +10465,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 655,1,1,Nodal Stage,N0
 655,1,1,Metastasis,M0
 656,1,1,Treatment Modality,Sx & RT
-656,1,1,Time to 1st failure,0.5
+656,1,1,Time to 1st Failure,0.5
 656,1,1,Tumor Site,oral cavity
 656,1,1,Nodal Stage,N2
 656,1,1,1st Failure Treatment Modality,Sx
@@ -10529,7 +10529,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 659,1,1,Time to death,5.7
 659,1,1,Overall Stage,II
 659,1,1,1st Failure Site,oral cavity
-659,1,1,Time to 1st failure,0.5
+659,1,1,Time to 1st Failure,0.5
 659,1,1,2nd Failure Type,no known failure
 659,1,1,1st Failure Treatment Modality,Sx
 659,1,1,Tumor Stage,T2
@@ -10582,7 +10582,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 662,1,1,1st Failure Type,locoregional
 662,1,1,Tumor Stage,T1
 662,1,1,1st Failure Site,oral cavity
-662,1,1,Time to 1st failure,1.4
+662,1,1,Time to 1st Failure,1.4
 662,1,1,Overall Stage,I
 662,1,1,Research lab p16,p16 unknown
 662,1,1,Metastasis,M0
@@ -10605,10 +10605,10 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 664,1,1,1st Failure Treatment Modality,Sx
 664,1,1,Status,Dead w/ disease
 664,1,1,Nodal Stage,N0
-664,1,1,Time to 1st failure,1.2
+664,1,1,Time to 1st Failure,1.2
 664,1,1,Date of Death,2008-02-09 00:00:00
 665,1,1,2nd Failure Type,no known failure
-665,1,1,Time to 1st failure,3.0
+665,1,1,Time to 1st Failure,3.0
 665,1,1,Research lab p16,p16 unknown
 665,1,1,Metastasis,M0
 665,1,1,Nodal Stage,N1
@@ -10786,7 +10786,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 677,1,1,Status,Alive w/o disease
 677,1,1,Overall Stage,II
 677,1,1,Metastasis,M0
-677,1,1,Time to 1st failure,1.0
+677,1,1,Time to 1st Failure,1.0
 677,1,1,Research lab p16,p16 unknown
 677,1,1,Treatment Modality,Sx
 677,1,1,Nodal Stage,N0
@@ -10931,7 +10931,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 686,1,1,1st Failure Type,no known failure
 688,1,1,2nd Failure Type,no known failure
 688,1,1,Research lab p16,p16 unknown
-688,1,1,Time to 1st failure,5.0
+688,1,1,Time to 1st Failure,5.0
 688,1,1,Occurrence #,1st primary
 688,1,1,Research lab HPV,HPV unknown
 688,1,1,1st Failure Treatment Modality,Sx & RT
@@ -10957,7 +10957,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 689,1,1,Research lab p16,p16 unknown
 689,1,1,Age at death,59.0
 689,1,1,2nd Failure Type,no known failure
-689,1,1,Time to 1st failure,0.1
+689,1,1,Time to 1st Failure,0.1
 689,1,1,Radiation Dosage,unknown
 689,1,1,Overall Stage,IVa
 689,1,1,1st Failure Type,locoregional
@@ -10968,7 +10968,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 690,1,1,Status,Dead w/ disease
 690,1,1,Treatment Modality,Sx & RT
 690,1,1,Overall Stage,IVa
-690,1,1,Time to 1st failure,0.7
+690,1,1,Time to 1st Failure,0.7
 690,1,1,Time to death,1.4
 690,1,1,Age at death,81.4
 690,1,1,Research lab HPV,HPV unknown
@@ -10999,7 +10999,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 691,1,1,Radiation Dosage,unknown
 691,1,1,Clinical lab p16,p16 unkown
 691,1,1,1st Failure Type,distant
-691,1,1,Time to 1st failure,1.5
+691,1,1,Time to 1st Failure,1.5
 691,1,1,Status,Dead w/ disease
 692,1,1,Clinical lab p16,p16 unkown
 692,1,1,Research lab p16,p16 unknown
@@ -11042,7 +11042,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 694,1,1,Nodal Stage,N2
 694,1,1,Time to death,1.4
 694,1,1,1st Failure Type,distant
-694,1,1,Time to 1st failure,0.2
+694,1,1,Time to 1st Failure,0.2
 694,1,1,Tumor Stage,T4a
 694,1,1,Tumor Site,oral cavity
 694,1,1,Treatment Modality,Sx & CTX-RT
@@ -11075,7 +11075,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 696,1,1,Research lab p16,p16 unknown
 696,1,1,Tumor Stage,T1
 696,1,1,Nodal Stage,N0
-696,1,1,Time to 1st failure,2.9
+696,1,1,Time to 1st Failure,2.9
 696,1,1,1st Failure Type,locoregional
 696,1,1,Tumor Site,oral cavity
 696,1,1,Metastasis,M0
@@ -11125,7 +11125,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 700,1,1,1st Failure Treatment Modality,Sx & CTX-RT
 700,1,1,Nodal Stage,N2
 700,1,1,Status,Dead w/ disease
-700,1,1,Time to 1st failure,-0.1
+700,1,1,Time to 1st Failure,-0.1
 701,1,1,2nd Failure Type,no known failure
 701,1,1,Research lab p16,p16 unknown
 701,1,1,Metastasis,M0
@@ -11296,7 +11296,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 712,1,1,Tumor Stage,T4a
 712,1,1,1st Failure Treatment Modality,Sx
 712,1,1,2nd Failure Type,no known failure
-712,1,1,Time to 1st failure,2.8
+712,1,1,Time to 1st Failure,2.8
 712,1,1,Research lab p16,p16 unknown
 713,1,1,Tumor Stage,T1
 713,1,1,Overall Stage,I
@@ -11424,7 +11424,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 721,1,1,1st Failure Treatment Modality,Sx
 721,1,1,Clinical lab p16,p16 unkown
 721,1,1,Metastasis,M0
-721,1,1,Time to 1st failure,0.2
+721,1,1,Time to 1st Failure,0.2
 721,1,1,1st Failure Site,oral cavity
 721,1,1,Research lab p16,p16 unknown
 721,1,1,Nodal Stage,N0
@@ -11441,7 +11441,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 722,1,1,Treatment Modality,Sx
 722,1,1,1st Failure Type,locoregional
 722,1,1,Clinical lab p16,p16 unkown
-722,1,1,Time to 1st failure,2.5
+722,1,1,Time to 1st Failure,2.5
 722,1,1,Research lab HPV,HPV unknown
 722,1,1,2nd Failure Type,no known failure
 722,1,1,Occurrence #,1st primary
@@ -11486,7 +11486,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 725,1,1,2nd Failure Type,no known failure
 725,1,1,1st Failure Type,locoregional
 725,1,1,Research lab HPV,HPV unknown
-725,1,1,Time to 1st failure,3.2
+725,1,1,Time to 1st Failure,3.2
 725,1,1,Clinical lab p16,p16 unkown
 725,1,1,1st Failure Site,oral cavity
 725,1,1,Treatment Modality,Sx
@@ -11511,7 +11511,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 726,1,1,Status,Dead unk disease
 726,1,1,Research lab p16,p16 unknown
 726,1,1,2nd Failure Type,no known failure
-727,1,1,Time to 1st failure,0.4
+727,1,1,Time to 1st Failure,0.4
 727,1,1,Tumor Stage,T4a
 727,1,1,Time to death,0.8
 727,1,1,2nd Failure Type,no known failure
@@ -11532,7 +11532,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 728,1,1,Occurrence #,1st primary
 728,1,1,1st Failure Type,locoregional
 728,1,1,Clinical lab p16,p16 unkown
-728,1,1,Time to 1st failure,5.5
+728,1,1,Time to 1st Failure,5.5
 728,1,1,1st Failure Site,oral cavity
 728,1,1,Treatment Modality,Sx
 728,1,1,Metastasis,M0
@@ -11547,7 +11547,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 728,1,1,Research lab p16,p16 unknown
 729,1,1,Nodal Stage,N1
 729,1,1,Treatment Modality,Sx
-729,1,1,Time to 1st failure,1.0
+729,1,1,Time to 1st Failure,1.0
 729,1,1,Clinical lab p16,p16 unkown
 729,1,1,Metastasis,M0
 729,1,1,Tumor Stage,T4a
@@ -11574,7 +11574,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 730,1,1,Research lab HPV,HPV unknown
 730,1,1,Date of Death,2011-02-27 00:00:00
 730,1,1,Clinical lab p16,p16 unkown
-730,1,1,Time to 1st failure,0.2
+730,1,1,Time to 1st Failure,0.2
 730,1,1,2nd Failure Type,no known failure
 730,1,1,Metastasis,M0
 730,1,1,Tumor Site,oral cavity
@@ -11608,7 +11608,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 732,1,1,2nd Failure Type,no known failure
 732,1,1,1st Failure Type,locoregional
 732,1,1,Nodal Stage,N0
-732,1,1,Time to 1st failure,1.0
+732,1,1,Time to 1st Failure,1.0
 732,1,1,Clinical lab p16,p16 unkown
 732,1,1,Research lab p16,p16 unknown
 732,1,1,Radiation Dosage,unknown
@@ -11629,7 +11629,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 733,1,1,Date of Death,2005-04-21 00:00:00
 733,1,1,Nodal Stage,N3
 733,1,1,Status,Dead unk disease
-733,1,1,Time to 1st failure,0.7
+733,1,1,Time to 1st Failure,0.7
 733,1,1,Age at death,51.5
 733,1,1,Clinical lab p16,p16 unkown
 734,1,1,Tumor Stage,T2
@@ -11671,7 +11671,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 737,1,1,Occurrence #,1st primary
 737,1,1,Date of Death,2011-12-23 00:00:00
 737,1,1,Clinical lab p16,p16 unkown
-737,1,1,Time to 1st failure,0.8
+737,1,1,Time to 1st Failure,0.8
 737,1,1,Time to death,3.2
 737,1,1,Initial Chemotherapy Agent,carbo/doce/panitumab
 737,1,1,Tumor Site,oral cavity
@@ -11742,7 +11742,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 741,1,1,Research lab HPV,HPV unknown
 741,1,1,Overall Stage,I
 741,1,1,Tumor Site,oral cavity
-741,1,1,Time to 1st failure,0.1
+741,1,1,Time to 1st Failure,0.1
 741,1,1,Age at death,52.0
 742,1,1,Tumor Site,oral cavity
 742,1,1,Research lab p16,p16 unknown
@@ -11804,7 +11804,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 745,1,1,Overall Stage,III
 745,1,1,Nodal Stage,N0
 745,1,1,1st Failure Type,locoregional
-745,1,1,Time to 1st failure,0.2
+745,1,1,Time to 1st Failure,0.2
 745,1,1,2nd Failure Type,no known failure
 745,1,1,Tumor Site,oral cavity
 745,1,1,Initial Chemotherapy Agent,PTX
@@ -11835,7 +11835,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 747,1,1,Treatment Modality,Sx
 747,1,1,1st Failure Type,locoregional
 747,1,1,1st Failure Treatment Modality,Sx
-747,1,1,Time to 1st failure,3.0
+747,1,1,Time to 1st Failure,3.0
 747,1,1,Metastasis,M0
 747,1,1,Overall Stage,I
 747,1,1,Date of Death,2011-04-02 00:00:00
@@ -11915,7 +11915,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 752,1,1,Status,Alive w/o disease
 752,1,1,Nodal Stage,N1
 753,1,1,Tumor Stage,T1
-753,1,1,Time to 1st failure,0.7
+753,1,1,Time to 1st Failure,0.7
 753,1,1,Occurrence #,1st primary
 753,1,1,Age at death,72.7
 753,1,1,Metastasis,M0
@@ -11992,7 +11992,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 757,1,1,Nodal Stage,N2
 757,1,1,Metastasis,M0
 757,1,1,Clinical lab p16,p16 unkown
-757,1,1,Time to 1st failure,0.1
+757,1,1,Time to 1st Failure,0.1
 757,1,1,Occurrence #,1st primary
 757,1,1,Radiation Dosage,2
 757,1,1,2nd Failure Type,no known failure
@@ -12087,7 +12087,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 763,1,1,2nd Failure Type,no known failure
 763,1,1,Treatment Modality,Sx
 765,1,1,2nd Failure Type,no known failure
-765,1,1,Time to 1st failure,5.2
+765,1,1,Time to 1st Failure,5.2
 765,1,1,Research lab p16,p16 unknown
 765,1,1,Research lab HPV,HPV unknown
 765,1,1,1st Failure Site,oral cavity
@@ -12102,7 +12102,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 765,1,1,Tumor Site,oral cavity
 765,1,1,Overall Stage,I
 765,1,1,1st Failure Type,locoregional
-766,1,1,Time to 1st failure,0.3
+766,1,1,Time to 1st Failure,0.3
 766,1,1,Date of Death,2001-08-23 00:00:00
 766,1,1,Research lab p16,p16 unknown
 766,1,1,Research lab HPV,HPV unknown
@@ -12132,7 +12132,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 768,1,1,Tumor Site,oral cavity
 768,1,1,Occurrence #,1st primary
 768,1,1,1st Failure Treatment Modality,Sx
-768,1,1,Time to 1st failure,1.9
+768,1,1,Time to 1st Failure,1.9
 768,1,1,2nd Failure Type,no known failure
 768,1,1,Research lab HPV,HPV unknown
 768,1,1,Status,Dead w/ disease
@@ -12209,7 +12209,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 774,1,1,1st Failure Site,oral cavity
 774,1,1,Status,Alive unk disease
 774,1,1,Treatment Modality,Sx
-774,1,1,Time to 1st failure,0.6
+774,1,1,Time to 1st Failure,0.6
 774,1,1,Occurrence #,1st primary
 774,1,1,Tumor Stage,T1
 774,1,1,Metastasis,M0
@@ -12440,7 +12440,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 789,1,1,Tumor Stage,T1
 789,1,1,Time to death,5.2
 789,1,1,Clinical lab p16,p16 unkown
-789,1,1,Time to 1st failure,3.9
+789,1,1,Time to 1st Failure,3.9
 789,1,1,Research lab p16,p16 unknown
 789,1,1,Overall Stage,I
 789,1,1,Tumor Site,oral cavity
@@ -12479,7 +12479,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 791,1,1,Overall Stage,I
 791,1,1,1st Failure Type,locoregional
 791,1,1,1st Failure Radiation Dosage,70.2
-791,1,1,Time to 1st failure,1.4
+791,1,1,Time to 1st Failure,1.4
 791,1,1,Occurrence #,1st primary
 792,1,1,2nd Failure Type,no known failure
 792,1,1,Overall Stage,I
@@ -12541,7 +12541,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 796,1,1,Research lab p16,p16 unknown
 796,1,1,Time to death,4.2
 796,1,1,Tumor Stage,T3
-796,1,1,Time to 1st failure,0.9
+796,1,1,Time to 1st Failure,0.9
 796,1,1,Overall Stage,III
 796,1,1,Research lab HPV,HPV unknown
 796,1,1,1st Failure Treatment Modality,CTX
@@ -12567,7 +12567,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 797,1,1,Treatment Modality,Sx
 797,1,1,Metastasis,M0
 797,1,1,Occurrence #,1st primary
-797,1,1,Time to 1st failure,0.8
+797,1,1,Time to 1st Failure,0.8
 797,1,1,Date of Death,2007-11-01 00:00:00
 797,1,1,Tumor Site,oral cavity
 797,1,1,2nd Failure Type,no known failure
@@ -12616,7 +12616,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 800,1,1,Time to death,0.6
 800,1,1,Metastasis,M0
 800,1,1,Research lab HPV,HPV unknown
-800,1,1,Time to 1st failure,0.4
+800,1,1,Time to 1st Failure,0.4
 800,1,1,Age at death,82.2
 800,1,1,Overall Stage,IVa
 800,1,1,Occurrence #,1st primary
@@ -12634,7 +12634,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 801,1,1,Tumor Stage,T4a
 801,1,1,Tumor Site,oral cavity
 802,1,1,Occurrence #,1st primary
-802,1,1,Time to 1st failure,2.1
+802,1,1,Time to 1st Failure,2.1
 802,1,1,Overall Stage,IVa
 802,1,1,Research lab p16,p16 unknown
 802,1,1,Research lab HPV,HPV unknown
@@ -12675,7 +12675,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 804,1,1,Overall Stage,Unknown
 804,1,1,Tumor Stage,Unknown
 804,1,1,Treatment Modality,Sx & CTX
-804,1,1,Time to 1st failure,0.6
+804,1,1,Time to 1st Failure,0.6
 804,1,1,Nodal Stage,Unknown
 804,1,1,Metastasis,Unknown
 804,1,1,Tumor Site,oral cavity
@@ -12791,7 +12791,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 811,1,1,Treatment Modality,Sx
 811,1,1,Metastasis,M0
 811,1,1,Overall Stage,I
-811,1,1,Time to 1st failure,1.8
+811,1,1,Time to 1st Failure,1.8
 811,1,1,Clinical lab p16,p16 unkown
 811,1,1,2nd Failure Type,no known failure
 812,1,1,Clinical lab p16,p16 unkown
@@ -12820,7 +12820,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 813,1,1,Metastasis,M0
 813,1,1,Status,Dead w/ disease
 813,1,1,Occurrence #,1st primary
-813,1,1,Time to 1st failure,0.3
+813,1,1,Time to 1st Failure,0.3
 813,1,1,Radiation Dosage,61.2
 813,1,1,Time to death,0.7
 813,1,1,1st Failure Treatment Modality,CTX
@@ -12997,7 +12997,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 825,1,1,Nodal Stage,N0
 825,1,1,Overall Stage,I
 825,1,1,Research lab p16,p16 unknown
-825,1,1,Time to 1st failure,1.9
+825,1,1,Time to 1st Failure,1.9
 826,1,1,2nd Failure Type,no known failure
 826,1,1,Overall Stage,II
 826,1,1,Occurrence #,1st primary
@@ -13070,7 +13070,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 830,1,1,Status,Dead w/ disease
 830,1,1,Time to death,2.0
 830,1,1,1st Failure Radiation Dosage,unknown
-830,1,1,Time to 1st failure,0.6
+830,1,1,Time to 1st Failure,0.6
 830,1,1,Age at death,70.1
 830,1,1,Research lab HPV,HPV unknown
 831,1,1,Status,Dead w/ disease
@@ -13090,7 +13090,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 831,1,1,Radiation Dosage,70.2
 831,1,1,Tumor Stage,T3
 831,1,1,Date of Death,2010-06-02 00:00:00
-831,1,1,Time to 1st failure,0.3
+831,1,1,Time to 1st Failure,0.3
 831,1,1,Metastasis,M0
 832,1,1,Metastasis,M0
 832,1,1,Tumor Site,oral cavity
@@ -13123,7 +13123,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 834,1,1,Status,Alive unk disease
 834,1,1,Metastasis,M0
 834,1,1,Clinical lab p16,p16 unkown
-834,1,1,Time to 1st failure,0.7
+834,1,1,Time to 1st Failure,0.7
 834,1,1,1st Failure Site,oral cavity
 834,1,1,Research lab p16,p16 unknown
 834,1,1,Research lab HPV,HPV unknown
@@ -13146,7 +13146,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 836,1,1,Status,Dead w/o disease
 836,1,1,Occurrence #,1st primary
 836,1,1,1st Failure Site,oral cavity
-836,1,1,Time to 1st failure,5.3
+836,1,1,Time to 1st Failure,5.3
 836,1,1,Age at death,54.2
 836,1,1,Metastasis,M0
 836,1,1,Overall Stage,IVa
@@ -13169,7 +13169,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 837,1,1,Metastasis,M0
 837,1,1,Research lab HPV,HPV unknown
 838,1,1,2nd Failure Type,no known failure
-838,1,1,Time to 1st failure,0.8
+838,1,1,Time to 1st Failure,0.8
 838,1,1,Time to death,1.6
 838,1,1,Initial Chemotherapy Agent,"vandetanib, cis"
 838,1,1,1st Failure Site,oral cavity
@@ -13230,7 +13230,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 841,1,1,Research lab HPV,HPV unknown
 841,1,1,Overall Stage,III
 841,1,1,Tumor Stage,T2
-841,1,1,Time to 1st failure,-0.1
+841,1,1,Time to 1st Failure,-0.1
 841,1,1,Status,Dead w/ disease
 841,1,1,Nodal Stage,N1
 841,1,1,Tumor Site,oral cavity
@@ -13456,7 +13456,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 857,1,1,1st Failure Second Line Chemotherapy Agent,cis
 857,1,1,Tumor Stage,T1
 857,1,1,Time to death,0.8
-857,1,1,Time to 1st failure,0.4
+857,1,1,Time to 1st Failure,0.4
 857,1,1,Metastasis,M0
 857,1,1,Radiation Dosage,unknown
 857,1,1,Nodal Stage,N0
@@ -13574,7 +13574,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 864,1,1,Overall Stage,IVa
 864,1,1,Initial Chemotherapy Agent,cis
 864,1,1,Research lab HPV,HPV unknown
-864,1,1,Time to 1st failure,0.3
+864,1,1,Time to 1st Failure,0.3
 864,1,1,Time to death,0.9
 864,1,1,Date of Death,2009-09-01 00:00:00
 864,1,1,Radiation Dosage,16.2
@@ -13646,7 +13646,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 868,1,1,Treatment Modality,Sx & RT
 868,1,1,Nodal Stage,N2
 868,1,1,Tumor Stage,T1
-868,1,1,Time to 1st failure,0.2
+868,1,1,Time to 1st Failure,0.2
 868,1,1,Radiation Dosage,unknown
 868,1,1,Research lab HPV,HPV unknown
 869,1,1,Research lab p16,p16 unknown
@@ -13695,7 +13695,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 872,1,1,Research lab HPV,HPV unknown
 872,1,1,Clinical lab p16,p16 unkown
 872,1,1,Tumor Stage,T4a
-872,1,1,Time to 1st failure,0.3
+872,1,1,Time to 1st Failure,0.3
 872,1,1,Nodal Stage,N0
 872,1,1,Overall Stage,IVa
 872,1,1,Occurrence #,1st primary
@@ -13938,7 +13938,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 888,1,1,Tumor Stage,T4a
 888,1,1,Research lab p16,p16 unknown
 888,1,1,Status,Dead unk disease
-888,1,1,Time to 1st failure,1.1
+888,1,1,Time to 1st Failure,1.1
 888,1,1,Age at death,65.0
 888,1,1,Date of Death,2008-06-22 00:00:00
 888,1,1,Time to death,1.8
@@ -13991,7 +13991,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 891,1,1,Tumor Site,oral cavity
 891,1,1,Overall Stage,IVa
 891,1,1,Clinical lab p16,p16 unkown
-891,1,1,Time to 1st failure,-0.1
+891,1,1,Time to 1st Failure,-0.1
 891,1,1,Time to death,0.3
 891,1,1,Status,Dead w/ disease
 891,1,1,Occurrence #,1st primary
@@ -14208,7 +14208,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 906,1,1,Occurrence #,1st primary
 906,1,1,Time to death,2.1
 906,1,1,Metastasis,M0
-906,1,1,Time to 1st failure,1.9
+906,1,1,Time to 1st Failure,1.9
 906,1,1,Clinical lab p16,p16 unkown
 906,1,1,Research lab HPV,HPV unknown
 906,1,1,Nodal Stage,N2
@@ -14359,7 +14359,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 915,1,1,Radiation Dosage,59.4
 915,1,1,Treatment Modality,Sx & CTX-RT
 915,1,1,1st Failure Type,no known failure
-916,1,1,Time to 1st failure,4.3
+916,1,1,Time to 1st Failure,4.3
 916,1,1,Occurrence #,1st primary
 916,1,1,Overall Stage,I
 916,1,1,1st Failure Treatment Modality,Sx
@@ -14383,7 +14383,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 917,1,1,Treatment Modality,Sx
 917,1,1,Status,Alive w/o disease
 917,1,1,Occurrence #,1st primary
-917,1,1,Time to 1st failure,0.2
+917,1,1,Time to 1st Failure,0.2
 917,1,1,Research lab HPV,HPV unknown
 917,1,1,Metastasis,M0
 917,1,1,Clinical lab p16,p16 unkown
@@ -14414,7 +14414,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 920,1,1,Tumor Stage,T2
 920,1,1,Date of Death,2010-08-07 00:00:00
 920,1,1,Radiation Dosage,unknown
-920,1,1,Time to 1st failure,0.1
+920,1,1,Time to 1st Failure,0.1
 920,1,1,Tumor Site,oral cavity
 920,1,1,Time to death,1.0
 920,1,1,Occurrence #,1st primary
@@ -14500,7 +14500,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 925,1,1,Occurrence #,other primary
 925,1,1,Status,Alive w/o disease
 925,1,1,1st Failure Radiation Dosage,60
-925,1,1,Time to 1st failure,0.2
+925,1,1,Time to 1st Failure,0.2
 925,1,1,Treatment Modality,Sx
 925,1,1,Tumor Site,oral cavity
 926,1,1,Research lab p16,p16 unknown
@@ -14576,7 +14576,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 931,1,1,1st Failure Treatment Modality,Sx & RT
 931,1,1,Date of Death,2004-08-18 00:00:00
 931,1,1,2nd Failure Type,no known failure
-931,1,1,Time to 1st failure,3.1
+931,1,1,Time to 1st Failure,3.1
 931,1,1,1st Failure Radiation Dosage,unknown
 931,1,1,Clinical lab p16,p16 unkown
 931,1,1,1st Failure Type,locoregional
@@ -14624,7 +14624,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 933,1,1,Second Line Chemotherapy Agent,carbo
 933,1,1,Clinical lab p16,p16 unkown
 933,1,1,Initial Chemotherapy Agent,cis/PTX/5-FU
-933,1,1,Time to 1st failure,0.3
+933,1,1,Time to 1st Failure,0.3
 933,1,1,Tumor Stage,T4a
 933,1,1,Occurrence #,1st primary
 934,1,1,Date of Death,2007-10-14 00:00:00
@@ -14644,7 +14644,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 934,1,1,1st Failure Type,locoregional
 934,1,1,Radiation Dosage,unknown
 934,1,1,Metastasis,M0
-934,1,1,Time to 1st failure,1.5
+934,1,1,Time to 1st Failure,1.5
 934,1,1,Tumor Stage,T2
 935,1,1,Tumor Stage,T1
 935,1,1,Research lab HPV,HPV unknown
@@ -14672,7 +14672,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 936,1,1,Research lab HPV,HPV unknown
 936,1,1,Treatment Modality,Sx & CTX-RT
 936,1,1,Tumor Site,oral cavity
-936,1,1,Time to 1st failure,-0.3
+936,1,1,Time to 1st Failure,-0.3
 936,1,1,1st Failure Site,oral cavity
 936,1,1,Occurrence #,1st primary
 936,1,1,Nodal Stage,N1
@@ -14687,7 +14687,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 937,1,1,1st Failure Radiation Dosage,63
 937,1,1,1st Failure Treatment Modality,Sx & RT
 937,1,1,Tumor Stage,T2
-937,1,1,Time to 1st failure,3.2
+937,1,1,Time to 1st Failure,3.2
 937,1,1,Research lab HPV,HPV unknown
 937,1,1,Nodal Stage,N0
 937,1,1,Time to death,4.5
@@ -14713,7 +14713,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 938,1,1,Treatment Modality,Sx
 938,1,1,Clinical lab p16,p16 unkown
 938,1,1,Status,Alive unk disease
-939,1,1,Time to 1st failure,1.5
+939,1,1,Time to 1st Failure,1.5
 939,1,1,Tumor Site,oral cavity
 939,1,1,Research lab HPV,HPV unknown
 939,1,1,Tumor Stage,T1
@@ -14793,7 +14793,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 944,1,1,2nd Failure Type,no known failure
 944,1,1,Research lab HPV,HPV unknown
 944,1,1,Age at death,77.1
-944,1,1,Time to 1st failure,0.2
+944,1,1,Time to 1st Failure,0.2
 944,1,1,Date of Death,2003-09-12 00:00:00
 944,1,1,Metastasis,M0
 944,1,1,Status,Dead unk disease
@@ -14810,7 +14810,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 945,1,1,Clinical lab p16,p16 unkown
 945,1,1,Metastasis,M0
 945,1,1,1st Failure Type,distant
-945,1,1,Time to 1st failure,0.2
+945,1,1,Time to 1st Failure,0.2
 945,1,1,Overall Stage,IVa
 945,1,1,Occurrence #,1st primary
 945,1,1,Radiation Dosage,unknown
@@ -14890,7 +14890,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 949,1,1,1st Failure Treatment Modality,Sx & CTX-RT
 949,1,1,Occurrence #,1st primary
 949,1,1,Status,Dead w/ disease
-949,1,1,Time to 1st failure,0.7
+949,1,1,Time to 1st Failure,0.7
 949,1,1,1st Failure Site,oral cavity
 949,1,1,1st Failure Radiation Dosage,63
 950,1,1,2nd Failure Type,no known failure
@@ -14935,7 +14935,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 952,1,1,Age at death,39.5
 952,1,1,Research lab p16,p16 unknown
 952,1,1,Radiation Dosage,68
-952,1,1,Time to 1st failure,1.2
+952,1,1,Time to 1st Failure,1.2
 952,1,1,Treatment Modality,RT
 953,1,1,Metastasis,M0
 953,1,1,Status,Alive unk disease
@@ -15019,7 +15019,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 958,1,1,Nodal Stage,N0
 958,1,1,Metastasis,M0
 959,1,1,2nd Failure Type,no known failure
-959,1,1,Time to 1st failure,3.4
+959,1,1,Time to 1st Failure,3.4
 959,1,1,Date of Death,2011-07-20 00:00:00
 959,1,1,1st Failure Type,locoregional
 959,1,1,Overall Stage,II
@@ -15113,7 +15113,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 965,1,1,Tumor Stage,T4a
 965,1,1,Treatment Modality,Sx
 965,1,1,Research lab p16,p16 unknown
-965,1,1,Time to 1st failure,0.7
+965,1,1,Time to 1st Failure,0.7
 965,1,1,1st Failure Site,oral cavity
 965,1,1,Overall Stage,IVa
 965,1,1,Clinical lab p16,p16 unkown
@@ -15334,7 +15334,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 980,1,1,1st Failure Type,locoregional
 980,1,1,Metastasis,M0
 980,1,1,Nodal Stage,N0
-980,1,1,Time to 1st failure,0.0
+980,1,1,Time to 1st Failure,0.0
 980,1,1,Age at death,48.5
 980,1,1,Occurrence #,1st primary
 980,1,1,Tumor Site,oral cavity
@@ -15383,7 +15383,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 983,1,1,1st Failure Type,locoregional and distant
 983,1,1,Tumor Site,oral cavity
 983,1,1,Clinical lab p16,p16 unkown
-983,1,1,Time to 1st failure,0.8
+983,1,1,Time to 1st Failure,0.8
 983,1,1,Metastasis,M0
 983,1,1,Treatment Modality,Sx & RT
 983,1,1,Age at death,30.7
@@ -15478,7 +15478,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 989,1,1,Tumor Stage,T4a
 989,1,1,Research lab p16,p16 unknown
 989,1,1,Age at death,59.0
-989,1,1,Time to 1st failure,1.3
+989,1,1,Time to 1st Failure,1.3
 989,1,1,Date of Death,2008-07-04 00:00:00
 989,1,1,1st Failure Treatment Modality,Sx
 990,1,1,Tumor Stage,T1
@@ -15594,7 +15594,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 997,1,1,Clinical lab p16,p16 unkown
 997,1,1,Nodal Stage,N2
 997,1,1,Research lab HPV,HPV unknown
-997,1,1,Time to 1st failure,0.3
+997,1,1,Time to 1st Failure,0.3
 997,1,1,Status,Dead w/ disease
 998,1,1,Treatment Modality,Sx
 998,1,1,Occurrence #,1st primary
@@ -15638,7 +15638,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1000,1,1,Clinical lab p16,p16 unkown
 1000,1,1,Time to death,4.3
 1000,1,1,Age at death,91.0
-1001,1,1,Time to 1st failure,1.3
+1001,1,1,Time to 1st Failure,1.3
 1001,1,1,Metastasis,M0
 1001,1,1,Research lab HPV,HPV unknown
 1001,1,1,Occurrence #,other primary
@@ -15688,7 +15688,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1004,1,1,Status,Dead w/ disease
 1004,1,1,Overall Stage,IVa
 1004,1,1,Time to death,1.2
-1004,1,1,Time to 1st failure,0.7
+1004,1,1,Time to 1st Failure,0.7
 1005,1,1,Overall Stage,IVa
 1005,1,1,1st Failure Type,no known failure
 1005,1,1,Research lab p16,p16 unknown
@@ -15703,7 +15703,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1005,1,1,Tumor Stage,T2
 1005,1,1,Occurrence #,1st primary
 1005,1,1,Status,Alive w/o disease
-1006,1,1,Time to 1st failure,2.9
+1006,1,1,Time to 1st Failure,2.9
 1006,1,1,1st Failure Site,oral cavity
 1006,1,1,Age at death,77.2
 1006,1,1,Occurrence #,recurrence
@@ -15857,7 +15857,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1016,1,1,Tumor Stage,T2
 1016,1,1,Nodal Stage,N2
 1016,1,1,Initial Chemotherapy Agent,unknown
-1016,1,1,Time to 1st failure,-0.1
+1016,1,1,Time to 1st Failure,-0.1
 1016,1,1,Tumor Site,oral cavity
 1016,1,1,Radiation Dosage,unknown
 1016,1,1,Clinical lab p16,p16 unkown
@@ -16019,7 +16019,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1027,1,1,Time to death,1.0
 1027,1,1,Research lab HPV,HPV unknown
 1027,1,1,Radiation Dosage,70.2
-1027,1,1,Time to 1st failure,0.3
+1027,1,1,Time to 1st Failure,0.3
 1027,1,1,1st Failure Type,locoregional
 1027,1,1,Tumor Site,oral cavity
 1027,1,1,Nodal Stage,N2
@@ -16082,7 +16082,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1031,1,1,Research lab HPV,HPV unknown
 1031,1,1,Overall Stage,IVa
 1031,1,1,2nd Failure Type,no known failure
-1031,1,1,Time to 1st failure,3.0
+1031,1,1,Time to 1st Failure,3.0
 1031,1,1,Research lab p16,p16 unknown
 1031,1,1,Tumor Site,oral cavity
 1031,1,1,1st Failure Type,locoregional
@@ -16116,7 +16116,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1033,1,1,Research lab HPV,HPV unknown
 1033,1,1,Treatment Modality,Sx & RT
 1033,1,1,Occurrence #,1st primary
-1034,1,1,Time to 1st failure,0.3
+1034,1,1,Time to 1st Failure,0.3
 1034,1,1,Status,Alive w/o disease
 1034,1,1,Research lab p16,p16 unknown
 1034,1,1,Radiation Dosage,unknown
@@ -16372,7 +16372,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1052,1,1,Tumor Site,oral cavity
 1052,1,1,Nodal Stage,N0
 1052,1,1,Treatment Modality,Sx
-1052,1,1,Time to 1st failure,2.0
+1052,1,1,Time to 1st Failure,2.0
 1052,1,1,1st Failure Treatment Modality,Sx
 1052,1,1,Overall Stage,I
 1052,1,1,Research lab HPV,HPV unknown
@@ -16396,7 +16396,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1053,1,1,Treatment Modality,Sx
 1053,1,1,Tumor Stage,T4a
 1053,1,1,Research lab p16,p16 unknown
-1053,1,1,Time to 1st failure,4.7
+1053,1,1,Time to 1st Failure,4.7
 1053,1,1,1st Failure Treatment Modality,Sx
 1053,1,1,1st Failure Type,locoregional
 1053,1,1,Status,Alive unk disease
@@ -16410,7 +16410,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1054,1,1,Occurrence #,recurrence
 1054,1,1,Tumor Stage,T2
 1054,1,1,Tumor Site,oral cavity
-1054,1,1,Time to 1st failure,0.3
+1054,1,1,Time to 1st Failure,0.3
 1054,1,1,1st Failure Treatment Modality,Sx
 1054,1,1,Status,Alive unk disease
 1054,1,1,Overall Stage,II
@@ -16448,7 +16448,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1056,1,1,2nd Failure Type,no known failure
 1056,1,1,1st Failure Radiation Dosage,unknown
 1056,1,1,1st Failure Type,locoregional
-1056,1,1,Time to 1st failure,1.4
+1056,1,1,Time to 1st Failure,1.4
 1056,1,1,Metastasis,M0
 1057,1,1,Clinical lab p16,p16 unkown
 1057,1,1,Tumor Site,oral cavity
@@ -16474,7 +16474,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1058,1,1,Time to death,1.6
 1058,1,1,Tumor Site,oral cavity
 1058,1,1,Date of Death,2008-03-26 00:00:00
-1058,1,1,Time to 1st failure,0.7
+1058,1,1,Time to 1st Failure,0.7
 1058,1,1,Metastasis,M0
 1058,1,1,Radiation Dosage,63
 1058,1,1,Tumor Stage,T3
@@ -16639,9 +16639,9 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1071,1,1,Research lab p16,p16 unknown
 1071,1,1,Treatment Modality,Sx
 1071,1,1,Clinical lab p16,p16 unkown
-1071,1,1,Time to 1st failure,4.5
+1071,1,1,Time to 1st Failure,4.5
 1072,1,1,Tumor Site,oral cavity
-1072,1,1,Time to 1st failure,0.6
+1072,1,1,Time to 1st Failure,0.6
 1072,1,1,1st Failure Type,distant
 1072,1,1,Nodal Stage,N0
 1072,1,1,Research lab p16,p16 unknown
@@ -16759,7 +16759,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1079,1,1,Age at death,56.8
 1079,1,1,Clinical lab p16,p16 unkown
 1079,1,1,Research lab HPV,HPV unknown
-1079,1,1,Time to 1st failure,-0.0
+1079,1,1,Time to 1st Failure,-0.0
 1079,1,1,Research lab p16,p16 unknown
 1079,1,1,Time to death,0.6
 1081,1,1,Treatment Modality,Sx
@@ -16770,7 +16770,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1081,1,1,Nodal Stage,N0
 1081,1,1,Research lab HPV,HPV unknown
 1081,1,1,Research lab p16,p16 unknown
-1081,1,1,Time to 1st failure,0.4
+1081,1,1,Time to 1st Failure,0.4
 1081,1,1,Clinical lab p16,p16 unkown
 1081,1,1,Age at death,87.6
 1081,1,1,2nd Failure Type,no known failure
@@ -16819,7 +16819,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1084,1,1,1st Failure Type,distant
 1084,1,1,2nd Failure Type,no known failure
 1084,1,1,Radiation Dosage,unknown
-1084,1,1,Time to 1st failure,6.7
+1084,1,1,Time to 1st Failure,6.7
 1084,1,1,Research lab p16,p16 unknown
 1084,1,1,Metastasis,M0
 1084,1,1,Tumor Stage,T2
@@ -16877,7 +16877,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1088,1,1,Status,Dead w/ disease
 1088,1,1,Overall Stage,IVa
 1088,1,1,Treatment Modality,Sx & RT
-1088,1,1,Time to 1st failure,0.2
+1088,1,1,Time to 1st Failure,0.2
 1088,1,1,Occurrence #,1st primary
 1088,1,1,1st Failure Initial Chemotherapy Agent,carbo
 1088,1,1,Metastasis,M0
@@ -16973,7 +16973,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1093,1,1,Research lab HPV,HPV unknown
 1093,1,1,Tumor Site,oral cavity
 1093,1,1,Status,Dead w/ disease
-1093,1,1,Time to 1st failure,0.3
+1093,1,1,Time to 1st Failure,0.3
 1093,1,1,Research lab p16,p16 unknown
 1094,1,1,Clinical lab p16,p16 unkown
 1094,1,1,Status,Dead w/o disease
@@ -17139,7 +17139,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1105,1,1,Tumor Stage,T2
 1105,1,1,Tumor Site,oral cavity
 1105,1,1,1st Failure Treatment Modality,Sx
-1105,1,1,Time to 1st failure,7.1
+1105,1,1,Time to 1st Failure,7.1
 1105,1,1,Overall Stage,II
 1105,1,1,Occurrence #,1st primary
 1105,1,1,Clinical lab p16,p16 unkown
@@ -17195,7 +17195,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1108,1,1,Occurrence #,1st primary
 1109,1,1,2nd Failure Type,no known failure
 1109,1,1,Research lab p16,p16 unknown
-1109,1,1,Time to 1st failure,4.7
+1109,1,1,Time to 1st Failure,4.7
 1109,1,1,1st Failure Treatment Modality,Sx
 1109,1,1,Overall Stage,I
 1109,1,1,Occurrence #,1st primary
@@ -17227,7 +17227,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1110,1,1,Overall Stage,IVa
 1111,1,1,Overall Stage,IVb
 1111,1,1,2nd Failure Type,no known failure
-1111,1,1,Time to 1st failure,-0.2
+1111,1,1,Time to 1st Failure,-0.2
 1111,1,1,Metastasis,M0
 1111,1,1,1st Failure Type,locoregional and distant
 1111,1,1,Occurrence #,1st primary
@@ -17254,7 +17254,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1112,1,1,Research lab HPV,HPV unknown
 1112,1,1,Nodal Stage,N0
 1112,1,1,Clinical lab p16,p16 unkown
-1112,1,1,Time to 1st failure,3.2
+1112,1,1,Time to 1st Failure,3.2
 1112,1,1,Research lab p16,p16 unknown
 1112,1,1,2nd Failure Type,no known failure
 1112,1,1,1st Failure Type,locoregional
@@ -17267,7 +17267,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1113,1,1,Nodal Stage,N0
 1113,1,1,1st Failure Treatment Modality,Sx
 1113,1,1,Clinical lab p16,p16 unkown
-1113,1,1,Time to 1st failure,0.5
+1113,1,1,Time to 1st Failure,0.5
 1113,1,1,Age at death,50.0
 1113,1,1,Occurrence #,other primary
 1113,1,1,Metastasis,M0
@@ -17289,7 +17289,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1114,1,1,Treatment Modality,Sx
 1114,1,1,1st Failure Treatment Modality,Sx
 1114,1,1,Overall Stage,III
-1114,1,1,Time to 1st failure,0.2
+1114,1,1,Time to 1st Failure,0.2
 1114,1,1,1st Failure Type,locoregional
 1114,1,1,Status,Dead unk disease
 1114,1,1,1st Failure Site,oral cavity
@@ -17462,7 +17462,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1126,1,1,1st Failure Type,locoregional
 1126,1,1,Clinical lab p16,p16 unkown
 1126,1,1,1st Failure Site,oral cavity
-1126,1,1,Time to 1st failure,0.8
+1126,1,1,Time to 1st Failure,0.8
 1126,1,1,Research lab p16,p16 unknown
 1126,1,1,Date of Death,2003-07-02 00:00:00
 1126,1,1,Metastasis,M0
@@ -17498,7 +17498,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1128,1,1,Treatment Modality,Sx & RT
 1128,1,1,Date of Death,2009-05-03 00:00:00
 1128,1,1,Tumor Stage,T2
-1128,1,1,Time to 1st failure,0.5
+1128,1,1,Time to 1st Failure,0.5
 1128,1,1,Overall Stage,III
 1128,1,1,Radiation Dosage,unknown
 1128,1,1,Time to death,1.0
@@ -17643,7 +17643,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1137,1,1,Clinical lab p16,p16 unkown
 1137,1,1,Metastasis,M0
 1138,1,1,Tumor Stage,T4a
-1138,1,1,Time to 1st failure,0.9
+1138,1,1,Time to 1st Failure,0.9
 1138,1,1,Metastasis,M0
 1138,1,1,Treatment Modality,Sx
 1138,1,1,Time to death,1.2
@@ -17698,7 +17698,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1141,1,1,Tumor Site,oral cavity
 1141,1,1,Occurrence #,recurrence
 1141,1,1,1st Failure Type,locoregional
-1141,1,1,Time to 1st failure,0.5
+1141,1,1,Time to 1st Failure,0.5
 1141,1,1,Overall Stage,I
 1142,1,1,Occurrence #,1st primary
 1142,1,1,2nd Failure Type,no known failure
@@ -17799,7 +17799,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1148,1,1,Status,Dead w/o disease
 1148,1,1,Time to death,5.4
 1148,1,1,1st Failure Type,no known failure
-1149,1,1,Time to 1st failure,0.7
+1149,1,1,Time to 1st Failure,0.7
 1149,1,1,Occurrence #,recurrence
 1149,1,1,Nodal Stage,N0
 1149,1,1,Age at death,81.6
@@ -17905,7 +17905,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1155,1,1,Nodal Stage,N0
 1156,1,1,Research lab HPV,HPV unknown
 1156,1,1,Overall Stage,IVa
-1156,1,1,Time to 1st failure,0.0
+1156,1,1,Time to 1st Failure,0.0
 1156,1,1,Occurrence #,recurrence
 1156,1,1,Research lab p16,p16 unknown
 1156,1,1,Tumor Site,oral cavity
@@ -17934,7 +17934,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1157,1,1,Treatment Modality,Sx
 1157,1,1,1st Failure Type,no known failure
 1157,1,1,Clinical lab p16,p16 unkown
-1158,1,1,Time to 1st failure,1.1
+1158,1,1,Time to 1st Failure,1.1
 1158,1,1,Research lab HPV,HPV unknown
 1158,1,1,1st Failure Type,locoregional
 1158,1,1,Occurrence #,1st primary
@@ -17997,7 +17997,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1161,1,1,Tumor Stage,T4a
 1162,1,1,1st Failure Treatment Modality,Sx
 1162,1,1,Research lab p16,p16 unknown
-1162,1,1,Time to 1st failure,0.5
+1162,1,1,Time to 1st Failure,0.5
 1162,1,1,Metastasis,M0
 1162,1,1,Nodal Stage,N0
 1162,1,1,Tumor Stage,T1
@@ -18031,7 +18031,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1163,1,1,Occurrence #,1st primary
 1163,1,1,Tumor Site,oropharynx
 1163,1,1,1st Failure Type,locoregional
-1163,1,1,Time to 1st failure,0.5
+1163,1,1,Time to 1st Failure,0.5
 1164,1,1,Occurrence #,1st primary
 1164,1,1,1st Failure Type,no known failure
 1164,1,1,Status,Alive w/o disease
@@ -18161,7 +18161,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1172,1,1,2nd Failure Type,no known failure
 1172,1,1,Initial Chemotherapy Agent,unknown
 1172,1,1,Tumor Stage,T3
-1172,1,1,Time to 1st failure,0.5
+1172,1,1,Time to 1st Failure,0.5
 1172,1,1,Treatment Modality,Sx & CTX-RT
 1172,1,1,Clinical lab p16,p16 unkown
 1172,1,1,Metastasis,M0
@@ -18451,7 +18451,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1192,1,1,Research lab p16,p16 unknown
 1192,1,1,Overall Stage,IVa
 1192,1,1,Research lab HPV,HPV unknown
-1192,1,1,Time to 1st failure,0.5
+1192,1,1,Time to 1st Failure,0.5
 1192,1,1,Occurrence #,recurrence
 1192,1,1,Status,Dead w/ disease
 1193,1,1,Overall Stage,IVa
@@ -18575,7 +18575,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1200,1,1,Clinical lab p16,p16 unkown
 1200,1,1,Nodal Stage,N3
 1200,1,1,Research lab p16,p16 unknown
-1200,1,1,Time to 1st failure,0.2
+1200,1,1,Time to 1st Failure,0.2
 1200,1,1,Date of Death,2010-12-20 00:00:00
 1200,1,1,2nd Failure Type,no known failure
 1200,1,1,Status,Dead w/ disease
@@ -18753,7 +18753,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1211,1,1,Tumor Site,oropharynx
 1211,1,1,Overall Stage,III
 1211,1,1,Initial Chemotherapy Agent,cetux
-1211,1,1,Time to 1st failure,-0.0
+1211,1,1,Time to 1st Failure,-0.0
 1211,1,1,1st Failure Type,locoregional
 1212,1,1,Research lab p16,p16 unknown
 1212,1,1,Tumor Stage,T1
@@ -18782,7 +18782,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1213,1,1,Metastasis,M0
 1213,1,1,Tumor Stage,T2
 1213,1,1,Date of Death,2010-12-07 00:00:00
-1213,1,1,Time to 1st failure,0.3
+1213,1,1,Time to 1st Failure,0.3
 1213,1,1,2nd Failure Type,no known failure
 1213,1,1,Radiation Dosage,70.2
 1213,1,1,Treatment Modality,CTX-RT
@@ -18827,7 +18827,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1216,1,1,Initial Chemotherapy Agent,carbo/PTX
 1216,1,1,Overall Stage,IVc
 1216,1,1,1st Failure Radiation Dosage,40
-1216,1,1,Time to 1st failure,0.4
+1216,1,1,Time to 1st Failure,0.4
 1216,1,1,2nd Failure Type,no known failure
 1216,1,1,Nodal Stage,Unknown
 1216,1,1,1st Failure Treatment Modality,CTX-RT
@@ -18846,7 +18846,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1217,1,1,Tumor Site,oropharynx
 1217,1,1,Metastasis,M0
 1217,1,1,Nodal Stage,N2
-1217,1,1,Time to 1st failure,1.5
+1217,1,1,Time to 1st Failure,1.5
 1217,1,1,1st Failure Treatment Modality,Sx
 1217,1,1,Treatment Modality,CTX-RT
 1217,1,1,Status,Alive w/ disease
@@ -18909,7 +18909,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1220,1,1,2nd Failure Type,no known failure
 1221,1,1,Nodal Stage,N1
 1221,1,1,1st Failure Site,hypopharynx
-1221,1,1,Time to 1st failure,4.6
+1221,1,1,Time to 1st Failure,4.6
 1221,1,1,Status,Alive w/o disease
 1221,1,1,Tumor Site,oropharynx
 1221,1,1,Treatment Modality,Sx
@@ -18926,7 +18926,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1223,1,1,Overall Stage,II
 1223,1,1,Research lab p16,p16 unknown
 1223,1,1,1st Failure Treatment Modality,Sx
-1223,1,1,Time to 1st failure,0.7
+1223,1,1,Time to 1st Failure,0.7
 1223,1,1,2nd Failure Type,no known failure
 1223,1,1,1st Failure Type,locoregional
 1223,1,1,Clinical lab p16,p16 negative
@@ -19014,7 +19014,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1229,1,1,Radiation Dosage,70.2
 1229,1,1,Occurrence #,1st primary
 1229,1,1,Treatment Modality,CTX-RT
-1229,1,1,Time to 1st failure,0.6
+1229,1,1,Time to 1st Failure,0.6
 1229,1,1,Clinical lab p16,p16 unkown
 1229,1,1,Time to death,1.5
 1229,1,1,Metastasis,M0
@@ -19049,7 +19049,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1231,1,1,Research lab HPV,HPV unknown
 1231,1,1,Radiation Dosage,70.2
 1231,1,1,Overall Stage,IVa
-1231,1,1,Time to 1st failure,0.6
+1231,1,1,Time to 1st Failure,0.6
 1231,1,1,Treatment Modality,CTX-RT
 1231,1,1,Tumor Stage,T4a
 1231,1,1,Nodal Stage,N0
@@ -19118,7 +19118,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1236,1,1,Date of Death,2010-11-27 00:00:00
 1236,1,1,Occurrence #,recurrence
 1236,1,1,Overall Stage,IVa
-1236,1,1,Time to 1st failure,0.1
+1236,1,1,Time to 1st Failure,0.1
 1236,1,1,Treatment Modality,Sx
 1236,1,1,Tumor Stage,T4a
 1236,1,1,Nodal Stage,Unknown
@@ -19135,7 +19135,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1237,1,1,1st Failure Type,locoregional
 1237,1,1,Tumor Site,oropharynx
 1237,1,1,1st Failure Site,oropharynx
-1237,1,1,Time to 1st failure,1.9
+1237,1,1,Time to 1st Failure,1.9
 1237,1,1,Research lab HPV,HPV unknown
 1237,1,1,Treatment Modality,CTX-RT
 1237,1,1,1st Failure Treatment Modality,Sx & CTX-RT
@@ -19195,7 +19195,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1240,1,1,Treatment Modality,CTX-RT
 1240,1,1,Tumor Site,oropharynx
 1240,1,1,Research lab p16,p16 unknown
-1240,1,1,Time to 1st failure,0.6
+1240,1,1,Time to 1st Failure,0.6
 1240,1,1,Initial Chemotherapy Agent,cis
 1240,1,1,Tumor Stage,T1
 1240,1,1,Metastasis,M0
@@ -19263,7 +19263,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1245,1,1,Overall Stage,IVa
 1245,1,1,Research lab p16,p16 unknown
 1245,1,1,1st Failure Type,distant
-1245,1,1,Time to 1st failure,0.2
+1245,1,1,Time to 1st Failure,0.2
 1245,1,1,Tumor Stage,T4a
 1245,1,1,Clinical lab p16,p16 unkown
 1245,1,1,2nd Failure Type,no known failure
@@ -19388,7 +19388,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1253,1,1,Status,Dead w/ disease
 1253,1,1,Research lab p16,p16 unknown
 1253,1,1,Treatment Modality,CTX-RT
-1253,1,1,Time to 1st failure,-0.2
+1253,1,1,Time to 1st Failure,-0.2
 1253,1,1,Initial Chemotherapy Agent,cis
 1253,1,1,Tumor Site,oropharynx
 1253,1,1,Research lab HPV,HPV negative
@@ -19419,7 +19419,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1255,1,1,Age at death,54.3
 1255,1,1,Tumor Stage,T3
 1255,1,1,Time to death,0.8
-1255,1,1,Time to 1st failure,-0.2
+1255,1,1,Time to 1st Failure,-0.2
 1255,1,1,Treatment Modality,CTX-RT
 1255,1,1,Nodal Stage,N2
 1255,1,1,Overall Stage,IVc
@@ -19490,7 +19490,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1259,1,1,Tumor Stage,Unknown
 1259,1,1,1st Failure Initial Chemotherapy Agent,HPV/MAGE
 1259,1,1,Metastasis,M0
-1259,1,1,Time to 1st failure,0.4
+1259,1,1,Time to 1st Failure,0.4
 1260,1,1,Nodal Stage,N2
 1260,1,1,2nd Failure Type,no known failure
 1260,1,1,Occurrence #,1st primary
@@ -19570,7 +19570,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1265,1,1,Status,Alive w/ disease
 1265,1,1,Clinical lab p16,p16 unkown
 1265,1,1,Research lab HPV,HPV unknown
-1265,1,1,Time to 1st failure,0.6
+1265,1,1,Time to 1st Failure,0.6
 1265,1,1,Occurrence #,recurrence
 1265,1,1,Metastasis,Unknown
 1265,1,1,Nodal Stage,Unknown
@@ -19583,7 +19583,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1265,1,1,1st Failure Type,locoregional and distant
 1265,1,1,Tumor Site,oropharynx
 1266,1,1,Treatment Modality,CTX-RT
-1266,1,1,Time to 1st failure,0.7
+1266,1,1,Time to 1st Failure,0.7
 1266,1,1,1st Failure Treatment Modality,Sx
 1266,1,1,Occurrence #,1st primary
 1266,1,1,1st Failure Type,locoregional
@@ -19601,7 +19601,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1266,1,1,Clinical lab p16,p16 unkown
 1266,1,1,Research lab p16,p16 unknown
 1267,1,1,Treatment Modality,Unknown
-1267,1,1,Time to 1st failure,-0.4
+1267,1,1,Time to 1st Failure,-0.4
 1267,1,1,Time to death,1.7
 1267,1,1,Research lab HPV,HPV unknown
 1267,1,1,Date of Death,2009-08-01 00:00:00
@@ -19642,7 +19642,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1269,1,1,Research lab HPV,HPV unknown
 1269,1,1,Initial Chemotherapy Agent,cis/doce/5 FU
 1269,1,1,Radiation Dosage,50.4
-1269,1,1,Time to 1st failure,0.1
+1269,1,1,Time to 1st Failure,0.1
 1269,1,1,Occurrence #,recurrence
 1269,1,1,Research lab p16,p16 unknown
 1269,1,1,Metastasis,Unknown
@@ -19694,7 +19694,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1272,1,1,Research lab p16,p16 unknown
 1272,1,1,1st Failure Type,locoregional and distant
 1272,1,1,Occurrence #,recurrence
-1272,1,1,Time to 1st failure,0.0
+1272,1,1,Time to 1st Failure,0.0
 1272,1,1,Research lab HPV,HPV unknown
 1272,1,1,Initial Chemotherapy Agent,dendritic cells
 1272,1,1,Treatment Modality,RT
@@ -19724,7 +19724,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1273,1,1,Initial Chemotherapy Agent,cis
 1273,1,1,Tumor Stage,T1
 1273,1,1,Metastasis,M0
-1273,1,1,Time to 1st failure,0.4
+1273,1,1,Time to 1st Failure,0.4
 1274,1,1,2nd Failure Type,no known failure
 1274,1,1,Date of Death,2011-02-08 00:00:00
 1274,1,1,Metastasis,M0
@@ -19759,7 +19759,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1276,1,1,Research lab p16,p16 unknown
 1276,1,1,Clinical lab p16,p16 unkown
 1276,1,1,Nodal Stage,Unknown
-1276,1,1,Time to 1st failure,0.6
+1276,1,1,Time to 1st Failure,0.6
 1276,1,1,Research lab HPV,HPV unknown
 1276,1,1,Tumor Site,oropharynx
 1276,1,1,Age at death,48.7
@@ -19805,7 +19805,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1279,1,1,Nodal Stage,N2
 1279,1,1,Date of Death,2010-06-25 00:00:00
 1279,1,1,Status,Dead w/ disease
-1279,1,1,Time to 1st failure,0.1
+1279,1,1,Time to 1st Failure,0.1
 1279,1,1,1st Failure Type,distant
 1279,1,1,Time to death,0.6
 1279,1,1,Treatment Modality,CTX-RT
@@ -19860,7 +19860,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1282,1,1,Initial Chemotherapy Agent,carbo/PTX
 1282,1,1,Nodal Stage,N0
 1282,1,1,Overall Stage,III
-1282,1,1,Time to 1st failure,0.2
+1282,1,1,Time to 1st Failure,0.2
 1282,1,1,Age at death,47.6
 1282,1,1,Tumor Site,oropharynx
 1282,1,1,Research lab HPV,HPV unknown
@@ -19879,7 +19879,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1283,1,1,Status,Alive w/ disease
 1283,1,1,Occurrence #,1st primary
 1283,1,1,2nd Failure Type,no known failure
-1283,1,1,Time to 1st failure,-0.2
+1283,1,1,Time to 1st Failure,-0.2
 1283,1,1,Tumor Stage,T2
 1283,1,1,Clinical lab p16,p16 unkown
 1284,1,1,Metastasis,M0
@@ -19921,7 +19921,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1286,1,1,Occurrence #,1st primary
 1286,1,1,Tumor Stage,T4a
 1286,1,1,Metastasis,M0
-1286,1,1,Time to 1st failure,1.0
+1286,1,1,Time to 1st Failure,1.0
 1286,1,1,1st Failure Site,oropharynx
 1286,1,1,1st Failure Type,locoregional
 1286,1,1,Research lab p16,p16 unknown
@@ -19937,7 +19937,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1287,1,1,Status,Dead w/ disease
 1287,1,1,Age at death,66.4
 1287,1,1,1st Failure Type,locoregional
-1287,1,1,Time to 1st failure,0.9
+1287,1,1,Time to 1st Failure,0.9
 1287,1,1,Occurrence #,other primary
 1287,1,1,Research lab p16,p16 unknown
 1287,1,1,Overall Stage,I
@@ -19983,7 +19983,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1290,1,1,Overall Stage,IVa
 1290,1,1,Tumor Site,oropharynx
 1290,1,1,1st Failure Site,oropharynx
-1290,1,1,Time to 1st failure,0.5
+1290,1,1,Time to 1st Failure,0.5
 1290,1,1,Research lab HPV,HPV unknown
 1290,1,1,Occurrence #,1st primary
 1290,1,1,1st Failure Type,locoregional
@@ -20065,7 +20065,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1295,1,1,Tumor Stage,T3
 1295,1,1,1st Failure Type,locoregional and distant
 1295,1,1,Tumor Site,oropharynx
-1295,1,1,Time to 1st failure,0.9
+1295,1,1,Time to 1st Failure,0.9
 1295,1,1,Treatment Modality,CTX-RT
 1295,1,1,Nodal Stage,N0
 1295,1,1,Research lab p16,p16 unknown
@@ -20090,14 +20090,14 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1296,1,1,Age at death,53.7
 1296,1,1,1st Failure Treatment Modality,CTX-RT
 1296,1,1,1st Failure Type,distant
-1296,1,1,Time to 1st failure,1.3
+1296,1,1,Time to 1st Failure,1.3
 1296,1,1,Research lab p16,p16 unknown
 1296,1,1,Tumor Stage,T1
 1296,1,1,Radiation Dosage,67
 1296,1,1,Treatment Modality,Sx & CTX-RT
 1296,1,1,Overall Stage,IVa
 1296,1,1,Initial Chemotherapy Agent,carbo/doce
-1297,1,1,Time to 1st failure,0.4
+1297,1,1,Time to 1st Failure,0.4
 1297,1,1,Occurrence #,recurrence
 1297,1,1,Research lab HPV,HPV unknown
 1297,1,1,Tumor Site,oropharynx
@@ -20203,7 +20203,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1303,1,1,Age at death,64.1
 1303,1,1,Nodal Stage,N1
 1303,1,1,Status,Dead w/ disease
-1303,1,1,Time to 1st failure,4.5
+1303,1,1,Time to 1st Failure,4.5
 1303,1,1,Time to death,7.5
 1303,1,1,2nd Failure Type,no known failure
 1303,1,1,Treatment Modality,CTX-RT
@@ -20241,7 +20241,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1305,1,1,Nodal Stage,N3
 1305,1,1,Overall Stage,IVb
 1305,1,1,Time to death,0.3
-1306,1,1,Time to 1st failure,0.6
+1306,1,1,Time to 1st Failure,0.6
 1306,1,1,Research lab HPV,HPV unknown
 1306,1,1,Nodal Stage,N2
 1306,1,1,Status,Dead w/ disease
@@ -20262,7 +20262,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1306,1,1,Initial Chemotherapy Agent,cetux/PTX/carbo
 1307,1,1,Occurrence #,1st primary
 1307,1,1,Age at death,52.7
-1307,1,1,Time to 1st failure,6.0
+1307,1,1,Time to 1st Failure,6.0
 1307,1,1,Tumor Site,oropharynx
 1307,1,1,Clinical lab p16,p16 unkown
 1307,1,1,Research lab p16,p16 unknown
@@ -20379,7 +20379,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1315,1,1,Date of Death,2003-10-10 00:00:00
 1315,1,1,Research lab p16,p16 unknown
 1315,1,1,Treatment Modality,RT
-1315,1,1,Time to 1st failure,1.3
+1315,1,1,Time to 1st Failure,1.3
 1315,1,1,Occurrence #,1st primary
 1315,1,1,Status,Dead w/ disease
 1315,1,1,Radiation Dosage,unknown
@@ -20462,7 +20462,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1320,1,1,Time to death,1.4
 1320,1,1,Research lab HPV,HPV unknown
 1320,1,1,Status,Dead w/ disease
-1320,1,1,Time to 1st failure,0.6
+1320,1,1,Time to 1st Failure,0.6
 1320,1,1,Overall Stage,IVc
 1320,1,1,Research lab p16,p16 unknown
 1320,1,1,Clinical lab p16,p16 unkown
@@ -20473,7 +20473,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1322,1,1,Metastasis,M0
 1322,1,1,Time to death,9.8
 1322,1,1,Tumor Stage,T4a
-1322,1,1,Time to 1st failure,9.4
+1322,1,1,Time to 1st Failure,9.4
 1322,1,1,Overall Stage,IVa
 1322,1,1,Research lab HPV,HPV unknown
 1322,1,1,Initial Chemotherapy Agent,PTX/cap
@@ -20617,7 +20617,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1331,1,1,Tumor Stage,T1
 1331,1,1,Overall Stage,IVa
 1331,1,1,Status,Dead w/ disease
-1331,1,1,Time to 1st failure,0.6
+1331,1,1,Time to 1st Failure,0.6
 1331,1,1,Age at death,58.1
 1331,1,1,Radiation Dosage,unknown
 1331,1,1,Date of Death,2001-04-19 00:00:00
@@ -20721,7 +20721,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1338,1,1,1st Failure Site,larynx
 1338,1,1,Occurrence #,1st primary
 1338,1,1,Status,Dead w/ disease
-1338,1,1,Time to 1st failure,0.8
+1338,1,1,Time to 1st Failure,0.8
 1338,1,1,2nd Failure Type,no known failure
 1338,1,1,1st Failure Radiation Dosage,60
 1338,1,1,Tumor Site,larynx
@@ -20852,7 +20852,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1346,1,1,Tumor Site,larynx
 1346,1,1,Age at death,69.6
 1346,1,1,2nd Failure Type,no known failure
-1346,1,1,Time to 1st failure,0.6
+1346,1,1,Time to 1st Failure,0.6
 1346,1,1,Initial Chemotherapy Agent,cis
 1346,1,1,Time to death,0.6
 1346,1,1,Overall Stage,IVa
@@ -20924,7 +20924,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1350,1,1,Clinical lab p16,p16 unkown
 1350,1,1,Treatment Modality,RT
 1350,1,1,Status,Alive unk disease
-1350,1,1,Time to 1st failure,2.1
+1350,1,1,Time to 1st Failure,2.1
 1350,1,1,Occurrence #,1st primary
 1350,1,1,Tumor Site,larynx
 1351,1,1,Overall Stage,Unknown
@@ -20987,7 +20987,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1354,1,1,Research lab p16,p16 unknown
 1354,1,1,Date of Death,2007-11-23 00:00:00
 1354,1,1,1st Failure Treatment Modality,CTX
-1354,1,1,Time to 1st failure,0.6
+1354,1,1,Time to 1st Failure,0.6
 1354,1,1,Age at death,60.4
 1354,1,1,Time to death,1.7
 1354,1,1,1st Failure Type,locoregional
@@ -21183,7 +21183,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1366,1,1,Nodal Stage,N0
 1366,1,1,Occurrence #,1st primary
 1366,1,1,Overall Stage,II
-1366,1,1,Time to 1st failure,0.3
+1366,1,1,Time to 1st Failure,0.3
 1366,1,1,Research lab HPV,HPV unknown
 1367,1,1,Tumor Stage,T2
 1367,1,1,Time to death,1.4
@@ -21331,7 +21331,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1376,1,1,Status,Dead w/ disease
 1376,1,1,Time to death,1.0
 1376,1,1,1st Failure Treatment Modality,CTX
-1376,1,1,Time to 1st failure,-2.5
+1376,1,1,Time to 1st Failure,-2.5
 1376,1,1,Metastasis,M0
 1376,1,1,Nodal Stage,N2
 1376,1,1,2nd Failure Type,no known failure
@@ -21403,7 +21403,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1380,1,1,Nodal Stage,N0
 1380,1,1,1st Failure Initial Chemotherapy Agent,doce
 1380,1,1,Occurrence #,1st primary
-1380,1,1,Time to 1st failure,1.1
+1380,1,1,Time to 1st Failure,1.1
 1380,1,1,Status,Dead w/ disease
 1380,1,1,Time to death,1.9
 1380,1,1,Research lab p16,p16 unknown
@@ -21429,7 +21429,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1381,1,1,Research lab HPV,HPV unknown
 1381,1,1,Date of Death,2010-08-23 00:00:00
 1381,1,1,Overall Stage,IVb
-1381,1,1,Time to 1st failure,0.7
+1381,1,1,Time to 1st Failure,0.7
 1382,1,1,Tumor Stage,T4a
 1382,1,1,Treatment Modality,Sx
 1382,1,1,Date of Death,2009-10-18 00:00:00
@@ -21519,7 +21519,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1387,1,1,Treatment Modality,RT
 1387,1,1,Occurrence #,1st primary
 1387,1,1,Time to death,2.3
-1387,1,1,Time to 1st failure,0.3
+1387,1,1,Time to 1st Failure,0.3
 1387,1,1,Research lab p16,p16 unknown
 1387,1,1,Overall Stage,III
 1387,1,1,Tumor Site,larynx
@@ -21552,7 +21552,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1389,1,1,Age at death,65.4
 1389,1,1,Metastasis,M0
 1389,1,1,Time to death,0.0
-1389,1,1,Time to 1st failure,-0.5
+1389,1,1,Time to 1st Failure,-0.5
 1389,1,1,Nodal Stage,N0
 1389,1,1,1st Failure Type,locoregional
 1389,1,1,Research lab p16,p16 unknown
@@ -21676,7 +21676,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1397,1,1,Research lab p16,p16 unknown
 1397,1,1,Date of Death,2002-03-12 00:00:00
 1397,1,1,Overall Stage,IVc
-1397,1,1,Time to 1st failure,-0.4
+1397,1,1,Time to 1st Failure,-0.4
 1397,1,1,Age at death,45.8
 1397,1,1,1st Failure Type,locoregional
 1397,1,1,Metastasis,M1
@@ -21822,7 +21822,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1407,1,1,Occurrence #,1st primary
 1407,1,1,1st Failure Type,distant
 1407,1,1,Metastasis,M0
-1407,1,1,Time to 1st failure,0.8
+1407,1,1,Time to 1st Failure,0.8
 1407,1,1,Research lab HPV,HPV unknown
 1407,1,1,Overall Stage,IVa
 1407,1,1,Research lab p16,p16 unknown
@@ -21834,7 +21834,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1408,1,1,Research lab p16,p16 unknown
 1408,1,1,Tumor Stage,T3
 1408,1,1,Tumor Site,larynx
-1408,1,1,Time to 1st failure,1.0
+1408,1,1,Time to 1st Failure,1.0
 1408,1,1,Age at death,50.9
 1408,1,1,Metastasis,M0
 1408,1,1,Clinical lab p16,p16 unkown
@@ -21852,7 +21852,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1408,1,1,Date of Death,2006-04-13 00:00:00
 1409,1,1,Tumor Site,larynx
 1409,1,1,Nodal Stage,N0
-1409,1,1,Time to 1st failure,0.5
+1409,1,1,Time to 1st Failure,0.5
 1409,1,1,Treatment Modality,Sx & RT
 1409,1,1,Status,Dead w/ disease
 1409,1,1,Age at death,65.9
@@ -21886,7 +21886,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1411,1,1,Tumor Stage,T3
 1411,1,1,Research lab HPV,HPV unknown
 1411,1,1,Occurrence #,1st primary
-1411,1,1,Time to 1st failure,1.0
+1411,1,1,Time to 1st Failure,1.0
 1411,1,1,Overall Stage,III
 1411,1,1,Nodal Stage,N1
 1411,1,1,Tumor Site,larynx
@@ -21944,7 +21944,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1414,1,1,1st Failure Site,larynx
 1414,1,1,1st Failure Initial Chemotherapy Agent,cis/doce
 1414,1,1,2nd Failure Type,no known failure
-1414,1,1,Time to 1st failure,0.4
+1414,1,1,Time to 1st Failure,0.4
 1414,1,1,Nodal Stage,N1
 1414,1,1,Time to death,1.8
 1414,1,1,Research lab HPV,HPV unknown
@@ -22000,7 +22000,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1417,1,1,Research lab HPV,HPV unknown
 1418,1,1,2nd Failure Type,no known failure
 1418,1,1,Overall Stage,IVa
-1418,1,1,Time to 1st failure,0.2
+1418,1,1,Time to 1st Failure,0.2
 1418,1,1,Research lab p16,p16 unknown
 1418,1,1,Tumor Site,larynx
 1418,1,1,Metastasis,Unknown
@@ -22049,7 +22049,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1420,1,1,1st Failure Type,locoregional
 1420,1,1,Occurrence #,recurrence
 1420,1,1,Clinical lab p16,p16 unkown
-1420,1,1,Time to 1st failure,-0.0
+1420,1,1,Time to 1st Failure,-0.0
 1420,1,1,Metastasis,M0
 1421,1,1,Research lab HPV,HPV unknown
 1421,1,1,Overall Stage,IVa
@@ -22141,7 +22141,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1427,1,1,1st Failure Site,oropharynx
 1427,1,1,Date of Death,2011-02-06 00:00:00
 1427,1,1,Status,Dead unk disease
-1427,1,1,Time to 1st failure,0.2
+1427,1,1,Time to 1st Failure,0.2
 1427,1,1,1st Failure Initial Chemotherapy Agent,unknown
 1427,1,1,Research lab p16,p16 unknown
 1427,1,1,Time to death,9.6
@@ -22165,7 +22165,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1428,1,1,2nd Failure Type,no known failure
 1428,1,1,Status,Alive w/ disease
 1428,1,1,Treatment Modality,Sx
-1428,1,1,Time to 1st failure,-0.7
+1428,1,1,Time to 1st Failure,-0.7
 1428,1,1,Clinical lab p16,p16 unkown
 1428,1,1,1st Failure Type,distant
 1428,1,1,Overall Stage,I
@@ -22298,7 +22298,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1437,1,1,Clinical lab p16,p16 unkown
 1437,1,1,Tumor Site,larynx
 1437,1,1,1st Failure Initial Chemotherapy Agent,cis/doce
-1437,1,1,Time to 1st failure,4.8
+1437,1,1,Time to 1st Failure,4.8
 1437,1,1,1st Failure Treatment Modality,Sx & CTX
 1437,1,1,2nd Failure Type,no known failure
 1437,1,1,1st Failure Site,larynx
@@ -22319,7 +22319,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1438,1,1,Age at death,53.8
 1438,1,1,Nodal Stage,N2
 1438,1,1,Metastasis,M0
-1438,1,1,Time to 1st failure,0.4
+1438,1,1,Time to 1st Failure,0.4
 1438,1,1,Tumor Site,larynx
 1438,1,1,Second Line Chemotherapy Agent,carbo/doce
 1438,1,1,Initial Chemotherapy Agent,carbo/PTX/cetux
@@ -22347,7 +22347,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1439,1,1,Overall Stage,IVa
 1439,1,1,Metastasis,M0
 1440,1,1,1st Failure Type,distant
-1440,1,1,Time to 1st failure,-0.0
+1440,1,1,Time to 1st Failure,-0.0
 1440,1,1,Treatment Modality,Sx
 1440,1,1,Tumor Site,larynx
 1440,1,1,Research lab HPV,HPV unknown
@@ -22469,7 +22469,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1447,1,1,Treatment Modality,Sx
 1447,1,1,Nodal Stage,N0
 1448,1,1,Status,Alive w/o disease
-1448,1,1,Time to 1st failure,2.1
+1448,1,1,Time to 1st Failure,2.1
 1448,1,1,1st Failure Type,distant
 1448,1,1,1st Failure Site,larynx
 1448,1,1,Tumor Stage,T4a
@@ -22499,7 +22499,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1449,1,1,Research lab p16,p16 unknown
 1449,1,1,Status,Dead w/ disease
 1449,1,1,Clinical lab p16,p16 unkown
-1449,1,1,Time to 1st failure,0.7
+1449,1,1,Time to 1st Failure,0.7
 1449,1,1,Date of Death,2009-03-31 00:00:00
 1449,1,1,Time to death,1.6
 1449,1,1,2nd Failure Type,no known failure
@@ -22629,7 +22629,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1458,1,1,Research lab HPV,HPV unknown
 1458,1,1,1st Failure Site,larynx
 1458,1,1,Tumor Site,larynx
-1458,1,1,Time to 1st failure,0.9
+1458,1,1,Time to 1st Failure,0.9
 1458,1,1,Treatment Modality,RT
 1458,1,1,Age at death,66.2
 1458,1,1,Metastasis,M0
@@ -22692,7 +22692,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1462,1,1,Age at death,71.8
 1462,1,1,1st Failure Site,larynx
 1462,1,1,Clinical lab p16,p16 unkown
-1462,1,1,Time to 1st failure,1.6
+1462,1,1,Time to 1st Failure,1.6
 1462,1,1,Status,Dead unk disease
 1462,1,1,Tumor Site,larynx
 1462,1,1,Date of Death,2006-01-30 00:00:00
@@ -22754,7 +22754,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1465,1,1,Metastasis,M0
 1465,1,1,Occurrence #,1st primary
 1465,1,1,Radiation Dosage,64.5
-1465,1,1,Time to 1st failure,1.3
+1465,1,1,Time to 1st Failure,1.3
 1465,1,1,Tumor Stage,T1
 1465,1,1,Time to death,4.8
 1465,1,1,Tumor Site,larynx
@@ -22804,7 +22804,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1468,1,1,Time to death,0.5
 1468,1,1,Research lab HPV,HPV unknown
 1468,1,1,Research lab p16,p16 unknown
-1468,1,1,Time to 1st failure,0.3
+1468,1,1,Time to 1st Failure,0.3
 1468,1,1,1st Failure Type,locoregional
 1468,1,1,Occurrence #,recurrence
 1468,1,1,Metastasis,M0
@@ -22825,7 +22825,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1469,1,1,Research lab p16,p16 unknown
 1469,1,1,Radiation Dosage,unknown
 1469,1,1,Date of Death,2005-01-01 00:00:00
-1469,1,1,Time to 1st failure,0.5
+1469,1,1,Time to 1st Failure,0.5
 1469,1,1,1st Failure Type,distant
 1469,1,1,Initial Chemotherapy Agent,carbo/PTX/amifostine
 1469,1,1,Research lab HPV,HPV positive
@@ -22920,8 +22920,8 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1474,1,1,2nd Failure Type,no known failure
 1474,1,1,Metastasis,M0
 1474,1,1,Time to death,1.2
-1474,1,1,Time to 1st failure,0.3
-1475,1,1,Time to 1st failure,0.9
+1474,1,1,Time to 1st Failure,0.3
+1475,1,1,Time to 1st Failure,0.9
 1475,1,1,Overall Stage,III
 1475,1,1,Research lab p16,p16 unknown
 1475,1,1,Metastasis,M0
@@ -23098,7 +23098,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1486,1,1,1st Failure Type,locoregional
 1486,1,1,Initial Chemotherapy Agent,gemcitabine/PTX/cap
 1486,1,1,Metastasis,M0
-1486,1,1,Time to 1st failure,-0.0
+1486,1,1,Time to 1st Failure,-0.0
 1486,1,1,Status,Dead w/ disease
 1486,1,1,Treatment Modality,Sx & CTX
 1486,1,1,Overall Stage,IVa
@@ -23120,7 +23120,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1487,1,1,1st Failure Site,larynx
 1487,1,1,Overall Stage,III
 1487,1,1,2nd Failure Type,no known failure
-1487,1,1,Time to 1st failure,1.2
+1487,1,1,Time to 1st Failure,1.2
 1487,1,1,Treatment Modality,CTX-RT
 1487,1,1,1st Failure Radiation Dosage,60
 1487,1,1,Tumor Stage,T3
@@ -23217,7 +23217,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1494,1,1,Research lab p16,p16 unknown
 1494,1,1,Status,Dead w/ disease
 1494,1,1,Metastasis,M0
-1494,1,1,Time to 1st failure,0.4
+1494,1,1,Time to 1st Failure,0.4
 1494,1,1,1st Failure Type,distant
 1494,1,1,2nd Failure Type,no known failure
 1494,1,1,Occurrence #,recurrence
@@ -23320,7 +23320,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1500,1,1,Occurrence #,recurrence
 1500,1,1,1st Failure Type,locoregional and distant
 1500,1,1,Age at death,58.7
-1500,1,1,Time to 1st failure,0.2
+1500,1,1,Time to 1st Failure,0.2
 1500,1,1,Status,Dead w/ disease
 1500,1,1,Treatment Modality,CTX-RT
 1500,1,1,Initial Chemotherapy Agent,cis
@@ -23336,7 +23336,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1500,1,1,Nodal Stage,N2
 1500,1,1,Date of Death,2010-07-01 00:00:00
 1501,1,1,Metastasis,M0
-1501,1,1,Time to 1st failure,1.3
+1501,1,1,Time to 1st Failure,1.3
 1501,1,1,Nodal Stage,N0
 1501,1,1,Tumor Site,larynx
 1501,1,1,Tumor Stage,T1
@@ -23418,7 +23418,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1506,1,1,Metastasis,M1
 1506,1,1,Research lab HPV,HPV unknown
 1506,1,1,2nd Failure Type,no known failure
-1506,1,1,Time to 1st failure,-0.0
+1506,1,1,Time to 1st Failure,-0.0
 1506,1,1,Occurrence #,recurrence
 1506,1,1,Tumor Stage,Unknown
 1506,1,1,Initial Chemotherapy Agent,erlotinib/bev
@@ -23460,7 +23460,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1508,1,1,Overall Stage,III
 1508,1,1,Occurrence #,1st primary
 1508,1,1,1st Failure Type,locoregional
-1508,1,1,Time to 1st failure,0.2
+1508,1,1,Time to 1st Failure,0.2
 1508,1,1,Metastasis,M0
 1509,1,1,Time to death,2.4
 1509,1,1,Treatment Modality,CTX-RT
@@ -23610,7 +23610,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1518,1,1,Clinical lab p16,p16 unkown
 1518,1,1,Tumor Site,larynx
 1518,1,1,Status,Dead w/ disease
-1518,1,1,Time to 1st failure,1.0
+1518,1,1,Time to 1st Failure,1.0
 1518,1,1,Treatment Modality,Sx
 1518,1,1,Research lab HPV,HPV unknown
 1518,1,1,Tumor Stage,T1
@@ -23660,7 +23660,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1521,1,1,Occurrence #,recurrence
 1521,1,1,Research lab HPV,HPV unknown
 1522,1,1,Clinical lab p16,p16 unkown
-1522,1,1,Time to 1st failure,0.1
+1522,1,1,Time to 1st Failure,0.1
 1522,1,1,1st Failure Type,locoregional and distant
 1522,1,1,Date of Death,2011-05-08 00:00:00
 1522,1,1,Research lab HPV,HPV unknown
@@ -23694,7 +23694,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1524,1,1,2nd Failure Type,no known failure
 1524,1,1,Initial Chemotherapy Agent,cis
 1524,1,1,Tumor Stage,T2
-1524,1,1,Time to 1st failure,5.9
+1524,1,1,Time to 1st Failure,5.9
 1524,1,1,Research lab HPV,HPV unknown
 1524,1,1,1st Failure Treatment Modality,Sx
 1524,1,1,Clinical lab p16,p16 unkown
@@ -23775,7 +23775,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1528,1,1,Research lab HPV,HPV unknown
 1528,1,1,Overall Stage,IVc
 1528,1,1,Tumor Stage,T2
-1528,1,1,Time to 1st failure,0.3
+1528,1,1,Time to 1st Failure,0.3
 1528,1,1,1st Failure Type,distant
 1528,1,1,Date of Death,2010-02-25 00:00:00
 1528,1,1,Status,Dead w/ disease
@@ -24023,7 +24023,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1544,1,1,Research lab HPV,HPV unknown
 1544,1,1,Research lab p16,p16 unknown
 1544,1,1,Treatment Modality,Sx
-1544,1,1,Time to 1st failure,0.9
+1544,1,1,Time to 1st Failure,0.9
 1544,1,1,Status,Dead unk disease
 1544,1,1,Age at death,58.0
 1544,1,1,1st Failure Site,larynx
@@ -24046,7 +24046,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1545,1,1,Overall Stage,I
 1545,1,1,Status,Alive w/o disease
 1545,1,1,Treatment Modality,RT
-1546,1,1,Time to 1st failure,0.6
+1546,1,1,Time to 1st Failure,0.6
 1546,1,1,Age at death,52.3
 1546,1,1,Metastasis,M0
 1546,1,1,Overall Stage,IVa
@@ -24071,7 +24071,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1547,1,1,Metastasis,M0
 1547,1,1,1st Failure Type,locoregional
 1547,1,1,Status,Dead w/ disease
-1547,1,1,Time to 1st failure,0.5
+1547,1,1,Time to 1st Failure,0.5
 1547,1,1,Clinical lab p16,p16 unkown
 1547,1,1,Age at death,50.8
 1547,1,1,Occurrence #,1st primary
@@ -24092,7 +24092,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1548,1,1,Initial Chemotherapy Agent,carbo/PTX
 1548,1,1,Status,Dead w/ disease
 1548,1,1,Time to death,3.6
-1548,1,1,Time to 1st failure,2.6
+1548,1,1,Time to 1st Failure,2.6
 1548,1,1,2nd Failure Type,no known failure
 1548,1,1,1st Failure Type,distant
 1548,1,1,Treatment Modality,CTX-RT
@@ -24187,7 +24187,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1553,1,1,Research lab p16,p16 unknown
 1553,1,1,Date of Death,2005-05-25 00:00:00
 1553,1,1,Tumor Stage,T3
-1553,1,1,Time to 1st failure,3.0
+1553,1,1,Time to 1st Failure,3.0
 1554,1,1,Nodal Stage,N2
 1554,1,1,Research lab p16,p16 unknown
 1554,1,1,Initial Chemotherapy Agent,unknown
@@ -24263,7 +24263,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1558,1,1,Tumor Stage,T3
 1558,1,1,Clinical lab p16,p16 unkown
 1558,1,1,1st Failure Site,larynx
-1558,1,1,Time to 1st failure,0.5
+1558,1,1,Time to 1st Failure,0.5
 1558,1,1,Time to death,1.4
 1558,1,1,Initial Chemotherapy Agent,cis
 1558,1,1,2nd Failure Type,no known failure
@@ -24295,7 +24295,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1560,1,1,Date of Death,2006-01-12 00:00:00
 1560,1,1,Metastasis,M0
 1560,1,1,Overall Stage,IVa
-1560,1,1,Time to 1st failure,1.1
+1560,1,1,Time to 1st Failure,1.1
 1560,1,1,Occurrence #,1st primary
 1560,1,1,2nd Failure Type,no known failure
 1560,1,1,Research lab p16,p16 unknown
@@ -24393,7 +24393,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1566,1,1,Research lab HPV,HPV unknown
 1566,1,1,Research lab p16,p16 unknown
 1566,1,1,Status,Dead w/ disease
-1566,1,1,Time to 1st failure,1.2
+1566,1,1,Time to 1st Failure,1.2
 1566,1,1,Tumor Site,larynx
 1566,1,1,2nd Failure Type,no known failure
 1566,1,1,Metastasis,M0
@@ -24415,7 +24415,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1567,1,1,Treatment Modality,Sx
 1567,1,1,Age at death,72.2
 1567,1,1,Research lab p16,p16 unknown
-1568,1,1,Time to 1st failure,0.2
+1568,1,1,Time to 1st Failure,0.2
 1568,1,1,Tumor Stage,T3
 1568,1,1,Treatment Modality,CTX-RT
 1568,1,1,Tumor Site,larynx
@@ -24523,7 +24523,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1574,1,1,2nd Failure Type,no known failure
 1574,1,1,Research lab p16,p16 unknown
 1574,1,1,1st Failure Type,no known failure
-1575,1,1,Time to 1st failure,1.2
+1575,1,1,Time to 1st Failure,1.2
 1575,1,1,Metastasis,M0
 1575,1,1,Research lab p16,p16 unknown
 1575,1,1,Occurrence #,recurrence
@@ -24622,7 +24622,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1580,1,1,Clinical lab p16,p16 unkown
 1580,1,1,Tumor Site,larynx
 1580,1,1,Age at death,69.6
-1580,1,1,Time to 1st failure,0.4
+1580,1,1,Time to 1st Failure,0.4
 1580,1,1,Tumor Stage,T2
 1581,1,1,Metastasis,M0
 1581,1,1,Tumor Site,larynx
@@ -24636,7 +24636,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1581,1,1,Overall Stage,I
 1581,1,1,1st Failure Type,locoregional
 1581,1,1,Radiation Dosage,unknown
-1581,1,1,Time to 1st failure,1.6
+1581,1,1,Time to 1st Failure,1.6
 1581,1,1,2nd Failure Type,no known failure
 1581,1,1,Research lab HPV,HPV unknown
 1581,1,1,Treatment Modality,RT
@@ -24735,7 +24735,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1587,1,1,Age at death,48.6
 1587,1,1,Research lab HPV,HPV unknown
 1587,1,1,Tumor Site,larynx
-1587,1,1,Time to 1st failure,0.2
+1587,1,1,Time to 1st Failure,0.2
 1588,1,1,Research lab p16,p16 unknown
 1588,1,1,Clinical lab p16,p16 unkown
 1588,1,1,Radiation Dosage,63
@@ -24866,7 +24866,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1596,1,1,Time to death,1.1
 1596,1,1,Treatment Modality,Sx & CTX-RT
 1596,1,1,Initial Chemotherapy Agent,carbo/PTX/amifostine
-1596,1,1,Time to 1st failure,0.5
+1596,1,1,Time to 1st Failure,0.5
 1596,1,1,1st Failure Type,distant
 1596,1,1,Research lab p16,p16 unknown
 1596,1,1,Date of Death,2006-05-02 00:00:00
@@ -24889,7 +24889,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1597,1,1,Tumor Stage,T1
 1597,1,1,1st Failure Radiation Dosage,69.6
 1597,1,1,Metastasis,M0
-1597,1,1,Time to 1st failure,1.3
+1597,1,1,Time to 1st Failure,1.3
 1597,1,1,Occurrence #,1st primary
 1598,1,1,Clinical lab p16,p16 unkown
 1598,1,1,Research lab p16,p16 unknown
@@ -24912,7 +24912,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1599,1,1,Research lab HPV,HPV unknown
 1599,1,1,Treatment Modality,RT
 1599,1,1,Metastasis,M0
-1599,1,1,Time to 1st failure,0.4
+1599,1,1,Time to 1st Failure,0.4
 1599,1,1,Radiation Dosage,unknown
 1599,1,1,Status,Alive w/o disease
 1599,1,1,1st Failure Site,larynx
@@ -25141,7 +25141,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1614,1,1,Overall Stage,IVa
 1614,1,1,Clinical lab p16,p16 unkown
 1614,1,1,Metastasis,M0
-1614,1,1,Time to 1st failure,1.7
+1614,1,1,Time to 1st Failure,1.7
 1614,1,1,1st Failure Type,locoregional
 1614,1,1,Age at death,50.8
 1614,1,1,Time to death,2.4
@@ -25219,7 +25219,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1619,1,1,Occurrence #,1st primary
 1619,1,1,Time to death,2.5
 1619,1,1,Nodal Stage,N2
-1619,1,1,Time to 1st failure,1.3
+1619,1,1,Time to 1st Failure,1.3
 1619,1,1,Age at death,68.6
 1619,1,1,Metastasis,M0
 1619,1,1,Research lab p16,p16 unknown
@@ -25292,7 +25292,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1623,1,1,Radiation Dosage,unknown
 1623,1,1,Tumor Stage,T4a
 1623,1,1,Research lab p16,p16 unknown
-1623,1,1,Time to 1st failure,0.6
+1623,1,1,Time to 1st Failure,0.6
 1623,1,1,Treatment Modality,Sx & RT
 1623,1,1,2nd Failure Type,no known failure
 1623,1,1,Date of Death,2001-08-08 00:00:00
@@ -25332,7 +25332,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1626,1,1,Radiation Dosage,70.2
 1626,1,1,Time to death,1.2
 1626,1,1,Tumor Stage,T4a
-1626,1,1,Time to 1st failure,0.4
+1626,1,1,Time to 1st Failure,0.4
 1626,1,1,Research lab p16,p16 unknown
 1626,1,1,Overall Stage,IVa
 1626,1,1,Status,Dead unk disease
@@ -25363,7 +25363,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1627,1,1,Research lab HPV,HPV unknown
 1627,1,1,Status,Alive w/o disease
 1628,1,1,1st Failure Treatment Modality,Sx
-1628,1,1,Time to 1st failure,5.5
+1628,1,1,Time to 1st Failure,5.5
 1628,1,1,Research lab HPV,HPV unknown
 1628,1,1,Treatment Modality,RT
 1628,1,1,Tumor Stage,T1
@@ -25410,7 +25410,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1630,1,1,Treatment Modality,Sx & RT
 1630,1,1,Clinical lab p16,p16 unkown
 1631,1,1,Age at death,58.3
-1631,1,1,Time to 1st failure,1.4
+1631,1,1,Time to 1st Failure,1.4
 1631,1,1,Date of Death,2005-09-18 00:00:00
 1631,1,1,1st Failure Type,locoregional
 1631,1,1,Research lab HPV,HPV unknown
@@ -25481,7 +25481,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1635,1,1,Overall Stage,III
 1635,1,1,Tumor Stage,T3
 1635,1,1,Nodal Stage,N0
-1635,1,1,Time to 1st failure,1.0
+1635,1,1,Time to 1st Failure,1.0
 1635,1,1,Age at death,75.9
 1635,1,1,Occurrence #,1st primary
 1635,1,1,Research lab p16,p16 unknown
@@ -25500,7 +25500,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1636,1,1,Treatment Modality,Sx & RT
 1636,1,1,Age at death,56.1
 1636,1,1,1st Failure Type,locoregional
-1636,1,1,Time to 1st failure,0.9
+1636,1,1,Time to 1st Failure,0.9
 1636,1,1,1st Failure Treatment Modality,CTX
 1636,1,1,2nd Failure Type,no known failure
 1636,1,1,Radiation Dosage,70.2
@@ -25534,7 +25534,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1638,1,1,Age at death,82.4
 1638,1,1,Tumor Site,larynx
 1638,1,1,Date of Death,2010-06-11 00:00:00
-1638,1,1,Time to 1st failure,1.7
+1638,1,1,Time to 1st Failure,1.7
 1638,1,1,Overall Stage,II
 1638,1,1,Radiation Dosage,70
 1638,1,1,Metastasis,M0
@@ -25630,7 +25630,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1643,1,1,Age at death,59.3
 1644,1,1,Status,Dead w/ disease
 1644,1,1,Age at death,62.1
-1644,1,1,Time to 1st failure,0.4
+1644,1,1,Time to 1st Failure,0.4
 1644,1,1,Treatment Modality,Sx
 1644,1,1,Time to death,0.6
 1644,1,1,Tumor Site,larynx
@@ -25695,7 +25695,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1647,1,1,Research lab p16,p16 unknown
 1647,1,1,Time to death,2.5
 1647,1,1,Treatment Modality,Sx & RT
-1647,1,1,Time to 1st failure,1.9
+1647,1,1,Time to 1st Failure,1.9
 1647,1,1,Occurrence #,1st primary
 1648,1,1,1st Failure Type,no known failure
 1648,1,1,Occurrence #,1st primary
@@ -25741,7 +25741,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1650,1,1,Overall Stage,IVa
 1650,1,1,Age at death,50.3
 1650,1,1,Tumor Site,larynx
-1650,1,1,Time to 1st failure,0.2
+1650,1,1,Time to 1st Failure,0.2
 1650,1,1,Nodal Stage,N0
 1650,1,1,Status,Dead unk disease
 1650,1,1,Tumor Stage,T4a
@@ -25930,7 +25930,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1662,1,1,Age at death,75.1
 1662,1,1,Metastasis,M0
 1662,1,1,Status,Dead w/ disease
-1662,1,1,Time to 1st failure,1.7
+1662,1,1,Time to 1st Failure,1.7
 1663,1,1,Age at death,80.1
 1663,1,1,Nodal Stage,N2
 1663,1,1,2nd Failure Type,no known failure
@@ -25989,7 +25989,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1666,1,1,Time to death,1.4
 1666,1,1,Metastasis,M0
 1666,1,1,Date of Death,2004-09-21 00:00:00
-1666,1,1,Time to 1st failure,1.0
+1666,1,1,Time to 1st Failure,1.0
 1666,1,1,Treatment Modality,Sx
 1666,1,1,2nd Failure Type,no known failure
 1666,1,1,Status,Dead w/ disease
@@ -26013,7 +26013,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1667,1,1,Radiation Dosage,74.4
 1667,1,1,Research lab HPV,HPV unknown
 1668,1,1,Treatment Modality,Sx
-1668,1,1,Time to 1st failure,0.8
+1668,1,1,Time to 1st Failure,0.8
 1668,1,1,Status,Dead w/ disease
 1668,1,1,Occurrence #,recurrence
 1668,1,1,1st Failure Site,larynx
@@ -26045,7 +26045,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1669,1,1,Metastasis,M0
 1669,1,1,2nd Failure Type,no known failure
 1669,1,1,1st Failure Site,larynx
-1669,1,1,Time to 1st failure,1.0
+1669,1,1,Time to 1st Failure,1.0
 1669,1,1,Date of Death,2005-05-01 00:00:00
 1669,1,1,Time to death,1.5
 1669,1,1,Treatment Modality,Sx & RT
@@ -26082,7 +26082,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1671,1,1,Tumor Stage,T3
 1671,1,1,Overall Stage,IVc
 1671,1,1,Metastasis,M1
-1671,1,1,Time to 1st failure,0.8
+1671,1,1,Time to 1st Failure,0.8
 1671,1,1,Initial Chemotherapy Agent,cis/PTX
 1671,1,1,Age at death,68.0
 1672,1,1,Metastasis,M0
@@ -26148,7 +26148,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1675,1,1,Nodal Stage,N3
 1675,1,1,Tumor Stage,T1
 1675,1,1,1st Failure Type,distant
-1675,1,1,Time to 1st failure,0.0
+1675,1,1,Time to 1st Failure,0.0
 1675,1,1,Overall Stage,IVb
 1676,1,1,Occurrence #,1st primary
 1676,1,1,Tumor Stage,T2
@@ -26228,7 +26228,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1680,1,1,Nodal Stage,N0
 1680,1,1,Research lab p16,p16 unknown
 1681,1,1,Tumor Stage,T3
-1681,1,1,Time to 1st failure,0.7
+1681,1,1,Time to 1st Failure,0.7
 1681,1,1,Time to death,2.8
 1681,1,1,Clinical lab p16,p16 unkown
 1681,1,1,1st Failure Site,larynx
@@ -26294,7 +26294,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1684,1,1,Nodal Stage,N2
 1684,1,1,Clinical lab p16,p16 unkown
 1684,1,1,Time to death,2.6
-1684,1,1,Time to 1st failure,2.1
+1684,1,1,Time to 1st Failure,2.1
 1684,1,1,Overall Stage,IVa
 1684,1,1,Research lab HPV,HPV unknown
 1684,1,1,1st Failure Type,distant
@@ -26333,7 +26333,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1686,1,1,Treatment Modality,Sx & CTX-RT
 1686,1,1,Overall Stage,IVc
 1687,1,1,Research lab p16,p16 unknown
-1687,1,1,Time to 1st failure,1.9
+1687,1,1,Time to 1st Failure,1.9
 1687,1,1,Time to death,3.1
 1687,1,1,1st Failure Type,locoregional and distant
 1687,1,1,Initial Chemotherapy Agent,cis
@@ -26369,7 +26369,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1688,1,1,Treatment Modality,Sx
 1688,1,1,Tumor Stage,T2
 1688,1,1,Age at death,68.6
-1688,1,1,Time to 1st failure,0.2
+1688,1,1,Time to 1st Failure,0.2
 1688,1,1,Time to death,2.1
 1688,1,1,Metastasis,M0
 1689,1,1,Clinical lab p16,p16 unkown
@@ -26422,7 +26422,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1691,1,1,Research lab HPV,HPV unknown
 1691,1,1,Occurrence #,recurrence
 1691,1,1,Tumor Site,larynx
-1691,1,1,Time to 1st failure,0.4
+1691,1,1,Time to 1st Failure,0.4
 1691,1,1,Research lab p16,p16 unknown
 1691,1,1,1st Failure Type,locoregional
 1691,1,1,2nd Failure Type,no known failure
@@ -26433,7 +26433,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1692,1,1,Status,Dead unk disease
 1692,1,1,2nd Failure Type,no known failure
 1692,1,1,Metastasis,M0
-1692,1,1,Time to 1st failure,0.3
+1692,1,1,Time to 1st Failure,0.3
 1692,1,1,Nodal Stage,N0
 1692,1,1,Occurrence #,1st primary
 1692,1,1,Research lab p16,p16 unknown
@@ -26539,7 +26539,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1698,1,1,Time to death,3.5
 1699,1,1,1st Failure Site,hypopharynx
 1699,1,1,Research lab HPV,HPV unknown
-1699,1,1,Time to 1st failure,0.0
+1699,1,1,Time to 1st Failure,0.0
 1699,1,1,Overall Stage,IVa
 1699,1,1,Tumor Site,hypopharynx
 1699,1,1,Status,Dead w/ disease
@@ -26633,7 +26633,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1704,1,1,1st Failure Initial Chemotherapy Agent,MAGE-3 vaccine
 1704,1,1,1st Failure Second Line Chemotherapy Agent,cis/doce
 1704,1,1,Status,Dead w/ disease
-1704,1,1,Time to 1st failure,0.7
+1704,1,1,Time to 1st Failure,0.7
 1704,1,1,1st Failure Site,hypopharynx
 1704,1,1,Tumor Site,hypopharynx
 1704,1,1,1st Failure Type,locoregional
@@ -26714,7 +26714,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1709,1,1,Research lab HPV,HPV unknown
 1709,1,1,Treatment Modality,Sx
 1709,1,1,Clinical lab p16,p16 unkown
-1709,1,1,Time to 1st failure,1.3
+1709,1,1,Time to 1st Failure,1.3
 1709,1,1,Age at death,66.0
 1709,1,1,Date of Death,2011-06-07 00:00:00
 1709,1,1,1st Failure Type,locoregional
@@ -26735,7 +26735,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1710,1,1,Radiation Dosage,42
 1710,1,1,Tumor Site,hypopharynx
 1710,1,1,Time to death,1.8
-1710,1,1,Time to 1st failure,0.8
+1710,1,1,Time to 1st Failure,0.8
 1711,1,1,Treatment Modality,CTX-RT
 1711,1,1,Clinical lab p16,p16 unkown
 1711,1,1,Status,Dead unk disease
@@ -26759,7 +26759,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1712,1,1,Occurrence #,recurrence
 1712,1,1,1st Failure Type,locoregional
 1712,1,1,Research lab HPV,HPV unknown
-1712,1,1,Time to 1st failure,0.8
+1712,1,1,Time to 1st Failure,0.8
 1712,1,1,Date of Death,2009-11-15 00:00:00
 1712,1,1,Status,Dead w/ disease
 1712,1,1,2nd Failure Type,no known failure
@@ -26780,7 +26780,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1713,1,1,Research lab HPV,HPV unknown
 1713,1,1,Time to death,2.8
 1713,1,1,Tumor Site,hypopharynx
-1713,1,1,Time to 1st failure,0.3
+1713,1,1,Time to 1st Failure,0.3
 1713,1,1,Treatment Modality,CTX-RT
 1713,1,1,Date of Death,2011-03-19 00:00:00
 1713,1,1,Research lab p16,p16 unknown
@@ -26823,7 +26823,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1715,1,1,Overall Stage,IVa
 1715,1,1,Clinical lab p16,p16 unkown
 1715,1,1,Tumor Stage,T3
-1715,1,1,Time to 1st failure,2.9
+1715,1,1,Time to 1st Failure,2.9
 1715,1,1,Date of Death,2008-12-24 00:00:00
 1715,1,1,1st Failure Site,hypopharynx
 1715,1,1,1st Failure Type,locoregional
@@ -26848,7 +26848,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1716,1,1,Treatment Modality,Sx
 1716,1,1,Date of Death,2005-02-16 00:00:00
 1716,1,1,Nodal Stage,N0
-1717,1,1,Time to 1st failure,0.8
+1717,1,1,Time to 1st Failure,0.8
 1717,1,1,Tumor Stage,T4b
 1717,1,1,Research lab p16,p16 unknown
 1717,1,1,Nodal Stage,N2
@@ -27099,7 +27099,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1732,1,1,Status,Dead w/ disease
 1732,1,1,Tumor Stage,T3
 1732,1,1,Tumor Site,hypopharynx
-1732,1,1,Time to 1st failure,0.2
+1732,1,1,Time to 1st Failure,0.2
 1732,1,1,Research lab p16,p16 unknown
 1732,1,1,Date of Death,2007-04-03 00:00:00
 1732,1,1,Second Line Chemotherapy Agent,cap
@@ -27237,7 +27237,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1740,1,1,Treatment Modality,Sx & CTX-RT
 1740,1,1,Research lab HPV,HPV unknown
 1740,1,1,1st Failure Initial Chemotherapy Agent,cis/cetux
-1740,1,1,Time to 1st failure,1.0
+1740,1,1,Time to 1st Failure,1.0
 1740,1,1,Occurrence #,1st primary
 1740,1,1,Tumor Stage,T2
 1740,1,1,Research lab p16,p16 unknown
@@ -27267,7 +27267,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1741,1,1,Treatment Modality,Sx
 1741,1,1,Clinical lab p16,p16 unkown
 1741,1,1,1st Failure Type,locoregional and distant
-1741,1,1,Time to 1st failure,0.2
+1741,1,1,Time to 1st Failure,0.2
 1741,1,1,Status,Dead w/ disease
 1741,1,1,Research lab HPV,HPV unknown
 1741,1,1,Overall Stage,IVc
@@ -27277,7 +27277,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1742,1,1,Overall Stage,IVb
 1742,1,1,Research lab HPV,HPV unknown
 1742,1,1,Status,Dead w/ disease
-1742,1,1,Time to 1st failure,0.2
+1742,1,1,Time to 1st Failure,0.2
 1742,1,1,Nodal Stage,N3
 1742,1,1,Age at death,58.8
 1742,1,1,Date of Death,2003-03-12 00:00:00
@@ -27373,7 +27373,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1747,1,1,Overall Stage,IVb
 1747,1,1,Occurrence #,1st primary
 1747,1,1,1st Failure Type,distant
-1747,1,1,Time to 1st failure,0.2
+1747,1,1,Time to 1st Failure,0.2
 1747,1,1,Metastasis,M0
 1747,1,1,Research lab p16,p16 unknown
 1747,1,1,Date of Death,2006-07-24 00:00:00
@@ -27435,7 +27435,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1751,1,1,Status,Dead unk disease
 1751,1,1,Age at death,78.2
 1751,1,1,1st Failure Type,locoregional
-1751,1,1,Time to 1st failure,0.3
+1751,1,1,Time to 1st Failure,0.3
 1751,1,1,Metastasis,M0
 1751,1,1,Nodal Stage,N1
 1751,1,1,Treatment Modality,CTX-RT
@@ -27460,7 +27460,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1752,1,1,Treatment Modality,Sx & CTX
 1752,1,1,Overall Stage,III
 1752,1,1,2nd Failure Type,no known failure
-1752,1,1,Time to 1st failure,0.7
+1752,1,1,Time to 1st Failure,0.7
 1752,1,1,Metastasis,M0
 1752,1,1,Time to death,1.3
 1752,1,1,Research lab HPV,HPV unknown
@@ -27483,7 +27483,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1753,1,1,Occurrence #,1st primary
 1753,1,1,Tumor Stage,T2
 1753,1,1,Nodal Stage,N0
-1753,1,1,Time to 1st failure,5.1
+1753,1,1,Time to 1st Failure,5.1
 1753,1,1,Radiation Dosage,74.4
 1753,1,1,1st Failure Type,locoregional
 1753,1,1,Time to death,5.6
@@ -27501,7 +27501,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1754,1,1,Nodal Stage,N2
 1754,1,1,Tumor Stage,T2
 1754,1,1,Clinical lab p16,p16 unkown
-1754,1,1,Time to 1st failure,-0.2
+1754,1,1,Time to 1st Failure,-0.2
 1754,1,1,Treatment Modality,CTX-RT
 1754,1,1,Status,Dead w/ disease
 1754,1,1,Date of Death,2010-06-24 00:00:00
@@ -27517,7 +27517,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1755,1,1,1st Failure Treatment Modality,Sx
 1755,1,1,Clinical lab p16,p16 unkown
 1755,1,1,Tumor Stage,T1
-1755,1,1,Time to 1st failure,6.8
+1755,1,1,Time to 1st Failure,6.8
 1755,1,1,Tumor Site,hypopharynx
 1755,1,1,Research lab HPV,HPV unknown
 1755,1,1,1st Failure Type,locoregional
@@ -27562,7 +27562,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1758,1,1,Radiation Dosage,70.2
 1758,1,1,Overall Stage,IVb
 1758,1,1,Status,Dead w/ disease
-1758,1,1,Time to 1st failure,0.1
+1758,1,1,Time to 1st Failure,0.1
 1758,1,1,Metastasis,M0
 1758,1,1,Time to death,1.9
 1758,1,1,2nd Failure Type,no known failure
@@ -27619,7 +27619,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1760,1,1,Tumor Site,hypopharynx
 1760,1,1,1st Failure Initial Chemotherapy Agent,cap
 1760,1,1,Radiation Dosage,70.2
-1760,1,1,Time to 1st failure,0.2
+1760,1,1,Time to 1st Failure,0.2
 1761,1,1,Clinical lab p16,p16 unkown
 1761,1,1,1st Failure Type,no known failure
 1761,1,1,Occurrence #,1st primary
@@ -27651,7 +27651,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1762,1,1,Nodal Stage,N0
 1762,1,1,Research lab p16,p16 unknown
 1762,1,1,2nd Failure Type,no known failure
-1762,1,1,Time to 1st failure,0.6
+1762,1,1,Time to 1st Failure,0.6
 1762,1,1,Clinical lab p16,p16 unkown
 1763,1,1,Time to death,0.6
 1763,1,1,Research lab HPV,HPV unknown
@@ -27686,7 +27686,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1764,1,1,1st Failure Type,locoregional and distant
 1764,1,1,Metastasis,M0
 1764,1,1,Date of Death,2001-10-16 00:00:00
-1764,1,1,Time to 1st failure,0.8
+1764,1,1,Time to 1st Failure,0.8
 1765,1,1,1st Failure Type,no known failure
 1765,1,1,Nodal Stage,N3
 1765,1,1,Date of Death,2009-05-18 00:00:00
@@ -27705,7 +27705,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1765,1,1,Status,Dead unk disease
 1766,1,1,Tumor Site,hypopharynx
 1766,1,1,Date of Death,2003-05-31 00:00:00
-1766,1,1,Time to 1st failure,0.1
+1766,1,1,Time to 1st Failure,0.1
 1766,1,1,Overall Stage,IVb
 1766,1,1,Research lab HPV,HPV unknown
 1766,1,1,Occurrence #,1st primary
@@ -27769,7 +27769,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1769,1,1,1st Failure Type,distant
 1769,1,1,Status,Dead w/ disease
 1769,1,1,Date of Death,2009-06-08 00:00:00
-1769,1,1,Time to 1st failure,1.0
+1769,1,1,Time to 1st Failure,1.0
 1769,1,1,Initial Chemotherapy Agent,cis
 1769,1,1,Clinical lab p16,p16 unkown
 1769,1,1,Overall Stage,IVa
@@ -27782,7 +27782,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1770,1,1,1st Failure Treatment Modality,RT
 1770,1,1,Date of Death,2011-04-30 00:00:00
 1770,1,1,Research lab HPV,HPV unknown
-1770,1,1,Time to 1st failure,4.1
+1770,1,1,Time to 1st Failure,4.1
 1770,1,1,Metastasis,M0
 1770,1,1,Overall Stage,III
 1770,1,1,Status,Dead w/ disease
@@ -27824,7 +27824,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1772,1,1,Tumor Stage,T4a
 1772,1,1,Nodal Stage,N2
 1772,1,1,Overall Stage,IVa
-1773,1,1,Time to 1st failure,1.7
+1773,1,1,Time to 1st Failure,1.7
 1773,1,1,Status,Dead w/ disease
 1773,1,1,Metastasis,M0
 1773,1,1,Date of Death,2011-02-09 00:00:00
@@ -27847,7 +27847,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1774,1,1,Occurrence #,other primary
 1774,1,1,Tumor Site,hypopharynx
 1774,1,1,Treatment Modality,CTX-RT
-1774,1,1,Time to 1st failure,0.3
+1774,1,1,Time to 1st Failure,0.3
 1774,1,1,Date of Death,2011-08-27 00:00:00
 1774,1,1,Overall Stage,IVa
 1774,1,1,Nodal Stage,N2
@@ -27863,7 +27863,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1774,1,1,Research lab p16,p16 unknown
 1774,1,1,Radiation Dosage,70.2
 1775,1,1,1st Failure Type,locoregional
-1775,1,1,Time to 1st failure,0.0
+1775,1,1,Time to 1st Failure,0.0
 1775,1,1,2nd Failure Type,no known failure
 1775,1,1,Tumor Site,hypopharynx
 1775,1,1,Nodal Stage,N2
@@ -27940,7 +27940,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1779,1,1,Initial Chemotherapy Agent,carbo/PTX
 1779,1,1,Time to death,1.5
 1779,1,1,Occurrence #,other primary
-1779,1,1,Time to 1st failure,0.3
+1779,1,1,Time to 1st Failure,0.3
 1779,1,1,Overall Stage,II
 1779,1,1,Metastasis,M0
 1779,1,1,Tumor Stage,T2
@@ -27976,7 +27976,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1781,1,1,Research lab HPV,HPV unknown
 1781,1,1,Clinical lab p16,p16 unkown
 1781,1,1,Tumor Stage,T4a
-1781,1,1,Time to 1st failure,0.0
+1781,1,1,Time to 1st Failure,0.0
 1781,1,1,Radiation Dosage,70
 1781,1,1,Nodal Stage,N3
 1781,1,1,Initial Chemotherapy Agent,carbo/PTX
@@ -28036,7 +28036,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1784,1,1,Occurrence #,1st primary
 1785,1,1,2nd Failure Type,no known failure
 1785,1,1,Treatment Modality,Sx & CTX-RT
-1785,1,1,Time to 1st failure,8.1
+1785,1,1,Time to 1st Failure,8.1
 1785,1,1,Research lab HPV,HPV unknown
 1785,1,1,Tumor Site,oral cavity
 1785,1,1,Overall Stage,IVa
@@ -28092,7 +28092,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1790,1,1,Age at death,61.8
 1790,1,1,Research lab HPV,HPV unknown
 1790,1,1,Date of Death,2008-06-12 00:00:00
-1790,1,1,Time to 1st failure,1.1
+1790,1,1,Time to 1st Failure,1.1
 1790,1,1,Occurrence #,1st primary
 1790,1,1,Treatment Modality,Sx & CTX-RT
 1790,1,1,Tumor Stage,T3
@@ -28333,7 +28333,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1806,1,1,Date of Death,2010-08-20 00:00:00
 1806,1,1,Research lab p16,p16 unknown
 1806,1,1,1st Failure Treatment Modality,Sx
-1806,1,1,Time to 1st failure,1.2
+1806,1,1,Time to 1st Failure,1.2
 1806,1,1,Tumor Stage,T2
 1806,1,1,Research lab HPV,HPV unknown
 1806,1,1,Radiation Dosage,unknown
@@ -28375,7 +28375,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1808,1,1,1st Failure Type,locoregional
 1808,1,1,2nd Failure Type,no known failure
 1808,1,1,Clinical lab p16,p16 unkown
-1808,1,1,Time to 1st failure,0.0
+1808,1,1,Time to 1st Failure,0.0
 1808,1,1,Status,Dead w/ disease
 1808,1,1,Research lab HPV,HPV unknown
 1808,1,1,Date of Death,2007-04-10 00:00:00
@@ -28441,7 +28441,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 1812,1,1,Age at death,46.5
 1812,1,1,2nd Failure Type,no known failure
 1812,1,1,Tumor Site,oral cavity
-1812,1,1,Time to 1st failure,0.3
+1812,1,1,Time to 1st Failure,0.3
 1812,1,1,1st Failure Type,locoregional
 1812,1,1,Tumor Stage,T2
 1812,1,1,Occurrence #,other primary
@@ -28468,7 +28468,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 2222,1,1,Research lab p16,p16 unknown
 2223,1,1,Tumor Stage,T2
 2223,1,1,Overall Stage,III
-2223,1,1,Time to 1st failure,0.3
+2223,1,1,Time to 1st Failure,0.3
 2223,1,1,Treatment Modality,Sx
 2223,1,1,1st Failure Type,locoregional
 2223,1,1,Nodal Stage,N2
@@ -28600,7 +28600,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3008,1,1,Occurrence #,1st primary
 3008,1,1,Status,Alive w/ disease
 3008,1,1,1st Failure Initial Chemotherapy Agent,Carbo/doce
-3008,1,1,Time to 1st failure,2.9
+3008,1,1,Time to 1st Failure,2.9
 3008,1,1,Clinical lab p16,p16 positive
 3008,1,1,1st Failure Second Line Chemotherapy Agent,Treme.+MEDI
 3008,1,1,1st Failure Type,distant
@@ -29505,7 +29505,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3069,1,1,Treatment Modality,Sx
 3069,1,1,Nodal Stage,N0
 3069,1,1,Research lab p16,p16 unknown
-3069,1,1,Time to 1st failure,0.0
+3069,1,1,Time to 1st Failure,0.0
 3069,1,1,Overall Stage,I
 3069,1,1,Tumor Stage,T1
 3069,1,1,Research lab HPV,HPV negative
@@ -29676,7 +29676,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3081,1,1,Occurrence #,1st primary
 3081,1,1,Tumor Site,oral cavity
 3081,1,1,Research lab HPV,HPV negative
-3081,1,1,Time to 1st failure,-0.1
+3081,1,1,Time to 1st Failure,-0.1
 3081,1,1,Initial Chemotherapy Agent,Cis/doce/5FU
 3081,1,1,Status,Dead w/ disease
 3081,1,1,Research lab p16,p16 unknown
@@ -29735,7 +29735,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3085,1,1,Nodal Stage,N3
 3085,1,1,Research lab p16,p16 unknown
 3085,1,1,Status,Dead w/ disease
-3085,1,1,Time to 1st failure,0.2
+3085,1,1,Time to 1st Failure,0.2
 3085,1,1,Research lab HPV,HPV negative
 3085,1,1,Time to death,0.4
 3085,1,1,Tumor Site,oropharynx
@@ -29773,7 +29773,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3087,1,1,2nd Failure Type,no known failure
 3087,1,1,Clinical lab p16,p16 negative
 3087,1,1,Occurrence #,1st primary
-3087,1,1,Time to 1st failure,0.4
+3087,1,1,Time to 1st Failure,0.4
 3087,1,1,Nodal Stage,N2
 3087,1,1,Initial Chemotherapy Agent,Cis/doce/5FU
 3087,1,1,Research lab HPV,HPV negative
@@ -29820,7 +29820,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3090,1,1,Treatment Modality,Sx
 3090,1,1,Nodal Stage,N0
 3090,1,1,2nd Failure Type,no known failure
-3090,1,1,Time to 1st failure,2.2
+3090,1,1,Time to 1st Failure,2.2
 3090,1,1,Overall Stage,IVa
 3090,1,1,1st Failure Type,locoregional
 3090,1,1,Metastasis,M0
@@ -30042,7 +30042,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3105,1,1,Status,Dead w/ disease
 3105,1,1,1st Failure Second Line Chemotherapy Agent,cetux
 3105,1,1,1st Failure Initial Chemotherapy Agent,carbo/pemetrexed
-3105,1,1,Time to 1st failure,0.1
+3105,1,1,Time to 1st Failure,0.1
 3105,1,1,Tumor Stage,T3
 3105,1,1,Overall Stage,IVc
 3105,1,1,Time to death,1.0
@@ -30066,7 +30066,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3106,1,1,Treatment Modality,Sx & CTX-RT
 3106,1,1,2nd Failure Type,no known failure
 3106,1,1,Research lab HPV,HPV negative
-3106,1,1,Time to 1st failure,0.3
+3106,1,1,Time to 1st Failure,0.3
 3106,1,1,1st Failure Initial Chemotherapy Agent,carbo/doce
 3106,1,1,Tumor Stage,T1
 3106,1,1,Time to death,1.0
@@ -30079,7 +30079,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3107,1,1,Metastasis,M0
 3107,1,1,1st Failure Treatment Modality,Sx
 3107,1,1,1st Failure Type,locoregional
-3107,1,1,Time to 1st failure,0.9
+3107,1,1,Time to 1st Failure,0.9
 3107,1,1,1st Failure Initial Chemotherapy Agent,cis
 3107,1,1,Clinical lab p16,p16 negative
 3107,1,1,Tumor Stage,T2
@@ -30364,7 +30364,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3127,1,1,Clinical lab p16,p16 negative
 3127,1,1,Status,Alive w/o disease
 3127,1,1,Research lab p16,p16 unknown
-3127,1,1,Time to 1st failure,2.6
+3127,1,1,Time to 1st Failure,2.6
 3127,1,1,1st Failure Site,oral cavity
 3127,1,1,1st Failure Treatment Modality,Sx
 3127,1,1,Nodal Stage,N0
@@ -30440,7 +30440,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3133,1,1,Overall Stage,IVa
 3133,1,1,1st Failure Treatment Modality,CTX
 3133,1,1,Occurrence #,1st primary
-3133,1,1,Time to 1st failure,1.2
+3133,1,1,Time to 1st Failure,1.2
 3133,1,1,Initial Chemotherapy Agent,Carbo
 3133,1,1,Research lab HPV,HPV negative
 3133,1,1,Status,Dead w/ disease
@@ -30486,7 +30486,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3135,1,1,1st Failure Site,oral cavity
 3135,1,1,Date of Death,2016-04-20 00:00:00
 3135,1,1,Research lab HPV,HPV negative
-3135,1,1,Time to 1st failure,3.0
+3135,1,1,Time to 1st Failure,3.0
 3135,1,1,Nodal Stage,N2
 3135,1,1,Tumor Stage,T4a
 3136,1,1,Clinical lab p16,p16 negative
@@ -30609,7 +30609,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3144,1,1,Research lab p16,p16 unknown
 3144,1,1,Initial Chemotherapy Agent,Carbo
 3144,1,1,Occurrence #,1st primary
-3144,1,1,Time to 1st failure,0.5
+3144,1,1,Time to 1st Failure,0.5
 3144,1,1,Radiation Dosage,70.2
 3144,1,1,Research lab HPV,HPV negative
 3144,1,1,Tumor Stage,T2
@@ -30719,7 +30719,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3152,1,1,2nd Failure Type,no known failure
 3152,1,1,Tumor Site,oral cavity
 3152,1,1,Occurrence #,recurrence
-3152,1,1,Time to 1st failure,1.2
+3152,1,1,Time to 1st Failure,1.2
 3152,1,1,Research lab HPV,HPV unknown
 3152,1,1,Metastasis,M0
 3152,1,1,Nodal Stage,N0
@@ -30872,7 +30872,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3162,1,1,Nodal Stage,N0
 3162,1,1,Treatment Modality,Sx
 3162,1,1,Overall Stage,I
-3162,1,1,Time to 1st failure,0.7
+3162,1,1,Time to 1st Failure,0.7
 3162,1,1,Tumor Stage,T1
 3162,1,1,1st Failure Treatment Modality,Sx & CTX-RT
 3162,1,1,Research lab HPV,HPV unknown
@@ -31056,7 +31056,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3174,1,1,Metastasis,M0
 3174,1,1,Tumor Stage,T3
 3174,1,1,Treatment Modality,Sx
-3174,1,1,Time to 1st failure,0.6
+3174,1,1,Time to 1st Failure,0.6
 3174,1,1,Date of Death,2014-04-18 00:00:00
 3174,1,1,Age at death,58.1
 3175,1,1,Research lab HPV,HPV unknown
@@ -31850,7 +31850,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3232,1,1,Overall Stage,I
 3232,1,1,Clinical lab p16,p16 unkown
 3232,1,1,Occurrence #,1st primary
-3232,1,1,Time to 1st failure,1.3
+3232,1,1,Time to 1st Failure,1.3
 3232,1,1,Treatment Modality,Sx
 3232,1,1,2nd Failure Type,no known failure
 3232,1,1,Tumor Site,oral cavity
@@ -32392,7 +32392,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3272,1,1,Clinical lab p16,p16 unkown
 3272,1,1,Treatment Modality,Sx
 3273,1,1,Nodal Stage,N0
-3273,1,1,Time to 1st failure,2.1
+3273,1,1,Time to 1st Failure,2.1
 3273,1,1,Clinical lab p16,p16 unkown
 3273,1,1,Tumor Stage,T1
 3273,1,1,Overall Stage,I
@@ -32624,7 +32624,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3290,1,1,1st Failure Type,locoregional
 3290,1,1,Tumor Stage,T1
 3290,1,1,Overall Stage,I
-3290,1,1,Time to 1st failure,2.1
+3290,1,1,Time to 1st Failure,2.1
 3290,1,1,Treatment Modality,Sx
 3290,1,1,1st Failure Site,oral cavity
 3290,1,1,Metastasis,M0
@@ -32932,7 +32932,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3313,1,1,Tumor Stage,T2
 3313,1,1,1st Failure Site,oral cavity
 3313,1,1,Metastasis,M0
-3313,1,1,Time to 1st failure,0.3
+3313,1,1,Time to 1st Failure,0.3
 3313,1,1,Clinical lab p16,p16 unkown
 3313,1,1,Research lab p16,p16 unknown
 3313,1,1,Research lab HPV,HPV unknown
@@ -33798,7 +33798,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3377,1,1,Treatment Modality,Sx
 3377,1,1,Overall Stage,III
 3377,1,1,1st Failure Radiation Dosage,28
-3377,1,1,Time to 1st failure,0.8
+3377,1,1,Time to 1st Failure,0.8
 3377,1,1,Tumor Stage,T3
 3377,1,1,Metastasis,M0
 3377,1,1,Nodal Stage,N0
@@ -33849,7 +33849,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3380,1,1,1st Failure Type,locoregional
 3380,1,1,Nodal Stage,N1
 3380,1,1,Tumor Site,oral cavity
-3380,1,1,Time to 1st failure,0.3
+3380,1,1,Time to 1st Failure,0.3
 3380,1,1,Tumor Stage,T2
 3381,1,1,Research lab p16,p16 unknown
 3381,1,1,Overall Stage,IVa
@@ -33891,7 +33891,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3383,1,1,Tumor Site,oral cavity
 3383,1,1,Research lab HPV,HPV unknown
 3384,1,1,1st Failure Type,distant
-3384,1,1,Time to 1st failure,-0.7
+3384,1,1,Time to 1st Failure,-0.7
 3384,1,1,Tumor Site,oral cavity
 3384,1,1,Status,Dead w/ disease
 3384,1,1,Initial Chemotherapy Agent,Cis/5FU
@@ -33979,7 +33979,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3389,1,1,Clinical lab p16,p16 unkown
 3389,1,1,1st Failure Type,locoregional
 3389,1,1,Research lab p16,p16 unknown
-3389,1,1,Time to 1st failure,0.7
+3389,1,1,Time to 1st Failure,0.7
 3390,1,1,1st Failure Treatment Modality,CTX
 3390,1,1,Tumor Stage,T1
 3390,1,1,Occurrence #,1st primary
@@ -34041,7 +34041,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3393,1,1,Clinical lab p16,p16 unkown
 3394,1,1,Treatment Modality,Sx & RT
 3394,1,1,2nd Failure Type,no known failure
-3394,1,1,Time to 1st failure,0.4
+3394,1,1,Time to 1st Failure,0.4
 3394,1,1,Clinical lab p16,p16 unkown
 3394,1,1,Nodal Stage,N0
 3394,1,1,Tumor Stage,T4a
@@ -34076,7 +34076,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3396,1,1,Tumor Site,oral cavity
 3396,1,1,Research lab p16,p16 unknown
 3396,1,1,Research lab HPV,HPV unknown
-3396,1,1,Time to 1st failure,0.3
+3396,1,1,Time to 1st Failure,0.3
 3396,1,1,Status,Dead w/ disease
 3396,1,1,Metastasis,M0
 3396,1,1,Tumor Stage,T1
@@ -34335,7 +34335,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3415,1,1,Metastasis,M0
 3415,1,1,Research lab p16,p16 unknown
 3415,1,1,Treatment Modality,CTX-RT
-3415,1,1,Time to 1st failure,0.2
+3415,1,1,Time to 1st Failure,0.2
 3415,1,1,Initial Chemotherapy Agent,carbo
 3415,1,1,Tumor Site,oropharynx
 3415,1,1,Nodal Stage,N2
@@ -34455,7 +34455,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3423,1,1,Metastasis,M0
 3423,1,1,Occurrence #,1st primary
 3424,1,1,Clinical lab p16,p16 unkown
-3424,1,1,Time to 1st failure,0.8
+3424,1,1,Time to 1st Failure,0.8
 3424,1,1,Metastasis,M0
 3424,1,1,Tumor Stage,T2
 3424,1,1,Nodal Stage,N2
@@ -34541,7 +34541,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3429,1,1,Overall Stage,I
 3429,1,1,Metastasis,M0
 3429,1,1,2nd Failure Type,no known failure
-3429,1,1,Time to 1st failure,0.1
+3429,1,1,Time to 1st Failure,0.1
 3429,1,1,Status,Dead w/ disease
 3429,1,1,Treatment Modality,Sx
 3429,1,1,Research lab p16,p16 unknown
@@ -34589,7 +34589,7 @@ SubjectNum,VisitNum,VisitCode,Testname,Value
 3432,1,1,Nodal Stage,N2
 3432,1,1,Initial Chemotherapy Agent,cis
 3432,1,1,Status,Dead w/o disease
-3432,1,1,Time to 1st failure,0.2
+3432,1,1,Time to 1st Failure,0.2
 3432,1,1,Research lab p16,p16 unknown
 3433,1,1,Tumor Site,oral cavity
 3433,1,1,Metastasis,M0
