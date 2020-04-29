@@ -52,6 +52,18 @@ class SubjectOntology(db.Model):
         """
         return cls.query.filter_by(id=subject_ontology_id).first()
 
+    @classmethod
+    def find_by_label(cls, subject_ontology_label):
+        """Find subject ontology by label.
+
+        Args:
+            subject_ontology_label: Subject ontology label.
+
+        Returns:
+           Subject ontology.
+        """
+        return cls.query.filter_by(label=subject_ontology_label).first()
+
     def save_to_db(self):
         """Save to database."""
         db.session.add(self)

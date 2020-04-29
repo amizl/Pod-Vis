@@ -461,6 +461,16 @@ def create_collection():
         collection_study = models.CollectionStudy(collection.id, study.id)
         collection_study.save_to_db()
 
+    # Add special "Dataset" subject variable
+    dataset_var = models.SubjectOntology.find_by_label("Dataset")
+    # ...creating it if it does not exist
+    if dataset_var is None:
+        dataset_var = models.SubjectOntology(None, 'Dataset', 'char', 'Categorical');
+        dataset_var.save_to_db()
+        
+    subj_var = models.CollectionSubjectVariable(collection.id, dataset_var.id)
+    subj_var.save_to_db()
+        
     # Add variables to appropriate collection table
     for variable in variables:
         if variable["type"] == "observation":
@@ -556,7 +566,7 @@ def get_collection(collection_id):
         if 'ontology' in sv:
             so = sv['ontology']
             so['category'] = get_subj_scale_category(so['id'])
-            
+
     return jsonify(dict(success=True, collection=collection_d))
 
 @api.route("/collections/<int:collection_id>", methods=["DELETE"])
@@ -811,6 +821,10 @@ def compute_anova():
     pvals = []
 
     for output_variable in output_variables:
+        # test doesn't apply to longitudinal categorical variables
+        if output_variable['data_category'] == 'Categorical':
+            continue
+
         # Output variables that are simply "change" or "firstVisit" will have the
         # id of "change-208" or "firstVisit-208". We want to detect this so we can
         # use the correct id
@@ -823,7 +837,11 @@ def compute_anova():
 
         samples = []
         for g in groups:
-            sample = [float(data.get(variable_id).get('change')) for data in g]
+            sample = []
+            for data in g:
+                change = data.get(variable_id).get('change')
+                if change is not None:
+                    sample.append(float(change))
             samples.append(sample)
             
         fval, pval = f_oneway(*samples)
@@ -843,6 +861,10 @@ def compute_pairwise_tukeyhsd():
     results = {}
 
     for output_variable in output_variables:
+        # test doesn't apply to longitudinal categorical variables
+        if output_variable['data_category'] == 'Categorical':
+            continue
+
         if isinstance(output_variable.get("id"), str) and "-" in output_variable.get("id"):
             variable_id = str(output_variable.get("parentID"))
             variable_label = output_variable.get("parentLabel")
@@ -856,7 +878,9 @@ def compute_pairwise_tukeyhsd():
         for g in groups:
             for datum in g['data']:
                 groupnums.append(g['id'])
-                data.append(datum.get(variable_id).get('change'))
+                change = datum.get(variable_id).get('change')
+                if change is not None:
+                    data.append(change)
 
         # compute Tukey-HSD
         res = pairwise_tukeyhsd(groups=groupnums, endog=data)

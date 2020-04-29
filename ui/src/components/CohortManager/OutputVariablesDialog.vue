@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="openOutputVariableDialog" scrollable max-width="600px">
+  <v-dialog v-model="openOutputVariableDialog" scrollable>
     <template v-slot:activator="{ on }">
       <v-btn flat color="primary" class="title" v-on="on">
         <v-icon left dark>add_box</v-icon>
@@ -23,7 +23,7 @@
         ></v-text-field>
       </v-sheet>
       <v-card-text>
-        <output-variables-tree ref="outputVars" :search="searchVariable" />
+        <output-variables-table ref="outputVars" :search="searchVariable" />
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
@@ -37,11 +37,11 @@
 </template>
 
 <script>
-import OutputVariablesTree from '@/components/CohortManager/OutputVariablesTree.vue';
+import OutputVariablesTable from '@/components/CohortManager/OutputVariablesTable.vue';
 
 export default {
   components: {
-    OutputVariablesTree,
+    OutputVariablesTable,
   },
   data: () => ({
     searchVariable: '',
