@@ -329,11 +329,11 @@ export default {
       });
       commit(mutations.ADD_COHORT, data.cohort);
 
-      // Clean up data... may want to put this is in its own dispatch action call.
-      dispatch(actions.SET_COHORT, { id: null });
-      commit(mutations.RESET_DIMENSIONS);
-      commit(mutations.RESET_QUERIES);
-      commit(mutations.RESET_PVALS);
+      // Uncomment to reset all variables/filters after saving cohort:
+      //      dispatch(actions.SET_COHORT, { id: null });
+      //      commit(mutations.RESET_DIMENSIONS);
+      //      commit(mutations.RESET_QUERIES);
+      //      commit(mutations.RESET_PVALS);
       const notification = new SuccessNotification(`Cohort saved`);
       dispatch(notification.dispatch, notification, { root: true });
     } catch ({ response }) {
