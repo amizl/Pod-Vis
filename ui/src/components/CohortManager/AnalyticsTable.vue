@@ -30,6 +30,27 @@
           <v-toolbar-title class="primary--text title ml-3 mt-2">
             Comparing cohort vs. remainder change:</v-toolbar-title
           >
+
+          <v-container
+            align-center
+            fluid
+            pa-0
+            mt-3
+            pl-4
+            style="border: 4px solid rgb(236,118,188); border-radius: 0.4rem;"
+          >
+            <v-layout align-center row>
+              <span style="padding: 0em 0.5em 0em 0em;">Highlight P &lt;</span
+              ><v-radio-group v-model="pvt" row>
+                <v-radio
+                  v-for="pv in pval_thresholds"
+                  :label="pv.toString()"
+                  :value="pv"
+                ></v-radio>
+              </v-radio-group>
+            </v-layout>
+          </v-container>
+
           <v-data-table
             :headers="headers"
             :items="pvals"
@@ -62,25 +83,6 @@
             </v-alert>
           </template> -->
           </v-data-table>
-
-          <v-container
-            align-center
-            fluid
-            pa-0
-            pl-4
-            style="border: 4px solid rgb(236,118,188); border-radius: 0.4rem;"
-          >
-            <v-layout align-center row>
-              <span style="padding: 0em 0.5em 0em 0em;">Highlight P &lt;</span
-              ><v-radio-group v-model="pvt" row>
-                <v-radio
-                  v-for="pv in pval_thresholds"
-                  :label="pv.toString()"
-                  :value="pv"
-                ></v-radio>
-              </v-radio-group>
-            </v-layout>
-          </v-container>
         </v-flex>
       </div>
     </v-layout>
@@ -114,13 +116,13 @@ export default {
         {
           text: 'Variable',
           align: 'left',
-          sortable: false,
+          sortable: true,
           value: 'label',
         },
         {
           text: 'Test',
           align: 'left',
-          sortable: false,
+          sortable: true,
           value: 'test_name',
         },
         {
