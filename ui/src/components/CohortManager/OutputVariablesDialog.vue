@@ -10,18 +10,6 @@
       <v-card-title class="title primary--text text--darken-3">
         Choose Outcome Variables
       </v-card-title>
-      <v-sheet class="pa-3 background">
-        <v-text-field
-          v-model="searchVariable"
-          label="Search Variable"
-          dark
-          flat
-          solo-inverted
-          hide-details
-          clearable
-          clear-icon="mdi-close-circle-outline"
-        ></v-text-field>
-      </v-sheet>
       <v-card-text>
         <output-variables-table ref="outputVars" :search="searchVariable" />
       </v-card-text>
