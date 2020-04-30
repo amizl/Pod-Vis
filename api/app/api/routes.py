@@ -1038,21 +1038,30 @@ def create_cohort():
         else:
             # type is observation
 
-            # Needs to be refactored. The labels being hard coded to 'First Visit", etc,
-            # mismatches our schema's enums.
-            if variable['label'] == 'First Visit':
-                dimension_label = 'left_y_axis'
-            elif variable['label'] == 'Last Visit':
-                dimension_label = 'right_y_axis'
-            elif variable['label'] == 'Rate of Change':
-                dimension_label = 'roc'
-            elif variable['label'] == 'Change':
-                dimension_label = 'change'
+            # variable from cross-sectional study
+            if not variable['is_longitudinal']:
+                input_variable = models.CohortInputVariable(
+                    cohort.id,
+                    observation_ontology_id = variable['id'],
+                    dimension_label = None)
 
-            input_variable = models.CohortInputVariable(
-                cohort.id,
-                observation_ontology_id = variable['parentID'],
-                dimension_label = dimension_label)
+            else:
+                # Needs to be refactored. The labels being hard coded to 'First Visit", etc,
+                # mismatches our schema's enums.
+                if variable['label'] == 'First Visit':
+                    dimension_label = 'left_y_axis'
+                elif variable['label'] == 'Last Visit':
+                    dimension_label = 'right_y_axis'
+                elif variable['label'] == 'Rate of Change':
+                    dimension_label = 'roc'
+                elif variable['label'] == 'Change':
+                    dimension_label = 'change'
+
+                input_variable = models.CohortInputVariable(
+                    cohort.id,
+                    observation_ontology_id = variable['parentID'],
+                    dimension_label = dimension_label)
+                
         input_variable.save_to_db()
         input_vars[variable['id']] = input_variable
         
