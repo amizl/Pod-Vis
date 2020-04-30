@@ -927,10 +927,27 @@ def compute_mannwhitneyu():
 
         filtered_sample = [data.get(variable_id).get('change') for data in filtered_data]
         unfiltered_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
+
+        err = None
+        n_filtered = len(filtered_sample)
+        n_unfiltered = len(unfiltered_sample)
+        if n_filtered < 20:
+            err = "Filtered sample size < 20"
+        elif n_unfiltered < 20:
+            err = "Unfiltered sample size < 20"
+            
         # TODO - use of 'None' default for alternative is deprecated, see https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html
-        stats, pval = mannwhitneyu(filtered_sample, unfiltered_sample)
-                
-        pvals.append(dict(label=variable_label, pval=pval))
+        u, pval = mannwhitneyu(filtered_sample, unfiltered_sample, alternative='two-sided')
+
+        # common language effect size f = U/(n1 * n2)
+        f = u / (n_filtered * n_unfiltered)
+        
+        pvals.append(dict(label=variable_label,
+                          test_name='2-Sided Mann-Whitney U Test',
+                          pval=pval,
+                          effect_size=f,
+                          u_statistic=u,
+                          error=err))
 
     return jsonify({
         "success": True,
