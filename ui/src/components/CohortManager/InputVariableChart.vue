@@ -1,7 +1,7 @@
 <template>
   <v-sheet color="white" height="100%" min-width="300px">
     <v-layout column fill-height>
-      <v-card-title class="subheading primary--text text--darken-4">
+      <v-card-title class="subheading primary--text text--darken-4 pa-0 ma-0">
         <span style="margin: 0em;">
           <v-layout
             align-center
@@ -13,7 +13,9 @@
                 :src="'/images/' + variable.category + '-icon-128.png'"
                 :title="variable.category"
                 style="height:3em"
-            /></span>
+		/>
+              <img v-else src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D" width="0" style="height: 3em" alt="" />
+	    </span>
             <span class="subtitle-1">
               {{
                 variable.type == 'observation' && variable.is_longitudinal
@@ -23,8 +25,7 @@
             </span>
           </v-layout>
         </span>
-
-        <v-spacer />
+      </v-card-title>
         <v-btn
           flat
           class="subheading primary--text text--lighten-4"
@@ -32,7 +33,6 @@
         >
           Reset
         </v-btn>
-      </v-card-title>
       <v-layout fill-height>
         <div v-if="variable.value_type === 'date'" class="pl-3">
           Date types not supported.
