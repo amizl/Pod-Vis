@@ -16,15 +16,17 @@
             <span class="subtitle-1">{{ getVariableLabel(variable) }}</span>
           </v-layout>
         </span>
-        <v-spacer />
-        <v-btn
-          flat
-          class="subheading primary--text text--lighten-4"
-          @click="clearAllFilters({ dimension })"
-        >
-          Reset
-        </v-btn>
       </v-card-title>
+      <v-btn
+	text
+	flat
+	small
+	no-padding
+        class="together subheading primary--text text--lighten-4"
+        @click="clearAllFilters({ dimension })"
+      >
+        Reset
+      </v-btn>
 
       <ColumnChart
         v-if="
@@ -148,7 +150,7 @@ export default {
       return rv;
     },
     getTitleClass(v) {
-      const dflt = 'subheading primary--text text--darken-4 pb-0';
+      const dflt = 'subheading primary--text text--darken-4 pa-0 ma-0';
       if (this.isBelowPValThreshold(v)) {
         return `${dflt} highlight-var`;
       }
