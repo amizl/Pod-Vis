@@ -51,17 +51,16 @@
     </v-layout>
 
     <v-layout row class="mt-2 pa-0">
-      <v-flex xs12>
+      <v-flex xs7>
         <output-variables
           :expanded.sync="outExpanded"
           :highlighted="outHighlighted"
           :disabled="true"
         />
       </v-flex>
-    </v-layout>
-
-    <v-layout v-if="collection.is_longitudinal" row class="mt-2 pa-0">
-      <v-flex xs6> <analytics-table :disabled="true" /> </v-flex>
+      <v-flex v-if="collection.is_longitudinal" class="ml-2" xs5>
+        <analytics-table :disabled="true" />
+      </v-flex>
     </v-layout>
 
     <v-layout v-if="false" row class="mt-2 pa-0">

@@ -19,7 +19,7 @@
         >&nbsp;selected</v-chip
       >
       <v-spacer />
-      <v-toolbar-items>
+      <v-toolbar-items v-if="false">
         <!-- TODO...filters? -->
         <span class="subheading primary--text mt-3 mr-3">Show:</span>
         <v-btn-toggle

@@ -1,10 +1,11 @@
 <template>
   <v-sheet color="white" height="100%" class="rounded-lg shadow">
     <v-layout column fill-height class="ma-1">
-      <v-toolbar card dense flat color="white rounded-lg">
+      <v-toolbar card dense flat color="rounded-lg">
         <v-toolbar-title class="primary--text title">
-          Mann-Whitney Rank Test
-          <div class="subtitle-1">cohort vs. remainder change</div>
+          ANALYTICS PANEL
+          <!--          Mann-Whitney Rank Test
+          <div class="subtitle-1">cohort vs. remainder change</div> -->
         </v-toolbar-title>
         <v-divider vertical class="ml-4"></v-divider>
         <v-spacer />
@@ -26,6 +27,9 @@
           </v-layout>
         </v-container>
         <v-flex v-else>
+          <v-toolbar-title class="primary--text title ml-3 mt-2">
+            Comparing cohort vs. remainder change:</v-toolbar-title
+          >
           <v-data-table
             :headers="headers"
             :items="pvals"
@@ -35,7 +39,18 @@
             <template v-slot:items="props">
               <tr :class="getVariableClass(props.item)">
                 <td class="text-xs-left">{{ props.item.label }}</td>
-                <td class="text-xs-right">
+                <td class="text-xs-left">{{ props.item.test_name }}</td>
+                <td
+                  v-if="props.item.error"
+                  class="text-xs-left error"
+                  colspan="2"
+                >
+                  {{ props.item.error }}
+                </td>
+                <td v-if="!props.item.error" class="text-xs-right">
+                  {{ props.item.effect_size | formatEffectSize }}
+                </td>
+                <td v-if="!props.item.error" class="text-xs-right">
                   {{ props.item.pval | formatPValue }}
                 </td>
               </tr>
@@ -86,6 +101,9 @@ export default {
         return format('.4f')(pvalue);
       }
     },
+    formatEffectSize(size) {
+      return format('.2f')(size);
+    },
   },
   data() {
     return {
@@ -98,6 +116,18 @@ export default {
           align: 'left',
           sortable: false,
           value: 'label',
+        },
+        {
+          text: 'Test',
+          align: 'left',
+          sortable: false,
+          value: 'test_name',
+        },
+        {
+          text: 'Effect Size',
+          align: 'right',
+          sortable: true,
+          value: 'effect_size',
         },
         {
           text: 'P Value',
@@ -132,7 +162,7 @@ export default {
       this.setPvalThreshold(newPval);
     },
     getVariableClass(v) {
-      if (v.pval < this.pval_threshold) {
+      if (v.pval < this.pval_threshold && !v.error) {
         return 'highlight-var-row';
       }
       return '';
