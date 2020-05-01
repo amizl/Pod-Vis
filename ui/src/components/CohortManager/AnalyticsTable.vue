@@ -19,10 +19,13 @@
         <v-container v-if="!pvals.length" fluid fill-height>
           <v-layout column align-center justify-center fill-height>
             <v-subheader class="subheading primary--text text--lighten-4">
-              <v-flex>
+              <v-flex v-if="collection.is_longitudinal">
                 Add variables and apply filters to them to view Mann-Whitney
                 rank test results for all outcome variables.
               </v-flex>
+	      <v-flex v-else>
+		Statistical tests for cross-sectional data are not yet implemented.
+     	      </v-flex>
             </v-subheader>
           </v-layout>
         </v-container>
@@ -150,6 +153,7 @@ export default {
     ...mapState('cohortManager', {
       pvals: state.PVALS,
       pval_threshold: state.PVAL_THRESHOLD,
+      collection: state.COLLECTION,
     }),
   },
   watch: {

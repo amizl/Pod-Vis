@@ -58,7 +58,7 @@
           :disabled="true"
         />
       </v-flex>
-      <v-flex v-if="collection.is_longitudinal" class="ml-2" xs5>
+      <v-flex class="ml-2" xs5>
         <analytics-table :disabled="true" />
       </v-flex>
     </v-layout>
