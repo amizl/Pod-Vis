@@ -28,8 +28,11 @@
         </v-layout>
       </v-card-title>
 
+      <div v-if="variable.value_type === 'date'" class="pl-3">
+        Date types not supported.
+      </div>
       <ColumnChart
-        v-if="
+        v-else-if="
           variable.is_longitudinal === false &&
             variable.data_category === 'Categorical'
         "
@@ -50,7 +53,9 @@
         :variable="variable"
         :dimension-name="dimension"
         :highlight-change="isBelowPValThreshold(variable)"
-      />
+	width="400px"
+	/>
+      <v-spacer />
     </v-layout>
   </v-sheet>
 </template>
