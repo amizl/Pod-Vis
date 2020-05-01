@@ -10,7 +10,7 @@
         </v-flex> 
       </v-layout>
     </v-flex>
-    <v-flex fill-width></v-flex>
+    <v-flex fill-width min-width="0px"></v-flex>
   </v-layout>
 </template>
 

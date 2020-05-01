@@ -28,6 +28,7 @@
         </v-layout>
       </v-card-title>
 
+      <v-layout fill-height>
       <div v-if="variable.value_type === 'date'" class="pl-3">
         Date types not supported.
       </div>
@@ -55,7 +56,10 @@
         :highlight-change="isBelowPValThreshold(variable)"
 	width="400px"
 	/>
-      <v-spacer />
+      <v-flex fill-width>
+      </v-flex>
+
+      </v-layout>
     </v-layout>
   </v-sheet>
 </template>
