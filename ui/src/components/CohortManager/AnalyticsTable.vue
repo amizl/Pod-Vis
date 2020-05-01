@@ -4,8 +4,6 @@
       <v-toolbar card dense flat color="rounded-lg">
         <v-toolbar-title class="primary--text title">
           ANALYTICS PANEL
-          <!--          Mann-Whitney Rank Test
-          <div class="subtitle-1">cohort vs. remainder change</div> -->
         </v-toolbar-title>
         <v-divider vertical class="ml-4"></v-divider>
         <v-spacer />
@@ -65,7 +63,8 @@
             <template v-slot:items="props">
               <tr :class="getVariableClass(props.item)">
                 <td class="text-xs-left">{{ props.item.label }}</td>
-                <td class="text-xs-left">{{ props.item.test_name }}</td>
+                <td class="text-xs-left" :title="props.item.test_name">{{ props.item.test_abbrev }}</span>
+		</td>
                 <td
                   v-if="props.item.error"
                   class="text-xs-left error"
@@ -73,7 +72,7 @@
                 >
                   {{ props.item.error }}
                 </td>
-                <td v-if="!props.item.error" class="text-xs-right">
+                <td v-if="!props.item.error" class="text-xs-right" :title="props.item.effect_size_descr">
                   {{ props.item.effect_size | formatEffectSize }}
                 </td>
                 <td v-if="!props.item.error" class="text-xs-right">

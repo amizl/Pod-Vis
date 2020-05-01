@@ -944,8 +944,10 @@ def compute_mannwhitneyu():
         
         pvals.append(dict(label=variable_label,
                           test_name='2-Sided Mann-Whitney U Test',
+                          test_abbrev='2SMWU',
                           pval=pval,
                           effect_size=f,
+                          effect_size_descr='Common language effect size.',
                           u_statistic=u,
                           error=err))
 
