@@ -1,38 +1,44 @@
 <template>
   <v-sheet color="white" height="100%" min-width="300px">
     <v-layout column fill-height>
-      <v-card-title class="subheading primary--text text--darken-4 pa-0 ma-0">
-        <span style="margin: 0em;">
-          <v-layout
-            align-center
-            style="background-color: white; padding: 0.4em 1.5em 0em 0.4em; border-radius: 0.5rem;"
-          >
-            <span style="padding:0em 0.5em 0em 0em">
-              <img
-                v-if="variable.label !== 'Dataset'"
-                :src="'/images/' + variable.category + '-icon-128.png'"
-                :title="variable.category"
-                style="height:3em"
-		/>
-              <img v-else src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D" width="0" style="height: 3em" alt="" />
-	    </span>
-            <span class="subtitle-1">
-              {{
-                variable.type == 'observation' && variable.is_longitudinal
-                  ? `${variable.parentLabel} - ${variable.label}`
-                  : variable.label
-              }}
-            </span>
-          </v-layout>
-        </span>
-      </v-card-title>
-        <v-btn
-          flat
-          class="subheading primary--text text--lighten-4"
-          @click="clearFilter({ dimension })"
+      <v-card-title
+        class="subtitle-1 primary--text text--darken-4 pa-0 ma-0 text-truncate"
+      >
+        <v-layout
+          align-center
+          style="background-color: white; padding: 0.5em 0em 1em 0.4em; border-radius: 0.5rem;"
         >
-          Reset
-        </v-btn>
+          <span style="padding: 0.4em 0.5em 1em 0.5em">
+            <img
+              v-if="variable.label !== 'Dataset'"
+              :src="'/images/' + variable.category + '-icon-128.png'"
+              :title="variable.category"
+              style="height:3em"
+            />
+            <img
+              v-else
+              src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D"
+              width="0"
+              style="height: 3em"
+              alt=""
+            />
+          </span>
+          {{
+            variable.type == 'observation' && variable.is_longitudinal
+              ? `${variable.parentLabel} - ${variable.label}`
+              : variable.label
+          }}
+          <v-spacer />
+          <v-btn
+            flat
+            class="subheading primary--text text--lighten-4"
+            @click="clearFilter({ dimension })"
+          >
+            Reset
+          </v-btn>
+        </v-layout>
+      </v-card-title>
+
       <v-layout fill-height>
         <div v-if="variable.value_type === 'date'" class="pl-3">
           Date types not supported.

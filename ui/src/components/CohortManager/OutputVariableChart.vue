@@ -1,32 +1,32 @@
 <template>
-  <v-sheet class="ma-1" color="white" height="100%" width="400px">
+  <v-sheet class="ma-1" color="white" height="100%" min-width="400px">
     <v-layout column fill-height class="var-chart">
       <v-card-title :class="getTitleClass(variable)">
-        <span style="margin: 0em;">
-          <v-layout
-            align-center
-            style="background-color: white; padding: 0.4em 1.5em 0em 0.4em; border-radius: 0.5rem;"
+        <v-layout
+          align-center
+          style="background-color: white; padding: 0.5em 0em 1em 0.4em; border-radius: 0.5rem;"
+        >
+          <span style="padding:0.4em 0.5em 1em 0.5em">
+            <img
+              :src="'/images/' + variable.category + '-icon-128.png'"
+              :title="variable.category"
+              style="height: 3em; padding: 0em 0.5em 0em 0em;"
+            />
+          </span>
+          <span class="subtitle-1">{{ getVariableLabel(variable) }}</span>
+          <v-spacer />
+          <v-btn
+            text
+            flat
+            small
+            no-padding
+            class="together subheading primary--text text--lighten-4"
+            @click="clearAllFilters({ dimension })"
           >
-            <span style="padding:0em 0.5em 0em 0em">
-              <img
-                :src="'/images/' + variable.category + '-icon-128.png'"
-                :title="variable.category"
-                style="height:3em"
-            /></span>
-            <span class="subtitle-1">{{ getVariableLabel(variable) }}</span>
-          </v-layout>
-        </span>
+            Reset
+          </v-btn>
+        </v-layout>
       </v-card-title>
-      <v-btn
-	text
-	flat
-	small
-	no-padding
-        class="together subheading primary--text text--lighten-4"
-        @click="clearAllFilters({ dimension })"
-      >
-        Reset
-      </v-btn>
 
       <ColumnChart
         v-if="
@@ -150,7 +150,8 @@ export default {
       return rv;
     },
     getTitleClass(v) {
-      const dflt = 'subheading primary--text text--darken-4 pa-0 ma-0';
+      const dflt =
+        'subheading primary--text text--darken-4 pa-1 ma-0 text-truncate';
       if (this.isBelowPValThreshold(v)) {
         return `${dflt} highlight-var`;
       }
