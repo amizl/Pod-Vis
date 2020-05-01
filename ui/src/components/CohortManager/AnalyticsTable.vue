@@ -56,6 +56,8 @@
             :items="pvals"
             dense
             hide-default-header
+            hide-actions
+            :pagination.sync="pagination"
           >
             <template v-slot:items="props">
               <tr :class="getVariableClass(props.item)">
@@ -138,6 +140,9 @@ export default {
           value: 'pval',
         },
       ],
+      pagination: {
+        rowsPerPage: -1,
+      },
       expanded: true,
     };
   },
