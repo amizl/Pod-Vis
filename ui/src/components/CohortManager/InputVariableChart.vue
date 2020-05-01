@@ -40,7 +40,7 @@
       </v-card-title>
 
       <v-layout fill-height>
-        <div v-if="variable.value_type === 'date'" class="pl-3">
+        <div v-if="variable.value_type === 'date'" class="pl-3 pt-3">
           Date types not supported.
         </div>
         <ColumnChart
