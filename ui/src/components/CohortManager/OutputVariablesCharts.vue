@@ -1,13 +1,13 @@
 <template>
   <v-layout :key="chartsKey" :class="classes">
-    <v-flex v-for="outputVariable in outputVariables" :key="outputVariable.id">
+    <v-flex v-for="(outputVariable, index) in outputVariables" :key="outputVariable.id">
       <v-layout fill-height>
         <v-flex fill-height>
           <output-variable-chart :variable="outputVariable" />
         </v-flex>
-        <!-- <v-flex v-if="index < outputVariables.length - 1" shrink>
+        <v-flex v-if="index < outputVariables.length - 1" shrink>
           <v-divider vertical></v-divider>
-        </v-flex> -->
+        </v-flex> 
       </v-layout>
     </v-flex>
     <v-flex fill-width></v-flex>
