@@ -6,7 +6,7 @@
         Choose Outcome Variables
       </v-btn>
     </template>
-    <v-card max-height="500px">
+    <v-card class="rounded-lg">
       <v-card-title class="title primary--text text--darken-3">
         Choose Outcome Variables
       </v-card-title>
