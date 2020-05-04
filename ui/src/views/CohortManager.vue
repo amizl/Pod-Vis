@@ -58,9 +58,7 @@
           :disabled="true"
         />
       </v-flex>
-      <v-flex class="ml-2" xs5>
-        <analytics-table :disabled="true" />
-      </v-flex>
+      <v-flex class="ml-2" xs5> <analytics-table /> </v-flex>
     </v-layout>
 
     <v-layout v-if="false" row class="mt-2 pa-0">
