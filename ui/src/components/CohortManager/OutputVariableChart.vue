@@ -29,36 +29,34 @@
       </v-card-title>
 
       <v-layout fill-height>
-      <div v-if="variable.value_type === 'date'" class="pl-3">
-        Date types not supported.
-      </div>
-      <ColumnChart
-        v-else-if="
-          variable.is_longitudinal === false &&
-            variable.data_category === 'Categorical'
-        "
-        :id="variable.id"
-        :dimension-name="dimension"
-      />
-      <HistogramChart
-        v-else-if="variable.is_longitudinal === false"
-        :id="variable.id"
-        :dimension-name="variable.label"
-        :input-variable="false"
-        :variable="variable"
-      />
-      <MultiChart
-        v-else
-        :key="resetCount"
-        class="ma-1"
-        :variable="variable"
-        :dimension-name="dimension"
-        :highlight-change="isBelowPValThreshold(variable)"
-	width="400px"
-	/>
-      <v-flex fill-width>
-      </v-flex>
-
+        <div v-if="variable.value_type === 'date'" class="pl-3">
+          Date types not supported.
+        </div>
+        <ColumnChart
+          v-else-if="
+            variable.is_longitudinal === false &&
+              variable.data_category === 'Categorical'
+          "
+          :id="variable.id"
+          :dimension-name="dimension"
+        />
+        <HistogramChart
+          v-else-if="variable.is_longitudinal === false"
+          :id="variable.id"
+          :dimension-name="variable.label"
+          :input-variable="false"
+          :variable="variable"
+        />
+        <MultiChart
+          v-else
+          :key="resetCount"
+          class="ma-1"
+          :variable="variable"
+          :dimension-name="dimension"
+          :highlight-change="isBelowPValThreshold(variable)"
+          width="400px"
+        />
+        <v-flex fill-width> </v-flex>
       </v-layout>
     </v-layout>
   </v-sheet>
