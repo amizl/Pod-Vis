@@ -37,6 +37,7 @@
           :substep.sync="substep"
           :collection-id="collectionId"
           @createSimilar="createSimilar"
+	  @createNew="createNew"
         ></analysis-tracker>
       </v-flex>
     </v-layout>
@@ -171,6 +172,12 @@ export default {
     }),
     cohortSaved(success) {
       this.substep = '3.5';
+    },
+    // create entirely new cohort resetting everything
+    createNew(success) {
+      // return to "choose predictor variables" step
+      this.setCohort({ id: null });
+      this.substep = '3.1';
     },
     // create new cohort similar to the most-recently-created one
     createSimilar(success) {

@@ -163,7 +163,7 @@
             saved. Click on:<br clear="both" />
             <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
             create another cohort based on the last one<br clear="both" />
-            <v-btn @click="goto3p1()">Create New Cohort</v-btn> to create a new
+            <v-btn @click="createNew()">Create New Cohort</v-btn> to create a new
             cohort from scratch.
           </div>
           <div v-else>
@@ -171,7 +171,7 @@
             Click on:<br clear="both" />
             <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
             create another cohort based on the last one<br clear="both" />
-            <v-btn @click="goto3p1()">Create New Cohort</v-btn> to create a new
+            <v-btn @click="createNew()">Create New Cohort</v-btn> to create a new
             cohort from scratch<br clear="both" />
             <v-btn @click="gotoSummaryMatrix()">Continue</v-btn> to proceed to
             the Summary Matrix.
@@ -366,6 +366,9 @@ export default {
     // Cohort Manager sub-step transitions.
     goto3p1() {
       this.$emit('update:substep', '3.1');
+    },
+    createNew() {
+      this.$emit('createNew', true);
     },
     createSimilar() {
       this.$emit('createSimilar', true);
