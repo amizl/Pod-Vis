@@ -163,16 +163,16 @@
             saved. Click on:<br clear="both" />
             <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
             create another cohort based on the last one<br clear="both" />
-            <v-btn @click="createNew()">Create New Cohort</v-btn> to create a new
-            cohort from scratch.
+            <v-btn @click="createNew()">Create New Cohort</v-btn> to create a
+            new cohort from scratch.
           </div>
           <div v-else>
             {{ collection_cohorts.length }} cohorts have been created and saved.
             Click on:<br clear="both" />
             <v-btn @click="createSimilar()">Create Similar Cohort</v-btn> to
             create another cohort based on the last one<br clear="both" />
-            <v-btn @click="createNew()">Create New Cohort</v-btn> to create a new
-            cohort from scratch<br clear="both" />
+            <v-btn @click="createNew()">Create New Cohort</v-btn> to create a
+            new cohort from scratch<br clear="both" />
             <v-btn @click="gotoSummaryMatrix()">Continue</v-btn> to proceed to
             the Summary Matrix.
           </div>

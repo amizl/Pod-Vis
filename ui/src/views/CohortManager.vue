@@ -37,7 +37,7 @@
           :substep.sync="substep"
           :collection-id="collectionId"
           @createSimilar="createSimilar"
-	  @createNew="createNew"
+          @createNew="createNew"
         ></analysis-tracker>
       </v-flex>
     </v-layout>
