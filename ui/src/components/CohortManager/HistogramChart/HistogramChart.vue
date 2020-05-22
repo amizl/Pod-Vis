@@ -94,32 +94,20 @@
     <v-flex v-if="inputVariable" ml-3 mr-3>
       <v-select
         v-model="selectedPopSubset"
-        :items="[
-          'top 1/2 of population',
-          'bottom 1/2 of population',
-          'top 1/4 of population',
-          'bottom 3/4 of population',
-          'bottom 1/4 of population',
-          'top 3/4 of population',
-        ]"
+        :items="popSubsetItems"
         item-text="label"
         item-value="id"
         label="Select population subset"
+        return-object
       ></v-select>
 
       <v-select
         v-model="selectedRange"
-        :items="[
-          'top 1/2 of range',
-          'bottom 1/2 of range',
-          'top 1/4 of range',
-          'bottom 3/4 of range',
-          'bottom 1/4 of range',
-          'top 3/4 of range',
-        ]"
+        :items="rangeItems"
         item-text="label"
         item-value="id"
         label="Select range"
+        return-object
       ></v-select>
     </v-flex>
   </v-layout>
@@ -349,70 +337,8 @@ export default {
         .on('start brush', this.brushed)
         .on('end', this.brushedData);
     },
-  },
-  watch: {
-    filteredData() {
-      this.data = flattenGroupCounts(this.group.all());
-      if (!this.dimension.currentFilter()) {
-        this.handle.attr('display', 'none');
-        select(this.$refs.brush).call(this.brush.move, null);
-        this.selectedRange = null;
-        this.selectedPopSubset = null;
-      }
-    },
-    selectedRange(sr) {
-      let minValue = 0;
-      let maxValue = 0;
-      let ext = extent(this.populationData);
-
-      // NOTE - not using snap to bars
-      if (sr == null) {
-        return;
-      } else if (sr.startsWith('top 1/2')) {
-        let mid = (ext[0] + ext[1]) / 2.0;
-        minValue = mid;
-        maxValue = Math.floor(ext[1] + 1);
-      } else if (sr.startsWith('bottom 1/2')) {
-        let mid = (ext[0] + ext[1]) / 2.0;
-        minValue = ext[0];
-        maxValue = mid;
-      } else if (sr.startsWith('top 1/4')) {
-        let qtr = (ext[1] - ext[0]) / 4.0;
-        minValue = ext[1] - qtr;
-        maxValue = Math.floor(ext[1] + 1);
-      } else if (sr.startsWith('bottom 3/4')) {
-        let qtr = (ext[1] - ext[0]) / 4.0;
-        minValue = ext[0];
-        maxValue = ext[1] - qtr;
-      } else if (sr.startsWith('bottom 1/4')) {
-        let qtr = (ext[1] - ext[0]) / 4.0;
-        minValue = ext[0];
-        maxValue = ext[0] + qtr;
-      } else if (sr.startsWith('top 3/4')) {
-        let qtr = (ext[1] - ext[0]) / 4.0;
-        minValue = ext[0] + qtr;
-        maxValue = Math.floor(ext[1] + 1);
-      } else {
-        return;
-      }
-      this.selectedPopSubset = null;
-
-      select(this.$refs.brush).call(this.brush.move, [
-        this.xScale(minValue),
-        this.xScale(maxValue),
-      ]);
-      this.addFilter({
-        dimension: this.dimensionName,
-        filter: d => d >= minValue && d < maxValue,
-        query: {
-          minValue,
-          maxValue,
-        },
-      });
-    },
-    selectedPopSubset(sr) {
-      let minValue = 0;
-      let maxValue = 0;
+    popSubsetItems() {
+      var items = [];
       let ext = extent(this.populationData);
       let popData = this.populationData.slice().sort((a, b) => a - b);
       let pdl = popData.length;
@@ -429,45 +355,65 @@ export default {
       let midpt = Math.floor(pdl / 2);
       let qtr1 = getMedian(popData, 0, midpt);
       let qtr3 = getMedian(popData, midpt, pdl - midpt);
+      let upper = Math.floor(ext[1] + 1);
 
-      // NOTE - not using snap to bars
-      if (sr == null) {
+      items.push({ label: 'top 1/2', min: median, max: upper });
+      items.push({ label: 'bottom 1/2', min: ext[0], max: median });
+      items.push({ label: 'top 1/4', min: qtr3, max: upper });
+      items.push({ label: 'bottom 3/4', min: ext[0], max: qtr3 });
+      items.push({ label: 'bottom 1/4', min: ext[0], max: qtr1 });
+      items.push({ label: 'top 3/4', min: qtr1, max: upper });
+      items.forEach(i => {
+        i.label = i.label + ' of population [' + i.min + '-' + i.max + ']';
+      });
+
+      return items;
+    },
+    rangeItems() {
+      var items = [];
+      let ext = extent(this.populationData);
+      let mid = (ext[0] + ext[1]) / 2.0;
+      let qtr = (ext[1] - ext[0]) / 4.0;
+      let qtr1 = ext[0] + qtr;
+      let qtr3 = ext[1] - qtr;
+      let upper = Math.floor(ext[1] + 1);
+
+      items.push({ label: 'top 1/2', min: mid, max: upper });
+      items.push({ label: 'bottom 1/2', min: ext[0], max: mid });
+      items.push({ label: 'top 1/4', min: qtr3, max: upper });
+      items.push({ label: 'bottom 3/4', min: ext[0], max: qtr3 });
+      items.push({ label: 'bottom 1/4', min: ext[0], max: qtr1 });
+      items.push({ label: 'top 3/4', min: qtr1, max: upper });
+      items.forEach(i => {
+        i.label = i.label + ' of range [' + i.min + '-' + i.max + ']';
+      });
+
+      return items;
+    },
+  },
+  watch: {
+    filteredData() {
+      this.data = flattenGroupCounts(this.group.all());
+      if (!this.dimension.currentFilter()) {
+        this.handle.attr('display', 'none');
+        select(this.$refs.brush).call(this.brush.move, null);
+        this.selectedRange = null;
+        this.selectedPopSubset = null;
+      }
+    },
+    selectedRange(s) {
+      if (s == null) {
         return;
-      } else if (sr.startsWith('top 1/2')) {
-        minValue = median;
-        maxValue = Math.floor(ext[1] + 1);
-      } else if (sr.startsWith('bottom 1/2')) {
-        minValue = ext[0];
-        maxValue = median;
-      } else if (sr.startsWith('top 1/4')) {
-        minValue = qtr3;
-        maxValue = Math.floor(ext[1] + 1);
-      } else if (sr.startsWith('bottom 3/4')) {
-        minValue = ext[0];
-        maxValue = qtr3;
-      } else if (sr.startsWith('bottom 1/4')) {
-        minValue = ext[0];
-        maxValue = qtr1;
-      } else if (sr.startsWith('top 3/4')) {
-        minValue = qtr1;
-        maxValue = Math.floor(ext[1] + 1);
-      } else {
+      }
+      this.selectedPopSubset = null;
+      this.selectRange(s);
+    },
+    selectedPopSubset(s) {
+      if (s == null) {
         return;
       }
       this.selectedRange = null;
-
-      select(this.$refs.brush).call(this.brush.move, [
-        this.xScale(minValue),
-        this.xScale(maxValue),
-      ]);
-      this.addFilter({
-        dimension: this.dimensionName,
-        filter: d => d >= minValue && d < maxValue,
-        query: {
-          minValue,
-          maxValue,
-        },
-      });
+      this.selectRange(s);
     },
   },
   created() {
@@ -728,6 +674,22 @@ export default {
     resizeChart() {
       this.height = 100;
       this.width = 350;
+    },
+    selectRange(s) {
+      let minValue = s.min;
+      let maxValue = s.max;
+      select(this.$refs.brush).call(this.brush.move, [
+        this.xScale(minValue),
+        this.xScale(maxValue),
+      ]);
+      this.addFilter({
+        dimension: this.dimensionName,
+        filter: d => d >= minValue && d < maxValue,
+        query: {
+          minValue,
+          maxValue,
+        },
+      });
     },
   },
 };
