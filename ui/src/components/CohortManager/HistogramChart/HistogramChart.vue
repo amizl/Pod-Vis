@@ -93,21 +93,6 @@
     </v-flex>
     <v-flex v-if="inputVariable" ml-3 mr-3>
       <v-select
-        v-model="selectedRange"
-        :items="[
-          'top 1/2 of range',
-          'bottom 1/2 of range',
-          'top 1/4 of range',
-          'bottom 3/4 of range',
-          'bottom 1/4 of range',
-          'top 3/4 of range',
-        ]"
-        item-text="label"
-        item-value="id"
-        label="Select range"
-      ></v-select>
-
-      <v-select
         v-model="selectedPopSubset"
         :items="[
           'top 1/2 of population',
@@ -120,6 +105,21 @@
         item-text="label"
         item-value="id"
         label="Select population subset"
+      ></v-select>
+
+      <v-select
+        v-model="selectedRange"
+        :items="[
+          'top 1/2 of range',
+          'bottom 1/2 of range',
+          'top 1/4 of range',
+          'bottom 3/4 of range',
+          'bottom 1/4 of range',
+          'top 3/4 of range',
+        ]"
+        item-text="label"
+        item-value="id"
+        label="Select range"
       ></v-select>
     </v-flex>
   </v-layout>
