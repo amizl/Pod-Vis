@@ -1,95 +1,128 @@
 <template>
-  <v-flex ref="container">
-    <svg ref="chart" :width="width" :height="height">
-      <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
-        <title v-if="hasSelection()">
-          Click outside the selected area to remove the filter.
-        </title>
-        <title v-else>Click and drag to add a cohort filter.</title>
-        <!-- Population bars are first so they will hide under cohort bars -->
-        <rect
-          v-for="(bin, i) in popBins"
-          :key="`population-${i}`"
-          :x="xScale(bin.x0)"
-          :y="yScale(bin.length)"
-          :width="
-            xScale(bin.x1) - xScale(bin.x0) - 1 > 0
-              ? xScale(bin.x1) - xScale(bin.x0) - 1
-              : 0
-          "
-          :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
-          :fill="colors['population']"
-          :opacity="getOpacity('population')"
-        />
-        <rect
-          v-for="(bin, i) in popMinusBins"
-          v-if="highlightedSubset === 'non-cohort'"
-          :key="`pop-minus-cohort-${i}`"
-          :x="xScale(bin.x0)"
-          :y="getNonCohortY(bin)"
-          :width="
-            xScale(bin.x1) - xScale(bin.x0) - 1 > 0
-              ? xScale(bin.x1) - xScale(bin.x0) - 1
-              : 0
-          "
-          :height="getNonCohortHeight(bin)"
-          :fill="colors['nonCohort']"
-          :opacity="getOpacity('non-cohort')"
-        />
-        <rect
-          v-for="(bin, i) in bins"
-          v-if="highlightedSubset === 'cohort'"
-          :key="`cohort-${i}`"
-          :x="xScale(bin.x0)"
-          :y="getCohortY(bin)"
-          :width="
-            xScale(bin.x1) - xScale(bin.x0) - 1 > 0
-              ? xScale(bin.x1) - xScale(bin.x0) - 1
-              : 0
-          "
-          :height="getCohortHeight(bin)"
-          :fill="colors['cohort']"
-          :opacity="getOpacity('cohort')"
-        />
-        <!-- Cohort Mean -->
-        <circle
-          v-if="typeof mean !== 'undefined'"
-          r="7"
-          :cx="mean"
-          :cy="h"
-          :fill="colors['cohort-circle-fill']"
-          :stroke="colors['cohort-circle-stroke']"
-          :stroke-width="colors['cohort-circle-stroke-width']"
-          :fill-opacity="colors['cohort-circle-fill-opacity']"
-        >
-          <title>Cohort mean value</title>
-        </circle>
-        <!-- Population Mean -->
-        <circle
-          v-if="typeof populationMean !== 'undefined'"
-          r="7"
-          :cx="populationMean"
-          :cy="h"
-          :fill="colors['population-circle-fill']"
-          :stroke="colors['population-circle-stroke']"
-          :stroke-width="colors['population-circle-stroke-width']"
-          :fill-opacity="colors['population-circle-fill-opacity']"
-        >
-          <title>Population mean value</title>
-        </circle>
-        <g ref="brush" class="brush"></g>
-      </g>
+  <v-layout column fill-height>
+    <v-flex ref="container">
+      <svg ref="chart" :width="width" :height="height">
+        <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
+          <title v-if="hasSelection()">
+            Click outside the selected area to remove the filter.
+          </title>
+          <title v-else>Click and drag to add a cohort filter.</title>
+          <!-- Population bars are first so they will hide under cohort bars -->
+          <rect
+            v-for="(bin, i) in popBins"
+            :key="`population-${i}`"
+            :x="xScale(bin.x0)"
+            :y="yScale(bin.length)"
+            :width="
+              xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+                ? xScale(bin.x1) - xScale(bin.x0) - 1
+                : 0
+            "
+            :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
+            :fill="colors['population']"
+            :opacity="getOpacity('population')"
+          />
+          <rect
+            v-for="(bin, i) in popMinusBins"
+            v-if="highlightedSubset === 'non-cohort'"
+            :key="`pop-minus-cohort-${i}`"
+            :x="xScale(bin.x0)"
+            :y="getNonCohortY(bin)"
+            :width="
+              xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+                ? xScale(bin.x1) - xScale(bin.x0) - 1
+                : 0
+            "
+            :height="getNonCohortHeight(bin)"
+            :fill="colors['nonCohort']"
+            :opacity="getOpacity('non-cohort')"
+          />
+          <rect
+            v-for="(bin, i) in bins"
+            v-if="highlightedSubset === 'cohort'"
+            :key="`cohort-${i}`"
+            :x="xScale(bin.x0)"
+            :y="getCohortY(bin)"
+            :width="
+              xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+                ? xScale(bin.x1) - xScale(bin.x0) - 1
+                : 0
+            "
+            :height="getCohortHeight(bin)"
+            :fill="colors['cohort']"
+            :opacity="getOpacity('cohort')"
+          />
+          <!-- Cohort Mean -->
+          <circle
+            v-if="typeof mean !== 'undefined'"
+            r="7"
+            :cx="mean"
+            :cy="h"
+            :fill="colors['cohort-circle-fill']"
+            :stroke="colors['cohort-circle-stroke']"
+            :stroke-width="colors['cohort-circle-stroke-width']"
+            :fill-opacity="colors['cohort-circle-fill-opacity']"
+          >
+            <title>Cohort mean value</title>
+          </circle>
+          <!-- Population Mean -->
+          <circle
+            v-if="typeof populationMean !== 'undefined'"
+            r="7"
+            :cx="populationMean"
+            :cy="h"
+            :fill="colors['population-circle-fill']"
+            :stroke="colors['population-circle-stroke']"
+            :stroke-width="colors['population-circle-stroke-width']"
+            :fill-opacity="colors['population-circle-fill-opacity']"
+          >
+            <title>Population mean value</title>
+          </circle>
+          <g ref="brush" class="brush"></g>
+        </g>
 
-      <g
-        v-xaxis="populationXAxis"
-        :transform="`translate(${margin.left},${h + margin.top})`"
-      ></g>
-      <g
-        v-yaxis="yAxis"
-        :transform="`translate(${margin.left}, ${margin.top})`"
-      ></g>
-    </svg>
-  </v-flex>
+        <g
+          v-xaxis="populationXAxis"
+          :transform="`translate(${margin.left},${h + margin.top})`"
+        ></g>
+        <g
+          v-yaxis="yAxis"
+          :transform="`translate(${margin.left}, ${margin.top})`"
+        ></g>
+      </svg>
+    </v-flex>
+    <v-flex v-if="inputVariable" ml-3 mr-3>
+      <v-select
+        v-model="selectedRange"
+        :items="[
+          'top 1/2 of range',
+          'bottom 1/2 of range',
+          'top 1/4 of range',
+          'bottom 3/4 of range',
+          'bottom 1/4 of range',
+          'top 3/4 of range',
+        ]"
+        item-text="label"
+        item-value="id"
+        label="Select range"
+      ></v-select>
+
+      <v-select
+        v-model="selectedPopSubset"
+        :items="[
+          'top 1/2 of population',
+          'bottom 1/2 of population',
+          'top 1/4 of population',
+          'bottom 3/4 of population',
+          'bottom 1/4 of population',
+          'top 3/4 of population',
+        ]"
+        item-text="label"
+        item-value="id"
+        label="Select population subset"
+      ></v-select>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -185,6 +218,8 @@ export default {
       selection: [],
       populationCounts: {},
       colors: colors,
+      selectedRange: null,
+      selectedPopSubset: null,
     };
   },
   computed: {
@@ -321,7 +356,118 @@ export default {
       if (!this.dimension.currentFilter()) {
         this.handle.attr('display', 'none');
         select(this.$refs.brush).call(this.brush.move, null);
+        this.selectedRange = null;
+        this.selectedPopSubset = null;
       }
+    },
+    selectedRange(sr) {
+      let minValue = 0;
+      let maxValue = 0;
+      let ext = extent(this.populationData);
+
+      // NOTE - not using snap to bars
+      if (sr == null) {
+        return;
+      } else if (sr.startsWith('top 1/2')) {
+        let mid = (ext[0] + ext[1]) / 2.0;
+        minValue = mid;
+        maxValue = Math.floor(ext[1] + 1);
+      } else if (sr.startsWith('bottom 1/2')) {
+        let mid = (ext[0] + ext[1]) / 2.0;
+        minValue = ext[0];
+        maxValue = mid;
+      } else if (sr.startsWith('top 1/4')) {
+        let qtr = (ext[1] - ext[0]) / 4.0;
+        minValue = ext[1] - qtr;
+        maxValue = Math.floor(ext[1] + 1);
+      } else if (sr.startsWith('bottom 3/4')) {
+        let qtr = (ext[1] - ext[0]) / 4.0;
+        minValue = ext[0];
+        maxValue = ext[1] - qtr;
+      } else if (sr.startsWith('bottom 1/4')) {
+        let qtr = (ext[1] - ext[0]) / 4.0;
+        minValue = ext[0];
+        maxValue = ext[0] + qtr;
+      } else if (sr.startsWith('top 3/4')) {
+        let qtr = (ext[1] - ext[0]) / 4.0;
+        minValue = ext[0] + qtr;
+        maxValue = Math.floor(ext[1] + 1);
+      } else {
+        return;
+      }
+      this.selectedPopSubset = null;
+
+      select(this.$refs.brush).call(this.brush.move, [
+        this.xScale(minValue),
+        this.xScale(maxValue),
+      ]);
+      this.addFilter({
+        dimension: this.dimensionName,
+        filter: d => d >= minValue && d < maxValue,
+        query: {
+          minValue,
+          maxValue,
+        },
+      });
+    },
+    selectedPopSubset(sr) {
+      let minValue = 0;
+      let maxValue = 0;
+      let ext = extent(this.populationData);
+      let popData = this.populationData.slice().sort((a, b) => a - b);
+      let pdl = popData.length;
+      var getMedian = function(data, first, len) {
+        let median = 0;
+        if (len % 2 === 0) {
+          median = (data[first + (len / 2 - 1)] + data[first + len / 2]) / 2;
+        } else {
+          median = data[first + (len - 1) / 2];
+        }
+        return median;
+      };
+      let median = getMedian(popData, 0, pdl);
+      let midpt = Math.floor(pdl / 2);
+      let qtr1 = getMedian(popData, 0, midpt);
+      let qtr3 = getMedian(popData, midpt, pdl - midpt);
+
+      // NOTE - not using snap to bars
+      if (sr == null) {
+        return;
+      } else if (sr.startsWith('top 1/2')) {
+        minValue = median;
+        maxValue = Math.floor(ext[1] + 1);
+      } else if (sr.startsWith('bottom 1/2')) {
+        minValue = ext[0];
+        maxValue = median;
+      } else if (sr.startsWith('top 1/4')) {
+        minValue = qtr3;
+        maxValue = Math.floor(ext[1] + 1);
+      } else if (sr.startsWith('bottom 3/4')) {
+        minValue = ext[0];
+        maxValue = qtr3;
+      } else if (sr.startsWith('bottom 1/4')) {
+        minValue = ext[0];
+        maxValue = qtr1;
+      } else if (sr.startsWith('top 3/4')) {
+        minValue = qtr1;
+        maxValue = Math.floor(ext[1] + 1);
+      } else {
+        return;
+      }
+      this.selectedRange = null;
+
+      select(this.$refs.brush).call(this.brush.move, [
+        this.xScale(minValue),
+        this.xScale(maxValue),
+      ]);
+      this.addFilter({
+        dimension: this.dimensionName,
+        filter: d => d >= minValue && d < maxValue,
+        query: {
+          minValue,
+          maxValue,
+        },
+      });
     },
   },
   created() {
@@ -446,6 +592,8 @@ export default {
         this.clearFilter({
           dimension: this.dimensionName,
         });
+        this.selectedRange = null;
+        this.selectedPopSubset = null;
         return;
       }
 
@@ -459,6 +607,8 @@ export default {
         .call(event.target.move, [low, high]);
 
       const [invertedLow, invertedHigh] = [low, high].map(this.xScale.invert);
+      this.selectedRange = null;
+      this.selectedPopSubset = null;
 
       // Filter dimension to be within snapped selection
       this.addFilter({
