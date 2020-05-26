@@ -432,13 +432,12 @@ export default {
         this.$nextTick(() => {
           const minValue = query.min_value;
           const maxValue = query.max_value;
-          // Snap selections to closest bins
           select(this.$refs.brush).call(this.brush.move, [
             this.xScale(minValue),
             this.xScale(maxValue),
           ]);
 
-          // Filter dimension to be within snapped selection
+          // Filter dimension to be within selection
           this.addFilter({
             dimension: this.dimensionName,
             filter: d => d >= minValue && d < maxValue,
@@ -543,18 +542,23 @@ export default {
         return;
       }
 
-      const [low, high] = this.getClosestBins();
-      //      console.log("closest bins low = " low.x0 + "-" + low.x1 + " high = " + high.x0 + "-" + high.x1);
-      //      console.log("closest bins low = " + low + " high = " + high);
-
       // Snap selections to closest bins
+      const [low, high] = this.getClosestBins();
+
       select(this.$refs.brush)
         .transition()
         .call(event.target.move, [low, high]);
 
-      const [invertedLow, invertedHigh] = [low, high].map(this.xScale.invert);
+      var [invertedLow, invertedHigh] = [low, high].map(this.xScale.invert);
       this.selectedRange = null;
       this.selectedPopSubset = null;
+
+      // workaround for when entire range is selected
+      const last_bin = this.bins[this.bins.length - 1];
+      if (invertedHigh >= last_bin.x1) {
+        // add a small amount so nobody notices
+        invertedHigh += (last_bin.x1 - last_bin.x0) * 0.1;
+      }
 
       // Filter dimension to be within snapped selection
       this.addFilter({
