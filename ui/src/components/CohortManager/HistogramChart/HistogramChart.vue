@@ -342,23 +342,34 @@ export default {
       let ext = extent(this.populationData);
       let popData = this.populationData.slice().sort((a, b) => a - b);
       let pdl = popData.length;
-      var getMedian = function(data, first, len) {
-        let median = 0;
-        if (len % 2 === 0) {
-          median = (data[first + (len / 2 - 1)] + data[first + len / 2]) / 2;
-        } else {
-          median = data[first + (len - 1) / 2];
-        }
-        return median;
+
+      // generalized median n = numerator, d = denominator e.g. 2/3 n=2, d=3
+      var getGenMedian = function(data, n, d) {
+        let len = data.length;
+        let pivot = (len / d) * n;
+        let pm = pivot - 0.5;
+        let pp = pivot + 0.5;
+        let pmi = Math.floor(pm);
+        let ppi = Math.floor(pp);
+        let pp_frac = pp - ppi;
+        let pm_frac = 1.0 - pp_frac;
+        return data[pmi] * pm_frac + data[ppi] * pp_frac;
       };
-      let median = getMedian(popData, 0, pdl);
-      let midpt = Math.floor(pdl / 2);
-      let qtr1 = getMedian(popData, 0, midpt);
-      let qtr3 = getMedian(popData, midpt, pdl - midpt);
+
+      let median = getGenMedian(popData, 1, 2);
+      let qtr1 = getGenMedian(popData, 1, 4);
+      let qtr3 = getGenMedian(popData, 3, 4);
+      let thr1 = getGenMedian(popData, 1, 3);
+      let thr2 = getGenMedian(popData, 2, 3);
       let upper = Math.floor(ext[1] + 1);
 
       items.push({ label: 'top 1/2', min: median, max: upper });
       items.push({ label: 'bottom 1/2', min: ext[0], max: median });
+
+      items.push({ label: 'top 1/3', min: thr2, max: upper });
+      items.push({ label: 'middle 1/3', min: thr1, max: thr2 });
+      items.push({ label: 'bottom 1/3', min: ext[0], max: thr1 });
+
       items.push({ label: 'top 1/4', min: qtr3, max: upper });
       items.push({ label: 'bottom 3/4', min: ext[0], max: qtr3 });
       items.push({ label: 'bottom 1/4', min: ext[0], max: qtr1 });
@@ -376,10 +387,18 @@ export default {
       let qtr = (ext[1] - ext[0]) / 4.0;
       let qtr1 = ext[0] + qtr;
       let qtr3 = ext[1] - qtr;
+      let one_third = (ext[1] - ext[0]) / 3.0;
+      let thr1 = Math.round(ext[0] + one_third);
+      let thr2 = Math.round(ext[1] - one_third);
       let upper = Math.floor(ext[1] + 1);
 
       items.push({ label: 'top 1/2', min: mid, max: upper });
       items.push({ label: 'bottom 1/2', min: ext[0], max: mid });
+
+      items.push({ label: 'top 1/3', min: thr2, max: upper });
+      items.push({ label: 'middle 1/3', min: thr1, max: thr2 });
+      items.push({ label: 'bottom 1/3', min: ext[0], max: thr1 });
+
       items.push({ label: 'top 1/4', min: qtr3, max: upper });
       items.push({ label: 'bottom 3/4', min: ext[0], max: qtr3 });
       items.push({ label: 'bottom 1/4', min: ext[0], max: qtr1 });
