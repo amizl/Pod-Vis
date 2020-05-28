@@ -14,7 +14,14 @@
             >based on {{ dimensionName }}:</span
           >
           <span
-            v-if="hasUserFilteredOutputVariables"
+            v-if="!outputVariables || outputVariables.length == 0"
+            class="red--text title pl-2 pt-4"
+          >
+            WARNING:<br clear="both" /><br clear="both" />No outcome variables
+            selected.
+          </span>
+          <span
+            v-else-if="hasUserFilteredOutputVariables"
             class="red--text title pl-2 pt-4"
           >
             WARNING:<br clear="both" /><br clear="both" />Outcome variable
@@ -109,7 +116,7 @@ export default {
   },
   data: () => ({
     cohortNamePrefix: '',
-    rangeType: 'cohort',
+    rangeType: 'current cohort',
     valid: true,
     dialog: false,
     loading: false,
@@ -160,6 +167,7 @@ export default {
       collection: state.COLLECTION,
       cohort: state.COHORT,
       cohorts: state.COHORTS,
+      outputVariables: state.OUTPUT_VARIABLES,
     }),
     ...mapGetters('cohortManager', {
       hasUserFilteredInputVariables: getters.HAS_USER_FILTERED_INPUT_VARIABLES,
