@@ -146,7 +146,9 @@
 
         <v-stepper-content step="3.3">
           Apply filters to predictor variables to define the desired cohort,
-          then click here to <v-btn @click="goto3p4()">Continue</v-btn>.
+          then click here to <v-btn @click="goto3p4()">Continue</v-btn> and/or
+          use the "CREATE COMPARATOR COHORTS" buttons below to create and save
+          multiple cohorts at once.
         </v-stepper-content>
 
         <v-stepper-content step="3.4">

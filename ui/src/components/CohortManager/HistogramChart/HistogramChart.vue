@@ -109,6 +109,12 @@
         label="Select range"
         return-object
       ></v-select>
+
+      <create-comparator-cohorts-btn-dialog
+        :dimension-name="dimensionName"
+        :select-cohort-range="selectCohortRange"
+        :reset-selection="resetSelection"
+      />
     </v-flex>
   </v-layout>
 </template>
@@ -127,8 +133,8 @@ import { axisBottom, axisLeft } from 'd3-axis';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
-// import AnimatedRect from './HistogramBar.vue';
 import { colors } from '@/utils/colors';
+import CreateComparatorCohortsBtnDialog from '@/components/CohortManager/CreateComparatorCohortsBtnDialog';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -162,7 +168,7 @@ export default {
     },
   },
   components: {
-    //    AnimatedRect,
+    CreateComparatorCohortsBtnDialog,
   },
   props: {
     id: {
@@ -343,24 +349,11 @@ export default {
       let popData = this.populationData.slice().sort((a, b) => a - b);
       let pdl = popData.length;
 
-      // generalized median n = numerator, d = denominator e.g. 2/3 n=2, d=3
-      var getGenMedian = function(data, n, d) {
-        let len = data.length;
-        let pivot = (len / d) * n;
-        let pm = pivot - 0.5;
-        let pp = pivot + 0.5;
-        let pmi = Math.floor(pm);
-        let ppi = Math.floor(pp);
-        let pp_frac = pp - ppi;
-        let pm_frac = 1.0 - pp_frac;
-        return data[pmi] * pm_frac + data[ppi] * pp_frac;
-      };
-
-      let median = getGenMedian(popData, 1, 2);
-      let qtr1 = getGenMedian(popData, 1, 4);
-      let qtr3 = getGenMedian(popData, 3, 4);
-      let thr1 = getGenMedian(popData, 1, 3);
-      let thr2 = getGenMedian(popData, 2, 3);
+      let median = this.getGenMedian(popData, 1, 2);
+      let qtr1 = this.getGenMedian(popData, 1, 4);
+      let qtr3 = this.getGenMedian(popData, 3, 4);
+      let thr1 = this.getGenMedian(popData, 1, 3);
+      let thr2 = this.getGenMedian(popData, 2, 3);
       let upper = Math.floor(ext[1] + 1);
 
       items.push({ label: 'top 1/2', min: median, max: upper });
@@ -470,9 +463,7 @@ export default {
     }
   },
   destroyed() {
-    this.clearFilter({
-      dimension: this.dimensionName,
-    });
+    this.resetSelection();
   },
   mounted() {
     this.container = this.$refs.container;
@@ -553,9 +544,7 @@ export default {
       if (!event.sourceEvent) return;
       // Ignore empty selections.
       if (!event.selection) {
-        this.clearFilter({
-          dimension: this.dimensionName,
-        });
+        this.resetSelection();
         this.selectedRange = null;
         this.selectedPopSubset = null;
         return;
@@ -698,6 +687,20 @@ export default {
       this.height = 100;
       this.width = 350;
     },
+
+    // generalized median n = numerator, d = denominator e.g. 2/3 n=2, d=3
+    getGenMedian(data, n, d) {
+      let len = data.length;
+      let pivot = (len / d) * n;
+      let pm = pivot - 0.5;
+      let pp = pivot + 0.5;
+      let pmi = Math.floor(pm);
+      let ppi = Math.floor(pp);
+      let pp_frac = pp - ppi;
+      let pm_frac = 1.0 - pp_frac;
+      return parseFloat(data[pmi] * pm_frac + data[ppi] * pp_frac).toFixed(1);
+    },
+
     selectRange(s) {
       let minValue = s.min;
       let maxValue = s.max;
@@ -713,6 +716,37 @@ export default {
           maxValue,
         },
       });
+    },
+    getCohortRangeEndpoint(ep, ext, data) {
+      if (ep == 'min') {
+        return ext[0];
+      } else if (ep == 'max') {
+        return ext[1];
+      } else {
+        return this.getGenMedian(data, ep[0], ep[1]);
+      }
+    },
+    // called by CreateComparatorCohortsBtnDialog
+    resetSelection() {
+      this.clearFilter({
+        dimension: this.dimensionName,
+      });
+    },
+    selectCohortRange(ss, t) {
+      var data = null;
+      // population
+      if (t.startsWith('study population')) {
+        data = this.populationData;
+      }
+      // cohort
+      else {
+        data = this.data;
+      }
+      let ext = extent(data);
+      let sorted_d = data.slice().sort((a, b) => a - b);
+      var min = this.getCohortRangeEndpoint(ss.min, ext, sorted_d);
+      var max = this.getCohortRangeEndpoint(ss.max, ext, sorted_d);
+      this.selectRange({ min, max });
     },
   },
 };
