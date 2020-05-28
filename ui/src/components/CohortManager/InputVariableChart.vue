@@ -1,5 +1,5 @@
 <template>
-  <v-sheet color="white" height="100%" min-width="300px">
+  <v-sheet color="white" height="100%" min-width="300px" max-width="500px">
     <v-layout column fill-height>
       <v-card-title
         class="subtitle-1 primary--text text--darken-4 pa-0 ma-0 text-truncate"
