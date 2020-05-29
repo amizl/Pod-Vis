@@ -144,6 +144,9 @@ export default {
     isBelowPValThreshold(v) {
       const pvt = this.pval_threshold;
       let rv = false;
+      if (!this.pvals) {
+        return false;
+      }
       this.pvals.forEach(pv => {
         if (
           pv.label === v.label ||

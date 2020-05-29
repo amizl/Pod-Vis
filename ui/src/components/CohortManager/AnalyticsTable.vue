@@ -14,7 +14,7 @@
       </v-toolbar>
       <v-divider></v-divider>
       <div v-show="expanded">
-        <v-container v-if="!pvals.length" fluid fill-height>
+        <v-container v-if="!pvals || !pvals.length" fluid fill-height>
           <v-layout column align-center justify-center fill-height>
             <v-subheader class="subheading primary--text text--lighten-4">
               <v-flex v-if="collection.is_longitudinal">
