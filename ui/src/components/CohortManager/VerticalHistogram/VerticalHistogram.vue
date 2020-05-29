@@ -482,7 +482,17 @@ export default {
         .transition()
         .call(event.target.move, [high, low]);
 
-      const [invertedHigh, invertedLow] = [high, low].map(this.yScale.invert);
+      var [invertedHigh, invertedLow] = [high, low].map(this.yScale.invert);
+
+      // workaround for when entire range is selected
+      var last_bin = this.bins[this.bins.length - 1];
+      if (last_bin.x0 == last_bin.x1) {
+        last_bin = this.bins[this.bins.length - 2];
+      }
+      if (invertedHigh >= last_bin.x1) {
+        // add a small amount so nobody notices
+        invertedHigh += (last_bin.x1 - last_bin.x0) * 0.1;
+      }
 
       // Filter dimension to be within snapped selection
       const newFilter = {

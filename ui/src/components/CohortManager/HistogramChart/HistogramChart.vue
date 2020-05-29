@@ -562,7 +562,10 @@ export default {
       this.selectedPopSubset = null;
 
       // workaround for when entire range is selected
-      const last_bin = this.bins[this.bins.length - 1];
+      var last_bin = this.bins[this.bins.length - 1];
+      if (last_bin.x0 == last_bin.x1) {
+        last_bin = this.bins[this.bins.length - 2];
+      }
       if (invertedHigh >= last_bin.x1) {
         // add a small amount so nobody notices
         invertedHigh += (last_bin.x1 - last_bin.x0) * 0.1;
