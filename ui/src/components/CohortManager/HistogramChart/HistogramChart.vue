@@ -724,7 +724,7 @@ export default {
       if (ep == 'min') {
         return ext[0];
       } else if (ep == 'max') {
-        return ext[1];
+        return Math.floor(ext[1] + 1);
       } else {
         return this.getGenMedian(data, ep[0], ep[1]);
       }
