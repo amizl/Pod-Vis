@@ -1,95 +1,155 @@
 <template>
-  <v-flex ref="container">
-    <svg ref="chart" :width="width" :height="height">
-      <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
-        <title v-if="hasSelection()">
-          Click outside the selected area to remove the filter.
-        </title>
-        <title v-else>Click and drag to add a cohort filter.</title>
-        <!-- Population bars are first so they will hide under cohort bars -->
-        <rect
-          v-for="(bin, i) in popBins"
-          :key="`population-${i}`"
-          :x="xScale(bin.x0)"
-          :y="yScale(bin.length)"
-          :width="
-            xScale(bin.x1) - xScale(bin.x0) - 1 > 0
-              ? xScale(bin.x1) - xScale(bin.x0) - 1
-              : 0
-          "
-          :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
-          :fill="colors['population']"
-          :opacity="getOpacity('population')"
-        />
-        <rect
-          v-for="(bin, i) in popMinusBins"
-          v-if="highlightedSubset === 'non-cohort'"
-          :key="`pop-minus-cohort-${i}`"
-          :x="xScale(bin.x0)"
-          :y="getNonCohortY(bin)"
-          :width="
-            xScale(bin.x1) - xScale(bin.x0) - 1 > 0
-              ? xScale(bin.x1) - xScale(bin.x0) - 1
-              : 0
-          "
-          :height="getNonCohortHeight(bin)"
-          :fill="colors['nonCohort']"
-          :opacity="getOpacity('non-cohort')"
-        />
-        <rect
-          v-for="(bin, i) in bins"
-          v-if="highlightedSubset === 'cohort'"
-          :key="`cohort-${i}`"
-          :x="xScale(bin.x0)"
-          :y="getCohortY(bin)"
-          :width="
-            xScale(bin.x1) - xScale(bin.x0) - 1 > 0
-              ? xScale(bin.x1) - xScale(bin.x0) - 1
-              : 0
-          "
-          :height="getCohortHeight(bin)"
-          :fill="colors['cohort']"
-          :opacity="getOpacity('cohort')"
-        />
-        <!-- Cohort Mean -->
-        <circle
-          v-if="typeof mean !== 'undefined'"
-          r="7"
-          :cx="mean"
-          :cy="h"
-          :fill="colors['cohort-circle-fill']"
-          :stroke="colors['cohort-circle-stroke']"
-          :stroke-width="colors['cohort-circle-stroke-width']"
-          :fill-opacity="colors['cohort-circle-fill-opacity']"
-        >
-          <title>Cohort mean value</title>
-        </circle>
-        <!-- Population Mean -->
-        <circle
-          v-if="typeof populationMean !== 'undefined'"
-          r="7"
-          :cx="populationMean"
-          :cy="h"
-          :fill="colors['population-circle-fill']"
-          :stroke="colors['population-circle-stroke']"
-          :stroke-width="colors['population-circle-stroke-width']"
-          :fill-opacity="colors['population-circle-fill-opacity']"
-        >
-          <title>Population mean value</title>
-        </circle>
-        <g ref="brush" class="brush"></g>
-      </g>
+  <div>
+    <div ref="container">
+      <svg ref="chart" :width="width" :height="height">
+        <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
+          <title v-if="hasSelection()">
+            Click outside the selected area to remove the filter.
+          </title>
+          <title v-else>Click and drag to add a cohort filter.</title>
+          <!-- Population bars are first so they will hide under cohort bars -->
+          <rect
+            v-for="(bin, i) in popBins"
+            :key="`population-${i}`"
+            :x="xScale(bin.x0)"
+            :y="yScale(bin.length)"
+            :width="
+              xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+                ? xScale(bin.x1) - xScale(bin.x0) - 1
+                : 0
+            "
+            :height="h - yScale(bin.length) > 0 ? h - yScale(bin.length) : 0"
+            :fill="colors['population']"
+            :opacity="getOpacity('population')"
+          />
+          <rect
+            v-for="(bin, i) in popMinusBins"
+            v-if="highlightedSubset === 'non-cohort'"
+            :key="`pop-minus-cohort-${i}`"
+            :x="xScale(bin.x0)"
+            :y="getNonCohortY(bin)"
+            :width="
+              xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+                ? xScale(bin.x1) - xScale(bin.x0) - 1
+                : 0
+            "
+            :height="getNonCohortHeight(bin)"
+            :fill="colors['nonCohort']"
+            :opacity="getOpacity('non-cohort')"
+          />
+          <rect
+            v-for="(bin, i) in bins"
+            v-if="highlightedSubset === 'cohort'"
+            :key="`cohort-${i}`"
+            :x="xScale(bin.x0)"
+            :y="getCohortY(bin)"
+            :width="
+              xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+                ? xScale(bin.x1) - xScale(bin.x0) - 1
+                : 0
+            "
+            :height="getCohortHeight(bin)"
+            :fill="colors['cohort']"
+            :opacity="getOpacity('cohort')"
+          />
+          <!-- Cohort Mean -->
+          <circle
+            v-if="typeof mean !== 'undefined'"
+            r="7"
+            :cx="mean"
+            :cy="h"
+            :fill="colors['cohort-circle-fill']"
+            :stroke="colors['cohort-circle-stroke']"
+            :stroke-width="colors['cohort-circle-stroke-width']"
+            :fill-opacity="colors['cohort-circle-fill-opacity']"
+          >
+            <title>Cohort mean value</title>
+          </circle>
+          <!-- Population Mean -->
+          <circle
+            v-if="typeof populationMean !== 'undefined'"
+            r="7"
+            :cx="populationMean"
+            :cy="h"
+            :fill="colors['population-circle-fill']"
+            :stroke="colors['population-circle-stroke']"
+            :stroke-width="colors['population-circle-stroke-width']"
+            :fill-opacity="colors['population-circle-fill-opacity']"
+          >
+            <title>Population mean value</title>
+          </circle>
+          <g ref="brush" class="brush"></g>
+        </g>
 
-      <g
-        v-xaxis="populationXAxis"
-        :transform="`translate(${margin.left},${h + margin.top})`"
-      ></g>
-      <g
-        v-yaxis="yAxis"
-        :transform="`translate(${margin.left}, ${margin.top})`"
-      ></g>
-    </svg>
-  </v-flex>
+        <g
+          v-xaxis="populationXAxis"
+          :transform="`translate(${margin.left},${h + margin.top})`"
+        ></g>
+        <g
+          v-yaxis="yAxis"
+          :transform="`translate(${margin.left}, ${margin.top})`"
+        ></g>
+      </svg>
+    </div>
+
+    <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
+      <v-row class="pa-0 ma-0" justify="start" align="center">
+        <v-col cols="5" class="center-text pa-0 ma-0"
+          >Custom&nbsp;Selection:</v-col
+        >
+        <v-col cols="2" class="pa-0 ma-0" justify="start">
+          <v-text-field
+            v-model.number="tfRangeMin"
+            :error-messages="rangeMinErrors"
+            class="center-text pa-0 ma-0"
+            type="number"
+          ></v-text-field
+        ></v-col>
+        <v-col cols="1" class="pa-0 ma-0" align="center" justify="center">
+          -
+        </v-col>
+        <v-col cols="2" class="pa-0 ma-0">
+          <v-text-field
+            v-model.number="tfRangeMax"
+            :error-messages="rangeMaxErrors"
+            class="center-text pa-0 ma-0"
+            type="number"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row class="pa-0 ma-0">
+        <v-col cols="12" class="pa-0 ma-0">
+          <v-checkbox v-model="snapToGrid" label="Select whole bars only">
+          </v-checkbox>
+        </v-col>
+      </v-row>
+
+      <v-row class="pa-0 ma-0">
+        <v-col cols="10" class="pa-0 ma-0">
+          <v-select
+            v-model="selectedPopSubset"
+            :items="popSubsetItems"
+            item-text="label"
+            item-value="id"
+            label="Prearranged Selections"
+            class="pa-0 ma-0"
+            return-object
+          ></v-select>
+        </v-col>
+      </v-row>
+
+      <v-row class="pa-0 ma-0">
+        <v-col cols="12" class="pa-0 ma-0">
+          <create-comparator-cohorts-btn-dialog
+            :dimension-name="dimensionName"
+            :select-cohort-range="selectCohortRange"
+            :reset-selection="resetSelection"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -98,7 +158,8 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 import { state, getters, actions } from '@/store/modules/cohortManager/types';
 // D3 Modules
 import { extent, max, mean, histogram } from 'd3-array';
-import { brushX } from 'd3-brush';
+import { brushX, brushSelection } from 'd3-brush';
+import { format } from 'd3-format';
 import { select, event } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import 'd3-transition';
@@ -106,8 +167,8 @@ import { axisBottom, axisLeft } from 'd3-axis';
 // Directives
 import resize from 'vue-resize-directive';
 // Components
-// import AnimatedRect from './HistogramBar.vue';
 import { colors } from '@/utils/colors';
+import CreateComparatorCohortsBtnDialog from '@/components/CohortManager/CreateComparatorCohortsBtnDialog';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -141,7 +202,7 @@ export default {
     },
   },
   components: {
-    //    AnimatedRect,
+    CreateComparatorCohortsBtnDialog,
   },
   props: {
     id: {
@@ -185,10 +246,16 @@ export default {
       selection: [],
       populationCounts: {},
       colors: colors,
+      selectedRange: null,
+      selectedPopSubset: null,
+      tfRangeMin: null,
+      tfRangeMax: null,
+      snapToGrid: true,
     };
   },
   computed: {
     ...mapGetters('cohortManager', {
+      getQuery: getters.GET_QUERY,
       findCohortQuery: getters.FIND_COHORT_QUERY,
       hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
     }),
@@ -199,10 +266,37 @@ export default {
       highlightedSubset: state.HIGHLIGHTED_SUBSET,
       cohort: state.COHORT,
     }),
+    rangeMinErrors() {
+      if (this.tfRangeMin) {
+        if (this.tfRangeMin < this.min_value) {
+          return ['Minimum is ' + this.min_value];
+        }
+        if (this.tfRangeMin > this.max_value) {
+          return ['Maximum is ' + this.max_value];
+        }
+        if (this.tfRangeMax && this.tfRangeMin > this.tfRangeMax) {
+          return ['Minimum is greater than maximum'];
+        }
+      }
+      return [];
+    },
+    rangeMaxErrors() {
+      if (this.tfRangeMax) {
+        if (this.tfRangeMax < this.min_value) {
+          return ['Minimum is ' + this.min_value];
+        }
+        if (this.tfRangeMax > this.max_value) {
+          return ['Maximum is ' + this.max_value];
+        }
+        if (this.tfRangeMin && this.tfRangeMin > this.tfRangeMax) {
+          return ['Maximum is less than minimum'];
+        }
+      }
+      return [];
+    },
     num_bins() {
       var ext = extent(this.populationData);
       var diff = ext[1] - ext[0];
-
       if (
         this.variable &&
         this.variable.value_type === 'decimal' &&
@@ -211,6 +305,27 @@ export default {
         return diff + 1;
       } else {
         return 30;
+      }
+    },
+    min_value() {
+      var ext = extent(this.populationData);
+      var range = ext[1] - ext[0];
+      // round to nearest int
+      if (range >= 10) {
+        return Math.floor(ext[0]);
+      } else {
+        return ext[0] - 0.5;
+      }
+    },
+    // padded maximum value
+    max_value() {
+      var ext = extent(this.populationData);
+      var range = ext[1] - ext[0];
+      // round up to nearest int
+      if (range >= 10) {
+        return Math.ceil(ext[1] + 0.5);
+      } else {
+        return ext[1] + 0.5;
       }
     },
     w() {
@@ -223,11 +338,6 @@ export default {
       const { height } = this;
       return height - top - bottom;
     },
-    // colorScale() {
-    //   return scaleOrdinal()
-    //     .domain(this.data.map(c => c.key))
-    //     .range(schemeCategory10);
-    // },
     xScale() {
       return scaleLinear()
         .domain(extent(this.populationData))
@@ -314,55 +424,121 @@ export default {
         .on('start brush', this.brushed)
         .on('end', this.brushedData);
     },
+    popSubsetItems() {
+      var items = [];
+      let ext = extent(this.populationData);
+      let popData = this.populationData.slice().sort((a, b) => a - b);
+      let pdl = popData.length;
+
+      let median = this.getGenMedian(popData, 1, 2);
+      let qtr1 = this.getGenMedian(popData, 1, 4);
+      let qtr3 = this.getGenMedian(popData, 3, 4);
+      let thr1 = this.getGenMedian(popData, 1, 3);
+      let thr2 = this.getGenMedian(popData, 2, 3);
+      let lower = this.min_value;
+      let upper = this.max_value;
+
+      items.push({ label: 'top 1/2', min: median, max: upper });
+      items.push({ label: 'bottom 1/2', min: lower, max: median });
+
+      items.push({ label: 'top 1/3', min: thr2, max: upper });
+      items.push({ label: 'middle 1/3', min: thr1, max: thr2 });
+      items.push({ label: 'bottom 1/3', min: lower, max: thr1 });
+
+      items.push({ label: 'top 1/4', min: qtr3, max: upper });
+      items.push({ label: 'bottom 3/4', min: lower, max: qtr3 });
+      items.push({ label: 'bottom 1/4', min: lower, max: qtr1 });
+      items.push({ label: 'top 3/4', min: qtr1, max: upper });
+      items.forEach(i => {
+        i.label = i.label + ' of population [' + i.min + ' - ' + i.max + ']';
+      });
+
+      return items;
+    },
+    rangeItems() {
+      var items = [];
+      let ext = extent(this.populationData);
+      let mid = (ext[0] + ext[1]) / 2.0;
+      let qtr = (ext[1] - ext[0]) / 4.0;
+      let qtr1 = ext[0] + qtr;
+      let qtr3 = ext[1] - qtr;
+      let one_third = (ext[1] - ext[0]) / 3.0;
+      let thr1 = Math.round(ext[0] + one_third);
+      let thr2 = Math.round(ext[1] - one_third);
+      let upper = this.max_value;
+
+      items.push({ label: 'top 1/2', min: mid, max: upper });
+      items.push({ label: 'bottom 1/2', min: ext[0], max: mid });
+
+      items.push({ label: 'top 1/3', min: thr2, max: upper });
+      items.push({ label: 'middle 1/3', min: thr1, max: thr2 });
+      items.push({ label: 'bottom 1/3', min: ext[0], max: thr1 });
+
+      items.push({ label: 'top 1/4', min: qtr3, max: upper });
+      items.push({ label: 'bottom 3/4', min: ext[0], max: qtr3 });
+      items.push({ label: 'bottom 1/4', min: ext[0], max: qtr1 });
+      items.push({ label: 'top 3/4', min: qtr1, max: upper });
+      items.forEach(i => {
+        i.label = i.label + ' of range [' + i.min + '-' + i.max + ']';
+      });
+
+      return items;
+    },
   },
   watch: {
     filteredData() {
       this.data = flattenGroupCounts(this.group.all());
-      if (!this.dimension.currentFilter()) {
-        this.handle.attr('display', 'none');
-        select(this.$refs.brush).call(this.brush.move, null);
+      this.updateRangeFromQuery();
+    },
+    selectedRange(s) {
+      if (s == null) {
+        return;
       }
+      this.selectedPopSubset = null;
+      this.selectRange(s);
+    },
+    selectedPopSubset(s) {
+      if (s == null) {
+        return;
+      }
+      this.selectedRange = null;
+      this.selectRange(s);
+    },
+    tfRangeMin(range_min) {
+      this.updateSelectedRange();
+    },
+    tfRangeMax(range_max) {
+      this.updateSelectedRange();
     },
   },
   created() {
     const dimension = this.dimensions[this.dimensionName];
     this.dimension = dimension;
     this.populationData = this.unfilteredData.map(dimension.accessor);
-
     this.group = dimension.group();
     this.data = flattenGroupCounts(this.group.all());
+    const [query] = this.findCohortQuery(this.dimensionName);
 
-    if (this.inputVariable && this.hasUserSelectedCohort) {
-      // there should only be one query for a histogram...
-      const [query] = this.findCohortQuery(this.dimensionName);
-
-      if (typeof query !== 'undefined') {
-        this.$nextTick(() => {
-          const minValue = query.min_value;
-          const maxValue = query.max_value;
-          // Snap selections to closest bins
-          select(this.$refs.brush).call(this.brush.move, [
-            this.xScale(minValue),
-            this.xScale(maxValue),
-          ]);
-
-          // Filter dimension to be within snapped selection
-          this.addFilter({
-            dimension: this.dimensionName,
-            filter: d => d >= minValue && d < maxValue,
-            query: {
-              minValue,
-              maxValue,
-            },
-          });
+    if (typeof query !== 'undefined') {
+      this.$nextTick(() => {
+        const minValue = query.min_value;
+        const maxValue = query.max_value;
+        // Filter dimension to be within selection
+        this.addFilter({
+          dimension: this.dimensionName,
+          filter: d => d >= minValue && d < maxValue,
+          query: {
+            minValue,
+            maxValue,
+          },
         });
-      }
+      });
     }
+
+    this.updateRangeFromQuery();
   },
   destroyed() {
-    this.clearFilter({
-      dimension: this.dimensionName,
-    });
+    this.resetSelection();
   },
   mounted() {
     this.container = this.$refs.container;
@@ -416,13 +592,16 @@ export default {
     getClosestBins() {
       const { selection } = event;
       const [low, high] = selection.map(this.xScale.invert);
+      if (!this.snapToGrid) {
+        return [low, high].map(this.xScale);
+      }
 
       // Get closest bin to our lower selection
       const closestBinToLow = this.bins
         .map(bin => bin.x0)
         .map(x0 => Math.abs(x0 - low))
         .reduce((acc, currVal) => Math.min(acc, currVal));
-      const newLowIdx = this.bins.findIndex(
+      var newLowIdx = this.bins.findIndex(
         bin => Math.abs(bin.x0 - low) === closestBinToLow
       );
       const newLow = this.bins[newLowIdx].x0;
@@ -431,11 +610,10 @@ export default {
         .map(bin => bin.x1)
         .map(x1 => Math.abs(x1 - high))
         .reduce((acc, currVal) => Math.min(acc, currVal));
-      const newHighIdx = this.bins.findIndex(
+      var newHighIdx = this.bins.findIndex(
         bin => Math.abs(bin.x1 - high) === closestBinToHigh
       );
       const newHigh = this.bins[newHighIdx].x1;
-
       return [newLow, newHigh].map(this.xScale);
     },
     brushedData() {
@@ -443,22 +621,36 @@ export default {
       if (!event.sourceEvent) return;
       // Ignore empty selections.
       if (!event.selection) {
-        this.clearFilter({
-          dimension: this.dimensionName,
-        });
+        this.resetSelection();
+        this.selectedRange = null;
+        this.selectedPopSubset = null;
         return;
       }
 
-      const [low, high] = this.getClosestBins();
-      //      console.log("closest bins low = " low.x0 + "-" + low.x1 + " high = " + high.x0 + "-" + high.x1);
-      //      console.log("closest bins low = " + low + " high = " + high);
-
       // Snap selections to closest bins
+      const [low, high] = this.getClosestBins();
+
       select(this.$refs.brush)
         .transition()
         .call(event.target.move, [low, high]);
 
-      const [invertedLow, invertedHigh] = [low, high].map(this.xScale.invert);
+      var [invertedLow, invertedHigh] = [low, high].map(this.xScale.invert);
+      this.selectedRange = null;
+      this.selectedPopSubset = null;
+
+      var fmt = format('.2~f');
+
+      // workaround for when entire range is selected
+      var last_bin = this.bins[this.bins.length - 1];
+      if (last_bin.x0 == last_bin.x1) {
+        last_bin = this.bins[this.bins.length - 2];
+      }
+      if (invertedHigh >= this.max_value) {
+        invertedHigh = this.max_value;
+      }
+
+      invertedLow = fmt(invertedLow);
+      invertedHigh = fmt(invertedHigh);
 
       // Filter dimension to be within snapped selection
       this.addFilter({
@@ -579,8 +771,154 @@ export default {
       this.height = 100;
       this.width = 350;
     },
+
+    // generalized median n = numerator, d = denominator e.g. 2/3 n=2, d=3
+    getGenMedian(data, n, d) {
+      let len = data.length;
+      let pivot = (len / d) * n;
+      let pm = pivot - 0.5;
+      let pp = pivot + 0.5;
+      let pmi = Math.floor(pm);
+      let ppi = Math.floor(pp);
+      let pp_frac = pp - ppi;
+      let pm_frac = 1.0 - pp_frac;
+      return parseFloat(data[pmi] * pm_frac + data[ppi] * pp_frac).toFixed(1);
+    },
+
+    selectRange(s) {
+      let minValue = s.min;
+      let maxValue = s.max;
+      this.addFilter({
+        dimension: this.dimensionName,
+        filter: d => d >= minValue && d < maxValue,
+        query: {
+          minValue,
+          maxValue,
+        },
+      });
+    },
+    getCohortRangeEndpoint(ep, ext, data) {
+      if (ep == 'min') {
+        return ext[0];
+      } else if (ep == 'max') {
+        return this.max_value;
+      } else {
+        return this.getGenMedian(data, ep[0], ep[1]);
+      }
+    },
+    // called by CreateComparatorCohortsBtnDialog
+    resetSelection() {
+      this.clearFilter({
+        dimension: this.dimensionName,
+      });
+    },
+    selectCohortRange(ss, t) {
+      var data = null;
+      // population
+      if (t.startsWith('study population')) {
+        data = this.populationData;
+      }
+      // cohort
+      else {
+        data = this.data;
+      }
+      let ext = extent(data);
+      let sorted_d = data.slice().sort((a, b) => a - b);
+      var min = this.getCohortRangeEndpoint(ss.min, ext, sorted_d);
+      var max = this.getCohortRangeEndpoint(ss.max, ext, sorted_d);
+      this.selectRange({ min, max });
+    },
+    updateRangeFromQuery() {
+      // there should only be one query for a histogram...
+      const query = this.getQuery(this.dimensionName);
+
+      if (query == null || typeof query == 'undefined') {
+        if (this.handle != null) {
+          this.handle.attr('display', 'none');
+          select(this.$refs.brush).call(this.brush.move, null);
+        }
+        this.selectedRange = null;
+        this.selectedPopSubset = null;
+        this.tfRangeMin = null;
+        this.tfRangeMax = null;
+      } else {
+        this.$nextTick(() => {
+          const minValue = query[0].minValue;
+          const maxValue = query[0].maxValue;
+
+          select(this.$refs.brush).call(this.brush.move, [
+            this.xScale(minValue),
+            this.xScale(maxValue),
+          ]);
+
+          if (this.tfRangeMin != query[0].minValue) {
+            this.tfRangeMin = Number(query[0].minValue);
+          }
+          if (this.tfRangeMax != query[0].maxValue) {
+            this.tfRangeMax = Number(query[0].maxValue);
+          }
+        });
+      }
+    },
+
+    // update selected range based on tfRangeMin - tfRangeMax, if feasible
+    updateSelectedRange() {
+      if (this.tfRangeMin == null || this.tfRangeMax == null) {
+        return;
+      }
+      var tfMin = Number(this.tfRangeMin);
+      var tfMax = Number(this.tfRangeMax);
+
+      if (tfMax > this.max_value) {
+        return;
+      }
+      if (tfMin < this.min_value) {
+        return;
+      }
+
+      // is this range already selected?
+      var alreadySelected = true;
+
+      if (select(this.$refs.brush) == null) {
+        alreadySelected = false;
+      } else {
+        var bsel = brushSelection(this.$refs.brush);
+        if (bsel == null) {
+          alreadySelected = false;
+        } else {
+          var rangeMin = this.xScale.invert(bsel[0]);
+          var rangeMax = this.xScale.invert(bsel[1]);
+          if (tfMin < tfMax && (rangeMin != tfMin || rangeMax != tfMax)) {
+            alreadySelected = false;
+          }
+        }
+      }
+
+      if (!alreadySelected) {
+        var tfrmin = tfMin;
+        var tfrmax = tfMax;
+
+        select(this.$refs.brush).call(this.brush.move, [
+          this.xScale(tfrmin),
+          this.xScale(tfrmax),
+        ]);
+
+        this.addFilter({
+          dimension: this.dimensionName,
+          filter: d => d >= tfrmin && d < tfrmax,
+          query: {
+            minValue: tfrmin,
+            maxValue: tfrmax,
+          },
+        });
+      }
+    },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.center-text >>> input {
+  text-align: center;
+}
+</style>

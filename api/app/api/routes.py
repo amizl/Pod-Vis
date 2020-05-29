@@ -461,6 +461,16 @@ def create_collection():
         collection_study = models.CollectionStudy(collection.id, study.id)
         collection_study.save_to_db()
 
+    # Add special "Dataset" subject variable
+    dataset_var = models.SubjectOntology.find_by_label("Dataset")
+    # ...creating it if it does not exist
+    if dataset_var is None:
+        dataset_var = models.SubjectOntology(None, 'Dataset', 'char', 'Categorical');
+        dataset_var.save_to_db()
+        
+    subj_var = models.CollectionSubjectVariable(collection.id, dataset_var.id)
+    subj_var.save_to_db()
+        
     # Add variables to appropriate collection table
     for variable in variables:
         if variable["type"] == "observation":
@@ -476,6 +486,56 @@ def create_collection():
     return jsonify({
         "success": True,
         "collection": collection.to_dict(include_studies=True, include_variables=True)
+    }), 201
+
+@api.route("/collections/<int:collection_id>/observation_visits", methods=["POST"])
+@jwt_required
+def set_collection_observation_variable_visits(collection_id):
+    """Set first/last visit for observation variable(s).
+
+    Params:
+        variable_visits
+    Example:
+        {
+            "variable_visits": [ {"variable_id": "2", "first_visit_event": "BL", "last_visit_event": "V12"} ],
+        }
+
+    Example requests:
+      /api/collections/23/observation_visits
+    """
+    request_data = request.get_json()
+    variable_visits = request_data.get('variable_visits')
+
+    if not variable_visits:
+        raise BadRequest("No observation variable first/last visits specified.")
+
+    user = get_current_user()
+    collection = models.Collection.find_by_id(collection_id)
+    
+    if not collection:
+        raise ResourceNotFound("Collection not found.")
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
+        raise AuthFailure('User not authorized to retrieve collection.')
+
+    obs_vars = collection.observation_variables
+    vvh = {}
+    for vv in variable_visits:
+        vvh[vv['variable_id']] = vv
+
+    for ov in obs_vars:
+        vv = vvh[ov.observation_ontology_id]
+        if 'first_visit_event' in vv:
+            ov.first_visit_event = vv['first_visit_event']
+        if 'last_visit_event' in vv:
+            ov.last_visit_event = vv['last_visit_event']
+        if 'first_visit_num' in vv:
+            ov.first_visit_num = vv['first_visit_num']
+        if 'last_visit_num' in vv:
+            ov.last_visit_num = vv['last_visit_num']
+        ov.save_to_db()
+        
+    return jsonify({
+        "success": True,
     }), 201
 
 @api.route("/collections")
@@ -556,7 +616,7 @@ def get_collection(collection_id):
         if 'ontology' in sv:
             so = sv['ontology']
             so['category'] = get_subj_scale_category(so['id'])
-            
+
     return jsonify(dict(success=True, collection=collection_d))
 
 @api.route("/collections/<int:collection_id>", methods=["DELETE"])
@@ -811,6 +871,10 @@ def compute_anova():
     pvals = []
 
     for output_variable in output_variables:
+        # test doesn't apply to longitudinal categorical variables
+        if output_variable['data_category'] == 'Categorical':
+            continue
+
         # Output variables that are simply "change" or "firstVisit" will have the
         # id of "change-208" or "firstVisit-208". We want to detect this so we can
         # use the correct id
@@ -823,7 +887,11 @@ def compute_anova():
 
         samples = []
         for g in groups:
-            sample = [float(data.get(variable_id).get('change')) for data in g]
+            sample = []
+            for data in g:
+                change = data.get(variable_id).get('change')
+                if change is not None:
+                    sample.append(float(change))
             samples.append(sample)
             
         fval, pval = f_oneway(*samples)
@@ -843,6 +911,10 @@ def compute_pairwise_tukeyhsd():
     results = {}
 
     for output_variable in output_variables:
+        # test doesn't apply to longitudinal categorical variables
+        if output_variable['data_category'] == 'Categorical':
+            continue
+
         if isinstance(output_variable.get("id"), str) and "-" in output_variable.get("id"):
             variable_id = str(output_variable.get("parentID"))
             variable_label = output_variable.get("parentLabel")
@@ -856,7 +928,9 @@ def compute_pairwise_tukeyhsd():
         for g in groups:
             for datum in g['data']:
                 groupnums.append(g['id'])
-                data.append(datum.get(variable_id).get('change'))
+                change = datum.get(variable_id).get('change')
+                if change is not None:
+                    data.append(change)
 
         # compute Tukey-HSD
         res = pairwise_tukeyhsd(groups=groupnums, endog=data)
@@ -903,10 +977,29 @@ def compute_mannwhitneyu():
 
         filtered_sample = [data.get(variable_id).get('change') for data in filtered_data]
         unfiltered_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
+
+        err = None
+        n_filtered = len(filtered_sample)
+        n_unfiltered = len(unfiltered_sample)
+        if n_filtered < 20:
+            err = "Filtered sample size < 20"
+        elif n_unfiltered < 20:
+            err = "Unfiltered sample size < 20"
+            
         # TODO - use of 'None' default for alternative is deprecated, see https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html
-        stats, pval = mannwhitneyu(filtered_sample, unfiltered_sample)
-                
-        pvals.append(dict(label=variable_label, pval=pval))
+        u, pval = mannwhitneyu(filtered_sample, unfiltered_sample, alternative='two-sided')
+
+        # common language effect size f = U/(n1 * n2)
+        f = u / (n_filtered * n_unfiltered)
+        
+        pvals.append(dict(label=variable_label,
+                          test_name='2-Sided Mann-Whitney U Test',
+                          test_abbrev='2SMWU',
+                          pval=pval,
+                          effect_size=f,
+                          effect_size_descr='Common language effect size.',
+                          u_statistic=u,
+                          error=err))
 
     return jsonify({
         "success": True,
@@ -997,21 +1090,30 @@ def create_cohort():
         else:
             # type is observation
 
-            # Needs to be refactored. The labels being hard coded to 'First Visit", etc,
-            # mismatches our schema's enums.
-            if variable['label'] == 'First Visit':
-                dimension_label = 'left_y_axis'
-            elif variable['label'] == 'Last Visit':
-                dimension_label = 'right_y_axis'
-            elif variable['label'] == 'Rate of Change':
-                dimension_label = 'roc'
-            elif variable['label'] == 'Change':
-                dimension_label = 'change'
+            # variable from cross-sectional study
+            if not variable['is_longitudinal']:
+                input_variable = models.CohortInputVariable(
+                    cohort.id,
+                    observation_ontology_id = variable['id'],
+                    dimension_label = None)
 
-            input_variable = models.CohortInputVariable(
-                cohort.id,
-                observation_ontology_id = variable['parentID'],
-                dimension_label = dimension_label)
+            else:
+                # Needs to be refactored. The labels being hard coded to 'First Visit", etc,
+                # mismatches our schema's enums.
+                if variable['label'] == 'First Visit':
+                    dimension_label = 'left_y_axis'
+                elif variable['label'] == 'Last Visit':
+                    dimension_label = 'right_y_axis'
+                elif variable['label'] == 'Rate of Change':
+                    dimension_label = 'roc'
+                elif variable['label'] == 'Change':
+                    dimension_label = 'change'
+
+                input_variable = models.CohortInputVariable(
+                    cohort.id,
+                    observation_ontology_id = variable['parentID'],
+                    dimension_label = dimension_label)
+                
         input_variable.save_to_db()
         input_vars[variable['id']] = input_variable
         
@@ -1059,7 +1161,60 @@ def create_cohort():
         "cohort": cohort_d
     }), 201
 
+# Method to retrieve all collection observation summaries
+@api.route("/collections/obs_summaries/<int:collection_id>")
+@jwt_required
+def get_collection_obs_summary_by_event(collection_id):
+    """Get the user's collection observation summary."""
+    obs_summaries = models.Collection.get_all_visit_summaries(collection_id)
 
+    if not obs_summaries:
+        raise ResourceNotFound("Collection not found.")
+    
+    return jsonify({
+        "success": True,
+        "summaries": obs_summaries,
+    }), 201
 
+# Method to calculate average time between events
+@api.route("/collections/time_between_visits/<int:collection_id>")
+@jwt_required
+def get_collection_time_between_visits(collection_id):
+    query_by = request.args.get("query_by")
 
-    # Add studies to collection
+    # only count subjects with first/last observations for these variables
+    obs_var_ids = request.args.get('obs_var_ids')
+
+    # single first/last visit for all variables
+    visit1 = request.args.get("visit1")
+    visit2 = request.args.get("visit2")
+    
+    # distinct first/last visit for each variable
+    fv = request.args.get("first_visits")
+    lv = request.args.get("last_visits")
+    ovl = obs_var_ids.split(",")
+
+    if visit1 is not None:
+        avg_times = models.Collection.get_avg_time_between_visits(collection_id, query_by, visit1, visit2, ovl)
+        return jsonify({
+            "success": True,
+            "obs_var_ids": obs_var_ids,
+            "visit1": visit1,
+            "visit2": visit2,
+            "query_by": query_by,
+            "times": avg_times,
+        }), 201
+    else:
+        fvl = fv.split(",")
+        lvl = lv.split(",")
+
+        avg_times = models.Collection.get_avg_time_between_visits(collection_id, query_by, fvl, lvl, ovl)
+
+        return jsonify({
+            "success": True,
+            "obs_var_ids": obs_var_ids,
+            "first_visits": fv,
+            "last_visits": lv,
+            "query_by": query_by,
+            "times": avg_times,
+        }), 201

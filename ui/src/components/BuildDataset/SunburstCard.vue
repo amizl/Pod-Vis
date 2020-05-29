@@ -23,7 +23,9 @@
       <v-spacer></v-spacer>
       <v-btn :to="`/datasets/${id}`" flat icon>
         <v-tooltip top color="primary">
-          <v-icon slot="activator"> info </v-icon>
+          <template v-slot:activator="{ on: tooltip }">
+            <v-icon v-on="{ ...tooltip }"> info </v-icon>
+          </template>
           <span>Learn more about this study</span>
         </v-tooltip>
       </v-btn>

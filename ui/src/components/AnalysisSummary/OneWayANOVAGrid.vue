@@ -1,42 +1,72 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
-      <v-card-title class="title primary--text"
-        >One-Way ANOVA
-        <v-spacer />
-        <v-chip color="#FEEDDE">p &lt; 1</v-chip>
-        <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
-        <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
-        <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
-        <v-chip color="#F16913">p &lt; 0.0001</v-chip>
-      </v-card-title>
-      <v-divider></v-divider>
+  <v-sheet color="white" class="rounded-lg shadow">
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-sheet color="white" class="rounded-lg shadow">
+            <v-container fluid fill-width class="ma-0 pa-0">
+              <v-row class="ma-0 pa-0">
+                <v-col cols="12" class="ma-0 pa-0">
+                  <v-card color="#eeeeee" class="pt-1">
+                    <v-card-title class="primary--text pl-3 py-2"
+                      >One-Way ANOVA
+                      <v-spacer />
+                      <v-chip color="#FEEDDE">p &lt; 1</v-chip>
+                      <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
+                      <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
+                      <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
+                      <v-chip color="#F16913">p &lt; 0.0001</v-chip>
+                    </v-card-title>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-sheet>
+        </v-col>
+      </v-row>
 
-      <v-flex xs12 style="overflow:auto">
-        <v-data-table
-          dense
-          :headers="headers"
-          :items="items"
-          class="elevation-1"
-          :rows-per-page-items="[100]"
-          :hide-footer="true"
-        >
-          <template v-slot:items="props">
-            <tr>
-              <td v-for="ov in outcomeVariables" :key="ov.id">
-                <v-layout justify-center
-                  ><v-chip
-                    :color="table_cell_color(ov)"
-                    @click="table_cell_click(ov)"
-                    >{{ table_cell(props.item, ov) }}</v-chip
-                  ></v-layout
+      <v-row>
+        <v-col cols="12">
+          <v-data-table
+            dense
+            :headers="headers"
+            :items="outcomeVariables"
+            class="elevation-1"
+            :hide-footer="true"
+          >
+            <template v-slot:item="props">
+              <tr
+                :class="{ selectedRow: isOVSelected(props.item) }"
+                @click="table_row_click(props.item)"
+              >
+                <td class="text-subtitle-1 text-xs-left">
+                  {{ props.item.category }}
+                </td>
+                <td class="text-subtitle-1 text-xs-left">
+                  {{ props.item.label }}
+                </td>
+                <td class="text-subtitle-1 text-xs-left">1-way ANOVA</td>
+                <td class="text-subtitle-1 text-xs-left">
+                  {{ variable_fval(props.item) }}
+                </td>
+                <td
+                  :key="props.item.id"
+                  class="text-subtitle-1 text-xs-left"
+                  :style="{ backgroundColor: table_cell_color(props.item) }"
                 >
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-      </v-flex>
-    </v-layout>
+                  {{ table_cell(props.item) }}
+                </td>
+                <td>
+                  <v-icon v-if="isOVSelected(props.item)" large
+                    >chevron_right</v-icon
+                  >
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-sheet>
 </template>
 
@@ -49,30 +79,51 @@ import { format } from 'd3-format';
 export default {
   components: {},
   props: {},
+  data() {
+    return {
+      selected: [],
+      headers: [
+        {
+          text: 'Category',
+          value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
+        },
+        {
+          text: 'Scale',
+          value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
+        },
+        {
+          text: 'Statistical Test',
+          value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
+        },
+        {
+          text: 'F-Statistic',
+          value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
+        },
+        {
+          text: 'p-Value',
+          value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
+        },
+        {
+          text: '',
+          value: '',
+          class: 'text-subtitle-1 font-weight-bold',
+        },
+      ],
+    };
+  },
   computed: {
     ...mapState('analysisSummary', {
       selectedOutcomeVariable: state.SELECTED_OUTCOME_VARIABLE,
     }),
     ...mapState('dataExplorer', {
-      cohorts: deState.COHORTS,
-      collection: deState.COLLECTION,
       outcomeVariables: deState.OUTCOME_VARIABLES,
       anova_pvals: deState.ANOVA_PVALS,
     }),
-    // cohorts are collection-specific
-    collection_cohorts() {
-      const cch = [];
-      const cid = this.collection.id;
-
-      this.cohorts.forEach(e => {
-        if (e.collection_id === cid) {
-          e.color = { value: '#d0d0d0', text: 'Grey' };
-          cch.push(e);
-        }
-      });
-
-      return cch;
-    },
     pval_dict() {
       const ap = this.anova_pvals;
       const pd = {};
@@ -80,26 +131,6 @@ export default {
         pd[a.label] = a;
       });
       return pd;
-    },
-    items() {
-      return [this.collection_cohorts[0]];
-    },
-    headers() {
-      let th = this;
-      const ovars = this.outcomeVariables;
-      const headers = [];
-      let ind = 0;
-      ovars.forEach(ov => {
-        headers.push({
-          text: ov.label,
-          align: 'center',
-          sortable: false,
-          divider: true,
-          value: ov.id,
-        });
-        ind += 1;
-      });
-      return headers;
     },
   },
   created() {
@@ -109,6 +140,14 @@ export default {
     ...mapActions('analysisSummary', {
       setSelectedOutcomeVariable: actions.SET_SELECTED_OUTCOME_VARIABLE,
     }),
+    variable_fval(ov) {
+      const pd = this.pval_dict;
+      if (ov.label in pd) {
+        const { fval } = pd[ov.label];
+        return `${format('.3f')(fval)}`;
+      }
+      return 'X';
+    },
     variable_pval(ov) {
       const pd = this.pval_dict;
       if (ov.label in pd) {
@@ -120,7 +159,7 @@ export default {
       }
       return null;
     },
-    table_cell(cohort, ov) {
+    table_cell(ov) {
       let pval = this.variable_pval(ov);
       if (pval === null) {
         return 'X';
@@ -163,11 +202,21 @@ export default {
       }
       return '';
     },
-    table_cell_click(ov) {
+    table_row_click(ov) {
       this.setSelectedOutcomeVariable(ov);
+    },
+    isOVSelected(ov) {
+      if (this.selectedOutcomeVariable == ov) {
+        return true;
+      }
+      return false;
     },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+tr.selectedRow {
+  background-color: rgb(236, 177, 212);
+}
+</style>

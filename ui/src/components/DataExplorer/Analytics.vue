@@ -1,50 +1,53 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
-      <v-card-title class="title primary--text"
-        >ANOVA
-        <div class="subtitle-1">1-way ANOVA for first-last visit change</div>
-      </v-card-title>
-      <v-divider></v-divider>
-      <v-container
-        v-if="typeof anova_pvals === undefined || !anova_pvals.length"
-        fluid
-        fill-height
-      >
-        <v-layout column align-center justify-center fill-height>
-          <v-subheader class="subheading primary--text text--lighten-4">
-            <v-flex xs6
-              ><v-icon large class="primary--text text--lighten-4"
-                >info</v-icon
-              ></v-flex
-            >
-            <v-flex> Nothing to show. </v-flex>
-          </v-subheader>
-        </v-layout>
-      </v-container>
+  <div class="ma-0 pa-0">
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card color="#eeeeee" class="pt-1">
+            <v-card-title class="primary--text pl-3 py-2">
+              ANOVA -
+              <span class="subtitle-1"
+                >1-way ANOVA for first-last visit change</span
+              >
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
 
-      <v-flex v-else>
-        <v-data-table
-          :headers="headers"
-          :items="anova_pvals"
-          dense
-          hide-default-header
-        >
-          <template v-slot:items="props">
-            <tr>
-              <td class="text-xs-left">{{ props.item.label }}</td>
-              <td class="text-xs-right">
-                {{ props.item.pval | formatPValue }}
-              </td>
-              <td class="text-xs-right">
-                {{ props.item.fval | formatFValue }}
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-      </v-flex>
-    </v-layout>
-  </v-sheet>
+    <v-container
+      v-if="typeof anova_pvals === undefined || !anova_pvals.length"
+      fluid
+      fill-width
+      class="pa-0 ma-0 pt-2 pl-2"
+    >
+      <v-row class="pl-2" align="center">
+        <v-col cols="12"> Nothing to show. </v-col>
+      </v-row>
+    </v-container>
+
+    <v-container v-else fluid fill-width class="pa-0 ma-0 pt-2">
+      <v-row class="pa-0 ma-0" align="center">
+        <v-col cols="12" class="pa-0 ma-0">
+          <v-data-table :headers="headers" :items="anova_pvals" dense>
+            <template v-slot:item="props">
+              <tr>
+                <td class="text-subtitle-1 text-xs-left">
+                  {{ props.item.label }}
+                </td>
+                <td class="text-subtitle-1 text-xs-right">
+                  {{ props.item.pval | formatPValue }}
+                </td>
+                <td class="text-subtitle-1 text-xs-right">
+                  {{ props.item.fval | formatFValue }}
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -73,18 +76,21 @@ export default {
           align: 'left',
           sortable: false,
           value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'P Value',
-          align: 'right',
+          align: 'left',
           sortable: true,
           value: 'pval',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'F Value',
-          align: 'right',
+          align: 'left',
           sortable: true,
           value: 'fval',
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ],
     };

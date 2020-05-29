@@ -1,5 +1,5 @@
 <template>
-  <v-flex ref="container" fill-height style="display: inline-block">
+  <div ref="container" fill-height style="display: inline-block">
     <svg ref="chart" :width="width" :height="height">
       <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
         <title v-if="hasSelection()">
@@ -103,7 +103,7 @@
         "
       ></g>
     </svg>
-  </v-flex>
+  </div>
 </template>
 
 <script>
@@ -170,6 +170,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    yMin: {
+      type: Number,
+      required: true,
+    },
     yDomain: {
       type: Number,
       required: true,
@@ -185,12 +189,6 @@ export default {
       haveDimensions: false,
       width: 0,
       height: 0,
-      margin: {
-        top: 20,
-        right: 30,
-        bottom: 10,
-        left: 30,
-      },
       filter: undefined,
       selected: [],
       container: null,
@@ -219,6 +217,14 @@ export default {
         return 30;
       }
     },
+    margin() {
+      return {
+        top: 20,
+        right: this.left ? 30 : 10,
+        bottom: 10,
+        left: this.left ? 10 : 30,
+      };
+    },
     w() {
       const { left, right } = this.margin;
       const { width } = this;
@@ -236,7 +242,7 @@ export default {
     // },
     yScale() {
       return scaleLinear()
-        .domain([0, this.yDomain])
+        .domain([this.yMin, this.yDomain])
         .range([this.h, 0]);
     },
     cohortXScale() {
@@ -478,7 +484,17 @@ export default {
         .transition()
         .call(event.target.move, [high, low]);
 
-      const [invertedHigh, invertedLow] = [high, low].map(this.yScale.invert);
+      var [invertedHigh, invertedLow] = [high, low].map(this.yScale.invert);
+
+      // workaround for when entire range is selected
+      var last_bin = this.bins[this.bins.length - 1];
+      if (last_bin.x0 == last_bin.x1) {
+        last_bin = this.bins[this.bins.length - 2];
+      }
+      if (invertedHigh >= last_bin.x1) {
+        // add a small amount so nobody notices
+        invertedHigh += (last_bin.x1 - last_bin.x0) * 0.1;
+      }
 
       // Filter dimension to be within snapped selection
       const newFilter = {
@@ -511,7 +527,7 @@ export default {
       }
 
       // Appropriately place brush handles
-      var tx = this.width;
+      var tx = this.w * 2;
       this.handle
         .attr('display', null)
         .attr(

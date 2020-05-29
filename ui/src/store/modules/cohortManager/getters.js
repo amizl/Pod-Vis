@@ -28,31 +28,33 @@ export default {
     return true;
   },
   [getters.FIND_COHORT_QUERY]: state => dimensionName =>
-    state.cohort.queries.filter(query => {
-      const inputVariable = query.input_variable;
-      // Need to safely access correct attribute
-      if (inputVariable.study) {
-        return inputVariable.study.label === dimensionName;
-      } else if (inputVariable.observation_ontology) {
-        // TODO: This needs to be refactored. Dimensions are currently
-        // keyed strangely and needs to be better named for an easier
-        // mapping then having to format labels like this...
-        const observationLabel = inputVariable.observation_ontology.label;
-        const dimLabel = inputVariable.dimension_label;
-        let newLabel = '';
-        if (dimLabel === 'change') {
-          newLabel = `${observationLabel} - Change`;
-        } else if (dimLabel === 'roc') {
-          newLabel = `${observationLabel} - Rate of Change`;
-        } else if (dimLabel === 'left_y_axis') {
-          newLabel = `${observationLabel} - First Visit`;
-        } else if (dimLabel === 'right_y_axis') {
-          newLabel = `${observationLabel} - Last Visit`;
-        }
-        return newLabel === dimensionName;
-      }
-      return inputVariable.subject_ontology.label === dimensionName;
-    }),
+    state.cohort.queries == null
+      ? []
+      : state.cohort.queries.filter(query => {
+          const inputVariable = query.input_variable;
+          // Need to safely access correct attribute
+          if (inputVariable.study) {
+            return inputVariable.study.label === dimensionName;
+          } else if (inputVariable.observation_ontology) {
+            // TODO: This needs to be refactored. Dimensions are currently
+            // keyed strangely and needs to be better named for an easier
+            // mapping then having to format labels like this...
+            const observationLabel = inputVariable.observation_ontology.label;
+            const dimLabel = inputVariable.dimension_label;
+            let newLabel = '';
+            if (dimLabel === 'change') {
+              newLabel = `${observationLabel} - Change`;
+            } else if (dimLabel === 'roc') {
+              newLabel = `${observationLabel} - Rate of Change`;
+            } else if (dimLabel === 'left_y_axis') {
+              newLabel = `${observationLabel} - First Visit`;
+            } else if (dimLabel === 'right_y_axis') {
+              newLabel = `${observationLabel} - Last Visit`;
+            }
+            return newLabel === dimensionName;
+          }
+          return inputVariable.subject_ontology.label === dimensionName;
+        }),
   //  [getters.FIND_COHORT_STUDY_INPUT_VARIABLES]: state => {
   //    return !state.cohort.input_variables
   //      ? []
@@ -80,9 +82,14 @@ export default {
       : state.cohort.input_variables
           .filter(variable => variable.observation_ontology != null)
           .map(variable => {
-            const dimLabel = variable.dimension_label;
+            let dimLabel = 'value';
             let dimension = '';
             let label = '';
+
+            if ('dimension_label' in variable) {
+              dimLabel = variable.dimension_label;
+            }
+
             if (dimLabel === 'left_y_axis') {
               dimension = 'firstVisit';
               label = 'First Visit';
@@ -95,13 +102,21 @@ export default {
             } else if (dimLabel === 'change') {
               dimension = 'change';
               label = 'Change';
+            } else if (dimLabel === 'value') {
+              dimension = '';
+              label = variable.observation_ontology.label;
             }
+
+            let var_id =
+              dimension === ''
+                ? variable.observation_ontology_id
+                : `${dimension}-${variable.observation_ontology_id}`;
 
             return {
               parentID: variable.observation_ontology_id,
               parentLabel: variable.observation_ontology.label,
               ...variable.observation_ontology,
-              id: `${dimension}-${variable.observation_ontology_id}`,
+              id: var_id,
               label,
               is_longitudinal: variable.is_longitudinal,
               type: 'observation',
@@ -186,5 +201,13 @@ export default {
     );
 
     return [...outcomeMeasures, ...dimensionsNotInParentIDs];
+  },
+  [getters.GET_QUERY]: state => dimensionName => {
+    const queries = state[stateTypes.QUERIES];
+    if (dimensionName in queries) {
+      return queries[dimensionName];
+    } else {
+      return null;
+    }
   },
 };

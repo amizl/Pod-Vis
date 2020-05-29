@@ -82,6 +82,19 @@ class CohortInputVariable(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    # Hack around ObservatonDimension not being JSON serializable.
+    def get_dimension_value_str(self):
+        value_str = ''
+        if self.dimension_label is ObservationDimension.left_y_axis:
+            value_str  = "left_y_axis"
+        elif self.dimension_label is ObservationDimension.right_y_axis:
+            value_str  = "right_y_axis"
+        elif self.dimension_label is ObservationDimension.change:
+            value_str  = "change"
+        elif self.dimension_label is ObservationDimension.roc:
+            value_str  = "roc"
+        return value_str
+
     def to_dict(self):
         """Return attributes as a dict.
 
@@ -95,19 +108,8 @@ class CohortInputVariable(db.Model):
             study_id = self.study_id,
             observation_ontology_id = self.observation_ontology_id,
             subject_ontology_id = self.subject_ontology_id,
-            # dimension_label = str(self.dimension_label)
+            dimension_label = self.get_dimension_value_str(),
             )
-
-        # Hack around ObservatonDimension not being JSON serializable.
-        # May want to clean this up.
-        if self.dimension_label is ObservationDimension.left_y_axis:
-            input_variable['dimension_label']  = "left_y_axis"
-        elif self.dimension_label is ObservationDimension.right_y_axis:
-            input_variable['dimension_label']  = "right_y_axis"
-        elif self.dimension_label is ObservationDimension.change:
-            input_variable['dimension_label']  = "change"
-        elif self.dimension_label is ObservationDimension.roc:
-            input_variable['dimension_label']  = "roc"
 
         if self.observation_ontology_id:
             input_variable['observation_ontology'] = self.observation_ontology.to_dict(include_parent=True)

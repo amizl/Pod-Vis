@@ -32,14 +32,19 @@ export default {
       const { data } = await axios.get(
         `/api/collections/${collectionId}?include=studies&include=variables`
       );
-      // massage collection data... here
 
+      // massage collection data... here
       const subjectVariables = makeHierarchy(data.collection.subject_variables);
 
       subjectVariables.forEach(subjectVariable => {
-        subjectVariable.children.forEach(child => {
-          child.type = 'subject';
-        });
+        if (subjectVariable.children) {
+          subjectVariable.children.forEach(child => {
+            child.type = 'subject';
+          });
+        }
+        if (subjectVariable.label === 'Dataset') {
+          subjectVariable.type = 'subject';
+        }
       });
 
       // determine whether this is longitudinal or cross-sectional data
@@ -51,12 +56,19 @@ export default {
       const observationVariables = makeHierarchy(
         data.collection.observation_variables
       );
-      // TODO:
-      // These fields are hard-coded and will inevitably need to be changed.
-      // For example, firstVisit and lastVisit are stored in the database as
-      //  left_y_axis and right_y_axis when queries are saved. This is because
-      //  eventually we want to allow the user to specify the visit number rather
-      //  than hard-coding first and last.
+      data.collection.observation_variables_list =
+        data.collection.observation_variables;
+
+      data.collection.has_visits_set = true;
+      data.collection.observation_variables_list.forEach(ov => {
+        if (
+          (ov.first_visit_event == null && ov.first_visit_num == null) ||
+          (ov.last_visit_event == null && ov.last_visit_num == null)
+        ) {
+          data.collection.has_visits_set = false;
+        }
+      });
+
       observationVariables.forEach(observationVariable => {
         observationVariable.children.forEach(child => {
           child.type = 'observation';
@@ -101,14 +113,18 @@ export default {
       data.collection.subject_variables = subjectVariables;
       data.collection.observation_variables = observationVariables;
       commit(mutations.SET_COLLECTION, data.collection);
-    } catch ({ response }) {
+    } catch (e) {
       // Something went wrong...
       // user didn't have access to collection? collection not found?
       // Display notification via notifcation snackbar? Reroute? Display msg in cohort manager?
       // TODO...
 
       // Currently displays error message.
-      const notification = new ErrorNotification(response.data.error);
+      let err = e;
+      if ('response' in e && 'data' in e.response) {
+        err = e.response.data.error;
+      }
+      const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     } finally {
       commit(mutations.SET_LOADING, false);
@@ -239,12 +255,38 @@ export default {
     } else {
       // Remove subjects within our filtered data sets from our unfiltered so
       // we can have separate samples
-      unfilteredData = unfilteredData.filter(
-        data =>
-          !filteredData
-            .map(({ subjectId }) => subjectId)
-            .includes(data.subject_id)
+      var filteredDataSubjIds = {};
+      filteredData.map(d => {
+        filteredDataSubjIds[d.subject_id] = 1;
+      });
+      var numFilteredSubjIds = Object.keys(filteredDataSubjIds).length;
+
+      var unfilteredDataSubjIds = {};
+      unfilteredData.map(d => {
+        unfilteredDataSubjIds[d.subject_id] = 1;
+      });
+      var numUnfilteredSubjIds = Object.keys(unfilteredDataSubjIds).length;
+
+      var remainderData = unfilteredData.filter(
+        data => !(data.subject_id in filteredDataSubjIds)
       );
+      var remainderDataSubjIds = {};
+      remainderData.map(d => {
+        remainderDataSubjIds[d.subject_id] = 1;
+      });
+      var numRemainderSubjIds = Object.keys(remainderDataSubjIds).length;
+
+      // sanity check - unfiltered subjects should be split into two distinct groups
+      if (numRemainderSubjIds + numFilteredSubjIds !== numUnfilteredSubjIds) {
+        console.log(
+          'ERROR - data filtering failed numFiltered=' +
+            numFilteredSubjIds +
+            ' numUnfiltered=' +
+            numUnfilteredSubjIds +
+            ' numRemainder=' +
+            numRemainderSubjIds
+        );
+      }
 
       // pass _all_ observation variables, not just the selected ones
       const outputVars = [];
@@ -259,9 +301,9 @@ export default {
       var cb = async function(reqnum) {
         try {
           const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
-            filteredData,
-            unfilteredData,
-            outputVariables,
+            filteredData: filteredData,
+            unfilteredData: remainderData,
+            outputVariables: outputVariables,
           });
 
           if (state[stateTypes.REQUEST_NUM] > reqnum) {
@@ -319,11 +361,11 @@ export default {
       });
       commit(mutations.ADD_COHORT, data.cohort);
 
-      // Clean up data... may want to put this is in its own dispatch action call.
-      dispatch(actions.SET_COHORT, { id: null });
-      commit(mutations.RESET_DIMENSIONS);
-      commit(mutations.RESET_QUERIES);
-      commit(mutations.RESET_PVALS);
+      // Uncomment to reset all variables/filters after saving cohort:
+      //      dispatch(actions.SET_COHORT, { id: null });
+      //      commit(mutations.RESET_DIMENSIONS);
+      //      commit(mutations.RESET_QUERIES);
+      //      commit(mutations.RESET_PVALS);
       const notification = new SuccessNotification(`Cohort saved`);
       dispatch(notification.dispatch, notification, { root: true });
     } catch ({ response }) {

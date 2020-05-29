@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-tooltip top color="primary">
-      <template v-slot:activator="{ on }">
+      <template v-slot:activator="{ on: tooltip }">
         <v-btn
-          flat
+          text
           color="primary"
           style="height:100%;"
           @click="dialog = !dialog"
-          v-on="on"
+          v-on="{ ...tooltip }"
         >
           <v-icon left dark>add_box</v-icon>
           Cohorts
@@ -27,7 +27,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="red lighten-2" @click="dialog = false">
+          <v-btn text color="red lighten-2" @click="dialog = false">
             <v-icon left>close</v-icon> No
           </v-btn>
           <v-btn

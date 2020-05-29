@@ -1,29 +1,51 @@
 <template>
-  <v-flex ref="container" fill-height style="display: inline-block">
-    <!-- First Visit histogram -->
-    <VerticalHistogram
-      :id="`firstVisit-${dimensionName}`"
-      left
-      :dimension-name="`${variable.label} - First Visit`"
-      :y-domain="maxValueBetweenDimensions"
-      :variable="variable"
-    />
-    <!-- Parallel Coordinates -->
-    <canvas
-      ref="canvas"
-      :width="computedWidth"
-      :height="computedHeight"
-      style="padding: 0px 5px 8px 5px; margin: 0px;"
-    >
-    </canvas>
-    <!-- Last visit histogram -->
-    <VerticalHistogram
-      :id="`lastVisit-${dimensionName}`"
-      :dimension-name="`${variable.label} - Last Visit`"
-      :y-domain="maxValueBetweenDimensions"
-      :variable="variable"
-    />
-  </v-flex>
+  <v-container fluid fill-height class="ma-0 pa-0">
+    <v-row class="ma-0 pa-0">
+      <v-col cols="4" class="ma-0 pa-0" align="center">
+        Visit: {{ firstVisitLabel }}
+      </v-col>
+      <v-col cols="4" class="ma-0 pa-0"> </v-col>
+      <v-col cols="4" class="ma-0 pa-0" align="center">
+        Visit: {{ lastVisitLabel }}
+      </v-col>
+    </v-row>
+
+    <v-row class="ma-0 pa-0">
+      <v-col cols="4" class="ma-0 pa-0">
+        <!-- First Visit histogram -->
+        <VerticalHistogram
+          :id="`firstVisit-${dimensionName}`"
+          left
+          :dimension-name="`${variable.label} - First Visit`"
+          :y-min="minValueBetweenDimensions"
+          :y-domain="maxValueBetweenDimensions"
+          :variable="variable"
+        />
+      </v-col>
+      <v-col cols="4" class="ma-0 pa-0">
+        <!-- Parallel Coordinates -->
+        <canvas
+          ref="canvas"
+          :width="computedWidth"
+          :height="computedHeight"
+          :style="
+            'padding: 0px; margin: 0px;' + ' margin-top: ' + margin.top + 'px;'
+          "
+        >
+        </canvas>
+      </v-col>
+      <v-col cols="4" class="ma-0 pa-0">
+        <!-- Last visit histogram -->
+        <VerticalHistogram
+          :id="`lastVisit-${dimensionName}`"
+          :dimension-name="`${variable.label} - Last Visit`"
+          :y-min="minValueBetweenDimensions"
+          :y-domain="maxValueBetweenDimensions"
+          :variable="variable"
+        />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -32,7 +54,7 @@ import { state, actions } from '@/store/modules/cohortManager/types';
 import { scalePoint, scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
-import { max } from 'd3-array';
+import { min, max } from 'd3-array';
 // import { line, curveMonotoneX } from 'd3-shape';
 import { colors } from '@/utils/colors';
 import VerticalHistogram from '@/components/CohortManager/VerticalHistogram/VerticalHistogram.vue';
@@ -57,6 +79,16 @@ export default {
     variable: {
       type: Object,
       required: true,
+    },
+    firstVisitLabel: {
+      type: String,
+      required: false,
+      default: 'First Visit',
+    },
+    lastVisitLabel: {
+      type: String,
+      required: false,
+      default: 'Last Visit',
     },
   },
   data() {
@@ -140,7 +172,11 @@ export default {
         };
       });
     },
-
+    minValueBetweenDimensions() {
+      const firstMin = min(this.populationData, d => d.firstVisit);
+      const lastMin = min(this.populationData, d => d.lastVisit);
+      return Math.min(firstMin, lastMin);
+    },
     maxValueBetweenDimensions() {
       const firstMax = max(this.populationData, d => d.firstVisit);
       const lastMax = max(this.populationData, d => d.lastVisit);
@@ -154,7 +190,7 @@ export default {
     computedHeight() {
       const { top, bottom } = this.margin;
       const { height } = this;
-      return height - top - bottom - 4;
+      return height - top - bottom;
     },
     xDimensionScale() {
       return scalePoint()
@@ -163,7 +199,10 @@ export default {
     },
     dimensionScale() {
       const scale = scaleLinear()
-        .domain([0, this.maxValueBetweenDimensions])
+        .domain([
+          this.minValueBetweenDimensions,
+          this.maxValueBetweenDimensions,
+        ])
         .range([this.computedHeight, 0]);
       return scale;
     },

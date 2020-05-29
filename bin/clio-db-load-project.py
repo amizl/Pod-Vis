@@ -1059,8 +1059,11 @@ def create_subject_observation(cursor, subject_visit_id, obs_ont_id, value, valu
         query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, int_value) VALUES (%s, %s, %s, %s, %s)"
         query_args = (subject_visit_id, obs_ont_id, value, value_type, int_value)
     elif value_type == 'Date':
-        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, date_value) VALUES (%s, %s, %s, %s, %s)"
-        query_args = (subject_visit_id, obs_ont_id, value, value_type, value)
+# requires date_value column
+#        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type, date_value) VALUES (%s, %s, %s, %s, %s)"
+#        query_args = (subject_visit_id, obs_ont_id, value, value_type, value)
+        query = "INSERT INTO observation (subject_visit_id, observation_ontology_id, value, value_type) VALUES (%s, %s, %s, %s)"
+        query_args = (subject_visit_id, obs_ont_id, value, value_type)
     else:
         print("Unknown value type {} skipping this entry".format(value_type))
         return
@@ -1093,8 +1096,11 @@ def update_subject_observation(cursor, subject_visit_id, obs_ont_id, value, valu
         query = "update observation set value = %s, value_type = %s, int_value = %s where subject_visit_id = %s and observation_ontology_id = %s"
         query_args = (value, value_type, subject_visit_id, obs_ont_id, int_value)
     elif value_type == 'Date':
-        query = "update observation set value = %s, value_type = %s, date_value = %s where subject_visit_id = %s and observation_ontology_id = %s"
-        query_args = (subject_visit_id, obs_ont_id, value, value_type, value)
+# requires date_value column
+#        query = "update observation set value = %s, value_type = %s, date_value = %s where subject_visit_id = %s and observation_ontology_id = %s"
+#        query_args = (value, value_type, value, subject_visit_id, obs_ont_id)
+        query = "update observation set value = %s, value_type = %s where subject_visit_id = %s and observation_ontology_id = %s"
+        query_args = (value, value_type, subject_visit_id, obs_ont_id)
     else:
         print("Unknown value type {} skipping this entry".format(value_type))
         return
@@ -1125,8 +1131,11 @@ def create_subject_obs_summary(cursor, subject_id, obs_ont_id, value, value_type
         query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, int_value) VALUES (%s, %s, %s, %s, %s)"
         query_args = (subject_id, obs_ont_id, value, value_type, int_value)
     elif value_type == 'Date':
-        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, date_value) VALUES (%s, %s, %s, %s, %s)"
-        query_args = (subject_id, obs_ont_id, value, value_type, value)
+# requires date_value column
+#        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type, date_value) VALUES (%s, %s, %s, %s, %s)"
+#        query_args = (subject_id, obs_ont_id, value, value_type, value)
+        query = "INSERT INTO observation_summary (subject_id, observation_ontology_id, value, value_type) VALUES (%s, %s, %s, %s)"
+        query_args = (subject_id, obs_ont_id, value, value_type)
     else:
         print("Unknown value type {} skipping this entry".format(value_type))
         return
@@ -1159,8 +1168,11 @@ def update_subject_obs_summary(cursor, subject_id, obs_ont_id, value, value_type
         query = "update observation_summary set value = %s, value_type = %s, int_value = %s where subject_id = %s and observation_ontology_id = %s"
         query_args = (value, value_type, subject_id, obs_ont_id, int_value)
     elif value_type == 'Date':
-        query = "update observation_summary set value = %s, value_type = %s, date_value = %s where subject_id = %s and observation_ontology_id = %s"
-        query_args = (subject_id, obs_ont_id, value, value_type, value)
+# requires date_value column
+#        query = "update observation_summary set value = %s, value_type = %s, date_value = %s where subject_id = %s and observation_ontology_id = %s"
+#        query_args = (value, value_type, value, subject_id, obs_ont_id)
+        query = "update observation_summary set value = %s, value_type = %s where subject_id = %s and observation_ontology_id = %s"
+        query_args = (value, value_type, subject_id, obs_ont_id)
     else:
         print("Unknown value type {} skipping this entry".format(value_type))
         return

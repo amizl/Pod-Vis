@@ -1,57 +1,80 @@
 <template>
-  <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-1">
-    <loading-spinner />
+  <v-container v-if="isLoading" fluid fill-width class="ma-0 pa-2">
+    <v-row class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0"> <loading-spinner /> </v-col>
+    </v-row>
   </v-container>
-  <v-container v-else fluid fill-width class="ma-0 pa-1">
-    <v-toolbar app class="primary">
-      <v-toolbar-title class="white--text"
-        >Data Explorer
-        <div class="subheading">Dataset: {{ collection.label }}</div>
-      </v-toolbar-title>
-    </v-toolbar>
 
-    <v-layout row class="ma-0 pa-0">
-      <v-flex xs12>
-        <analysis-tracker
-          step="5"
-          :substep="substep"
-          :collection-id="collectionId"
-        ></analysis-tracker>
-      </v-flex>
-    </v-layout>
+  <v-container
+    v-else
+    fluid
+    fill-width
+    class="ma-0 pa-0"
+    center="start"
+    justify="start"
+  >
+    <v-row class="pa-0 ma-0">
+      <v-col cols="12" class="pa-0 ma-0">
+        <v-container
+          fluid
+          fill-width
+          class="ma-0 pa-2"
+          center="start"
+          justify="start"
+        >
+          <v-app-bar app class="primary">
+            <v-icon color="white" large>explore</v-icon>
+            <v-toolbar-title class="white--text pl-3"
+              >Data Explorer
+              <div class="subtitle-1">Dataset: {{ collection.label }}</div>
+            </v-toolbar-title>
+          </v-app-bar>
 
-    <v-layout row fill-height class="ma-0 pa-0">
-      <v-flex xs12> <summary-view /> </v-flex>
-    </v-layout>
+          <analysis-tracker
+            step="5"
+            :substep="substep"
+            :collection-id="collectionId"
+          ></analysis-tracker>
 
-    <v-layout row fill-height class="ma-0 pa-0">
-      <v-flex fill-height xs12>
-        <v-layout col fill-height class="ma-0 pa-0">
-          <v-flex xs3 fill-height class="ma-0 pa-1"> <cohorts /> </v-flex>
-          <v-flex xs6 fill-height class="ma-0 pa-1"> <detailed-view /> </v-flex>
-          <v-flex xs3 fill-height class="ma-0 pa-1"> <analytics /> </v-flex>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-    <!--
-    <v-layout column fill-height>
-      <v-flex xs7 class="ma-0 pa-1">
-        <v-layout fill-height>
-          <v-flex xs3 fill-height>
-            <v-layout column fill-height>
+          <v-container fluid fill-width class="ma-0 pa-0 pt-1">
+            <v-row class="ma-0 pa-0">
+              <v-col cols="12" class="ma-0 pa-0">
+                <v-sheet color="white" height="100%" class="rounded-lg shadow">
+                  <summary-view />
+                </v-sheet>
+              </v-col>
+            </v-row>
 
-            </v-layout>
-          </v-flex>
+            <v-row class="ma-0 pa-0 pt-2">
+              <v-col cols="12" class="ma-0 pa-0">
+                <v-sheet color="white" height="100%" class="rounded-lg shadow">
+                  <cohorts />
+                </v-sheet>
+              </v-col>
+            </v-row>
 
-          <v-flex xs3 class="ma-0 pa-1">
-            <v-layout column fill-height>
+            <v-row class="ma-0 pa-0 pt-2" min-height="400px">
+              <v-col cols="7" class="ma-0 pa-0">
+                <v-sheet
+                  color="white"
+                  height="100%"
+                  min-height="400px"
+                  class="rounded-lg shadow"
+                >
+                  <detailed-view min-height="400px" />
+                </v-sheet>
+              </v-col>
 
-            </v-layout>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-    </v-layout>
--->
+              <v-col cols="5" class="ma-0 pa-0 pl-2">
+                <v-sheet color="white" height="100%" class="rounded-lg shadow">
+                  <analytics />
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-container>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -102,7 +125,6 @@ export default {
     }),
   },
   async created() {
-    // this.resetAllStoreData();
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
     await this.fetchData();

@@ -1,68 +1,52 @@
 <template>
-  <section>
-    <v-toolbar card dense flat :class="getToolbarClass()" class="rounded-lg">
-      <v-toolbar-items>
-        <input-variables-dialog @dialogOpened="opened" />
-      </v-toolbar-items>
-      <v-divider vertical class="ml-4"></v-divider>
-      <v-chip
-        v-if="inputVariables.length == 0"
-        disabled
-        color="primary"
-        class="white--text title"
-        >No variables selected</v-chip
-      >
-      <v-chip v-else disabled color="primary" class="white--text title"
-        >{{ inputVariables.length }} variable<span
-          v-if="inputVariables.length != 1"
-          >s</span
-        >&nbsp;selected</v-chip
-      >
-      <v-spacer />
-      <v-toolbar-items>
-        <v-chip
-          disabled
-          class="white--text title"
-          :style="'background: ' + colors['cohort']"
-          >Selected Cohort - {{ animatedNumber }}</v-chip
-        >
-        <v-chip
-          disabled
-          class="primary--text title"
-          :style="'background: ' + colors['population']"
-          >Study Population - {{ unfilteredData.length }}</v-chip
-        >
-      </v-toolbar-items>
-      <v-toolbar-items>
-        <v-icon v-if="expanded" @click="expandClicked">expand_less</v-icon>
-        <v-icon v-else @click="expandClicked">expand_more</v-icon>
-      </v-toolbar-items>
-      <!-- <v-spacer></v-spacer>
-      <v-select
-        :items="['Cohort']"
-        menu-props="auto"
-        label="Select"
-        hide-details
-        append-icon="format_color_fill"
-        color="primary"
-      ></v-select> -->
-      <!-- <v-spacer></v-spacer> -->
-      <!--
-      <v-divider vertical class="mr-4"></v-divider>
-      <v-toolbar-items class="scrollable">
-        <v-tooltip color="primary" top>
-          <template v-slot:activator="{ on }">
-            <span class="primary--text title mt-3" v-on="on"
-              >{{ animatedNumber }}/{{ unfilteredData.length }}</span
+  <v-container fluid fill-width class="ma-0 pa-0">
+    <v-row class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0">
+        <v-card color="#eeeeee">
+          <v-card-title class="primary--text pl-3 py-2">
+            <input-variables-dialog @dialogOpened="opened" />
+
+            <v-divider vertical class="ml-4 mr-4"> </v-divider>
+
+            <v-chip
+              v-if="inputVariables.length == 0"
+              color="primary"
+              class="white--text title"
+              >No variables selected</v-chip
             >
-          </template>
-          <span>Number of subjects in cohort.</span>
-        </v-tooltip>
-      </v-toolbar-items>
--->
-    </v-toolbar>
-    <v-divider></v-divider>
-  </section>
+            <v-chip v-else color="primary" class="white--text title"
+              >{{ inputVariables.length }} variable<span
+                v-if="inputVariables.length != 1"
+                >s</span
+              >&nbsp;selected</v-chip
+            >
+
+            <v-spacer />
+
+            <v-chip
+              class="white--text title"
+              :style="'background: ' + colors['cohort']"
+              >Selected Cohort - {{ animatedNumber }}</v-chip
+            >
+            <v-chip
+              class="primary--text title"
+              :style="'background: ' + colors['population']"
+              >Study Population - {{ unfilteredData.length }}</v-chip
+            >
+
+            <v-toolbar-items>
+              <v-icon v-if="expanded" @click="expandClicked"
+                >expand_less</v-icon
+              >
+              <v-icon v-else @click="expandClicked">expand_more</v-icon>
+            </v-toolbar-items>
+          </v-card-title>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+
+  <!--    <v-app-bar dense flat :class="getToolbarClass()" class="rounded-lg"> -->
 </template>
 
 <script>

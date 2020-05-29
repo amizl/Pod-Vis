@@ -1,17 +1,15 @@
-<template>
-  <v-layout :key="chartsKey" :class="classes">
-    <v-flex v-for="outputVariable in outputVariables" :key="outputVariable.id">
-      <v-layout fill-height>
-        <v-flex fill-height>
-          <output-variable-chart :variable="outputVariable" />
-        </v-flex>
-        <!-- <v-flex v-if="index < outputVariables.length - 1" shrink>
-          <v-divider vertical></v-divider>
-        </v-flex> -->
-      </v-layout>
-    </v-flex>
-    <v-flex fill-width></v-flex>
-  </v-layout>
+><template>
+  <div :key="chartsKey" class="xscrollable px-2">
+    <v-card class="d-flex flex-row pb-1">
+      <v-card
+        v-for="(outputVariable, index) in outputVariables"
+        :key="outputVariable.id"
+        :class="index > 0 ? 'ml-2 pb-1' : 'pb-1'"
+      >
+        <output-variable-chart :variable="outputVariable" />
+      </v-card>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -36,13 +34,6 @@ export default {
     ...mapState('cohortManager', {
       outputVariables: state.OUTPUT_VARIABLES,
     }),
-    classes() {
-      return {
-        // When the user has specified more variables
-        // then what the container can fit, make
-        scrollable: true, // this.outputVariables > 5,
-      };
-    },
   },
   watch: {
     /**
@@ -69,10 +60,8 @@ export default {
   display: flex;
 }
 
-.scrollable {
+.xscrollable {
   overflow-x: auto;
-}
-.scrollable::-webkit-scrollbar {
-  display: none;
+  overflow-y: hidden;
 }
 </style>

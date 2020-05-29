@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-tooltip bottom color="primary">
-      <template v-slot:activator="{ on }">
+      <template v-slot:activator="{ on: tooltip }">
         <v-btn
           color="primary--text"
           :disabled="collection_cohorts.length == 0"
           @click="dialog = !dialog"
-          v-on="on"
+          v-on="{ ...tooltip }"
         >
           <v-icon left>explore</v-icon>
           Explore

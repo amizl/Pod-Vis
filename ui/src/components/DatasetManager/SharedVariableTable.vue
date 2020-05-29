@@ -4,24 +4,39 @@
     <v-data-table
       v-else
       v-model="selected"
-      :headers="headers"
-      :items="variables"
-      :select-all="selectable"
-      item-key="scale"
-      :pagination.sync="pagination"
       class="ml-1 mr-1"
-      hide-actions
+      :items="variables"
+      item-key="scale"
+      :headers="headers"
+      disable-pagination
+      hide-default-footer
+      show-select
     >
-      <!-- TODO - use v-slot:body.prepend in Vuetify 2.x -->
-      <template v-slot:headers="props">
+      <template
+        v-for="ds in datasets"
+        v-slot:[`header.${ds.study_name}`]="{ header }"
+      >
+        {{ header.dataset.study_name }} <br />
+        <v-chip
+          :color="getNumSubjectsColor(getStudyCount(header.dataset.id))"
+          :text-color="
+            getNumSubjectsTextColor(getStudyCount(header.dataset.id))
+          "
+          class="title ma-2"
+          >{{ getStudyCount(header.dataset.id) + ' selected' }}</v-chip
+        >
+      </template>
+
+      <!--
+      <template v-slot:header.="{ header }">
         <tr>
-          <th></th>
-          <th class="text-xs-left">Domain<br /></th>
-          <th class="text-xs-left">Variable<br /></th>
+	  <th></th>
+          <th class="text-subtitle-1 text-xs-left">Domain<br /></th>
+          <th class="text-subtitle-1 text-xs-left">Variable<br /></th>
           <th
             v-for="dataset in datasets"
             :key="dataset.id"
-            class="text-xs-center"
+            class="text-subtitle-1 text-xs-center"
           >
             {{ dataset.study_name }}<br />
             <v-chip
@@ -34,47 +49,57 @@
           </th>
         </tr>
       </template>
+      -->
 
-      <template v-slot:items="props">
+      <template v-slot:item="props">
         <tr>
-          <td v-if="selectable">
-            <v-checkbox v-model="props.selected" color="primary" hide-details />
-          </td>
           <td>
-            <v-layout align-center
-              ><span style="padding:0.5em 0.5em 0.25em 0em"
+            <v-checkbox
+              :input-value="props.isSelected"
+              @change="props.select($event)"
+            ></v-checkbox>
+          </td>
+          <td class="subtitle-1 text-xs-left">
+            <v-row align="center" class="pa-0 ma-0">
+              <span style="padding:0.5em 0.5em 0em 0em"
                 ><img
                   :src="'/images/' + props.item.category + '-icon-128.png'"
                   :title="props.item.category"
                   style="height:2.5em"
               /></span>
-              {{ props.item.category }}</v-layout
-            >
+              {{ props.item.category }}
+            </v-row>
           </td>
-          <td>
+          <td class="subtitle-1 text-xs-left">
             <span>{{ props.item.scale }}</span>
           </td>
-          <!-- Study columns with distribution visualizations -->
+
           <td
             v-for="dataset in datasets"
             :key="dataset.id"
-            class="text-xs-center"
+            class="subtitle-1 text-xs-center"
           >
-            <histogram-sparkline
-              :dataset-id="dataset.id"
-              :type="props.item.type"
-              :scale-id="props.item.id"
-              :data-category="props.item.data_category"
-            />
-            <span
-              :style="
-                'color: ' +
-                  getStudyVariableColor(
-                    getStudyVariableCount(dataset.id, props.item.id)
-                  )
-              "
-            >
-              {{ getStudyVariableCount(dataset.id, props.item.id) }}</span
+            <v-container class="pa-0 ma-0">
+              <v-row justify="center" class="pa-0 ma-0">
+                <histogram-sparkline
+                  :dataset-id="dataset.id"
+                  :type="props.item.type"
+                  :scale-id="props.item.id"
+                  :data-category="props.item.data_category"
+                />
+              </v-row>
+              <v-row justify="center" class="pa-0 ma-0">
+                <span
+                  :style="
+                    'color: ' +
+                      getStudyVariableColor(
+                        getStudyVariableCount(dataset.id, props.item.id)
+                      )
+                  "
+                >
+                  {{ getStudyVariableCount(dataset.id, props.item.id) }}</span
+                >
+              </v-row></v-container
             >
           </td>
         </tr>
@@ -118,17 +143,18 @@ export default {
       subject_variables: {},
       study_variable_counts: {},
       subject_counts: { all: 0 },
-      pagination: { sortBy: 'full_path', rowsPerPage: -1 },
       headers: [
         {
           text: 'Category',
           value: 'category',
           sortable: true,
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Scale',
           value: 'scale',
           sortable: true,
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ],
       colors: colors,
@@ -170,9 +196,12 @@ export default {
       // we can see study variable distributions as
       // columns
       ...this.datasets.map(dataset => ({
+        dataset: dataset,
         text: dataset.study_name,
         value: dataset.study_name,
         sortable: false,
+        class: 'text-subtitle-1 font-weight-bold',
+        align: 'center',
       })),
     ];
 

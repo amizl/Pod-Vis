@@ -79,10 +79,19 @@ export default {
 
     try {
       const { data } = await axios.get(
-        '/api/collections?include=cohort_counts'
+        '/api/collections?include=cohort_counts&include=variables'
       );
       data.collections.forEach(c => {
         c.date_generated_epoch = new Date(c.date_generated).getTime();
+        c.has_visits_set = true;
+        c.observation_variables.forEach(v => {
+          if (
+            (v.first_visit_event == null && v.first_visit_num == null) ||
+            (v.last_visit_event == null && v.last_visit_num == null)
+          ) {
+            c.has_visits_set = false;
+          }
+        });
       });
       data.collections.sort((a, b) => {
         return b.date_generated_epoch - a.date_generated_epoch;

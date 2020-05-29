@@ -1,64 +1,90 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
-      <v-card-title class="title primary--text"
-        >Tukey Range/HSD Test
-        <span v-if="selectedOutcomeVariable"
-          >&nbsp; - {{ selectedOutcomeVariable.label }}</span
-        >
-        <v-spacer />
-        <v-chip color="#FEEDDE">p &lt; 1</v-chip>
-        <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
-        <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
-        <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
-        <v-chip color="#F16913">p &lt; 0.0001</v-chip>
-      </v-card-title>
-      <v-divider></v-divider>
+  <v-sheet
+    :color="this.selectedOutcomeVariable != null ? 'rgb(236,177,212)' : 'white'"
+    class="rounded-lg shadow"
+  >
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-container fluid fill-width class="ma-0 pa-0">
+            <v-row class="ma-0 pa-0">
+              <v-col cols="12" class="ma-0 pa-0">
+                <v-card color="#eeeeee" class="pt-1">
+                  <v-card-title class="primary--text pl-3 py-2"
+                    >Tukey Range/HSD Test
+                    <v-spacer />
+                    <v-chip color="#FEEDDE">p &lt; 1</v-chip>
+                    <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
+                    <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
+                    <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
+                    <v-chip color="#F16913">p &lt; 0.0001</v-chip>
+                  </v-card-title>
+                  <v-card-title class="primary--text pa-0 pl-3">
+                    {{
+                      this.selectedOutcomeVariable
+                        ? this.selectedOutcomeVariable.label
+                        : '-'
+                    }}
+                  </v-card-title>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-col>
+      </v-row>
 
-      <v-flex xs12 style="overflow:auto">
-        <v-data-table
-          v-if="selectedOutcomeVariable && collection_cohorts.length > 2"
-          :headers="headers"
-          :items="items"
-          class="elevation-1"
-          :rows-per-page-items="[100]"
-          :hide-default-footer="true"
-          dense
-        >
-          <template v-slot:items="props">
-            <tr>
-              <td class="text-xs-left">{{ props.item.label }}</td>
-              <td v-for="c in collection_cohorts" :key="c.id">
-                <v-layout justify-center>
+      <v-row>
+        <v-col cols="12">
+          <v-data-table
+            v-if="selectedOutcomeVariable && collection_cohorts.length > 2"
+            :headers="headers"
+            :items="items"
+            class="elevation-1"
+            hide-default-footer
+            disable-pagination
+            dense
+          >
+            <template v-slot:item="props">
+              <tr>
+                <td class="text-subtitle-1 text-xs-left">
+                  {{ props.item.label }}
+                </td>
+                <td
+                  v-for="c in collection_cohorts"
+                  :key="c.id"
+                  class="text-subtitle-1"
+                  align="center"
+                >
                   <v-chip
                     v-if="c.index < props.item.index"
                     :color="table_cell_color(c, props.item)"
                     @click="table_cell_click(c, props.item)"
                     >{{ table_cell(c, props.item) }}</v-chip
                   >
-                </v-layout>
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-        <v-layout
-          v-else-if="collection_cohorts.length < 3"
-          column
-          align-center
-          justify-center
-          fill-height
-        >
-          <v-subheader class="display-1 primary--text text--lighten-5">
-            Tukey HSD test requires at least 3 Cohorts.
-          </v-subheader>
-        </v-layout>
-        <v-layout v-else column align-center justify-center fill-height>
-          <v-subheader class="display-1 primary--text text--lighten-5">
-            Select Outcome Variable from 1-Way ANOVA table above.
-          </v-subheader>
-        </v-layout>
-      </v-flex>
-    </v-layout>
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
+
+          <div
+            v-else-if="collection_cohorts.length < 3"
+            column
+            align-center
+            justify-center
+            fill-height
+          >
+            <v-subheader class="title primary--text text--lighten-5">
+              Tukey HSD test requires at least 3 Cohorts.
+            </v-subheader>
+          </div>
+          <div v-else column align-center justify-center fill-width>
+            <v-subheader class="title primary--text text--lighten-5">
+              Select Variable from One-Way ANOVA table.
+            </v-subheader>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-sheet>
 </template>
 
@@ -78,11 +104,11 @@ export default {
   },
   computed: {
     ...mapState('analysisSummary', {
+      selectedCohorts: state.SELECTED_COHORTS,
       selectedOutcomeVariable: state.SELECTED_OUTCOME_VARIABLE,
       pairwiseTukeyHsdPvals: state.PAIRWISE_TUKEY_HSD_PVALS,
     }),
     ...mapState('dataExplorer', {
-      cohorts: deState.COHORTS,
       collection: deState.COLLECTION,
       outcomeVariables: deState.OUTCOME_VARIABLES,
       anova_pvals: deState.ANOVA_PVALS,
@@ -93,7 +119,7 @@ export default {
       const cid = this.collection.id;
       let ccnum = 0;
 
-      this.cohorts.forEach(e => {
+      this.selectedCohorts.forEach(e => {
         if (e.collection_id === cid) {
           e.color = { value: '#d0d0d0', text: 'Grey' };
           e.index = ccnum;
@@ -112,6 +138,7 @@ export default {
           sortable: false,
           divider: true,
           value: 'cohort',
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ];
       const cc = this.collection_cohorts;
@@ -122,6 +149,7 @@ export default {
           sortable: false,
           divider: true,
           value: c.label,
+          class: 'text-subtitle-1 font-weight-bold',
         });
       });
       // remove last column
@@ -136,7 +164,7 @@ export default {
     },
   },
   watch: {
-    selectedOutcomeVariable() {
+    selectedOutcomeVariable(nv) {
       this.update_pval_dict();
     },
   },
@@ -145,6 +173,13 @@ export default {
       const pd = {};
       if (typeof this.selectedOutcomeVariable === 'undefined') return;
       if (this.collection_cohorts.length < 3) return;
+      if (!(this.selectedOutcomeVariable.label in this.pairwiseTukeyHsdPvals)) {
+        console.log(
+          'No results found for ' + this.selectedOutcomeVariable.label
+        );
+        this.pval_dict = {};
+        return;
+      }
       const pvals = this.pairwiseTukeyHsdPvals[
         this.selectedOutcomeVariable.label
       ];
@@ -154,7 +189,7 @@ export default {
       for (let i = 0; i < ng; i += 1) {
         pd[groups[i]] = {};
         for (let j = i + 1; j < ng; j += 1) {
-          pd[groups[i]][groups[j]] = pvals.pvals[ind];
+          pd[groups[i]][groups[j]] = pvals == null ? 'x' : pvals.pvals[ind];
           ind += 1;
         }
       }
@@ -163,6 +198,7 @@ export default {
     table_cell(cohort1, cohort2) {
       if (cohort1.index < cohort2.index) {
         const pd = this.pval_dict;
+        if (!(cohort1.id in pd) || !(cohort2.id in pd[cohort1.id])) return null;
         const pval = pd[cohort1.id][cohort2.id];
         if (pval < 0.0001) {
           return 'p<0.0001';
@@ -173,6 +209,8 @@ export default {
     },
     table_cell_color(cohort1, cohort2) {
       const pd = this.pval_dict;
+      if (!(cohort1.id in pd) || !(cohort2.id in pd[cohort1.id]))
+        return '#FFFFFF';
       const pval = pd[cohort1.id][cohort2.id];
       let ccl = '#FEEDDE';
       if (pval < 0.0001) {

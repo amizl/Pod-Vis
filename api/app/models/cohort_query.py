@@ -8,8 +8,8 @@ class CohortQuery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     cohort_id = db.Column(db.Integer, db.ForeignKey("cohort.id"))
     input_variable_id = db.Column(db.Integer, db.ForeignKey("cohort_input_variable.id"))
-    min_value = db.Column(db.Integer, nullable=True)
-    max_value = db.Column(db.Integer, nullable=True)
+    min_value = db.Column(db.Float, nullable=True)
+    max_value = db.Column(db.Float, nullable=True)
     value = db.Column(db.VARCHAR, nullable=True)
 
     input_variable = db.relationship(

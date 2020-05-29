@@ -18,6 +18,15 @@ export default new Router({
       beforeEnter: requireAuth,
     },
     {
+      path: '/data_summary',
+      name: 'dataSummary',
+      component: () => import('@/views/DataSummary.vue'),
+      beforeEnter: requireAuth,
+      props: route => ({
+        collectionId: +route.query.collection,
+      }),
+    },
+    {
       path: '/study_datasets',
       name: 'studyDataset',
       component: () => import('@/views/StudyDataset.vue'),
@@ -51,6 +60,7 @@ export default new Router({
       props: route => ({
         user: route.params.user,
         collectionId: +route.query.collection,
+        cohortIds: route.query.cohorts,
       }),
     },
     {

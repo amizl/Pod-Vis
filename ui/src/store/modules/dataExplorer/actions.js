@@ -126,13 +126,12 @@ export default {
       commit(mutations.SET_LOADING, false);
     }
     dispatch(actions.SET_COHORT_SUBJECTS);
-    dispatch(actions.ANALYZE_COHORTS);
   },
   [actions.SET_VISIBLE_COHORTS]({ commit }, cohorts) {
     commit(mutations.SET_VISIBLE_COHORTS, cohorts);
   },
-  async [actions.ANALYZE_COHORTS]({ commit, dispatch, state }) {
-    const { cohorts, data } = state;
+  async [actions.ANALYZE_COHORTS]({ commit, dispatch, state }, cohorts) {
+    const { data } = state;
     let { outputVariables } = state;
     const collection = state[stateTypes.COLLECTION];
 

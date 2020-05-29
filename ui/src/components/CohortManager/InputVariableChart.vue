@@ -1,61 +1,72 @@
 <template>
-  <v-sheet color="white" height="100%" min-width="300px">
-    <v-layout column fill-height>
-      <v-card-title class="subheading primary--text text--darken-4">
-        <span style="margin: 0em;">
-          <v-layout
-            align-center
-            style="background-color: white; padding: 0.4em 1.5em 0em 0.4em; border-radius: 0.5rem;"
-          >
-            <span style="padding:0em 0.5em 0em 0em">
-              <img
-                v-if="variable.label !== 'Dataset'"
-                :src="'/images/' + variable.category + '-icon-128.png'"
-                :title="variable.category"
-                style="height:3em"
-            /></span>
-            <span class="subtitle-1">
-              {{
-                variable.type == 'observation' && variable.is_longitudinal
-                  ? `${variable.parentLabel} - ${variable.label}`
-                  : variable.label
-              }}
-            </span>
-          </v-layout>
-        </span>
+  <v-sheet color="white" height="100%" min-width="380px" max-width="500px">
+    <v-container fluid fill-width class="pa-0 ma-0">
+      <!-- Variable icon/title/reset button -->
+      <v-row class="pa-0 ma-0">
+        <v-col cols="12" class="pa-0 ma-0">
+          <v-container class="pa-0 ma-0">
+            <v-row class="pa-0 ma-0">
+              <v-col cols="2" class="pa-0 ma-0 pl-2 pt-1">
+                <span>
+                  <img
+                    v-if="variable.label !== 'Dataset'"
+                    :src="'/images/' + variable.category + '-icon-128.png'"
+                    :title="variable.category"
+                    style="height: 3em;"
+                  />
+                </span>
+              </v-col>
 
-        <v-spacer />
-        <v-btn
-          flat
-          class="subheading primary--text text--lighten-4"
-          @click="clearFilter({ dimension })"
-        >
-          Reset
-        </v-btn>
-      </v-card-title>
-      <v-layout fill-height>
-        <div v-if="variable.value_type === 'date'" class="pl-3">
-          Date types not supported.
-        </div>
-        <ColumnChart
-          v-else-if="
-            (!variable.is_longitudinal &&
-              variable.data_category === 'Categorical') ||
-              variable.type === 'study'
-          "
-          :id="variable.id"
-          :dimension-name="dimension"
-          bar-tooltip="Click to add or remove this value from the cohort filter"
-        />
-        <HistogramChart
-          v-else
-          :id="variable.id"
-          :dimension-name="dimension"
-          :variable="variable"
-          input-variable
-        />
-      </v-layout>
-    </v-layout>
+              <v-col cols="7" class="pa-0 ma-0 pt-0">
+                <div class="text-h6 ml-2 text-wrap">{{ getChartTitle() }}</div>
+              </v-col>
+
+              <v-col cols="3" class="pa-0 ma-0 pt-2 pr-2" align="right">
+                <span>
+                  <v-btn
+                    outlined
+                    medium
+                    class="together primary--text text--lighten-3 ma-0 pa-0 ml-2"
+                    @click="clearFilter({ dimension })"
+                  >
+                    Reset
+                  </v-btn>
+                </span>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-col>
+      </v-row>
+      <!-- End of Variable icon/title/reset button -->
+    </v-container>
+
+    <v-container fluid fill-width class="pa-0 ma-0">
+      <v-row class="pa-0 ma-0">
+        <v-col cols="12" class="pa-0 ma-0">
+          <div v-if="variable.value_type === 'date'" class="pl-3">
+            Date types not supported.
+          </div>
+
+          <ColumnChart
+            v-else-if="
+              (!variable.is_longitudinal &&
+                variable.data_category === 'Categorical') ||
+                variable.type === 'study'
+            "
+            :id="variable.id"
+            :dimension-name="dimension"
+            bar-tooltip="Click to add or remove this value from the cohort filter"
+          />
+          <HistogramChart
+            v-else
+            :id="variable.id"
+            :dimension-name="dimension"
+            :variable="variable"
+            input-variable
+          />
+        </v-col>
+      </v-row>
+    </v-container>
   </v-sheet>
 </template>
 
@@ -93,6 +104,45 @@ export default {
       addDimension: actions.ADD_DIMENSION,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    getChartTitle() {
+      var title = this.variable.label;
+      if (
+        this.variable.type == 'observation' &&
+        this.variable.is_longitudinal
+      ) {
+        var visit = this.variable.label;
+        //     var which = this.variable.label == 'First Visit' ? 'first' : 'last';
+        var fv = null;
+        var lv = null;
+
+        this.collection.observation_variables_list.forEach(ov => {
+          if (ov.ontology.id == this.variable.parentID) {
+            if (ov['first_visit_event']) {
+              fv = ov['first_visit_event'];
+              lv = ov['last_visit_event'];
+            } else {
+              fv = ov['first_visit_num'];
+              lv = ov['last_visit_num'];
+            }
+          }
+        });
+        if (this.variable.label == 'First Visit') {
+          title = this.variable.parentLabel + ' - ' + fv;
+        } else if (this.variable.label == 'Last Visit') {
+          title = this.variable.parentLabel + ' - ' + lv;
+        } else {
+          title =
+            this.variable.parentLabel +
+            ' - ' +
+            this.variable.label +
+            ': ' +
+            fv +
+            '-' +
+            lv;
+        }
+      }
+      return title;
+    },
     addDimensionHelper(variable) {
       var dimensionName = null;
       var payload = null;

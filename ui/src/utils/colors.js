@@ -67,6 +67,9 @@ export let colors = {
 
   'warn-background': '#F83008',
   'warn-text': '#F8D5F0',
+
+  firstVisit: '#8bdb35',
+  lastVisit: '#db5454',
 };
 
 export function getNumSubjectsColor(nSubjects) {

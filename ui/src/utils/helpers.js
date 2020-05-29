@@ -3,16 +3,23 @@ import crossfilter from 'crossfilter2';
 
 export function makeHierarchy(data) {
   const ontologies = data.map(obs => obs.ontology);
+  ontologies.forEach(o => {
+    if (!o.parent) {
+      o.parent = null;
+    }
+  });
+
   const parents = uniqBy(
-    ontologies.map(ontology => ontology.parent),
+    ontologies.map(ontology => (ontology.parent ? ontology.parent : ontology)),
     'label'
-  ).map(parent => ({
+  );
+
+  return parents.map(parent => ({
     ...parent,
     children: ontologies.filter(
-      ontology => ontology.parent.label === parent.label
+      ontology => ontology.parent && ontology.parent.label === parent.label
     ),
   }));
-  return parents;
 }
 
 export function getInputVariablesFromQueries(queries, inputVariables) {
@@ -100,4 +107,40 @@ export function getCohortSubjectIds(data, c) {
 
   const cohortSubjectIds = Object.keys(sids);
   return cohortSubjectIds;
+}
+
+export function getObservationVariableNames(c) {
+  var collectionVarNames = {};
+  var getCollectionVarNames = function(vars) {
+    vars.forEach(v => {
+      if (v.children && v.children.length > 0) {
+        if (v.children[0].label === 'First Visit') {
+          collectionVarNames[v.label] = true;
+        } else {
+          getCollectionVarNames(v.children);
+        }
+      }
+    });
+  };
+
+  getCollectionVarNames(c.observation_variables);
+  return collectionVarNames;
+}
+
+export function getObservationVariableIds(c) {
+  var collectionVarIds = {};
+  var getCollectionVarIds = function(vars) {
+    vars.forEach(v => {
+      if (v.children && v.children.length > 0) {
+        if (v.children[0].label === 'First Visit') {
+          collectionVarIds[v.id] = true;
+        } else {
+          getCollectionVarIds(v.children);
+        }
+      }
+    });
+  };
+
+  getCollectionVarIds(c.observation_variables);
+  return Object.keys(collectionVarIds);
 }

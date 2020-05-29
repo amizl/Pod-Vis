@@ -1,64 +1,71 @@
 <template>
-  <section>
-    <v-sheet color="white" height="100%" class="rounded-lg shadow">
-      <v-layout column fill-height class="ma-1">
-        <v-toolbar card dense flat color="white rounded-lg">
-          <span class="title primary--text">Cohorts</span>
-          <v-divider vertical class="ml-4"></v-divider>
-          <v-spacer />
-          <v-toolbar-items>
-            <cohort-manager-dialog :collection-id="collection.id" />
-          </v-toolbar-items>
-        </v-toolbar>
+  <div>
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card color="#eeeeee" class="pt-1">
+            <v-card-title class="primary--text pl-3 py-2"
+              >Cohorts
+              <v-spacer />
+              <v-toolbar-items>
+                <cohort-manager-dialog :collection-id="collection.id" />
+                <v-icon v-if="expanded" @click="expanded = false"
+                  >expand_less</v-icon
+                >
+                <v-icon v-else @click="expanded = true">expand_more</v-icon>
+              </v-toolbar-items>
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
 
-        <v-divider></v-divider>
+    <v-container
+      v-if="typeof cohorts === 'undefined' || collection_cohorts.length === 0"
+      fluid
+      fill-height
+    >
+      Loading
+    </v-container>
 
-        <v-container
-          v-if="
-            typeof cohorts === 'undefined' || collection_cohorts.length === 0
-          "
-          fluid
-          fill-height
-        >
-          <v-flex>Loading</v-flex>
-        </v-container>
+    <v-container
+      v-else
+      v-show="expanded"
+      fluid
+      fill-height
+      class="pa-0 pl-3 pt-3"
+    >
+      <v-row>
+        <v-col cols="12">
+          <v-data-table
+            v-model="selected"
+            dense
+            text
+            :headers="headers"
+            :items="collection_cohorts"
+            item-key="id"
+            show-select
+          >
+            <template v-slot:item.label="{ item }">
+              <td class="subtitle-1 text-xs-left">{{ item.label }}</td>
+            </template>
 
-        <v-data-table
-          v-else
-          v-model="selected"
-          flat
-          dense
-          :headers="headers"
-          :items="collection_cohorts"
-          item-key="id"
-          :rows-per-page-items="[5]"
-          select-all
-        >
-          <template v-slot:items="props">
-            <td>
-              <v-checkbox
-                v-model="props.selected"
-                primary
-                hide-details
-              ></v-checkbox>
-            </td>
-            <td class="text-xs-left" fill-width>{{ props.item.label }}</td>
-            <td
-              v-if="typeof props.item.subject_ids === 'undefined'"
-              class="text-xs-left"
-              fill-width
-            >
-              -
-            </td>
-            <td v-else class="text-xs-left" fill-width>
-              {{ props.item.subject_ids.length }}
-            </td>
-            <td><v-chip :color="props.item.color" /></td>
-          </template>
-        </v-data-table>
-      </v-layout>
-    </v-sheet>
-  </section>
+            <template v-slot:item.subject_ids.length="{ item }">
+              <td class="subtitle-1 text-xs-center">
+                {{ item.subject_ids.length }}
+              </td>
+            </template>
+
+            <template v-slot:item.color="{ item }">
+              <td class="text-xs-left">
+                <v-chip small :color="item.color" class="my-1" />
+              </td>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -72,6 +79,7 @@ export default {
   },
   data() {
     return {
+      expanded: true,
       selected: [],
       colors: [
         '#e41a1c',
@@ -90,18 +98,21 @@ export default {
           align: 'left',
           sortable: true,
           value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Size',
           align: 'left',
           sortable: true,
           value: 'subject_ids.length',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Color',
           align: 'left',
           sortable: false,
           value: 'color',
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ],
     };
@@ -130,7 +141,7 @@ export default {
     },
   },
   watch: {
-    selected() {
+    selected(newsel) {
       const selectedCohorts = {};
       const visibleCohorts = [];
       this.selected.forEach(s => {

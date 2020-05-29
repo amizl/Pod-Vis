@@ -1,62 +1,51 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
-      <v-toolbar card dense flat color="white rounded-lg">
-        <v-toolbar-title class="primary--text title">
-          Mann-Whitney Rank Test
-          <div class="subtitle-1">cohort vs. remainder change</div>
-        </v-toolbar-title>
-        <v-divider vertical class="ml-4"></v-divider>
-        <v-spacer />
-        <v-toolbar-items>
-          <v-icon v-if="expanded" @click="expandClicked">expand_less</v-icon>
-          <v-icon v-else @click="expandClicked">expand_more</v-icon>
-        </v-toolbar-items>
-      </v-toolbar>
-      <v-divider></v-divider>
-      <div v-show="expanded">
-        <v-container v-if="!pvals.length" fluid fill-height>
-          <v-layout column align-center justify-center fill-height>
-            <v-subheader class="subheading primary--text text--lighten-4">
-              <v-flex>
-                Add variables and apply filters to them to view Mann-Whitney
-                rank test results for all outcome variables.
-              </v-flex>
-            </v-subheader>
-          </v-layout>
-        </v-container>
-        <v-flex v-else>
-          <v-data-table
-            :headers="headers"
-            :items="pvals"
-            dense
-            hide-default-header
-          >
-            <template v-slot:items="props">
-              <tr :class="getVariableClass(props.item)">
-                <td class="text-xs-left">{{ props.item.label }}</td>
-                <td class="text-xs-right">
-                  {{ props.item.pval | formatPValue }}
-                </td>
-              </tr>
-            </template>
-            <!-- <template v-slot:no-data>
-            <v-alert :value="true" color="primary" icon="info">
-              Add output variables and filter charts for Mann-Whitney rank test
-              on cohort and population samples.
-            </v-alert>
-          </template> -->
-          </v-data-table>
+  <v-sheet color="white" height="100%" class="rounded-lg shadow pa-0 ma-0">
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card color="#eeeeee" class="pt-1">
+            <v-card-title class="primary--text pl-3 py-2"
+              >ANALYTICS PANEL
+              <v-divider vertical class="ml-4 mr-4"> </v-divider>
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
 
-          <v-container
-            align-center
-            fluid
-            pa-0
-            pl-4
-            style="border: 4px solid rgb(236,118,188); border-radius: 0.4rem;"
-          >
-            <v-layout align-center row>
-              <span style="padding: 0em 0.5em 0em 0em;">Highlight P &lt;</span
+    <div v-show="expanded">
+      <v-container v-if="!pvals || !pvals.length" fluid fill-height>
+        <v-row>
+          <v-col cols="12">
+            <v-subheader class="subheading primary--text text--lighten-4">
+              <div v-if="collection.is_longitudinal">
+                Add variables and apply filters to them to view statistical test
+                results for all outcome variables.
+              </div>
+              <div v-else>
+                Statistical tests for cross-sectional data are not yet
+                implemented.
+              </div>
+            </v-subheader>
+          </v-col>
+        </v-row>
+      </v-container>
+      <div v-else>
+        <v-toolbar-title class="primary--text title ml-3 mt-2">
+          Comparing cohort vs. remainder change:</v-toolbar-title
+        >
+
+        <v-container
+          align-center
+          fluid
+          pa-0
+          mt-3
+          pl-4
+          style="border: 4px solid rgb(236,118,188); border-radius: 0.4rem;"
+        >
+          <v-row class="pa-0 ma-0">
+            <v-col class="pa-0 ma-0">
+              <span class="pa-0 mr-1 subtitle-1">Highlight P &lt;</span
               ><v-radio-group v-model="pvt" row>
                 <v-radio
                   v-for="pv in pval_thresholds"
@@ -64,11 +53,53 @@
                   :value="pv"
                 ></v-radio>
               </v-radio-group>
-            </v-layout>
-          </v-container>
-        </v-flex>
+            </v-col>
+          </v-row>
+        </v-container>
+
+        <v-data-table
+          :headers="headers"
+          :items="pvals"
+          dense
+          hide-default-footer
+          disable-pagination
+        >
+          <template v-slot:item="props">
+            <tr :class="getVariableClass(props.item)">
+              <td class="text-subtitle-1 text-xs-left">
+                {{ props.item.label }}
+              </td>
+              <td
+                class="text-subtitle-1 text-xs-left"
+                :title="props.item.test_name"
+              >
+                {{ props.item.test_abbrev }}
+              </td>
+              <td
+                v-if="props.item.error"
+                class="text-subtitle-1 text-xs-left error"
+                colspan="2"
+              >
+                {{ props.item.error }}
+              </td>
+              <td
+                v-if="!props.item.error"
+                class="text-subtitle-1 text-xs-right"
+                :title="props.item.effect_size_descr"
+              >
+                {{ props.item.effect_size | formatEffectSize }}
+              </td>
+              <td
+                v-if="!props.item.error"
+                class="text-subtitle-1 text-xs-right"
+              >
+                {{ props.item.pval | formatPValue }}
+              </td>
+            </tr>
+          </template>
+        </v-data-table>
       </div>
-    </v-layout>
+    </div>
   </v-sheet>
 </template>
 
@@ -86,6 +117,9 @@ export default {
         return format('.4f')(pvalue);
       }
     },
+    formatEffectSize(size) {
+      return format('.2f')(size);
+    },
   },
   data() {
     return {
@@ -96,14 +130,30 @@ export default {
         {
           text: 'Variable',
           align: 'left',
-          sortable: false,
+          sortable: true,
           value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
+        },
+        {
+          text: 'Test',
+          align: 'left',
+          sortable: true,
+          value: 'test_name',
+          class: 'text-subtitle-1 font-weight-bold',
+        },
+        {
+          text: 'Effect Size',
+          align: 'left',
+          sortable: true,
+          value: 'effect_size',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'P Value',
-          align: 'right',
+          align: 'left',
           sortable: true,
           value: 'pval',
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ],
       expanded: true,
@@ -113,6 +163,7 @@ export default {
     ...mapState('cohortManager', {
       pvals: state.PVALS,
       pval_threshold: state.PVAL_THRESHOLD,
+      collection: state.COLLECTION,
     }),
   },
   watch: {
@@ -132,7 +183,7 @@ export default {
       this.setPvalThreshold(newPval);
     },
     getVariableClass(v) {
-      if (v.pval < this.pval_threshold) {
+      if (v.pval < this.pval_threshold && !v.error) {
         return 'highlight-var-row';
       }
       return '';
@@ -145,6 +196,13 @@ export default {
 </script>
 
 <style>
+table.v-data-table thead tr th {
+  font-size: 24px;
+}
+table.v-data-table tbody tr td {
+  font-size: 24px;
+}
+
 /* Transition effect for changing routes */
 .fade-enter-active,
 .fade-leave-active {

@@ -312,10 +312,10 @@ def process_failure1(filename):
 
     df[['Failure date1','Tx End1']] = df[['Failure date1','Tx End1']].apply(lambda x: pd.to_datetime(x, format='%m/%d/%Y', errors='coerce'))
 
-    df["Time to 1st failure"] = round((df["Failure date1"] - df["Tx End1"]).dt.days/365.25, 1)
+    df["Time to 1st Failure"] = round((df["Failure date1"] - df["Tx End1"]).dt.days/365.25, 1)
 
 
-    df = df.loc[:, ["lab code", "Initial Failure Type1", "Failure?", "Site2#", "TX2", "Total Primary Dose2", "ChemoAg2A", "ChemoAg2B", "Time to 1st failure"]]
+    df = df.loc[:, ["lab code", "Initial Failure Type1", "Failure?", "Site2#", "TX2", "Total Primary Dose2", "ChemoAg2A", "ChemoAg2B", "Time to 1st Failure"]]
     df = df.groupby(['lab code']).first().reset_index()
     df = df.rename(columns={"lab code": "SubjectNum", 
                             "Initial Failure Type1": "1st Failure Type",

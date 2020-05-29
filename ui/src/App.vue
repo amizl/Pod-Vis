@@ -1,16 +1,27 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <!-- Notification Center is our global snackbar for error/success messages-->
     <notification-center />
     <side-bar v-if="isUserAuthenticated" />
     <!-- <app-header v-if="isUserAuthenticated" /> -->
     <!-- All of our views will be loaded inside content based on route-->
-    <v-content class="indigo lighten-5">
+    <v-main class="indigo lighten-5">
       <transition name="fade" mode="out-in">
         <!-- /homepage, /datasets, etc. components to be injected here -->
         <router-view />
       </transition>
-    </v-content>
+    </v-main>
+    <v-footer
+      v-if="
+        $route == null || $route.name == 'homepage' || $route.name == 'signIn'
+      "
+      class="indigo lighten-5"
+    >
+      <v-spacer></v-spacer>
+      <div class="font-weight-medium">
+        &copy; 2020 University of Maryland, Baltimore
+      </div>
+    </v-footer>
   </v-app>
 </template>
 
@@ -35,108 +46,20 @@ export default {
 </script>
 
 <style>
-/* Increase font sizes throughout the app (modifying main.styl has no effect in 1.5) */
-
+/* Global (mostly) font size setting */
 html {
-  font-size: 1.2em;
+  font-size: 1em !important;
 }
 
-/* v-datatable */
-table.v-datatable td.text-xs-left {
-  font-size: 1em;
-}
-
-table.v-datatable td.text-xs-center {
-  font-size: 1em;
-}
-
-table.v-datatable td.text-xs-right {
-  font-size: 1em;
-}
-
-table.v-datatable td div {
-  font-size: 1.2em;
-}
-
-table.v-datatable td span {
-  font-size: 1.4em;
-}
-
-table.v-datatable div.v-btn__content {
-  font-size: 1.2em;
-}
-
-div.v-btn__content {
-  font-size: 1.2em;
-}
-
-div.v-datatable__actions {
-  font-size: 1.2em;
-}
-
-span.subheading {
-  font-size: 1.5em;
-}
-
-span.subtitle-1 {
-  font-size: 1.2em;
-}
-
-/* Sidebar navigation options */
-div.v-list__tile__title {
-  font-size: 1.2em;
-}
-
-/* Stepper labels */
-div.v-stepper__label {
-  font-size: 0.9em;
+.v-application {
+  font-size: 1.1rem !important;
 }
 
 /* Circled number in stepper step */
 span.v-stepper__step__step {
   font-size: 1em;
-  width: 40px;
-  height: 40px;
-}
-
-div.v-stepper__step span.v-stepper__step__step {
-  margin-bottom: 16px important!;
-}
-
-.v-stepper__step {
-  padding-top: 16px;
-}
-
-/* Dataset Overview page */
-div.v-card__text {
-  font-size: 1.2em;
-}
-
-div.v-treeview-node__label {
-  font-size: 1em;
-}
-
-table.v-datatable div.layout.align-center {
-  font-size: 1.4em;
-}
-
-table.v-datatable span {
-  font-size: 1.4em;
-}
-
-/* title/heading of tabs in v-datatable */
-div.v-tabs__div {
-  font-size: 1.2em;
-}
-
-/* larger font for data table headings */
-table.v-table thead th {
-  font-size: 20px !important;
-}
-
-/* Increase font size of D3 axis labels */
-g.tick text {
-  font-size: 1.2em;
+  width: 35px;
+  height: 35px;
 }
 
 /* Lines connecting steps in the v-stepper */
@@ -145,8 +68,14 @@ div.v-stepper__header hr.v-divider.theme--light {
   border-top-color: rgba(0, 0, 0, 0.35) !important;
 }
 
-svg {
-  font-size: 2em;
+/* Dataset Overview page - SunBurst chart and heading div */
+div.v-card__text {
+  font-size: 1.1em;
+}
+
+/* Increase font size of D3 axis labels - CohortManager charts */
+g.tick text {
+  font-size: 1.2em;
 }
 
 /* Transition effect for changing routes */
