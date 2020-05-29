@@ -5,6 +5,7 @@
       :id="`firstVisit-${dimensionName}`"
       left
       :dimension-name="`${variable.label} - First Visit`"
+      :y-min="minValueBetweenDimensions"
       :y-domain="maxValueBetweenDimensions"
       :variable="variable"
     />
@@ -20,6 +21,7 @@
     <VerticalHistogram
       :id="`lastVisit-${dimensionName}`"
       :dimension-name="`${variable.label} - Last Visit`"
+      :y-min="minValueBetweenDimensions"
       :y-domain="maxValueBetweenDimensions"
       :variable="variable"
     />
@@ -32,7 +34,7 @@ import { state, actions } from '@/store/modules/cohortManager/types';
 import { scalePoint, scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
-import { max } from 'd3-array';
+import { min, max } from 'd3-array';
 // import { line, curveMonotoneX } from 'd3-shape';
 import { colors } from '@/utils/colors';
 import VerticalHistogram from '@/components/CohortManager/VerticalHistogram/VerticalHistogram.vue';
@@ -140,7 +142,11 @@ export default {
         };
       });
     },
-
+    minValueBetweenDimensions() {
+      const firstMin = min(this.populationData, d => d.firstVisit);
+      const lastMin = min(this.populationData, d => d.lastVisit);
+      return Math.min(firstMin, lastMin);
+    },
     maxValueBetweenDimensions() {
       const firstMax = max(this.populationData, d => d.firstVisit);
       const lastMax = max(this.populationData, d => d.lastVisit);
@@ -163,7 +169,10 @@ export default {
     },
     dimensionScale() {
       const scale = scaleLinear()
-        .domain([0, this.maxValueBetweenDimensions])
+        .domain([
+          this.minValueBetweenDimensions,
+          this.maxValueBetweenDimensions,
+        ])
         .range([this.computedHeight, 0]);
       return scale;
     },

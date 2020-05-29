@@ -170,6 +170,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    yMin: {
+      type: Number,
+      required: true,
+    },
     yDomain: {
       type: Number,
       required: true,
@@ -236,7 +240,7 @@ export default {
     // },
     yScale() {
       return scaleLinear()
-        .domain([0, this.yDomain])
+        .domain([this.yMin, this.yDomain])
         .range([this.h, 0]);
     },
     cohortXScale() {
