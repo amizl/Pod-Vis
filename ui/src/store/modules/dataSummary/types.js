@@ -4,7 +4,7 @@ export const state = {
   COLLECTION: 'collection',
   COLLECTION_SUMMARY: 'collectionSummary',
   FIRST_VISIT: 'firstVisit',
-  LAST_VSIST: 'lastVisit',
+  LAST_VISIT: 'lastVisit',
   VISIT_VARIABLE: 'visitVariable',
 };
 
