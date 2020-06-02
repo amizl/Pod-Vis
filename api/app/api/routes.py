@@ -1116,7 +1116,7 @@ def create_cohort():
 @jwt_required
 def get_collection_obs_summary_by_event(collection_id):
     """Get the user's collection observation summary."""
-    collection_summary = models.CollectionObservations.summary_by_visit_event(collection_id)
+    collection_summary = models.Collection.summary_by_visit_event(collection_id)
 
     if not collection_summary:
         raise ResourceNotFound("Collection not found.")
@@ -1128,7 +1128,7 @@ def get_collection_obs_summary_by_event(collection_id):
 @jwt_required
 def get_collection_obs_summary_by_event_num(collection_id):
     """Get the user's collection observation summary."""
-    collection_summary = models.CollectionObservations.summary_by_visit_num(collection_id)
+    collection_summary = models.Collection.summary_by_visit_num(collection_id)
 
     if not collection_summary:
         raise ResourceNotFound("Collection not found.")

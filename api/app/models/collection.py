@@ -552,3 +552,52 @@ class Collection(db.Model):
             collection['num_cohorts'] = len(user_cohorts)
         
         return collection
+
+    @classmethod
+    def summary_by_visit(cls, collection_id, query_by):
+        connection = db.engine.connect()
+
+        query = text("""
+            SELECT sv.""" + query_by + """, oo.label, count(obs.id) as num_obs
+            FROM collection c, collection_study cs, subject s, subject_visit sv, observation obs, observation_ontology oo
+            WHERE c.id = (:id)
+            AND c.id = cs.collection_id
+            AND cs.study_id = s.study_id
+            AND s.id = sv.subject_id
+            AND sv.id = obs.subject_visit_id
+            AND obs.observation_ontology_id = oo.id
+            GROUP by sv.""" + query_by + """, oo.label
+        """)
+
+        result_proxy = connection.execute(query,id=collection_id).fetchall()
+        result = []
+        for row in result_proxy:
+            result.append([row[query_by], row.label, row.num_obs])
+        return result
+        
+    @classmethod
+    def summary_by_visit_event(cls, collection_id):
+        """Find all the observations for this collection and group them by visit event and count them.
+
+        Args:
+            collection_id: Collection's ID.
+
+        Returns:
+            Collection observation counts grouped by collection, visit_event, and observation
+        """
+        return cls.summary_by_visit(collection_id, "visit_event")
+        
+    @classmethod
+    def summary_by_visit_num(cls, collection_id):
+        """Find all the observations for this collection and group them by visit num and count them.
+
+        Args:
+            collection_id: Collection's ID.
+
+        Returns:
+            Collection observation counts grouped by collection, visit_num, and observation
+        """
+        return cls.summary_by_visit(collection_id, "visit_num")
+
+
+
