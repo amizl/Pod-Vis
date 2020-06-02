@@ -12,6 +12,7 @@ from .observation_ontology import ObservationOntology
 from .study import Study
 from .project import Project
 from .collection import Collection
+from .collection_observations import CollectionObservations
 from .collection_observation_variable import CollectionObservationVariable
 from .collection_subject_variable import CollectionSubjectVariable
 from .collection_query import CollectionQuery
