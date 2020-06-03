@@ -554,7 +554,22 @@ class Collection(db.Model):
         return collection
 
     @classmethod
-    def summary_by_visit(cls, collection_id, query_by):
+    def get_all_visit_summaries(cls, collection_id):
+        by_visit_event = cls.get_visit_summary(collection_id, 'visit_event')
+        by_visit_num = cls.get_visit_summary(collection_id, 'visit_num')
+        return { "Visit Event": by_visit_event, "Visit Number": by_visit_num }
+        
+    @classmethod
+    def get_visit_summary(cls, collection_id, query_by):
+        """Find all the observations for this collection and group them by visit event or number and count them.
+
+        Args:
+            collection_id: Collection's ID.
+
+        Returns:
+            Collection observation counts grouped by collection, visit_event or visit_num, and observation
+        """
+
         connection = db.engine.connect()
 
         query = text("""
@@ -575,29 +590,3 @@ class Collection(db.Model):
             result.append([row[query_by], row.label, row.num_obs])
         return result
         
-    @classmethod
-    def summary_by_visit_event(cls, collection_id):
-        """Find all the observations for this collection and group them by visit event and count them.
-
-        Args:
-            collection_id: Collection's ID.
-
-        Returns:
-            Collection observation counts grouped by collection, visit_event, and observation
-        """
-        return cls.summary_by_visit(collection_id, "visit_event")
-        
-    @classmethod
-    def summary_by_visit_num(cls, collection_id):
-        """Find all the observations for this collection and group them by visit num and count them.
-
-        Args:
-            collection_id: Collection's ID.
-
-        Returns:
-            Collection observation counts grouped by collection, visit_num, and observation
-        """
-        return cls.summary_by_visit(collection_id, "visit_num")
-
-
-

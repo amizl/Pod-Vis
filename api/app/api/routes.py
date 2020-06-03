@@ -1111,26 +1111,14 @@ def create_cohort():
         "cohort": cohort_d
     }), 201
 
-# Method to retrieve the collection observation summary by visit
-@api.route("/collections/obs_summary_by_event/<int:collection_id>")
+# Method to retrieve all collection observation summaries
+@api.route("/collections/obs_summaries/<int:collection_id>")
 @jwt_required
 def get_collection_obs_summary_by_event(collection_id):
     """Get the user's collection observation summary."""
-    collection_summary = models.Collection.summary_by_visit_event(collection_id)
+    obs_summaries = models.Collection.get_all_visit_summaries(collection_id)
 
-    if not collection_summary:
+    if not obs_summaries:
         raise ResourceNotFound("Collection not found.")
     
-    return jsonify(collection_summary)
-
-# Method to retrieve the collection observation summary by visit number
-@api.route("/collections/obs_summary_by_event_num/<int:collection_id>")
-@jwt_required
-def get_collection_obs_summary_by_event_num(collection_id):
-    """Get the user's collection observation summary."""
-    collection_summary = models.Collection.summary_by_visit_num(collection_id)
-
-    if not collection_summary:
-        raise ResourceNotFound("Collection not found.")
-    
-    return jsonify(collection_summary)
+    return jsonify(obs_summaries)
