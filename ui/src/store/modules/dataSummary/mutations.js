@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import * as crossfilter from 'crossfilter2';
 import { mutations, state as stateTypes } from './types';
 
 export default {
@@ -19,8 +18,8 @@ export default {
   [mutations.SET_COLLECTION](state, collection) {
     state[stateTypes.COLLECTION] = collection;
   },
-  [mutations.SET_COLLECTION_SUMMARY](state, collection_summary) {
-    state[stateTypes.COLLECTION_SUMMARY] = collection_summary;
+  [mutations.SET_COLLECTION_SUMMARIES](state, collection_summaries) {
+    state[stateTypes.COLLECTION_SUMMARIES] = collection_summaries;
   },
   /**
    * Set first visit variables.
@@ -37,5 +36,13 @@ export default {
    */
   [mutations.SET_LAST_VISIT](state, newLastVisit) {
     state[stateTypes.LAST_VISIT] = newLastVisit;
+  },
+  /**
+   * Set visit variable.
+   * @param {*} state
+   * @param {*} newVisitVar
+   */
+  [mutations.SET_VISIT_VARIABLE](state, newVisitVar) {
+    state[stateTypes.VISIT_VARIABLE] = newVisitVar;
   },
 };

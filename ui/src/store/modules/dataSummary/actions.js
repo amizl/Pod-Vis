@@ -101,7 +101,7 @@ export default {
       commit(mutations.SET_LOADING, false);
     }
   },
-  async [actions.FETCH_COLLECTION_SUMMARY_BY_EVENT](
+  async [actions.FETCH_COLLECTION_SUMMARIES](
     { commit, dispatch },
     collectionId
   ) {
@@ -109,10 +109,10 @@ export default {
 
     try {
       const { data } = await axios.get(
-        `/api/collections/obs_summary_by_event/${collectionId}`
+        `/api/collections/obs_summaries/${collectionId}`
       );
       // massage collection observation summary data... here
-      commit(mutations.SET_COLLECTION_SUMMARY, data);
+      commit(mutations.SET_COLLECTION_SUMMARIES, data);
     } catch ({ response }) {
       // Something went wrong...
       // user didn't have access to collection? collection not found?
@@ -257,7 +257,7 @@ export default {
         });
       });
       outputVariables = output_vars;
-	
+
       try {
         const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
           filteredData,
@@ -330,8 +330,8 @@ export default {
     commit(mutations.RESET_INPUT_VARIABLES);
     commit(mutations.SET_COHORT, cohort);
 
-//    const studyInputVariables =
-//      getters[getterTypes.FIND_COHORT_STUDY_INPUT_VARIABLES];
+    //    const studyInputVariables =
+    //      getters[getterTypes.FIND_COHORT_STUDY_INPUT_VARIABLES];
     const subjectInputVariables =
       getters[getterTypes.FIND_COHORT_SUBJECT_INPUT_VARIABLES];
     const observationInputVariables =
@@ -341,7 +341,7 @@ export default {
 
     dispatch(actions.CLEAR_ALL_FILTERS);
     dispatch(actions.SET_INPUT_VARIABLES, [
-//      ...studyInputVariables,
+      //      ...studyInputVariables,
       ...subjectInputVariables,
       ...observationInputVariables,
     ]);
@@ -378,13 +378,13 @@ export default {
     commit(mutations.RESET_PVALS);
     commit(mutations.RESET_QUERIES);
   },
-  [actions.SET_PVAL_THRESHOLD]({ commit }, threshold ) {
+  [actions.SET_PVAL_THRESHOLD]({ commit }, threshold) {
     commit(mutations.SET_PVAL_THRESHOLD, threshold);
   },
   [actions.RESET_PVAL_THRESHOLD]({ commit }) {
     commit(mutations.SET_PVAL_THRESHOLD);
   },
-  [actions.SET_HIGHLIGHTED_SUBSET]({ commit }, subset ) {
+  [actions.SET_HIGHLIGHTED_SUBSET]({ commit }, subset) {
     commit(mutations.SET_HIGHLIGHTED_SUBSET, subset);
   },
   [actions.RESET_HIGHLIGHTED_SUBSET]({ commit }) {
@@ -395,5 +395,8 @@ export default {
   },
   [actions.SET_LAST_VISIT]({ commit }, newLastVisit) {
     commit(mutations.SET_LAST_VISIT, newLastVisit);
+  },
+  [actions.SET_VISIT_VARIABLE]({ commit }, newVisitVar) {
+    commit(mutations.SET_VISIT_VARIABLE, newVisitVar);
   },
 };
