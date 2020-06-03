@@ -12,7 +12,7 @@
         <v-divider vertical class="ml-4"></v-divider>
         <v-select
           v-model="firstVisit"
-          :items="uniqueEvents"
+          :items="firstVisitEvents"
           label="Select first visit"
           class="light-green"
         >
@@ -21,7 +21,7 @@
         <v-divider vertical class="ml-4"></v-divider>
         <v-select
           v-model="lastVisit"
-          :items="uniqueEvents"
+          :items="lastVisitEvents"
           label="Select last visit"
           class="light-blue"
         >
@@ -43,6 +43,8 @@ export default {
     return {
       visitItems: ['Visit Event', 'Visit Number'],
       uniqueEvents: [],
+      firstVisitEvents: [],
+      lastVisitEvents: [],
       selVisitVariable: null,
     };
   },
@@ -61,6 +63,7 @@ export default {
       },
       set(value) {
         this.setLastVisit(value);
+        this.updateEvents();
       },
     },
     firstVisit: {
@@ -69,6 +72,7 @@ export default {
       },
       set(value) {
         this.setFirstVisit(value);
+        this.updateEvents();
       },
     },
   },
@@ -94,6 +98,25 @@ export default {
       this.uniqueEvents = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
       );
+      // possible first visit events - all those up until lastVisit
+      this.firstVisitEvents = [];
+      for (var i = 0; i < this.uniqueEvents.length; i++) {
+        if (this.lastVisit && this.uniqueEvents[i] == this.lastVisit) {
+          break;
+        }
+        this.firstVisitEvents.push(this.uniqueEvents[i]);
+      }
+
+      // possible last visit events - starting after firstVisit
+      var firstVisitSeen = !this.firstVisit;
+      this.lastVisitEvents = [];
+      for (var i = 0; i < this.uniqueEvents.length; i++) {
+        if (firstVisitSeen) {
+          this.lastVisitEvents.push(this.uniqueEvents[i]);
+        } else if (this.firstVisit && this.uniqueEvents[i] == this.firstVisit) {
+          firstVisitSeen = true;
+        }
+      }
     },
     getColumn(anArray, columnNumber) {
       return anArray.map(function(row) {
