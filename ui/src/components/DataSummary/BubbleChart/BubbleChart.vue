@@ -34,8 +34,7 @@ export default {
     },
     yaxis(el, binding) {
       const axisMethod = binding.value;
-      select(el)
-        .call(axisMethod);
+      select(el).call(axisMethod);
     },
   },
   data() {
@@ -93,7 +92,6 @@ export default {
   },
   watch: {
     visitVariable() {
-      console.log('BubbleChart, variable = ' + this.visitVariable);
       this.updateCanvas();
     },
     firstVisit() {
@@ -117,10 +115,6 @@ export default {
       return unique;
     },
     updateCanvas() {
-      console.log(
-        'BubbleChart mounted, visit variable = ' + this.visitVariable
-      );
-
       // Identify the unique events
       this.uniqueEvents = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
