@@ -22,7 +22,16 @@
     </v-layout>
 
     <v-layout fill-height>
-      <v-flex> <visit-variables /> </v-flex>
+      <v-flex>
+        <v-sheet color="white" height="100%" class="rounded-lg shadow">
+          <v-layout column fill-height class="ma-1 pt-3">
+            <visit-variables-toolbar></visit-variables-toolbar>
+            <v-container fluid fill-height class="pa-0 pb-1">
+              <bubble-chart> </bubble-chart>
+            </v-container>
+          </v-layout>
+        </v-sheet>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -31,13 +40,15 @@
 import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/dataSummary/types';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
-import VisitVariables from '@/components/DataSummary/VisitVariables.vue';
+import VisitVariablesToolbar from '@/components/DataSummary/VisitVariablesToolbar.vue';
+import BubbleChart from '@/components/DataSummary/BubbleChart/BubbleChart.vue';
 
 export default {
   name: 'DataSummary',
   components: {
     AnalysisTracker,
-    VisitVariables,
+    VisitVariablesToolbar,
+    BubbleChart,
   },
   props: {
     collectionId: {
@@ -54,19 +65,19 @@ export default {
   computed: {
     ...mapState('dataSummary', {
       collection: state.COLLECTION,
-      collection_summary: state.COLLECTION_SUMMARY,
+      collection_summaries: state.COLLECTION_SUMMARIES,
     }),
   },
   async created() {
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
-    await this.fetchCollectionSummaryByEvent(this.collectionId);
+    await this.fetchCollectionSummaries(this.collectionId);
     this.isLoading = false;
   },
   methods: {
     ...mapActions('dataSummary', {
       fetchCollection: actions.FETCH_COLLECTION,
-      fetchCollectionSummaryByEvent: actions.FETCH_COLLECTION_SUMMARY_BY_EVENT,
+      fetchCollectionSummaries: actions.FETCH_COLLECTION_SUMMARIES,
     }),
   },
 };

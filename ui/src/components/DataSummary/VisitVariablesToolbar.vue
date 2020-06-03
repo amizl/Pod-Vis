@@ -1,9 +1,6 @@
 <template>
   <section>
     <v-toolbar card dense flat color="white rounded-lg">
-      <!-- 
-      <v-toolbar-items> <input-variables-dialog /> </v-toolbar-items>
-      -->
       <v-toolbar-items>
         <v-select
           v-model="selVisitVariable"
@@ -16,8 +13,8 @@
         <v-select
           v-model="firstVisit"
           :items="uniqueEvents"
-          filled
           label="Select first visit"
+          class="light-green"
         >
         </v-select>
         <v-spacer />
@@ -25,8 +22,8 @@
         <v-select
           v-model="lastVisit"
           :items="uniqueEvents"
-          outlined
           label="Select last visit"
+          class="light-blue"
         >
         </v-select>
       </v-toolbar-items>
@@ -42,33 +39,27 @@ import { mapState, mapMutations } from 'vuex';
 import { state, actions } from '@/store/modules/dataSummary/types';
 
 export default {
-  props: {
-    visitVariable: {
-      type: String,
-      required: true,
-    },
-  },
   data() {
     return {
       visitItems: ['Visit Event', 'Visit Number'],
       uniqueEvents: [],
-      selVisitVariable: '',
+      selVisitVariable: null,
     };
   },
   computed: {
     ...mapState('dataSummary', {
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
-      collectionSummary: state.COLLECTION_SUMMARY,
+      collectionSummaries: state.COLLECTION_SUMMARIES,
       selFirstVisit: state.FIRST_VISIT,
       selLastVisit: state.LAST_VISIT,
+      visitVariable: state.VISIT_VARIABLE,
     }),
     lastVisit: {
       get() {
         return this.selLastVisit;
       },
       set(value) {
-        alert('In setter for last. New value: ' + value);
         this.setLastVisit(value);
       },
     },
@@ -77,34 +68,32 @@ export default {
         return this.selFirstVisit;
       },
       set(value) {
-        alert('In setter for firstVisit. New value: ' + value);
         this.setFirstVisit(value);
       },
     },
   },
   watch: {
-    selVisitVariable() {
-      alert(
-        'In watcher for visitVariable visit event changed to: ' +
-          this.selVisitVariable
-      );
-      this.$emit('visitVarChanged', this.selVisitVariable);
+    selVisitVariable(newval) {
+      this.setVisitVariable(newval);
+      this.setFirstVisit(null);
+      this.setLastVisit(null);
+    },
+    visitVariable() {
+      this.updateEvents();
     },
   },
+  created() {
+    this.selVisitVariable = this.visitVariable;
+  },
   mounted() {
-    // Identify the unique events
-    this.uniqueEvents = this.getUniqueList(
-      this.getColumn(this.collectionSummary, 0)
-    );
-    // this.visitVariable = this.visitItems[0];
-    // this.firstVisit = this.uniqueEvents[0];
-    // this.lastVisit = this.uniqueEvents[this.uniqueEvents.length - 1];
+    this.updateEvents();
   },
   methods: {
-    visitVarChanged: function(event) {
-      console.log('Visit Event Changed to: ' + this.visitVariable);
-      // `this` inside methods points to the Vue instance
-      alert('Hello ' + event + '!');
+    updateEvents() {
+      // Identify the unique events
+      this.uniqueEvents = this.getUniqueList(
+        this.getColumn(this.collectionSummaries[this.visitVariable], 0)
+      );
     },
     getColumn(anArray, columnNumber) {
       return anArray.map(function(row) {
@@ -118,6 +107,7 @@ export default {
     ...mapMutations('dataSummary', {
       setFirstVisit: actions.SET_FIRST_VISIT,
       setLastVisit: actions.SET_LAST_VISIT,
+      setVisitVariable: actions.SET_VISIT_VARIABLE,
     }),
   },
 };
