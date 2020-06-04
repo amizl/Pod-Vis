@@ -14,8 +14,8 @@
           v-model="firstVisit"
           :items="firstVisitEvents"
           label="Select first visit"
-          class="light-green"
-        >
+          :background-color="colors['firstVisit']"
+          >
         </v-select>
         <v-spacer />
         <v-divider vertical class="ml-4"></v-divider>
@@ -23,7 +23,7 @@
           v-model="lastVisit"
           :items="lastVisitEvents"
           label="Select last visit"
-          class="light-blue"
+          :background-color="colors['lastVisit']"
         >
         </v-select>
       </v-toolbar-items>
@@ -37,6 +37,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { state, actions } from '@/store/modules/dataSummary/types';
+import { colors } from '@/utils/colors';
 
 export default {
   data() {
@@ -46,6 +47,7 @@ export default {
       firstVisitEvents: [],
       lastVisitEvents: [],
       selVisitVariable: null,
+      colors: colors,
     };
   },
   computed: {

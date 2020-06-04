@@ -51,22 +51,25 @@ export let colors = {
 */
 // grey/light blue
 export let colors = {
-  cohort: '#3F51B5',
+  'cohort': '#3F51B5',
   'cohort-circle-fill': '#1B33B5',
   'cohort-circle-fill-opacity': '0.8',
   'cohort-circle-stroke': '#769eb5',
   'cohort-circle-stroke-width': '2',
 
-  population: '#B8D6FF',
+  'population': '#B8D6FF',
   'population-circle-fill': '#85B9FF',
   'population-circle-fill-opacity': '0.8',
   'population-circle-stroke': '#E1FFE1',
   'population-circle-stroke-width': '2',
 
-  nonCohort: '#3FB551',
+  'nonCohort': '#3FB551',
 
   'warn-background': '#F83008',
   'warn-text': '#F8D5F0',
+
+  'firstVisit': '#8bdb35',
+  'lastVisit': '#db5454',
 };
 
 export function getNumSubjectsColor(nSubjects) {

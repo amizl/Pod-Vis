@@ -14,10 +14,13 @@
       <v-tooltip top color="primary">
         <span>View Data Summary</span>
       </v-tooltip>
+
+      <save-first-last-visit-btn-dialog />
+      
     </v-toolbar>
     <v-layout>
       <v-flex>
-        <analysis-tracker step="3" :substep="substep"></analysis-tracker>
+        <analysis-tracker step="2" :substep="substep"></analysis-tracker>
       </v-flex>
     </v-layout>
 
@@ -27,7 +30,7 @@
           <v-layout column fill-height class="ma-1 pt-3">
             <visit-variables-toolbar></visit-variables-toolbar>
             <v-container fluid fill-height class="pa-0 pb-1">
-              <bubble-chart> </bubble-chart>
+              <bubble-chart :var-opacity='"0.3"' :collection-var-opacity='"0.8"' > </bubble-chart>
             </v-container>
           </v-layout>
         </v-sheet>
@@ -42,6 +45,7 @@ import { actions, state } from '@/store/modules/dataSummary/types';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import VisitVariablesToolbar from '@/components/DataSummary/VisitVariablesToolbar.vue';
 import BubbleChart from '@/components/DataSummary/BubbleChart/BubbleChart.vue';
+import SaveFirstLastVisitBtnDialog from '@/components/BuildDataset/SaveFirstLastVisitBtnDialog.vue';
 
 export default {
   name: 'DataSummary',
@@ -49,6 +53,7 @@ export default {
     AnalysisTracker,
     VisitVariablesToolbar,
     BubbleChart,
+    SaveFirstLastVisitBtnDialog,
   },
   props: {
     collectionId: {
@@ -59,7 +64,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      substep: '3.1',
+      substep: '2.4',
     };
   },
   computed: {

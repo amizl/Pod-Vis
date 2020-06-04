@@ -24,6 +24,7 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 // Directives
 import resize from 'vue-resize-directive';
+import { colors } from '@/utils/colors';
 
 export default {
   directives: {
@@ -37,7 +38,20 @@ export default {
       select(el).call(axisMethod);
     },
   },
-  data() {
+  props: {
+    varOpacity: {
+      type: String,
+      required: true,
+    },
+    collectionVarOpacity: {
+      type: String,
+      required: true,
+    },
+  },
+created() {
+console.log("this.varOpacity = " + this.varOpacity + " this.collectionVarOpacity=" + this.collectionVarOpacity);
+},
+data() {
     return {
       isLoading: true,
       haveDimensions: false,
@@ -60,10 +74,12 @@ export default {
       maxGroupCount: 0,
       testCount: 0,
       eventCount: 0,
+      colors: colors, 
     };
   },
   computed: {
     ...mapState('dataSummary', {
+      collection: state.COLLECTION,
       collectionSummaries: state.COLLECTION_SUMMARIES,
       firstVisit: state.FIRST_VISIT,
       lastVisit: state.LAST_VISIT,
@@ -121,10 +137,12 @@ export default {
       );
       this.eventCount = this.uniqueEvents.length;
 
-      // Identufy the unique tests
+      // Identify the unique tests
       this.uniqueTests = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 1)
-      );
+      ).sort().reverse();
+// test behavior when number of vars is small:
+// .slice(1,4);
       this.testCount = this.uniqueTests.length;
 
       var testGroupCounts = this.getColumn(
@@ -134,9 +152,24 @@ export default {
       this.minGroupCount = Math.min(...testGroupCounts);
       this.maxGroupCount = Math.max(...testGroupCounts);
 
+      // generate lookup of variable names actually in the collection
+      var collectionVarNames = {};
+				  var getCollectionVarNames = function(vars) {
+				  vars.forEach(v => { if (v.children && v.children.length > 0) {
+if (v.children[0].label === 'First Visit') {
+  collectionVarNames[v.label] = true;
+} else {
+  getCollectionVarNames(v.children);
+}
+}});
+};
+
+getCollectionVarNames(this.collection.observation_variables);
+
       // set the dimensions and margins of the graph
       var width = this.canvasWidth - this.margin.left - this.margin.right;
       var height = this.canvasHeight - this.margin.top - this.margin.bottom;
+
       var margin = {
         left: this.margin.left,
         right: this.margin.right,
@@ -182,10 +215,15 @@ export default {
         .selectAll('text')
         .attr('transform', 'translate(10, -5)rotate(-45)');
 
+      var cvo = this.collectionVarOpacity;
+      var vo = this.varOpacity;
+
       mysvg
         .append('g')
         .attr('transform', 'translate(' + margin.left + ', 0)')
-        .call(d3.axisLeft(y));
+        .call(d3.axisLeft(y))
+        .selectAll('text')
+        .style('opacity', function(d) { return (d in collectionVarNames) ? cvo : vo; });
 
       mysvg
         .append('g')
@@ -208,7 +246,7 @@ export default {
           return val;
         })
         .style('fill', '#69b3a2')
-        .style('opacity', '0.7')
+        .style('opacity', function(d) { return (d[1] in collectionVarNames) ? cvo : vo; })
         .attr('stroke', 'black');
 
       mysvg
@@ -277,6 +315,20 @@ export default {
           return d;
         });
 
+      var highlightRow = function(var_id, color) {
+console.log("highlightRow called on " + var_id);
+				  mysvg
+          .append('g')
+          .append('rect')
+          .attr('x', margin.left)
+          .attr('y', y(var_id) + margin.top)
+          .attr('width', width - margin.left - margin.right)
+          .attr('height', y_bw)
+          .style('fill', color)
+          .style('opacity', '0.4')
+          .attr('stroke', 'none');
+      };
+
       var highlightCol = function(visit, color) {
         mysvg
           .append('g')
@@ -292,10 +344,10 @@ export default {
 
       // highlight first and last selections
       if (this.firstVisit) {
-        highlightCol(this.firstVisit, 'lightgreen');
+        highlightCol(this.firstVisit, colors['firstVisit']);
       }
       if (this.lastVisit) {
-        highlightCol(this.lastVisit, 'lightblue');
+        highlightCol(this.lastVisit, colors['lastVisit']);
       }
     },
   },
