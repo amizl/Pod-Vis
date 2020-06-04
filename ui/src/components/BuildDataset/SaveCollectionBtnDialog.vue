@@ -111,7 +111,8 @@ export default {
           });
           this.$emit('collectionSaved');
           this.loading = false;
-          this.$router.push(`/cohorts?collection=${newCollection.id}`);
+//          this.$router.push(`/cohorts?collection=${newCollection.id}`);
+          this.$router.push(`/data_summary?collection=${newCollection.id}`);
         } catch (err) {
           this.loading = false;
         }

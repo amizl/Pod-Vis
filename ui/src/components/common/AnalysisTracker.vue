@@ -84,20 +84,23 @@
         <v-stepper-step :complete="substep !== '2.1' || step === '3'" step="2.1"
           >Choose Datasets
           <span
-            >Choose one or more datasets and click on "SELECT VARIABLES"</span
+            >Choose datasets and click "SELECT VARIABLES"</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="substep === '2.3' || step === '3'" step="2.2"
+        <v-stepper-step :complete="substep === '2.3' || substep === '2.4' || step === '3'" step="2.2"
           >Select Variables
           <span
-            >Select one or more variables and click on "SAVE STUDY
-            DATASET"</span
+            >Select variables and click on "SELECT VISITS"</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="step === '3'" step="2.3"
-          >Save (and name) Study Dataset</v-stepper-step
+        <v-stepper-step :complete="substep === '2.4' || step === '3'" step="2.3"
+          >Save Study Dataset</v-stepper-step
+        >
+        <v-divider></v-divider>
+        <v-stepper-step :complete="step === '3'" step="2.4"
+          >Choose First/Last Visit</v-stepper-step
         >
       </v-stepper-header>
     </v-stepper>

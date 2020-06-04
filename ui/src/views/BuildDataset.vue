@@ -25,8 +25,9 @@
         @dialogOpen="dialogOpened"
         @collectionSaved="collectionSaved"
       />
-    </v-toolbar>
 
+    </v-toolbar>
+    
     <v-sheet color="white" height="100%" class="scroll rounded-lg shadow">
       <analysis-tracker
         :step.sync="step"
@@ -133,6 +134,7 @@ export default {
     UnsharedVariableTable,
     SaveCollectionBtnDialog,
   },
+
   props: {
     // id is passed in via route parameters
     // i.e., /build?id=x&id=y
