@@ -574,7 +574,8 @@ class Collection(db.Model):
 
         query = text("""
             SELECT sv.""" + query_by + """, oo.label, count(obs.id) as num_obs
-            FROM collection c, collection_study cs, subject s, subject_visit sv, observation obs, observation_ontology oo
+            FROM collection c, collection_study cs,
+                 subject s, subject_visit sv, observation obs, observation_ontology oo
             WHERE c.id = (:id)
             AND c.id = cs.collection_id
             AND cs.study_id = s.study_id
