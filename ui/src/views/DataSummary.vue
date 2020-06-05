@@ -16,7 +16,6 @@
       </v-tooltip>
 
       <save-first-last-visit-btn-dialog />
-      
     </v-toolbar>
     <v-layout>
       <v-flex>
@@ -30,7 +29,11 @@
           <v-layout column fill-height class="ma-1 pt-3">
             <visit-variables-toolbar></visit-variables-toolbar>
             <v-container fluid fill-height class="pa-0 pb-1">
-              <bubble-chart :var-opacity='"0.3"' :collection-var-opacity='"0.8"' > </bubble-chart>
+              <bubble-chart
+                :var-opacity="'0.3'"
+                :collection-var-opacity="'0.8'"
+              >
+              </bubble-chart>
             </v-container>
           </v-layout>
         </v-sheet>

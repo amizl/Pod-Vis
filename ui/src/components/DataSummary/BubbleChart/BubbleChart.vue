@@ -48,10 +48,7 @@ export default {
       required: true,
     },
   },
-created() {
-console.log("this.varOpacity = " + this.varOpacity + " this.collectionVarOpacity=" + this.collectionVarOpacity);
-},
-data() {
+  data() {
     return {
       isLoading: true,
       haveDimensions: false,
@@ -74,7 +71,7 @@ data() {
       maxGroupCount: 0,
       testCount: 0,
       eventCount: 0,
-      colors: colors, 
+      colors: colors,
     };
   },
   computed: {
@@ -140,11 +137,15 @@ data() {
       // Identify the unique tests
       this.uniqueTests = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 1)
-      ).sort().reverse();
-// test behavior when number of vars is small:
-// .slice(1,4);
-      this.testCount = this.uniqueTests.length;
+      )
+        .sort()
+        .reverse();
 
+      // DEBUG
+      // test behavior when number of vars is small:
+      // .slice(1,4);
+
+      this.testCount = this.uniqueTests.length;
       var testGroupCounts = this.getColumn(
         this.collectionSummaries[this.visitVariable],
         2
@@ -154,17 +155,19 @@ data() {
 
       // generate lookup of variable names actually in the collection
       var collectionVarNames = {};
-				  var getCollectionVarNames = function(vars) {
-				  vars.forEach(v => { if (v.children && v.children.length > 0) {
-if (v.children[0].label === 'First Visit') {
-  collectionVarNames[v.label] = true;
-} else {
-  getCollectionVarNames(v.children);
-}
-}});
-};
+      var getCollectionVarNames = function(vars) {
+        vars.forEach(v => {
+          if (v.children && v.children.length > 0) {
+            if (v.children[0].label === 'First Visit') {
+              collectionVarNames[v.label] = true;
+            } else {
+              getCollectionVarNames(v.children);
+            }
+          }
+        });
+      };
 
-getCollectionVarNames(this.collection.observation_variables);
+      getCollectionVarNames(this.collection.observation_variables);
 
       // set the dimensions and margins of the graph
       var width = this.canvasWidth - this.margin.left - this.margin.right;
@@ -223,7 +226,9 @@ getCollectionVarNames(this.collection.observation_variables);
         .attr('transform', 'translate(' + margin.left + ', 0)')
         .call(d3.axisLeft(y))
         .selectAll('text')
-        .style('opacity', function(d) { return (d in collectionVarNames) ? cvo : vo; });
+        .style('opacity', function(d) {
+          return d in collectionVarNames ? cvo : vo;
+        });
 
       mysvg
         .append('g')
@@ -246,7 +251,9 @@ getCollectionVarNames(this.collection.observation_variables);
           return val;
         })
         .style('fill', '#69b3a2')
-        .style('opacity', function(d) { return (d[1] in collectionVarNames) ? cvo : vo; })
+        .style('opacity', function(d) {
+          return d[1] in collectionVarNames ? cvo : vo;
+        })
         .attr('stroke', 'black');
 
       mysvg
@@ -315,9 +322,9 @@ getCollectionVarNames(this.collection.observation_variables);
           return d;
         });
 
+      // unused
       var highlightRow = function(var_id, color) {
-console.log("highlightRow called on " + var_id);
-				  mysvg
+        mysvg
           .append('g')
           .append('rect')
           .attr('x', margin.left)

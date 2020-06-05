@@ -25,9 +25,8 @@
         @dialogOpen="dialogOpened"
         @collectionSaved="collectionSaved"
       />
-
     </v-toolbar>
-    
+
     <v-sheet color="white" height="100%" class="scroll rounded-lg shadow">
       <analysis-tracker
         :step.sync="step"

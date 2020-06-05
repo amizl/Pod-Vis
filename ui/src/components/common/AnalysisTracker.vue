@@ -88,7 +88,9 @@
           ></v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="substep === '2.3' || substep === '2.4' || step === '3'" step="2.2"
+        <v-stepper-step
+          :complete="substep === '2.3' || substep === '2.4' || step === '3'"
+          step="2.2"
           >Select Variables
           <span
             >Select variables and click on "SELECT VISITS"</span
