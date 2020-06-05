@@ -153,6 +153,8 @@ export default {
       this.minGroupCount = Math.min(...testGroupCounts);
       this.maxGroupCount = Math.max(...testGroupCounts);
 
+console.log("min-max group count = " + this.minGroupCount + " - " + this.maxGroupCount);
+
       // generate lookup of variable names actually in the collection
       var collectionVarNames = {};
       var getCollectionVarNames = function(vars) {
@@ -265,7 +267,7 @@ export default {
         .style('font-size', 25);
 
       // Add legend to the plot
-      var circInt = this.maxGroupCount / 5;
+      var circInt = this.maxGroupCount / 4;
 
       var cirCounts = [];
       for (let index = 0; index < 5; index++) {
@@ -276,10 +278,10 @@ export default {
       mysvg
         .append('g')
         .append('rect')
-        .attr('x', width + margin.left + 5)
+        .attr('x', width + margin.left + 10)
         .attr('y', margin.top * 2)
         .attr('width', max_radius * 5)
-        .attr('height', max_radius * 10)
+        .attr('height', max_radius * 11)
         .style('fill', 'gray')
         .style('opacity', '0.4')
         .attr('stroke', 'black');
@@ -291,9 +293,9 @@ export default {
         .data(cirCounts)
         .enter()
         .append('circle')
-        .attr('cx', width + margin.left + 20)
+        .attr('cx', width + margin.left + 30)
         .attr('cy', function(d, i) {
-          var val = (5 - i) * max_radius * 1.6 + margin.top * 2;
+          var val = (5 - i) * max_radius * 1.8 + margin.top * 2;
           return val;
         })
         .attr('r', function(d) {
@@ -312,12 +314,12 @@ export default {
         .enter()
         .append('text')
         .attr('text-anchor', 'middle')
-        .attr('x', width + margin.left + max_radius * 2 + 20)
+        .attr('x', width + margin.left + max_radius * 2 + 30)
         .attr('y', function(d, i) {
-          var val = (5 - i) * max_radius * 1.6 + margin.top * 2 + 5;
+          var val = (5 - i) * max_radius * 1.8 + margin.top * 2 + 5;
           return val;
         })
-        .style('font-size', 10)
+        .style('font-size', 12)
         .text(function(d) {
           return d;
         });
