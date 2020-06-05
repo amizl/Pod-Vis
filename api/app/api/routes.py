@@ -1121,4 +1121,28 @@ def get_collection_obs_summary_by_event(collection_id):
     if not obs_summaries:
         raise ResourceNotFound("Collection not found.")
     
-    return jsonify(obs_summaries)
+    return jsonify({
+        "success": True,
+        "summaries": obs_summaries,
+    }), 201
+
+# Method to calculate average time between events
+@api.route("/collections/time_between_visits/<int:collection_id>")
+@jwt_required
+def get_collection_time_between_visits(collection_id):
+    query_by = request.args.get("query_by")
+    visit1 = request.args.get("visit1")
+    visit2 = request.args.get("visit2")
+    
+    avg_times = models.Collection.get_avg_time_between_visits(collection_id, query_by, visit1, visit2)
+
+    if not avg_times:
+        raise ResourceNotFound("Collection not found.") 
+
+    return jsonify({
+        "success": True,
+        "visit1": visit1,
+        "visit2": visit2,
+        "query_by": query_by,
+        "times": avg_times,
+    }), 201

@@ -111,8 +111,9 @@ export default {
       const { data } = await axios.get(
         `/api/collections/obs_summaries/${collectionId}`
       );
+
       // massage collection observation summary data... here
-      commit(mutations.SET_COLLECTION_SUMMARIES, data);
+      commit(mutations.SET_COLLECTION_SUMMARIES, data['summaries']);
     } catch ({ response }) {
       // Something went wrong...
       // user didn't have access to collection? collection not found?

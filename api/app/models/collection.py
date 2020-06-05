@@ -591,3 +591,51 @@ class Collection(db.Model):
             result.append([row[query_by], row.label, row.num_obs])
         return result
         
+    @classmethod
+    def get_avg_time_between_visits(cls, collection_id, query_by, visit1, visit2):
+        """Find the average time between visits for the specified collection and pair of visits.
+
+        Args:
+            collection_id: Collection's ID.
+            query_by: Either 'visit_num' or 'visit_event'
+            visit1: Name of the first visit
+            visit2: Name of the second visit
+
+        Returns:
+            List of study_id, study_name, n_subjects, avg_time_secs
+
+        """
+
+        connection = db.engine.connect()
+
+        query = text("""
+            SELECT cs.study_id, st.study_name, COUNT(DISTINCT s.id) AS num_subjects,
+                   AVG(unix_timestamp(sv2.event_date) - unix_timestamp(sv1.event_date)) as average_time
+            FROM collection c, collection_study cs, study st, subject s, 
+                 subject_visit sv1, subject_visit sv2
+            WHERE c.id = (:id)
+            AND c.id = cs.collection_id
+            AND cs.study_id = s.study_id
+            AND cs.study_id = st.id
+            AND s.id = sv1.subject_id
+            AND s.id = sv2.subject_id
+            AND sv1.""" + query_by + """ = (:visit1)
+            AND sv2.""" + query_by + """ = (:visit2)
+            GROUP BY cs.study_id
+        """)
+
+        result_proxy = connection.execute(query,
+                                          id=collection_id,
+                                          visit1=visit1,
+                                          visit2=visit2,
+        ).fetchall()
+        result = []
+        for row in result_proxy:
+            result.append({
+                "study_id": row.study_id,
+                "study_name": row.study_name,
+                "n_subjects": row.num_subjects,
+                "avg_time_secs": int(row.average_time)
+            })
+        return result
+        

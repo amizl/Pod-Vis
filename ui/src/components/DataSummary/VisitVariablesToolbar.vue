@@ -15,7 +15,7 @@
           :items="firstVisitEvents"
           label="Select first visit"
           :background-color="colors['firstVisit']"
-          >
+        >
         </v-select>
         <v-spacer />
         <v-divider vertical class="ml-4"></v-divider>
@@ -26,6 +26,7 @@
           :background-color="colors['lastVisit']"
         >
         </v-select>
+        &nbsp; Average time between visits: {{ timeBetweenVisits }}
       </v-toolbar-items>
       <v-spacer />
       <v-divider vertical class="ml-4"></v-divider>
@@ -35,6 +36,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapState, mapMutations } from 'vuex';
 import { state, actions } from '@/store/modules/dataSummary/types';
 import { colors } from '@/utils/colors';
@@ -47,6 +49,7 @@ export default {
       firstVisitEvents: [],
       lastVisitEvents: [],
       selVisitVariable: null,
+      timeBetweenVisits: 'N/A',
       colors: colors,
     };
   },
@@ -54,6 +57,7 @@ export default {
     ...mapState('dataSummary', {
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
+      collection: state.COLLECTION,
       collectionSummaries: state.COLLECTION_SUMMARIES,
       selFirstVisit: state.FIRST_VISIT,
       selLastVisit: state.LAST_VISIT,
@@ -86,6 +90,12 @@ export default {
     },
     visitVariable() {
       this.updateEvents();
+    },
+    selFirstVisit() {
+      this.updateTimeBetweenVisits();
+    },
+    selLastVisit() {
+      this.updateTimeBetweenVisits();
     },
   },
   created() {
@@ -128,6 +138,31 @@ export default {
     getUniqueList(anArray) {
       var unique = anArray.filter((v, i, a) => a.indexOf(v) === i);
       return unique;
+    },
+    async updateTimeBetweenVisits() {
+      if (this.selFirstVisit && this.selLastVisit) {
+        var query_by =
+          this.visitVariable === 'Visit Event' ? 'visit_event' : 'visit_num';
+        var request_url =
+          '/api/collections/time_between_visits/' +
+          this.collection.id +
+          '?query_by=' +
+          query_by +
+          '&visit1=' +
+          this.selFirstVisit +
+          '&visit2=' +
+          this.selLastVisit;
+        const { data } = await axios.get(request_url);
+        if (
+          data['query_by'] === query_by &&
+          data['visit1'] == this.selFirstVisit &&
+          data['visit2'] == this.selLastVisit
+        ) {
+          this.timeBetweenVisits =
+            data['times'][0]['avg_time_secs'] / (3600 * 24.0) / 365.0 +
+            ' years';
+        }
+      }
     },
     ...mapMutations('dataSummary', {
       setFirstVisit: actions.SET_FIRST_VISIT,
