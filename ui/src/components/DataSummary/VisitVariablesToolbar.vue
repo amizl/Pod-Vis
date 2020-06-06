@@ -11,7 +11,7 @@ L<template>
         <v-spacer />
         <v-divider vertical class="ml-4"></v-divider>
         <v-select
-          v-model="firstVisit"
+          v-model="selFirstVisit"
           :items="firstVisitEvents"
           label="Select first visit"
           :background-color="colors['firstVisit']"
@@ -20,7 +20,7 @@ L<template>
         <v-spacer />
         <v-divider vertical class="ml-4"></v-divider>
         <v-select
-          v-model="lastVisit"
+          v-model="selLastVisit"
           :items="lastVisitEvents"
           label="Select last visit"
           :background-color="colors['lastVisit']"
@@ -79,6 +79,8 @@ export default {
       firstVisitEvents: [],
       lastVisitEvents: [],
       selVisitVariable: null,
+      selFirstVisit: null,
+      selLastVisit: null,
       timesBetweenVisits: [],
       colors: colors,
       headers: [
@@ -112,28 +114,10 @@ export default {
       unfilteredData: state.UNFILTERED_DATA,
       collection: state.COLLECTION,
       collectionSummaries: state.COLLECTION_SUMMARIES,
-      selFirstVisit: state.FIRST_VISIT,
-      selLastVisit: state.LAST_VISIT,
+      firstVisit: state.FIRST_VISIT,
+      lastVisit: state.LAST_VISIT,
       visitVariable: state.VISIT_VARIABLE,
     }),
-    lastVisit: {
-      get() {
-        return this.selLastVisit;
-      },
-      set(value) {
-        this.setLastVisit(value);
-        this.updateEvents();
-      },
-    },
-    firstVisit: {
-      get() {
-        return this.selFirstVisit;
-      },
-      set(value) {
-        this.setFirstVisit(value);
-        this.updateEvents();
-      },
-    },
   },
   watch: {
     selVisitVariable(newval) {
@@ -144,15 +128,25 @@ export default {
     visitVariable() {
       this.updateEvents();
     },
-    selFirstVisit() {
+    firstVisit(fv) {
+      this.selFirstVisit = fv;
+    },
+    lastVisit(lv) {
+      this.selLastVisit = lv;
+    },
+    selFirstVisit(fv) {
+      this.setFirstVisit(fv);
       this.updateTimesBetweenVisits();
     },
-    selLastVisit() {
+    selLastVisit(lv) {
+      this.setLastVisit(lv);
       this.updateTimesBetweenVisits();
     },
   },
   created() {
     this.selVisitVariable = this.visitVariable;
+    this.selFirstVisit = this.firstVisit;
+    this.selLastVisit = this.lastVisit;
   },
   mounted() {
     this.updateEvents();
@@ -165,10 +159,10 @@ export default {
       );
 
       if (!this.firstVisit) {
-        this.firstVisit = this.uniqueEvents[0];
+        this.selFirstVisit = this.uniqueEvents[0];
       }
       if (!this.lastVisit) {
-        this.lastVisit = this.uniqueEvents[this.uniqueEvents.length - 1];
+        this.selLastVisit = this.uniqueEvents[this.uniqueEvents.length - 1];
       }
 
       // possible first visit events - all those up until lastVisit
@@ -213,6 +207,7 @@ export default {
           this.selFirstVisit +
           '&visit2=' +
           this.selLastVisit;
+
         const { data } = await axios.get(request_url);
         if (
           data['query_by'] === query_by &&

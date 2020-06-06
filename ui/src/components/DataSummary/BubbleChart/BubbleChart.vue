@@ -354,7 +354,6 @@ export default {
           .attr('stroke', 'black');
 
         // enable dragging
-
         var min_x = margin.left;
         var max_x = margin.left + width - x.bandwidth();
         var xoffset = 0;
@@ -372,13 +371,30 @@ export default {
           if (new_x > max_x) {
             new_x = max_x;
           }
+          // don't allow first visit to go past last visit
+          if (is_first) {
+            if (chart.lastVisit) {
+              var lvx = x(chart.lastVisit) + margin.left;
+              if (new_x > lvx - x_bw) {
+                new_x = lvx - x_bw;
+              }
+            }
+          }
+          // don't allow last visit to go past first visit
+          else {
+            if (chart.firstVisit) {
+              var lvx = x(chart.firstVisit) + margin.left;
+              if (new_x < lvx + x_bw) {
+                new_x = lvx + x_bw;
+              }
+            }
+          }
           d3.select(this).attr('x', new_x);
         };
 
         var drag_end_fn = function(d) {
           // find nearest visit event/num and update/snap to grid
-          var new_x = d3.event.x - xoffset;
-          var midpt = new_x + x_hbw;
+          var midpt = d3.select(this).attr('x') * 1.0 + x_hbw;
           var visitnum = Math.floor((midpt - min_x) / x_bw);
           if (visitnum < 0) {
             visitnum = 0;
