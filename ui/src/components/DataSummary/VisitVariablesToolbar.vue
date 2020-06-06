@@ -1,4 +1,4 @@
-<template>
+L<template>
   <section>
     <v-toolbar card dense flat color="white rounded-lg">
       <v-toolbar-items>
@@ -26,12 +26,30 @@
           :background-color="colors['lastVisit']"
         >
         </v-select>
-        &nbsp; Average time between visits: {{ timeBetweenVisits }}
       </v-toolbar-items>
       <v-spacer />
       <v-divider vertical class="ml-4"></v-divider>
     </v-toolbar>
     <v-divider></v-divider>
+
+    <v-data-table
+      :headers="headers"
+      :items="timesBetweenVisits"
+      dense
+      hide-default-header
+      hide-actions
+      :pagination.sync="pagination"
+    >
+      <template v-slot:items="props">
+        <tr>
+          <td class="text-xs-left">{{ props.item.study_name }}</td>
+          <td class="text-xs-left">{{ props.item.n_subjects }}</td>
+          <td class="text-xs-left">
+            {{ props.item.avg_time_secs | formatTime }}
+          </td>
+        </tr>
+      </template>
+    </v-data-table>
   </section>
 </template>
 
@@ -40,8 +58,20 @@ import axios from 'axios';
 import { mapState, mapMutations } from 'vuex';
 import { state, actions } from '@/store/modules/dataSummary/types';
 import { colors } from '@/utils/colors';
+import { format } from 'd3-format';
 
 export default {
+  filters: {
+    formatTime(tsecs) {
+      var tdays = tsecs / (3600 * 24);
+      var tyears = tdays / 365.25;
+      if (tdays <= 60) {
+        return format('.1f')(tdays) + ' days';
+      } else {
+        return format('.1f')(tyears) + ' years';
+      }
+    },
+  },
   data() {
     return {
       visitItems: ['Visit Event', 'Visit Number'],
@@ -49,8 +79,31 @@ export default {
       firstVisitEvents: [],
       lastVisitEvents: [],
       selVisitVariable: null,
-      timeBetweenVisits: 'N/A',
+      timesBetweenVisits: [],
       colors: colors,
+      headers: [
+        {
+          text: 'Study',
+          align: 'left',
+          sortable: true,
+          value: 'study_name',
+        },
+        {
+          text: 'Subject Count',
+          align: 'left',
+          sortable: true,
+          value: 'n_subjects',
+        },
+        {
+          text: 'Average Time',
+          align: 'left',
+          sortable: true,
+          value: 'avg_time_secs',
+        },
+      ],
+      pagination: {
+        rowsPerPage: -1,
+      },
     };
   },
   computed: {
@@ -92,10 +145,10 @@ export default {
       this.updateEvents();
     },
     selFirstVisit() {
-      this.updateTimeBetweenVisits();
+      this.updateTimesBetweenVisits();
     },
     selLastVisit() {
-      this.updateTimeBetweenVisits();
+      this.updateTimesBetweenVisits();
     },
   },
   created() {
@@ -110,6 +163,14 @@ export default {
       this.uniqueEvents = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
       );
+
+      if (!this.firstVisit) {
+        this.firstVisit = this.uniqueEvents[0];
+      }
+      if (!this.lastVisit) {
+        this.lastVisit = this.uniqueEvents[this.uniqueEvents.length - 1];
+      }
+
       // possible first visit events - all those up until lastVisit
       this.firstVisitEvents = [];
       for (var i = 0; i < this.uniqueEvents.length; i++) {
@@ -139,7 +200,7 @@ export default {
       var unique = anArray.filter((v, i, a) => a.indexOf(v) === i);
       return unique;
     },
-    async updateTimeBetweenVisits() {
+    async updateTimesBetweenVisits() {
       if (this.selFirstVisit && this.selLastVisit) {
         var query_by =
           this.visitVariable === 'Visit Event' ? 'visit_event' : 'visit_num';
@@ -158,9 +219,7 @@ export default {
           data['visit1'] == this.selFirstVisit &&
           data['visit2'] == this.selLastVisit
         ) {
-          this.timeBetweenVisits =
-            data['times'][0]['avg_time_secs'] / (3600 * 24.0) / 365.0 +
-            ' years';
+          this.timesBetweenVisits = data['times'];
         }
       }
     },

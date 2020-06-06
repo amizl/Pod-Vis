@@ -12,8 +12,8 @@
 
 <script>
 // Data Store
-import { mapState } from 'vuex';
-import { state } from '@/store/modules/dataSummary/types';
+import { mapState, mapMutations } from 'vuex';
+import { state, actions } from '@/store/modules/dataSummary/types';
 // D3 Modules
 import * as d3 from 'd3';
 import { max } from 'd3-array';
@@ -152,8 +152,6 @@ export default {
       );
       this.minGroupCount = Math.min(...testGroupCounts);
       this.maxGroupCount = Math.max(...testGroupCounts);
-
-console.log("min-max group count = " + this.minGroupCount + " - " + this.maxGroupCount);
 
       // generate lookup of variable names actually in the collection
       var collectionVarNames = {};
@@ -338,9 +336,14 @@ console.log("min-max group count = " + this.minGroupCount + " - " + this.maxGrou
           .attr('stroke', 'none');
       };
 
-      var highlightCol = function(visit, color) {
-        mysvg
-          .append('g')
+      var addDraggableHighlightCol = function(visit, color, chart, is_first) {
+        var cx = x(visit) + margin.left;
+        var cy = margin.top;
+        var cw = width - margin.right;
+        var ch = height - margin.bottom;
+
+        var g = mysvg.append('g');
+        var colRect = g
           .append('rect')
           .attr('x', x(visit) + margin.left)
           .attr('y', margin.top)
@@ -348,17 +351,79 @@ console.log("min-max group count = " + this.minGroupCount + " - " + this.maxGrou
           .attr('height', height - margin.top)
           .style('fill', color)
           .style('opacity', '0.4')
-          .attr('stroke', 'none');
+          .attr('stroke', 'black');
+
+        // enable dragging
+
+        var min_x = margin.left;
+        var max_x = margin.left + width - x.bandwidth();
+        var xoffset = 0;
+
+        var start_drag_fn = function(d) {
+          xoffset = d3.event.x - d3.select(this).attr('x');
+        };
+
+        // TODO - do not allow one endpoint to be dragged over the other
+        var on_drag_fn = function(d) {
+          var new_x = d3.event.x - xoffset;
+          if (new_x < min_x) {
+            new_x = min_x;
+          }
+          if (new_x > max_x) {
+            new_x = max_x;
+          }
+          d3.select(this).attr('x', new_x);
+        };
+
+        var drag_end_fn = function(d) {
+          // find nearest visit event/num and update/snap to grid
+          var new_x = d3.event.x - xoffset;
+          var midpt = new_x + x_hbw;
+          var visitnum = Math.floor((midpt - min_x) / x_bw);
+          if (visitnum < 0) {
+            visitnum = 0;
+          }
+          if (visitnum >= chart.uniqueEvents.length) {
+            visitnum = chart.uniqueEvents.length - 1;
+          }
+          var visit = chart.uniqueEvents[visitnum];
+          if (is_first) {
+            chart.setFirstVisit(visit);
+          } else {
+            chart.setLastVisit(visit);
+          }
+        };
+
+        var dh = d3
+          .drag()
+          .on('start', start_drag_fn)
+          .on('drag', on_drag_fn)
+          .on('end', drag_end_fn);
+        dh(colRect);
       };
 
       // highlight first and last selections
       if (this.firstVisit) {
-        highlightCol(this.firstVisit, colors['firstVisit']);
+        addDraggableHighlightCol(
+          this.firstVisit,
+          colors['firstVisit'],
+          this,
+          true
+        );
       }
       if (this.lastVisit) {
-        highlightCol(this.lastVisit, colors['lastVisit']);
+        addDraggableHighlightCol(
+          this.lastVisit,
+          colors['lastVisit'],
+          this,
+          false
+        );
       }
     },
+    ...mapMutations('dataSummary', {
+      setFirstVisit: actions.SET_FIRST_VISIT,
+      setLastVisit: actions.SET_LAST_VISIT,
+    }),
   },
 };
 </script>
