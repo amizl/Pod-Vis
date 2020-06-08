@@ -45,4 +45,12 @@ export default {
   [mutations.SET_VISIT_VARIABLE](state, newVisitVar) {
     state[stateTypes.VISIT_VARIABLE] = newVisitVar;
   },
+  /**
+   * Set times between visits.
+   * @param {*} state
+   * @param {*} newTimesVar
+   */
+  [mutations.SET_TIMES_BETWEEN_VISITS](state, newTimesVar) {
+    state[stateTypes.TIMES_BETWEEN_VISITS] = newTimesVar;
+  },
 };

@@ -7,4 +7,5 @@ export default {
   [state.FIRST_VISIT]: null,
   [state.LAST_VISIT]: null,
   [state.VISIT_VARIABLE]: 'Visit Event',
+  [state.TIMES_BETWEEN_VISITS]: null,
 };
