@@ -5,35 +5,34 @@
   </v-container>
   <v-container v-else fluid fill-width class="ma-0 pa-2">
     <v-toolbar app class="primary">
-      <v-toolbar-title class="subheading white--text"
-        >Data Summary Viewer
-        <div class="subheading">{{ collection.label }}</div>
+      <v-toolbar-title class="white--text"
+        >Dataset Manager - Create New Study Dataset
+        <div class="subheading">Choose First & Last Visit</div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-tooltip top color="primary">
-        <span>View Data Summary</span>
-      </v-tooltip>
-
       <save-first-last-visit-btn-dialog />
     </v-toolbar>
-    <v-layout>
-      <v-flex>
+
+    <v-layout row class="ma-0 pa-0">
+      <v-flex xs12>
         <analysis-tracker step="2" :substep="substep"></analysis-tracker>
       </v-flex>
     </v-layout>
 
-    <v-layout fill-height>
-      <v-flex>
+    <v-layout fill-width class="mt-2 pa-0">
+      <v-flex xs12>
         <v-sheet color="white" height="100%" class="rounded-lg shadow">
-          <v-layout column fill-height class="ma-1 pt-3">
+          <v-layout column class="ma-1 pt-1">
             <visit-variables-toolbar></visit-variables-toolbar>
-            <v-container fluid fill-height class="pa-0 pb-1">
+            <!--	    <visit-times-list></visit-times-list> -->
+
+            <v-container fluid class="pa-0 pb-0">
               <bubble-chart
                 :var-opacity="'0.3'"
                 :collection-var-opacity="'0.8'"
               >
               </bubble-chart>
+              <visit-times-table></visit-times-table>
             </v-container>
           </v-layout>
         </v-sheet>
@@ -47,6 +46,8 @@ import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/dataSummary/types';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import VisitVariablesToolbar from '@/components/DataSummary/VisitVariablesToolbar.vue';
+import VisitTimesList from '@/components/DataSummary/VisitTimesList.vue';
+import VisitTimesTable from '@/components/DataSummary/VisitTimesTable.vue';
 import BubbleChart from '@/components/DataSummary/BubbleChart/BubbleChart.vue';
 import SaveFirstLastVisitBtnDialog from '@/components/BuildDataset/SaveFirstLastVisitBtnDialog.vue';
 
@@ -55,6 +56,8 @@ export default {
   components: {
     AnalysisTracker,
     VisitVariablesToolbar,
+    VisitTimesList,
+    VisitTimesTable,
     BubbleChart,
     SaveFirstLastVisitBtnDialog,
   },

@@ -1,77 +1,74 @@
-L<template>
+<template>
   <section>
-    <v-toolbar card dense flat color="white rounded-lg">
+    <v-toolbar
+      card
+      dense
+      flat
+      color="white rounded-lg"
+      class="toolbar_step_highlight"
+    >
+      <v-toolbar-title class="primary--text title">
+        CHOOSE FIRST & LAST VISIT
+      </v-toolbar-title>
+
+      <v-divider vertical class="ml-4"> </v-divider>
+
+      <v-chip color="primary" class="white--text title"
+        >{{ collection.observation_variables.length }} variable<span
+          v-if="collection.observation_variables.length != 1"
+          >s</span
+        >&nbsp;selected</v-chip
+      >
+      <v-spacer />
       <v-toolbar-items>
+        <v-chip
+          :disabled="true"
+          class="primary--text title"
+          :style="'background: ' + colors['population']"
+          >Study Population - {{ numSubjects }}</v-chip
+        >
+      </v-toolbar-items>
+    </v-toolbar>
+
+    <v-flex>
+      <v-container fill-height class="ma-0 pa-2">
         <v-select
           v-model="selVisitVariable"
           :items="visitItems"
           label="Select visit variable"
         >
         </v-select>
-        <v-spacer />
-        <v-divider vertical class="ml-4"></v-divider>
+
         <v-select
           v-model="selFirstVisit"
           :items="firstVisitEvents"
           label="Select first visit"
           :background-color="colors['firstVisit']"
+          class="ml-2"
         >
         </v-select>
-        <v-spacer />
-        <v-divider vertical class="ml-4"></v-divider>
+
         <v-select
           v-model="selLastVisit"
           :items="lastVisitEvents"
           label="Select last visit"
           :background-color="colors['lastVisit']"
+          class="ml-2"
         >
         </v-select>
-      </v-toolbar-items>
-      <v-spacer />
-      <v-divider vertical class="ml-4"></v-divider>
-    </v-toolbar>
-    <v-divider></v-divider>
-
-    <v-data-table
-      :headers="headers"
-      :items="timesBetweenVisits"
-      dense
-      hide-default-header
-      hide-actions
-      :pagination.sync="pagination"
-    >
-      <template v-slot:items="props">
-        <tr>
-          <td class="text-xs-left">{{ props.item.study_name }}</td>
-          <td class="text-xs-left">{{ props.item.n_subjects }}</td>
-          <td class="text-xs-left">
-            {{ props.item.avg_time_secs | formatTime }}
-          </td>
-        </tr>
-      </template>
-    </v-data-table>
+        <v-spacer />
+      </v-container>
+    </v-flex>
   </section>
 </template>
 
 <script>
 import axios from 'axios';
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/dataSummary/types';
 import { colors } from '@/utils/colors';
-import { format } from 'd3-format';
 
 export default {
-  filters: {
-    formatTime(tsecs) {
-      var tdays = tsecs / (3600 * 24);
-      var tyears = tdays / 365.25;
-      if (tdays <= 60) {
-        return format('.1f')(tdays) + ' days';
-      } else {
-        return format('.1f')(tyears) + ' years';
-      }
-    },
-  },
   data() {
     return {
       visitItems: ['Visit Event', 'Visit Number'],
@@ -81,31 +78,8 @@ export default {
       selVisitVariable: null,
       selFirstVisit: null,
       selLastVisit: null,
-      timesBetweenVisits: [],
+      numSubjects: 0,
       colors: colors,
-      headers: [
-        {
-          text: 'Study',
-          align: 'left',
-          sortable: true,
-          value: 'study_name',
-        },
-        {
-          text: 'Subject Count',
-          align: 'left',
-          sortable: true,
-          value: 'n_subjects',
-        },
-        {
-          text: 'Average Time',
-          align: 'left',
-          sortable: true,
-          value: 'avg_time_secs',
-        },
-      ],
-      pagination: {
-        rowsPerPage: -1,
-      },
     };
   },
   computed: {
@@ -117,22 +91,25 @@ export default {
       firstVisit: state.FIRST_VISIT,
       lastVisit: state.LAST_VISIT,
       visitVariable: state.VISIT_VARIABLE,
+      timesBetweenVisits: state.TIMES_BETWEEN_VISITS,
     }),
   },
   watch: {
     selVisitVariable(newval) {
       this.setVisitVariable(newval);
-      this.setFirstVisit(null);
-      this.setLastVisit(null);
     },
     visitVariable() {
+      this.selFirstVisit = null;
+      this.selLastVisit = null;
       this.updateEvents();
     },
     firstVisit(fv) {
       this.selFirstVisit = fv;
+      this.updateEvents();
     },
     lastVisit(lv) {
       this.selLastVisit = lv;
+      this.updateEvents();
     },
     selFirstVisit(fv) {
       this.setFirstVisit(fv);
@@ -142,13 +119,18 @@ export default {
       this.setLastVisit(lv);
       this.updateTimesBetweenVisits();
     },
+    timesBetweenVisits() {
+      var ns = 0;
+      this.timesBetweenVisits.forEach(x => {
+        ns += x.n_subjects;
+      });
+      this.numSubjects = ns;
+    },
   },
-  created() {
+  mounted() {
     this.selVisitVariable = this.visitVariable;
     this.selFirstVisit = this.firstVisit;
     this.selLastVisit = this.lastVisit;
-  },
-  mounted() {
     this.updateEvents();
   },
   methods: {
@@ -158,11 +140,11 @@ export default {
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
       );
 
-      if (!this.firstVisit) {
-        this.selFirstVisit = this.uniqueEvents[0];
+      if (!this.selFirstVisit) {
+        this.setFirstVisit(this.uniqueEvents[0]);
       }
-      if (!this.lastVisit) {
-        this.selLastVisit = this.uniqueEvents[this.uniqueEvents.length - 1];
+      if (!this.selLastVisit) {
+        this.setLastVisit(this.uniqueEvents[this.uniqueEvents.length - 1]);
       }
 
       // possible first visit events - all those up until lastVisit
@@ -194,34 +176,14 @@ export default {
       var unique = anArray.filter((v, i, a) => a.indexOf(v) === i);
       return unique;
     },
-    async updateTimesBetweenVisits() {
-      if (this.selFirstVisit && this.selLastVisit) {
-        var query_by =
-          this.visitVariable === 'Visit Event' ? 'visit_event' : 'visit_num';
-        var request_url =
-          '/api/collections/time_between_visits/' +
-          this.collection.id +
-          '?query_by=' +
-          query_by +
-          '&visit1=' +
-          this.selFirstVisit +
-          '&visit2=' +
-          this.selLastVisit;
-
-        const { data } = await axios.get(request_url);
-        if (
-          data['query_by'] === query_by &&
-          data['visit1'] == this.selFirstVisit &&
-          data['visit2'] == this.selLastVisit
-        ) {
-          this.timesBetweenVisits = data['times'];
-        }
-      }
+    updateTimesBetweenVisits() {
+      this.fetchTimesBetweenVisits();
     },
-    ...mapMutations('dataSummary', {
+    ...mapActions('dataSummary', {
       setFirstVisit: actions.SET_FIRST_VISIT,
       setLastVisit: actions.SET_LAST_VISIT,
       setVisitVariable: actions.SET_VISIT_VARIABLE,
+      fetchTimesBetweenVisits: actions.FETCH_TIMES_BETWEEN_VISITS,
     }),
   },
 };
