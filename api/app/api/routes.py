@@ -1136,9 +1136,6 @@ def get_collection_time_between_visits(collection_id):
     
     avg_times = models.Collection.get_avg_time_between_visits(collection_id, query_by, visit1, visit2)
 
-    if not avg_times:
-        raise ResourceNotFound("Collection not found.") 
-
     return jsonify({
         "success": True,
         "visit1": visit1,
