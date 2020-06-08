@@ -102,7 +102,7 @@
         >
         <v-divider></v-divider>
         <v-stepper-step :complete="step === '3'" step="2.4"
-          >Choose First/Last Visit</v-stepper-step
+          >Choose First & Last Visit</v-stepper-step
         >
       </v-stepper-header>
     </v-stepper>
