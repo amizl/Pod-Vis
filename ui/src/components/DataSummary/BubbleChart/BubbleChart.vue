@@ -197,7 +197,7 @@ export default {
       var y = d3
         .scaleBand()
         .domain(this.uniqueTests)
-        .range([height, margin.top]);
+        .range([height + margin.top, margin.top]);
 
       var x_bw = x.bandwidth();
       var x_hbw = x_bw / 2;
@@ -339,16 +339,14 @@ export default {
       var addDraggableHighlightCol = function(visit, color, chart, is_first) {
         var cx = x(visit) + margin.left;
         var cy = margin.top;
-        var cw = width - margin.right;
-        var ch = height - margin.bottom;
 
         var g = mysvg.append('g');
         var colRect = g
           .append('rect')
-          .attr('x', x(visit) + margin.left)
-          .attr('y', margin.top)
+          .attr('x', cx)
+          .attr('y', cy)
           .attr('width', x.bandwidth())
-          .attr('height', height - margin.top)
+          .attr('height', height)
           .style('fill', color)
           .style('opacity', '0.4')
           .attr('stroke', 'black');
