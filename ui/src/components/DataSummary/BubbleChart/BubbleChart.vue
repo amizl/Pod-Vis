@@ -1,13 +1,15 @@
 <template>
-  <v-flex>
-    <svg
-      id="greenbox"
-      ref="rect"
-      :width="canvasWidth"
-      :height="canvasHeight"
-      style="background: white"
-    ></svg>
-  </v-flex>
+  <v-container>
+    <v-flex>
+      <svg
+        id="greenbox"
+        ref="rect"
+        :width="canvasWidth"
+        :height="canvasHeight"
+        style="background: white"
+      ></svg>
+    </v-flex>
+  </v-container>
 </template>
 
 <script>
@@ -47,15 +49,21 @@ export default {
       type: String,
       required: true,
     },
+    hideUnselectedVars: {
+      type: Boolean,
+      required: false,
+    },
   },
   data() {
     return {
       isLoading: true,
       haveDimensions: false,
-      canvasWidth: 1200,
-      canvasHeight: 1000,
+      defaultCanvasWidth: 1200,
+      defaultCanvasHeight: 1000,
+      minPxPerCol: 18,
+      maxPxPerRow: 40,
       margin: {
-        top: 70,
+        top: 60,
         right: 100,
         bottom: 10,
         left: 220,
@@ -72,6 +80,7 @@ export default {
       testCount: 0,
       eventCount: 0,
       colors: colors,
+      collectionVarNames: {},
     };
   },
   computed: {
@@ -96,6 +105,30 @@ export default {
         .range(this.range)
         .nice(); // rounds domain to nice numbers
     },
+    canvasWidth() {
+      var nCols = this.uniqueEvents.length;
+      var width =
+        this.defaultCanvasWidth - this.margin.left - this.margin.right;
+      var pxPerCol = width / nCols;
+      if (pxPerCol < this.minPxPerCol) {
+        return this.minPxPerCol * nCols + this.margin.left + this.margin.right;
+      } else {
+        return this.defaultCanvasWidth;
+      }
+    },
+    canvasHeight() {
+      var nRows = this.uniqueTests.length;
+      var pxPerRow =
+        (this.defaultCanvasHeight - this.margin.top - this.margin.bottom) /
+        nRows;
+      if (pxPerRow > this.maxPxPerRow) {
+        var calcCanvasHeight =
+          this.maxPxPerRow * nRows + this.margin.top + this.margin.bottom;
+        return calcCanvasHeight;
+      } else {
+        return this.defaultCanvasHeight;
+      }
+    },
     h() {
       return this.canvasHeight - this.margin.top - this.margin.bottom;
     },
@@ -104,6 +137,9 @@ export default {
     },
   },
   watch: {
+    hideUnselectedVars() {
+      this.updateCanvas();
+    },
     visitVariable() {
       this.updateCanvas();
     },
@@ -127,6 +163,20 @@ export default {
       var unique = anArray.filter((v, i, a) => a.indexOf(v) === i);
       return unique;
     },
+    getCollectionSummaries() {
+      if (this.hideUnselectedVars) {
+        var summaries = [];
+
+        this.collectionSummaries[this.visitVariable].forEach(s => {
+          if (s[1] in this.collectionVarNames) {
+            summaries.push(s);
+          }
+        });
+        return summaries;
+      } else {
+        return this.collectionSummaries[this.visitVariable];
+      }
+    },
     updateCanvas() {
       // Identify the unique events
       this.uniqueEvents = this.getUniqueList(
@@ -135,17 +185,12 @@ export default {
       this.eventCount = this.uniqueEvents.length;
 
       // Identify the unique tests
-      this.uniqueTests = this.getUniqueList(
+      var uniqueTests = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 1)
       )
         .sort()
         .reverse();
 
-      // DEBUG
-      // test behavior when number of vars is small:
-      // .slice(1,4);
-
-      this.testCount = this.uniqueTests.length;
       var testGroupCounts = this.getColumn(
         this.collectionSummaries[this.visitVariable],
         2
@@ -168,6 +213,18 @@ export default {
       };
 
       getCollectionVarNames(this.collection.observation_variables);
+      this.collectionVarNames = collectionVarNames;
+
+      if (this.hideUnselectedVars) {
+        var selectedUniqueTests = [];
+        uniqueTests.forEach(t => {
+          if (t in collectionVarNames) {
+            selectedUniqueTests.push(t);
+          }
+        });
+        uniqueTests = selectedUniqueTests;
+      }
+      this.uniqueTests = uniqueTests;
 
       // set the dimensions and margins of the graph
       var width = this.canvasWidth - this.margin.left - this.margin.right;
@@ -205,6 +262,7 @@ export default {
       var y_hbw = y_bw / 2;
 
       // Calculate the maximum size of the circle for bubble
+      this.testCount = this.uniqueTests.length;
       var max_radius = height / (this.testCount * 2);
       var z = d3
         .scaleSqrt()
@@ -233,7 +291,7 @@ export default {
       mysvg
         .append('g')
         .selectAll('dot')
-        .data(this.collectionSummaries[this.visitVariable])
+        .data(this.getCollectionSummaries())
         .enter()
         .append('circle')
         .attr('cx', function(d) {
@@ -277,7 +335,7 @@ export default {
         .append('g')
         .append('rect')
         .attr('x', width + margin.left + 10)
-        .attr('y', margin.top * 2)
+        .attr('y', margin.top)
         .attr('width', max_radius * 5)
         .attr('height', max_radius * 11)
         .style('fill', 'gray')
@@ -293,7 +351,7 @@ export default {
         .append('circle')
         .attr('cx', width + margin.left + 30)
         .attr('cy', function(d, i) {
-          var val = (5 - i) * max_radius * 1.8 + margin.top * 2;
+          var val = (5 - i) * max_radius * 1.8 + margin.top;
           return val;
         })
         .attr('r', function(d) {
@@ -314,7 +372,7 @@ export default {
         .attr('text-anchor', 'middle')
         .attr('x', width + margin.left + max_radius * 2 + 30)
         .attr('y', function(d, i) {
-          var val = (5 - i) * max_radius * 1.8 + margin.top * 2 + 5;
+          var val = (5 - i) * max_radius * 1.8 + margin.top + 5;
           return val;
         })
         .style('font-size', 12)

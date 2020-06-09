@@ -23,18 +23,23 @@
       <v-flex xs12>
         <v-sheet color="white" height="100%" class="rounded-lg shadow">
           <v-layout column class="ma-1 pt-1">
-            <visit-variables-toolbar></visit-variables-toolbar>
-            <!--	    <visit-times-list></visit-times-list> -->
+            <visit-variables-toolbar
+	      @hideUnselectedVars="hideUnselectedVarsChanged">
+	    </visit-variables-toolbar>
 
-            <v-container fluid class="pa-0 pb-0">
+	    <v-container fluid fill-height class="pa-0 pb-0">
               <bubble-chart
                 :var-opacity="'0.3'"
                 :collection-var-opacity="'0.8'"
+                :hide-unselected-vars="hideUnselectedVars"
               >
               </bubble-chart>
-              <visit-times-table></visit-times-table>
-            </v-container>
-          </v-layout>
+	      <v-spacer></v-spacer>
+	    </v-container>
+
+               <visit-times-table></visit-times-table>
+
+	  </v-layout>
         </v-sheet>
       </v-flex>
     </v-layout>
@@ -71,6 +76,7 @@ export default {
     return {
       isLoading: false,
       substep: '2.4',
+      hideUnselectedVars: true,
     };
   },
   computed: {
@@ -90,6 +96,9 @@ export default {
       fetchCollection: actions.FETCH_COLLECTION,
       fetchCollectionSummaries: actions.FETCH_COLLECTION_SUMMARIES,
     }),
-  },
+hideUnselectedVarsChanged(newval) {
+  this.hideUnselectedVars = newval;
+},
+},
 };
 </script>

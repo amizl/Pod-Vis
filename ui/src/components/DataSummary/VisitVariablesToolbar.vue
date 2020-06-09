@@ -14,8 +14,8 @@
       <v-divider vertical class="ml-4"> </v-divider>
 
       <v-chip color="primary" class="white--text title"
-        >{{ collection.observation_variables.length }} variable<span
-          v-if="collection.observation_variables.length != 1"
+        >{{ collectionVarNames.length }} outcome variable<span
+          v-if="collectionVarNames.length != 1"
           >s</span
         >&nbsp;selected</v-chip
       >
@@ -31,7 +31,7 @@
     </v-toolbar>
 
     <v-flex>
-      <v-container fill-height class="ma-0 pa-2">
+      <v-container fluid fill-height class="ma-0 pa-2">
         <v-select
           v-model="selVisitVariable"
           :items="visitItems"
@@ -40,7 +40,7 @@
         </v-select>
 
         <v-select
-          v-model="selFirstVisit"
+          v-model="firstVisit"
           :items="firstVisitEvents"
           label="Select first visit"
           :background-color="colors['firstVisit']"
@@ -49,14 +49,20 @@
         </v-select>
 
         <v-select
-          v-model="selLastVisit"
+          v-model="lastVisit"
           :items="lastVisitEvents"
           label="Select last visit"
           :background-color="colors['lastVisit']"
           class="ml-2"
         >
         </v-select>
-        <v-spacer />
+
+        <v-checkbox
+          v-model="hideUnselectedVars"
+          label="Hide unselected variables"
+	  class="ml-2"
+          ></v-checkbox>
+	
       </v-container>
     </v-flex>
   </section>
@@ -76,10 +82,9 @@ export default {
       firstVisitEvents: [],
       lastVisitEvents: [],
       selVisitVariable: null,
-      selFirstVisit: null,
-      selLastVisit: null,
       numSubjects: 0,
       colors: colors,
+      hideUnselectedVars: true,
     };
   },
   computed: {
@@ -88,38 +93,66 @@ export default {
       unfilteredData: state.UNFILTERED_DATA,
       collection: state.COLLECTION,
       collectionSummaries: state.COLLECTION_SUMMARIES,
-      firstVisit: state.FIRST_VISIT,
-      lastVisit: state.LAST_VISIT,
+      selFirstVisit: state.FIRST_VISIT,
+      selLastVisit: state.LAST_VISIT,
       visitVariable: state.VISIT_VARIABLE,
       timesBetweenVisits: state.TIMES_BETWEEN_VISITS,
-    }),
+}),
+collectionVarNames() {
+var collectionVarNames = {};
+      var getCollectionVarNames = function(vars) {
+        vars.forEach(v => {
+          if (v.children && v.children.length > 0) {
+            if (v.children[0].label === 'First Visit') {
+              collectionVarNames[v.label] = true;
+            } else {
+              getCollectionVarNames(v.children);
+            }
+          }
+        });
+      };
+
+      getCollectionVarNames(this.collection.observation_variables);
+return Object.keys(collectionVarNames);
+},
+    lastVisit: {
+      get() {
+        return this.selLastVisit;
+      },
+      set(value) {
+        this.setLastVisit(value);
+        this.updateEvents();
+        this.updateTimesBetweenVisits();
+      },
+    },
+    firstVisit: {
+      get() {
+        return this.selFirstVisit;
+      },
+      set(value) {
+        this.setFirstVisit(value);
+        this.updateEvents();
+        this.updateTimesBetweenVisits();
+      },
+    },
   },
   watch: {
     selVisitVariable(newval) {
       this.setVisitVariable(newval);
-    },
-    visitVariable() {
-      this.selFirstVisit = null;
-      this.selLastVisit = null;
       this.updateEvents();
     },
-    firstVisit(fv) {
-      this.selFirstVisit = fv;
+    selFirstVisit(newval) {
       this.updateEvents();
-    },
-    lastVisit(lv) {
-      this.selLastVisit = lv;
-      this.updateEvents();
-    },
-    selFirstVisit(fv) {
-      this.setFirstVisit(fv);
       this.updateTimesBetweenVisits();
     },
-    selLastVisit(lv) {
-      this.setLastVisit(lv);
+    selLastVisit(newval) {
+      this.updateEvents();
       this.updateTimesBetweenVisits();
     },
-    timesBetweenVisits() {
+hideUnselectedVars(newval) {
+this.$emit('hideUnselectedVars', newval);
+},
+timesBetweenVisits() {
       var ns = 0;
       this.timesBetweenVisits.forEach(x => {
         ns += x.n_subjects;
@@ -129,8 +162,6 @@ export default {
   },
   mounted() {
     this.selVisitVariable = this.visitVariable;
-    this.selFirstVisit = this.firstVisit;
-    this.selLastVisit = this.lastVisit;
     this.updateEvents();
   },
   methods: {
@@ -140,11 +171,11 @@ export default {
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
       );
 
-      if (!this.selFirstVisit) {
-        this.setFirstVisit(this.uniqueEvents[0]);
+      if (!this.firstVisit) {
+        this.firstVisit = this.uniqueEvents[0];
       }
-      if (!this.selLastVisit) {
-        this.setLastVisit(this.uniqueEvents[this.uniqueEvents.length - 1]);
+      if (!this.lastVisit) {
+        this.lastVisit = this.uniqueEvents[this.uniqueEvents.length - 1];
       }
 
       // possible first visit events - all those up until lastVisit
