@@ -27,6 +27,8 @@ import { schemeCategory10 } from 'd3-scale-chromatic';
 // Directives
 import resize from 'vue-resize-directive';
 import { colors } from '@/utils/colors';
+// Util
+import { getObservationVariableNames } from '@/utils/helpers';
 
 export default {
   directives: {
@@ -166,9 +168,9 @@ export default {
     getCollectionSummaries() {
       if (this.hideUnselectedVars) {
         var summaries = [];
-
+        var collectionVarNames = this.collectionVarNames;
         this.collectionSummaries[this.visitVariable].forEach(s => {
-          if (s[1] in this.collectionVarNames) {
+          if (s[1] in collectionVarNames) {
             summaries.push(s);
           }
         });
@@ -198,21 +200,8 @@ export default {
       this.minGroupCount = Math.min(...testGroupCounts);
       this.maxGroupCount = Math.max(...testGroupCounts);
 
-      // generate lookup of variable names actually in the collection
-      var collectionVarNames = {};
-      var getCollectionVarNames = function(vars) {
-        vars.forEach(v => {
-          if (v.children && v.children.length > 0) {
-            if (v.children[0].label === 'First Visit') {
-              collectionVarNames[v.label] = true;
-            } else {
-              getCollectionVarNames(v.children);
-            }
-          }
-        });
-      };
-
-      getCollectionVarNames(this.collection.observation_variables);
+      // lookup of variable names actually in the collection
+      var collectionVarNames = getObservationVariableNames(this.collection);
       this.collectionVarNames = collectionVarNames;
 
       if (this.hideUnselectedVars) {

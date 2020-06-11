@@ -25,7 +25,7 @@
           :disabled="true"
           class="primary--text title"
           :style="'background: ' + colors['population']"
-          >Study Population - {{ numSubjects }}</v-chip
+          >Study Population - {{ numSelectedSubjects }}</v-chip
         >
       </v-toolbar-items>
     </v-toolbar>
@@ -60,9 +60,8 @@
         <v-checkbox
           v-model="hideUnselectedVars"
           label="Hide unselected variables"
-	  class="ml-2"
-          ></v-checkbox>
-	
+          class="ml-2"
+        ></v-checkbox>
       </v-container>
     </v-flex>
   </section>
@@ -73,6 +72,7 @@ import axios from 'axios';
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/dataSummary/types';
 import { colors } from '@/utils/colors';
+import { getObservationVariableNames } from '@/utils/helpers';
 
 export default {
   data() {
@@ -97,24 +97,11 @@ export default {
       selLastVisit: state.LAST_VISIT,
       visitVariable: state.VISIT_VARIABLE,
       timesBetweenVisits: state.TIMES_BETWEEN_VISITS,
-}),
-collectionVarNames() {
-var collectionVarNames = {};
-      var getCollectionVarNames = function(vars) {
-        vars.forEach(v => {
-          if (v.children && v.children.length > 0) {
-            if (v.children[0].label === 'First Visit') {
-              collectionVarNames[v.label] = true;
-            } else {
-              getCollectionVarNames(v.children);
-            }
-          }
-        });
-      };
-
-      getCollectionVarNames(this.collection.observation_variables);
-return Object.keys(collectionVarNames);
-},
+      numSelectedSubjects: state.NUM_SELECTED_SUBJECTS,
+    }),
+    collectionVarNames() {
+      return getObservationVariableNames(this.collection);
+    },
     lastVisit: {
       get() {
         return this.selLastVisit;
@@ -149,15 +136,8 @@ return Object.keys(collectionVarNames);
       this.updateEvents();
       this.updateTimesBetweenVisits();
     },
-hideUnselectedVars(newval) {
-this.$emit('hideUnselectedVars', newval);
-},
-timesBetweenVisits() {
-      var ns = 0;
-      this.timesBetweenVisits.forEach(x => {
-        ns += x.n_subjects;
-      });
-      this.numSubjects = ns;
+    hideUnselectedVars(newval) {
+      this.$emit('hideUnselectedVars', newval);
     },
   },
   mounted() {
