@@ -4,7 +4,7 @@ import {
   ErrorNotification,
   SuccessNotification,
 } from '@/store/modules/notifications/notifications';
-import { makeHierarchy, getInputVariablesFromQueries } from '@/utils/helpers';
+import { makeHierarchy, getObservationVariableIds } from '@/utils/helpers';
 import {
   actions,
   getters as getterTypes,
@@ -142,7 +142,8 @@ export default {
         '&visit1=' +
         firstVisit +
         '&visit2=' +
-        lastVisit;
+          lastVisit;
+	getObservationVariableIds(collection).forEach(o => {request_url = request_url + "&obs_var_ids=" + o;});
 
       const { data } = await axios.get(request_url);
       if (
@@ -151,12 +152,31 @@ export default {
         data['visit2'] == lastVisit
       ) {
         commit(mutations.SET_TIMES_BETWEEN_VISITS, data['times']);
+        var ns = 0;
+	data['times'].forEach(t => {
+          ns += t.n_subjects;
+        });
+        commit(mutations.SET_NUM_SELECTED_SUBJECTS, ns);
       }
     }
+  },
+  async [actions.SAVE_FIRST_AND_LAST_VISITS](
+    { commit, dispatch, state },
+    { variableVisits }
+  ) {
+    const { collection } = state;
 
-    //      try {
-    //      const { data } = await axios.get(
-    //        `/api/collections/${collectionId}?include=studies&include=variables`
-    //      );
+    try {
+      const { data } = await axios.post(
+        '/api/collections/' + collection.id + '/observation_visits',
+        {
+          variable_visits: variableVisits,
+        }
+      );
+      //      commit(mutations.ADD_COHORT, data.cohort);
+    } catch ({ response }) {
+      const notification = new ErrorNotification(response.data.error);
+      dispatch(notification.dispatch, notification, { root: true });
+    }
   },
 };

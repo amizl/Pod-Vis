@@ -8,4 +8,5 @@ export default {
   [state.LAST_VISIT]: null,
   [state.VISIT_VARIABLE]: 'Visit Event',
   [state.TIMES_BETWEEN_VISITS]: null,
+  [state.NUM_SELECTED_SUBJECTS]: 0,
 };

@@ -53,4 +53,12 @@ export default {
   [mutations.SET_TIMES_BETWEEN_VISITS](state, newTimesVar) {
     state[stateTypes.TIMES_BETWEEN_VISITS] = newTimesVar;
   },
+  /**
+   * Set number of selected subjects.
+   * @param {*} state
+   * @param {*} newSelectedSubjectsVar
+   */
+  [mutations.SET_NUM_SELECTED_SUBJECTS](state, newSelectedSubjectsVar) {
+    state[stateTypes.NUM_SELECTED_SUBJECTS] = newSelectedSubjectsVar;
+  },
 };

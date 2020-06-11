@@ -7,6 +7,7 @@ export const state = {
   LAST_VISIT: 'lastVisit',
   VISIT_VARIABLE: 'visitVariable',
   TIMES_BETWEEN_VISITS: 'timesBetweenVisits',
+  NUM_SELECTED_SUBJECTS: 'numSelectedSubjects',
 };
 
 // Mutations
@@ -18,6 +19,7 @@ export const mutations = {
   SET_LAST_VISIT: 'setLastVisit',
   SET_VISIT_VARIABLE: 'setVisitVariable',
   SET_TIMES_BETWEEN_VISITS: 'setTimesBetweenVisits',
+  SET_NUM_SELECTED_SUBJECTS: 'setNumSelectedSubjects',
 };
 
 // Actions
@@ -28,4 +30,5 @@ export const actions = {
   SET_LAST_VISIT: 'setLastVisit',
   SET_VISIT_VARIABLE: 'setVisitVariable',
   FETCH_TIMES_BETWEEN_VISITS: 'fetchTimesBetweenVisits',
+  SAVE_FIRST_AND_LAST_VISITS: 'saveFirstAndLastVisits',
 };
