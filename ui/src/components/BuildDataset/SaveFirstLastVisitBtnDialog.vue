@@ -13,6 +13,16 @@
         <v-card-title primary-title>
           <span class="title pl-2">Save First and Last Visit</span>
         </v-card-title>
+        <v-card-text class="title primary--text text--darken-3">
+          <div class="primary--text title pl-2">
+            <ul>
+              <li>First Visit={{ firstVisit }}</li>
+              <li>Last Visit={{ lastVisit }}</li>
+              <li>Study Population={{ numSelectedSubjects }} subject(s)</li>
+            </ul>
+          </div>
+        </v-card-text>
+
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
