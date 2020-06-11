@@ -33,7 +33,7 @@
     <v-flex>
       <v-container fluid fill-height class="ma-0 pa-2">
         <v-select
-          v-model="selVisitVariable"
+          v-model="visitVariable"
           :items="visitItems"
           label="Select visit variable"
         >
@@ -81,7 +81,6 @@ export default {
       uniqueEvents: [],
       firstVisitEvents: [],
       lastVisitEvents: [],
-      selVisitVariable: null,
       numSubjects: 0,
       colors: colors,
       hideUnselectedVars: true,
@@ -95,12 +94,22 @@ export default {
       collectionSummaries: state.COLLECTION_SUMMARIES,
       selFirstVisit: state.FIRST_VISIT,
       selLastVisit: state.LAST_VISIT,
-      visitVariable: state.VISIT_VARIABLE,
+      selVisitVariable: state.VISIT_VARIABLE,
       timesBetweenVisits: state.TIMES_BETWEEN_VISITS,
       numSelectedSubjects: state.NUM_SELECTED_SUBJECTS,
     }),
     collectionVarNames() {
       return Object.keys(getObservationVariableNames(this.collection));
+    },
+    visitVariable: {
+      get() {
+        return this.selVisitVariable;
+      },
+      set(value) {
+        this.setVisitVariable(value);
+        this.updateEvents();
+        this.updateTimesBetweenVisits();
+      },
     },
     lastVisit: {
       get() {
@@ -124,10 +133,6 @@ export default {
     },
   },
   watch: {
-    selVisitVariable(newval) {
-      this.setVisitVariable(newval);
-      this.updateEvents();
-    },
     selFirstVisit(newval) {
       this.updateEvents();
       this.updateTimesBetweenVisits();
@@ -139,10 +144,13 @@ export default {
     hideUnselectedVars(newval) {
       this.$emit('hideUnselectedVars', newval);
     },
+    collectionSummaries(newval) {
+      this.updateTimesBetweenVisits();
+    },
   },
   mounted() {
-    this.selVisitVariable = this.visitVariable;
     this.updateEvents();
+    this.updateTimesBetweenVisits();
   },
   methods: {
     updateEvents() {
@@ -151,10 +159,10 @@ export default {
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
       );
 
-      if (!this.firstVisit) {
+      if (!this.selFirstVisit) {
         this.firstVisit = this.uniqueEvents[0];
       }
-      if (!this.lastVisit) {
+      if (!this.selLastVisit) {
         this.lastVisit = this.uniqueEvents[this.uniqueEvents.length - 1];
       }
 

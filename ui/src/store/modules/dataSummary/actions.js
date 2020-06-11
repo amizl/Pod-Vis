@@ -28,9 +28,35 @@ export default {
         subjectVariable.children.forEach(child => (child['type'] = 'subject'));
       });
 
+      // update first/last visit info
+      var firstVisit = null;
+      var lastVisit = null;
+      var visitVar = null;
+
+      if (data.collection.observation_variables.length > 0) {
+        var ov = data.collection.observation_variables[0];
+        if (ov['first_visit_event']) {
+          visitVar = 'Visit Event';
+          firstVisit = ov['first_visit_event'];
+          lastVisit = ov['last_visit_event'];
+        } else {
+          visitVar = 'Visit Num';
+          firstVisit = ov['first_visit_num'];
+          lastVisit = ov['last_visit_num'];
+        }
+      }
+      console.log(
+        'fetchCollection setting visits to ' + firstVisit + ' - ' + lastVisit
+      );
+      commit(mutations.SET_VISIT_VARIABLE, visitVar);
+      commit(mutations.SET_FIRST_VISIT, firstVisit);
+      commit(mutations.SET_LAST_VISIT, lastVisit);
+	
       const observationVariables = makeHierarchy(
         data.collection.observation_variables
       );
+      data.collection.observation_variables_list = data.collection.observation_variables;
+	
       // TODO:
       // These fields are hard-coded and will inevitably need to be changed.
       // For example, firstVisit and lastVisit are stored in the database as

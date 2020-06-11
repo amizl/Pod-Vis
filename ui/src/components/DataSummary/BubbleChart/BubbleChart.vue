@@ -383,6 +383,23 @@ export default {
           .attr('stroke', 'none');
       };
 
+      var highlightColHeading = function(visit, color, chart, is_first) {
+        var cx = x(visit) + margin.left;
+        var cy = margin.top - y.bandwidth();
+
+        var g = mysvg.append('g');
+        var colRect = g
+          .append('rect')
+          .attr('x', cx)
+          .attr('y', cy)
+          .attr('width', x.bandwidth())
+          .attr('height', y.bandwidth())
+          .style('fill', color)
+          .style('opacity', '0.4')
+          .attr('stroke', 'black');
+       };
+
+				  
       var addDraggableHighlightCol = function(visit, color, chart, is_first) {
         var cx = x(visit) + margin.left;
         var cy = margin.top;
@@ -463,6 +480,18 @@ export default {
         dh(colRect);
       };
 
+      // highlight saved first/last visit			    
+      if (this.collection.observation_variables_list.length > 0) {
+        var ov = this.collection.observation_variables_list[0];
+        if (this.visitVariable == 'Visit Event') {
+          if (ov.first_visit_event) { highlightColHeading(ov['first_visit_event'], colors['firstVisit'], this, true) }
+	  if (ov.last_visit_event) { highlightColHeading(ov['last_visit_event'], colors['lastVisit'], this, true) }	
+        } else {
+            if (ov.first_visit_num) { highlightColHeading(ov['first_visit_num'], colors['firstVisit'], this, true) }
+	  if (ov.last_visit_num) { highlightColHeading(ov['last_visit_num'], colors['lastVisit'], this, true) }	
+        }
+      }
+			  
       // highlight first and last selections
       if (this.firstVisit) {
         addDraggableHighlightCol(
