@@ -100,7 +100,7 @@ export default {
       numSelectedSubjects: state.NUM_SELECTED_SUBJECTS,
     }),
     collectionVarNames() {
-      return getObservationVariableNames(this.collection);
+      return Object.keys(getObservationVariableNames(this.collection));
     },
     lastVisit: {
       get() {
