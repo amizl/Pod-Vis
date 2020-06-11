@@ -142,8 +142,10 @@ export default {
         '&visit1=' +
         firstVisit +
         '&visit2=' +
-          lastVisit;
-	getObservationVariableIds(collection).forEach(o => {request_url = request_url + "&obs_var_ids=" + o;});
+        lastVisit;
+      getObservationVariableIds(collection).forEach(o => {
+        request_url = request_url + '&obs_var_ids=' + o;
+      });
 
       const { data } = await axios.get(request_url);
       if (
@@ -153,7 +155,7 @@ export default {
       ) {
         commit(mutations.SET_TIMES_BETWEEN_VISITS, data['times']);
         var ns = 0;
-	data['times'].forEach(t => {
+        data['times'].forEach(t => {
           ns += t.n_subjects;
         });
         commit(mutations.SET_NUM_SELECTED_SUBJECTS, ns);
