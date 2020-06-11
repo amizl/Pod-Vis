@@ -164,18 +164,22 @@ class Collection(db.Model):
         all_subjects = Subject.find_all_by_study_ids(study_ids, load_atts=True)
         subject_variable_ids = [subject_var.id for subject_var in self.subject_variables]
         obs_ids = [obs_var.ontology.id for obs_var in self.observation_variables]
-
+        
+        obsid2obs = {}
+        for ov in self.observation_variables:
+            obsid2obs[ov.ontology.id] = ov
+        
         # subject -> study mapping
-
         studyid2study= {}
         for study in self.studies:
             studyid2study[study.study_id] = study
-            sys.stderr.flush()
         subjid2study = {}
+        n_all_subjects = 0
         for subject in all_subjects:
+            n_all_subjects += 1
             if subject.study_id in studyid2study:
                 subjid2study[subject.id] = studyid2study[subject.study_id]
-            
+
         # Query for getting observation values for patients across all
         # their visits. Note that the observations are sorted by event
         # date and visit_num, with the latter used to order multiple
@@ -183,9 +187,10 @@ class Collection(db.Model):
         query_for_totals = text("""
           SELECT
               sv.subject_id as subject_id, oo.id as observation_ontology_id, oo.data_category,
-              sv.event_date, sv.visit_num, o.value_type, o.int_value, o.dec_value, o.value
+              sv.event_date, sv.visit_num, sv.visit_event, o.value_type, o.int_value, o.dec_value, o.value
           FROM subject s, subject_visit sv, observation o, observation_ontology oo
           WHERE s.study_id in :study_ids
+          AND oo.id in :obs_ids
           AND s.id = sv.subject_id
           AND sv.id = o.subject_visit_id
           AND oo.id = o.observation_ontology_id
@@ -199,6 +204,7 @@ class Collection(db.Model):
             result_proxy = connection.execute(
                 query_for_totals,
                 study_ids=study_ids,
+                obs_ids=obs_ids,
                 ids=obs_ids).fetchall()
 
         # group by subject_id, obs_id
@@ -230,6 +236,8 @@ class Collection(db.Model):
             if (n <= 1) and (study.study.longitudinal == 1):
                 return
 
+            ov = obsid2obs[obs_id]
+            
             # Categorical observations
             if (study.study.longitudinal == 0) or (last_obs_category == 'Categorical'):
                 obs_val = group_rows[0]['value']
@@ -252,24 +260,45 @@ class Collection(db.Model):
                 return
 
             # All other types of observations
-            for gr in group_rows:
-                if gr['value_type'] == 'int':
-                    gr['total'] = gr['int_value']
-                elif gr['value_type'] == 'decimal':
-                    gr['total'] = gr['dec_value']
-                else:
-                    raise Exception("Unhandled value_type (" + gr['value_type'] + ")")
-                        
-            # note - using first visit on first day as "first_vist" and last visit on last day as "last_visit"
-            first_date = group_rows[0]['event_date']
-            last_date = group_rows[-1]['event_date']
+            first = { 'date' : None, 'value': None }
+            last = { 'date' : None, 'value': None }
 
+            # pick out first and last visit
+            for gr in group_rows:
+                to_update = None
+
+                # TODO - check for / handle case where there are multiple observations with the same visit_event?
+                if (ov.first_visit_event is not None):
+                    if (gr['visit_event'] == ov.first_visit_event):
+                        to_update = first
+                if (ov.first_visit_num is not None):
+                    if (gr['visit_num'] == ov.first_visit_num):
+                        to_update = first
+                if (ov.last_visit_event is not None):
+                    if (gr['visit_event'] == ov.last_visit_event):
+                        to_update = last
+                if (ov.first_visit_num is not None):
+                    if (gr['visit_num'] == ov.last_visit_num):
+                        to_update = last
+
+                if to_update is not None:
+                    if gr['value_type'] == 'int':
+                        to_update['value'] = gr['int_value']
+                    elif gr['value_type'] == 'decimal':
+                        to_update['value'] = gr['dec_value']
+                    else:
+                        raise Exception("Unhandled value_type (" + gr['value_type'] + ")")
+                    to_update['date'] = gr['event_date']
+
+            if (first['value'] is None) or (last['value'] is None):
+                return
+                
             # http://www.andrewshamlet.net/2017/07/07/python-tutorial-roc/
-            N = group_rows[0]['total']
-            M = group_rows[-1]['total'] - N
+            N = first['value']
+            M = last['value'] - N
             
             # normalize by duration in years
-            n_years = last_date.year - first_date.year
+            n_years = last['date'].year - first['date'].year
             if n_years <= 0:
                 n_years = 1
 
@@ -290,8 +319,8 @@ class Collection(db.Model):
                     value=None,
                     roc=roc,
                     change=M,
-                    min=group_rows[0]['total'],
-                    max=group_rows[-1]['total'],
+                    min=first['value'],
+                    max=last['value'],
                 ))
 
             add_subj_observation(subject_id, obs_id)
@@ -638,4 +667,65 @@ class Collection(db.Model):
                 "avg_time_secs": int(row.average_time)
             })
         return result
-        
+
+    @classmethod
+    def get_avg_time_between_visits(cls, collection_id, query_by, visit1, visit2, obs_var_ids):
+        """Find the average time between visits for the specified collection and pair of visits.
+
+        Args:
+            collection_id: Collection's ID.
+            query_by: Either 'visit_num' or 'visit_event'
+            visit1: Name of the first visit
+            visit2: Name of the second visit
+            obs_var_ids: List of observation variable ids
+
+        Returns:
+            List of study_id, study_name, n_subjects, avg_time_secs
+
+        """
+
+        connection = db.engine.connect()
+            
+        query = text("""
+             SELECT sq.study_id, sq.study_name, COUNT(DISTINCT sq.id) AS num_subjects, AVG(sq.average_time) as average_time
+             FROM
+              (SELECT cs.study_id, st.study_name, s.id, COUNT(DISTINCT o1.observation_ontology_id) as num_vars,
+                      AVG(unix_timestamp(sv2.event_date) - unix_timestamp(sv1.event_date)) as average_time
+               FROM collection c, collection_study cs, study st, subject s, 
+                    subject_visit sv1, subject_visit sv2, 
+                    observation o1, observation o2
+               WHERE c.id = (:id)
+                 AND c.id = cs.collection_id
+                 AND cs.study_id = s.study_id
+                 AND cs.study_id = st.id
+                 AND s.id = sv1.subject_id
+                 AND s.id = sv2.subject_id
+                 AND sv1.""" + query_by + """ = (:visit1)
+                 AND sv2.""" + query_by + """ = (:visit2)
+                 AND sv1.id = o1.subject_visit_id
+                 AND o1.observation_ontology_id in :obs_vars
+                 AND sv2.id = o2.subject_visit_id
+                 AND o2.observation_ontology_id = o1.observation_ontology_id
+               GROUP BY cs.study_id, st.study_name, s.id
+              ) as sq
+             WHERE sq.num_vars >= (:n_obs_vars) 
+             GROUP BY sq.study_id, sq.study_name;
+        """)
+
+        result_proxy = connection.execute(query,
+                                          id=collection_id,
+                                          visit1=visit1,
+                                          visit2=visit2,
+                                          obs_vars=obs_var_ids,
+                                          n_obs_vars=len(obs_var_ids)
+        ).fetchall()
+        result = []
+        for row in result_proxy:
+            result.append({
+                "study_id": row.study_id,
+                "study_name": row.study_name,
+                "n_subjects": row.num_subjects,
+                "avg_time_secs": int(row.average_time)
+            })
+        return result
+

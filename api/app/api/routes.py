@@ -488,6 +488,56 @@ def create_collection():
         "collection": collection.to_dict(include_studies=True, include_variables=True)
     }), 201
 
+@api.route("/collections/<int:collection_id>/observation_visits", methods=["POST"])
+@jwt_required
+def set_collection_observation_variable_visits(collection_id):
+    """Set first/last visit for observation variable(s).
+
+    Params:
+        variable_visits
+    Example:
+        {
+            "variable_visits": [ {"variable_id": "2", "first_visit_event": "BL", "last_visit_event": "V12"} ],
+        }
+
+    Example requests:
+      /api/collections/23/observation_visits
+    """
+    request_data = request.get_json()
+    variable_visits = request_data.get('variable_visits')
+
+    if not variable_visits:
+        raise BadRequest("No observation variable first/last visits specified.")
+
+    user = get_current_user()
+    collection = models.Collection.find_by_id(collection_id)
+    
+    if not collection:
+        raise ResourceNotFound("Collection not found.")
+    if (collection.is_public) == 0 and (collection.user_id != user.id):
+        raise AuthFailure('User not authorized to retrieve collection.')
+
+    obs_vars = collection.observation_variables
+    vvh = {}
+    for vv in variable_visits:
+        vvh[vv['variable_id']] = vv
+
+    for ov in obs_vars:
+        vv = vvh[ov.observation_ontology_id]
+        if 'first_visit_event' in vv:
+            ov.first_visit_event = vv['first_visit_event']
+        if 'last_visit_event' in vv:
+            ov.last_visit_event = vv['last_visit_event']
+        if 'first_visit_num' in vv:
+            ov.first_visit_num = vv['first_visit_num']
+        if 'last_visit_num' in vv:
+            ov.last_visit_num = vv['last_visit_num']
+        ov.save_to_db()
+        
+    return jsonify({
+        "success": True,
+    }), 201
+
 @api.route("/collections")
 @jwt_required
 def get_collections():
@@ -1133,8 +1183,10 @@ def get_collection_time_between_visits(collection_id):
     query_by = request.args.get("query_by")
     visit1 = request.args.get("visit1")
     visit2 = request.args.get("visit2")
-    
-    avg_times = models.Collection.get_avg_time_between_visits(collection_id, query_by, visit1, visit2)
+
+    # only count subjects with first/last observations for these variables
+    obs_var_ids = request.args.getlist('obs_var_ids')
+    avg_times = models.Collection.get_avg_time_between_visits(collection_id, query_by, visit1, visit2, obs_var_ids)
 
     return jsonify({
         "success": True,
