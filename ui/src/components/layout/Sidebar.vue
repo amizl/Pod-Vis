@@ -137,25 +137,15 @@ export default {
           path: '/homepage',
         },
         {
-          name: 'Dataset Manager',
-          icon: 'table_chart',
+          name: 'Create Dataset',
+          icon: 'library_add',
           path: '/datasets',
         },
-        // {
-        //   name: 'Analysis Summary',
-        //   icon: 'bar_chart',
-        //   path: '/summary',
-        // },
-        // {
-        //   name: 'Cohort Manager',
-        //   icon: 'group',
-        //   path: '/cohorts',
-        // },
-        // {
-        //   name: 'Data Explorer',
-        //   icon: 'explore',
-        //   path: '/explore',
-        // },
+        {
+          name: 'Saved Datasets',
+          icon: 'library_books',
+          path: '/study_datasets',
+        },
       ],
     };
   },

@@ -4,6 +4,7 @@
   </v-container>
   <v-container v-else fluid fill-width class="ma-0 pa-2">
     <v-toolbar app class="primary">
+      <v-icon color="white" large>group_add</v-icon>
       <v-toolbar-title class="white--text"
         >Cohort Manager
         <div class="subheading">Dataset: {{ collection.label }}</div>

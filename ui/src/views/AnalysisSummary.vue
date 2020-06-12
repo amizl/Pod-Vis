@@ -4,6 +4,7 @@
   </v-container>
   <v-container v-else fluid fill-width class="ma-0 pa-2">
     <v-toolbar app class="primary">
+      <v-icon color="white" large>grid_on</v-icon>
       <v-toolbar-title class="white--text"
         >Summary Matrix
         <div class="subheading">Dataset: {{ collection.label }}</div>

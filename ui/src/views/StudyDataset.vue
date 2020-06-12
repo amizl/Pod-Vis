@@ -1,9 +1,10 @@
 <template>
   <v-container fluid class="ma-0 pa-2">
     <v-toolbar app class="primary">
+      <v-icon color="white" large>library_books</v-icon>
       <v-toolbar-title class="white--text"
-        >Dataset Manager - Use Saved Study Dataset
-        <div class="subheading">Select Dataset</div>
+        >Saved Study Datasets
+        <div class="subheading">Select/View/Analyze Dataset</div>
       </v-toolbar-title>
     </v-toolbar>
 

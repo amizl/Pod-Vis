@@ -4,6 +4,7 @@
   </v-container>
   <v-container v-else fluid fill-width class="ma-0 pa-1">
     <v-toolbar app class="primary">
+      <v-icon color="white" large>explore</v-icon>
       <v-toolbar-title class="white--text"
         >Data Explorer
         <div class="subheading">Dataset: {{ collection.label }}</div>

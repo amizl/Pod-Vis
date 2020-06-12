@@ -1,6 +1,7 @@
 <template>
   <v-container fluid class="ma-0 pa-2">
     <v-toolbar app class="primary">
+      <v-icon color="white" large>library_add</v-icon>
       <v-toolbar-title class="white--text"
         >Dataset Manager - Create New Study Dataset
         <div class="subheading">Choose Datasets</div>
