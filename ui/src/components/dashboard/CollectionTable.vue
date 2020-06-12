@@ -21,6 +21,17 @@
           <td class="text-xs-left px-0">
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on }">
+                <v-btn @click="routeToDataSummary(props.item)" v-on="on">
+                  Set Visits
+                </v-btn>
+              </template>
+              <span class="subtitle-1"
+                >View Data Summary and choose First &amp; Last Visit</span
+              >
+            </v-tooltip>
+
+            <v-tooltip top color="primary">
+              <template v-slot:activator="{ on }">
                 <v-btn @click="routeToCohortManager(props.item)" v-on="on">
                   <v-icon left small color="secondary">group_add</v-icon> Add
                   Cohorts ({{ props.item.num_cohorts }})
@@ -30,7 +41,8 @@
                 >Launch Cohort Manager to add/remove Cohorts ({{
                   props.item.num_cohorts
                 }}
-                cohorts created so far)</span
+                cohort{{ props.item.num_cohorts > 1 ? 's' : '' }} created so
+                far)</span
               >
             </v-tooltip>
 
@@ -163,20 +175,16 @@ export default {
       });
       return filteredCollections;
     },
+    routeToDataSummary({ id }) {
+      this.$router.push(`data_summary?collection=${id}`);
+    },
     routeToCohortManager({ id }) {
-      // Route to view for dataset information
-      // const currentPath = this.$router.currentPath.fullPath;
-      // this.$router.push(`analysis/${id}/`);
       this.$router.push(`cohorts?collection=${id}`);
     },
     routeToDataExplorer({ id }) {
-      // Route to view for dataset information
-      // const currentPath = this.$router.currentPath.fullPath;
-      // this.$router.push(`analysis/${id}/`);
       this.$router.push(`explore?collection=${id}`);
     },
     routeToAnalysisSummary({ id }) {
-      // Route to view for analysis summary
       this.$router.push(`summary?collection=${id}`);
     },
   },
