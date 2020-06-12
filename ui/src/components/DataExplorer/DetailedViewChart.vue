@@ -1,7 +1,7 @@
 <template>
-  <v-flex ref="container" fill-height>
+  <v-flex ref="dv_container" fill-height>
     <!-- Detailed View Chart -->
-    <canvas ref="canvas" :width="width" :height="height" min-height="500">
+    <canvas ref="dv_canvas" :width="width" :height="height" min-height="500">
     </canvas>
   </v-flex>
 </template>
@@ -57,7 +57,7 @@ export default {
       margin: { top: 20, right: 50, bottom: 100, left: 50 },
       tick_font: '15px sans-serif',
       label_font: '20px sans-serif',
-      //      draw_mean: false,
+      y_axis_pad_frac: 0.1,
     };
   },
   computed: {
@@ -100,8 +100,8 @@ export default {
     },
     yAxisRangeMax() {
       const rd = this.getRawData;
-      const rmax = max(rd, d => d.total);
-      return rmax;
+      const rmax = max(rd, d => (d.value * 1.0));
+      return rmax * (1 + this.y_axis_pad_frac);
     },
 
     // --------------------------------------------------
@@ -188,8 +188,8 @@ export default {
     this.devicePixelRatio = window.devicePixelRatio || 1;
   },
   mounted() {
-    this.container = this.$refs.container;
-    this.canvas = this.$refs.canvas;
+    this.container = this.$refs.dv_container;
+    this.canvas = this.$refs.dv_canvas;
     this.context = select(this.canvas)
       .node()
       .getContext('2d');
@@ -206,7 +206,6 @@ export default {
     selectedCohorts() {
       const cch = [];
       const cid = this.collection.id;
-
       this.visibleCohorts.forEach(e => {
         if (e.collection_id === cid) {
           cch.push(e);
@@ -238,7 +237,7 @@ export default {
         if (!(r.subject_id in subj2coords)) {
           subj2coords[r.subject_id] = [];
         }
-        subj2coords[r.subject_id].push({ x: xds(xacc(r)), y: ds(r.total) });
+        subj2coords[r.subject_id].push({ x: xds(xacc(r)), y: ds(r.value * 1.0) });
       });
 
       // extract paths for each subject
@@ -272,7 +271,7 @@ export default {
         if (!(tp in tp2data)) {
           tp2data[tp] = [];
         }
-        tp2data[tp].push(r.total);
+        tp2data[tp].push(r.value * 1.0);
       });
 
       // extract paths for mean and mean +/- SD
