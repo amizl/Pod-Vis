@@ -188,9 +188,9 @@ export default {
       this.collection.observation_variables_list.forEach(ov => {
         if (ov.ontology.id == this.variable.id) {
           if (ov[which + '_visit_event']) {
-            result = ov[which + '_visit_event'];
+            result = String(ov[which + '_visit_event']);
           } else {
-            result = ov[which + '_visit_num'];
+            result = String(ov[which + '_visit_num']);
           }
         }
       });
