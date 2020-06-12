@@ -154,6 +154,7 @@ export default {
   },
   methods: {
     updateEvents() {
+      if (!this.collectionSummaries) { return; }
       // Identify the unique events
       this.uniqueEvents = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
