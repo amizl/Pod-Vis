@@ -40,7 +40,7 @@ export default {
           firstVisit = ov['first_visit_event'];
           lastVisit = ov['last_visit_event'];
         } else {
-          visitVar = 'Visit Num';
+          visitVar = 'Visit Number';
           firstVisit = ov['first_visit_num'];
           lastVisit = ov['last_visit_num'];
         }
