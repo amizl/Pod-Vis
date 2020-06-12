@@ -10,8 +10,8 @@
           "
         >
           <v-layout>
-            <v-flex>First Visit</v-flex>
-            <v-flex pl-5 ml-5>Last Visit</v-flex>
+            <v-flex>Visit:{{ firstVisitLabel }}</v-flex>
+            <v-flex pl-5 ml-5>Visit:{{ lastVisitLabel }}</v-flex>
           </v-layout>
           <v-layout fill-height>
             <ParallelCoordinates
@@ -23,10 +23,9 @@
         <v-layout v-else>
           <v-flex
             v-if="'firstVisit' in variable.selected_measures"
+	    class="not-highlight-var pb-0""
             xs6
-            class="pb-0"
-          >
-            First Visit
+          >First Visit: {{ firstVisitLabel }}
             <HistogramChart
               :id="`firstVisit-${dimensionName}`"
               class="ma-1"
@@ -36,10 +35,9 @@
           </v-flex>
           <v-flex
             v-if="'lastVisit' in variable.selected_measures"
+	    class="not-highlight-var pb-0""
             xs6
-            class="pb-0"
-          >
-            Last Visit
+          >Last Visit: {{ lastVisitLabel }}
             <HistogramChart
               :id="`lastVisit-${dimensionName}`"
               class="ma-1"
@@ -58,8 +56,7 @@
             "
             :class="highlightChange ? 'highlight-var' : 'not-highlight-var'"
             xs6
-          >
-            Change
+          >Change: {{ firstVisitLabel }}-{{ lastVisitLabel }}
             <HistogramChart
               :id="`change-${dimensionName}`"
               :dimension-name="`${variable.label} - Change`"
@@ -69,11 +66,10 @@
           <v-flex
             v-if="
               !variable.selected_measures || 'roc' in variable.selected_measures
-            "
+              "
+	    :class="'not-highlight-var'"
             xs6
-            class="pt-0"
-          >
-            Rate of Change
+          >Rate of Change: {{ firstVisitLabel }}-{{ lastVisitLabel }}
             <HistogramChart
               :id="`roc-${dimensionName}`"
               :dimension-name="`${variable.label} - Rate of Change`"
@@ -81,8 +77,7 @@
             />
           </v-flex>
         </v-layout>
-      </v-flex>
-      <!-- <v-flex xs2> </v-flex> -->
+     </v-flex>
     </v-layout>
   </v-flex>
 </template>
@@ -109,6 +104,17 @@ export default {
       type: Boolean,
       required: false,
     },
+    firstVisitLabel: {
+      type: String,
+required: false,
+default: "First Visit"
+    },
+    lastVisitLabel: {
+      type: String,
+required: false,
+default: "Last Visit"
+    },
+
   },
 };
 </script>

@@ -54,6 +54,8 @@
           :variable="variable"
           :dimension-name="dimension"
           :highlight-change="isBelowPValThreshold(variable)"
+          :first-visit-label="getFirstVisitLabel()"
+          :last-visit-label="getLastVisitLabel()"
           width="400px"
         />
         <v-flex fill-width> </v-flex>
@@ -86,6 +88,7 @@ export default {
   },
   computed: {
     ...mapState('cohortManager', {
+      collection: state.COLLECTION,
       pvals: state.PVALS,
       pval_threshold: state.PVAL_THRESHOLD,
       dimensions: state.DIMENSIONS,
@@ -178,6 +181,26 @@ export default {
         return `${v.parentLabel} - ${v.label}`;
       }
       return v.label;
+    },
+    getVisitLabel(isFirst) {
+      var which = isFirst ? 'first' : 'last';
+      var result = '?';
+      this.collection.observation_variables_list.forEach(ov => {
+        if (ov.ontology.id == this.variable.id) {
+          if (ov[which + '_visit_event']) {
+            result = ov[which + '_visit_event'];
+          } else {
+            result = ov[which + '_visit_num'];
+          }
+        }
+      });
+      return result;
+    },
+    getFirstVisitLabel() {
+      return this.getVisitLabel(true);
+    },
+    getLastVisitLabel() {
+      return this.getVisitLabel(false);
     },
   },
 };

@@ -23,11 +23,7 @@
               alt=""
             />
           </span>
-          {{
-            variable.type == 'observation' && variable.is_longitudinal
-              ? `${variable.parentLabel} - ${variable.label}`
-              : variable.label
-          }}
+          {{ getChartTitle() }}
           <v-spacer />
           <v-btn
             flat
@@ -99,6 +95,45 @@ export default {
       addDimension: actions.ADD_DIMENSION,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    getChartTitle() {
+      var title = this.variable.label;
+      if (
+        this.variable.type == 'observation' &&
+        this.variable.is_longitudinal
+      ) {
+        var visit = this.variable.label;
+        //     var which = this.variable.label == 'First Visit' ? 'first' : 'last';
+        var fv = null;
+        var lv = null;
+
+        this.collection.observation_variables_list.forEach(ov => {
+          if (ov.ontology.id == this.variable.parentID) {
+            if (ov['first_visit_event']) {
+              fv = ov['first_visit_event'];
+              lv = ov['last_visit_event'];
+            } else {
+              fv = ov['first_visit_num'];
+              lv = ov['last_visit_num'];
+            }
+          }
+        });
+        if (this.variable.label == 'First Visit') {
+          title = this.variable.parentLabel + ' - ' + fv;
+        } else if (this.variable.label == 'Last Visit') {
+          title = this.variable.parentLabel + ' - ' + lv;
+        } else {
+          title =
+            this.variable.parentLabel +
+            ' - ' +
+            this.variable.label +
+            ': ' +
+            fv +
+            '-' +
+            lv;
+        }
+      }
+      return title;
+    },
     addDimensionHelper(variable) {
       var dimensionName = null;
       var payload = null;

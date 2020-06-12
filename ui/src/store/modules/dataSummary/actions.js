@@ -45,18 +45,16 @@ export default {
           lastVisit = ov['last_visit_num'];
         }
       }
-      console.log(
-        'fetchCollection setting visits to ' + firstVisit + ' - ' + lastVisit
-      );
       commit(mutations.SET_VISIT_VARIABLE, visitVar);
       commit(mutations.SET_FIRST_VISIT, firstVisit);
       commit(mutations.SET_LAST_VISIT, lastVisit);
-	
+
       const observationVariables = makeHierarchy(
         data.collection.observation_variables
       );
-      data.collection.observation_variables_list = data.collection.observation_variables;
-	
+      data.collection.observation_variables_list =
+        data.collection.observation_variables;
+
       // TODO:
       // These fields are hard-coded and will inevitably need to be changed.
       // For example, firstVisit and lastVisit are stored in the database as

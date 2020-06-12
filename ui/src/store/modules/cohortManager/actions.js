@@ -56,6 +56,8 @@ export default {
       const observationVariables = makeHierarchy(
         data.collection.observation_variables
       );
+      data.collection.observation_variables_list =
+        data.collection.observation_variables;
 
       // TODO:
       // These fields are hard-coded and will inevitably need to be changed.
