@@ -294,7 +294,7 @@ export default {
         })
         .attr('r', function(d) {
           var val = z(d[2]);
-          // console.log('Count: ' + d[2] + ' z: ' + val);
+//  console.log('Count: ' + d[2] + ' z: ' + val);
           return val;
         })
         .style('fill', '#69b3a2')
@@ -312,11 +312,11 @@ export default {
         .style('font-size', 25);
 
       // Add legend to the plot
-      var circInt = this.maxGroupCount / 4;
+      var circInt = (this.maxGroupCount - this.minGroupCount) / 4;
 
       var cirCounts = [];
       for (let index = 0; index < 5; index++) {
-        cirCounts.push(Math.round(index * circInt) + 1);
+        cirCounts.push(Math.round(index * circInt) + this.minGroupCount);
       }
 
       // Draw a rectangle around the legend
@@ -345,7 +345,8 @@ export default {
         })
         .attr('r', function(d) {
           var val = z(d);
-          return val;
+// console.log("legend circle d=" + d + " val=" + val);
+				  return val;
         })
         .style('fill', '#69b3a2')
         .style('opacity', '0.7')
