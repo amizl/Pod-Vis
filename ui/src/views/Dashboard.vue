@@ -26,30 +26,30 @@
           <v-card-actions>
             <v-container fluid fill-width>
               <v-layout row wrap>
-                <v-flex xs3>
+                <v-flex xs4>
                   <div class="text-xs-center">
                     <v-btn color="primary" @click="$router.push('/datasets')"
-                      >Create new study dataset</v-btn
+                      ><v-icon left small color="white">library_add</v-icon>Create new study dataset</v-btn
                     >
                   </div>
                 </v-flex>
-                <v-flex xs9 class="pl-2">
+                <v-flex xs8 class="pl-2">
                   Select subjects and variables from uploaded dataset(s) to
                   create a new study dataset.
                 </v-flex>
 
                 <v-flex xs12><div height="0.5em">&nbsp;</div></v-flex>
 
-                <v-flex xs3>
+                <v-flex xs4>
                   <div class="text-xs-center">
                     <v-btn
                       color="primary"
                       @click="$router.push('/study_datasets')"
-                      >Use saved study dataset</v-btn
+                      ><v-icon left small color="white">library_books</v-icon>Use saved study dataset</v-btn
                     >
                   </div>
                 </v-flex>
-                <v-flex xs9 class="pl-2">
+                <v-flex xs8 class="pl-2">
                   Use a previously-created saved study dataset to continue or
                   revisit an analysis.
                 </v-flex>
