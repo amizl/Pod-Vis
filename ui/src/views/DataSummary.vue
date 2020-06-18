@@ -1,7 +1,6 @@
 <template>
   <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-2">
     <loading-spinner />
-    <span>Loading ... {{ collection.label }} </span>
   </v-container>
   <v-container v-else fluid fill-width class="ma-0 pa-2">
     <v-toolbar app class="primary">
