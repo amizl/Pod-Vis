@@ -100,7 +100,7 @@ export default {
     },
     yAxisRangeMax() {
       const rd = this.getRawData;
-      const rmax = max(rd, d => (d.value * 1.0));
+      const rmax = max(rd, d => d.value * 1.0);
       return rmax * (1 + this.y_axis_pad_frac);
     },
 
@@ -237,7 +237,10 @@ export default {
         if (!(r.subject_id in subj2coords)) {
           subj2coords[r.subject_id] = [];
         }
-        subj2coords[r.subject_id].push({ x: xds(xacc(r)), y: ds(r.value * 1.0) });
+        subj2coords[r.subject_id].push({
+          x: xds(xacc(r)),
+          y: ds(r.value * 1.0),
+        });
       });
 
       // extract paths for each subject

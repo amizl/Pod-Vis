@@ -294,7 +294,7 @@ export default {
         })
         .attr('r', function(d) {
           var val = z(d[2]);
-//  console.log('Count: ' + d[2] + ' z: ' + val);
+          //  console.log('Count: ' + d[2] + ' z: ' + val);
           return val;
         })
         .style('fill', '#69b3a2')
@@ -345,8 +345,8 @@ export default {
         })
         .attr('r', function(d) {
           var val = z(d);
-// console.log("legend circle d=" + d + " val=" + val);
-				  return val;
+          // console.log("legend circle d=" + d + " val=" + val);
+          return val;
         })
         .style('fill', '#69b3a2')
         .style('opacity', '0.7')

@@ -29,7 +29,8 @@
                 <v-flex xs4>
                   <div class="text-xs-center">
                     <v-btn color="primary" @click="$router.push('/datasets')"
-                      ><v-icon left small color="white">library_add</v-icon>Create new study dataset</v-btn
+                      ><v-icon left small color="white">library_add</v-icon
+                      >Create new study dataset</v-btn
                     >
                   </div>
                 </v-flex>
@@ -45,7 +46,8 @@
                     <v-btn
                       color="primary"
                       @click="$router.push('/study_datasets')"
-                      ><v-icon left small color="white">library_books</v-icon>Use saved study dataset</v-btn
+                      ><v-icon left small color="white">library_books</v-icon
+                      >Use saved study dataset</v-btn
                     >
                   </div>
                 </v-flex>
