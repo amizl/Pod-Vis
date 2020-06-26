@@ -29,6 +29,7 @@ export const getters = {
     'findCohortObservationInputVariables',
   FIND_COHORT_OBSERVATION_OUTPUT_VARIABLES:
     'findCohortObservationOutputVariables',
+  GET_QUERY: 'getQuery',
 };
 
 // Mutations
