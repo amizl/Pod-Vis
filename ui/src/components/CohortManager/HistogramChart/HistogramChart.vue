@@ -91,16 +91,51 @@
         ></g>
       </svg>
     </v-flex>
+
     <v-flex v-if="inputVariable" ml-3 mr-3>
+
+      <v-container class="pa-0">
+	<v-layout row>
+          <v-flex>Selection:</v-flex>
+          <v-flex
+            ><v-text-field
+              v-model.number="tfRangeMin"
+              :error-messages="rangeMinErrors"
+               class="center-text pa-0 ma-0"
+	       type="number"
+            ></v-text-field
+          ></v-flex>
+          <v-flex>-</v-flex>
+          <v-flex
+            ><v-text-field
+              v-model.number="tfRangeMax"
+              :error-messages="rangeMaxErrors"
+               class="center-text pa-0 ma-0"
+	       type="number"
+            ></v-text-field
+          ></v-flex>
+        </v-layout>
+      </v-container>
+
+        <v-flex><v-checkbox v-model="snapToGrid" label="Select whole bars only"> </v-checkbox></v-flex>
+
       <v-select
         v-model="selectedPopSubset"
         :items="popSubsetItems"
         item-text="label"
         item-value="id"
         label="Select population subset"
+        class="pa-0 ma-0"
         return-object
       ></v-select>
 
+      <create-comparator-cohorts-btn-dialog
+        :dimension-name="dimensionName"
+        :select-cohort-range="selectCohortRange"
+        :reset-selection="resetSelection"
+	/>
+
+      <!--
       <v-select
         v-model="selectedRange"
         :items="rangeItems"
@@ -109,12 +144,8 @@
         label="Select range"
         return-object
       ></v-select>
-
-      <create-comparator-cohorts-btn-dialog
-        :dimension-name="dimensionName"
-        :select-cohort-range="selectCohortRange"
-        :reset-selection="resetSelection"
-      />
+-->
+	
     </v-flex>
   </v-layout>
 </template>
@@ -125,7 +156,8 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 import { state, getters, actions } from '@/store/modules/cohortManager/types';
 // D3 Modules
 import { extent, max, mean, histogram } from 'd3-array';
-import { brushX } from 'd3-brush';
+import { brushX, brushSelection } from 'd3-brush';
+import { format } from 'd3-format';
 import { select, event } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import 'd3-transition';
@@ -214,10 +246,14 @@ export default {
       colors: colors,
       selectedRange: null,
       selectedPopSubset: null,
+      tfRangeMin: null,
+      tfRangeMax: null,
+      snapToGrid: true,
     };
   },
   computed: {
     ...mapGetters('cohortManager', {
+      getQuery: getters.GET_QUERY,
       findCohortQuery: getters.FIND_COHORT_QUERY,
       hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
     }),
@@ -228,6 +264,34 @@ export default {
       highlightedSubset: state.HIGHLIGHTED_SUBSET,
       cohort: state.COHORT,
     }),
+    rangeMinErrors() {
+      if (this.tfRangeMin) {
+        if (this.tfRangeMin < this.min_value) {
+          return ['Minimum is ' + this.min_value];
+        }
+        if (this.tfRangeMin > this.max_value) {
+          return ['Maximum is ' + this.max_value];
+        }
+        if (this.tfRangeMax && (this.tfRangeMin > this.tfRangeMax)) {
+          return ['Minimum is greater than maximum'];
+        }
+      }
+      return [];
+    },
+    rangeMaxErrors() {
+      if (this.tfRangeMax) {
+        if (this.tfRangeMax < this.min_value) {
+          return ['Minimum is ' + this.min_value];
+        }
+        if (this.tfRangeMax > this.max_value) {
+          return ['Maximum is ' + this.max_value];
+        }
+        if (this.tfRangeMin && this.tfRangeMin > this.tfRangeMax) {
+          return ['Maximum is less than minimum'];
+        }
+      }
+      return [];
+    },
     num_bins() {
       var ext = extent(this.populationData);
       var diff = ext[1] - ext[0];
@@ -241,6 +305,21 @@ export default {
       } else {
         return 30;
       }
+    },
+    min_value() {
+      return this.bins[0].x0;
+    },
+    max_pad() {
+      var last_bin = this.bins[this.bins.length - 1];
+      if (last_bin.x0 == last_bin.x1) {
+        last_bin = this.bins[this.bins.length - 2];
+      }
+
+      // add a small amount to ensure entire range can be selected
+      return (last_bin.x1 - last_bin.x0) * 0.1;
+    },
+    max_value() {
+      return this.bins[this.bins.length - 1].x1 + this.max_pad;
     },
     w() {
       const { left, right } = this.margin;
@@ -354,7 +433,7 @@ export default {
       let qtr3 = this.getGenMedian(popData, 3, 4);
       let thr1 = this.getGenMedian(popData, 1, 3);
       let thr2 = this.getGenMedian(popData, 2, 3);
-      let upper = Math.floor(ext[1] + 1);
+      let upper = ext[1] + this.max_pad;
 
       items.push({ label: 'top 1/2', min: median, max: upper });
       items.push({ label: 'bottom 1/2', min: ext[0], max: median });
@@ -368,7 +447,7 @@ export default {
       items.push({ label: 'bottom 1/4', min: ext[0], max: qtr1 });
       items.push({ label: 'top 3/4', min: qtr1, max: upper });
       items.forEach(i => {
-        i.label = i.label + ' of population [' + i.min + '-' + i.max + ']';
+        i.label = i.label + ' of population [' + i.min + ' - ' + i.max + ']';
       });
 
       return items;
@@ -383,7 +462,7 @@ export default {
       let one_third = (ext[1] - ext[0]) / 3.0;
       let thr1 = Math.round(ext[0] + one_third);
       let thr2 = Math.round(ext[1] - one_third);
-      let upper = Math.floor(ext[1] + 1);
+      let upper = Math.floor(ext[1] + this.max_pad);
 
       items.push({ label: 'top 1/2', min: mid, max: upper });
       items.push({ label: 'bottom 1/2', min: ext[0], max: mid });
@@ -406,12 +485,7 @@ export default {
   watch: {
     filteredData() {
       this.data = flattenGroupCounts(this.group.all());
-      if (!this.dimension.currentFilter()) {
-        this.handle.attr('display', 'none');
-        select(this.$refs.brush).call(this.brush.move, null);
-        this.selectedRange = null;
-        this.selectedPopSubset = null;
-      }
+      this.updateRangeFromQuery();
     },
     selectedRange(s) {
       if (s == null) {
@@ -427,40 +501,38 @@ export default {
       this.selectedRange = null;
       this.selectRange(s);
     },
+    tfRangeMin(range_min) {
+      this.updateSelectedRange();
+    },
+    tfRangeMax(range_max) {
+      this.updateSelectedRange();
+    },
   },
   created() {
     const dimension = this.dimensions[this.dimensionName];
     this.dimension = dimension;
     this.populationData = this.unfilteredData.map(dimension.accessor);
-
     this.group = dimension.group();
     this.data = flattenGroupCounts(this.group.all());
+    const [query] = this.findCohortQuery(this.dimensionName);
 
-    if (this.inputVariable && this.hasUserSelectedCohort) {
-      // there should only be one query for a histogram...
-      const [query] = this.findCohortQuery(this.dimensionName);
-
-      if (typeof query !== 'undefined') {
-        this.$nextTick(() => {
-          const minValue = query.min_value;
-          const maxValue = query.max_value;
-          select(this.$refs.brush).call(this.brush.move, [
-            this.xScale(minValue),
-            this.xScale(maxValue),
-          ]);
-
-          // Filter dimension to be within selection
-          this.addFilter({
-            dimension: this.dimensionName,
-            filter: d => d >= minValue && d < maxValue,
-            query: {
-              minValue,
-              maxValue,
-            },
-          });
+    if (typeof query !== 'undefined') {
+      this.$nextTick(() => {
+        const minValue = query.min_value;
+        const maxValue = query.max_value;
+        // Filter dimension to be within selection
+        this.addFilter({
+          dimension: this.dimensionName,
+          filter: d => d >= minValue && d < maxValue,
+          query: {
+            minValue,
+            maxValue,
+          },
         });
-      }
+      });
     }
+
+    this.updateRangeFromQuery();
   },
   destroyed() {
     this.resetSelection();
@@ -517,13 +589,16 @@ export default {
     getClosestBins() {
       const { selection } = event;
       const [low, high] = selection.map(this.xScale.invert);
+      if (!this.snapToGrid) {
+        return [low, high].map(this.xScale);
+      }
 
       // Get closest bin to our lower selection
       const closestBinToLow = this.bins
         .map(bin => bin.x0)
         .map(x0 => Math.abs(x0 - low))
         .reduce((acc, currVal) => Math.min(acc, currVal));
-      const newLowIdx = this.bins.findIndex(
+      var newLowIdx = this.bins.findIndex(
         bin => Math.abs(bin.x0 - low) === closestBinToLow
       );
       const newLow = this.bins[newLowIdx].x0;
@@ -532,11 +607,10 @@ export default {
         .map(bin => bin.x1)
         .map(x1 => Math.abs(x1 - high))
         .reduce((acc, currVal) => Math.min(acc, currVal));
-      const newHighIdx = this.bins.findIndex(
+      var newHighIdx = this.bins.findIndex(
         bin => Math.abs(bin.x1 - high) === closestBinToHigh
       );
       const newHigh = this.bins[newHighIdx].x1;
-
       return [newLow, newHigh].map(this.xScale);
     },
     brushedData() {
@@ -561,15 +635,19 @@ export default {
       this.selectedRange = null;
       this.selectedPopSubset = null;
 
+      var fmt = format('.2~f');
+
       // workaround for when entire range is selected
       var last_bin = this.bins[this.bins.length - 1];
       if (last_bin.x0 == last_bin.x1) {
         last_bin = this.bins[this.bins.length - 2];
       }
-      if (invertedHigh >= last_bin.x1) {
-        // add a small amount so nobody notices
-        invertedHigh += (last_bin.x1 - last_bin.x0) * 0.1;
+      if (invertedHigh >= this.max_value) {
+        invertedHigh = this.max_value;
       }
+
+      invertedLow = fmt(invertedLow);
+      invertedHigh = fmt(invertedHigh);
 
       // Filter dimension to be within snapped selection
       this.addFilter({
@@ -707,10 +785,6 @@ export default {
     selectRange(s) {
       let minValue = s.min;
       let maxValue = s.max;
-      select(this.$refs.brush).call(this.brush.move, [
-        this.xScale(minValue),
-        this.xScale(maxValue),
-      ]);
       this.addFilter({
         dimension: this.dimensionName,
         filter: d => d >= minValue && d < maxValue,
@@ -724,7 +798,7 @@ export default {
       if (ep == 'min') {
         return ext[0];
       } else if (ep == 'max') {
-        return Math.floor(ext[1] + 1);
+        return Math.floor(ext[1] + this.max_pad);
       } else {
         return this.getGenMedian(data, ep[0], ep[1]);
       }
@@ -751,8 +825,97 @@ export default {
       var max = this.getCohortRangeEndpoint(ss.max, ext, sorted_d);
       this.selectRange({ min, max });
     },
+    updateRangeFromQuery() {
+      // there should only be one query for a histogram...
+      const query = this.getQuery(this.dimensionName);
+
+      if (query == null || typeof query == 'undefined') {
+        if (this.handle != null) {
+          this.handle.attr('display', 'none');
+          select(this.$refs.brush).call(this.brush.move, null);
+        }
+        this.selectedRange = null;
+        this.selectedPopSubset = null;
+        this.tfRangeMin = null;
+        this.tfRangeMax = null;
+      } else {
+        this.$nextTick(() => {
+          const minValue = query[0].minValue;
+          const maxValue = query[0].maxValue;
+
+          select(this.$refs.brush).call(this.brush.move, [
+            this.xScale(minValue),
+            this.xScale(maxValue),
+          ]);
+
+          if (this.tfRangeMin != query[0].minValue) {
+            this.tfRangeMin = Number(query[0].minValue);
+          }
+          if (this.tfRangeMax != query[0].maxValue) {
+            this.tfRangeMax = Number(query[0].maxValue);
+          }
+        });
+      }
+    },
+
+    // update selected range based on tfRangeMin - tfRangeMax, if feasible
+    updateSelectedRange() {
+      if (this.tfRangeMin == null || this.tfRangeMax == null) {
+        return;
+      }
+      var tfMin = Number(this.tfRangeMin);
+      var tfMax = Number(this.tfRangeMax);
+
+      if (tfMax > this.max_value) {
+        return;
+      }
+      if (tfMin < this.min_value) {
+        return;
+      }
+
+      // is this range already selected?
+      var alreadySelected = true;
+
+      if (select(this.$refs.brush) == null) {
+        alreadySelected = false;
+      } else {
+        var bsel = brushSelection(this.$refs.brush);
+        if (bsel == null) {
+          alreadySelected = false;
+        } else {
+          var rangeMin = this.xScale.invert(bsel[0]);
+          var rangeMax = this.xScale.invert(bsel[1]);
+          if (tfMin < tfMax && (rangeMin != tfMin || rangeMax != tfMax)) {
+            alreadySelected = false;
+          }
+        }
+      }
+
+      if (!alreadySelected) {
+        var tfrmin = tfMin;
+        var tfrmax = tfMax;
+
+        select(this.$refs.brush).call(this.brush.move, [
+          this.xScale(tfrmin),
+          this.xScale(tfrmax),
+        ]);
+
+        this.addFilter({
+          dimension: this.dimensionName,
+          filter: d => d >= tfrmin && d < tfrmax,
+          query: {
+            minValue: tfrmin,
+            maxValue: tfrmax,
+          },
+        });
+      }
+    },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.center-text >>> input {
+  text-align: center;
+}
+</style>
