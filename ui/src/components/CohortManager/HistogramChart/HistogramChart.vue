@@ -93,16 +93,15 @@
     </v-flex>
 
     <v-flex v-if="inputVariable" ml-3 mr-3>
-
       <v-container class="pa-0">
-	<v-layout row>
+        <v-layout row>
           <v-flex>Selection:</v-flex>
           <v-flex
             ><v-text-field
               v-model.number="tfRangeMin"
               :error-messages="rangeMinErrors"
-               class="center-text pa-0 ma-0"
-	       type="number"
+              class="center-text pa-0 ma-0"
+              type="number"
             ></v-text-field
           ></v-flex>
           <v-flex>-</v-flex>
@@ -110,14 +109,17 @@
             ><v-text-field
               v-model.number="tfRangeMax"
               :error-messages="rangeMaxErrors"
-               class="center-text pa-0 ma-0"
-	       type="number"
+              class="center-text pa-0 ma-0"
+              type="number"
             ></v-text-field
           ></v-flex>
         </v-layout>
       </v-container>
 
-        <v-flex><v-checkbox v-model="snapToGrid" label="Select whole bars only"> </v-checkbox></v-flex>
+      <v-flex
+        ><v-checkbox v-model="snapToGrid" label="Select whole bars only">
+        </v-checkbox
+      ></v-flex>
 
       <v-select
         v-model="selectedPopSubset"
@@ -133,7 +135,7 @@
         :dimension-name="dimensionName"
         :select-cohort-range="selectCohortRange"
         :reset-selection="resetSelection"
-	/>
+      />
 
       <!--
       <v-select
@@ -145,7 +147,6 @@
         return-object
       ></v-select>
 -->
-	
     </v-flex>
   </v-layout>
 </template>
@@ -272,7 +273,7 @@ export default {
         if (this.tfRangeMin > this.max_value) {
           return ['Maximum is ' + this.max_value];
         }
-        if (this.tfRangeMax && (this.tfRangeMin > this.tfRangeMax)) {
+        if (this.tfRangeMax && this.tfRangeMin > this.tfRangeMax) {
           return ['Minimum is greater than maximum'];
         }
       }
