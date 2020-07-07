@@ -3,8 +3,8 @@
     <v-toolbar app class="primary">
       <v-icon color="white" large>library_add</v-icon>
       <v-toolbar-title class="white--text"
-        >Dataset Manager - Create New Study Dataset
-        <div class="subheading">Select Variables</div>
+        >Create New Study Dataset - Select Variables
+	<div class="subheading">Dataset: New Study Dataset (not saved)</div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
