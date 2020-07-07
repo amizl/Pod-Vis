@@ -296,7 +296,6 @@ export default {
     num_bins() {
       var ext = extent(this.populationData);
       var diff = ext[1] - ext[0];
-
       if (
         this.variable &&
         this.variable.value_type === 'decimal' &&
@@ -308,19 +307,26 @@ export default {
       }
     },
     min_value() {
-      return this.bins[0].x0;
-    },
-    max_pad() {
-      var last_bin = this.bins[this.bins.length - 1];
-      if (last_bin.x0 == last_bin.x1) {
-        last_bin = this.bins[this.bins.length - 2];
+      var ext = extent(this.populationData);
+      var range = ext[1] - ext[0];
+      // round to nearest int
+      if (range >= 10) {
+        return Math.floor(ext[0]);
+      } else {
+        return ext[0] - 0.5;
       }
-
-      // add a small amount to ensure entire range can be selected
-      return (last_bin.x1 - last_bin.x0) * 0.1;
     },
+    // padded maximum value
     max_value() {
-      return this.bins[this.bins.length - 1].x1 + this.max_pad;
+      var ext = extent(this.populationData);
+      var range = ext[1] - ext[0];
+       console.log("ext[1] =" + ext[1]);
+      // round to nearest int
+      if (range >= 10) {
+        return Math.ceil(ext[1]);
+      } else {
+        return ext[1] + 0.5;
+      }
     },
     w() {
       const { left, right } = this.margin;
@@ -434,18 +440,19 @@ export default {
       let qtr3 = this.getGenMedian(popData, 3, 4);
       let thr1 = this.getGenMedian(popData, 1, 3);
       let thr2 = this.getGenMedian(popData, 2, 3);
-      let upper = ext[1] + this.max_pad;
+      let lower = this.min_value;
+      let upper = this.max_value;
 
       items.push({ label: 'top 1/2', min: median, max: upper });
-      items.push({ label: 'bottom 1/2', min: ext[0], max: median });
+      items.push({ label: 'bottom 1/2', min: lower, max: median });
 
       items.push({ label: 'top 1/3', min: thr2, max: upper });
       items.push({ label: 'middle 1/3', min: thr1, max: thr2 });
-      items.push({ label: 'bottom 1/3', min: ext[0], max: thr1 });
+      items.push({ label: 'bottom 1/3', min: lower, max: thr1 });
 
       items.push({ label: 'top 1/4', min: qtr3, max: upper });
-      items.push({ label: 'bottom 3/4', min: ext[0], max: qtr3 });
-      items.push({ label: 'bottom 1/4', min: ext[0], max: qtr1 });
+      items.push({ label: 'bottom 3/4', min: lower, max: qtr3 });
+      items.push({ label: 'bottom 1/4', min: lower, max: qtr1 });
       items.push({ label: 'top 3/4', min: qtr1, max: upper });
       items.forEach(i => {
         i.label = i.label + ' of population [' + i.min + ' - ' + i.max + ']';
@@ -463,7 +470,7 @@ export default {
       let one_third = (ext[1] - ext[0]) / 3.0;
       let thr1 = Math.round(ext[0] + one_third);
       let thr2 = Math.round(ext[1] - one_third);
-      let upper = Math.floor(ext[1] + this.max_pad);
+      let upper = this.max_value;
 
       items.push({ label: 'top 1/2', min: mid, max: upper });
       items.push({ label: 'bottom 1/2', min: ext[0], max: mid });
@@ -799,7 +806,7 @@ export default {
       if (ep == 'min') {
         return ext[0];
       } else if (ep == 'max') {
-        return Math.floor(ext[1] + this.max_pad);
+        return this.max_value;
       } else {
         return this.getGenMedian(data, ep[0], ep[1]);
       }
