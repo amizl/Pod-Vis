@@ -320,10 +320,9 @@ export default {
     max_value() {
       var ext = extent(this.populationData);
       var range = ext[1] - ext[0];
-       console.log("ext[1] =" + ext[1]);
-      // round to nearest int
+      // round up to nearest int
       if (range >= 10) {
-        return Math.ceil(ext[1]);
+        return Math.ceil(ext[1] + 0.5);
       } else {
         return ext[1] + 0.5;
       }
@@ -338,11 +337,6 @@ export default {
       const { height } = this;
       return height - top - bottom;
     },
-    // colorScale() {
-    //   return scaleOrdinal()
-    //     .domain(this.data.map(c => c.key))
-    //     .range(schemeCategory10);
-    // },
     xScale() {
       return scaleLinear()
         .domain(extent(this.populationData))
