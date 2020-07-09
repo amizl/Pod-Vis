@@ -70,7 +70,7 @@ export default {
       margin: {
         top: 60,
         right: 100,
-        bottom: 10,
+        bottom: 40,
         left: 220,
       },
       selected: [],
@@ -86,6 +86,8 @@ export default {
       eventCount: 0,
       colors: colors,
       collectionVarNames: {},
+      firstVisitHandle: null,
+      lastVisitHandle: null,
     };
   },
   computed: {
@@ -182,6 +184,22 @@ export default {
         return this.collectionSummaries[this.visitVariable];
       }
     },
+    setAllFirstVisits(visit) {
+      var newFirstVisits = {};
+      Object.keys(this.firstVisits).forEach(id => {
+        newFirstVisits[id] = visit;
+      });
+      this.firstVisitHandle = visit;
+      this.setFirstVisits(newFirstVisits);
+    },
+    setAllLastVisits(visit) {
+      var newLastVisits = {};
+      Object.keys(this.lastVisits).forEach(id => {
+        newLastVisits[id] = visit;
+      });
+      this.lastVisitHandle = visit;
+      this.setLastVisits(newLastVisits);
+    },
     // TODO - move these two methods to actions.js?
     setFirstVisit(varId, visit) {
       var newFirstVisits = {};
@@ -199,6 +217,32 @@ export default {
       newLastVisits[varId] = visit;
       this.setLastVisits(newLastVisits);
     },
+    // set first visit handle based on majority vote
+    setVisitHandle(is_first) {
+      var varIds = getObservationVariableIds(this.collection);
+      var visits = {};
+      varIds.forEach(vid => {
+        var v = is_first ? this.firstVisits[vid] : this.lastVisits[vid];
+        if (v in visits) {
+          visits[v] += 1;
+        } else {
+          visits[v] = 1;
+        }
+      });
+      // sort by decreasing visit count
+      var sortFn = function compare(a, b) {
+        var ca = visits[a];
+        var cb = visits[b];
+        return cb - ca;
+      };
+      var selectedVisits = Object.keys(visits).sort(sortFn);
+      if (is_first) {
+        this.firstVisitHandle = selectedVisits[0];
+      } else {
+        this.lastVisitHandle = selectedVisits[0];
+      }
+    },
+
     updateCanvas() {
       // Identify the unique events
       this.uniqueEvents = this.getUniqueList(
@@ -234,6 +278,28 @@ export default {
           'ST',
         ];
       }
+
+      // Compute firstLast and lastFirst visits
+      // TODO - duplicated from VisitVariablesToolbar
+      var varIds = getObservationVariableIds(this.collection);
+      var firstLastVisit = null;
+      var lastFirstVisit = null;
+      var firstVisits = {};
+      var lastVisits = {};
+
+      varIds.forEach(v => {
+        firstVisits[this.firstVisits[v]] = true;
+        lastVisits[this.lastVisits[v]] = true;
+      });
+
+      this.uniqueEvents.forEach(e => {
+        if (e in firstVisits) {
+          lastFirstVisit = e;
+        }
+        if ((firstLastVisit == null) && (e in lastVisits)) {
+          firstLastVisit = e;
+        }
+      });
 
       // Identify the unique tests
       var uniqueTests = this.getUniqueList(
@@ -475,7 +541,6 @@ export default {
           xoffset = d3.event.x - d3.select(this).attr('x');
         };
 
-        // TODO - do not allow one endpoint to be dragged over the other
         var on_drag_fn = function(d) {
           var new_x = d3.event.x - xoffset;
           if (new_x < min_x) {
@@ -531,6 +596,105 @@ export default {
         dh(colRect);
       };
 
+      var addDraggableHandle = function(visit, color, chart, is_first) {
+        var cx = x(visit) + margin.left;
+        var cy = margin.top - y.bandwidth();
+
+        var g = mysvg.append('g');
+        var colRect1 = g
+          .append('rect')
+          .attr('x', cx)
+          .attr('y', cy)
+          .attr('width', x.bandwidth())
+          .attr('height', y.bandwidth())
+          .style('fill', color)
+          .style('fill-opacity', '0.6');
+
+        var colRect2 = g
+          .append('rect')
+          .attr('x', cx)
+          .attr('y', height + margin.top)
+          .attr('width', x.bandwidth())
+          .attr('height', y.bandwidth())
+          .style('fill', color)
+          .style('fill-opacity', '0.6');
+
+        var colRect3 = g
+          .append('rect')
+          .attr('x', cx)
+          .attr('y', cy)
+          .attr('width', x.bandwidth())
+          .attr('height', height + (y.bandwidth()*2))
+          .style('fill', 'none')
+          .attr('stroke', 'black')
+          .attr('stroke-width', '1')
+          .attr('stroke-opacity', '0.7');
+
+        // enable dragging
+        var min_x = margin.left;
+        var max_x = margin.left + width - x.bandwidth();
+        var xoffset = 0;
+
+        var start_drag_fn = function(d) {
+          xoffset = d3.event.x - d3.select(this).attr('x');
+        };
+
+        var on_drag_fn = function(d) {
+          var new_x = d3.event.x - xoffset;
+          if (new_x < min_x) {
+            new_x = min_x;
+          }
+          if (new_x > max_x) {
+            new_x = max_x;
+          }
+          // don't allow first visit to go past first last visit
+                    if (is_first) {
+                        var lvx = x(firstLastVisit) + margin.left;
+                        if (new_x > lvx - x_bw) {
+                          new_x = lvx - x_bw;
+                      }
+                    }
+          // don't allow last visit to go past last first visit
+                    else {
+                        var lvx = x(lastFirstVisit) + margin.left;
+                        if (new_x < lvx + x_bw) {
+                          new_x = lvx + x_bw;
+                      }
+                    }
+          d3.select(colRect1.node()).attr('x', new_x);
+          d3.select(colRect2.node()).attr('x', new_x);
+          d3.select(colRect3.node()).attr('x', new_x);
+        };
+
+        var drag_end_fn = function(d) {
+          // find nearest visit event/num and update/snap to grid
+          var midpt = d3.select(this).attr('x') * 1.0 + x_hbw;
+          var visitnum = Math.floor((midpt - min_x) / x_bw);
+          if (visitnum < 0) {
+            visitnum = 0;
+          }
+          if (visitnum >= chart.uniqueEvents.length) {
+            visitnum = chart.uniqueEvents.length - 1;
+          }
+          var visit = chart.uniqueEvents[visitnum];
+          d3.select(colRect1.node()).attr('x', x(visit) + margin.left);
+          d3.select(colRect2.node()).attr('x', x(visit) + margin.left);
+          if (is_first) {
+            chart.setAllFirstVisits(visit);
+          } else {
+            chart.setAllLastVisits(visit);
+          }
+        };
+
+        var dh = d3
+          .drag()
+          .on('start', start_drag_fn)
+          .on('drag', on_drag_fn)
+          .on('end', drag_end_fn);
+        dh(colRect1);
+        dh(colRect2);
+      };
+
       var varIdToName = {};
       this.collection.observation_variables_list.forEach(ov => {
         varIdToName[ov['ontology']['id']] = ov['ontology']['label'];
@@ -565,7 +729,6 @@ export default {
       }
 
       // highlight first and last selections for each variable
-      var varIds = getObservationVariableIds(this.collection);
       varIds.forEach(vid => {
         var fv = this.firstVisits[vid];
         var lv = this.lastVisits[vid];
@@ -590,6 +753,24 @@ export default {
           );
         }
       });
+      if (this.firstVisitHandle == null) {
+        this.setVisitHandle(true);
+      }
+      if (this.lastVisitHandle == null) {
+        this.setVisitHandle(false);
+      }
+      addDraggableHandle(
+        this.firstVisitHandle,
+        colors['firstVisit'],
+        this,
+        true
+      );
+      addDraggableHandle(
+        this.lastVisitHandle,
+        colors['lastVisit'],
+        this,
+        false
+      );
     },
     ...mapMutations('dataSummary', {
       setFirstVisits: actions.SET_FIRST_VISITS,
