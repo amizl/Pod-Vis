@@ -1181,17 +1181,40 @@ def get_collection_obs_summary_by_event(collection_id):
 @jwt_required
 def get_collection_time_between_visits(collection_id):
     query_by = request.args.get("query_by")
-    visit1 = request.args.get("visit1")
-    visit2 = request.args.get("visit2")
 
     # only count subjects with first/last observations for these variables
-    obs_var_ids = request.args.getlist('obs_var_ids')
-    avg_times = models.Collection.get_avg_time_between_visits(collection_id, query_by, visit1, visit2, obs_var_ids)
+    obs_var_ids = request.args.get('obs_var_ids')
 
-    return jsonify({
-        "success": True,
-        "visit1": visit1,
-        "visit2": visit2,
-        "query_by": query_by,
-        "times": avg_times,
-    }), 201
+    # single first/last visit for all variables
+    visit1 = request.args.get("visit1")
+    visit2 = request.args.get("visit2")
+    
+    # distinct first/last visit for each variable
+    fv = request.args.get("first_visits")
+    lv = request.args.get("last_visits")
+    ovl = obs_var_ids.split(",")
+
+    if visit1 is not None:
+        avg_times = models.Collection.get_avg_time_between_visits(collection_id, query_by, visit1, visit2, ovl)
+        return jsonify({
+            "success": True,
+            "obs_var_ids": obs_var_ids,
+            "visit1": visit1,
+            "visit2": visit2,
+            "query_by": query_by,
+            "times": avg_times,
+        }), 201
+    else:
+        fvl = fv.split(",")
+        lvl = lv.split(",")
+
+        avg_times = models.Collection.get_avg_time_between_visits(collection_id, query_by, fvl, lvl, ovl)
+
+        return jsonify({
+            "success": True,
+            "obs_var_ids": obs_var_ids,
+            "first_visits": fv,
+            "last_visits": lv,
+            "query_by": query_by,
+            "times": avg_times,
+        }), 201

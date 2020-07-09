@@ -729,3 +729,124 @@ class Collection(db.Model):
             })
         return result
 
+    @classmethod
+    def get_avg_time_between_visits(cls, collection_id, query_by, first_visits, last_visits, obs_var_ids):
+        """Find the average time between visits for the specified collection and pair of visits.
+
+        Args:
+            collection_id: Collection's ID.
+            query_by: Either 'visit_num' or 'visit_event'
+            visit1: Name of the first visit
+            visit2: Name of the second visit
+            obs_var_ids: List of observation variable ids
+            first_visits: List of first visits corresponding to obs_var_ids
+            last_visits: List of last visits corresponding to obs_var_ids
+
+        Returns:
+            List of study_id, study_name, n_subjects, avg_time_secs
+
+        """
+
+        # group variables with same first + last visit
+        groups = {}
+        i = 0
+        for oid in obs_var_ids:
+            first_visit = first_visits[i]
+            last_visit = last_visits[i]
+            i += 1
+            fl = (first_visit, last_visit)
+            if fl in groups:
+                groups[fl].append(oid)
+            else:
+                groups[fl] = [oid]
+
+        connection = db.engine.connect()
+
+        n_groups = len(groups)
+        # subjects indexed by id
+        subjects = {}
+        subj2study = {}
+        
+        for fl in groups:
+            query = text("""
+            SELECT cs.study_id, st.study_name, s.id, COUNT(DISTINCT o1.observation_ontology_id) as num_vars,
+                   AVG(unix_timestamp(sv2.event_date) - unix_timestamp(sv1.event_date)) as average_time
+            FROM collection c, collection_study cs, study st, subject s, 
+                 subject_visit sv1, subject_visit sv2, 
+                 observation o1, observation o2
+            WHERE c.id = (:id)
+            AND c.id = cs.collection_id
+            AND cs.study_id = s.study_id
+            AND cs.study_id = st.id
+            AND s.id = sv1.subject_id
+            AND s.id = sv2.subject_id
+            AND sv1.""" + query_by + """ = (:visit1)
+            AND sv2.""" + query_by + """ = (:visit2)
+            AND sv1.id = o1.subject_visit_id
+            AND o1.observation_ontology_id in :obs_vars
+            AND sv2.id = o2.subject_visit_id
+            AND o2.observation_ontology_id = o1.observation_ontology_id
+            GROUP BY cs.study_id, st.study_name, s.id
+            HAVING num_vars >= (:n_obs_vars) 
+            """)
+
+            result_proxy = connection.execute(query,
+                                              id=collection_id,
+                                              visit1=fl[0],
+                                              visit2=fl[1],
+                                              obs_vars=groups[fl],
+                                              n_obs_vars=len(groups[fl])
+            ).fetchall()
+
+            for row in result_proxy:
+                if row.id not in subj2study:
+                    subj2study[row.id] = { 'id': row.study_id, 'name': row.study_name }
+                    
+                if row.id in subjects:
+                    subjects[row.id]['n_groups'] += 1
+                    subjects[row.id][fl] = row.average_time
+                else:
+                    subjects[row.id] = { 'id': row.id, 'n_groups': 1, fl: row.average_time }
+
+#        sys.stderr.write("found " + str(len(subj_ids.keys())) + " subject(s)" + "\n")
+#        sys.stderr.flush()
+
+        # group subjects by study
+        studies = {}
+        for sid in subjects:
+            subj = subjects[sid]
+            if subj['n_groups'] < n_groups:
+                continue
+            study = subj2study[sid]
+            if study['id'] in studies:
+                studies[study['id']]['n_subjects'] += 1
+            else:
+                studies[study['id']] = { 'id': study['id'], 'name': study['name'], 'n_subjects': 1 }
+
+            # add times
+            st = studies[study['id']]
+            for fl in groups:
+                if fl in st:
+                    st[fl] += subj[fl]
+                else:
+                    st[fl] = subj[fl]
+                   
+        result = []
+        for study_id in studies:
+            st = studies[study_id]
+            is_first = True
+            for fl in groups:
+                result.append({
+                    "study_id": study_id,
+                    "study_name": st['name'],
+                    "is_first": is_first,
+                    "n_subjects": st['n_subjects'],
+                    "n_variables": len(groups[fl]),
+                    "first_visit": fl[0],
+                    "last_visit": fl[1],
+                    "avg_time_secs": int(st[fl] / st['n_subjects'] )
+                })
+                is_first = False
+
+        return result
+
