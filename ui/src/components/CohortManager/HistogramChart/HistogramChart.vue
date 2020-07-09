@@ -95,7 +95,7 @@
     <v-flex v-if="inputVariable" ml-3 mr-3>
       <v-container class="pa-0">
         <v-layout row>
-          <v-flex>Selection:</v-flex>
+          <v-flex>Custom&nbsp;Selection:</v-flex>
           <v-flex
             ><v-text-field
               v-model.number="tfRangeMin"
@@ -126,7 +126,7 @@
         :items="popSubsetItems"
         item-text="label"
         item-value="id"
-        label="Select population subset"
+        label="Prearranged Selections"
         class="pa-0 ma-0"
         return-object
       ></v-select>
