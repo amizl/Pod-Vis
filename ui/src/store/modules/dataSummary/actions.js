@@ -29,25 +29,24 @@ export default {
       });
 
       // update first/last visit info
-      var firstVisit = null;
-      var lastVisit = null;
+      var firstVisits = {};
+      var lastVisits = {};
       var visitVar = null;
 
-      if (data.collection.observation_variables.length > 0) {
-        var ov = data.collection.observation_variables[0];
+      data.collection.observation_variables.forEach(ov => {
         if (ov['first_visit_event']) {
           visitVar = 'Visit Event';
-          firstVisit = ov['first_visit_event'];
-          lastVisit = ov['last_visit_event'];
+          firstVisits[ov['ontology']['id']] = ov['first_visit_event'];
+          lastVisits[ov['ontology']['id']] = ov['last_visit_event'];
         } else {
           visitVar = 'Visit Number';
-          firstVisit = ov['first_visit_num'];
-          lastVisit = ov['last_visit_num'];
+          firstVisits[ov['ontology']['id']] = ov['first_visit_num'];
+          lastVisits[ov['ontology']['id']] = ov['last_visit_num'];
         }
-      }
+      });
       commit(mutations.SET_VISIT_VARIABLE, visitVar);
-      commit(mutations.SET_FIRST_VISIT, firstVisit);
-      commit(mutations.SET_LAST_VISIT, lastVisit);
+      commit(mutations.SET_FIRST_VISITS, firstVisits);
+      commit(mutations.SET_LAST_VISITS, lastVisits);
 
       const observationVariables = makeHierarchy(
         data.collection.observation_variables
@@ -139,48 +138,77 @@ export default {
       commit(mutations.SET_LOADING, false);
     }
   },
-  [actions.SET_FIRST_VISIT]({ commit }, newFirstVisit) {
-    commit(mutations.SET_FIRST_VISIT, newFirstVisit);
+  [actions.SET_FIRST_VISITS]({ commit }, newFirstVisits) {
+    commit(mutations.SET_FIRST_VISITS, newFirstVisits);
   },
-  [actions.SET_LAST_VISIT]({ commit }, newLastVisit) {
-    commit(mutations.SET_LAST_VISIT, newLastVisit);
+  [actions.SET_LAST_VISITS]({ commit }, newLastVisits) {
+    commit(mutations.SET_LAST_VISITS, newLastVisits);
   },
   [actions.SET_VISIT_VARIABLE]({ commit }, newVisitVar) {
-    commit(mutations.SET_FIRST_VISIT, null);
-    commit(mutations.SET_LAST_VISIT, null);
+    commit(mutations.SET_FIRST_VISITS, {});
+    commit(mutations.SET_LAST_VISITS, {});
     commit(mutations.SET_VISIT_VARIABLE, newVisitVar);
+  },
+  // set all variables to same first/last visit
+  [actions.SET_FIRST_VISIT]({ commit, state }, newFirstVisit) {
+    var collection = state[stateTypes.COLLECTION];
+    var firstVisits = {};
+    getObservationVariableIds(collection).forEach(oid => {
+      firstVisits[oid] = newFirstVisit;
+    });
+    commit(mutations.SET_FIRST_VISITS, firstVisits);
+  },
+  [actions.SET_LAST_VISIT]({ commit, state }, newLastVisit) {
+    var collection = state[stateTypes.COLLECTION];
+    var lastVisits = {};
+    getObservationVariableIds(collection).forEach(oid => {
+      lastVisits[oid] = newLastVisit;
+    });
+    commit(mutations.SET_LAST_VISITS, lastVisits);
   },
   async [actions.FETCH_TIMES_BETWEEN_VISITS]({ commit, dispatch, state }) {
     var collection = state[stateTypes.COLLECTION];
     var visitVariable = state[stateTypes.VISIT_VARIABLE];
-    var firstVisit = state[stateTypes.FIRST_VISIT];
-    var lastVisit = state[stateTypes.LAST_VISIT];
-    if (collection && visitVariable && firstVisit && lastVisit) {
+    var firstVisits = state[stateTypes.FIRST_VISITS];
+    var lastVisits = state[stateTypes.LAST_VISITS];
+
+    if (collection && visitVariable && firstVisits && lastVisits) {
       var query_by =
         visitVariable === 'Visit Event' ? 'visit_event' : 'visit_num';
       var request_url =
         '/api/collections/time_between_visits/' +
         collection.id +
         '?query_by=' +
-        query_by +
-        '&visit1=' +
-        firstVisit +
-        '&visit2=' +
-        lastVisit;
+        query_by;
+
+      var first_visits_l = [];
+      var last_visits_l = [];
+      var obs_var_ids_l = [];
+
+      // comma-separated lists for first_visits, last_visits, obs_var_ids
       getObservationVariableIds(collection).forEach(o => {
-        request_url = request_url + '&obs_var_ids=' + o;
+        obs_var_ids_l.push(o);
+        first_visits_l.push(firstVisits[o]);
+        last_visits_l.push(lastVisits[o]);
       });
 
+      request_url = request_url + '&obs_var_ids=' + obs_var_ids_l.join(',');
+      request_url = request_url + '&first_visits=' + first_visits_l.join(',');
+      request_url = request_url + '&last_visits=' + last_visits_l.join(',');
+
       const { data } = await axios.get(request_url);
+      // TODO -
       if (
-        data['query_by'] === query_by &&
-        data['visit1'] == firstVisit &&
-        data['visit2'] == lastVisit
+        data['query_by'] === query_by
+        // &&       data['visit1'] == firstVisit &&
+        //        data['visit2'] == lastVisit
       ) {
         commit(mutations.SET_TIMES_BETWEEN_VISITS, data['times']);
         var ns = 0;
         data['times'].forEach(t => {
-          ns += t.n_subjects;
+          if (t['is_first']) {
+            ns += t.n_subjects;
+          }
         });
         commit(mutations.SET_NUM_SELECTED_SUBJECTS, ns);
       }

@@ -72,7 +72,10 @@ import axios from 'axios';
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/dataSummary/types';
 import { colors } from '@/utils/colors';
-import { getObservationVariableNames } from '@/utils/helpers';
+import {
+  getObservationVariableIds,
+  getObservationVariableNames,
+} from '@/utils/helpers';
 
 export default {
   data() {
@@ -92,8 +95,8 @@ export default {
       unfilteredData: state.UNFILTERED_DATA,
       collection: state.COLLECTION,
       collectionSummaries: state.COLLECTION_SUMMARIES,
-      selFirstVisit: state.FIRST_VISIT,
-      selLastVisit: state.LAST_VISIT,
+      firstVisits: state.FIRST_VISITS,
+      lastVisits: state.LAST_VISITS,
       selVisitVariable: state.VISIT_VARIABLE,
       timesBetweenVisits: state.TIMES_BETWEEN_VISITS,
       numSelectedSubjects: state.NUM_SELECTED_SUBJECTS,
@@ -113,38 +116,62 @@ export default {
     },
     lastVisit: {
       get() {
-        return this.selLastVisit;
+        var varIds = getObservationVariableIds(this.collection);
+        var lastVisit = null;
+        varIds.forEach(vid => {
+          var lv = this.lastVisits[vid];
+          if (lastVisit == null) {
+            lastVisit = lv;
+          }
+          // different variables have different visits
+          else if (lastVisit != lv) {
+            lastVisit = 'multiple';
+          }
+        });
+        return lastVisit;
       },
       set(value) {
-        this.setLastVisit(value);
-        this.updateEvents();
-        this.updateTimesBetweenVisits();
+        if (value != 'multiple') {
+          this.setLastVisit(value);
+        }
       },
     },
     firstVisit: {
       get() {
-        return this.selFirstVisit;
+        var varIds = getObservationVariableIds(this.collection);
+        var firstVisit = null;
+        varIds.forEach(vid => {
+          var fv = this.firstVisits[vid];
+          if (firstVisit == null) {
+            firstVisit = fv;
+          }
+          // different variables have different visits
+          else if (firstVisit != fv) {
+            firstVisit = 'multiple';
+          }
+        });
+        return firstVisit;
       },
       set(value) {
-        this.setFirstVisit(value);
-        this.updateEvents();
-        this.updateTimesBetweenVisits();
+        if (value != 'multiple') {
+          this.setFirstVisit(value);
+        }
       },
     },
   },
   watch: {
-    selFirstVisit(newval) {
-      this.updateEvents();
-      this.updateTimesBetweenVisits();
-    },
-    selLastVisit(newval) {
-      this.updateEvents();
-      this.updateTimesBetweenVisits();
-    },
     hideUnselectedVars(newval) {
       this.$emit('hideUnselectedVars', newval);
     },
     collectionSummaries(newval) {
+      this.updateTimesBetweenVisits();
+    },
+    firstVisits(newval) {
+      this.updateEvents();
+      this.updateTimesBetweenVisits();
+    },
+    lastVisits(newval) {
+      this.updateEvents();
       this.updateTimesBetweenVisits();
     },
   },
@@ -158,33 +185,76 @@ export default {
         return;
       }
       // Identify the unique events
+      // TODO - ensure that these events are sorted chronologically
       this.uniqueEvents = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
       );
-
-      if (!this.selFirstVisit) {
-        this.firstVisit = this.uniqueEvents[0];
+      // HACK for PPMI
+      if (
+        this.uniqueEvents.join(',') ==
+        'BL,PW,SC,ST,U01,V01,V02,V03,V04,V05,V06,V07,V08,V09,V10,V11,V12,V13,V14,V15,V16'
+      ) {
+        this.uniqueEvents = [
+          'SC',
+          'BL',
+          'U01',
+          'V01',
+          'V02',
+          'V03',
+          'V04',
+          'V05',
+          'V06',
+          'V07',
+          'V08',
+          'V09',
+          'V10',
+          'V11',
+          'V12',
+          'V13',
+          'V14',
+          'V15',
+          'V16',
+          'PW',
+          'ST',
+        ];
       }
-      if (!this.selLastVisit) {
-        this.lastVisit = this.uniqueEvents[this.uniqueEvents.length - 1];
-      }
 
-      // possible first visit events - all those up until lastVisit
-      this.firstVisitEvents = [];
+      var varIds = getObservationVariableIds(this.collection);
+      var firstLastVisit = null;
+      var lastFirstVisit = null;
+      var firstVisits = {};
+      var lastVisits = {};
+
+      varIds.forEach(v => {
+        firstVisits[this.firstVisits[v]] = true;
+        lastVisits[this.lastVisits[v]] = true;
+      });
+
+      this.uniqueEvents.forEach(e => {
+        if (e in firstVisits) {
+          lastFirstVisit = e;
+        }
+        if (firstLastVisit == null && e in lastVisits) {
+          firstLastVisit = e;
+        }
+      });
+
+      // possible first visit events - all those up until the first lastVisit
+      this.firstVisitEvents = ['multiple'];
       for (var i = 0; i < this.uniqueEvents.length; i++) {
-        if (this.lastVisit && this.uniqueEvents[i] == this.lastVisit) {
+        if (this.lastVisit && this.uniqueEvents[i] == firstLastVisit) {
           break;
         }
         this.firstVisitEvents.push(this.uniqueEvents[i]);
       }
 
-      // possible last visit events - starting after firstVisit
+      // possible last visit events - starting after the last firstVisit
       var firstVisitSeen = !this.firstVisit;
-      this.lastVisitEvents = [];
+      this.lastVisitEvents = ['multiple'];
       for (var i = 0; i < this.uniqueEvents.length; i++) {
         if (firstVisitSeen) {
           this.lastVisitEvents.push(this.uniqueEvents[i]);
-        } else if (this.firstVisit && this.uniqueEvents[i] == this.firstVisit) {
+        } else if (this.firstVisit && this.uniqueEvents[i] == lastFirstVisit) {
           firstVisitSeen = true;
         }
       }

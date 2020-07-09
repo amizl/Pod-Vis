@@ -28,7 +28,10 @@ import { schemeCategory10 } from 'd3-scale-chromatic';
 import resize from 'vue-resize-directive';
 import { colors } from '@/utils/colors';
 // Util
-import { getObservationVariableNames } from '@/utils/helpers';
+import {
+  getObservationVariableIds,
+  getObservationVariableNames,
+} from '@/utils/helpers';
 
 export default {
   directives: {
@@ -89,8 +92,8 @@ export default {
     ...mapState('dataSummary', {
       collection: state.COLLECTION,
       collectionSummaries: state.COLLECTION_SUMMARIES,
-      firstVisit: state.FIRST_VISIT,
-      lastVisit: state.LAST_VISIT,
+      firstVisits: state.FIRST_VISITS,
+      lastVisits: state.LAST_VISITS,
       visitVariable: state.VISIT_VARIABLE,
     }),
     domain() {
@@ -145,10 +148,10 @@ export default {
     visitVariable() {
       this.updateCanvas();
     },
-    firstVisit() {
+    firstVisits() {
       this.updateCanvas();
     },
-    lastVisit() {
+    lastVisits() {
       this.updateCanvas();
     },
   },
@@ -179,12 +182,58 @@ export default {
         return this.collectionSummaries[this.visitVariable];
       }
     },
+    // TODO - move these two methods to actions.js?
+    setFirstVisit(varId, visit) {
+      var newFirstVisits = {};
+      Object.keys(this.firstVisits).forEach(id => {
+        newFirstVisits[id] = this.firstVisits[id];
+      });
+      newFirstVisits[varId] = visit;
+      this.setFirstVisits(newFirstVisits);
+    },
+    setLastVisit(varId, visit) {
+      var newLastVisits = {};
+      Object.keys(this.lastVisits).forEach(id => {
+        newLastVisits[id] = this.lastVisits[id];
+      });
+      newLastVisits[varId] = visit;
+      this.setLastVisits(newLastVisits);
+    },
     updateCanvas() {
       // Identify the unique events
       this.uniqueEvents = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
       );
       this.eventCount = this.uniqueEvents.length;
+      // HACK for PPMI
+      if (
+        this.uniqueEvents.join(',') ==
+        'BL,PW,SC,ST,U01,V01,V02,V03,V04,V05,V06,V07,V08,V09,V10,V11,V12,V13,V14,V15,V16'
+      ) {
+        this.uniqueEvents = [
+          'SC',
+          'BL',
+          'U01',
+          'V01',
+          'V02',
+          'V03',
+          'V04',
+          'V05',
+          'V06',
+          'V07',
+          'V08',
+          'V09',
+          'V10',
+          'V11',
+          'V12',
+          'V13',
+          'V14',
+          'V15',
+          'V16',
+          'PW',
+          'ST',
+        ];
+      }
 
       // Identify the unique tests
       var uniqueTests = this.getUniqueList(
@@ -370,23 +419,40 @@ export default {
           return d;
         });
 
-      // unused
-      var highlightRow = function(var_id, color) {
-        mysvg
-          .append('g')
+      var highlightCell = function(
+        var_id,
+        var_name,
+        visit,
+        color,
+        chart,
+        is_first
+      ) {
+        var cx = x(visit) + margin.left;
+        var cy = y(var_name);
+
+        var g = mysvg.append('g');
+        var colRect = g
           .append('rect')
-          .attr('x', margin.left)
-          .attr('y', y(var_id) + margin.top)
-          .attr('width', width - margin.left - margin.right)
-          .attr('height', y_bw)
-          .style('fill', color)
+          .attr('x', cx)
+          .attr('y', cy)
+          .attr('width', x.bandwidth())
+          .attr('height', y.bandwidth())
+          .style('fill', 'none')
           .style('opacity', '0.4')
-          .attr('stroke', 'none');
+          .attr('stroke', color)
+          .attr('stroke-width', '3');
       };
 
-      var highlightColHeading = function(visit, color, chart, is_first) {
+      var addDraggableHighlight = function(
+        var_id,
+        var_name,
+        visit,
+        color,
+        chart,
+        is_first
+      ) {
         var cx = x(visit) + margin.left;
-        var cy = margin.top - y.bandwidth();
+        var cy = y(var_name);
 
         var g = mysvg.append('g');
         var colRect = g
@@ -397,23 +463,8 @@ export default {
           .attr('height', y.bandwidth())
           .style('fill', color)
           .style('opacity', '0.4')
-          .attr('stroke', 'black');
-      };
-
-      var addDraggableHighlightCol = function(visit, color, chart, is_first) {
-        var cx = x(visit) + margin.left;
-        var cy = margin.top;
-
-        var g = mysvg.append('g');
-        var colRect = g
-          .append('rect')
-          .attr('x', cx)
-          .attr('y', cy)
-          .attr('width', x.bandwidth())
-          .attr('height', height)
-          .style('fill', color)
-          .style('opacity', '0.4')
-          .attr('stroke', 'black');
+          .attr('stroke', 'black')
+          .attr('stroke-width', '0.5');
 
         // enable dragging
         var min_x = margin.left;
@@ -435,8 +486,8 @@ export default {
           }
           // don't allow first visit to go past last visit
           if (is_first) {
-            if (chart.lastVisit) {
-              var lvx = x(chart.lastVisit) + margin.left;
+            if (chart.lastVisits[var_id]) {
+              var lvx = x(chart.lastVisits[var_id]) + margin.left;
               if (new_x > lvx - x_bw) {
                 new_x = lvx - x_bw;
               }
@@ -444,8 +495,8 @@ export default {
           }
           // don't allow last visit to go past first visit
           else {
-            if (chart.firstVisit) {
-              var lvx = x(chart.firstVisit) + margin.left;
+            if (chart.firstVisits[var_id]) {
+              var lvx = x(chart.firstVisits[var_id]) + margin.left;
               if (new_x < lvx + x_bw) {
                 new_x = lvx + x_bw;
               }
@@ -466,9 +517,9 @@ export default {
           }
           var visit = chart.uniqueEvents[visitnum];
           if (is_first) {
-            chart.setFirstVisit(visit);
+            chart.setFirstVisit(var_id, visit);
           } else {
-            chart.setLastVisit(visit);
+            chart.setLastVisit(var_id, visit);
           }
         };
 
@@ -480,67 +531,69 @@ export default {
         dh(colRect);
       };
 
-      // highlight saved first/last visit
+      var varIdToName = {};
+      this.collection.observation_variables_list.forEach(ov => {
+        varIdToName[ov['ontology']['id']] = ov['ontology']['label'];
+      });
+
+      // highlight saved first/last visit selections
       if (this.collection.observation_variables_list.length > 0) {
-        var ov = this.collection.observation_variables_list[0];
-        if (this.visitVariable == 'Visit Event') {
-          if (ov.first_visit_event) {
-            highlightColHeading(
-              ov['first_visit_event'],
+        var vvl =
+          this.visitVariable == 'Visit Event' ? 'visit_event' : 'visit_num';
+        this.collection.observation_variables_list.forEach(ov => {
+          if (ov['first_' + vvl]) {
+            highlightCell(
+              ov['ontology']['id'],
+              varIdToName[ov['ontology']['id']],
+              ov['first_' + vvl],
               colors['firstVisit'],
               this,
               true
             );
           }
-          if (ov.last_visit_event) {
-            highlightColHeading(
-              ov['last_visit_event'],
+          if (ov['last_' + vvl]) {
+            highlightCell(
+              ov['ontology']['id'],
+              varIdToName[ov['ontology']['id']],
+              ov['last_' + vvl],
               colors['lastVisit'],
               this,
-              true
+              false
             );
           }
-        } else {
-          if (ov.first_visit_num) {
-            highlightColHeading(
-              ov['first_visit_num'],
-              colors['firstVisit'],
-              this,
-              true
-            );
-          }
-          if (ov.last_visit_num) {
-            highlightColHeading(
-              ov['last_visit_num'],
-              colors['lastVisit'],
-              this,
-              true
-            );
-          }
-        }
+        });
       }
 
-      // highlight first and last selections
-      if (this.firstVisit) {
-        addDraggableHighlightCol(
-          this.firstVisit,
-          colors['firstVisit'],
-          this,
-          true
-        );
-      }
-      if (this.lastVisit) {
-        addDraggableHighlightCol(
-          this.lastVisit,
-          colors['lastVisit'],
-          this,
-          false
-        );
-      }
+      // highlight first and last selections for each variable
+      var varIds = getObservationVariableIds(this.collection);
+      varIds.forEach(vid => {
+        var fv = this.firstVisits[vid];
+        var lv = this.lastVisits[vid];
+        if (fv) {
+          addDraggableHighlight(
+            vid,
+            varIdToName[vid],
+            fv,
+            colors['firstVisit'],
+            this,
+            true
+          );
+        }
+        if (lv) {
+          addDraggableHighlight(
+            vid,
+            varIdToName[vid],
+            lv,
+            colors['lastVisit'],
+            this,
+            false
+          );
+        }
+      });
     },
     ...mapMutations('dataSummary', {
-      setFirstVisit: actions.SET_FIRST_VISIT,
-      setLastVisit: actions.SET_LAST_VISIT,
+      setFirstVisits: actions.SET_FIRST_VISITS,
+      setLastVisits: actions.SET_LAST_VISITS,
     }),
   },
 };

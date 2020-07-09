@@ -24,18 +24,18 @@ export default {
   /**
    * Set first visit variables.
    * @param {*} state
-   * @param {*} newFirstVisit
+   * @param {*} newFirstVisits
    */
-  [mutations.SET_FIRST_VISIT](state, newFirstVisit) {
-    state[stateTypes.FIRST_VISIT] = newFirstVisit;
+  [mutations.SET_FIRST_VISITS](state, newFirstVisits) {
+    state[stateTypes.FIRST_VISITS] = newFirstVisits;
   },
   /**
    * Set last visit variables.
    * @param {*} state
    * @param {*} newLastVisit
    */
-  [mutations.SET_LAST_VISIT](state, newLastVisit) {
-    state[stateTypes.LAST_VISIT] = newLastVisit;
+  [mutations.SET_LAST_VISITS](state, newLastVisits) {
+    state[stateTypes.LAST_VISITS] = newLastVisits;
   },
   /**
    * Set visit variable.

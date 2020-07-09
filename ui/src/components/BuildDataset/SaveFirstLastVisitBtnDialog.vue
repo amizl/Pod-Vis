@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn
-      :disabled="!firstVisit || !lastVisit || numSelectedSubjects == 0"
+      :disabled="disableButton"
       color="primary--text"
       @click="dialog = !dialog"
     >
@@ -11,15 +11,16 @@
     <v-dialog v-model="dialog" width="500">
       <v-card>
         <v-card-title primary-title>
-          <span class="title pl-2">Save First and Last Visit</span>
+          <span class="title pl-2">Save First and Last Visits</span>
         </v-card-title>
         <v-card-text class="title primary--text text--darken-3">
           <div class="primary--text title pl-2">
             <ul>
-              <li>First Visit={{ firstVisit }}</li>
-              <li>Last Visit={{ lastVisit }}</li>
-              <li>Study Population={{ numSelectedSubjects }} subject(s)</li>
+              <li v-for="descr in varDescriptions">{{ descr }}</li>
             </ul>
+          </div>
+          <div class="pt-3">
+            Study Population - {{ numSelectedSubjects }} subject(s)
           </div>
         </v-card-text>
 
@@ -50,11 +51,53 @@ export default {
   computed: {
     ...mapState('dataSummary', {
       collection: state.COLLECTION,
-      firstVisit: state.FIRST_VISIT,
-      lastVisit: state.LAST_VISIT,
+      firstVisits: state.FIRST_VISITS,
+      lastVisits: state.LAST_VISITS,
       visitVariable: state.VISIT_VARIABLE,
       numSelectedSubjects: state.NUM_SELECTED_SUBJECTS,
     }),
+    disableButton() {
+      var disabled = false;
+      if (this.numSelectedSubjects == 0) {
+        disabled = true;
+      } else {
+        var cvIds = getObservationVariableIds(this.collection);
+        var firstVisits = this.firstVisits;
+        var lastVisits = this.lastVisits;
+        cvIds.forEach(cvid => {
+          if (
+            !(cvid in firstVisits) ||
+            firstVisits[cvid] == null ||
+            !(cvid in lastVisits) ||
+            lastVisits[cvid] == null
+          ) {
+            disabled = true;
+          }
+        });
+      }
+      return disabled;
+    },
+    varDescriptions() {
+      var descrs = [];
+      var cvIds = getObservationVariableIds(this.collection);
+      var firstVisits = this.firstVisits;
+      var lastVisits = this.lastVisits;
+      var varIdToName = {};
+      this.collection.observation_variables_list.forEach(ov => {
+        varIdToName[ov['ontology']['id']] = ov['ontology']['label'];
+      });
+
+      cvIds.forEach(cvid => {
+        descrs.push(
+          varIdToName[cvid] +
+            ': ' +
+            firstVisits[cvid] +
+            ' - ' +
+            lastVisits[cvid]
+        );
+      });
+      return descrs;
+    },
   },
   data: () => ({
     valid: true,
@@ -71,13 +114,11 @@ export default {
       saveFirstAndLastVisits: actions.SAVE_FIRST_AND_LAST_VISITS,
     }),
     async onSaveFirstLastVisit() {
-      //      const { collectionName, variables, datasetIds } = this;
       this.loading = true;
-
       var variableVisits = [];
       var cvIds = getObservationVariableIds(this.collection);
-      var firstVisit = this.firstVisit;
-      var lastVisit = this.lastVisit;
+      var firstVisits = this.firstVisits;
+      var lastVisits = this.lastVisits;
       var vvar =
         this.visitVariable === 'Visit Event' ? 'visit_event' : 'visit_num';
 
@@ -85,8 +126,8 @@ export default {
         var fkey = 'first_' + vvar;
         var lkey = 'last_' + vvar;
         var vv = { variable_id: Number(cvid) };
-        vv[fkey] = firstVisit;
-        vv[lkey] = lastVisit;
+        vv[fkey] = firstVisits[cvid];
+        vv[lkey] = lastVisits[cvid];
         variableVisits.push(vv);
       });
 

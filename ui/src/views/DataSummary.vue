@@ -7,7 +7,7 @@
       <v-icon color="white" large>library_add</v-icon>
       <v-toolbar-title class="white--text"
         >Create New Study Dataset - Choose First & Last Visit
-	<div class="subheading">Dataset: {{ collection.label }}</div>
+        <div class="subheading">Dataset: {{ collection.label }}</div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <save-first-last-visit-btn-dialog />

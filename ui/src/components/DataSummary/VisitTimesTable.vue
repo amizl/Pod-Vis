@@ -11,8 +11,15 @@
     >
       <template v-slot:items="props">
         <tr>
-          <td class="text-xs-left">{{ props.item.study_name }}</td>
-          <td class="text-xs-left">{{ props.item.n_subjects }}</td>
+          <td class="text-xs-left">
+            {{ props.item.is_first ? props.item.study_name : '' }}
+          </td>
+          <td class="text-xs-left">
+            {{ props.item.is_first ? props.item.n_subjects : '' }}
+          </td>
+          <td class="text-xs-left">{{ props.item.first_visit }}</td>
+          <td class="text-xs-left">{{ props.item.last_visit }}</td>
+          <td class="text-xs-left">{{ props.item.n_variables }}</td>
           <td class="text-xs-left">
             {{ props.item.avg_time_secs | formatTime }}
           </td>
@@ -55,6 +62,24 @@ export default {
           align: 'left',
           sortable: true,
           value: 'n_subjects',
+        },
+        {
+          text: 'First Visit',
+          align: 'left',
+          sortable: true,
+          value: 'first_visit',
+        },
+        {
+          text: 'Last Visit',
+          align: 'left',
+          sortable: true,
+          value: 'last_visit',
+        },
+        {
+          text: 'Variables',
+          align: 'left',
+          sortable: true,
+          value: 'n_variables',
         },
         {
           text: 'Average Time',
