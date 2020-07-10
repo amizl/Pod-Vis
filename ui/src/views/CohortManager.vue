@@ -2,6 +2,7 @@
   <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-2">
     <loading-spinner />
   </v-container>
+
   <v-container v-else fluid fill-width class="ma-0 pa-2">
     <v-toolbar app class="primary">
       <v-icon color="white" large>group_add</v-icon>
@@ -31,41 +32,79 @@
       </v-tooltip>
     </v-toolbar>
 
-    <v-layout row class="ma-0 pa-0">
-      <v-flex xs12>
-        <analysis-tracker
-          step="3"
-          :substep.sync="substep"
-          :collection-id="collectionId"
-          @createSimilar="createSimilar"
-          @createNew="createNew"
-        ></analysis-tracker>
-      </v-flex>
-    </v-layout>
+    <v-container
+      v-if="!collection.has_visits_set"
+      fluid
+      fill-height
+      class="ma-0 pa-0"
+    >
+      <v-layout row fill-height class="pa-0">
+        <v-flex xs12>
+          <v-sheet color="white" height="100%" class="rounded-lg shadow">
+            <v-layout fill-height align-center class="ma-2 pa-3">
+              <span
+                >ERROR - First/Last Visits must be set in order to use the
+                Cohort Manager:<br clear="both"
+              /></span>
+              <v-tooltip top color="primary">
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    width="15em"
+                    @click="
+                      $router.push(`data_summary?collection=${collection.id}`)
+                    "
+                    v-on="on"
+                  >
+                    Set Visits
+                  </v-btn>
+                </template>
+                <span class="subtitle-1"
+                  >View Data Summary and choose First &amp; Last Visit</span
+                >
+              </v-tooltip>
+            </v-layout>
+          </v-sheet>
+        </v-flex>
+      </v-layout>
+    </v-container>
 
-    <v-layout row fill-height class="mt-2 pa-0">
-      <v-flex xs12>
-        <input-variables
-          :expanded.sync="inExpanded"
-          :highlighted="inHighlighted"
-        />
-      </v-flex>
-    </v-layout>
+    <div v-else>
+      <v-layout row class="ma-0 pa-0">
+        <v-flex xs12>
+          <analysis-tracker
+            step="3"
+            :substep.sync="substep"
+            :collection-id="collectionId"
+            @createSimilar="createSimilar"
+            @createNew="createNew"
+          ></analysis-tracker>
+        </v-flex>
+      </v-layout>
 
-    <v-layout row class="mt-2 pa-0">
-      <v-flex xs7>
-        <output-variables
-          :expanded.sync="outExpanded"
-          :highlighted="outHighlighted"
-          :disabled="true"
-        />
-      </v-flex>
-      <v-flex class="ml-2" xs5> <analytics-table /> </v-flex>
-    </v-layout>
+      <v-layout row fill-height class="mt-2 pa-0">
+        <v-flex xs12>
+          <input-variables
+            :expanded.sync="inExpanded"
+            :highlighted="inHighlighted"
+          />
+        </v-flex>
+      </v-layout>
 
-    <v-layout v-if="false" row class="mt-2 pa-0">
-      <v-flex xs6> <cohort-table /> </v-flex>
-    </v-layout>
+      <v-layout row class="mt-2 pa-0">
+        <v-flex xs7>
+          <output-variables
+            :expanded.sync="outExpanded"
+            :highlighted="outHighlighted"
+            :disabled="true"
+          />
+        </v-flex>
+        <v-flex class="ml-2" xs5> <analytics-table /> </v-flex>
+      </v-layout>
+
+      <v-layout v-if="false" row class="mt-2 pa-0">
+        <v-flex xs6> <cohort-table /> </v-flex>
+      </v-layout>
+    </div>
   </v-container>
 </template>
 

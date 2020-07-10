@@ -224,6 +224,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
+import { state as dsState } from '@/store/modules/dataSummary/types';
 import ErrorDialog from '@/components/common/ErrorDialog.vue';
 import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue';
 
@@ -275,6 +276,9 @@ export default {
       unfilteredData: state.UNFILTERED_DATA,
       cohorts: state.COHORTS,
       collection: state.COLLECTION,
+    }),
+    ...mapState('dataSummary', {
+      dsCollection: dsState.COLLECTION,
     }),
     // cohorts are collection-specific
     collection_cohorts() {
@@ -334,6 +338,16 @@ export default {
     gotoCohortManager() {
       if (this.step === 3) {
         // no-op
+      } else if (this.step == 2 && this.substep == 2.4) {
+        if (!this.dsCollection.has_visits_set) {
+          this.displayErrorDialog(
+            'First and last visits must be selected before the Cohort Manager can be used. ' +
+              "Please finish selecting the first and last visits or return to the home page and use the 'Add Cohorts' " +
+              'link for an existing study dataset.'
+          );
+        } else {
+          this.$router.push(`cohorts?collection=${this.collectionId}`);
+        }
       } else if (this.step <= 2) {
         this.displayErrorDialog(
           'A study dataset must be created before the Cohort Manager can be used. ' +

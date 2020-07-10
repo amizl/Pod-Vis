@@ -32,7 +32,11 @@
 
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on }">
-                <v-btn @click="routeToCohortManager(props.item)" v-on="on">
+                <v-btn
+                  :disabled="!props.item.has_visits_set"
+                  @click="routeToCohortManager(props.item)"
+                  v-on="on"
+                >
                   <v-icon left small color="secondary">group_add</v-icon> Add
                   Cohorts ({{ props.item.num_cohorts }})
                 </v-btn>
