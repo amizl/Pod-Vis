@@ -68,7 +68,7 @@ export default {
       minPxPerCol: 18,
       maxPxPerRow: 40,
       margin: {
-        top: 60,
+        top: 70,
         right: 100,
         bottom: 40,
         left: 220,
@@ -148,6 +148,12 @@ export default {
       this.updateCanvas();
     },
     visitVariable() {
+      // Identify the unique events
+      this.uniqueEvents = this.getUniqueList(
+        this.getColumn(this.collectionSummaries[this.visitVariable], 0)
+      );
+      this.firstVisitHandle = null;
+      this.lastVisitHandle = null;
       this.updateCanvas();
     },
     firstVisits() {
@@ -185,16 +191,18 @@ export default {
       }
     },
     setAllFirstVisits(visit) {
+      var varIds = getObservationVariableIds(this.collection);
       var newFirstVisits = {};
-      Object.keys(this.firstVisits).forEach(id => {
+      varIds.forEach(id => {
         newFirstVisits[id] = visit;
       });
       this.firstVisitHandle = visit;
       this.setFirstVisits(newFirstVisits);
     },
     setAllLastVisits(visit) {
+      var varIds = getObservationVariableIds(this.collection);
       var newLastVisits = {};
-      Object.keys(this.lastVisits).forEach(id => {
+      varIds.forEach(id => {
         newLastVisits[id] = visit;
       });
       this.lastVisitHandle = visit;
@@ -223,10 +231,12 @@ export default {
       var visits = {};
       varIds.forEach(vid => {
         var v = is_first ? this.firstVisits[vid] : this.lastVisits[vid];
-        if (v in visits) {
-          visits[v] += 1;
-        } else {
-          visits[v] = 1;
+        if (v != null) {
+          if (v in visits) {
+            visits[v] += 1;
+          } else {
+            visits[v] = 1;
+          }
         }
       });
       // sort by decreasing visit count
@@ -237,17 +247,33 @@ export default {
       };
       var selectedVisits = Object.keys(visits).sort(sortFn);
       if (is_first) {
-        this.firstVisitHandle = selectedVisits[0];
+        if (selectedVisits[0] == null) {
+          this.firstVisitHandle = this.uniqueEvents[0];
+          this.setAllFirstVisits(this.uniqueEvents[0]);
+        } else {
+          this.firstVisitHandle = selectedVisits[0];
+          this.setAllFirstVisits(selectedVisits[0]);
+        }
       } else {
-        this.lastVisitHandle = selectedVisits[0];
+        if (selectedVisits[0] == null) {
+          this.lastVisitHandle = this.uniqueEvents[
+            this.uniqueEvents.length - 1
+          ];
+          this.setAllLastVisits(
+            this.uniqueEvents[this.uniqueEvents.length - 1]
+          );
+        } else {
+          this.lastVisitHandle = selectedVisits[0];
+          this.setAllLastVisits(selectedVisits[0]);
+        }
       }
     },
 
     updateCanvas() {
-      // Identify the unique events
       this.uniqueEvents = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
       );
+
       this.eventCount = this.uniqueEvents.length;
       // HACK for PPMI
       if (
@@ -296,7 +322,7 @@ export default {
         if (e in firstVisits) {
           lastFirstVisit = e;
         }
-        if ((firstLastVisit == null) && (e in lastVisits)) {
+        if (firstLastVisit == null && e in lastVisits) {
           firstLastVisit = e;
         }
       });
@@ -422,7 +448,7 @@ export default {
         .append('text')
         .attr('text-anchor', 'middle')
         .attr('x', width / 2 + 200)
-        .attr('y', margin.top - 40)
+        .attr('y', margin.top - 50)
         .text(this.visitVariable)
         .style('font-size', 25);
 
@@ -624,7 +650,7 @@ export default {
           .attr('x', cx)
           .attr('y', cy)
           .attr('width', x.bandwidth())
-          .attr('height', height + (y.bandwidth()*2))
+          .attr('height', height + y.bandwidth() * 2)
           .style('fill', 'none')
           .attr('stroke', 'black')
           .attr('stroke-width', '1')
@@ -648,19 +674,19 @@ export default {
             new_x = max_x;
           }
           // don't allow first visit to go past first last visit
-                    if (is_first) {
-                        var lvx = x(firstLastVisit) + margin.left;
-                        if (new_x > lvx - x_bw) {
-                          new_x = lvx - x_bw;
-                      }
-                    }
+          if (is_first) {
+            var lvx = x(firstLastVisit) + margin.left;
+            if (new_x > lvx - x_bw) {
+              new_x = lvx - x_bw;
+            }
+          }
           // don't allow last visit to go past last first visit
-                    else {
-                        var lvx = x(lastFirstVisit) + margin.left;
-                        if (new_x < lvx + x_bw) {
-                          new_x = lvx + x_bw;
-                      }
-                    }
+          else {
+            var lvx = x(lastFirstVisit) + margin.left;
+            if (new_x < lvx + x_bw) {
+              new_x = lvx + x_bw;
+            }
+          }
           d3.select(colRect1.node()).attr('x', new_x);
           d3.select(colRect2.node()).attr('x', new_x);
           d3.select(colRect3.node()).attr('x', new_x);
@@ -728,6 +754,13 @@ export default {
         });
       }
 
+      if (this.firstVisitHandle == null) {
+        this.setVisitHandle(true);
+      }
+      if (this.lastVisitHandle == null) {
+        this.setVisitHandle(false);
+      }
+
       // highlight first and last selections for each variable
       varIds.forEach(vid => {
         var fv = this.firstVisits[vid];
@@ -753,12 +786,6 @@ export default {
           );
         }
       });
-      if (this.firstVisitHandle == null) {
-        this.setVisitHandle(true);
-      }
-      if (this.lastVisitHandle == null) {
-        this.setVisitHandle(false);
-      }
       addDraggableHandle(
         this.firstVisitHandle,
         colors['firstVisit'],
