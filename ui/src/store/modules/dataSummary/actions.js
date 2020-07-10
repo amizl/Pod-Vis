@@ -32,7 +32,6 @@ export default {
       var firstVisits = {};
       var lastVisits = {};
       var visitVar = null;
-
       data.collection.observation_variables.forEach(ov => {
         if (ov['first_visit_event']) {
           visitVar = 'Visit Event';
@@ -53,6 +52,15 @@ export default {
       );
       data.collection.observation_variables_list =
         data.collection.observation_variables;
+      data.collection.has_visits_set = true;
+      data.collection.observation_variables_list.forEach(ov => {
+        if (
+          (ov.first_visit_event == null && ov.first_visit_num == null) ||
+          (ov.last_visit_event == null && ov.last_visit_num == null)
+        ) {
+          data.collection.has_visits_set = false;
+        }
+      });
 
       // TODO:
       // These fields are hard-coded and will inevitably need to be changed.
