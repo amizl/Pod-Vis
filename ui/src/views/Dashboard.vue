@@ -15,10 +15,6 @@
         <v-card>
           <v-card-text>
             <div class="subtitle-1">Welcome to POD-Vis</div>
-            <!--
-	    <div class="text--primary subtitle-2 mt-3">About POD-Vis</div>
-	    <div class="subheading">POD-Vis is a </div>
--->
             <div class="text--primary subtitle-2 mt-4">
               Please choose one of the following options to get started:
             </div>
