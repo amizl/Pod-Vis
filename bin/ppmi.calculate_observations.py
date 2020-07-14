@@ -10,6 +10,7 @@ of UPDRS Totals, Semantic Fluency Totals, etc.
 """
 
 import argparse
+import os
 import re
 import sys
 import pandas as pd
@@ -115,9 +116,9 @@ def process_demographics(input_dir):
     randomization_filename = 'Randomization_table.csv'
 
     # Read the input as a pandas dataframe
-    df_demo = pd.read_csv(input_dir + demographics_filename)
-    df_features = pd.read_csv(input_dir + features_filename)
-    df_random = pd.read_csv(input_dir + randomization_filename)
+    df_demo = pd.read_csv(os.path.join(input_dir, demographics_filename))
+    df_features = pd.read_csv(os.path.join(input_dir, features_filename))
+    df_random = pd.read_csv(os.path.join(input_dir, randomization_filename))
 
     # Subset the frame for the columns needed
     df_demo = df_demo.loc[:, ['PATNO', "APPRDX","CURRENT_APPRDX", "HISPLAT","RAINDALS","RAASIAN","RABLACK", "RAHAWOPI","RAWHITE","RANOS"]]
@@ -597,75 +598,75 @@ def main():
     for scale, filename in scale_file_map.items():
         if (scale == 'Semantic Fluency'):
             print("Processing Semantic Fluency")
-            df_semantic_fluency = process_semantic_fluency(args.input_dir + filename)
+            df_semantic_fluency = process_semantic_fluency(os.path.join(args.input_dir, filename))
             # pp.pprint(df_semantic_fluency.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Benton Judgement of Line'):
             print("Processing Benton Judgement of Line")
-            df_benton_judgement = process_benton_judgement(args.input_dir + filename)
+            df_benton_judgement = process_benton_judgement(os.path.join(args.input_dir, filename))
             # pp.pprint(df_benton_judgement.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'MDS-UPDRS1-1'):
             print("Processing MDS-UPDRS1-1")
-            df_mds_updrs1_1 = process_mds_updrs_1_1(args.input_dir + filename)
+            df_mds_updrs1_1 = process_mds_updrs_1_1(os.path.join(args.input_dir, filename))
             # pp.pprint(df_mds_updrs1_1.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'MDS-UPDRS1-2'):
             print("Processing MDS-UPDRS1-2")
-            df_mds_updrs1_2 = process_mds_updrs_1_2(args.input_dir + filename)
+            df_mds_updrs1_2 = process_mds_updrs_1_2(os.path.join(args.input_dir, filename))
             # pp.pprint(df_mds_updrs1_2.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'MDS-UPDRS2'):
             print("Processing MDS-UPDRS2")
-            df_mds_updrs2 = process_mds_updrs_2(args.input_dir + filename)
+            df_mds_updrs2 = process_mds_updrs_2(os.path.join(args.input_dir, filename))
             # pp.pprint(df_mds_updrs2.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'MDS-UPDRS3'):
             print("Processing MDS-UPDRS3")
-            df_mds_updrs3 = process_mds_updrs_3(args.input_dir + filename)
+            df_mds_updrs3 = process_mds_updrs_3(os.path.join(args.input_dir, filename))
             # pp.pprint(df_mds_updrs3.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Montreal Cognitive Assessment'):
             print("Processing Montreal Cognitive Assessment")
-            df_moca = process_moca(args.input_dir + filename)
+            df_moca = process_moca(os.path.join(args.input_dir, filename))
             # pp.pprint(df_moca.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Letter Number Sequencing'):
             print("Processing Letter Number Sequencing")
-            df_lns =  process_lns(args.input_dir + filename)
+            df_lns =  process_lns(os.path.join(args.input_dir, filename))
             # pp.pprint(df_lns.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Hopkins Verbal Learning Test'):
             print("Processing Hopkins Verbal Learning Test")
-            df_hvlt =  process_hvlt(args.input_dir + filename)
+            df_hvlt =  process_hvlt(os.path.join(args.input_dir, filename))
             # pp.pprint(df_hvlt.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Epworth Sleepiness Scale'):
             print("Processing Epworth Sleepiness Scale")
-            df_ess =  process_ess(args.input_dir + filename)
+            df_ess =  process_ess(os.path.join(args.input_dir, filename))
             # pp.pprint(df_ess.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Modified Schwab England ADL'):
             print("Processing Modified Schwab England ADL")
-            df_mse_adl =  process_mse_adl(args.input_dir + filename)
+            df_mse_adl =  process_mse_adl(os.path.join(args.input_dir, filename))
             # pp.pprint(df_mse_adl.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'SCOPA_AUT'):
             print("Processing SCOPA_AUT")
-            df_scopa_aut =  process_scopa_aut(args.input_dir + filename)
+            df_scopa_aut =  process_scopa_aut(os.path.join(args.input_dir, filename))
             # pp.pprint(df_scopa_aut.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Symbol Digit Modalities'):
             print("Processing Symbol Digit Modalities")
-            df_sdm =  process_sdm(args.input_dir + filename)
+            df_sdm =  process_sdm(os.path.join(args.input_dir, filename))
             # pp.pprint(df_sdm.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'State Trait Anxiety Inventory'):
             print("Processing State Trait Anxiety Inventory")
-            df_stai =  process_stai(args.input_dir + filename)
+            df_stai =  process_stai(os.path.join(args.input_dir, filename))
             # pp.pprint(df_stai.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Geriatric Depression'):
             print("Processing Geriatric Depression")
-            df_ger_dep =  process_ger_dep(args.input_dir + filename)
+            df_ger_dep =  process_ger_dep(os.path.join(args.input_dir, filename))
             # pp.pprint(df_ger_dep.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'REM Sleep Disorder'):
             print("Processing REM Sleep Disorder")
-            df_rem_sleep =  process_rem_sleep(args.input_dir + filename)
+            df_rem_sleep =  process_rem_sleep(os.path.join(args.input_dir, filename))
             # pp.pprint(df_rem_sleep.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
         elif (scale == 'Biospecimen Analysis'):
             print("Processing Biospecimen Analysis")
-            df_bio =  process_biospecimen(args.input_dir + filename)
+            df_bio =  process_biospecimen(os.path.join(args.input_dir, filename))
             # pp.pprint(df_bio.sort_values(by = ['SubjectNum', 'VisitCode']))
         elif (scale == 'Pilot Biospecimen Analysis'):
             print("Processing Pilot Biospecimen Analysis")
-            df_pilot_bio =  process_pilot_biospecimen(args.input_dir + filename)
+            df_pilot_bio =  process_pilot_biospecimen(os.path.join(args.input_dir, filename))
             # pp.pprint(df_pilot_bio.sort_values(by = ['SubjectNum', 'VisitCode']))
 
 
@@ -801,31 +802,31 @@ def main():
     # Once the dataframes are created write the table to a CSV file
     # pp.pprint(df_pilot_bio.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     filename = "ppmi_pilot_bio_obs.csv"
-    df_pilot_bio.to_csv(args.output_dir + filename, index = False)
+    df_pilot_bio.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # pp.pprint(df_bio.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     filename = "ppmi_bio_obs.csv"
-    df_bio.to_csv(args.output_dir + filename, index = False)
+    df_bio.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
     filename = "ppmi_obs.csv"
-    df_all_vars_sorted.to_csv(args.output_dir + filename, index = False)
+    df_all_vars_sorted.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # pp.pprint(df_demo.sort_values(by = ['SubjectNum', 'Study']))
     filename = "ppmi_demographics.csv"
-    df_demo.to_csv(args.output_dir + filename, index = False)
+    df_demo.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # pp.pprint(df_demo_long)
     filename = "ppmi_demographics_long.csv"
-    df_demo_long.to_csv(args.output_dir + filename, index = False)
+    df_demo_long.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # pp.pprint(df_all_vars_long_sorted)
     filename = "ppmi_obs_long.csv"
-    df_all_obs.to_csv(args.output_dir + filename, index = False)
+    df_all_obs.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # pp.pprint(df_grouped_tests_summary)
     filename = "ppmi_obs_summary.csv"
-    df_grouped_tests_summary.to_csv(args.output_dir + filename, index = False)
+    df_grouped_tests_summary.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # Before printing the subject visits calculate the age at visit
     df_unique_sub_visits = df_unique_sub_visits.merge(df_demo.loc[:, ['SubjectNum', 'Birthdate', 'Diagnosis Date']], how="inner", on = ['SubjectNum'])
@@ -835,7 +836,7 @@ def main():
     
     # Print a table of visit information
     filename = "ppmi_visit_info.csv"
-    df_unique_sub_visits.to_csv(args.output_dir + filename, index = False)
+    df_unique_sub_visits.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # Print a table of unique tests in the data by combining the tests in the summary as well as observation
     # data frames
@@ -847,13 +848,13 @@ def main():
     df_unique_obs = pd.DataFrame({"Observations": unique_all_obs})
     pp.pprint(df_unique_obs)
     filename = "ppmi_unique_obs.csv"
-    df_unique_obs.to_csv(args.output_dir + filename, index = False)
+    df_unique_obs.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # Print a table of unique subject variables in the data
     df_unique_subject_vars = pd.DataFrame({"Observations": df_demo_long.SubjectVar.unique()})
     # pp.pprint(df_unique_subject_vars)
     filename = "ppmi_unique_subject_vars.csv"
-    df_unique_subject_vars.to_csv(args.output_dir + filename, index = False)
+    df_unique_subject_vars.to_csv(os.path.join(args.output_dir, filename), index = False)
 
 if __name__ == '__main__':
     main()
