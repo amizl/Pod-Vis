@@ -65,22 +65,25 @@ def calc_duration_change(group):
     return ds
 
 # Take the multiple values for the APPRDX field and assign a study name
-def assign_study(study_int):
-    if study_int == 1:
-        return "Parkinson's Disease"
-    elif study_int == 2:
-        return "Healthy Control"
-    elif study_int == 3:
-        return "SWEDD"
-    elif study_int == 4:
-        return "Prodromal"
-    elif study_int == 5 or study_int == 6:
-        return "Genetic Cohort"
-    elif study_int == 7 or study_int == 8:
-        return "Genetic Registry"
-    else:
-        return "Unknown"
-
+def get_assign_study_fn(study_suffix):
+    def assign_study(study_int):
+        if study_int == 1:
+            study = "Parkinson's Disease"
+        elif study_int == 2:
+            study = "Healthy Control"
+        elif study_int == 3:
+            study = "SWEDD"
+        elif study_int == 4:
+            study = "Prodromal"
+        elif study_int == 5 or study_int == 6:
+            study = "Genetic Cohort"
+        elif study_int == 7 or study_int == 8:
+            study = "Genetic Registry"
+        else:
+            study = "Unknown"
+        return study + study_suffix
+    return assign_study
+            
 # Take the multiple columns designated for race and assign a sinlge race string
 def assign_race(row):
     # RAINDALS, RAASIAN, RABLACK, RAHAWOPI, RAWHITE, RANOS.  Other = RAINDALS, RAHAWOPI, RANOS, or more than one race specified.
@@ -102,7 +105,7 @@ def assign_race(row):
         else:
             return "Unknown"
 
-def process_demographics(input_dir):
+def process_demographics(input_dir, study_suffix):
 
     # Enrolled PD Subject	- PATNO, APPRDX, ENROLLDT.  Merge SCREEN with RANDOM and find each unique PATNO with APPRDX = '1' that is not missing ENROLLDT.
     # Enrolled Healthy Control - 	PATNO, APPRDX, ENROLLDT.  Merge SCREEN with RANDOM and find each unique PATNO with APPRDX = '2' that is not missing ENROLLDT.
@@ -135,7 +138,7 @@ def process_demographics(input_dir):
     df_demo = df_demo.merge(df_features.loc[:, ['PATNO', "PDDXDT"]], how="outer", on = ['PATNO'])
 
     # Recode some of the variables such as gender, race
-    df_demo['Study'] = df_demo['APPRDX'].apply(assign_study)
+    df_demo['Study'] = df_demo['APPRDX'].apply(get_assign_study_fn(study_suffix))
     df_demo['Race'] = df_demo[["RAINDALS","RAASIAN","RABLACK", "RAHAWOPI","RAWHITE","RANOS"]].apply(assign_race, axis = 1)
     df_demo['GENDER'] = df_demo['GENDER'].map(lambda x: 'Male' if x == 2 else 'Female')
 
@@ -581,6 +584,7 @@ def main():
     parser = argparse.ArgumentParser( description='Put a description of your script here')
     parser.add_argument('-i', '--input_dir', type=str, required=True, help='Path to an input directory from where to get files' )
     parser.add_argument('-o', '--output_dir', type=str, required=False, help='Path to directory where the output files that will be generated' )
+    parser.add_argument('-s', '--study_suffix', type=str, required=False, default='', help='Optional suffix to append to study and project names.' )
     args = parser.parse_args()
 
     # If the output dir is not specified then use the input dir
@@ -588,7 +592,7 @@ def main():
         args.output_dir = args.input_dir
 
     # Process the demographic variables
-    df_demo = process_demographics(args.input_dir)
+    df_demo = process_demographics(args.input_dir, args.study_suffix)
     df_test = df_demo
     pd.to_datetime(df_test['Enroll Date']).apply(lambda x: x.date()) 
     df_demo_long = pd.melt(df_test, id_vars=['SubjectNum'], var_name ='SubjectVar', value_name ='Value')
