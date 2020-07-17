@@ -4,7 +4,6 @@
   </v-container>
   <v-container v-else fluid fill-width class="ma-0 pa-2">
     <v-toolbar app class="primary">
-      <v-icon color="white" large>grid_on</v-icon>
       <v-toolbar-title class="white--text"
         >Summary Matrix
         <div class="subheading">Dataset: {{ collection.label }}</div>
@@ -21,12 +20,18 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row fill-height class="ma-0 pa-0">
-      <v-flex xs12><one-way-anova-grid /></v-flex>
+    <v-layout row fill-height class="ma-1 pa-0">
+      <v-flex xs12><cohort-table /></v-flex>
     </v-layout>
 
-    <v-layout row fill-height class="ma-0 pa-0">
-      <v-flex xs12><tukey-hsd-grid class="mt-2"/></v-flex>
+    <v-layout>
+      <v-layout col fill-height class="ma-1 pa-0">
+        <v-flex xs12><one-way-anova-grid /></v-flex>
+      </v-layout>
+
+      <v-layout col fill-height class="ma-1 pa-0">
+        <v-flex xs12><tukey-hsd-grid /></v-flex>
+      </v-layout>
     </v-layout>
   </v-container>
 </template>
@@ -42,6 +47,7 @@ import {
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import OneWayAnovaGrid from '@/components/AnalysisSummary/OneWayANOVAGrid.vue';
 import TukeyHsdGrid from '@/components/AnalysisSummary/TukeyHSDGrid.vue';
+import CohortTable from '@/components/CohortManager/CohortTable.vue';
 
 export default {
   name: 'AnalysisSummary',
@@ -49,6 +55,7 @@ export default {
     AnalysisTracker,
     OneWayAnovaGrid,
     TukeyHsdGrid,
+    CohortTable,
   },
   props: {
     collectionId: {
