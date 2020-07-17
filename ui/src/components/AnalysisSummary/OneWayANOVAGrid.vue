@@ -16,21 +16,39 @@
         <v-data-table
           dense
           :headers="headers"
-          :items="items"
+          :items="outcomeVariables"
           class="elevation-1"
           :rows-per-page-items="[100]"
           :hide-footer="true"
         >
           <template v-slot:items="props">
-            <tr>
-              <td v-for="ov in outcomeVariables" :key="ov.id">
-                <v-layout justify-center
+            <tr :class="{ selectedRow: isOVSelected(props.item) }">
+              <td class=" text-xs-left" @click="table_row_click(props.item)">
+                {{ props.item.category }}
+              </td>
+              <td class="text-xs-left">{{ props.item.label }}</td>
+              <td class="text-xs-left">1-way ANOVA</td>
+              <td class="text-xs-left">{{ variable_fval(props.item) }}</td>
+              <!--
+
+              <td :key="props.item.id">
+                <v-layout justify-left
                   ><v-chip
-                    :color="table_cell_color(ov)"
-                    @click="table_cell_click(ov)"
-                    >{{ table_cell(props.item, ov) }}</v-chip
+                    class="text-xs-left"
+                    :color="table_cell_color(props.item)"
+                    @click="table_cell_click(props.item)"
+                    >{{ table_cell(props.item) }}</v-chip
                   ></v-layout
                 >
+              </td>
+              -->
+              <td
+                :key="props.item.id"
+                class="text-xs-left"
+                :style="{ backgroundColor: table_cell_color(props.item) }"
+                @click="table_cell_click(props.item)"
+              >
+                {{ table_cell(props.item) }}
               </td>
             </tr>
           </template>
@@ -49,6 +67,33 @@ import { format } from 'd3-format';
 export default {
   components: {},
   props: {},
+  data() {
+    return {
+      selected: [],
+      headers: [
+        {
+          text: 'Outcome Category',
+          value: 'label',
+        },
+        {
+          text: 'Outcome Variable',
+          value: 'label',
+        },
+        {
+          text: 'Statistical Test',
+          value: 'label',
+        },
+        {
+          text: 'F-Statistic',
+          value: 0,
+        },
+        {
+          text: 'p-Value',
+          value: 0,
+        },
+      ],
+    };
+  },
   computed: {
     ...mapState('analysisSummary', {
       selectedOutcomeVariable: state.SELECTED_OUTCOME_VARIABLE,
@@ -84,22 +129,8 @@ export default {
     items() {
       return [this.collection_cohorts[0]];
     },
-    headers() {
-      let th = this;
-      const ovars = this.outcomeVariables;
-      const headers = [];
-      let ind = 0;
-      ovars.forEach(ov => {
-        headers.push({
-          text: ov.label,
-          align: 'center',
-          sortable: false,
-          divider: true,
-          value: ov.id,
-        });
-        ind += 1;
-      });
-      return headers;
+    outcomeVars() {
+      return [this.outcomeVariables];
     },
   },
   created() {
@@ -109,6 +140,14 @@ export default {
     ...mapActions('analysisSummary', {
       setSelectedOutcomeVariable: actions.SET_SELECTED_OUTCOME_VARIABLE,
     }),
+    variable_fval(ov) {
+      const pd = this.pval_dict;
+      if (ov.label in pd) {
+        const { fval } = pd[ov.label];
+        return `${format('.3f')(fval)}`;
+      }
+      return null;
+    },
     variable_pval(ov) {
       const pd = this.pval_dict;
       if (ov.label in pd) {
@@ -120,7 +159,7 @@ export default {
       }
       return null;
     },
-    table_cell(cohort, ov) {
+    table_cell(ov) {
       let pval = this.variable_pval(ov);
       if (pval === null) {
         return 'X';
@@ -163,8 +202,17 @@ export default {
       }
       return '';
     },
+    table_row_click(ov) {
+      this.setSelectedOutcomeVariable(ov);
+    },
     table_cell_click(ov) {
       this.setSelectedOutcomeVariable(ov);
+    },
+    isOVSelected(ov) {
+      if (this.selectedOutcomeVariable == ov) {
+        return true;
+      }
+      return false;
     },
   },
 };
