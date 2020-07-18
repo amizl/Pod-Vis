@@ -120,7 +120,8 @@ class Cohort(db.Model):
             label=self.label,
             queries=[query.to_dict() for query in self.queries],
             input_variables=input_vars,
-            output_variables=output_vars
+            output_variables=output_vars,
+            query_string = self.query_desc()
             # instantiation_type=str(self.instantiation_type)
         )
 
@@ -131,3 +132,37 @@ class Cohort(db.Model):
         #     ]
 
         return cohort
+
+    # Method to iterate over all the query parameters and return a human readable query
+    def query_desc(self):
+        description = ''
+        i = 0
+        for query in self.queries:
+            # If there is more than one query variable then append AND
+            if i > 0:
+                description += ' AND '
+
+            subquery = '('
+            input_var = query.input_variable
+            if input_var.subject_ontology:
+                # This query uses subject ontology so process for that
+                subj_ont = input_var.subject_ontology
+                subquery += subj_ont.label + " = " + query.value 
+            else:
+                # This query uses observation ontology so process for that
+                obs_ont = input_var.observation_ontology
+                subquery += obs_ont.label
+
+                # If one of the derived variables are used then add the dimension
+                if input_var.dimension_label:
+                    subquery += "-" + input_var.get_dimension_value_str()
+
+                if query.value:
+                    subquery += query.value
+                else:
+                    subquery += ' between ' + str(query.min_value) + ' and ' + str(query.max_value)
+            
+            description += subquery + ')'
+            i += 1
+
+        return description
