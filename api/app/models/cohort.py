@@ -1,7 +1,6 @@
 from . import db
 import enum
 
-
 class InstantiationType(enum.Enum):
     static = "static"
     dynamic = "dynamic"
@@ -144,23 +143,23 @@ class Cohort(db.Model):
 
             subquery = '('
             input_var = query.input_variable
+            ont = None
+            
             if input_var.subject_ontology:
-                # This query uses subject ontology so process for that
-                subj_ont = input_var.subject_ontology
-                subquery += subj_ont.label + " = " + query.value 
+                ont = input_var.subject_ontology
             else:
-                # This query uses observation ontology so process for that
-                obs_ont = input_var.observation_ontology
-                subquery += obs_ont.label
+                ont = input_var.observation_ontology
 
-                # If one of the derived variables are used then add the dimension
-                if input_var.dimension_label:
-                    subquery += "-" + input_var.get_dimension_value_str()
+            subquery += ont.label
+            
+            # If one of the derived variables are used then add the dimension
+            if input_var.dimension_label:
+                subquery += "-" + input_var.get_dimension_value_str()
 
-                if query.value:
-                    subquery += query.value
-                else:
-                    subquery += ' between ' + str(query.min_value) + ' and ' + str(query.max_value)
+            if query.value:
+                subquery += " = " + query.value
+            else:
+                subquery += ' between ' + str(query.min_value) + ' and ' + str(query.max_value)
             
             description += subquery + ')'
             i += 1
