@@ -30,7 +30,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import { state, actions } from '@/store/modules/cohortManager/types';
+import { state, actions } from '@/store/modules/dataExplorer/types';
 
 export default {
   data() {
@@ -57,10 +57,10 @@ export default {
     };
   },
   computed: {
-    ...mapState('cohortManager', {
+    ...mapState('dataExplorer', {
       isLoading: state.IS_LOADING,
-      cohorts: state.COHORTS,
       collection: state.COLLECTION,
+      cohorts: state.COHORTS,
     }),
 
     // cohorts are collection-specific
@@ -74,7 +74,6 @@ export default {
           cch.push(e);
         }
       });
-
       return cch;
     },
   },
@@ -93,13 +92,7 @@ export default {
       this.setVisibleCohorts(visibleCohorts);
     },
   },
-  created() {
-    if (!this.cohorts.length) this.fetchCohorts();
-  },
   methods: {
-    ...mapActions('cohortManager', {
-      fetchCohorts: actions.FETCH_COHORTS,
-    }),
   },
 };
 </script>
