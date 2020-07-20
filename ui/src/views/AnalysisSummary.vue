@@ -47,7 +47,7 @@ import {
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import OneWayAnovaGrid from '@/components/AnalysisSummary/OneWayANOVAGrid.vue';
 import TukeyHsdGrid from '@/components/AnalysisSummary/TukeyHSDGrid.vue';
-import CohortTable from '@/components/CohortManager/CohortTable.vue';
+import CohortTable from '@/components/common/CohortTable.vue';
 
 export default {
   name: 'AnalysisSummary',
