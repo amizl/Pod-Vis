@@ -92,8 +92,7 @@ export default {
       this.setVisibleCohorts(visibleCohorts);
     },
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
