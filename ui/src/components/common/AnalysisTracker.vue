@@ -2,79 +2,90 @@
   <div style="background: white">
     <v-stepper v-model="step" :value="step" alt-labels>
       <v-stepper-header>
-        <v-tooltip color="primary" right>
-          <v-stepper-step
-            slot="activator"
-            :complete="step > 1"
-            step="1"
-            :style="stepStyle('1')"
-            :class="stepClass('1')"
-            @click.native="gotoHomepage()"
-            >Home Page
-          </v-stepper-step>
-          <span class="subtitle-1">{{ step_descr['1'] }}</span>
-        </v-tooltip>
+        <v-stepper-step
+          :complete="step > 1"
+          step="1"
+          :style="stepStyle('1')"
+          :class="stepClass('1')"
+          @click.native="gotoHomepage()"
+        >
+          <v-tooltip color="primary" bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <span v-on="{ ...tooltip }">Home Page</span>
+            </template>
+            <span class="subtitle-1">{{ step_descr['1'] }}</span>
+          </v-tooltip>
+        </v-stepper-step>
 
         <v-divider></v-divider>
 
-        <v-tooltip color="primary" right>
-          <v-stepper-step
-            slot="activator"
-            :complete="step > 2"
-            step="2"
-            :style="stepStyle('2')"
-            :class="stepClass('2')"
-            @click.native="gotoDatasetManager()"
-            >Dataset Manager
-          </v-stepper-step>
-          <span class="subtitle-1">{{ step_descr['2'] }}</span>
-        </v-tooltip>
+        <v-stepper-step
+          :complete="step > 2"
+          step="2"
+          :style="stepStyle('2')"
+          :class="stepClass('2')"
+          @click.native="gotoDatasetManager()"
+        >
+          <v-tooltip color="primary" bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <span v-on="{ ...tooltip }">Dataset Manager</span>
+            </template>
+            <span class="subtitle-1">{{ step_descr['2'] }}</span>
+          </v-tooltip>
+        </v-stepper-step>
 
         <v-divider></v-divider>
 
-        <v-tooltip color="primary" right>
-          <v-stepper-step
-            slot="activator"
-            :complete="step > 3"
-            step="3"
-            :style="stepStyle('3')"
-            :class="stepClass('3')"
-            @click.native="gotoCohortManager()"
-            >Cohort Manager
-          </v-stepper-step>
-          <span class="subtitle-1">{{ step_descr['3'] }}</span>
-        </v-tooltip>
+        <v-stepper-step
+          :complete="step > 3"
+          step="3"
+          :style="stepStyle('3')"
+          :class="stepClass('3')"
+          @click.native="gotoCohortManager()"
+        >
+          <v-tooltip color="primary" bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <span v-on="{ ...tooltip }">Cohort Manager</span>
+            </template>
+            <span class="subtitle-1">{{ step_descr['3'] }}</span>
+          </v-tooltip>
+        </v-stepper-step>
 
         <v-divider></v-divider>
 
-        <v-tooltip color="primary" right>
-          <v-stepper-step
-            slot="activator"
-            :complete="step > 4"
-            step="4"
-            :style="stepStyle('4')"
-            :class="stepClass('4')"
-            @click.native="gotoSummaryMatrix()"
-            >Summary Matrix
-          </v-stepper-step>
-          <span class="subtitle-1">{{ step_descr['4'] }}</span>
-        </v-tooltip>
+        <v-stepper-step
+          :complete="step > 4"
+          step="4"
+          :style="stepStyle('4')"
+          :class="stepClass('4')"
+          @click.native="gotoSummaryMatrix()"
+        >
+          <v-tooltip color="primary" bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <span v-on="{ ...tooltip }">Summary Matrix</span>
+            </template>
+            <span class="subtitle-1">{{ step_descr['4'] }}</span>
+          </v-tooltip>
+        </v-stepper-step>
 
         <v-divider></v-divider>
 
-        <v-tooltip color="primary" right>
-          <v-stepper-step
-            slot="activator"
-            :complete="step > 5"
-            step="5"
-            :style="stepStyle('5')"
-            :class="stepClass('5')"
-            @click.native="gotoDataExplorer()"
-            >Data Explorer
-          </v-stepper-step>
-          <span class="subtitle-1">{{ step_descr['5'] }}</span>
-        </v-tooltip>
+        <v-stepper-step
+          :complete="step > 5"
+          step="5"
+          :style="stepStyle('5')"
+          :class="stepClass('5')"
+          @click.native="gotoDataExplorer()"
+        >
+          <v-tooltip color="primary" bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <span v-on="{ ...tooltip }">Data Explorer</span>
+            </template>
+            <span class="subtitle-1">{{ step_descr['5'] }}</span>
+          </v-tooltip>
+        </v-stepper-step>
       </v-stepper-header>
+
       <v-stepper-items> </v-stepper-items>
     </v-stepper>
 
@@ -310,7 +321,7 @@ export default {
     },
     // Transitions between major steps
     gotoHomepage() {
-      if (this.step === 1) {
+      if (this.step == 1) {
         // no-op
       } else if (this.step > 2) {
         this.displayConfirmationDialog(
@@ -323,7 +334,7 @@ export default {
       }
     },
     gotoDatasetManager() {
-      if (this.step === 2) {
+      if (this.step == 2) {
         // no-op
       } else if (this.step > 2) {
         this.displayConfirmationDialog(
@@ -336,7 +347,7 @@ export default {
       }
     },
     gotoCohortManager() {
-      if (this.step === 3) {
+      if (this.step == 3) {
         // no-op
       } else if (this.step == 2 && this.substep == 2.4) {
         if (!this.dsCollection.has_visits_set) {
@@ -359,7 +370,7 @@ export default {
       }
     },
     gotoDataExplorer() {
-      if (this.step === 4) {
+      if (this.step == 4) {
         // no-op
       } else if (this.step <= 2) {
         this.displayErrorDialog(
@@ -372,7 +383,7 @@ export default {
       }
     },
     gotoSummaryMatrix() {
-      if (this.step === 5) {
+      if (this.step == 5) {
         // no-op
       } else if (this.step <= 2) {
         this.displayErrorDialog(

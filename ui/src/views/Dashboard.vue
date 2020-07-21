@@ -1,9 +1,9 @@
 <template>
   <v-container fluid class="ma-0 pa-2">
-    <v-toolbar app class="primary">
+    <v-app-bar app class="primary">
       <v-icon color="white" large>home</v-icon>
       <v-toolbar-title class="white--text">Home Page</v-toolbar-title>
-    </v-toolbar>
+    </v-app-bar>
 
     <analysis-tracker
       :step.sync="step"
