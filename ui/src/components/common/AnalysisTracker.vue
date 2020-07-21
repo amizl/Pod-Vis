@@ -221,6 +221,7 @@
     </v-stepper>
     <error-dialog
       :show="show_error_dialog"
+      :error-title="error_title"
       :error-message="error_message"
       @closed="show_error_dialog = false"
     ></error-dialog>
@@ -270,6 +271,7 @@ export default {
       expanded: true,
 
       // ErrorDialog
+      error_title: '',
       error_message: '',
       show_error_dialog: false,
 
@@ -352,6 +354,7 @@ export default {
       } else if (this.step == 2 && this.substep == 2.4) {
         if (!this.dsCollection.has_visits_set) {
           this.displayErrorDialog(
+            'First/Last Visits Not Selected',
             'First and last visits must be selected before the Cohort Manager can be used. ' +
               "Please finish selecting the first and last visits or return to the home page and use the 'Add Cohorts' " +
               'link for an existing study dataset.'
@@ -361,6 +364,7 @@ export default {
         }
       } else if (this.step <= 2) {
         this.displayErrorDialog(
+          'No Study Dataset',
           'A study dataset must be created before the Cohort Manager can be used. ' +
             "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
             'link for an existing study dataset.'
@@ -374,6 +378,7 @@ export default {
         // no-op
       } else if (this.step <= 2) {
         this.displayErrorDialog(
+          'No Study Dataset',
           'A study dataset must be created before the Data Explorer can be used. ' +
             "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
             'link for an existing study dataset.'
@@ -387,6 +392,7 @@ export default {
         // no-op
       } else if (this.step <= 2) {
         this.displayErrorDialog(
+          'No Study Dataset',
           'A study dataset must be created before the Summary Matrix can be viewed. ' +
             "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
             'link for an existing study dataset.'
@@ -410,6 +416,7 @@ export default {
         this.$emit('update:substep', '3.2');
       } else {
         this.displayErrorDialog(
+          'No Predictor Variables',
           'At least one predictor variable must be selected before continuing to the next step.'
         );
       }
@@ -419,6 +426,7 @@ export default {
         this.$emit('update:substep', '3.3');
       } else {
         this.displayErrorDialog(
+          'No Outcome Variables',
           'At least one outcome variable must be selected before continuing to the next step.'
         );
       }
@@ -428,6 +436,7 @@ export default {
         this.$emit('update:substep', '3.4');
       } else {
         this.displayErrorDialog(
+          'No Cohort Filters Defined',
           'At least one filter must be added before continuing to the next step.'
         );
       }
@@ -436,8 +445,8 @@ export default {
       // TODO - check that collection was saved
       this.$emit('update:substep', '3.5');
     },
-
-    displayErrorDialog(errorMsg) {
+    displayErrorDialog(errorTitle, errorMsg) {
+      this.error_title = errorTitle;
       this.error_message = errorMsg;
       this.show_error_dialog = true;
     },
