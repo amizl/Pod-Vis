@@ -5,11 +5,10 @@
       :headers="headers"
       :items="timesBetweenVisits"
       dense
-      hide-default-header
-      hide-actions
-      :pagination.sync="pagination"
+      hide-default-footer
+      disable-pagination
     >
-      <template v-slot:items="props">
+      <template v-slot:item="props">
         <tr>
           <td class="text-xs-left">
             {{ props.item.is_first ? props.item.study_name : '' }}
@@ -88,9 +87,6 @@ export default {
           value: 'avg_time_secs',
         },
       ],
-      pagination: {
-        rowsPerPage: -1,
-      },
     };
   },
   computed: {

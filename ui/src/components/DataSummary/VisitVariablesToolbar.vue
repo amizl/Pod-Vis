@@ -1,17 +1,16 @@
 <template>
-  <section>
-    <v-toolbar
-      card
+  <div>
+    <v-app-bar
       dense
       flat
-      color="white rounded-lg"
-      class="toolbar_step_highlight"
+      color="rgb(247,216,206,0.5)"
+      class="toolbar_step_highlight rounded-lg"
     >
       <v-toolbar-title class="primary--text title">
         CHOOSE FIRST & LAST VISIT
       </v-toolbar-title>
 
-      <v-divider vertical class="ml-4"> </v-divider>
+      <v-divider vertical class="ml-4 mr-4"> </v-divider>
 
       <v-chip color="primary" class="white--text title"
         >{{ collectionVarNames.length }} outcome variable<span
@@ -20,51 +19,47 @@
         >&nbsp;selected</v-chip
       >
       <v-spacer />
-      <v-toolbar-items>
-        <v-chip
-          :disabled="true"
-          class="primary--text title"
-          :style="'background: ' + colors['population']"
-          >Study Population - {{ numSelectedSubjects }}</v-chip
-        >
-      </v-toolbar-items>
-    </v-toolbar>
+      <v-chip
+        :disabled="true"
+        class="primary--text title"
+        :style="'background: ' + colors['population'] + ';'"
+        >Study Population - {{ numSelectedSubjects }}</v-chip
+      >
+    </v-app-bar>
 
-    <v-flex>
-      <v-container fluid fill-height class="ma-0 pa-2">
-        <v-select
-          v-model="visitVariable"
-          :items="visitItems"
-          label="Select visit variable"
-        >
-        </v-select>
+    <v-container fluid fill-height class="ma-0 pa-2">
+      <v-select
+        v-model="visitVariable"
+        :items="visitItems"
+        label="Select visit variable"
+      >
+      </v-select>
 
-        <v-select
-          v-model="firstVisit"
-          :items="firstVisitEvents"
-          label="Select first visit"
-          :background-color="colors['firstVisit']"
-          class="ml-2"
-        >
-        </v-select>
+      <v-select
+        v-model="firstVisit"
+        :items="firstVisitEvents"
+        label="Select first visit"
+        :background-color="colors['firstVisit']"
+        class="ml-2"
+      >
+      </v-select>
 
-        <v-select
-          v-model="lastVisit"
-          :items="lastVisitEvents"
-          label="Select last visit"
-          :background-color="colors['lastVisit']"
-          class="ml-2"
-        >
-        </v-select>
+      <v-select
+        v-model="lastVisit"
+        :items="lastVisitEvents"
+        label="Select last visit"
+        :background-color="colors['lastVisit']"
+        class="ml-2"
+      >
+      </v-select>
 
-        <v-checkbox
-          v-model="hideUnselectedVars"
-          label="Hide unselected variables"
-          class="ml-2"
-        ></v-checkbox>
-      </v-container>
-    </v-flex>
-  </section>
+      <v-checkbox
+        v-model="hideUnselectedVars"
+        label="Hide unselected variables"
+        class="ml-2"
+      ></v-checkbox>
+    </v-container>
+  </div>
 </template>
 
 <script>

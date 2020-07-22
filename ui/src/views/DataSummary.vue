@@ -3,49 +3,47 @@
     <loading-spinner />
   </v-container>
   <v-container v-else fluid fill-width class="ma-0 pa-2">
-    <v-toolbar app class="primary">
+    <v-app-bar app class="primary">
       <v-icon color="white" large>library_add</v-icon>
-      <v-toolbar-title class="white--text"
+      <v-toolbar-title class="white--text pl-2"
         >Create New Study Dataset - Choose First & Last Visit
-        <div class="subheading">Dataset: {{ collection.label }}</div>
+        <div class="subtitle-1">Dataset: {{ collection.label }}</div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <save-first-last-visit-btn-dialog />
-    </v-toolbar>
+    </v-app-bar>
 
-    <v-layout row class="ma-0 pa-0">
-      <v-flex xs12>
-        <analysis-tracker
-          step="2"
-          :substep="substep"
-          :collection-id="this.collection.id"
-        ></analysis-tracker>
-      </v-flex>
-    </v-layout>
+    <analysis-tracker
+      step="2"
+      :substep="substep"
+      :collection-id="this.collection.id"
+    ></analysis-tracker>
 
-    <v-layout fill-width class="mt-2 pa-0">
-      <v-flex xs12>
-        <v-sheet color="white" height="100%" class="rounded-lg shadow">
-          <v-layout column class="ma-1 pt-1">
-            <visit-variables-toolbar
-              @hideUnselectedVars="hideUnselectedVarsChanged"
-            >
-            </visit-variables-toolbar>
-
-            <v-container fluid fill-height class="pa-0 pb-0">
-              <bubble-chart
-                :var-opacity="'0.3'"
-                :collection-var-opacity="'0.8'"
-                :hide-unselected-vars="hideUnselectedVars"
+    <v-layout fill-width class="ma-0 pt-2">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-sheet color="white" height="100%" class="rounded-lg shadow">
+            <v-layout column class="ma-1 pt-1">
+              <visit-variables-toolbar
+                @hideUnselectedVars="hideUnselectedVarsChanged"
               >
-              </bubble-chart>
-              <v-spacer></v-spacer>
-            </v-container>
+              </visit-variables-toolbar>
 
-            <visit-times-table></visit-times-table>
-          </v-layout>
-        </v-sheet>
-      </v-flex>
+              <v-container fluid fill-height class="pa-0 pb-0">
+                <bubble-chart
+                  :var-opacity="'0.3'"
+                  :collection-var-opacity="'0.8'"
+                  :hide-unselected-vars="hideUnselectedVars"
+                >
+                </bubble-chart>
+                <v-spacer></v-spacer>
+              </v-container>
+
+              <visit-times-table></visit-times-table>
+            </v-layout>
+          </v-sheet>
+        </v-col>
+      </v-row>
     </v-layout>
   </v-container>
 </template>

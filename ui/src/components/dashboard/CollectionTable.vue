@@ -6,10 +6,9 @@
       :headers="headers"
       :items="visibleCollections"
       item-key="label"
-      hide-actions
-      disable-initial-sort
+      hide-default-footer
     >
-      <template v-slot:items="props">
+      <template v-slot:item="props">
         <tr>
           <td class="text-xs-left">{{ props.item.label }}</td>
           <td class="text-xs-left">
@@ -20,8 +19,13 @@
           </td>
           <td class="text-xs-left px-0">
             <v-tooltip top color="primary">
-              <template v-slot:activator="{ on }">
-                <v-btn @click="routeToDataSummary(props.item)" v-on="on">
+              <template v-slot:activator="{ on: tooltip }">
+                <v-btn
+                  small
+                  class="mr-2"
+                  @click="routeToDataSummary(props.item)"
+                  v-on="{ ...tooltip }"
+                >
                   Set Visits
                 </v-btn>
               </template>
@@ -31,11 +35,13 @@
             </v-tooltip>
 
             <v-tooltip top color="primary">
-              <template v-slot:activator="{ on }">
+              <template v-slot:activator="{ on: tooltip }">
                 <v-btn
                   :disabled="!props.item.has_visits_set"
+                  small
+                  class="mr-2"
                   @click="routeToCohortManager(props.item)"
-                  v-on="on"
+                  v-on="{ ...tooltip }"
                 >
                   <v-icon left small color="secondary">group_add</v-icon> Add
                   Cohorts ({{ props.item.num_cohorts }})
@@ -51,11 +57,13 @@
             </v-tooltip>
 
             <v-tooltip top color="primary">
-              <template v-slot:activator="{ on }">
+              <template v-slot:activator="{ on: tooltip }">
                 <v-btn
                   :disabled="props.item.num_cohorts == 0"
+                  small
+                  class="mr-2"
                   @click="routeToAnalysisSummary(props.item)"
-                  v-on="on"
+                  v-on="{ ...tooltip }"
                 >
                   <v-icon left small color="secondary">grid_on</v-icon>
                   Summarize
@@ -67,11 +75,13 @@
             </v-tooltip>
 
             <v-tooltip top color="primary">
-              <template v-slot:activator="{ on }">
+              <template v-slot:activator="{ on: tooltip }">
                 <v-btn
                   :disabled="props.item.num_cohorts == 0"
+                  small
+                  class="mr-2"
                   @click="routeToDataExplorer(props.item)"
-                  v-on="on"
+                  v-on="{ ...tooltip }"
                 >
                   <v-icon left small color="secondary">explore</v-icon> Explore
                 </v-btn>
