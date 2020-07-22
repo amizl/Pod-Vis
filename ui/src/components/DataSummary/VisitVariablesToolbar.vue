@@ -20,12 +20,13 @@
       >
       <v-spacer />
       <v-chip
-        :disabled="true"
-        class="primary--text title"
-        :style="'background: ' + colors['population'] + ';'"
+        class="title"
+        :color="colors['population']"
+	:text-color="colors['cohort']"
         >Study Population - {{ numSelectedSubjects }}</v-chip
       >
     </v-app-bar>
+
 
     <v-container fluid fill-height class="ma-0 pa-2">
       <v-select
