@@ -3,7 +3,12 @@ import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import colors from 'vuetify/es5/util/colors';
 
-Vue.use(Vuetify, {
+Vue.use(Vuetify);
+
+export default new Vuetify({
+  icons: {
+    iconfont: 'mdi',
+  },
   theme: {
     themes: {
       light: {
@@ -13,11 +18,5 @@ Vue.use(Vuetify, {
         'v-divider': colors.indigo.lighten5,
       },
     },
-  },
-});
-
-export default new Vuetify({
-  icons: {
-    iconfont: 'mdi',
   },
 });
