@@ -1,8 +1,13 @@
 <template>
   <span>
     <v-tooltip top color="primary">
-      <template v-slot:activator="{ on }">
-        <v-btn color="error" v-on="on" @click="dialog = !dialog">
+      <template v-slot:activator="{ on: tooltip }">
+        <v-btn
+          color="error"
+          small
+          v-on="{ ...tooltip }"
+          @click="dialog = !dialog"
+        >
           <v-icon color="white" left>delete</v-icon>DELETE
         </v-btn>
       </template>

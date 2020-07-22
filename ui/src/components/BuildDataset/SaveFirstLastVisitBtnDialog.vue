@@ -5,20 +5,22 @@
       color="primary--text"
       @click="dialog = !dialog"
     >
-      <v-icon left>save</v-icon> SAVE FIRST/LAST VISIT
+      <v-icon left>save</v-icon> SAVE VISITS
     </v-btn>
     <!-- SAVE FIRST/LAST VISIT DIALOG -->
     <v-dialog v-model="dialog" width="500">
-      <v-card>
-        <v-card-title primary-title>
-          <span class="title pl-2">Save First and Last Visits</span>
+      <v-card class="rounded-lg">
+        <v-card-title color="white" primary-title>
+          <v-icon color="primary darken-3">save</v-icon>
+          <span class="primary--text text--darken-3 title pl-2"
+            >Save First/Last Visits</span
+          >
         </v-card-title>
-        <v-card-text class="title primary--text text--darken-3">
-          <div class="primary--text title pl-2">
-            <ul>
-              <li v-for="descr in varDescriptions">{{ descr }}</li>
-            </ul>
-          </div>
+
+        <v-card-text class="primary primary--text text--lighten-5 pt-4">
+          <ul>
+            <li v-for="descr in varDescriptions">{{ descr }}</li>
+          </ul>
           <div class="pt-3">
             Study Population - {{ numSelectedSubjects }} subject(s)
           </div>
@@ -27,10 +29,10 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="dialog = false">Cancel</v-btn>
+          <v-btn text color="primary" @click="dialog = false">Cancel</v-btn>
           <v-btn
+            color="primary"
             :loading="loading"
-            color="primary darken-4"
             @click="onSaveFirstLastVisit"
           >
             <v-icon left>save</v-icon> Save</v-btn
