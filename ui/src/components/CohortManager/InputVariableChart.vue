@@ -13,7 +13,7 @@
               v-if="variable.label !== 'Dataset'"
               :src="'/images/' + variable.category + '-icon-128.png'"
               :title="variable.category"
-              style="height:3em"
+              style="height: 3em;"
             />
             <img
               v-else
@@ -23,10 +23,11 @@
               alt=""
             />
           </span>
-          {{ getChartTitle() }}
+          <span class="text-h6">{{ getChartTitle() }}</span>
           <v-spacer />
           <v-btn
-            flat
+            text
+            large
             class="subheading primary--text text--lighten-4"
             @click="clearFilter({ dimension })"
           >

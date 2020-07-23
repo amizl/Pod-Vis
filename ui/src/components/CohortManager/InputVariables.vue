@@ -1,21 +1,19 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
-      <input-variables-toolbar
-        :expanded="expanded"
-        :highlighted="highlighted"
-        @expandClicked="expandClicked"
-      />
-      <v-container v-show="expanded" fluid fill-height class="pa-0 pb-1">
-        <input-variables-charts v-if="hasUserAddedInputVariables" />
-        <v-layout v-else column align-center justify-center fill-height>
-          <v-subheader class="display-1 primary--text text--lighten-5">
-            ADD PREDICTOR VARIABLES
-          </v-subheader>
-        </v-layout>
-      </v-container>
-    </v-layout>
-  </v-sheet>
+  <v-layout column fill-height class="ma-0 pa-0">
+    <input-variables-toolbar
+      :expanded="expanded"
+      :highlighted="highlighted"
+      @expandClicked="expandClicked"
+    />
+    <v-container v-show="expanded" fluid fill-height class="pa-0 pb-1">
+      <input-variables-charts v-if="hasUserAddedInputVariables" />
+      <v-layout v-else column align-center justify-center fill-height>
+        <v-subheader class="display-1 primary--text text--lighten-5 my-5">
+          ADD PREDICTOR VARIABLES
+        </v-subheader>
+      </v-layout>
+    </v-container>
+  </v-layout>
 </template>
 
 <script>

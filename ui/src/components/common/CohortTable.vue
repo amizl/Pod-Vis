@@ -6,7 +6,7 @@
     :items="collection_cohorts"
     item-key="id"
   >
-    <template v-slot:items="props">
+    <template v-slot:item="props">
       <tr>
         <td>
           <v-checkbox
@@ -15,9 +15,13 @@
             hide-details
           ></v-checkbox>
         </td>
-        <td class="text-xs-left">{{ props.item.label }}</td>
-        <td class="text-xs-left">{{ props.item.subject_ids.length }}</td>
-        <td class="text-xs-left">{{ props.item.query_string }}</td>
+        <td class="text-subtitle-1 text-xs-left">{{ props.item.label }}</td>
+        <td class="text-subtitle-1 text-xs-left">
+          {{ props.item.subject_ids.length }}
+        </td>
+        <td class="text-subtitle-1 text-xs-left">
+          {{ props.item.query_string }}
+        </td>
       </tr>
     </template>
     <template v-slot:no-data>
@@ -40,18 +44,22 @@ export default {
         {
           text: 'Select',
           value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Cohort Name',
           value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Cohort Count',
           value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Query',
           value: 'query_string',
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ],
     };

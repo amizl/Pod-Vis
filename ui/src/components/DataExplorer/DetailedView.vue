@@ -1,52 +1,44 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
-      <v-card-title class="title primary--text"
-        >Detailed View<span v-if="detailedView"
-          >&nbsp;-&nbsp;{{ detailedView.label }}</span
-        ></v-card-title
-      >
+<div class="ma-1">
+  <v-app-bar text dense class="rounded-lg">
+    <v-toolbar-title class="title primary--text">
+     Detailed View - <span class="subtitle-1">{{ detailedView.label }}</span>
+    </v-toolbar-title>
+    <v-spacer />
+   </v-app-bar>
 
-      <v-toolbar card dense flat color="white rounded-lg">
-        <v-toolbar-items>
-          <!--
+    <v-container fluid fill-width class="pa-0 ma-0 pt-2 pl-2">
+      <v-row class="pl-2" align="center">
+ <!--
         <span class="subheading primary--text mt-3 mr-2">Style:</span>
         <v-btn-toggle v-model="line_style">
          <v-btn text color="primary" class="white--text mr-2 py-1" value="bezier">BEZIER</v-btn>
          <v-btn text color="#3FB551" class="white--text mr-2 py-1" value="line">LINE</v-btn>
         </v-btn-toggle>
--->
-          <span class="subtitle-1 primary--text mt-3 mr-2 ml-3">X-Axis:</span>
-          <v-btn-toggle v-model="xaxis" mandatory>
+	-->
+        <span class="pl-2">X-Axis:</span> <v-btn-toggle v-model="xaxis" class="pl-2" mandatory>
             <v-btn
               text
               color="primary"
-              class="white--text mr-2 py-1"
+              class="white--text"
               value="visits"
               >VISITS</v-btn
             >
             <v-btn
               text
               color="#3FB551"
-              class="white--text mr-2 py-1"
+              class="white--text"
               value="days"
               >DAYS</v-btn
             >
           </v-btn-toggle>
-
-          <span class="subtitle-1 primary--text mt-3 mr-2 ml-3"
-            >Show Raw Data:</span
-          >
-          <v-checkbox v-model="draw_raw" class="mt-2"> </v-checkbox>
-
-          <span class="subtitle-1 primary--text mt-3 mr-2 ml-3"
-            >Overlay Mean/SD:</span
-          >
-          <v-checkbox v-model="draw_mean" class="mt-2"> </v-checkbox>
-        </v-toolbar-items>
-      </v-toolbar>
+          <v-checkbox v-model="draw_raw" label="Show Raw Data" class="pl-3"></v-checkbox>
+          <v-checkbox v-model="draw_mean" label="Overlay Mean/SD" class="pl-3"></v-checkbox>
+       </v-row>
+      </v-container>
 
       <v-divider></v-divider>
+      
       <v-container fluid fill-height>
         <v-layout column align-center justify-center fill-height>
           <v-subheader
@@ -68,8 +60,8 @@
           />
         </v-layout>
       </v-container>
-    </v-layout>
-  </v-sheet>
+</v-layout>
+</div>
 </template>
 
 <script>

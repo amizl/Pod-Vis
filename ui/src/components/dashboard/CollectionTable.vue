@@ -10,14 +10,14 @@
     >
       <template v-slot:item="props">
         <tr>
-          <td class="text-xs-left">{{ props.item.label }}</td>
-          <td class="text-xs-left">
+          <td class="text-subtitle-1 text-xs-left">{{ props.item.label }}</td>
+          <td class="text-subtitle-1 text-xs-left">
             {{ props.item.date_generated | formatDate }}
           </td>
-          <td class="text-xs-left">
+          <td class="text-subtitle-1 text-xs-left">
             {{ props.item.is_public ? 'Yes' : 'No' }}
           </td>
-          <td class="text-xs-left px-0">
+          <td class="text-subtitle-1 text-xs-left px-0">
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on: tooltip }">
                 <v-btn
@@ -138,19 +138,23 @@ export default {
         {
           text: 'Study Dataset',
           value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Created',
           value: 'date_generated_epoch',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Public?',
           value: 'is_public',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Available Actions',
           value: 'label',
           sortable: false,
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ],
     };

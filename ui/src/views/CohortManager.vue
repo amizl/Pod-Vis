@@ -1,36 +1,38 @@
 <template>
   <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-2">
-    <loading-spinner />
+    <v-row class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0"> <loading-spinner /> </v-col>
+    </v-row>
   </v-container>
 
   <v-container v-else fluid fill-width class="ma-0 pa-2">
-    <v-toolbar app class="primary">
+    <v-app-bar app class="primary">
       <v-icon color="white" large>group_add</v-icon>
-      <v-toolbar-title class="white--text"
+      <v-toolbar-title class="white--text pl-3"
         >Cohort Manager
-        <div class="subheading">Dataset: {{ collection.label }}</div>
+        <div class="subtitle-1">Dataset: {{ collection.label }}</div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-flex xs12 sm12>
-          <CohortSelection class="mt-2" @selectedCohort="cohortLoaded" />
-        </v-flex>
+        <CohortSelection class="mt-2" @selectedCohort="cohortLoaded" />
       </v-toolbar-items>
+
       <v-spacer></v-spacer>
 
-      <delete-cohort-button @cohortDeleted="cohortDeleted" />
+      <delete-cohort-button class="mx-1" @cohortDeleted="cohortDeleted" />
       <save-cohort-button
         :cohorts="this.collection_cohorts"
+        class="mx-1"
         @cohortSaved="cohortSaved"
       />
 
       <v-tooltip top color="primary">
         <template v-slot:activator="{ on }">
-          <analysis-summary-button :collection-id="collectionId" />
+          <analysis-summary-button :collection-id="collectionId" class="mx-1" />
         </template>
         <span>View Analysis Summary for all Cohorts and Outcome Variables</span>
       </v-tooltip>
-    </v-toolbar>
+    </v-app-bar>
 
     <v-container
       v-if="!collection.has_visits_set"
@@ -38,72 +40,71 @@
       fill-height
       class="ma-0 pa-0"
     >
-      <v-layout row fill-height class="pa-0">
-        <v-flex xs12>
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
           <v-sheet color="white" height="100%" class="rounded-lg shadow">
-            <v-layout fill-height align-center class="ma-2 pa-3">
-              <span
-                >ERROR - First/Last Visits must be set in order to use the
-                Cohort Manager:<br clear="both"
-              /></span>
-              <v-tooltip top color="primary">
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    width="15em"
-                    @click="
-                      $router.push(`data_summary?collection=${collection.id}`)
-                    "
-                    v-on="on"
-                  >
-                    Set Visits
-                  </v-btn>
-                </template>
-                <span class="subtitle-1"
-                  >View Data Summary and choose First &amp; Last Visit</span
+            <span
+              >ERROR - First/Last Visits must be set in order to use the Cohort
+              Manager:<br clear="both"
+            /></span>
+            <v-tooltip top color="primary">
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  width="15em"
+                  @click="
+                    $router.push(`data_summary?collection=${collection.id}`)
+                  "
+                  v-on="on"
                 >
-              </v-tooltip>
-            </v-layout>
+                  Set Visits
+                </v-btn>
+              </template>
+              <span class="subtitle-1"
+                >View Data Summary and choose First &amp; Last Visit</span
+              >
+            </v-tooltip>
           </v-sheet>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
 
-    <div v-else>
-      <v-layout row class="ma-0 pa-0">
-        <v-flex xs12>
-          <analysis-tracker
-            step="3"
-            :substep.sync="substep"
-            :collection-id="collectionId"
-            @createSimilar="createSimilar"
-            @createNew="createNew"
-          ></analysis-tracker>
-        </v-flex>
-      </v-layout>
+    <div v-else fill-width class="ma-0 pa-0">
+      <analysis-tracker
+        step="3"
+        :substep.sync="substep"
+        :collection-id="collectionId"
+        @createSimilar="createSimilar"
+        @createNew="createNew"
+      ></analysis-tracker>
 
-      <v-layout row fill-height class="mt-2 pa-0">
-        <v-flex xs12>
-          <input-variables
-            :expanded.sync="inExpanded"
-            :highlighted="inHighlighted"
-          />
-        </v-flex>
-      </v-layout>
+      <v-container fluid fill-width class="ma-0 pa-0 pt-1">
+        <v-row class="ma-0 pa-0">
+          <v-col cols="12" class="ma-0 pa-0">
+            <v-sheet color="white" height="100%" class="rounded-lg shadow">
+              <input-variables
+                :expanded.sync="inExpanded"
+                :highlighted="inHighlighted"
+                class="ma-1 pt-1"
+              />
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
 
-      <v-layout row class="mt-2 pa-0">
-        <v-flex xs7>
-          <output-variables
-            :expanded.sync="outExpanded"
-            :highlighted="outHighlighted"
-            :disabled="true"
-          />
-        </v-flex>
-        <v-flex class="ml-2" xs5> <analytics-table /> </v-flex>
-      </v-layout>
-
-      <v-layout v-if="false" row class="mt-2 pa-0">
-        <v-flex xs6> <cohort-table /> </v-flex>
-      </v-layout>
+      <v-container fluid fill-width class="ma-0 pa-0 pt-2">
+        <v-row class="ma-0 pa-0">
+          <v-col cols="7" class="ma-0 pa-0">
+            <output-variables
+              :expanded.sync="outExpanded"
+              :highlighted="outHighlighted"
+              :disabled="true"
+            />
+          </v-col>
+          <v-col cols="5" class="ma-0 pa-0">
+            <analytics-table class="ml-2" />
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
   </v-container>
 </template>
@@ -112,7 +113,6 @@
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions, state, getters } from '@/store/modules/cohortManager/types';
 
-import CohortTable from '@/components/common/CohortTable.vue';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import CohortSelection from '@/components/CohortManager/CohortSelection.vue';
 import AnalyticsTable from '@/components/CohortManager/AnalyticsTable.vue';
@@ -127,7 +127,6 @@ export default {
   components: {
     AnalysisTracker,
     CohortSelection,
-    CohortTable,
     InputVariables,
     OutputVariables,
     AnalyticsTable,

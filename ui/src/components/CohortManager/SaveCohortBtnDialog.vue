@@ -8,22 +8,31 @@
       <v-icon left>save</v-icon> SAVE COHORT
     </v-btn>
     <!-- SAVE COLLECTION FORM DIALOG -->
-    <v-dialog v-model="dialog" width="500" persistent>
+    <v-dialog v-model="dialog" width="500">
       <v-card class="rounded-lg">
-        <v-card-title primary-title>
-          <span class="primary--text title pl-2">Save Cohort</span>
-
-          <span
-            v-if="hasUserFilteredOutputVariables"
-            class="red--text title pl-2 pt-4"
+        <v-card-title color="white" primary-title>
+          <v-icon color="primary">save</v-icon>
+          <span class="primary--text text--darken-3 title pl-2"
+            >Save Cohort</span
           >
-            WARNING:<br clear="both" /><br clear="both" />Outcome variable
-            filters will not be saved with the cohort unless they are moved to
-            the INPUT VARIABLES section.
-          </span>
         </v-card-title>
-        <v-card-text>
-          <v-form ref="form" v-model="valid" @submit.prevent="onSaveCohort">
+
+        <v-card-text class="primary primary--text text--lighten-5 pt-4">
+          <div
+            v-if="hasUserFilteredOutputVariables"
+            class="red--text text--lighten-4 title pl-2 py-4"
+          >
+            WARNING:<br clear="both" />Outcome variable filters will not be
+            saved with the cohort unless they are moved to the INPUT VARIABLES
+            section.<br clear="both" />
+          </div>
+
+          <v-form
+            ref="form"
+            v-model="valid"
+            class="white"
+            @submit.prevent="onSaveCohort"
+          >
             <v-text-field
               ref="vtf"
               v-model="cohortName"
@@ -35,18 +44,19 @@
               ]"
               prepend-inner-icon="table_chart"
               label="Please name your cohort."
-              box
-              flat
+              filled
+              text
               background-color="grey lighten-4"
               class="mt-2"
             >
             </v-text-field>
           </v-form>
         </v-card-text>
+
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="red lighten-2" @click="dialog = false">
+          <v-btn text color="primary" @click="dialog = false">
             <v-icon left>close</v-icon> Cancel
           </v-btn>
           <v-btn :loading="loading" color="primary" @click="onSaveCohort">
@@ -117,7 +127,7 @@ export default {
       saveCohort: actions.SAVE_COHORT,
     }),
     showing() {
-      this.$nextTick(function() {
+      setTimeout(() => {
         this.$refs.vtf.focus();
       });
     },

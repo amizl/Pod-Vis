@@ -1,33 +1,36 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
-      <v-toolbar card dense flat color="rounded-lg">
+  <v-sheet color="white" height="100%" class="rounded-lg shadow pa-0 ma-0">
+    <v-layout column fill-width class="ma-0 pa-0">
+      <v-app-bar dense flat color="rounded-lg">
         <v-toolbar-title class="primary--text title">
           ANALYTICS PANEL
         </v-toolbar-title>
         <v-divider vertical class="ml-4"></v-divider>
         <v-spacer />
+        <!--
         <v-toolbar-items>
           <v-icon v-if="expanded" @click="expandClicked">expand_less</v-icon>
           <v-icon v-else @click="expandClicked">expand_more</v-icon>
         </v-toolbar-items>
-      </v-toolbar>
+ -->
+      </v-app-bar>
       <v-divider></v-divider>
       <div v-show="expanded">
         <v-container v-if="!pvals || !pvals.length" fluid fill-height>
           <v-layout column align-center justify-center fill-height>
             <v-subheader class="subheading primary--text text--lighten-4">
-              <v-flex v-if="collection.is_longitudinal">
-                Add variables and apply filters to them to view Mann-Whitney
-                rank test results for all outcome variables.
-              </v-flex>
-	      <v-flex v-else>
-		Statistical tests for cross-sectional data are not yet implemented.
-     	      </v-flex>
+              <div v-if="collection.is_longitudinal">
+                Add variables and apply filters to them to view statistical test
+                results for all outcome variables.
+              </div>
+              <div v-else>
+                Statistical tests for cross-sectional data are not yet
+                implemented.
+              </div>
             </v-subheader>
           </v-layout>
         </v-container>
-        <v-flex v-else>
+        <div v-else>
           <v-toolbar-title class="primary--text title ml-3 mt-2">
             Comparing cohort vs. remainder change:</v-toolbar-title
           >
@@ -40,8 +43,8 @@
             pl-4
             style="border: 4px solid rgb(236,118,188); border-radius: 0.4rem;"
           >
-            <v-layout align-center row>
-              <span style="padding: 0em 0.5em 0em 0em;">Highlight P &lt;</span
+            <v-layout align-center row class="pa-0 ma-0">
+              <span class="pa-0 mr-1">Highlight P &lt;</span
               ><v-radio-group v-model="pvt" row>
                 <v-radio
                   v-for="pv in pval_thresholds"
@@ -56,38 +59,44 @@
             :headers="headers"
             :items="pvals"
             dense
-            hide-default-header
-            hide-actions
-            :pagination.sync="pagination"
+            hide-default-footer
+            disable-pagination
           >
-            <template v-slot:items="props">
+            <template v-slot:item="props">
               <tr :class="getVariableClass(props.item)">
-                <td class="text-xs-left">{{ props.item.label }}</td>
-                <td class="text-xs-left" :title="props.item.test_name">{{ props.item.test_abbrev }}</span>
-		</td>
+                <td class="text-subtitle-1 text-xs-left">
+                  {{ props.item.label }}
+                </td>
+                <td
+                  class="text-subtitle-1 text-xs-left"
+                  :title="props.item.test_name"
+                >
+                  {{ props.item.test_abbrev }}
+                </td>
                 <td
                   v-if="props.item.error"
-                  class="text-xs-left error"
+                  class="text-subtitle-1 text-xs-left error"
                   colspan="2"
                 >
                   {{ props.item.error }}
                 </td>
-                <td v-if="!props.item.error" class="text-xs-right" :title="props.item.effect_size_descr">
+                <td
+                  v-if="!props.item.error"
+                  class="text-subtitle-1 text-xs-right"
+                  :title="props.item.effect_size_descr"
+                >
                   {{ props.item.effect_size | formatEffectSize }}
                 </td>
-                <td v-if="!props.item.error" class="text-xs-right">
+                <td
+                  v-if="!props.item.error"
+                  class="text-subtitle-1 text-xs-right"
+                >
                   {{ props.item.pval | formatPValue }}
                 </td>
               </tr>
             </template>
-            <!-- <template v-slot:no-data>
-            <v-alert :value="true" color="primary" icon="info">
-              Add output variables and filter charts for Mann-Whitney rank test
-              on cohort and population samples.
-            </v-alert>
-          </template> -->
           </v-data-table>
-        </v-flex>
+        </div>
       </div>
     </v-layout>
   </v-sheet>
@@ -122,29 +131,30 @@ export default {
           align: 'left',
           sortable: true,
           value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Test',
           align: 'left',
           sortable: true,
           value: 'test_name',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Effect Size',
-          align: 'right',
+          align: 'left',
           sortable: true,
           value: 'effect_size',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'P Value',
-          align: 'right',
+          align: 'left',
           sortable: true,
           value: 'pval',
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ],
-      pagination: {
-        rowsPerPage: -1,
-      },
       expanded: true,
     };
   },
@@ -185,6 +195,13 @@ export default {
 </script>
 
 <style>
+table.v-data-table thead tr th {
+  font-size: 24px;
+}
+table.v-data-table tbody tr td {
+  font-size: 24px;
+}
+
 /* Transition effect for changing routes */
 .fade-enter-active,
 .fade-leave-active {

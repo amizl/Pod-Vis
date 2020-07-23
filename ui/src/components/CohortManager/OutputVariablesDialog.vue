@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="openOutputVariableDialog" scrollable>
     <template v-slot:activator="{ on }">
-      <v-btn flat color="primary" class="title" v-on="on">
+      <v-btn text color="primary" class="title" v-on="on">
         <v-icon left dark>add_box</v-icon>
         Choose Outcome Variables
       </v-btn>
@@ -17,11 +17,11 @@
             :items="[...this.outputVariables].sort(this.scaleSortFn)"
             :headers="headers"
             item-key="id"
-            hide-actions
+            hide-default-footer
             dense
             style="width: 100%;"
           >
-            <template v-slot:items="props"> </template>
+            <template v-slot:item="props"> </template>
           </v-data-table>
         </div>
       </v-card-title>
@@ -31,12 +31,14 @@
           :headers="headers"
           :items="[...this.outputVariables].sort(this.scaleSortFn)"
           item-key="id"
-          hide-actions
+	  hide-default-header
+          hide-default-footer
           dense
           style="width: 100%;"
         >
           <template v-slot:headers="props"> </template>
-          <template v-slot:items="props">
+          <template v-slot:item="props">
+	    <tr>
             <td style="font-size:0.9rem; width: 20%;">
               {{ props.item.category }}
             </td>
@@ -88,13 +90,14 @@
                 @change="cbChange"
               ></v-checkbox>
             </td>
+	    </tr>
           </template>
         </v-data-table>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" flat @click="openOutputVariableDialog = false"
+        <v-btn color="primary" text @click="openOutputVariableDialog = false"
           ><v-icon left dark>close</v-icon>Close</v-btn
         >
       </v-card-actions>

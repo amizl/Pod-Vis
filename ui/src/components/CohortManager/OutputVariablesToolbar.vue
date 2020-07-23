@@ -1,18 +1,17 @@
 <template>
   <section>
-    <v-toolbar card dense flat :class="getToolbarClass()" class="rounded-lg">
+    <v-app-bar dense flat :class="getToolbarClass()" class="rounded-lg">
       <v-toolbar-items>
         <output-variables-dialog @dialogOpened="opened" />
       </v-toolbar-items>
       <v-divider vertical class="ml-4"></v-divider>
       <v-chip
         v-if="outputVariables.length == 0"
-        disabled
         color="primary"
         class="white--text title"
         >No variables selected</v-chip
       >
-      <v-chip v-else disabled color="primary" class="white--text title"
+      <v-chip v-else color="primary" class="white--text title"
         >{{ outputVariables.length }} variable<span
           v-if="outputVariables.length != 1"
           >s</span
@@ -44,11 +43,13 @@
           >
         </v-btn-toggle>
       </v-toolbar-items>
+      <!--
       <v-toolbar-items>
         <v-icon v-if="expanded" @click="expandClicked">expand_less</v-icon>
         <v-icon v-else @click="expandClicked">expand_more</v-icon>
       </v-toolbar-items>
-    </v-toolbar>
+-->
+    </v-app-bar>
     <v-divider></v-divider>
   </section>
 </template>

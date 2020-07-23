@@ -1,6 +1,6 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
+  <v-sheet color="white" height="100%" class="rounded-lg shadow pa-0 ma-0">
+    <v-layout column fill-height class="ma-0 pa-0">
       <output-variables-toolbar
         :expanded="expanded"
         :highlighted="highlighted"
@@ -9,7 +9,7 @@
       <v-container v-show="expanded" fluid fill-height class="pa-0 pb-1">
         <output-variables-charts v-if="hasUserAddedOutputVariables" />
         <v-layout v-else column align-center justify-center fill-height>
-          <v-subheader class="display-1 primary--text text--lighten-5">
+          <v-subheader class="display-1 primary--text text--lighten-5 my-5">
             ADD OUTCOME VARIABLES
           </v-subheader>
         </v-layout>

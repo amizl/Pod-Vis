@@ -1,60 +1,62 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
-      <v-card-title class="title primary--text"
-        >One-Way ANOVA
-        <v-spacer />
-        <v-chip color="#FEEDDE">p &lt; 1</v-chip>
-        <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
-        <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
-        <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
-        <v-chip color="#F16913">p &lt; 0.0001</v-chip>
-      </v-card-title>
-      <v-divider></v-divider>
+  <v-sheet color="white" class="rounded-lg shadow">
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-sheet color="white" class="rounded-lg shadow">
+            <v-app-bar dense flat class="rounded-lg">
+              <v-toolbar-title class="primary--text title">
+                One-Way ANOVA
+              </v-toolbar-title>
+              <v-spacer />
+              <v-chip color="#FEEDDE">p &lt; 1</v-chip>
+              <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
+              <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
+              <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
+              <v-chip color="#F16913">p &lt; 0.0001</v-chip>
+            </v-app-bar>
+          </v-sheet>
+        </v-col>
+      </v-row>
 
-      <v-flex xs12 style="overflow:auto">
-        <v-data-table
-          dense
-          :headers="headers"
-          :items="outcomeVariables"
-          class="elevation-1"
-          :rows-per-page-items="[100]"
-          :hide-footer="true"
-        >
-          <template v-slot:items="props">
-            <tr :class="{ selectedRow: isOVSelected(props.item) }">
-              <td class=" text-xs-left" @click="table_row_click(props.item)">
-                {{ props.item.category }}
-              </td>
-              <td class="text-xs-left">{{ props.item.label }}</td>
-              <td class="text-xs-left">1-way ANOVA</td>
-              <td class="text-xs-left">{{ variable_fval(props.item) }}</td>
-              <!--
-
-              <td :key="props.item.id">
-                <v-layout justify-left
-                  ><v-chip
-                    class="text-xs-left"
-                    :color="table_cell_color(props.item)"
-                    @click="table_cell_click(props.item)"
-                    >{{ table_cell(props.item) }}</v-chip
-                  ></v-layout
+      <v-row>
+        <v-col cols="12">
+          <v-data-table
+            dense
+            :headers="headers"
+            :items="outcomeVariables"
+            class="elevation-1"
+            :hide-footer="true"
+          >
+            <template v-slot:item="props">
+              <tr :class="{ selectedRow: isOVSelected(props.item) }">
+                <td
+                  class="text-subtitle-1 text-xs-left"
+                  @click="table_row_click(props.item)"
                 >
-              </td>
-              -->
-              <td
-                :key="props.item.id"
-                class="text-xs-left"
-                :style="{ backgroundColor: table_cell_color(props.item) }"
-                @click="table_cell_click(props.item)"
-              >
-                {{ table_cell(props.item) }}
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-      </v-flex>
-    </v-layout>
+                  {{ props.item.category }}
+                </td>
+                <td class="text-subtitle-1 text-xs-left">
+                  {{ props.item.label }}
+                </td>
+                <td class="text-subtitle-1 text-xs-left">1-way ANOVA</td>
+                <td class="text-subtitle-1 text-xs-left">
+                  {{ variable_fval(props.item) }}
+                </td>
+                <td
+                  :key="props.item.id"
+                  class="text-xs-left"
+                  :style="{ backgroundColor: table_cell_color(props.item) }"
+                  @click="table_cell_click(props.item)"
+                >
+                  {{ table_cell(props.item) }}
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-sheet>
 </template>
 
@@ -74,22 +76,27 @@ export default {
         {
           text: 'Outcome Category',
           value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Outcome Variable',
           value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Statistical Test',
           value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'F-Statistic',
           value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'p-Value',
           value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ],
     };

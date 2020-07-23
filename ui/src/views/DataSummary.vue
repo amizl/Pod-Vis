@@ -1,9 +1,11 @@
 <template>
   <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-2">
-    <loading-spinner />
+    <v-row class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0"> <loading-spinner /> </v-col>
+    </v-row>
   </v-container>
 
-  <v-container v-else fluid fill-width class="ma-0 pa-2">
+  <div v-else fluid fill-width class="ma-0 pa-2">
     <v-app-bar app class="primary">
       <v-icon color="white" large>library_add</v-icon>
       <v-toolbar-title class="white--text pl-2"
@@ -20,33 +22,30 @@
       :collection-id="this.collection.id"
     ></analysis-tracker>
 
-    <v-layout fill-width class="ma-0 pt-2">
+    <v-container fluid fill-width class="ma-0 pa-0 pt-1">
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <v-sheet color="white" height="100%" class="rounded-lg shadow">
-            <v-layout column class="ma-1 pt-1">
-              <visit-variables-toolbar
-                @hideUnselectedVars="hideUnselectedVarsChanged"
-              >
-              </visit-variables-toolbar>
+            <visit-variables-toolbar
+              class="ma-1 pt-1"
+              @hideUnselectedVars="hideUnselectedVarsChanged"
+            >
+            </visit-variables-toolbar>
 
-              <v-container fluid fill-height class="pa-0 pb-0">
-                <bubble-chart
-                  :var-opacity="'0.3'"
-                  :collection-var-opacity="'0.8'"
-                  :hide-unselected-vars="hideUnselectedVars"
-                >
-                </bubble-chart>
-                <v-spacer></v-spacer>
-              </v-container>
+            <bubble-chart
+              :var-opacity="'0.3'"
+              :collection-var-opacity="'0.8'"
+              :hide-unselected-vars="hideUnselectedVars"
+            >
+            </bubble-chart>
+            <v-spacer></v-spacer>
 
-              <visit-times-table></visit-times-table>
-            </v-layout>
+            <visit-times-table></visit-times-table>
           </v-sheet>
         </v-col>
       </v-row>
-    </v-layout>
-  </v-container>
+    </v-container>
+  </div>
 </template>
 
 <script>

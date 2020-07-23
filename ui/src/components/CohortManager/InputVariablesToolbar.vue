@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-toolbar card dense flat :class="getToolbarClass()" class="rounded-lg">
+    <v-app-bar dense flat :class="getToolbarClass()" class="rounded-lg">
       <v-toolbar-items>
         <input-variables-dialog @dialogOpened="opened" />
       </v-toolbar-items>
@@ -19,20 +19,18 @@
         >&nbsp;selected</v-chip
       >
       <v-spacer />
-      <v-toolbar-items>
-        <v-chip
-          disabled
-          class="white--text title"
-          :style="'background: ' + colors['cohort']"
-          >Selected Cohort - {{ animatedNumber }}</v-chip
-        >
-        <v-chip
-          disabled
-          class="primary--text title"
-          :style="'background: ' + colors['population']"
-          >Study Population - {{ unfilteredData.length }}</v-chip
-        >
-      </v-toolbar-items>
+
+      <v-chip
+        class="white--text title"
+        :style="'background: ' + colors['cohort']"
+        >Selected Cohort - {{ animatedNumber }}</v-chip
+      >
+      <v-chip
+        class="primary--text title"
+        :style="'background: ' + colors['population']"
+        >Study Population - {{ unfilteredData.length }}</v-chip
+      >
+
       <v-toolbar-items>
         <v-icon v-if="expanded" @click="expandClicked">expand_less</v-icon>
         <v-icon v-else @click="expandClicked">expand_more</v-icon>
@@ -60,7 +58,7 @@
         </v-tooltip>
       </v-toolbar-items>
 -->
-    </v-toolbar>
+    </v-app-bar>
     <v-divider></v-divider>
   </section>
 </template>

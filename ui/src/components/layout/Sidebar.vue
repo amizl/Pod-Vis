@@ -51,7 +51,7 @@
           </v-tooltip>
 
           <v-list-item-content class="primary--text">
-            <span>{{ item.name }}</span>
+            <span class="title-1">{{ item.name }}</span>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -123,7 +123,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="signOutDialog = false"
-            >Cancel</v-btn
+            ><v-icon left>close</v-icon>Cancel</v-btn
           >
           <v-btn color="primary" @click="signUserOut">Sign Out</v-btn>
         </v-card-actions>

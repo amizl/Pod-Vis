@@ -1,25 +1,24 @@
 <template>
-  <v-sheet class="ma-1" color="white" height="100%" min-width="400px">
-    <v-layout column fill-height class="var-chart">
+  <v-sheet class="ma-1 pa-0" color="white" height="100%" min-width="400px">
+    <v-layout column fill-height class="var-chart pa-0 ma-0">
       <v-card-title :class="getTitleClass(variable)">
         <v-layout
           align-center
+          class="pa-0 ma-0"
           style="background-color: white; padding: 0.5em 0em 1em 0.4em; border-radius: 0.5rem;"
         >
-          <span style="padding:0.4em 0.5em 1em 0.5em">
+          <span style="padding: 0.4em 0.5em 1em 0.5em">
             <img
               :src="'/images/' + variable.category + '-icon-128.png'"
               :title="variable.category"
-              style="height: 3em; padding: 0em 0.5em 0em 0em;"
+              style="height: 3em;"
             />
           </span>
-          <span class="subtitle-1">{{ getVariableLabel(variable) }}</span>
+          <span class="text-h6">{{ getVariableLabel(variable) }}</span>
           <v-spacer />
           <v-btn
             text
-            flat
-            small
-            no-padding
+            large
             class="together subheading primary--text text--lighten-4"
             @click="clearAllFilters({ dimension })"
           >
@@ -164,7 +163,7 @@ export default {
     },
     getTitleClass(v) {
       const dflt =
-        'subheading primary--text text--darken-4 pa-1 ma-0 text-truncate';
+        'subheading primary--text text--darken-4 pa-0 ma-0 text-truncate';
       if (this.isBelowPValThreshold(v)) {
         return `${dflt} highlight-var`;
       }

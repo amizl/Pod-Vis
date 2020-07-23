@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-tooltip bottom color="primary">
-      <template v-slot:activator="{ on }">
+      <template v-slot:activator="{ on: tooltip }">
         <v-btn
           color="primary--text"
           :disabled="collection_cohorts.length < 2"
           @click="dialog = !dialog"
-          v-on="on"
+          v-on="{ ...tooltip }"
         >
           <v-icon left>grid_on</v-icon>
           Summary Matrix
@@ -17,16 +17,22 @@
 
     <v-dialog v-model="dialog" width="500">
       <v-card class="rounded-lg">
-        <v-card-title class="title primary--text text--darken-3">
-          <span class="primary--text title pl-2"
-            >Are you sure you want to leave the Cohort Manager and go to the
-            Summary Matrix?</span
+        <v-card-title color="white" primary-title>
+          <v-icon color="primary">grid_on</v-icon>
+          <span class="primary--text text--darken-3 title pl-2"
+            >Proceed to Summary Matrix</span
           >
         </v-card-title>
+
+        <v-card-text class="primary primary--text text--lighten-5 pt-4">
+          Are you sure you want to leave the Cohort Manager and go to the
+          Summary Matrix?
+        </v-card-text>
+
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="red lighten-2" @click="dialog = false">
+          <v-btn text color="primary" @click="dialog = false">
             <v-icon left>close</v-icon> No
           </v-btn>
           <v-btn
