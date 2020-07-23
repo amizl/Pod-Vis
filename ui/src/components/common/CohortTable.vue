@@ -5,15 +5,16 @@
     :headers="headers"
     :items="collection_cohorts"
     item-key="id"
+    dense
   >
     <template v-slot:item="props">
       <tr>
         <td>
-          <v-checkbox
+          <v-simple-checkbox
             v-model="props.selected"
             primary
             hide-details
-          ></v-checkbox>
+          ></v-simple-checkbox>
         </td>
         <td class="text-subtitle-1 text-xs-left">{{ props.item.label }}</td>
         <td class="text-subtitle-1 text-xs-left">
