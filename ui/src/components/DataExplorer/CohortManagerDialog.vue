@@ -3,7 +3,7 @@
     <v-tooltip top color="primary">
       <template v-slot:activator="{ on }">
         <v-btn
-	  text
+          text
           color="primary"
           style="height:100%;"
           @click="dialog = !dialog"

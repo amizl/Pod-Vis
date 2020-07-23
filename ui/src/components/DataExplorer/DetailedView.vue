@@ -1,5 +1,5 @@
 <template>
-<div class="ma-1">
+<div class="ma-1" min-height="400px" fill-height>
   <v-app-bar text dense class="rounded-lg">
     <v-toolbar-title class="title primary--text">
      Detailed View - <span class="subtitle-1">{{ detailedView.label }}</span>
@@ -39,7 +39,7 @@
 
       <v-divider></v-divider>
       
-      <v-container fluid fill-height>
+      <v-container fluid fill-height min-height="400px">
         <v-layout column align-center justify-center fill-height>
           <v-subheader
             v-if="!detailedView"
@@ -57,6 +57,7 @@
             :draw-mean="draw_mean"
             :draw-raw="draw_raw"
             :xaxis="xaxis"
+	    class="pa-0 ma-0"
           />
         </v-layout>
       </v-container>

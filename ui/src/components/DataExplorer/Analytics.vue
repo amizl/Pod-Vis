@@ -1,45 +1,46 @@
 <template>
-    <div class="ma-1 pa-0">
-     <v-app-bar text dense class="rounded-lg">
-       <v-toolbar-title class="title primary--text">
-        ANOVA - <span class="subtitle-1">1-way ANOVA for first-last visit change</span>
-       </v-toolbar-title>
+  <div class="ma-1 pa-0">
+    <v-app-bar text dense class="rounded-lg">
+      <v-toolbar-title class="title primary--text">
+        ANOVA -
+        <span class="subtitle-1">1-way ANOVA for first-last visit change</span>
+      </v-toolbar-title>
       <v-spacer />
-      </v-app-bar>
+    </v-app-bar>
 
-     <v-container
-       v-if="typeof anova_pvals === undefined || !anova_pvals.length"
-       fluid fill-width class="pa-0 ma-0 pt-2 pl-2">
+    <v-container
+      v-if="typeof anova_pvals === undefined || !anova_pvals.length"
+      fluid
+      fill-width
+      class="pa-0 ma-0 pt-2 pl-2"
+    >
       <v-row class="pl-2" align="center">
-	<v-col cols="12">
-	    Nothing to show.
-	</v-col>
+        <v-col cols="12"> Nothing to show. </v-col>
       </v-row>
-      </v-container>
+    </v-container>
 
-     <v-container v-else fluid fill-width class="pa-0 ma-0 pt-2">
+    <v-container v-else fluid fill-width class="pa-0 ma-0 pt-2">
       <v-row class="pa-0 ma-0" align="center">
-	<v-col cols="12" class="pa-0 ma-0">
-
-        <v-data-table :headers="headers" :items="anova_pvals" dense>
-          <template v-slot:item="props">
-            <tr>
-              <td class="text-subtitle-1 text-xs-left">
-                {{ props.item.label }}
-              </td>
-              <td class="text-subtitle-1 text-xs-right">
-                {{ props.item.pval | formatPValue }}
-              </td>
-              <td class="text-subtitle-1 text-xs-right">
-                {{ props.item.fval | formatFValue }}
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-	</v-col>
+        <v-col cols="12" class="pa-0 ma-0">
+          <v-data-table :headers="headers" :items="anova_pvals" dense>
+            <template v-slot:item="props">
+              <tr>
+                <td class="text-subtitle-1 text-xs-left">
+                  {{ props.item.label }}
+                </td>
+                <td class="text-subtitle-1 text-xs-right">
+                  {{ props.item.pval | formatPValue }}
+                </td>
+                <td class="text-subtitle-1 text-xs-right">
+                  {{ props.item.fval | formatFValue }}
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
+        </v-col>
       </v-row>
-      </v-container>
-    </div>
+    </v-container>
+  </div>
 </template>
 
 <script>

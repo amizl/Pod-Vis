@@ -1,56 +1,80 @@
 <template>
-  <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-2">
+  <v-container v-if="isLoading" fluid fill-width class="ma-0 pa-2">
     <v-row class="ma-0 pa-0">
       <v-col cols="12" class="ma-0 pa-0"> <loading-spinner /> </v-col>
     </v-row>
   </v-container>
 
-  <v-container v-else fluid fill-width class="ma-0 pa-2">
-    <v-app-bar app class="primary">
-      <v-icon color="white" large>explore</v-icon>
-      <v-toolbar-title class="white--text pl-3"
-        >Data Explorer
-        <div class="subtitle-1">Dataset: {{ collection.label }}</div>
-      </v-toolbar-title>
-    </v-app-bar>
+  <v-container
+    v-else
+    fluid
+    fill-width
+    class="ma-0 pa-0"
+    center="start"
+    justify="start"
+  >
+    <v-row>
+      <v-col cols="12">
+        <v-container
+          fluid
+          fill-width
+          class="ma-0 pa-2"
+          center="start"
+          justify="start"
+        >
+          <v-app-bar app class="primary">
+            <v-icon color="white" large>explore</v-icon>
+            <v-toolbar-title class="white--text pl-3"
+              >Data Explorer
+              <div class="subtitle-1">Dataset: {{ collection.label }}</div>
+            </v-toolbar-title>
+          </v-app-bar>
 
-    <analysis-tracker
-      step="5"
-      :substep="substep"
-      :collection-id="collectionId"
-    ></analysis-tracker>
+          <analysis-tracker
+            step="5"
+            :substep="substep"
+            :collection-id="collectionId"
+          ></analysis-tracker>
 
-    <v-container fluid fill-width class="ma-0 pa-0 pt-1">
-      <v-row class="ma-0 pa-0">
-        <v-col cols="12" class="ma-0 pa-0">
-          <v-sheet color="white" height="100%" class="rounded-lg shadow">
-            <summary-view />
-          </v-sheet>
-        </v-col>
-      </v-row>
+          <v-container fluid fill-width class="ma-0 pa-0 pt-1">
+            <v-row class="ma-0 pa-0">
+              <v-col cols="12" class="ma-0 pa-0">
+                <v-sheet color="white" height="100%" class="rounded-lg shadow">
+                  <summary-view />
+                </v-sheet>
+              </v-col>
+            </v-row>
 
-      <v-row class="ma-0 pa-0 pt-3">
-        <v-col cols="12" class="ma-0 pa-0">
-          <v-sheet color="white" height="100%" class="rounded-lg shadow">
-            <cohorts />
-          </v-sheet>
-        </v-col>
-      </v-row>
+            <v-row class="ma-0 pa-0 pt-3">
+              <v-col cols="12" class="ma-0 pa-0">
+                <v-sheet color="white" height="100%" class="rounded-lg shadow">
+                  <cohorts />
+                </v-sheet>
+              </v-col>
+            </v-row>
 
-      <v-row class="ma-0 pa-0 pt-1">
-        <v-col cols="7" class="ma-0 pa-0">
-          <v-sheet color="white" height="100%" class="rounded-lg shadow">
-            <detailed-view />
-          </v-sheet>
-        </v-col>
+            <v-row class="ma-0 pa-0 pt-1" min-height="400px">
+              <v-col cols="7" class="ma-0 pa-0">
+                <v-sheet
+                  color="white"
+                  height="100%"
+                  min-height="400px"
+                  class="rounded-lg shadow"
+                >
+                  <detailed-view min-height="400px" />
+                </v-sheet>
+              </v-col>
 
-        <v-col cols="5" class="ma-0 pa-0 pl-2">
-          <v-sheet color="white" height="100%" class="rounded-lg shadow">
-            <analytics />
-          </v-sheet>
-        </v-col>
-      </v-row>
-    </v-container>
+              <v-col cols="5" class="ma-0 pa-0 pl-2">
+                <v-sheet color="white" height="100%" class="rounded-lg shadow">
+                  <analytics />
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-container>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

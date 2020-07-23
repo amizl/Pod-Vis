@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-app-bar dense text class="rounded-lg">
-      <v-toolbar-title class="primary--text title">
-	Cohorts
-      </v-toolbar-title>      
+      <v-toolbar-title class="primary--text title"> Cohorts </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items>
         <cohort-manager-dialog :collection-id="collection.id" />
+        <v-icon v-if="expanded" @click="expanded = false">expand_less</v-icon>
+        <v-icon v-else @click="expanded = true">expand_more</v-icon>
       </v-toolbar-items>
     </v-app-bar>
 
@@ -18,33 +18,41 @@
       <v-flex>Loading</v-flex>
     </v-container>
 
-    <v-container v-else fluid fill-height class="pa-0 pl-3 pt-3">
+    <v-container
+      v-else
+      v-show="expanded"
+      fluid
+      fill-height
+      class="pa-0 pl-3 pt-3"
+    >
       <v-row>
-	<v-col cols="12">
-    <v-data-table
-      v-model="selected"
-      dense
-      text
-      :headers="headers"
-      :items="collection_cohorts"
-      item-key="id"
-      show-select
-      >
+        <v-col cols="12">
+          <v-data-table
+            v-model="selected"
+            dense
+            text
+            :headers="headers"
+            :items="collection_cohorts"
+            item-key="id"
+            show-select
+          >
+            <template v-slot:item.label="{ item }">
+              <td class="subtitle-1 text-xs-left">{{ item.label }}</td>
+            </template>
 
-      <template v-slot:item.label="{ item }">
-        <td class="subtitle-1 text-xs-left">{{ item.label }}</td>
-      </template>
+            <template v-slot:item.subject_ids.length="{ item }">
+              <td class="subtitle-1 text-xs-center">
+                {{ item.subject_ids.length }}
+              </td>
+            </template>
 
-      <template v-slot:item.subject_ids.length="{ item }">
-        <td class="subtitle-1 text-xs-left">{{ item.subject_ids.length }}</td>
-      </template>
-
-      <template v-slot:item.color="{ item }">
-	<v-chip :color="item.color" class="my-1" />
-      </template>
-
-    </v-data-table>
-	</v-col>
+            <template v-slot:item.color="{ item }">
+              <td class="text-xs-left">
+                <v-chip small :color="item.color" class="my-1" />
+              </td>
+            </template>
+          </v-data-table>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -61,6 +69,7 @@ export default {
   },
   data() {
     return {
+      expanded: true,
       selected: [],
       colors: [
         '#e41a1c',

@@ -1,32 +1,27 @@
 <template>
-<!--    <v-layout column fill-height class="ma-1"> -->
+  <!--    <v-layout column fill-height class="ma-1"> -->
   <div class="ma-1">
-    <v-app-bar
-      dense
-      text
-      class="rounded-lg"
-    >
+    <v-app-bar dense text class="rounded-lg">
       <v-toolbar-title class="primary--text title">
         Choose Outcome Variable
       </v-toolbar-title>
       <v-spacer />
     </v-app-bar>
 
-      <v-container fluid fill-height class="pa-0 pl-3 pt-3">
-	<span>Variable:</span>
-	<v-btn-toggle v-model="dview" class="pl-2" mandatory>
-            <v-btn
-              text
-	      v-for="v in outcomeVariables"
-              color="primary"
-              class="white--text"
-	      :value="v"
-              >{{v.label}}</v-btn
-            >
-
-	</v-btn-toggle>
-      </v-container>
-<!--
+    <v-container fluid fill-height class="pa-0 pl-3 pt-3">
+      <span>Variable:</span>
+      <v-btn-toggle v-model="dview" class="pl-2" mandatory>
+        <v-btn
+          v-for="v in outcomeVariables"
+          text
+          color="primary"
+          class="white--text"
+          :value="v"
+          >{{ v.label }}</v-btn
+        >
+      </v-btn-toggle>
+    </v-container>
+    <!--
       <v-container fluid fill-height class="pa-0 pl-3">
         <summary-parallel-coordinates v-if="userAddedOutcomeVariables" />
         <v-layout v-else column align-center justify-center fill-height>
@@ -36,8 +31,8 @@
         </v-layout>
       </v-container>
 -->
-<!-- </v-layout> -->
-</div>
+    <!-- </v-layout> -->
+  </div>
 </template>
 
 <script>
@@ -52,16 +47,19 @@ export default {
     SummaryViewToolbar,
   },
   data() {
-return {
-dview: [],
+    return {
+      dview: null,
     };
   },
-watch: {
-dview(newval) {
-this.setDetailedView(newval);
-},
-},
-computed: {
+  watch: {
+    dview(newval) {
+      this.setDetailedView(newval);
+    },
+  },
+  mounted() {
+    this.dview = this.detailedView;
+  },
+  computed: {
     ...mapState('dataExplorer', {
       detailedView: state.DETAILED_VIEW,
       outcomeVariables: state.OUTCOME_VARIABLES,
@@ -74,8 +72,8 @@ computed: {
   methods: {
     ...mapActions('dataExplorer', {
       setDetailedView: actions.SET_DETAILED_VIEW,
-   }),
-  }
+    }),
+  },
 };
 </script>
 
