@@ -26,7 +26,7 @@
             >
             <v-btn
               text
-              color="#3FB551"
+              color="primary"
               class="white--text"
               value="days"
               >DAYS</v-btn
