@@ -1,5 +1,5 @@
 <template>
-<!--  <v-layout column fill-height> -->
+  <!--  <v-layout column fill-height> -->
   <div>
     <div ref="container">
       <svg ref="chart" :width="width" :height="height">
@@ -93,64 +93,66 @@
       </svg>
     </div>
 
-      <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
-	  <v-row class="pa-0 ma-0" justify="center" align="center">
-          <v-col cols="4" class="center-text pa-0 ma-0">Custom&nbsp;Selection:</v-col>
-	  <v-col cols="3" class="pa-0 ma-0" justify="start">
+    <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
+      <v-row class="pa-0 ma-0" justify="center" align="center">
+        <v-col cols="4" class="center-text pa-0 ma-0"
+          >Custom&nbsp;Selection:</v-col
+        >
+        <v-col cols="3" class="pa-0 ma-0" justify="start">
           <v-text-field
-              v-model.number="tfRangeMin"
-              :error-messages="rangeMinErrors"
-              class="center-text pa-0 ma-0"
-             type="number"
-	     width="5em"
-            ></v-text-field
-               ></v-col>
-	  <v-col cols="1" class="pa-0 ma-0" align="center" justify="center">
-	    -
-	  </v-col>
-	  <v-col cols="3" class="pa-0 ma-0">
-            <v-text-field
-              v-model.number="tfRangeMax"
-              :error-messages="rangeMaxErrors"
-              class="center-text pa-0 ma-0"
-              type="number"
-              ></v-text-field>
-	    </v-col>
-        </v-row>
-
-	<v-row class="pa-0 ma-0">
-          <v-col cols="12" class="pa-0 ma-0">
-       <v-checkbox v-model="snapToGrid" label="Select whole bars only">
-       </v-checkbox>
-      </v-col>
+            v-model.number="tfRangeMin"
+            :error-messages="rangeMinErrors"
+            class="center-text pa-0 ma-0"
+            type="number"
+            width="5em"
+          ></v-text-field
+        ></v-col>
+        <v-col cols="1" class="pa-0 ma-0" align="center" justify="center">
+          -
+        </v-col>
+        <v-col cols="3" class="pa-0 ma-0">
+          <v-text-field
+            v-model.number="tfRangeMax"
+            :error-messages="rangeMaxErrors"
+            class="center-text pa-0 ma-0"
+            type="number"
+          ></v-text-field>
+        </v-col>
       </v-row>
 
       <v-row class="pa-0 ma-0">
-      <v-col cols="10" class="pa-0 ma-0">
-      <v-select
-        v-model="selectedPopSubset"
-        :items="popSubsetItems"
-        item-text="label"
-        item-value="id"
-        label="Prearranged Selections"
-        class="pa-0 ma-0"
-        return-object
-	></v-select>
-      </v-col>
+        <v-col cols="12" class="pa-0 ma-0">
+          <v-checkbox v-model="snapToGrid" label="Select whole bars only">
+          </v-checkbox>
+        </v-col>
       </v-row>
 
       <v-row class="pa-0 ma-0">
-      <v-col cols="12" class="pa-0 ma-0">
-	<create-comparator-cohorts-btn-dialog
-        :dimension-name="dimensionName"
-        :select-cohort-range="selectCohortRange"
-        :reset-selection="resetSelection"
-      />
-      </v-col>
+        <v-col cols="10" class="pa-0 ma-0">
+          <v-select
+            v-model="selectedPopSubset"
+            :items="popSubsetItems"
+            item-text="label"
+            item-value="id"
+            label="Prearranged Selections"
+            class="pa-0 ma-0"
+            return-object
+          ></v-select>
+        </v-col>
       </v-row>
-      </v-container>
-</div>
-<!--  </v-layout>-->
+
+      <v-row class="pa-0 ma-0">
+        <v-col cols="12" class="pa-0 ma-0">
+          <create-comparator-cohorts-btn-dialog
+            :dimension-name="dimensionName"
+            :select-cohort-range="selectCohortRange"
+            :reset-selection="resetSelection"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
+  <!--  </v-layout>-->
 </template>
 
 <script>

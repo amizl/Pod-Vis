@@ -32,66 +32,66 @@
           :items="[...this.inputVariables].sort(this.scaleSortFn)"
           :headers="headers"
           item-key="id"
-	  hide-default-header
+          hide-default-header
           hide-default-footer
           dense
           style="width: 100%;"
         >
           <template v-slot:headers="props"> </template>
           <template v-slot:item="props">
-	    <tr>
-            <td style="font-size:0.9rem; width: 20%;">
-              {{ props.item.category }}
-            </td>
-            <td style="font-size:0.9rem; width: 20%;">
-              {{ props.item.label }}
-            </td>
-            <td style="width: 12%;">
-              <v-checkbox
-                v-model="props.item.inSelected"
-                hide-details
-                @change="masterCbChange(props.item)"
-              ></v-checkbox>
-            </td>
-            <td style="width: 12%;">
-              <v-checkbox
-                v-if="props.item.has_first_and_last"
-                v-model="props.item.children[0].inSelected"
-                hide-details
-                @change="cbChange"
-              ></v-checkbox>
-            </td>
-            <td style="width: 12%;">
-              <v-checkbox
-                v-if="props.item.has_first_and_last"
-                v-model="props.item.children[1].inSelected"
-                hide-details
-                @change="cbChange"
-              ></v-checkbox>
-            </td>
-            <td style="width: 12%;">
-              <v-checkbox
-                v-if="
-                  props.item.has_first_and_last &&
-                    props.item.data_category !== 'Categorical'
-                "
-                v-model="props.item.children[2].inSelected"
-                hide-details
-                @change="cbChange"
-              ></v-checkbox>
-            </td>
-            <td style="width: 12%;">
-              <v-checkbox
-                v-if="
-                  props.item.has_first_and_last &&
-                    props.item.data_category !== 'Categorical'
-                "
-                v-model="props.item.children[3].inSelected"
-                hide-details
-                @change="cbChange"
-              ></v-checkbox>
-            </td>
-	    </tr>
+            <tr>
+              <td style="font-size:0.9rem; width: 20%;">
+                {{ props.item.category }}
+              </td>
+              <td style="font-size:0.9rem; width: 20%;">
+                {{ props.item.label }}
+              </td>
+              <td style="width: 12%;">
+                <v-checkbox
+                  v-model="props.item.inSelected"
+                  hide-details
+                  @change="masterCbChange(props.item)"
+                ></v-checkbox>
+              </td>
+              <td style="width: 12%;">
+                <v-checkbox
+                  v-if="props.item.has_first_and_last"
+                  v-model="props.item.children[0].inSelected"
+                  hide-details
+                  @change="cbChange"
+                ></v-checkbox>
+              </td>
+              <td style="width: 12%;">
+                <v-checkbox
+                  v-if="props.item.has_first_and_last"
+                  v-model="props.item.children[1].inSelected"
+                  hide-details
+                  @change="cbChange"
+                ></v-checkbox>
+              </td>
+              <td style="width: 12%;">
+                <v-checkbox
+                  v-if="
+                    props.item.has_first_and_last &&
+                      props.item.data_category !== 'Categorical'
+                  "
+                  v-model="props.item.children[2].inSelected"
+                  hide-details
+                  @change="cbChange"
+                ></v-checkbox>
+              </td>
+              <td style="width: 12%;">
+                <v-checkbox
+                  v-if="
+                    props.item.has_first_and_last &&
+                      props.item.data_category !== 'Categorical'
+                  "
+                  v-model="props.item.children[3].inSelected"
+                  hide-details
+                  @change="cbChange"
+                ></v-checkbox>
+              </td>
+            </tr>
           </template>
         </v-data-table>
       </v-card-text>
