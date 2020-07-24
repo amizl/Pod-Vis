@@ -34,6 +34,7 @@
           hide-default-header
           hide-default-footer
           dense
+	  disable-pagination
           style="width: 100%;"
         >
           <template v-slot:headers="props"> </template>
