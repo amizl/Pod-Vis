@@ -1,54 +1,66 @@
 <template>
-  <div>
-    <v-container v-if="dataset" fluid grid-list-xl class="ma-0 pa-2">
-      <v-toolbar app class="primary">
-        <v-toolbar-title class="white--text">Dataset Overview</v-toolbar-title>
+    <v-container v-if="dataset" fluid fill-width class="ma-0 pa-2">
+      <v-app-bar app class="primary">
+        <v-toolbar-title class="white--text pl-3">Dataset Overview</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-tooltip bottom color="primary">
-          <template v-slot:activator="{ on }">
-            <v-btn color="primary--text" @click="goBack()" v-on="on">
+          <template v-slot:activator="{ on: tooltip }">
+            <v-btn color="primary--text" @click="goBack()" v-on="{ ...tooltip }">
               <v-icon left>table_chart</v-icon>
               Dataset Manager
             </v-btn>
           </template>
           <span>Return to Dataset Manager</span>
         </v-tooltip>
-      </v-toolbar>
-      <v-layout row wrap justify-center class="ma-0 pa-1">
-        <v-flex xs8 class="ma-0 pa-2">
-          <v-layout row wrap justify-center>
-            <v-flex xs12 class="ma-0 pa-1">
-              <v-card flat class="rounded-lg shadow">
-                <v-card-title primary-title card color="white">
-                  <p class="title mb-0 ">
-                    {{ dataset.study.study_name }} <br />
-                    <span class="subtitle-2 grey--text">
-                      {{ dataset.study.project.project_name }}
-                    </span>
-                  </p>
-                </v-card-title>
-                <v-card-text>
-                  <p>{{ dataset.study.description }}</p>
-                </v-card-text>
-                <v-card-actions v-if="dataset.sourceURL">
-                  <v-spacer></v-spacer>
-                  <v-btn :href="dataset.sourceURL" flat>Link to Study</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap justify-center>
-            <v-flex xs12 class="ma-0 pa-1">
-              <v-card flat class="rounded-lg shadow">
-                <v-card-title primary-title card color="white">
-                  <span class="title">Variables</span>
-                </v-card-title>
-                <variable-table :dataset-id="id" />
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-        <v-flex xs4 class="ma-0 pa-1">
+      </v-app-bar>
+
+      <v-container fluid fill-width class="ma-0 pa-0 pt-2">
+       <v-row class="ma-0 pa-0">
+        <v-col cols="8" class="ma-0 pa-0">
+
+	  <v-container fluid fill-width class="ma-0 pa-0 pt-0">
+	    <v-row class="ma-0 pa-0">
+              <v-col cols="12" class="ma-0 pa-0">
+
+	  <v-card flat class="rounded-lg shadow">
+            <v-card-title primary-title card color="white">
+              <p class="title mb-0 ">
+                {{ dataset.study.study_name }} <br />
+                <span class="subtitle-2 grey--text">
+                  {{ dataset.study.project.project_name }}
+                </span>
+              </p>
+            </v-card-title>
+            <v-card-text>
+              <p>{{ dataset.study.description }}</p>
+            </v-card-text>
+            <v-card-actions v-if="dataset.sourceURL">
+              <v-spacer></v-spacer>
+              <v-btn :href="dataset.sourceURL" flat>Link to Study</v-btn>
+            </v-card-actions>
+          </v-card>
+	 </v-col>
+	</v-row>
+        </v-container>
+
+	  <v-container fluid fill-width class="ma-0 pa-0 pt-2">
+	    <v-row class="ma-0 pa-0">
+              <v-col cols="12" class="ma-0 pa-0">
+	  
+          <v-card flat class="rounded-lg shadow pt-2">
+            <v-card-title primary-title card color="white">
+              <span class="title">Variables</span>
+            </v-card-title>
+            <variable-table :dataset-id="id" />
+          </v-card>
+
+  	  </v-col>
+	 </v-row>
+        </v-container>
+
+	</v-col>
+
+	<v-col cols="4" class="ma-0 pa-0 pl-2">
           <v-card flat class="rounded-lg shadow">
             <v-card-title primary-title card color="white">
               <span class="title">Subject Summary</span>
@@ -76,14 +88,17 @@
               <loading-spinner medium class="ma-5" />
             </v-card-text>
           </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
+	</v-col>
+
+       </v-row>
+      </v-container>
+
     <!-- SNACKBARS -->
     <v-snackbar v-model="addToProfileSuccess" color="success" top>
       Dataset was successfully added to your profile.
     </v-snackbar>
-  </div>
+
+    </v-container>
 </template>
 
 <script>

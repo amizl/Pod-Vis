@@ -5,37 +5,33 @@
     v-model="selected"
     :headers="headers"
     :items="variables"
-    :select-all="selectable"
     item-key="scale"
     must-sort
-    hide-actions
+    hide-default-footer
+    disable-pagination
     class="pb-1"
-  >
-    <template v-slot:items="props">
-      <tr>
-        <td v-if="selectable">
-          <v-checkbox v-model="props.selected" color="primary" hide-details />
-        </td>
-        <td>
+    >
+
+    <template v-slot:item.category="{ item }">
+        <td class="subtitle-1 text-xs-left">
           <v-layout align-center
             ><span style="padding:0.5em 0.5em 0.25em 0em"
               ><img
-                :src="'/images/' + props.item.category + '-icon-128.png'"
-                :title="props.item.category"
+                :src="'/images/' + item.category + '-icon-128.png'"
+                :title="item.category"
                 style="height:2.5em"
             /></span>
-            {{ props.item.category }}</v-layout
+            {{ item.category }}</v-layout
           >
         </td>
-        <td>
-          <span>{{ props.item.scale }}</span>
-        </td>
-        <!-- <td v-if="histogram"></td> -->
-        <!-- <td>{{ props.item.description }}</td> -->
-        <!-- <td>{{ props.item.data_range }}</td> -->
-        <!-- <td>{{ props.item.missing }}</td> -->
-      </tr>
     </template>
+
+    <template v-slot:item.scale="{ item }">
+      <td class="subtitle-1 text-xs-left">
+	{{ item.scale }}
+      </td>
+    </template>
+
   </v-data-table>
 </template>
 
@@ -67,36 +63,14 @@ export default {
           text: 'Category',
           value: 'category',
           sortable: true,
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Scale',
           value: 'scale',
           sortable: true,
+          class: 'text-subtitle-1 font-weight-bold',
         },
-        // {
-        //   text: 'Variable',
-        //   value: 'variable',
-        // },
-        // {
-        //   text: 'Type',
-        //   value: 'type',
-        // },
-        // {
-        //   text: 'Description',
-        //   value: 'description',
-        // },
-        // {
-        //   text: 'Data Range',
-        //   value: 'data_range',
-        // },
-        // {
-        //   text: 'Missing',
-        //   value: 'missing',
-        // },
-        // {
-        //   text: 'Histogram',
-        //   value: 'histogram',
-        // },
       ],
     };
   },

@@ -1,10 +1,10 @@
 <template>
-  <v-container fluid class="ma-0 pa-2">
-    <v-toolbar app class="primary">
+  <v-container fluid fill-width class="ma-0 pa-2">
+    <v-app-bar app class="primary">
       <v-icon color="white" large>library_add</v-icon>
-      <v-toolbar-title class="white--text"
+      <v-toolbar-title class="white--text pl-3"
         >Create New Study Dataset - Choose Datasets
-        <div class="subheading">Dataset: New Study Dataset (not saved)</div>
+        <div class="subtitle-1">Dataset: New Study Dataset (not saved)</div>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -19,38 +19,35 @@
       >
       </v-text-field> -->
       <v-spacer></v-spacer>
-      <!-- <v-toolbar-items class="hidden-sm-and-down"> -->
+
       <v-btn
         color="primary--text"
         :to="selectedDatasets | buildPath"
         :disabled="selectedDatasets.length === 0"
         right
       >
-        <!-- <v-icon color="grey lighten-2" small fab left> build </v-icon> -->
         Select Variables</v-btn
       >
-      <!-- </v-toolbar-items> -->
-    </v-toolbar>
+    </v-app-bar>
 
-    <v-sheet color="white" height="100%" class="scroll rounded-lg shadow">
-      <analysis-tracker step="2" substep="2.1"></analysis-tracker>
-    </v-sheet>
+    <analysis-tracker step="2" substep="2.1"></analysis-tracker>
 
-    <v-layout fill-height justify-center class="mt-2">
-      <v-flex xs12 class="pa-0 ma-0">
-        <v-card class="shadow rounded-lg">
-          <v-tabs slider-color="primary" grow>
-            <v-tab>
-              <span class="">Available Datasets</span>
-              <!-- <span class="subheading grey--text lighten-2"
-                  >Select those you wish to combine.</span
-                > -->
-            </v-tab>
-            <v-tab-item> <dataset-table :search="search" /> </v-tab-item>
-          </v-tabs>
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <v-container fluid fill-width class="ma-0 pa-0 pt-2">
+      <v-row class="ma-0 pa-0">
+	<v-col cols="12" class="ma-0 pa-0">
+          <v-sheet color="white" height="100%" class="rounded-lg shadow">
+	    
+	    <v-card color="#eeeeee">
+	      <v-card-title class="primary--text pl-3">Available Datasets
+	      </v-card-title>
+	    </v-card>
+      
+	    <dataset-table :search="search" />
+
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-container>
 </template>
 

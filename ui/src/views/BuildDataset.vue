@@ -1,21 +1,20 @@
 <template>
-  <v-container fluid grid-list-md class="ma-0 pa-2">
-    <v-toolbar app class="primary">
+  <v-container fluid fill-width class="ma-0 pa-2">
+    <v-app-bar app class="primary">
       <v-icon color="white" large>library_add</v-icon>
-      <v-toolbar-title class="white--text"
+      <v-toolbar-title class="white--text pl-3"
         >Create New Study Dataset - Select Variables
-        <div class="subheading">Dataset: New Study Dataset (not saved)</div>
+        <div class="subtitle-1">Dataset: New Study Dataset (not saved)</div>
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-chip
-          disabled
-          :color="getNumSubjectsColor(numSubjects)"
-          :text-color="getNumSubjectsTextColor(numSubjects)"
-          class="title ma-2"
-          >TOTAL SAMPLE: {{ numSubjects }} subjects selected</v-chip
+
+      <v-chip
+        :color="getNumSubjectsColor(numSubjects)"
+        :text-color="getNumSubjectsTextColor(numSubjects)"
+        class="title ma-2"
+        >TOTAL SAMPLE: {{ numSubjects }} subjects selected</v-chip
         >
-      </v-toolbar-items>
 
       <save-collection-btn-dialog
         :variables="variables"
@@ -26,91 +25,36 @@
         @dialogOpen="dialogOpened"
         @collectionSaved="collectionSaved"
       />
-    </v-toolbar>
+    </v-app-bar>
 
-    <v-sheet color="white" height="100%" class="scroll rounded-lg shadow">
-      <analysis-tracker
-        :step.sync="step"
-        :substep.sync="substep"
+    <analysis-tracker
+      :step.sync="step"
+      :substep.sync="substep"
       ></analysis-tracker>
-    </v-sheet>
 
-    <!-- <v-layout row justify-center>
-      <v-flex xs12>
-        <p class="subheading grey--text lighten-2">Selected Datasets:</p>
-        <v-container grid-list-lg fluid pt-0 mt-0 pl-0 ml-0>
-          <v-layout row wrap>
-            <v-flex v-for="dataset in selectedDatasets" :key="dataset.id" xs4>
-              <sunburst-card
-                :id="dataset.id"
-                :project-name="dataset.project_name"
-                :study-name="dataset.study_name"
-              />
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-flex>
-    </v-layout> -->
+    <v-container fluid fill-width class="ma-0 pa-0 pt-2">
+      <v-row class="ma-0 pa-0">
+	<v-col cols="12" class="ma-0 pa-0">
+          <v-sheet color="white" height="100%" class="rounded-lg shadow">
+	    
+	    <v-card color="#eeeeee">
+	      <v-card-title class="primary--text pl-3">Shared Variables</v-card-title>
+	      <v-card-subtitle class="primary--text pl-3">Select the variables to include in the new study dataset.</v-card-subtitle>
+	    </v-card>
 
-    <v-layout column>
-      <v-flex>
-        <v-layout>
-          <v-flex xs12>
-            <v-card flat class="shadow rounded-lg">
-              <v-card-title card color="white">
-                <p>
-                  <span class="title primary--text">Shared Variables</span>
-                  <br />
-                  <span class="subtitle-1 grey--text lighten-2"
-                    >Select the variables to include in the new study
-                    dataset.</span
-                  >
-                </p>
-              </v-card-title>
-              <shared-variable-table
-                v-model="selected"
-                :datasets="selectedDatasets"
-                selectable
-                @nSubjects="updateNumSubjects"
-                @nObservationVars="updateNumObservationVars"
-                @nSubjectVars="updateNumSubjectVars"
+            <shared-variable-table
+              v-model="selected"
+              :datasets="selectedDatasets"
+              selectable
+              @nSubjects="updateNumSubjects"
+              @nObservationVars="updateNumObservationVars"
+              @nSubjectVars="updateNumSubjectVars"
               />
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex>
-        <v-layout row justify-center>
-          <v-flex xs12>
-            <v-card flat class="shadow rounded-lg">
-              <v-card-title card color="white">
-                <p>
-                  <span class="title primary--text">Unshared Variables</span>
-                  <br />
-                  <span class="subtitle-1 grey--text ligthen-2"
-                    >These variables are not shared among the selected datasets.
-                  </span>
-                </p>
-              </v-card-title>
-              <v-tabs v-model="activeDataset" slider-color="primary">
-                <v-tab v-for="dataset in selectedDatasets" :key="dataset.id">
-                  {{ dataset.study_name }}
-                </v-tab>
-                <v-tab-item
-                  v-for="dataset in selectedDatasets"
-                  :key="dataset.id"
-                >
-                  <unshared-variable-table
-                    :selected-ids="selectedDatasets.map(d => d.id)"
-                    :dataset-id="dataset.id"
-                  />
-                </v-tab-item>
-              </v-tabs>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-    </v-layout>
+	    
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-container>
 </template>
 
@@ -119,7 +63,7 @@ import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import SharedVariableTable from '@/components/DatasetManager/SharedVariableTable.vue';
-import UnsharedVariableTable from '@/components/DatasetManager/UnsharedVariableTable.vue';
+//import UnsharedVariableTable from '@/components/DatasetManager/UnsharedVariableTable.vue';
 import SaveCollectionBtnDialog from '@/components/BuildDataset/SaveCollectionBtnDialog.vue';
 import {
   colors,
@@ -131,7 +75,7 @@ export default {
   components: {
     AnalysisTracker,
     SharedVariableTable,
-    UnsharedVariableTable,
+//    UnsharedVariableTable,
     SaveCollectionBtnDialog,
   },
 

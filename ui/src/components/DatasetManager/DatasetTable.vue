@@ -3,40 +3,39 @@
   <v-data-table
     v-else
     v-model="selected"
+    show-select
     :search="search"
     :headers="headers"
     :items="datasets"
     item-key="study_name"
     class="pb-1"
-    hide-actions
-  >
-    <template v-slot:items="props">
-      <tr>
-        <td>
-          <v-checkbox
-            v-model="props.selected"
-            color="primary"
-            hide-details
-          ></v-checkbox>
-        </td>
-        <td class="text-xs-left">{{ props.item.project_name }}</td>
-        <td class="text-xs-left">{{ props.item.study_name }}</td>
-        <td class="text-xs-left">{{ props.item.num_subjects }}</td>
-        <td class="text-xs-left">
-          {{ props.item.longitudinal ? 'Yes' : 'No' }}
-        </td>
-        <!-- <td class="text-xs-right">{{ props.item.n_samples }}</td>
-        <td class="text-xs-right">{{ props.item.outcome_categories }}</td>
-        <td class="text-xs-right">{{ props.item.outcome_measures }}</td>
-        <td class="text-xs-right">{{ props.item.demographics.length }}</td>
-        <td class="text-xs-right">{{ props.item.variables.length }}</td> -->
-        <td class="text-xs-right">
+    hide-default-footer
+    >
+
+    <template v-slot:item.project_name="{ item }">
+      <td class="subtitle-1 text-xs-left">{{ item.project_name }}</td>
+    </template>
+
+    <template v-slot:item.study_name="{ item }">
+      <td class="subtitle-1 text-xs-left">{{ item.study_name }}</td>
+    </template>
+
+    <template v-slot:item.num_subjects="{ item }">
+      <td class="subtitle-1 text-xs-left">{{ item.num_subjects }}</td>
+    </template>
+
+    <template v-slot:item.longitudinal="{ item }">
+      <td class="subtitle-1 text-xs-left">{{ item.longitudinal ? 'Yes' : 'No' }}</td>
+    </template>
+
+    <template v-slot:item.name="{ item }">
+        <td class="text-subtitle-1 text-xs-left">
           <v-tooltip top color="primary">
             <template v-slot:activator="{ on }">
               <v-icon
                 color="primary"
                 class="mr-1"
-                @click="stepIntoDataset(props.item.id)"
+                @click="stepIntoDataset(item.id)"
                 v-on="on"
                 >info</v-icon
               >
@@ -44,8 +43,8 @@
             <span>Learn more about this dataset.</span>
           </v-tooltip>
         </td>
-      </tr>
     </template>
+
   </v-data-table>
 </template>
 
@@ -65,47 +64,31 @@ export default {
       selected: [],
       headers: [
         {
-          text: 'Selected',
-          value: 'selected',
-          sortable: false,
-        },
-        {
           text: 'Project',
           value: 'project_name',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Dataset',
           value: 'study_name',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Subject Count',
           value: 'num_subjects',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Longitudinal?',
           value: 'longitudinal',
+          class: 'text-subtitle-1 font-weight-bold',
         },
-        // {
-        //   text: 'Outcome Categories',
-        //   value: 'categories',
-        // },
-        // {
-        //   text: 'Outcome Measures',
-        //   value: 'measure',
-        // },
-        // {
-        //   text: 'Demographics',
-        //   value: 'demographics',
-        // },
-        // {
-        //   text: 'Variables',
-        //   value: 'variables',
-        // },
         {
           text: 'Info',
           value: 'name',
-          align: 'right',
+          align: 'left',
           sortable: false,
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ],
     };
