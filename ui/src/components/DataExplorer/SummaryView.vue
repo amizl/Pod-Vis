@@ -1,5 +1,4 @@
 <template>
-  <!--    <v-layout column fill-height class="ma-1"> -->
   <div class="ma-1">
     <v-app-bar dense text class="rounded-lg">
       <v-toolbar-title class="primary--text title">
@@ -21,17 +20,6 @@
         >
       </v-btn-toggle>
     </v-container>
-    <!--
-      <v-container fluid fill-height class="pa-0 pl-3">
-        <summary-parallel-coordinates v-if="userAddedOutcomeVariables" />
-        <v-layout v-else column align-center justify-center fill-height>
-          <v-subheader class="display-1 primary--text text--lighten-5">
-            ADD OUTCOME VARIABLES
-          </v-subheader>
-        </v-layout>
-      </v-container>
--->
-    <!-- </v-layout> -->
   </div>
 </template>
 
@@ -57,7 +45,13 @@ export default {
     },
   },
   mounted() {
-    this.dview = this.detailedView;
+    if (this.detailedView == null) {
+      if (this.dview != null) {
+        this.setDetailedView(this.dview);
+      }
+    } else {
+      this.dview = this.detailedView;
+    }
   },
   computed: {
     ...mapState('dataExplorer', {

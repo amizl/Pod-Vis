@@ -2,7 +2,7 @@
 <div class="ma-1" min-height="400px" fill-height>
   <v-app-bar text dense class="rounded-lg">
     <v-toolbar-title class="title primary--text">
-     Detailed View - <span class="subtitle-1">{{ detailedView.label }}</span>
+     Detailed View<span v-if="detailedView" class="subtitle-1">- {{ detailedView.label }}</span>
     </v-toolbar-title>
     <v-spacer />
    </v-app-bar>
@@ -43,7 +43,7 @@
         <v-layout column align-center justify-center fill-height>
           <v-subheader
             v-if="!detailedView"
-            class="display-1 primary--text text--lighten-5"
+            class="display-1 primary--text text--lighten-5 pt-5 mt-5"
           >
             SELECT OUTCOME VARIABLE
           </v-subheader>

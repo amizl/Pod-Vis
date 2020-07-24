@@ -125,7 +125,6 @@ export default {
     }),
   },
   async created() {
-    // this.resetAllStoreData();
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
