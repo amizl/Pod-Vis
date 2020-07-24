@@ -101,7 +101,7 @@
     <v-stepper v-if="step === '2'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step :complete="substep !== '2.1' || step === '3'" step="2.1"
-          >Choose Datasets
+          ><span class="subtitle-1">Choose Datasets</span>
           <span
             >Choose datasets and click "SELECT VARIABLES"</span
           ></v-stepper-step
@@ -110,18 +110,18 @@
         <v-stepper-step
           :complete="substep === '2.3' || substep === '2.4' || step === '3'"
           step="2.2"
-          >Select Variables
+          ><span class="subtitle-1">Select Variables</span>
           <span
             >Select variables and click on "SELECT VISITS"</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
         <v-stepper-step :complete="substep === '2.4' || step === '3'" step="2.3"
-          >Save Study Dataset</v-stepper-step
+          ><span class="subtitle-1">Save Study Dataset</span></v-stepper-step
         >
         <v-divider></v-divider>
         <v-stepper-step :complete="step === '3'" step="2.4"
-          >Choose First & Last Visit</v-stepper-step
+          ><span class="subtitle-1">Choose First & Last Visit</span></v-stepper-step
         >
       </v-stepper-header>
     </v-stepper>
@@ -131,13 +131,13 @@
         <v-stepper-step
           :complete="inputVariables.length > 0 || substep >= 3.4"
           step="3.1"
-          >Choose Predictor Variables</v-stepper-step
+          ><span class="subtitle-1">Choose Predictor Variables</span></v-stepper-step
         >
         <v-divider></v-divider>
         <v-stepper-step
           :complete="outputVariables.length > 0 || substep >= 3.4"
           step="3.2"
-          >Choose Outcome Variables</v-stepper-step
+          ><span class="subtitle-1">Choose Outcome Variables</span></v-stepper-step
         >
         <v-divider></v-divider>
         <v-stepper-step
@@ -149,11 +149,11 @@
         >
         <v-divider></v-divider>
         <v-stepper-step :complete="substep === '3.5'" step="3.4"
-          >Save Cohort</v-stepper-step
+          ><span class="subtitle-1">Save Cohort</span></v-stepper-step
         >
 
         <v-divider></v-divider>
-        <v-stepper-step step="3.5">Repeat or Continue</v-stepper-step>
+        <v-stepper-step step="3.5"><span class="subtitle-1">Repeat or Continue</span></v-stepper-step>
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="3.1">
