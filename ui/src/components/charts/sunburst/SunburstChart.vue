@@ -1,5 +1,5 @@
 <template>
-   <v-container fluid fill-width class="ma-0 pa-0">
+  <v-container fluid fill-width class="ma-0 pa-0">
     <v-row>
       <v-col cols="6">
         <p class="mb-0 display-1 font-weight-bold text-xs-right">
@@ -9,23 +9,21 @@
           {{ current.value }}/{{ root.value }}
         </p>
 
-	<div ref="chart"></div>
+        <div ref="chart"></div>
       </v-col>
 
       <v-col cols="6">
-
-      <slot
-        :data="data"
-        :color="color"
-        :colorScale="colorScale"
-        :actions="actions"
-        :nodes="nodes"
-        name="legend"
-      ></slot>
-
+        <slot
+          :data="data"
+          :color="color"
+          :colorScale="colorScale"
+          :actions="actions"
+          :nodes="nodes"
+          name="legend"
+        ></slot>
       </v-col>
     </v-row>
-   </v-container>
+  </v-container>
 </template>
 
 <script>

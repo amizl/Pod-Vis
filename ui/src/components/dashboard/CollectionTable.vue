@@ -94,7 +94,7 @@
             <delete-collection-button
               v-if="props.item.is_deletable"
               :collection-id="props.item.id"
-	      :collection-name="props.item.label"
+              :collection-name="props.item.label"
             />
           </td>
         </tr>

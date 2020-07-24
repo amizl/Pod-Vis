@@ -14,7 +14,7 @@
         :text-color="getNumSubjectsTextColor(numSubjects)"
         class="title ma-2"
         >TOTAL SAMPLE: {{ numSubjects }} subjects selected</v-chip
-        >
+      >
 
       <save-collection-btn-dialog
         :variables="variables"
@@ -30,17 +30,21 @@
     <analysis-tracker
       :step.sync="step"
       :substep.sync="substep"
-      ></analysis-tracker>
+    ></analysis-tracker>
 
     <v-container fluid fill-width class="ma-0 pa-0 pt-2">
       <v-row class="ma-0 pa-0">
-	<v-col cols="12" class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
           <v-sheet color="white" height="100%" class="rounded-lg shadow">
-	    
-	    <v-card color="#eeeeee">
-	      <v-card-title class="primary--text pl-3">Shared Variables</v-card-title>
-	      <v-card-subtitle class="primary--text pl-3">Select the variables to include in the new study dataset.</v-card-subtitle>
-	    </v-card>
+            <v-card color="#eeeeee">
+              <v-card-title class="primary--text pl-3"
+                >Shared Variables</v-card-title
+              >
+              <v-card-subtitle class="primary--text pl-3"
+                >Select the variables to include in the new study
+                dataset.</v-card-subtitle
+              >
+            </v-card>
 
             <shared-variable-table
               v-model="selected"
@@ -49,8 +53,7 @@
               @nSubjects="updateNumSubjects"
               @nObservationVars="updateNumObservationVars"
               @nSubjectVars="updateNumSubjectVars"
-              />
-	    
+            />
           </v-sheet>
         </v-col>
       </v-row>
@@ -75,7 +78,7 @@ export default {
   components: {
     AnalysisTracker,
     SharedVariableTable,
-//    UnsharedVariableTable,
+    //    UnsharedVariableTable,
     SaveCollectionBtnDialog,
   },
 

@@ -10,28 +10,24 @@
     hide-default-footer
     disable-pagination
     class="pb-1"
-    >
-
+  >
     <template v-slot:item.category="{ item }">
-        <td class="subtitle-1 text-xs-left">
-          <v-layout align-center
-            ><span style="padding:0.5em 0.5em 0.25em 0em"
-              ><img
-                :src="'/images/' + item.category + '-icon-128.png'"
-                :title="item.category"
-                style="height:2.5em"
-            /></span>
-            {{ item.category }}</v-layout
-          >
-        </td>
-    </template>
-
-    <template v-slot:item.scale="{ item }">
       <td class="subtitle-1 text-xs-left">
-	{{ item.scale }}
+        <v-layout align-center
+          ><span style="padding:0.5em 0.5em 0.25em 0em"
+            ><img
+              :src="'/images/' + item.category + '-icon-128.png'"
+              :title="item.category"
+              style="height:2.5em"
+          /></span>
+          {{ item.category }}</v-layout
+        >
       </td>
     </template>
 
+    <template v-slot:item.scale="{ item }">
+      <td class="subtitle-1 text-xs-left">{{ item.scale }}</td>
+    </template>
   </v-data-table>
 </template>
 

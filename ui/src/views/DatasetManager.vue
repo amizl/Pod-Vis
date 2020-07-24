@@ -34,16 +34,15 @@
 
     <v-container fluid fill-width class="ma-0 pa-0 pt-2">
       <v-row class="ma-0 pa-0">
-	<v-col cols="12" class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
           <v-sheet color="white" height="100%" class="rounded-lg shadow">
-	    
-	    <v-card color="#eeeeee">
-	      <v-card-title class="primary--text pl-3">Available Datasets
-	      </v-card-title>
-	    </v-card>
-      
-	    <dataset-table :search="search" />
+            <v-card color="#eeeeee">
+              <v-card-title class="primary--text pl-3"
+                >Available Datasets
+              </v-card-title>
+            </v-card>
 
+            <dataset-table :search="search" />
           </v-sheet>
         </v-col>
       </v-row>

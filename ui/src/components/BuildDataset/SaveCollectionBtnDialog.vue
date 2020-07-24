@@ -27,9 +27,8 @@
             class="white"
             @submit.prevent="onSaveCollection"
           >
-
             <v-text-field
-	      ref="vtf"
+              ref="vtf"
               v-model="collectionName"
               :rules="[
                 () => !!collectionName || 'Study Dataset name is required.',

@@ -28,7 +28,9 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" v-on="{ ...tooltip }">Dataset Manager</span>
+              <span class="subtitle-1" v-on="{ ...tooltip }"
+                >Dataset Manager</span
+              >
             </template>
             <span class="subtitle-1">{{ step_descr['2'] }}</span>
           </v-tooltip>
@@ -45,7 +47,9 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" v-on="{ ...tooltip }">Cohort Manager</span>
+              <span class="subtitle-1" v-on="{ ...tooltip }"
+                >Cohort Manager</span
+              >
             </template>
             <span class="subtitle-1">{{ step_descr['3'] }}</span>
           </v-tooltip>
@@ -62,7 +66,9 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" v-on="{ ...tooltip }">Summary Matrix</span>
+              <span class="subtitle-1" v-on="{ ...tooltip }"
+                >Summary Matrix</span
+              >
             </template>
             <span class="subtitle-1">{{ step_descr['4'] }}</span>
           </v-tooltip>
@@ -79,7 +85,9 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" v-on="{ ...tooltip }">Data Explorer</span>
+              <span class="subtitle-1" v-on="{ ...tooltip }"
+                >Data Explorer</span
+              >
             </template>
             <span class="subtitle-1">{{ step_descr['5'] }}</span>
           </v-tooltip>
@@ -151,20 +159,27 @@
         <v-stepper-content step="3.1">
           Click on "CHOOSE PREDICTOR VARIABLES" below and select one or more
           variables, then click here to
-          <v-btn small outlined color="primary--text" @click="goto3p2()">Continue</v-btn>.
+          <v-btn small outlined color="primary--text" @click="goto3p2()"
+            >Continue</v-btn
+          >.
         </v-stepper-content>
 
         <v-stepper-content step="3.2">
           Click on "CHOOSE OUTCOME VARIABLES" below and select one or more
           variables, then click here to
-          <v-btn small outlined color="primary--text" @click="goto3p3()">Continue</v-btn>.
+          <v-btn small outlined color="primary--text" @click="goto3p3()"
+            >Continue</v-btn
+          >.
         </v-stepper-content>
 
         <v-stepper-content step="3.3">
           Apply filters to predictor variables to define the desired cohort,
-          then click here to <v-btn small outlined color="primary--text" @click="goto3p4()">Continue</v-btn> and/or
-          use the "CREATE COMPARATOR COHORTS" buttons below to create and save
-          multiple cohorts at once.
+          then click here to
+          <v-btn small outlined color="primary--text" @click="goto3p4()"
+            >Continue</v-btn
+          >
+          and/or use the "CREATE COMPARATOR COHORTS" buttons below to create and
+          save multiple cohorts at once.
         </v-stepper-content>
 
         <v-stepper-content step="3.4">
@@ -179,20 +194,34 @@
             <span v-else>cohorts have</span> been defined. To proceed to the
             Summary Matrix a minimum of 3 distinct cohorts must be created and
             saved. Click on:<br clear="both" />
-            <v-btn small outlined color="primary--text" @click="createSimilar()">Create Similar Cohort</v-btn> to
-            create another cohort based on the last one<br clear="both" />
-            <v-btn small outlined color="primary--text" @click="createNew()">Create New Cohort</v-btn> to create a
-            new cohort from scratch.
+            <v-btn small outlined color="primary--text" @click="createSimilar()"
+              >Create Similar Cohort</v-btn
+            >
+            to create another cohort based on the last one<br clear="both" />
+            <v-btn small outlined color="primary--text" @click="createNew()"
+              >Create New Cohort</v-btn
+            >
+            to create a new cohort from scratch.
           </div>
           <div v-else>
             {{ collection_cohorts.length }} cohorts have been created and saved.
             Click on:<br clear="both" />
-            <v-btn small outlined color="primary--text" @click="createSimilar()">Create Similar Cohort</v-btn> to
-            create another cohort based on the last one<br clear="both" />
-            <v-btn small outlined color="primary--text" @click="createNew()">Create New Cohort</v-btn> to create a
-            new cohort from scratch<br clear="both" />
-            <v-btn small outlined color="primary--text" @click="gotoSummaryMatrix()">Continue</v-btn> to proceed to
-            the Summary Matrix.
+            <v-btn small outlined color="primary--text" @click="createSimilar()"
+              >Create Similar Cohort</v-btn
+            >
+            to create another cohort based on the last one<br clear="both" />
+            <v-btn small outlined color="primary--text" @click="createNew()"
+              >Create New Cohort</v-btn
+            >
+            to create a new cohort from scratch<br clear="both" />
+            <v-btn
+              small
+              outlined
+              color="primary--text"
+              @click="gotoSummaryMatrix()"
+              >Continue</v-btn
+            >
+            to proceed to the Summary Matrix.
           </div>
         </v-stepper-content>
       </v-stepper-items>

@@ -3,30 +3,33 @@
     <loading-spinner v-if="isLoading" medium class="pb-5" />
     <v-data-table
       v-else
-      class="ml-1 mr-1"
       v-model="selected"
+      class="ml-1 mr-1"
       :items="variables"
       item-key="scale"
       :headers="headers"
       disable-pagination
       hide-default-footer
       show-select
+    >
+      <template
+        v-for="ds in datasets"
+        v-slot:[`header.${ds.study_name}`]="{ header }"
       >
-
-      <template v-for="ds in datasets" v-slot:[`header.${ds.study_name}`]="{ header }">
-	<th>
-          {{ header.dataset.study_name }}
-	  <br />
-            <v-chip
-              :color="getNumSubjectsColor(getStudyCount(header.dataset.id))"
-              :text-color="getNumSubjectsTextColor(getStudyCount(header.dataset.id))"
-              class="title ma-2"
-              >{{ getStudyCount(header.dataset.id) + ' selected' }}</v-chip
-            > 
-	</th>
+        <th>
+          {{ header.dataset.study_name }} <br />
+          <v-chip
+            :color="getNumSubjectsColor(getStudyCount(header.dataset.id))"
+            :text-color="
+              getNumSubjectsTextColor(getStudyCount(header.dataset.id))
+            "
+            class="title ma-2"
+            >{{ getStudyCount(header.dataset.id) + ' selected' }}</v-chip
+          >
+        </th>
       </template>
-      
-<!--
+
+      <!--
       <template v-slot:header.="{ header }">
         <tr>
 	  <th></th>
@@ -49,23 +52,27 @@
         </tr>
       </template>
       -->
-      
+
       <template v-slot:item="props">
-	<tr>
-	  <td>
-	    <v-checkbox :input-value="props.isSelected" @change="props.select($event)"></v-checkbox>
-	  </td>
+        <tr>
+          <td>
+            <v-checkbox
+              :input-value="props.isSelected"
+              @change="props.select($event)"
+            ></v-checkbox>
+          </td>
           <td class="subtitle-1 text-xs-left" justify="center">
-	    <v-layout align-center
+            <v-layout align-center
               ><span style="padding:0.5em 0.5em 0em 0em"
                 ><img
                   :src="'/images/' + props.item.category + '-icon-128.png'"
                   :title="props.item.category"
                   style="height:2.5em"
               /></span>
-              {{ props.item.category }}</v-layout>
+              {{ props.item.category }}</v-layout
+            >
           </td>
-	<td class="subtitle-1 text-xs-left">
+          <td class="subtitle-1 text-xs-left">
             <span>{{ props.item.scale }}</span>
           </td>
 
@@ -91,9 +98,8 @@
               {{ getStudyVariableCount(dataset.id, props.item.id) }}</span
             >
           </td>
-      </tr>
+        </tr>
       </template>
-      
     </v-data-table>
   </transition>
 </template>

@@ -10,8 +10,7 @@
     item-key="study_name"
     class="pb-1"
     hide-default-footer
-    >
-
+  >
     <template v-slot:item.project_name="{ item }">
       <td class="subtitle-1 text-xs-left">{{ item.project_name }}</td>
     </template>
@@ -25,26 +24,27 @@
     </template>
 
     <template v-slot:item.longitudinal="{ item }">
-      <td class="subtitle-1 text-xs-left">{{ item.longitudinal ? 'Yes' : 'No' }}</td>
+      <td class="subtitle-1 text-xs-left">
+        {{ item.longitudinal ? 'Yes' : 'No' }}
+      </td>
     </template>
 
     <template v-slot:item.name="{ item }">
-        <td class="text-subtitle-1 text-xs-left">
-          <v-tooltip top color="primary">
-            <template v-slot:activator="{ on }">
-              <v-icon
-                color="primary"
-                class="mr-1"
-                @click="stepIntoDataset(item.id)"
-                v-on="on"
-                >info</v-icon
-              >
-            </template>
-            <span>Learn more about this dataset.</span>
-          </v-tooltip>
-        </td>
+      <td class="text-subtitle-1 text-xs-left">
+        <v-tooltip top color="primary">
+          <template v-slot:activator="{ on }">
+            <v-icon
+              color="primary"
+              class="mr-1"
+              @click="stepIntoDataset(item.id)"
+              v-on="on"
+              >info</v-icon
+            >
+          </template>
+          <span>Learn more about this dataset.</span>
+        </v-tooltip>
+      </td>
     </template>
-
   </v-data-table>
 </template>
 
