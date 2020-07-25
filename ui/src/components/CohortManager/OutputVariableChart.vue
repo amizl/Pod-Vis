@@ -17,9 +17,9 @@
           <span class="text-h6">{{ getVariableLabel(variable) }}</span>
           <v-spacer />
           <v-btn
-            text
-            large
-            class="together subheading primary--text text--lighten-4"
+	    outlined
+            medium
+            class="together primary--text text--lighten-3"
             @click="clearAllFilters({ dimension })"
           >
             Reset

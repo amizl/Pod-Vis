@@ -26,9 +26,9 @@
           <span class="text-h6">{{ getChartTitle() }}</span>
           <v-spacer />
           <v-btn
-            text
-            large
-            class="subheading primary--text text--lighten-4"
+	    outlined
+            medium
+            class="primary--text text--lighten-3 mr-2"
             @click="clearFilter({ dimension })"
           >
             Reset
