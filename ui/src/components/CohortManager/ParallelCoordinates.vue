@@ -186,13 +186,11 @@ export default {
     computedWidth() {
       const { left, right } = this.margin;
       const { width } = this;
-console.log("parallel coords width = " + width + " left=" + left + " right=" + right);
-return width - left - right;
+      return width - left - right;
     },
     computedHeight() {
       const { top, bottom } = this.margin;
-const { height } = this;
-console.log("parallel coords height = " + height + " top=" + top + " bottom=" + bottom);
+      const { height } = this;
       return height - top - bottom;
     },
     xDimensionScale() {

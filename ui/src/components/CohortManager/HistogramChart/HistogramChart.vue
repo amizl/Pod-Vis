@@ -93,7 +93,7 @@
     </div>
 
     <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
-      <v-row class="pa-0 ma-0" justify="left" align="center">
+      <v-row class="pa-0 ma-0" justify="start" align="center">
         <v-col cols="4" class="center-text pa-0 ma-0"
           >Custom&nbsp;Selection:</v-col
         >
