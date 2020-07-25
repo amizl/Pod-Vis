@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container fluid fill-width>
     <v-row class="ma-0 pa-0">
       <v-col cols="12" class="ma-0 pa-0">
 
