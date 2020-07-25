@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-tabs v-model="tab" slider-color="primary" grow class="rounded-lg">
-      <v-tab class="primary--text">SIGN IN</v-tab>
-      <v-tab class="primary--text">CREATE ACCOUNT</v-tab>
+      <v-tab class="text-h5 font-weight-bold primary--text">SIGN IN</v-tab>
+      <v-tab class="text-h5 font-weight-bold primary--text">CREATE ACCOUNT</v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">

@@ -1,5 +1,4 @@
 <template>
-  <!--  <v-layout column fill-height> -->
   <div>
     <div ref="container">
       <svg ref="chart" :width="width" :height="height">
@@ -94,7 +93,7 @@
     </div>
 
     <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
-      <v-row class="pa-0 ma-0" justify="center" align="center">
+      <v-row class="pa-0 ma-0" justify="left" align="center">
         <v-col cols="4" class="center-text pa-0 ma-0"
           >Custom&nbsp;Selection:</v-col
         >
@@ -104,7 +103,6 @@
             :error-messages="rangeMinErrors"
             class="center-text pa-0 ma-0"
             type="number"
-            width="5em"
           ></v-text-field
         ></v-col>
         <v-col cols="1" class="pa-0 ma-0" align="center" justify="center">
@@ -152,7 +150,6 @@
       </v-row>
     </v-container>
   </div>
-  <!--  </v-layout>-->
 </template>
 
 <script>

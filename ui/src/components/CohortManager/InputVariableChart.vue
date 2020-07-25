@@ -1,14 +1,14 @@
 <template>
-  <v-sheet color="white" height="100%" min-width="300px" max-width="500px">
+  <v-sheet color="white" height="100%" min-width="380px" max-width="500px">
     <v-layout column fill-height>
       <v-card-title
         class="subtitle-1 primary--text text--darken-4 pa-0 ma-0 text-truncate"
       >
         <v-layout
           align-center
-          style="background-color: white; padding: 0.5em 0em 1em 0.4em; border-radius: 0.5rem;"
+          style="background-color: white; padding: 0.5em 0em 0em 0.4em; border-radius: 0.5rem;"
         >
-          <span style="padding: 0.4em 0.5em 1em 0.5em">
+          <span style="padding: 0.4em 0.5em 0em 0.5em">
             <img
               v-if="variable.label !== 'Dataset'"
               :src="'/images/' + variable.category + '-icon-128.png'"
@@ -36,7 +36,7 @@
         </v-layout>
       </v-card-title>
 
-      <v-layout fill-height>
+      <v-layout fill-width class="pb-2">
         <div v-if="variable.value_type === 'date'" class="pl-3 pt-3">
           Date types not supported.
         </div>

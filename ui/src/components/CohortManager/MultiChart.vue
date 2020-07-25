@@ -9,10 +9,6 @@
                 'lastVisit' in variable.selected_measures)
           "
         >
-<!--          <v-layout>
-            <v-flex>Visit:{{ firstVisitLabel }}</v-flex>
-            <v-flex pl-5 ml-5>Visit:{{ lastVisitLabel }}</v-flex>
-          </v-layout> -->
           <v-layout fill-height>
             <ParallelCoordinates
               :dimension-name="dimensionName"
