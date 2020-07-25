@@ -9,14 +9,16 @@
                 'lastVisit' in variable.selected_measures)
           "
         >
-          <v-layout>
+<!--          <v-layout>
             <v-flex>Visit:{{ firstVisitLabel }}</v-flex>
             <v-flex pl-5 ml-5>Visit:{{ lastVisitLabel }}</v-flex>
-          </v-layout>
+          </v-layout> -->
           <v-layout fill-height>
             <ParallelCoordinates
               :dimension-name="dimensionName"
               :variable="variable"
+	      :first-visit-label="firstVisitLabel"
+	      :last-visit-label="lastVisitLabel"
             />
           </v-layout>
         </v-flex>
@@ -106,13 +108,13 @@ export default {
     },
     firstVisitLabel: {
       type: String,
-required: false,
-default: "First Visit"
+      required: false,
+      default: "First Visit"
     },
     lastVisitLabel: {
       type: String,
-required: false,
-default: "Last Visit"
+      required: false,
+      default: "Last Visit"
     },
 
   },

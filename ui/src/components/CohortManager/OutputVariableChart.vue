@@ -19,7 +19,7 @@
           <v-btn
 	    outlined
             medium
-            class="together primary--text text--lighten-3"
+            class="together primary--text text--lighten-3 mr-1"
             @click="clearAllFilters({ dimension })"
           >
             Reset
@@ -57,7 +57,6 @@
           :last-visit-label="getLastVisitLabel()"
           width="400px"
         />
-        <v-flex fill-width> </v-flex>
       </v-layout>
     </v-layout>
   </v-sheet>

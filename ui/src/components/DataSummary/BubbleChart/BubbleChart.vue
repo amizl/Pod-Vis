@@ -1,14 +1,16 @@
 <template>
-  <v-container>
-    <v-flex>
-      <svg
-        id="greenbox"
-        ref="rect"
-        :width="canvasWidth"
-        :height="canvasHeight"
-        style="background: white"
-      ></svg>
-    </v-flex>
+  <v-container fluid fill-width>
+    <v-row class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0">
+	<svg
+          id="greenbox"
+          ref="rect"
+          :width="canvasWidth"
+          :height="canvasHeight"
+          style="background: white"
+        ></svg>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

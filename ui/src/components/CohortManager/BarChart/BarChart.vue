@@ -1,5 +1,8 @@
 <template>
-  <v-flex ref="container" fill-height>
+  <v-container fluid fill-height>
+    <v-row class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0">
+
     <svg ref="chart" :width="width" :height="height">
       <g
         v-if="width && height"
@@ -38,7 +41,9 @@
         :transform="`translate(${margin.left}, ${margin.top})`"
       ></g>
     </svg>
-  </v-flex>
+   </v-col>
+  </v-row>
+</v-container>
 </template>
 
 <script>

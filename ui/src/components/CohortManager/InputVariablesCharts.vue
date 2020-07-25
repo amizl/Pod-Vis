@@ -1,19 +1,13 @@
 <template>
-  <v-layout :key="chartsKey" :class="classes">
-    <v-flex
-      v-for="(inputVariable, index) in inputVariables"
-      :key="inputVariable.id"
-    >
-      <v-layout fill-height>
-        <v-flex fill-height>
-          <input-variable-chart :variable="inputVariable" />
-        </v-flex>
-        <v-flex v-if="index < inputVariables.length - 1" shrink>
-          <v-divider vertical></v-divider>
-        </v-flex>
-      </v-layout>
-    </v-flex>
-  </v-layout>
+  <div :key="chartsKey" :class="classes">
+    <v-card class="d-flex flex-row">
+      <v-card
+	v-for="(inputVariable, index) in inputVariables"
+	:key="inputVariable.id" :class="index > 0 ? 'ml-2' : ''">
+        <input-variable-chart :variable="inputVariable" />
+      </v-card>
+    </v-card>
+  </div>
 </template>
 
 <script>

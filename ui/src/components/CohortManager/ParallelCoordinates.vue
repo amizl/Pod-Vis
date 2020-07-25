@@ -1,31 +1,51 @@
 <template>
-  <v-flex ref="container" fill-height style="display: inline-block">
-    <!-- First Visit histogram -->
-    <VerticalHistogram
-      :id="`firstVisit-${dimensionName}`"
-      left
-      :dimension-name="`${variable.label} - First Visit`"
-      :y-min="minValueBetweenDimensions"
-      :y-domain="maxValueBetweenDimensions"
-      :variable="variable"
-    />
-    <!-- Parallel Coordinates -->
-    <canvas
-      ref="canvas"
-      :width="computedWidth"
-      :height="computedHeight"
-      style="padding: 0px 5px 8px 5px; margin: 0px;"
-    >
-    </canvas>
-    <!-- Last visit histogram -->
-    <VerticalHistogram
-      :id="`lastVisit-${dimensionName}`"
-      :dimension-name="`${variable.label} - Last Visit`"
-      :y-min="minValueBetweenDimensions"
-      :y-domain="maxValueBetweenDimensions"
-      :variable="variable"
-    />
-  </v-flex>
+  <v-container fluid fill-height class="ma-0 pa-0">
+    <v-row class="ma-0 pa-0">
+      <v-col cols="4" class="ma-0 pa-0" align="center">
+	Visit: {{ firstVisitLabel }}
+      </v-col>
+      <v-col cols="4" class="ma-0 pa-0">
+      </v-col>
+      <v-col cols="4" class="ma-0 pa-0" align="center">
+	Visit: {{ lastVisitLabel }}
+      </v-col>
+    </v-row>
+	
+    <v-row class="ma-0 pa-0">
+      <v-col cols="4" class="ma-0 pa-0">
+
+      <!-- First Visit histogram -->
+      <VerticalHistogram
+	:id="`firstVisit-${dimensionName}`"
+	left
+	:dimension-name="`${variable.label} - First Visit`"
+	:y-min="minValueBetweenDimensions"
+	:y-domain="maxValueBetweenDimensions"
+	:variable="variable"
+	/>
+      </v-col>
+      <v-col cols="4" class="ma-0 pa-0">
+      <!-- Parallel Coordinates -->
+      <canvas
+	ref="canvas"
+	:width="computedWidth"
+	:height="computedHeight"
+	:style="'padding: 0px; margin: 0px;' + ' margin-top: ' + margin.top + 'px;'"
+	>
+      </canvas>
+      </v-col>
+      <v-col cols="4" class="ma-0 pa-0">
+      <!-- Last visit histogram -->
+      <VerticalHistogram
+	:id="`lastVisit-${dimensionName}`"
+	:dimension-name="`${variable.label} - Last Visit`"
+	:y-min="minValueBetweenDimensions"
+	:y-domain="maxValueBetweenDimensions"
+	:variable="variable"
+	/>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -60,6 +80,17 @@ export default {
       type: Object,
       required: true,
     },
+    firstVisitLabel: {
+      type: String,
+      required: false,
+      default: "First Visit"
+    },
+    lastVisitLabel: {
+      type: String,
+      required: false,
+      default: "Last Visit"
+    },
+
   },
   data() {
     return {
@@ -155,12 +186,14 @@ export default {
     computedWidth() {
       const { left, right } = this.margin;
       const { width } = this;
-      return width - left - right;
+console.log("parallel coords width = " + width + " left=" + left + " right=" + right);
+return width - left - right;
     },
     computedHeight() {
       const { top, bottom } = this.margin;
-      const { height } = this;
-      return height - top - bottom - 4;
+const { height } = this;
+console.log("parallel coords height = " + height + " top=" + top + " bottom=" + bottom);
+      return height - top - bottom;
     },
     xDimensionScale() {
       return scalePoint()

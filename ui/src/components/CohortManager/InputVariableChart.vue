@@ -28,7 +28,7 @@
           <v-btn
 	    outlined
             medium
-            class="primary--text text--lighten-3 mr-2"
+            class="primary--text text--lighten-3 mr-1"
             @click="clearFilter({ dimension })"
           >
             Reset

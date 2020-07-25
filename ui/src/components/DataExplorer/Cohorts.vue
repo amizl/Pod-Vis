@@ -15,7 +15,7 @@
       fluid
       fill-height
     >
-      <v-flex>Loading</v-flex>
+      Loading
     </v-container>
 
     <v-container
