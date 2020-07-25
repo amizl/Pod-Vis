@@ -26,13 +26,9 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/dataExplorer/types';
-import SummaryParallelCoordinates from '@/components/DataExplorer/SummaryParallelCoordinates.vue';
-import SummaryViewToolbar from '@/components/DataExplorer/SummaryViewToolbar.vue';
 
 export default {
   components: {
-    SummaryParallelCoordinates,
-    SummaryViewToolbar,
   },
   data() {
     return {
