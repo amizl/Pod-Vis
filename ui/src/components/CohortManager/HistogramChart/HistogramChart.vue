@@ -94,10 +94,10 @@
 
     <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
       <v-row class="pa-0 ma-0" justify="start" align="center">
-        <v-col cols="4" class="center-text pa-0 ma-0"
+        <v-col cols="5" class="center-text pa-0 ma-0"
           >Custom&nbsp;Selection:</v-col
         >
-        <v-col cols="3" class="pa-0 ma-0" justify="start">
+        <v-col cols="2" class="pa-0 ma-0" justify="start">
           <v-text-field
             v-model.number="tfRangeMin"
             :error-messages="rangeMinErrors"
@@ -108,7 +108,7 @@
         <v-col cols="1" class="pa-0 ma-0" align="center" justify="center">
           -
         </v-col>
-        <v-col cols="3" class="pa-0 ma-0">
+        <v-col cols="2" class="pa-0 ma-0">
           <v-text-field
             v-model.number="tfRangeMax"
             :error-messages="rangeMaxErrors"

@@ -3,7 +3,6 @@
     <v-layout column fill-height class="var-chart pa-0 ma-0">
       <v-card-title :class="getTitleClass(variable)">
         <v-layout
-          align-center
           class="pa-0 ma-0"
           style="background-color: white; padding: 0.5em 0em 1em 0.4em; border-radius: 0.5rem;"
         >
@@ -14,12 +13,12 @@
               style="height: 3em;"
             />
           </span>
-          <span class="text-h6">{{ getVariableLabel(variable) }}</span>
+          <span class="text-h6 mt-2">{{ getVariableLabel(variable) }}</span>
           <v-spacer />
           <v-btn
 	    outlined
             medium
-            class="together primary--text text--lighten-3 mr-1"
+            class="together primary--text text--lighten-3 mr-1 mt-2"
             @click="clearAllFilters({ dimension })"
           >
             Reset
