@@ -1,5 +1,5 @@
 <template>
-  <v-flex ref="container" fill-height style="display: inline-block">
+  <div ref="container" fill-height style="display: inline-block">
     <svg ref="chart" :width="width" :height="height">
       <g ref="bars" :transform="`translate(${margin.left}, ${margin.top})`">
         <title v-if="hasSelection()">
@@ -103,7 +103,7 @@
         "
       ></g>
     </svg>
-  </v-flex>
+  </div>
 </template>
 
 <script>
@@ -189,12 +189,6 @@ export default {
       haveDimensions: false,
       width: 0,
       height: 0,
-      margin: {
-        top: 20,
-        right: 30,
-        bottom: 10,
-        left: 30,
-      },
       filter: undefined,
       selected: [],
       container: null,
@@ -222,6 +216,14 @@ export default {
       } else {
         return 30;
       }
+    },
+    margin() {
+     return {
+       top: 20,
+       right: this.left ? 30 : 10,
+       bottom: 10,
+       left: this.left ? 10 : 30,
+     };
     },
     w() {
       const { left, right } = this.margin;
@@ -525,7 +527,7 @@ export default {
       }
 
       // Appropriately place brush handles
-      var tx = this.width;
+      var tx = this.w * 2;
       this.handle
         .attr('display', null)
         .attr(
