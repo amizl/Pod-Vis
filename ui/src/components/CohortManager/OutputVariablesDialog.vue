@@ -40,56 +40,56 @@
           <template v-slot:headers="props"> </template>
           <template v-slot:item="props">
             <tr>
-              <td style="font-size:0.9rem; width: 20%;">
+              <td class="text-subtitle-1" style="width: 20%;">
                 {{ props.item.category }}
               </td>
-              <td style="font-size:0.9rem; width: 20%;">
+              <td class="text-subtitle-1" style="width: 20%;">
                 {{ props.item.label }}
               </td>
-              <td style="width 12%;">
-                <v-checkbox
+              <td class="text-subtitle-1" style="width 12%;">
+                <v-simple-checkbox
                   v-model="props.item.outSelected"
                   hide-details
-                  @change="masterCbChange(props.item)"
-                ></v-checkbox>
+                  @input="masterCbChange(props.item)"
+                ></v-simple-checkbox>
               </td>
-              <td style="width 12%;">
-                <v-checkbox
+              <td class="text-subtitle-1" style="width 12%;">
+                <v-simple-checkbox
                   v-if="props.item.has_first_and_last"
                   v-model="props.item.children[0].outSelected"
                   hide-details
-                  @change="cbChange"
-                ></v-checkbox>
+                  @input="cbChange"
+                ></v-simple-checkbox>
               </td>
-              <td style="width 12%;">
-                <v-checkbox
+              <td class="text-subtitle-1" style="width 12%;">
+                <v-simple-checkbox
                   v-if="props.item.has_first_and_last"
                   v-model="props.item.children[1].outSelected"
                   hide-details
-                  @change="cbChange"
-                ></v-checkbox>
+                  @input="cbChange"
+                ></v-simple-checkbox>
               </td>
-              <td style="width 12%;">
-                <v-checkbox
+              <td class="text-subtitle-1" style="width 12%;">
+                <v-simple-checkbox
                   v-if="
                     props.item.has_first_and_last &&
                       props.item.data_category !== 'Categorical'
                   "
                   v-model="props.item.children[2].outSelected"
                   hide-details
-                  @change="cbChange"
-                ></v-checkbox>
+                  @input="cbChange"
+                ></v-simple-checkbox>
               </td>
-              <td style="width 12%;">
-                <v-checkbox
+              <td class="text-subtitle-1" style="width 12%;">
+                <v-simple-checkbox
                   v-if="
                     props.item.has_first_and_last &&
                       props.item.data_category !== 'Categorical'
                   "
                   v-model="props.item.children[3].outSelected"
                   hide-details
-                  @change="cbChange"
-                ></v-checkbox>
+                  @input="cbChange"
+                ></v-simple-checkbox>
               </td>
             </tr>
           </template>
@@ -148,13 +148,13 @@ export default {
       return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
     },
     headers: [
-      { text: 'Category', value: 'category', width: '20%', sortable: false },
-      { text: 'Variable', value: 'label', width: '20%', sortable: false },
-      { text: 'All', value: '', width: '12%', sortable: false },
-      { text: 'First Visit', value: '', width: '12%', sortable: false },
-      { text: 'Last Visit', value: '', width: '12%', sortable: false },
-      { text: 'Change', value: '', width: '12%', sortable: false },
-      { text: 'ROC', value: '', width: '12%', sortable: false },
+      { text: 'Category', value: 'category', width: '20%', sortable: false, class: "text-subtitle-1 font-weight-bold" },
+      { text: 'Variable', value: 'label', width: '20%', sortable: false, class: "text-subtitle-1 font-weight-bold"  },
+      { text: 'All', value: '', width: '12%', sortable: false, class: "text-subtitle-1 font-weight-bold"  },
+      { text: 'First Visit', value: '', width: '12%', sortable: false, class: "text-subtitle-1 font-weight-bold"  },
+      { text: 'Last Visit', value: '', width: '12%', sortable: false, class: "text-subtitle-1 font-weight-bold"  },
+      { text: 'Change', value: '', width: '12%', sortable: false, class: "text-subtitle-1 font-weight-bold"  },
+      { text: 'ROC', value: '', width: '12%', sortable: false, class: "text-subtitle-1 font-weight-bold"  },
     ],
     outputVariables: [],
     observationVariablesD: {},
