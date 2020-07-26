@@ -1,5 +1,5 @@
 <template>
-  <div :key="chartsKey" :class="classes">
+  <div :key="chartsKey" class="xscrollable">
     <v-card class="d-flex flex-row">
       <v-card
 	v-for="(outputVariable, index) in outputVariables"
@@ -32,13 +32,6 @@ export default {
     ...mapState('cohortManager', {
       outputVariables: state.OUTPUT_VARIABLES,
     }),
-    classes() {
-      return {
-        // When the user has specified more variables
-        // then what the container can fit, make
-        scrollable: true, // this.outputVariables > 5,
-      };
-    },
   },
   watch: {
     /**
@@ -65,10 +58,8 @@ export default {
   display: flex;
 }
 
-.scrollable {
+.xscrollable {
   overflow-x: auto;
-}
-.scrollable::-webkit-scrollbar {
-  display: none;
+  overflow-y: hidden;
 }
 </style>

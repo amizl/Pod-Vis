@@ -16,7 +16,6 @@
         v-for="ds in datasets"
         v-slot:[`header.${ds.study_name}`]="{ header }"
       >
-        <th>
           {{ header.dataset.study_name }} <br />
           <v-chip
             :color="getNumSubjectsColor(getStudyCount(header.dataset.id))"
@@ -26,7 +25,6 @@
             class="title ma-2"
             >{{ getStudyCount(header.dataset.id) + ' selected' }}</v-chip
           >
-        </th>
       </template>
 
       <!--
@@ -61,16 +59,16 @@
               @change="props.select($event)"
             ></v-checkbox>
           </td>
-          <td class="subtitle-1 text-xs-left" justify="center">
-            <v-layout align-center
-              ><span style="padding:0.5em 0.5em 0em 0em"
+          <td class="subtitle-1 text-xs-left">
+	      <v-row align="center" class="pa-0 ma-0">
+              <span style="padding:0.5em 0.5em 0em 0em"
                 ><img
                   :src="'/images/' + props.item.category + '-icon-128.png'"
                   :title="props.item.category"
                   style="height:2.5em"
               /></span>
-              {{ props.item.category }}</v-layout
-            >
+              {{ props.item.category }}
+	      </v-row>
           </td>
           <td class="subtitle-1 text-xs-left">
             <span>{{ props.item.scale }}</span>
@@ -80,13 +78,17 @@
             v-for="dataset in datasets"
             :key="dataset.id"
             class="subtitle-1 text-xs-center"
-          >
+            >
+	    <v-container class="pa-0 ma-0">
+	    <v-row justify="center" class="pa-0 ma-0">
             <histogram-sparkline
               :dataset-id="dataset.id"
               :type="props.item.type"
               :scale-id="props.item.id"
               :data-category="props.item.data_category"
-            />
+              />
+	    </v-row>
+	    <v-row justify="center" class="pa-0 ma-0">
             <span
               :style="
                 'color: ' +
@@ -96,7 +98,8 @@
               "
             >
               {{ getStudyVariableCount(dataset.id, props.item.id) }}</span
-            >
+								      >
+	    </v-row></v-container>
           </td>
         </tr>
       </template>
@@ -197,6 +200,7 @@ export default {
         value: dataset.study_name,
         sortable: false,
         class: 'text-subtitle-1 font-weight-bold',
+        align: 'center'
       })),
     ];
 

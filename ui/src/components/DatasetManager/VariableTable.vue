@@ -13,14 +13,14 @@
   >
     <template v-slot:item.category="{ item }">
       <td class="subtitle-1 text-xs-left">
-        <v-layout align-center
+        <v-row align="center" class="pl-2"
           ><span style="padding:0.5em 0.5em 0.25em 0em"
             ><img
               :src="'/images/' + item.category + '-icon-128.png'"
               :title="item.category"
               style="height:2.5em"
           /></span>
-          {{ item.category }}</v-layout
+          {{ item.category }}</v-row
         >
       </td>
     </template>

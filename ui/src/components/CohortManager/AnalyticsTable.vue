@@ -1,6 +1,5 @@
 <template>
   <v-sheet color="white" height="100%" class="rounded-lg shadow pa-0 ma-0">
-    <v-layout column fill-width class="ma-0 pa-0">
       <v-app-bar dense flat color="rounded-lg">
         <v-toolbar-title class="primary--text title">
           ANALYTICS PANEL
@@ -17,7 +16,9 @@
       <v-divider></v-divider>
       <div v-show="expanded">
         <v-container v-if="!pvals || !pvals.length" fluid fill-height>
-          <v-layout column align-center justify-center fill-height>
+	  <v-row>
+	    <v-col cols="12">
+
             <v-subheader class="subheading primary--text text--lighten-4">
               <div v-if="collection.is_longitudinal">
                 Add variables and apply filters to them to view statistical test
@@ -28,7 +29,8 @@
                 implemented.
               </div>
             </v-subheader>
-          </v-layout>
+            </v-col>
+          </v-row>
         </v-container>
         <div v-else>
           <v-toolbar-title class="primary--text title ml-3 mt-2">
@@ -43,8 +45,9 @@
             pl-4
             style="border: 4px solid rgb(236,118,188); border-radius: 0.4rem;"
           >
-            <v-layout align-center row class="pa-0 ma-0">
-              <span class="pa-0 mr-1">Highlight P &lt;</span
+            <v-row class="pa-0 ma-0">
+	      <v-col class="pa-0 ma-0">
+              <span class="pa-0 mr-1 subtitle-1">Highlight P &lt;</span
               ><v-radio-group v-model="pvt" row>
                 <v-radio
                   v-for="pv in pval_thresholds"
@@ -52,7 +55,8 @@
                   :value="pv"
                 ></v-radio>
               </v-radio-group>
-            </v-layout>
+	      </v-col>
+            </v-row>
           </v-container>
 
           <v-data-table
@@ -98,7 +102,6 @@
           </v-data-table>
         </div>
       </div>
-    </v-layout>
   </v-sheet>
 </template>
 

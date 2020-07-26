@@ -1,20 +1,21 @@
 <template>
   <v-sheet color="white" height="100%" class="rounded-lg shadow pa-0 ma-0">
-    <v-layout column fill-height class="ma-0 pa-0">
-      <output-variables-toolbar
-        :expanded="expanded"
-        :highlighted="highlighted"
-        @expandClicked="expandClicked"
+    <output-variables-toolbar
+      :expanded="expanded"
+      :highlighted="highlighted"
+      @expandClicked="expandClicked"
+      class="ma-0 pa-0"
       />
-      <v-container v-show="expanded" fluid fill-height class="pa-0 pb-1">
-        <output-variables-charts v-if="hasUserAddedOutputVariables" />
-        <v-layout v-else column align-center justify-center fill-height>
-          <v-subheader class="display-1 primary--text text--lighten-5 my-5">
+    <v-container v-show="expanded" fluid fill-width class="pa-0 pb-1 ma-0">
+      <v-row>
+	<v-col cols="12">
+          <output-variables-charts v-if="hasUserAddedOutputVariables" />
+          <div v-else class="display-1 primary--text text--lighten-5 mb-5 pa-5" align="center" justify="center">
             ADD OUTCOME VARIABLES
-          </v-subheader>
-        </v-layout>
-      </v-container>
-    </v-layout>
+          </div>
+	</v-col>
+      </v-row>
+    </v-container>
   </v-sheet>
 </template>
 

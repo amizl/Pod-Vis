@@ -1,30 +1,46 @@
 <template>
   <v-sheet class="ma-1 pa-0" color="white" height="100%" min-width="400px">
-    <v-layout column fill-height class="var-chart pa-0 ma-0">
-      <v-card-title :class="getTitleClass(variable)">
-        <v-layout
-          class="pa-0 ma-0"
-          style="background-color: white; padding: 0.5em 0em 1em 0.4em; border-radius: 0.5rem;"
-        >
-          <span style="padding: 0.4em 0.5em 1em 0.5em">
+    <v-container fluid fill-width class="pa-0 ma-0">
+      <v-row class="pa-0 ma-0" :class="getTitleClass(variable) + ' pt-1'">
+	<v-col cols="12" class="pa-0 ma-0">
+
+	  <v-container class="pa-0 ma-0">
+	    <v-row class="pa-0 ma-0">
+	      <v-col md="auto" class="pa-0 ma-0">
+
+	    <span>
             <img
               :src="'/images/' + variable.category + '-icon-128.png'"
               :title="variable.category"
               style="height: 3em;"
-            />
-          </span>
-          <span class="text-h6 mt-2">{{ getVariableLabel(variable) }}</span>
-          <v-spacer />
+	      class="pl-2"
+              />
+	    </span>
+	    </v-col>
+
+       	<v-col md="auto">
+          <span class="text-h6 ml-1">{{ getVariableLabel(variable) }}</span>
+         </v-col>
+
+	<v-col align="right">
+	  <span>
           <v-btn
 	    outlined
             medium
-            class="together primary--text text--lighten-3 mr-1 mt-2"
+            class="together primary--text text--lighten-3 ma-0 pa-0 ml-2"
             @click="clearAllFilters({ dimension })"
           >
             Reset
-          </v-btn>
-        </v-layout>
-      </v-card-title>
+	  </v-btn>
+	  </span>
+	      </v-col>
+
+	    </v-row>
+	  </v-container>
+	    
+	</v-col>
+      </v-row>
+    </v-container>
 
       <v-layout fill-height>
         <div v-if="variable.value_type === 'date'" class="pl-3">
@@ -57,7 +73,6 @@
           width="400px"
         />
       </v-layout>
-    </v-layout>
   </v-sheet>
 </template>
 
