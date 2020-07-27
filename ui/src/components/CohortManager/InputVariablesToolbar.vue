@@ -49,8 +49,8 @@
       <v-divider vertical class="mr-4"></v-divider>
       <v-toolbar-items class="scrollable">
         <v-tooltip color="primary" top>
-          <template v-slot:activator="{ on }">
-            <span class="primary--text title mt-3" v-on="on"
+          <template v-slot:activator="{ on:tooltip }">
+            <span class="primary--text title mt-3" v-on="{ ...tooltip }"
               >{{ animatedNumber }}/{{ unfilteredData.length }}</span
             >
           </template>

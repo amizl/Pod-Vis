@@ -32,12 +32,12 @@
     <template v-slot:item.name="{ item }">
       <td class="text-subtitle-1 text-xs-left">
         <v-tooltip top color="primary">
-          <template v-slot:activator="{ on }">
+          <template v-slot:activator="{ on: tooltip }">
             <v-icon
               color="primary"
               class="mr-1"
               @click="stepIntoDataset(item.id)"
-              v-on="on"
+              v-on="{ ...tooltip }"
               >info</v-icon
             >
           </template>

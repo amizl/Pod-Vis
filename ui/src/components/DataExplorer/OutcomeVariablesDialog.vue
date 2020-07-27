@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-tooltip top color="primary">
-      <template v-slot:activator="{ on }">
+      <template v-slot:activator="{ on: tooltip }">
         <v-btn
           flat
           color="primary"
           style="height:100%"
           @click="openInputVariableDialog = !openInputVariableDialog"
-          v-on="on"
+          v-on="{ ...tooltip }"
         >
           <v-icon left dark>add_box</v-icon>
           Choose Outcome Variable

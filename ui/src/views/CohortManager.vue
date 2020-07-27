@@ -27,8 +27,12 @@
       />
 
       <v-tooltip top color="primary">
-        <template v-slot:activator="{ on }">
-          <analysis-summary-button :collection-id="collectionId" class="mx-1" />
+        <template v-slot:activator="{ on: tooltip }">
+          <analysis-summary-button
+            :collection-id="collectionId"
+            class="mx-1"
+            v-on="{ ...tooltip }"
+          />
         </template>
         <span>View Analysis Summary for all Cohorts and Outcome Variables</span>
       </v-tooltip>
