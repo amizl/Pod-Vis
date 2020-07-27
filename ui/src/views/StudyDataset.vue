@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import CollectionTable from '@/components/dashboard/CollectionTable.vue';
+import CollectionTable from '@/components/DatasetManager/CollectionTable.vue';
 
 export default {
   components: {
