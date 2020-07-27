@@ -11,16 +11,15 @@
     <v-container fluid fill-width class="pa-0 ma-0">
       <v-row class="pa-0 ma-0">
         <v-col cols="12" class="pa-0 ma-0">
-	  <v-sheet color="white" class="scroll rounded-lg shadow mt-2">
+          <v-sheet color="white" class="scroll rounded-lg shadow mt-2">
             <collection-table
               class="pb-1"
               show-collections="all"
-              ></collection-table>
-	  </v-sheet>
+            ></collection-table>
+          </v-sheet>
         </v-col>
       </v-row>
     </v-container>
-
   </v-container>
 </template>
 

@@ -2,8 +2,10 @@
   <div :key="chartsKey" class="xscrollable">
     <v-card class="d-flex flex-row">
       <v-card
-	v-for="(outputVariable, index) in outputVariables"
-	:key="outputVariable.id" :class="index > 0 ? 'ml-2' : ''">
+        v-for="(outputVariable, index) in outputVariables"
+        :key="outputVariable.id"
+        :class="index > 0 ? 'ml-2' : ''"
+      >
         <output-variable-chart :variable="outputVariable" />
       </v-card>
     </v-card>

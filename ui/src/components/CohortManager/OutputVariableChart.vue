@@ -3,79 +3,79 @@
     <v-container fluid fill-width class="pa-0 ma-0">
       <!-- Variable icon/title/reset button -->
       <v-row class="pa-0 ma-0" :class="getTitleClass(variable) + ' pt-1'">
-	<v-col cols="12" class="pa-0 ma-0">
-
-	  <v-container class="pa-0 ma-0">
-	    <v-row class="pa-0 ma-0">
-	      <v-col md="auto" class="pa-0 ma-0">
-		<span>
-		  <img
-		    :src="'/images/' + variable.category + '-icon-128.png'"
-		    :title="variable.category"
-		    style="height: 3em;"
-		    class="pl-2"
-		    />
-		</span>
-	      </v-col>
-	      
-       	      <v-col md="auto">
-		<span class="text-h6 ml-1">{{ getVariableLabel(variable) }}</span>
+        <v-col cols="12" class="pa-0 ma-0">
+          <v-container class="pa-0 ma-0">
+            <v-row class="pa-0 ma-0">
+              <v-col md="auto" class="pa-0 ma-0">
+                <span>
+                  <img
+                    :src="'/images/' + variable.category + '-icon-128.png'"
+                    :title="variable.category"
+                    style="height: 3em;"
+                    class="pl-2"
+                  />
+                </span>
               </v-col>
-	      
-	      <v-col align="right">
-		<span>
-		  <v-btn
-		    outlined
-		    medium
-		    class="together primary--text text--lighten-3 ma-0 pa-0 ml-2"
-		    @click="clearAllFilters({ dimension })"
-		    >
-		    Reset
-		  </v-btn>
-		</span>
-	      </v-col>
-	    </v-row>
-	  </v-container>
-	</v-col>
+
+              <v-col md="auto">
+                <span class="text-h6 ml-1">{{
+                  getVariableLabel(variable)
+                }}</span>
+              </v-col>
+
+              <v-col align="right">
+                <span>
+                  <v-btn
+                    outlined
+                    medium
+                    class="together primary--text text--lighten-3 ma-0 pa-0 ml-2"
+                    @click="clearAllFilters({ dimension })"
+                  >
+                    Reset
+                  </v-btn>
+                </span>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-col>
       </v-row>
       <!-- End of Variable icon/title/reset button -->
     </v-container>
 
     <v-container fluid fill-width class="pa-0 ma-0">
       <v-row class="pa-0 ma-0">
-	<v-col cols="12" class="pa-0 ma-0">
-
-        <div v-if="variable.value_type === 'date'" class="pl-3">
-          Date types not supported.
-        </div>
-        <ColumnChart
-          v-else-if="
-            variable.is_longitudinal === false &&
-              variable.data_category === 'Categorical'
-          "
-          :id="variable.id"
-          :dimension-name="dimension"
-        />
-        <HistogramChart
-          v-else-if="variable.is_longitudinal === false"
-          :id="variable.id"
-          :dimension-name="variable.label"
-          :input-variable="false"
-          :variable="variable"
-        />
-        <MultiChart
-          v-else
-          :key="resetCount"
-          class="ma-1"
-          :variable="variable"
-          :dimension-name="dimension"
-          :highlight-change="isBelowPValThreshold(variable)"
-          :first-visit-label="getFirstVisitLabel()"
-          :last-visit-label="getLastVisitLabel()"
-          width="400px"
-        />
-      </v-col>
-     </v-row>
+        <v-col cols="12" class="pa-0 ma-0">
+          <div v-if="variable.value_type === 'date'" class="pl-3">
+            Date types not supported.
+          </div>
+          <ColumnChart
+            v-else-if="
+              variable.is_longitudinal === false &&
+                variable.data_category === 'Categorical'
+            "
+            :id="variable.id"
+            :dimension-name="dimension"
+          />
+          <HistogramChart
+            v-else-if="variable.is_longitudinal === false"
+            :id="variable.id"
+            :dimension-name="variable.label"
+            :input-variable="false"
+            :variable="variable"
+          />
+          <MultiChart
+            v-else
+            :key="resetCount"
+            class="ma-1"
+            :variable="variable"
+            :dimension-name="dimension"
+            :highlight-change="isBelowPValThreshold(variable)"
+            :first-visit-label="getFirstVisitLabel()"
+            :last-visit-label="getLastVisitLabel()"
+            width="400px"
+          />
+        </v-col>
+      </v-row>
     </v-container>
   </v-sheet>
 </template>

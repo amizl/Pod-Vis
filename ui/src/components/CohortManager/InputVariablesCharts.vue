@@ -2,8 +2,10 @@
   <div :key="chartsKey" :class="classes">
     <v-card class="d-flex flex-row">
       <v-card
-	v-for="(inputVariable, index) in inputVariables"
-	:key="inputVariable.id" :class="index > 0 ? 'ml-2' : ''">
+        v-for="(inputVariable, index) in inputVariables"
+        :key="inputVariable.id"
+        :class="index > 0 ? 'ml-2' : ''"
+      >
         <input-variable-chart :variable="inputVariable" />
       </v-card>
     </v-card>

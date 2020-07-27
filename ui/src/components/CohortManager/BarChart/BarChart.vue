@@ -2,48 +2,47 @@
   <v-container fluid fill-width>
     <v-row class="ma-0 pa-0">
       <v-col cols="12" class="ma-0 pa-0">
-
-    <svg ref="chart" :width="width" :height="height">
-      <g
-        v-if="width && height"
-        ref="bars"
-        :transform="`translate(${margin.left}, ${margin.top})`"
-      >
-        <bar-rect
-          v-for="d in populationData"
-          :key="`population-${d.key}`"
-          :x="xScale(d.key)"
-          :y="yScale(d.value)"
-          :width="xScale.bandwidth()"
-          :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
-          :fill="colors['population']"
-          :tooltip="barTooltip"
-          @click.native="userClickedBar(d.key)"
-        />
-        <bar-rect
-          v-for="d in data"
-          :key="`cohort-${d.key}`"
-          :x="xScale(d.key)"
-          :y="yScale(d.value)"
-          :width="xScale.bandwidth()"
-          :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
-          :fill="getFill(d.key)"
-          :tooltip="barTooltip"
-          @click.native="userClickedBar(d.key)"
-        />
-      </g>
-      <g
-        v-xaxis="xAxis"
-        :transform="`translate(${margin.left},${h + margin.top})`"
-      ></g>
-      <g
-        v-yaxis="yAxis"
-        :transform="`translate(${margin.left}, ${margin.top})`"
-      ></g>
-    </svg>
-   </v-col>
-  </v-row>
-</v-container>
+        <svg ref="chart" :width="width" :height="height">
+          <g
+            v-if="width && height"
+            ref="bars"
+            :transform="`translate(${margin.left}, ${margin.top})`"
+          >
+            <bar-rect
+              v-for="d in populationData"
+              :key="`population-${d.key}`"
+              :x="xScale(d.key)"
+              :y="yScale(d.value)"
+              :width="xScale.bandwidth()"
+              :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
+              :fill="colors['population']"
+              :tooltip="barTooltip"
+              @click.native="userClickedBar(d.key)"
+            />
+            <bar-rect
+              v-for="d in data"
+              :key="`cohort-${d.key}`"
+              :x="xScale(d.key)"
+              :y="yScale(d.value)"
+              :width="xScale.bandwidth()"
+              :height="h - yScale(d.value) > 0 ? h - yScale(d.value) : 0"
+              :fill="getFill(d.key)"
+              :tooltip="barTooltip"
+              @click.native="userClickedBar(d.key)"
+            />
+          </g>
+          <g
+            v-xaxis="xAxis"
+            :transform="`translate(${margin.left},${h + margin.top})`"
+          ></g>
+          <g
+            v-yaxis="yAxis"
+            :transform="`translate(${margin.left}, ${margin.top})`"
+          ></g>
+        </svg>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

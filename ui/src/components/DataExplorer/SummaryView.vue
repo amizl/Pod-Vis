@@ -28,8 +28,7 @@ import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/dataExplorer/types';
 
 export default {
-  components: {
-  },
+  components: {},
   data() {
     return {
       dview: null,

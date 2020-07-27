@@ -27,8 +27,10 @@
               ><v-icon left large color="white">library_add</v-icon
               ><span class="pl-2">Create new study dataset</span></v-btn
             >
-            <span class="pl-2">- select subjects and variables from uploaded dataset(s) to create a
-            new study dataset.</span>
+            <span class="pl-2"
+              >- select subjects and variables from uploaded dataset(s) to
+              create a new study dataset.</span
+            >
           </v-col>
         </v-row>
 
@@ -38,8 +40,10 @@
               ><v-icon left large color="white">library_books</v-icon
               ><span class="pl-2">Use saved study dataset</span></v-btn
             >
-            <span class="pl-2">- use a previously-created saved study dataset to continue or revisit
-            an analysis.</span>
+            <span class="pl-2"
+              >- use a previously-created saved study dataset to continue or
+              revisit an analysis.</span
+            >
           </v-col>
         </v-row>
       </v-container>

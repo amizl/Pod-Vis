@@ -16,15 +16,15 @@
         v-for="ds in datasets"
         v-slot:[`header.${ds.study_name}`]="{ header }"
       >
-          {{ header.dataset.study_name }} <br />
-          <v-chip
-            :color="getNumSubjectsColor(getStudyCount(header.dataset.id))"
-            :text-color="
-              getNumSubjectsTextColor(getStudyCount(header.dataset.id))
-            "
-            class="title ma-2"
-            >{{ getStudyCount(header.dataset.id) + ' selected' }}</v-chip
-          >
+        {{ header.dataset.study_name }} <br />
+        <v-chip
+          :color="getNumSubjectsColor(getStudyCount(header.dataset.id))"
+          :text-color="
+            getNumSubjectsTextColor(getStudyCount(header.dataset.id))
+          "
+          class="title ma-2"
+          >{{ getStudyCount(header.dataset.id) + ' selected' }}</v-chip
+        >
       </template>
 
       <!--
@@ -60,7 +60,7 @@
             ></v-checkbox>
           </td>
           <td class="subtitle-1 text-xs-left">
-	      <v-row align="center" class="pa-0 ma-0">
+            <v-row align="center" class="pa-0 ma-0">
               <span style="padding:0.5em 0.5em 0em 0em"
                 ><img
                   :src="'/images/' + props.item.category + '-icon-128.png'"
@@ -68,7 +68,7 @@
                   style="height:2.5em"
               /></span>
               {{ props.item.category }}
-	      </v-row>
+            </v-row>
           </td>
           <td class="subtitle-1 text-xs-left">
             <span>{{ props.item.scale }}</span>
@@ -78,28 +78,29 @@
             v-for="dataset in datasets"
             :key="dataset.id"
             class="subtitle-1 text-xs-center"
+          >
+            <v-container class="pa-0 ma-0">
+              <v-row justify="center" class="pa-0 ma-0">
+                <histogram-sparkline
+                  :dataset-id="dataset.id"
+                  :type="props.item.type"
+                  :scale-id="props.item.id"
+                  :data-category="props.item.data_category"
+                />
+              </v-row>
+              <v-row justify="center" class="pa-0 ma-0">
+                <span
+                  :style="
+                    'color: ' +
+                      getStudyVariableColor(
+                        getStudyVariableCount(dataset.id, props.item.id)
+                      )
+                  "
+                >
+                  {{ getStudyVariableCount(dataset.id, props.item.id) }}</span
+                >
+              </v-row></v-container
             >
-	    <v-container class="pa-0 ma-0">
-	    <v-row justify="center" class="pa-0 ma-0">
-            <histogram-sparkline
-              :dataset-id="dataset.id"
-              :type="props.item.type"
-              :scale-id="props.item.id"
-              :data-category="props.item.data_category"
-              />
-	    </v-row>
-	    <v-row justify="center" class="pa-0 ma-0">
-            <span
-              :style="
-                'color: ' +
-                  getStudyVariableColor(
-                    getStudyVariableCount(dataset.id, props.item.id)
-                  )
-              "
-            >
-              {{ getStudyVariableCount(dataset.id, props.item.id) }}</span
-								      >
-	    </v-row></v-container>
           </td>
         </tr>
       </template>
@@ -200,7 +201,7 @@ export default {
         value: dataset.study_name,
         sortable: false,
         class: 'text-subtitle-1 font-weight-bold',
-        align: 'center'
+        align: 'center',
       })),
     ];
 

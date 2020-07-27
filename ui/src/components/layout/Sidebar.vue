@@ -14,29 +14,29 @@
             width="100%"
             src="/images/POD-Vis_tag2.jpg"
             alt="POD-Vis: Probing Outcomes Data with Visual analytics"
-            />
+          />
         </div>
         <div v-else>
           <img
             width="100%"
             src="/images/POD-Vis.jpg"
             alt="POD-Vis: Probing Outcomes Data with Visual analytics"
-            />
+          />
         </div>
       </v-list-item>
-      
+
       <!-- Application links -->
       <v-list-item
         v-for="item in menuItems"
         :key="item.title"
         :to="item.path"
-	justify="center"
-        >
+        justify="center"
+      >
         <!-- icon without tooltip -->
         <v-list-item-icon v-if="showExpanded()">
           <v-icon color="primary" large>{{ item.icon }}</v-icon>
         </v-list-item-icon>
-	
+
         <!-- icon with tooltip -->
         <v-tooltip v-else color="primary" right>
           <template v-slot:activator="{ on: tooltip }">
@@ -46,7 +46,7 @@
           </template>
           <span>{{ item.name }}</span>
         </v-tooltip>
-	
+
         <v-list-item-content class="primary--text">
           <span class="title-1">{{ item.name }}</span>
         </v-list-item-content>
@@ -61,7 +61,8 @@
           <span class="primary--text text--darken-3 title pl-2">Sign Out</span>
         </v-card-title>
         <v-card-text class="primary primary--text text--lighten-5 pt-4"
-		     >Are you sure you'd like to sign out?</v-card-text>
+          >Are you sure you'd like to sign out?</v-card-text
+        >
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -75,30 +76,33 @@
 
     <template v-slot:append>
       <v-list>
-
         <!-- minimize/expand -->
-        <v-list-item v-if="$route.name !== 'homepage'" @click="expand = !expand">
+        <v-list-item
+          v-if="$route.name !== 'homepage'"
+          @click="expand = !expand"
+        >
           <v-list-item-action v-if="showExpanded()">
             <v-icon color="primary" x-large>chevron_left</v-icon>
           </v-list-item-action>
-	  
+
           <v-list-item-action v-else>
-	    <v-tooltip color="primary" right>
+            <v-tooltip color="primary" right>
               <template v-slot:activator="{ on: tooltip }">
-		<v-icon v-on="{ ...tooltip}" color="primary" x-large>chevron_right</v-icon>
-	      </template>
-	      <span>Expand menu</span>
-	    </v-tooltip>
+                <v-icon color="primary" x-large v-on="{ ...tooltip }"
+                  >chevron_right</v-icon
+                >
+              </template>
+              <span>Expand menu</span>
+            </v-tooltip>
           </v-list-item-action>
-	  
-	  <v-list-item-content>
-	    <v-list-item-title v-if="showExpanded()">
+
+          <v-list-item-content>
+            <v-list-item-title v-if="showExpanded()">
               <span class="primary--text">Minimize menu</span>
             </v-list-item-title>
-	    
           </v-list-item-content>
         </v-list-item>
-	
+
         <!-- sign out -->
         <v-list-item @click="signOutDialog = true">
           <v-list-item-action v-if="showExpanded()">
@@ -120,7 +124,6 @@
         </v-list-item>
       </v-list>
     </template>
-
   </v-navigation-drawer>
 </template>
 

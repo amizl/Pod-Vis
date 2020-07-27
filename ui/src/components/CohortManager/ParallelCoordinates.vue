@@ -2,47 +2,47 @@
   <v-container fluid fill-height class="ma-0 pa-0">
     <v-row class="ma-0 pa-0">
       <v-col cols="4" class="ma-0 pa-0" align="center">
-	Visit: {{ firstVisitLabel }}
+        Visit: {{ firstVisitLabel }}
       </v-col>
-      <v-col cols="4" class="ma-0 pa-0">
-      </v-col>
+      <v-col cols="4" class="ma-0 pa-0"> </v-col>
       <v-col cols="4" class="ma-0 pa-0" align="center">
-	Visit: {{ lastVisitLabel }}
+        Visit: {{ lastVisitLabel }}
       </v-col>
     </v-row>
-	
+
     <v-row class="ma-0 pa-0">
       <v-col cols="4" class="ma-0 pa-0">
-
-      <!-- First Visit histogram -->
-      <VerticalHistogram
-	:id="`firstVisit-${dimensionName}`"
-	left
-	:dimension-name="`${variable.label} - First Visit`"
-	:y-min="minValueBetweenDimensions"
-	:y-domain="maxValueBetweenDimensions"
-	:variable="variable"
-	/>
+        <!-- First Visit histogram -->
+        <VerticalHistogram
+          :id="`firstVisit-${dimensionName}`"
+          left
+          :dimension-name="`${variable.label} - First Visit`"
+          :y-min="minValueBetweenDimensions"
+          :y-domain="maxValueBetweenDimensions"
+          :variable="variable"
+        />
       </v-col>
       <v-col cols="4" class="ma-0 pa-0">
-      <!-- Parallel Coordinates -->
-      <canvas
-	ref="canvas"
-	:width="computedWidth"
-	:height="computedHeight"
-	:style="'padding: 0px; margin: 0px;' + ' margin-top: ' + margin.top + 'px;'"
-	>
-      </canvas>
+        <!-- Parallel Coordinates -->
+        <canvas
+          ref="canvas"
+          :width="computedWidth"
+          :height="computedHeight"
+          :style="
+            'padding: 0px; margin: 0px;' + ' margin-top: ' + margin.top + 'px;'
+          "
+        >
+        </canvas>
       </v-col>
       <v-col cols="4" class="ma-0 pa-0">
-      <!-- Last visit histogram -->
-      <VerticalHistogram
-	:id="`lastVisit-${dimensionName}`"
-	:dimension-name="`${variable.label} - Last Visit`"
-	:y-min="minValueBetweenDimensions"
-	:y-domain="maxValueBetweenDimensions"
-	:variable="variable"
-	/>
+        <!-- Last visit histogram -->
+        <VerticalHistogram
+          :id="`lastVisit-${dimensionName}`"
+          :dimension-name="`${variable.label} - Last Visit`"
+          :y-min="minValueBetweenDimensions"
+          :y-domain="maxValueBetweenDimensions"
+          :variable="variable"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -83,14 +83,13 @@ export default {
     firstVisitLabel: {
       type: String,
       required: false,
-      default: "First Visit"
+      default: 'First Visit',
     },
     lastVisitLabel: {
       type: String,
       required: false,
-      default: "Last Visit"
+      default: 'Last Visit',
     },
-
   },
   data() {
     return {

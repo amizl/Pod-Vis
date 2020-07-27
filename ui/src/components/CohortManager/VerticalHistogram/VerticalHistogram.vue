@@ -218,12 +218,12 @@ export default {
       }
     },
     margin() {
-     return {
-       top: 20,
-       right: this.left ? 30 : 10,
-       bottom: 10,
-       left: this.left ? 10 : 30,
-     };
+      return {
+        top: 20,
+        right: this.left ? 30 : 10,
+        bottom: 10,
+        left: this.left ? 10 : 30,
+      };
     },
     w() {
       const { left, right } = this.margin;

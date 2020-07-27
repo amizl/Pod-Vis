@@ -37,13 +37,18 @@
                 <td class="text-subtitle-1 text-xs-left">
                   {{ props.item.label }}
                 </td>
-                <td v-for="c in collection_cohorts" :key="c.id" class="text-subtitle-1" align="center">
-                    <v-chip
-                      v-if="c.index < props.item.index"
-                      :color="table_cell_color(c, props.item)"
-                      @click="table_cell_click(c, props.item)"
-                      >{{ table_cell(c, props.item) }}</v-chip
-                    >
+                <td
+                  v-for="c in collection_cohorts"
+                  :key="c.id"
+                  class="text-subtitle-1"
+                  align="center"
+                >
+                  <v-chip
+                    v-if="c.index < props.item.index"
+                    :color="table_cell_color(c, props.item)"
+                    @click="table_cell_click(c, props.item)"
+                    >{{ table_cell(c, props.item) }}</v-chip
+                  >
                 </td>
               </tr>
             </template>

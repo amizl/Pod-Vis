@@ -3,17 +3,20 @@
     <input-variables-toolbar
       :expanded="expanded"
       :highlighted="highlighted"
-      @expandClicked="expandClicked"
       class="ma-0 pa-0"
+      @expandClicked="expandClicked"
     />
     <v-container v-show="expanded" fluid fill-width class="pa-0 pb-1 ma-0">
       <v-row>
-	<v-col cols="12">
-	  <input-variables-charts v-if="hasUserAddedInputVariables" />
-          <v-subheader v-else class="subheading primary--text text--lighten-4 text-h6">
+        <v-col cols="12">
+          <input-variables-charts v-if="hasUserAddedInputVariables" />
+          <v-subheader
+            v-else
+            class="subheading primary--text text--lighten-4 text-h6"
+          >
             ADD PREDICTOR VARIABLES
-	  </v-subheader>
-	</v-col>
+          </v-subheader>
+        </v-col>
       </v-row>
     </v-container>
   </v-sheet>
