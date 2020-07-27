@@ -2,7 +2,7 @@
 <div class="ma-1" min-height="400px" fill-height>
   <v-app-bar text dense class="rounded-lg">
     <v-toolbar-title class="title primary--text">
-     Detailed View<span v-if="detailedView" class="subtitle-1">- {{ detailedView.label }}</span>
+     Detailed View<span v-if="detailedView" class="subtitle-1"> - {{ detailedView.label }}</span>
     </v-toolbar-title>
     <v-spacer />
    </v-app-bar>
@@ -38,30 +38,30 @@
       </v-container>
 
       <v-divider></v-divider>
-      
-      <v-container fluid fill-height min-height="400px">
-        <v-layout column align-center justify-center fill-height>
-          <v-subheader
-            v-if="!detailedView"
-            class="display-1 primary--text text--lighten-5 pt-5 mt-5"
-          >
-            SELECT OUTCOME VARIABLE
-          </v-subheader>
 
-          <!-- work in progress -->
-          <detailed-view-chart
-            v-else
-            :variable="detailedView"
-            :dimension-name="detailedView.id"
-            :line-style="line_style"
-            :draw-mean="draw_mean"
-            :draw-raw="draw_raw"
-            :xaxis="xaxis"
-	    class="pa-0 ma-0"
-          />
-        </v-layout>
+      <v-container fluid fill-height min-height="400px">
+	<v-row class="pa-0 ma-0">
+	  <v-col cols="12" class="pa-0 ma-0">
+            <div
+              v-if="!detailedView"
+              class="display-1 primary--text text--lighten-5 pt-5 mt-5"
+              >
+              SELECT OUTCOME VARIABLE
+            </div>
+
+            <detailed-view-chart
+              v-else
+              :variable="detailedView"
+              :dimension-name="detailedView.id"
+              :line-style="line_style"
+              :draw-mean="draw_mean"
+              :draw-raw="draw_raw"
+              :xaxis="xaxis"
+	      class="pa-0 ma-0"
+              />
+          </v-col>
+	</v-row>
       </v-container>
-</v-layout>
 </div>
 </template>
 

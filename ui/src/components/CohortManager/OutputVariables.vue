@@ -6,13 +6,13 @@
       @expandClicked="expandClicked"
       class="ma-0 pa-0"
       />
-    <v-container v-show="expanded" fluid fill-width class="pa-0 pb-1 ma-0">
+    <v-container v-show="true" fluid fill-width class="pa-0 pb-1 ma-0">
       <v-row>
 	<v-col cols="12">
           <output-variables-charts v-if="hasUserAddedOutputVariables" />
-          <div v-else class="display-1 primary--text text--lighten-5 mb-5 pa-5" align="center" justify="center">
+          <v-subheader v-else class="subheading primary--text text--lighten-4 text-h6">
             ADD OUTCOME VARIABLES
-          </div>
+	  </v-subheader>
 	</v-col>
       </v-row>
     </v-container>

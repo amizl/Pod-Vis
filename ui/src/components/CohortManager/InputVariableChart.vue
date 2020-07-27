@@ -1,45 +1,56 @@
 <template>
   <v-sheet color="white" height="100%" min-width="380px" max-width="500px">
-    <v-layout column fill-height>
-      <v-card-title
-        class="subtitle-1 primary--text text--darken-4 pa-0 ma-0 text-truncate"
-      >
-        <v-layout
-          align-center
-          style="background-color: white; padding: 0.5em 0em 0em 0.4em; border-radius: 0.5rem;"
-        >
-          <span style="padding: 0.4em 0.5em 0em 0.5em">
-            <img
-              v-if="variable.label !== 'Dataset'"
-              :src="'/images/' + variable.category + '-icon-128.png'"
-              :title="variable.category"
-              style="height: 3em;"
-            />
-            <img
-              v-else
-              src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D"
-              width="0"
-              style="height: 3em"
-              alt=""
-            />
-          </span>
-          <span class="text-h6">{{ getChartTitle() }}</span>
-          <v-spacer />
-          <v-btn
-	    outlined
-            medium
-            class="primary--text text--lighten-3 mr-1"
-            @click="clearFilter({ dimension })"
-          >
-            Reset
-          </v-btn>
-        </v-layout>
-      </v-card-title>
+    <v-container fluid fill-width class="pa-0 ma-0">
 
-      <v-layout fill-width class="pb-2">
-        <div v-if="variable.value_type === 'date'" class="pl-3 pt-3">
+      <!-- Variable icon/title/reset button -->
+      <v-row class="pa-0 ma-0 pt-1">
+	<v-col cols="12" class="pa-0 ma-0">
+
+	  <v-container class="pa-0 ma-0">
+	    <v-row class="pa-0 ma-0">
+	      <v-col cols="2" class="pa-0 ma-0 pl-2">
+		<span>
+		  <img
+		    v-if="variable.label !== 'Dataset'"
+		    :src="'/images/' + variable.category + '-icon-128.png'"
+		    :title="variable.category"
+		    style="height: 3em;"
+		    class="pl-1"
+		    />
+		</span>
+	      </v-col>
+	      
+       	      <v-col cols="7" class="pa-0 ma-0 pt-2">
+		<div class="text-h6 ml-1">{{ getChartTitle() }}</div>
+              </v-col>
+	      
+	      <v-col cols="3" class="pa-0 ma-0 pt-1 pr-2" align="right">
+		<span>
+		  <v-btn
+		    outlined
+		    medium
+		    class="together primary--text text--lighten-3 ma-0 pa-0 ml-2"
+		    @click="clearFilter({ dimension })"
+		    >
+		    Reset
+		  </v-btn>
+		</span>
+	      </v-col>
+	    </v-row>
+	  </v-container>
+	</v-col>
+      </v-row>
+      <!-- End of Variable icon/title/reset button -->
+    </v-container>
+
+    <v-container fluid fill-width class="pa-0 ma-0">
+      <v-row class="pa-0 ma-0">
+	<v-col cols="12" class="pa-0 ma-0">
+
+        <div v-if="variable.value_type === 'date'" class="pl-3">
           Date types not supported.
         </div>
+
         <ColumnChart
           v-else-if="
             (!variable.is_longitudinal &&
@@ -57,8 +68,9 @@
           :variable="variable"
           input-variable
         />
-      </v-layout>
-    </v-layout>
+      </v-col>
+     </v-row>
+    </v-container>
   </v-sheet>
 </template>
 
