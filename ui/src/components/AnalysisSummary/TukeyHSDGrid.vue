@@ -1,64 +1,81 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
-      <v-card-title class="title primary--text"
-        >Tukey Range/HSD Test
-        <span v-if="selectedOutcomeVariable"
-          >&nbsp; - {{ selectedOutcomeVariable.label }}</span
-        >
-        <v-spacer />
-        <v-chip color="#FEEDDE">p &lt; 1</v-chip>
-        <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
-        <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
-        <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
-        <v-chip color="#F16913">p &lt; 0.0001</v-chip>
-      </v-card-title>
-      <v-divider></v-divider>
+  <v-sheet color="white" class="rounded-lg shadow">
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-sheet color="white" class="rounded-lg shadow">
+            <v-container fluid fill-width class="ma-0 pa-0">
+              <v-row class="ma-0 pa-0">
+                <v-col cols="12" class="ma-0 pa-0">
+                  <v-card color="#eeeeee" class="pt-1">
+                    <v-card-title class="primary--text pl-3 py-2"
+                      >Tukey Range/HSD Test
+                      <v-spacer />
+                      <v-chip color="#FEEDDE">p &lt; 1</v-chip>
+                      <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
+                      <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
+                      <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
+                      <v-chip color="#F16913">p &lt; 0.0001</v-chip>
+                    </v-card-title>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-sheet>
+        </v-col>
+      </v-row>
 
-      <v-flex xs12 style="overflow:auto">
-        <v-data-table
-          v-if="selectedOutcomeVariable && collection_cohorts.length > 2"
-          :headers="headers"
-          :items="items"
-          class="elevation-1"
-          :rows-per-page-items="[100]"
-          :hide-default-footer="true"
-          dense
-        >
-          <template v-slot:items="props">
-            <tr>
-              <td class="text-xs-left">{{ props.item.label }}</td>
-              <td v-for="c in collection_cohorts" :key="c.id">
-                <v-layout justify-center>
+      <v-row>
+        <v-col cols="12">
+          <v-data-table
+            v-if="selectedOutcomeVariable && collection_cohorts.length > 2"
+            :headers="headers"
+            :items="items"
+            class="elevation-1"
+            :hide-default-footer="true"
+            dense
+          >
+            <template v-slot:item="props">
+              <tr>
+                <td class="text-subtitle-1 text-xs-left">
+                  {{ props.item.label }}
+                </td>
+                <td
+                  v-for="c in collection_cohorts"
+                  :key="c.id"
+                  class="text-subtitle-1"
+                  align="center"
+                >
                   <v-chip
                     v-if="c.index < props.item.index"
                     :color="table_cell_color(c, props.item)"
                     @click="table_cell_click(c, props.item)"
                     >{{ table_cell(c, props.item) }}</v-chip
                   >
-                </v-layout>
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-        <v-layout
-          v-else-if="collection_cohorts.length < 3"
-          column
-          align-center
-          justify-center
-          fill-height
-        >
-          <v-subheader class="display-1 primary--text text--lighten-5">
-            Tukey HSD test requires at least 3 Cohorts.
-          </v-subheader>
-        </v-layout>
-        <v-layout v-else column align-center justify-center fill-height>
-          <v-subheader class="display-1 primary--text text--lighten-5">
-            Select Outcome Variable from 1-Way ANOVA table above.
-          </v-subheader>
-        </v-layout>
-      </v-flex>
-    </v-layout>
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
+
+          <div
+            v-else-if="collection_cohorts.length < 3"
+            column
+            align-center
+            justify-center
+            fill-height
+          >
+            <v-subheader class="title primary--text text--lighten-5">
+              Tukey HSD test requires at least 3 Cohorts.
+            </v-subheader>
+          </div>
+          <div v-else column align-center justify-center fill-width>
+            <v-subheader class="title primary--text text--lighten-5">
+              Select Variable from One-Way ANOVA table.
+            </v-subheader>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-sheet>
 </template>
 
@@ -112,6 +129,7 @@ export default {
           sortable: false,
           divider: true,
           value: 'cohort',
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ];
       const cc = this.collection_cohorts;
@@ -122,6 +140,7 @@ export default {
           sortable: false,
           divider: true,
           value: c.label,
+          class: 'text-subtitle-1 font-weight-bold',
         });
       });
       // remove last column

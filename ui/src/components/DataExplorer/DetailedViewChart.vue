@@ -1,9 +1,18 @@
 <template>
-  <v-flex ref="dv_container" fill-height>
-    <!-- Detailed View Chart -->
-    <canvas ref="dv_canvas" :width="width" :height="height" min-height="500">
-    </canvas>
-  </v-flex>
+  <v-container ref="dv_container" v-resize="onResize" fluid class="pa-0 ma-0">
+    <v-row class="pa-0 ma-0">
+      <v-col cols="12" class="pa-0 ma-0">
+        <!-- Detailed View Chart -->
+        <canvas
+          ref="dv_canvas"
+          :width="width"
+          :height="height"
+          class="pa-0 ma-0"
+        >
+        </canvas>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -48,12 +57,24 @@ export default {
       type: String,
       required: true,
     },
+    minHeight: {
+      type: Number,
+      required: false,
+      default: 400,
+    },
+    minWidth: {
+      type: Number,
+      required: false,
+      default: 550,
+    },
   },
   data() {
     return {
       devicePixelRatio: 1,
       width: 0,
       height: 0,
+      initialWidth: 0,
+      initialHeight: 0,
       margin: { top: 20, right: 50, bottom: 100, left: 50 },
       tick_font: '15px sans-serif',
       label_font: '20px sans-serif',
@@ -189,13 +210,22 @@ export default {
   },
   mounted() {
     this.container = this.$refs.dv_container;
+
+    //console.log("mounted, container height = " + this.container.clientHeight + " width=" + this.container.clientWidth);
+    this.initialHeight = this.container.clientHeight;
+    this.initialWidth = this.container.clientWidth;
+
     this.canvas = this.$refs.dv_canvas;
+
+    //console.log("mounted, canvas height = " + this.canvas.clientHeight + " width=" + this.canvas.clientWidth);
+
     this.context = select(this.canvas)
       .node()
       .getContext('2d');
 
     // Resize chart so we have parent dimensions (width/height)
     this.resizeChart();
+
     this.$nextTick(() => this.updateCanvas());
 
     this.$root.$on('update_detailed_view', () => {
@@ -203,6 +233,11 @@ export default {
     });
   },
   methods: {
+    onResize() {
+      this.resizeChart();
+      this.$nextTick(() => this.updateCanvas());
+    },
+
     selectedCohorts() {
       const cch = [];
       const cid = this.collection.id;
@@ -302,13 +337,25 @@ export default {
     },
 
     resizeChart() {
-      const { height } = this.container.getBoundingClientRect();
-      this.height = height;
-      // HACK - establish minimum size
-      if (height < 400) {
-        this.height = 400;
+      if (this.container == null) {
+        return;
       }
-      this.width = 550;
+      var { width, height } = this.container.getBoundingClientRect();
+      //      console.log("resizeChart() client height = " + height + " width = " + width);
+
+      // establish minimum size
+      if (height < this.minHeight) {
+        height = this.minHeight;
+      }
+      if (width < this.minWidth) {
+        width = this.minWidth;
+      }
+
+      //      console.log("resizeChart() setting this.height = " + height + " this.width = " + width);
+      // HACK - needs to be fixed properly
+      this.height = height - 7;
+      this.width = width;
+
       // this.context.scale(this.devicePixelRatio, this.devicePixelRatio);
     },
 
@@ -803,4 +850,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+div .container {
+  padding: 0px important;
+}
+</style>

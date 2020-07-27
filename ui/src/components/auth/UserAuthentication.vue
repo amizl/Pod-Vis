@@ -1,21 +1,24 @@
 <template>
   <div>
-    <v-tabs slider-color="primary" grow class="rounded-lg">
-      <v-tab class="primary--text">SIGN IN</v-tab>
-      <v-tab class="primary--text">CREATE ACCOUNT</v-tab>
-      <v-tabs-items>
-        <v-alert
-          :value="authError"
-          type="error"
-          transition="fade-transition"
-          dismissable
-        >
-          {{ authError }}
-        </v-alert>
-        <v-tab-item> <sign-in-form /> </v-tab-item>
-        <v-tab-item> <create-account-form /> </v-tab-item>
-      </v-tabs-items>
+    <v-tabs v-model="tab" slider-color="primary" grow class="rounded-lg">
+      <v-tab class="text-h5 font-weight-bold primary--text">SIGN IN</v-tab>
+      <v-tab class="text-h5 font-weight-bold primary--text"
+        >CREATE ACCOUNT</v-tab
+      >
     </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-alert
+        :value="authError"
+        type="error"
+        transition="fade-transition"
+        dismissable
+      >
+        {{ authError }}
+      </v-alert>
+      <v-tab-item> <sign-in-form /> </v-tab-item>
+      <v-tab-item> <create-account-form /> </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 
@@ -31,7 +34,7 @@ export default {
     createAccountForm: CreateAccount,
   },
   data() {
-    return {};
+    return { tab: null };
   },
   computed: {
     ...mapState('auth', {

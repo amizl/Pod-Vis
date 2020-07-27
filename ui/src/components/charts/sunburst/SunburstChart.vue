@@ -1,27 +1,29 @@
 <template>
-  <v-layout class="graph">
-    <v-flex xs6>
-      <v-flex xs2>
+  <v-container fluid fill-width class="ma-0 pa-0">
+    <v-row>
+      <v-col cols="6">
         <p class="mb-0 display-1 font-weight-bold text-xs-right">
           {{ ((100 * current.value) / root.value) | toPrecision3 }}%
         </p>
         <p class="subtitle-1 text-xs-right">
           {{ current.value }}/{{ root.value }}
         </p>
-      </v-flex>
-      <div ref="chart"></div>
-    </v-flex>
-    <v-flex xs6>
-      <slot
-        :data="data"
-        :color="color"
-        :colorScale="colorScale"
-        :actions="actions"
-        :nodes="nodes"
-        name="legend"
-      ></slot>
-    </v-flex>
-  </v-layout>
+
+        <div ref="chart"></div>
+      </v-col>
+
+      <v-col cols="6">
+        <slot
+          :data="data"
+          :color="color"
+          :colorScale="colorScale"
+          :actions="actions"
+          :nodes="nodes"
+          name="legend"
+        ></slot>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

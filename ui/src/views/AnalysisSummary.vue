@@ -1,38 +1,36 @@
 <template>
   <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-2">
-    <loading-spinner />
+    <v-row class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0"> <loading-spinner /> </v-col>
+    </v-row>
   </v-container>
+
   <v-container v-else fluid fill-width class="ma-0 pa-2">
-    <v-toolbar app class="primary">
-      <v-toolbar-title class="white--text"
+    <v-app-bar app class="primary">
+      <v-icon color="white" large>grid_on</v-icon>
+      <v-toolbar-title class="white--text pl-3"
         >Summary Matrix
         <div class="subheading">Dataset: {{ collection.label }}</div>
       </v-toolbar-title>
-    </v-toolbar>
+    </v-app-bar>
 
-    <v-layout row class="ma-0 pa-0">
-      <v-flex xs12>
-        <analysis-tracker
-          step="4"
-          :substep="substep"
-          :collection-id="collectionId"
-        ></analysis-tracker>
-      </v-flex>
-    </v-layout>
+    <analysis-tracker
+      step="4"
+      :substep="substep"
+      :collection-id="collectionId"
+    ></analysis-tracker>
 
-    <v-layout row fill-height class="ma-1 pa-0">
-      <v-flex xs12><cohort-table /></v-flex>
-    </v-layout>
+    <v-container fluid fill-width class="ma-0 pa-0 pt-2">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0"> <cohort-table /> </v-col>
+      </v-row>
 
-    <v-layout>
-      <v-layout col fill-height class="ma-1 pa-0">
-        <v-flex xs12><one-way-anova-grid /></v-flex>
-      </v-layout>
+      <v-row class="ma-0 pa-0 mt-2">
+        <v-col cols="6" class="ma-0 pa-0"> <one-way-anova-grid /> </v-col>
 
-      <v-layout col fill-height class="ma-1 pa-0">
-        <v-flex xs12><tukey-hsd-grid /></v-flex>
-      </v-layout>
-    </v-layout>
+        <v-col cols="6" class="ma-0 pa-0 pl-2"> <tukey-hsd-grid /> </v-col>
+      </v-row>
+    </v-container>
   </v-container>
 </template>
 

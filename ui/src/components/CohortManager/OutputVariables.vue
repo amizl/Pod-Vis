@@ -1,20 +1,24 @@
 <template>
-  <v-sheet color="white" height="100%" class="rounded-lg shadow">
-    <v-layout column fill-height class="ma-1">
-      <output-variables-toolbar
-        :expanded="expanded"
-        :highlighted="highlighted"
-        @expandClicked="expandClicked"
-      />
-      <v-container v-show="expanded" fluid fill-height class="pa-0 pb-1">
-        <output-variables-charts v-if="hasUserAddedOutputVariables" />
-        <v-layout v-else column align-center justify-center fill-height>
-          <v-subheader class="display-1 primary--text text--lighten-5">
+  <v-sheet color="white" height="100%" class="rounded-lg shadow pa-0 ma-0">
+    <output-variables-toolbar
+      :expanded="expanded"
+      :highlighted="highlighted"
+      class="ma-0 pa-0"
+      @expandClicked="expandClicked"
+    />
+    <v-container v-show="true" fluid fill-width class="pa-0 ma-0">
+      <v-row class="pa-0 ma-0">
+        <v-col cols="12">
+          <output-variables-charts v-if="hasUserAddedOutputVariables" />
+          <v-subheader
+            v-else
+            class="subheading primary--text text--lighten-4 text-h6"
+          >
             ADD OUTCOME VARIABLES
           </v-subheader>
-        </v-layout>
-      </v-container>
-    </v-layout>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-sheet>
 </template>
 

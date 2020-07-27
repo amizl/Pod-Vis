@@ -1,14 +1,11 @@
-<template lang="pug">
-  v-layout(
-    align-center
-    justify-center
-    fill-height
-  )
-    v-progress-circular(
-      indeterminate
-      :size='size'
-      color="primary"
-    )
+<template>
+  <v-container fluid fill-width>
+    <v-row>
+      <v-col cols="12" align="center" justify="center">
+        <v-progress-circular indeterminate :size="size" color="primary" />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

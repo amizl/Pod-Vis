@@ -1,16 +1,16 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <!-- Notification Center is our global snackbar for error/success messages-->
     <notification-center />
     <side-bar v-if="isUserAuthenticated" />
     <!-- <app-header v-if="isUserAuthenticated" /> -->
     <!-- All of our views will be loaded inside content based on route-->
-    <v-content class="indigo lighten-5">
+    <v-main class="indigo lighten-5">
       <transition name="fade" mode="out-in">
         <!-- /homepage, /datasets, etc. components to be injected here -->
         <router-view />
       </transition>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 

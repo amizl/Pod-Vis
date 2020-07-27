@@ -2,12 +2,14 @@ import '@babel/polyfill';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import { actions as authActions } from '@/store/modules/auth/types';
 import Vue from 'vue';
-import './assets/stylus/main.styl';
-import './plugins/vuetify';
-import './assets/css/main.css';
 import App from './App.vue';
+import vuetify from './plugins/vuetify';
+import './assets/stylus/main.styl';
+import './assets/css/main.css';
 import store from './store';
 import router from './router';
+
+Vue.config.productionTip = false;
 
 // Globally register the loading spinner because we
 // use it in so many components.
@@ -29,6 +31,7 @@ const getUserFromSession = authActions.GET_USER_FROM_SESSION;
   } finally {
     // Initialize...
     new Vue({
+      vuetify,
       store,
       router,
       render: h => h(App),

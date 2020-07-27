@@ -1,12 +1,12 @@
 <template>
   <v-container fluid fill-height>
-    <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md4>
-        <v-card flat class="rounded-lg shadow">
+    <v-row align="center" justify="center">
+      <v-col cols="5">
+        <v-sheet color="white" height="100%" class="rounded-lg shadow">
           <user-authentication />
-        </v-card>
-      </v-flex>
-    </v-layout>
+        </v-sheet>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

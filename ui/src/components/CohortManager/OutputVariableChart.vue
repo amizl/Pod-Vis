@@ -1,66 +1,82 @@
 <template>
-  <v-sheet class="ma-1" color="white" height="100%" min-width="400px">
-    <v-layout column fill-height class="var-chart">
-      <v-card-title :class="getTitleClass(variable)">
-        <v-layout
-          align-center
-          style="background-color: white; padding: 0.5em 0em 1em 0.4em; border-radius: 0.5rem;"
-        >
-          <span style="padding:0.4em 0.5em 1em 0.5em">
-            <img
-              :src="'/images/' + variable.category + '-icon-128.png'"
-              :title="variable.category"
-              style="height: 3em; padding: 0em 0.5em 0em 0em;"
-            />
-          </span>
-          <span class="subtitle-1">{{ getVariableLabel(variable) }}</span>
-          <v-spacer />
-          <v-btn
-            text
-            flat
-            small
-            no-padding
-            class="together subheading primary--text text--lighten-4"
-            @click="clearAllFilters({ dimension })"
-          >
-            Reset
-          </v-btn>
-        </v-layout>
-      </v-card-title>
+  <v-sheet class="ma-1 pa-0" color="white" height="100%" min-width="400px">
+    <v-container fluid fill-width class="pa-0 ma-0">
+      <!-- Variable icon/title/reset button -->
+      <v-row class="pa-0 ma-0" :class="getTitleClass(variable) + ' pt-1'">
+        <v-col cols="12" class="pa-0 ma-0">
+          <v-container class="pa-0 ma-0">
+            <v-row class="pa-0 ma-0">
+              <v-col md="auto" class="pa-0 ma-0">
+                <span>
+                  <img
+                    :src="'/images/' + variable.category + '-icon-128.png'"
+                    :title="variable.category"
+                    style="height: 3em;"
+                    class="pl-2"
+                  />
+                </span>
+              </v-col>
 
-      <v-layout fill-height>
-        <div v-if="variable.value_type === 'date'" class="pl-3">
-          Date types not supported.
-        </div>
-        <ColumnChart
-          v-else-if="
-            variable.is_longitudinal === false &&
-              variable.data_category === 'Categorical'
-          "
-          :id="variable.id"
-          :dimension-name="dimension"
-        />
-        <HistogramChart
-          v-else-if="variable.is_longitudinal === false"
-          :id="variable.id"
-          :dimension-name="variable.label"
-          :input-variable="false"
-          :variable="variable"
-        />
-        <MultiChart
-          v-else
-          :key="resetCount"
-          class="ma-1"
-          :variable="variable"
-          :dimension-name="dimension"
-          :highlight-change="isBelowPValThreshold(variable)"
-          :first-visit-label="getFirstVisitLabel()"
-          :last-visit-label="getLastVisitLabel()"
-          width="400px"
-        />
-        <v-flex fill-width> </v-flex>
-      </v-layout>
-    </v-layout>
+              <v-col md="auto">
+                <span class="text-h6 ml-1">{{
+                  getVariableLabel(variable)
+                }}</span>
+              </v-col>
+
+              <v-col align="right">
+                <span>
+                  <v-btn
+                    outlined
+                    medium
+                    class="together primary--text text--lighten-3 ma-0 pa-0 ml-2"
+                    @click="clearAllFilters({ dimension })"
+                  >
+                    Reset
+                  </v-btn>
+                </span>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-col>
+      </v-row>
+      <!-- End of Variable icon/title/reset button -->
+    </v-container>
+
+    <v-container fluid fill-width class="pa-0 ma-0">
+      <v-row class="pa-0 ma-0">
+        <v-col cols="12" class="pa-0 ma-0">
+          <div v-if="variable.value_type === 'date'" class="pl-3">
+            Date types not supported.
+          </div>
+          <ColumnChart
+            v-else-if="
+              variable.is_longitudinal === false &&
+                variable.data_category === 'Categorical'
+            "
+            :id="variable.id"
+            :dimension-name="dimension"
+          />
+          <HistogramChart
+            v-else-if="variable.is_longitudinal === false"
+            :id="variable.id"
+            :dimension-name="variable.label"
+            :input-variable="false"
+            :variable="variable"
+          />
+          <MultiChart
+            v-else
+            :key="resetCount"
+            class="ma-1"
+            :variable="variable"
+            :dimension-name="dimension"
+            :highlight-change="isBelowPValThreshold(variable)"
+            :first-visit-label="getFirstVisitLabel()"
+            :last-visit-label="getLastVisitLabel()"
+            width="400px"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
   </v-sheet>
 </template>
 
@@ -164,7 +180,7 @@ export default {
     },
     getTitleClass(v) {
       const dflt =
-        'subheading primary--text text--darken-4 pa-1 ma-0 text-truncate';
+        'subheading primary--text text--darken-4 pa-0 ma-0 text-truncate';
       if (this.isBelowPValThreshold(v)) {
         return `${dflt} highlight-var`;
       }

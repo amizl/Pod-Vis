@@ -2,28 +2,32 @@
   <div>
     <v-btn
       :disabled="!hasUserSelectedCohort"
-      flat
-      outline
       color="error"
       @click="dialog = !dialog"
     >
-      <v-icon color="error" left>delete</v-icon> DELETE COHORT
+      <v-icon left>delete</v-icon> DELETE COHORT
     </v-btn>
     <!-- DELETE COHORT FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
       <v-card class="rounded-lg">
-        <v-card-title primary-title>
-          <span class="primary--text title pl-2"
-            >Are you sure you want to delete this cohort?</span
+        <v-card-title color="white" primary-title>
+          <v-icon color="primary">delete</v-icon>
+          <span class="primary--text text--darken-3 title pl-2"
+            >Delete Cohort</span
           >
         </v-card-title>
+
+        <v-card-text class="primary primary--text text--lighten-5 pt-4">
+          Are you sure you want to delete this cohort?
+        </v-card-text>
+
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="red lighten-2" @click="dialog = false">
+          <v-btn text color="primary" @click="dialog = false">
             <v-icon left>close</v-icon> Cancel
           </v-btn>
-          <v-btn :loading="loading" color="primary" @click="onDeleteCohort">
+          <v-btn :loading="loading" color="error" @click="onDeleteCohort">
             <v-icon color="" left>delete</v-icon> Delete Cohort</v-btn
           >
         </v-card-actions>

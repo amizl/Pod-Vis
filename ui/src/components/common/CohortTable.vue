@@ -1,31 +1,49 @@
 <template>
   <loading-spinner v-if="isLoading" medium class="pb-5"></loading-spinner>
-  <v-data-table
-    v-else
-    :headers="headers"
-    :items="collection_cohorts"
-    item-key="id"
-  >
-    <template v-slot:items="props">
-      <tr>
-        <td>
-          <v-checkbox
-            v-model="props.selected"
-            primary
-            hide-details
-          ></v-checkbox>
-        </td>
-        <td class="text-xs-left">{{ props.item.label }}</td>
-        <td class="text-xs-left">{{ props.item.subject_ids.length }}</td>
-        <td class="text-xs-left">{{ props.item.query_string }}</td>
-      </tr>
-    </template>
-    <template v-slot:no-data>
-      <v-alert :value="true" color="info" icon="info">
-        You have no saved cohorts.
-      </v-alert>
-    </template>
-  </v-data-table>
+  <div v-else>
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card color="#eeeeee" class="pt-1">
+            <v-card-title class="primary--text pl-3 py-2"
+              >Cohorts
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-data-table
+      :headers="headers"
+      :items="collection_cohorts"
+      item-key="id"
+      dense
+    >
+      <template v-slot:item="props">
+        <tr>
+          <td>
+            <v-simple-checkbox
+              v-model="props.selected"
+              primary
+              hide-details
+            ></v-simple-checkbox>
+          </td>
+          <td class="text-subtitle-1 text-xs-left">{{ props.item.label }}</td>
+          <td class="text-subtitle-1 text-xs-left">
+            {{ props.item.subject_ids.length }}
+          </td>
+          <td class="text-subtitle-1 text-xs-left">
+            {{ props.item.query_string }}
+          </td>
+        </tr>
+      </template>
+      <template v-slot:no-data>
+        <v-alert :value="true" color="info" icon="info">
+          You have no saved cohorts.
+        </v-alert>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
@@ -40,18 +58,22 @@ export default {
         {
           text: 'Select',
           value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Cohort Name',
           value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Cohort Count',
           value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
         },
         {
           text: 'Query',
           value: 'query_string',
+          class: 'text-subtitle-1 font-weight-bold',
         },
       ],
     };
@@ -92,8 +114,7 @@ export default {
       this.setVisibleCohorts(visibleCohorts);
     },
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 

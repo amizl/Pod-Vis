@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="openInputVariableDialog" scrollable>
     <template v-slot:activator="{ on }">
-      <v-btn flat color="primary" class="title" v-on="on">
+      <v-btn text color="primary" class="title" v-on="on">
         <v-icon left dark>add_box</v-icon>
         Choose Predictor Variables
       </v-btn>
@@ -19,11 +19,11 @@
             :items="[...this.inputVariables].sort(this.scaleSortFn)"
             :headers="headers"
             item-key="id"
-            hide-actions
+            hide-default-footer
             dense
             style="width: 100%;"
           >
-            <template v-slot:items="props"> </template>
+            <template v-slot:item="props"> </template>
           </v-data-table>
         </div>
       </v-card-title>
@@ -32,70 +32,74 @@
           :items="[...this.inputVariables].sort(this.scaleSortFn)"
           :headers="headers"
           item-key="id"
-          hide-actions
+          hide-default-header
+          hide-default-footer
           dense
+          disable-pagination
           style="width: 100%;"
         >
           <template v-slot:headers="props"> </template>
-          <template v-slot:items="props">
-            <td style="font-size:0.9rem; width: 20%;">
-              {{ props.item.category }}
-            </td>
-            <td style="font-size:0.9rem; width: 20%;">
-              {{ props.item.label }}
-            </td>
-            <td style="width: 12%;">
-              <v-checkbox
-                v-model="props.item.inSelected"
-                hide-details
-                @change="masterCbChange(props.item)"
-              ></v-checkbox>
-            </td>
-            <td style="width: 12%;">
-              <v-checkbox
-                v-if="props.item.has_first_and_last"
-                v-model="props.item.children[0].inSelected"
-                hide-details
-                @change="cbChange"
-              ></v-checkbox>
-            </td>
-            <td style="width: 12%;">
-              <v-checkbox
-                v-if="props.item.has_first_and_last"
-                v-model="props.item.children[1].inSelected"
-                hide-details
-                @change="cbChange"
-              ></v-checkbox>
-            </td>
-            <td style="width: 12%;">
-              <v-checkbox
-                v-if="
-                  props.item.has_first_and_last &&
-                    props.item.data_category !== 'Categorical'
-                "
-                v-model="props.item.children[2].inSelected"
-                hide-details
-                @change="cbChange"
-              ></v-checkbox>
-            </td>
-            <td style="width: 12%;">
-              <v-checkbox
-                v-if="
-                  props.item.has_first_and_last &&
-                    props.item.data_category !== 'Categorical'
-                "
-                v-model="props.item.children[3].inSelected"
-                hide-details
-                @change="cbChange"
-              ></v-checkbox>
-            </td>
+          <template v-slot:item="props">
+            <tr>
+              <td class="text-subtitle-1" style="width: 20%;">
+                {{ props.item.category }}
+              </td>
+              <td class="text-subtitle-1" style="width: 20%;">
+                {{ props.item.label }}
+              </td>
+              <td class="text-subtitle-1" style="width: 12%;">
+                <v-simple-checkbox
+                  v-model="props.item.inSelected"
+                  hide-details
+                  @input="masterCbChange(props.item)"
+                ></v-simple-checkbox>
+              </td>
+              <td class="text-subtitle-1" style="width: 12%;">
+                <v-simple-checkbox
+                  v-if="props.item.has_first_and_last"
+                  v-model="props.item.children[0].inSelected"
+                  hide-details
+                  @input="cbChange"
+                ></v-simple-checkbox>
+              </td>
+              <td class="text-subtitle-1" style="width: 12%;">
+                <v-simple-checkbox
+                  v-if="props.item.has_first_and_last"
+                  v-model="props.item.children[1].inSelected"
+                  hide-details
+                  @input="cbChange"
+                ></v-simple-checkbox>
+              </td>
+              <td class="text-subtitle-1" style="width: 12%;">
+                <v-simple-checkbox
+                  v-if="
+                    props.item.has_first_and_last &&
+                      props.item.data_category !== 'Categorical'
+                  "
+                  v-model="props.item.children[2].inSelected"
+                  hide-details
+                  @input="cbChange"
+                ></v-simple-checkbox>
+              </td>
+              <td class="text-subtitle-1" style="width: 12%;">
+                <v-simple-checkbox
+                  v-if="
+                    props.item.has_first_and_last &&
+                      props.item.data_category !== 'Categorical'
+                  "
+                  v-model="props.item.children[3].inSelected"
+                  hide-details
+                  @input="cbChange"
+                ></v-simple-checkbox>
+              </td>
+            </tr>
           </template>
         </v-data-table>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" flat @click="openInputVariableDialog = false"
+        <v-btn color="primary" text @click="openInputVariableDialog = false"
           ><v-icon left dark>close</v-icon>Close</v-btn
         >
       </v-card-actions>
@@ -146,13 +150,55 @@ export default {
       return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
     },
     headers: [
-      { text: 'Category', value: 'category', width: '20%', sortable: false },
-      { text: 'Variable', value: 'label', width: '20%', sortable: false },
-      { text: 'All', value: '', width: '12%', sortable: false },
-      { text: 'First Visit', value: '', width: '12%', sortable: false },
-      { text: 'Last Visit', value: '', width: '12%', sortable: false },
-      { text: 'Change', value: '', width: '12%', sortable: false },
-      { text: 'ROC', value: '', width: '12%', sortable: false },
+      {
+        text: 'Category',
+        value: 'category',
+        width: '20%',
+        sortable: false,
+        class: 'text-subtitle-1 font-weight-bold',
+      },
+      {
+        text: 'Variable',
+        value: 'label',
+        width: '20%',
+        sortable: false,
+        class: 'text-subtitle-1 font-weight-bold',
+      },
+      {
+        text: 'All',
+        value: '',
+        width: '12%',
+        sortable: false,
+        class: 'text-subtitle-1 font-weight-bold',
+      },
+      {
+        text: 'First Visit',
+        value: '',
+        width: '12%',
+        sortable: false,
+        class: 'text-subtitle-1 font-weight-bold',
+      },
+      {
+        text: 'Last Visit',
+        value: '',
+        width: '12%',
+        sortable: false,
+        class: 'text-subtitle-1 font-weight-bold',
+      },
+      {
+        text: 'Change',
+        value: '',
+        width: '12%',
+        sortable: false,
+        class: 'text-subtitle-1 font-weight-bold',
+      },
+      {
+        text: 'ROC',
+        value: '',
+        width: '12%',
+        sortable: false,
+        class: 'text-subtitle-1 font-weight-bold',
+      },
     ],
     inputVariables: [],
     propagateChanges: false,
