@@ -4,17 +4,23 @@
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <v-sheet color="white" class="rounded-lg shadow">
-            <v-app-bar dense flat class="rounded-lg">
-              <v-toolbar-title class="primary--text title">
-                One-Way ANOVA
-              </v-toolbar-title>
-              <v-spacer />
-              <v-chip color="#FEEDDE">p &lt; 1</v-chip>
-              <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
-              <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
-              <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
-              <v-chip color="#F16913">p &lt; 0.0001</v-chip>
-            </v-app-bar>
+            <v-container fluid fill-width class="ma-0 pa-0">
+              <v-row class="ma-0 pa-0">
+                <v-col cols="12" class="ma-0 pa-0">
+                  <v-card color="#eeeeee" class="pt-1">
+                    <v-card-title class="primary--text pl-3 py-2"
+                      >One-Way ANOVA
+                      <v-spacer />
+                      <v-chip color="#FEEDDE">p &lt; 1</v-chip>
+                      <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
+                      <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
+                      <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
+                      <v-chip color="#F16913">p &lt; 0.0001</v-chip>
+                    </v-card-title>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
           </v-sheet>
         </v-col>
       </v-row>

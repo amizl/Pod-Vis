@@ -1,10 +1,10 @@
 <template>
-  <div :key="chartsKey" :class="classes">
-    <v-card class="d-flex flex-row">
+  <div :key="chartsKey" class="xscrollable px-2">
+    <v-card class="d-flex flex-row pb-1">
       <v-card
         v-for="(inputVariable, index) in inputVariables"
         :key="inputVariable.id"
-        :class="index > 0 ? 'ml-2' : ''"
+        :class="index > 0 ? 'ml-2 pb-1' : 'pb-1'"
       >
         <input-variable-chart :variable="inputVariable" />
       </v-card>
@@ -34,13 +34,6 @@ export default {
     ...mapState('cohortManager', {
       inputVariables: state.INPUT_VARIABLES,
     }),
-    classes() {
-      return {
-        // When the user has specified more variables
-        // then what the container can fit, make
-        scrollable: true, // this.inputVariables > 5,
-      };
-    },
   },
   watch: {
     /**
@@ -67,8 +60,9 @@ export default {
   display: flex;
 }
 
-.scrollable {
+.xscrollable {
   overflow-x: auto;
+  overflow-y: hidden;
 }
 .scrollable::-webkit-scrollbar {
   display: none;

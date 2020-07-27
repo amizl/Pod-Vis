@@ -45,7 +45,7 @@
               </v-col>
             </v-row>
 
-            <v-row class="ma-0 pa-0 pt-3">
+            <v-row class="ma-0 pa-0 pt-2">
               <v-col cols="12" class="ma-0 pa-0">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <cohorts />
@@ -53,7 +53,7 @@
               </v-col>
             </v-row>
 
-            <v-row class="ma-0 pa-0 pt-1" min-height="400px">
+            <v-row class="ma-0 pa-0 pt-2" min-height="400px">
               <v-col cols="7" class="ma-0 pa-0">
                 <v-sheet
                   color="white"

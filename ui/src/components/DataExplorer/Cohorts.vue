@@ -1,14 +1,24 @@
 <template>
   <div>
-    <v-app-bar dense text class="rounded-lg">
-      <v-toolbar-title class="primary--text title"> Cohorts </v-toolbar-title>
-      <v-spacer />
-      <v-toolbar-items>
-        <cohort-manager-dialog :collection-id="collection.id" />
-        <v-icon v-if="expanded" @click="expanded = false">expand_less</v-icon>
-        <v-icon v-else @click="expanded = true">expand_more</v-icon>
-      </v-toolbar-items>
-    </v-app-bar>
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card color="#eeeeee" class="pt-1">
+            <v-card-title class="primary--text pl-3 py-2"
+              >Cohorts
+              <v-spacer />
+              <v-toolbar-items>
+                <cohort-manager-dialog :collection-id="collection.id" />
+                <v-icon v-if="expanded" @click="expanded = false"
+                  >expand_less</v-icon
+                >
+                <v-icon v-else @click="expanded = true">expand_more</v-icon>
+              </v-toolbar-items>
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
 
     <v-container
       v-if="typeof cohorts === 'undefined' || collection_cohorts.length === 0"

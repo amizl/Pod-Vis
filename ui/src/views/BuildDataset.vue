@@ -36,8 +36,8 @@
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <v-sheet color="white" height="100%" class="rounded-lg shadow">
-            <v-card color="#eeeeee">
-              <v-card-title class="primary--text pl-3"
+            <v-card color="#eeeeee" class="pt-1">
+              <v-card-title class="primary--text pl-3 py-2"
                 >Shared Variables</v-card-title
               >
               <v-card-subtitle class="primary--text pl-3"

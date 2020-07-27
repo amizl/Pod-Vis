@@ -1,19 +1,18 @@
 <template>
   <v-sheet color="white" height="100%" class="rounded-lg shadow pa-0 ma-0">
-    <v-app-bar dense flat color="rounded-lg">
-      <v-toolbar-title class="primary--text title">
-        ANALYTICS PANEL
-      </v-toolbar-title>
-      <v-divider vertical class="ml-4"></v-divider>
-      <v-spacer />
-      <!--
-        <v-toolbar-items>
-          <v-icon v-if="expanded" @click="expandClicked">expand_less</v-icon>
-          <v-icon v-else @click="expandClicked">expand_more</v-icon>
-        </v-toolbar-items>
- -->
-    </v-app-bar>
-    <v-divider></v-divider>
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card color="#eeeeee" class="pt-1">
+            <v-card-title class="primary--text pl-3 py-2"
+              >ANALYTICS PANEL
+              <v-divider vertical class="ml-4 mr-4"> </v-divider>
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+
     <div v-show="expanded">
       <v-container v-if="!pvals || !pvals.length" fluid fill-height>
         <v-row>

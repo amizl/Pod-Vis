@@ -1,31 +1,32 @@
 <template>
   <div>
-    <v-app-bar
-      dense
-      flat
-      color="rgb(247,216,206,0.5)"
-      class="toolbar_step_highlight rounded-lg"
-    >
-      <v-toolbar-title class="primary--text title">
-        CHOOSE FIRST & LAST VISIT
-      </v-toolbar-title>
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card color="#eeeeee" class="pt-1">
+            <v-card-title class="primary--text pl-3 py-2"
+              >CHOOSE FIRST & LAST VISIT
 
-      <v-divider vertical class="ml-4 mr-4"> </v-divider>
+              <v-divider vertical class="ml-4 mr-4"> </v-divider>
 
-      <v-chip color="primary" class="white--text title"
-        >{{ collectionVarNames.length }} outcome variable<span
-          v-if="collectionVarNames.length != 1"
-          >s</span
-        >&nbsp;selected</v-chip
-      >
-      <v-spacer />
-      <v-chip
-        class="title"
-        :color="colors['population']"
-        :text-color="colors['cohort']"
-        >Study Population - {{ numSelectedSubjects }}</v-chip
-      >
-    </v-app-bar>
+              <v-chip color="primary" class="white--text title"
+                >{{ collectionVarNames.length }} outcome variable<span
+                  v-if="collectionVarNames.length != 1"
+                  >s</span
+                >&nbsp;selected</v-chip
+              >
+              <v-spacer />
+              <v-chip
+                class="title"
+                :color="colors['population']"
+                :text-color="colors['cohort']"
+                >Study Population - {{ numSelectedSubjects }}</v-chip
+              >
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
 
     <v-container fluid fill-height class="ma-0 pa-2">
       <v-select

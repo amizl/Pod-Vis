@@ -6,10 +6,13 @@
       class="ma-0 pa-0"
       @expandClicked="expandClicked"
     />
-    <v-container v-show="expanded" fluid fill-width class="pa-0 pb-1 ma-0">
-      <v-row>
-        <v-col cols="12">
-          <input-variables-charts v-if="hasUserAddedInputVariables" />
+    <v-container v-show="expanded" fluid fill-width class="pa-0 ma-0">
+      <v-row class="pa-0 ma-0">
+        <v-col cols="12" class="pa-0 ma-0">
+          <input-variables-charts
+            v-if="hasUserAddedInputVariables"
+            class="ma-2"
+          />
           <v-subheader
             v-else
             class="subheading primary--text text--lighten-4 text-h6"

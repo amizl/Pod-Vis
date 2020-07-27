@@ -1,57 +1,64 @@
 <template>
-  <section>
-    <v-app-bar dense flat :class="getToolbarClass()" class="rounded-lg">
-      <v-toolbar-items>
-        <output-variables-dialog @dialogOpened="opened" />
-      </v-toolbar-items>
-      <v-divider vertical class="ml-4"></v-divider>
-      <v-chip
-        v-if="outputVariables.length == 0"
-        color="primary"
-        class="white--text title"
-        >No variables selected</v-chip
-      >
-      <v-chip v-else color="primary" class="white--text title"
-        >{{ outputVariables.length }} variable<span
-          v-if="outputVariables.length != 1"
-          >s</span
-        >&nbsp;selected</v-chip
-      >
-      <v-spacer />
-      <v-toolbar-items v-if="false">
-        <!-- TODO...filters? -->
-        <span class="subheading primary--text mt-3 mr-3">Show:</span>
-        <v-btn-toggle
-          v-model="subset"
-          mandatory
-          style="background: rgb(255,255,255,0)"
-          @change="doHighlightChange()"
-        >
-          <v-btn
-            text
-            :color="colors['cohort']"
-            class="white--text mr-2 py-1"
-            value="cohort"
-            >Cohort</v-btn
-          >
-          <v-btn
-            text
-            :color="colors['nonCohort']"
-            class="white--text mr-2 py-1"
-            value="non-cohort"
-            >Non-Cohort</v-btn
-          >
-        </v-btn-toggle>
-      </v-toolbar-items>
-      <!--
+  <v-container fluid fill-width class="ma-0 pa-0">
+    <v-row class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0">
+        <v-card color="#eeeeee">
+          <v-card-title class="primary--text pl-3 py-2">
+            <output-variables-dialog @dialogOpened="opened" />
+
+            <v-divider vertical class="ml-4 mr-4"> </v-divider>
+
+            <v-chip
+              v-if="outputVariables.length == 0"
+              color="primary"
+              class="white--text title"
+              >No variables selected</v-chip
+            >
+            <v-chip v-else color="primary" class="white--text title"
+              >{{ outputVariables.length }} variable<span
+                v-if="outputVariables.length != 1"
+                >s</span
+              >&nbsp;selected</v-chip
+            >
+
+            <v-spacer />
+
+            <v-toolbar-items v-if="false">
+              <span class="subheading primary--text mt-3 mr-3">Show:</span>
+              <v-btn-toggle
+                v-model="subset"
+                mandatory
+                style="background: rgb(255,255,255,0)"
+                @change="doHighlightChange()"
+              >
+                <v-btn
+                  text
+                  :color="colors['cohort']"
+                  class="white--text mr-2 py-1"
+                  value="cohort"
+                  >Cohort</v-btn
+                >
+                <v-btn
+                  text
+                  :color="colors['nonCohort']"
+                  class="white--text mr-2 py-1"
+                  value="non-cohort"
+                  >Non-Cohort</v-btn
+                >
+              </v-btn-toggle>
+            </v-toolbar-items>
+
+            <!--
       <v-toolbar-items>
         <v-icon v-if="expanded" @click="expandClicked">expand_less</v-icon>
         <v-icon v-else @click="expandClicked">expand_more</v-icon>
       </v-toolbar-items>
--->
-    </v-app-bar>
-    <v-divider></v-divider>
-  </section>
+      -->
+          </v-card-title>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

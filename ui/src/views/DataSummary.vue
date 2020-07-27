@@ -22,12 +22,16 @@
       :collection-id="this.collection.id"
     ></analysis-tracker>
 
-    <v-container fluid fill-width class="ma-0 pa-0 pt-1">
+    <v-container fluid fill-width class="ma-0 pa-0 pt-2">
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
-          <v-sheet color="white" height="100%" class="rounded-lg shadow">
+          <v-sheet
+            color="white"
+            height="100%"
+            class="rounded-lg shadow ma-0 pa-0"
+          >
             <visit-variables-toolbar
-              class="ma-1 pt-1"
+              class="ma-0 pa-0"
               @hideUnselectedVars="hideUnselectedVarsChanged"
             >
             </visit-variables-toolbar>

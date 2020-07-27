@@ -81,14 +81,18 @@
         @createNew="createNew"
       ></analysis-tracker>
 
-      <v-container fluid fill-width class="ma-0 pa-0 pt-1">
+      <v-container fluid fill-width class="ma-0 pa-0 pt-2">
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
-            <v-sheet color="white" height="100%" class="rounded-lg shadow">
+            <v-sheet
+              color="white"
+              height="100%"
+              class="rounded-lg shadow pa-0 ma-0"
+            >
               <input-variables
                 :expanded.sync="inExpanded"
                 :highlighted="inHighlighted"
-                class="ma-1 pt-1"
+                class="ma-0 pt-0"
               />
             </v-sheet>
           </v-col>
@@ -102,6 +106,7 @@
               :expanded.sync="outExpanded"
               :highlighted="outHighlighted"
               :disabled="true"
+              class="ma-0 pt-0"
             />
           </v-col>
           <v-col cols="5" class="ma-0 pa-0">

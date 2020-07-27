@@ -2,7 +2,7 @@
   <v-sheet color="white" height="100%" min-width="380px" max-width="500px">
     <v-container fluid fill-width class="pa-0 ma-0">
       <!-- Variable icon/title/reset button -->
-      <v-row class="pa-0 ma-0 pt-1">
+      <v-row class="pa-0 ma-0">
         <v-col cols="12" class="pa-0 ma-0">
           <v-container class="pa-0 ma-0">
             <v-row class="pa-0 ma-0">

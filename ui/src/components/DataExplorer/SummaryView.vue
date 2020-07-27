@@ -1,13 +1,18 @@
 <template>
-  <div class="ma-1">
-    <v-app-bar dense text class="rounded-lg">
-      <v-toolbar-title class="primary--text title">
-        Choose Outcome Variable
-      </v-toolbar-title>
-      <v-spacer />
-    </v-app-bar>
+  <div class="ma-0">
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card color="#eeeeee" class="pt-1">
+            <v-card-title class="primary--text pl-3 py-2"
+              >Choose Outcome Variable
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
 
-    <v-container fluid fill-height class="pa-0 pl-3 pt-3">
+    <v-container fluid fill-height class="pa-0 pl-3 pt-3 ma-1">
       <span>Variable:</span>
       <v-btn-toggle v-model="dview" class="pl-2" mandatory>
         <v-btn

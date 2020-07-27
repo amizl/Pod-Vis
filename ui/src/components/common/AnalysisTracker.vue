@@ -264,6 +264,7 @@
     ></error-dialog>
     <confirmation-dialog
       :show="show_confirmation_dialog"
+      :confirmation-title="confirmation_title"
       :confirmation-message="confirmation_message"
       :target-uri="target_uri"
       @closed="show_confirmation_dialog = false"
@@ -364,6 +365,7 @@ export default {
         // no-op
       } else if (this.step > 2) {
         this.displayConfirmationDialog(
+          'Return to Home Page?',
           'Are you sure you want to return to the home page? ' +
             'Any unsaved work in progress on the current study dataset will be lost.',
           'homepage'
@@ -377,6 +379,7 @@ export default {
         // no-op
       } else if (this.step > 2) {
         this.displayConfirmationDialog(
+          'Return to Dataset Manager?',
           'Are you sure you want to return to the Dataset Manager? ' +
             'Any unsaved work in progress on the current study dataset will be lost.',
           'datasets'
@@ -487,7 +490,8 @@ export default {
       this.error_message = errorMsg;
       this.show_error_dialog = true;
     },
-    displayConfirmationDialog(confirmationMsg, targetUri) {
+    displayConfirmationDialog(confirmationTitle, confirmationMsg, targetUri) {
+      this.confirmation_title = confirmationTitle;
       this.confirmation_message = confirmationMsg;
       this.target_uri = targetUri;
       this.show_confirmation_dialog = true;

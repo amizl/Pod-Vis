@@ -1,10 +1,10 @@
-<template>
-  <div :key="chartsKey" class="xscrollable">
-    <v-card class="d-flex flex-row">
+><template>
+  <div :key="chartsKey" class="xscrollable px-2">
+    <v-card class="d-flex flex-row pb-1">
       <v-card
         v-for="(outputVariable, index) in outputVariables"
         :key="outputVariable.id"
-        :class="index > 0 ? 'ml-2' : ''"
+        :class="index > 0 ? 'ml-2 pb-1' : 'pb-1'"
       >
         <output-variable-chart :variable="outputVariable" />
       </v-card>

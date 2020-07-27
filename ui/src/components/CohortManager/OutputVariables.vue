@@ -6,8 +6,8 @@
       class="ma-0 pa-0"
       @expandClicked="expandClicked"
     />
-    <v-container v-show="true" fluid fill-width class="pa-0 pb-1 ma-0">
-      <v-row>
+    <v-container v-show="true" fluid fill-width class="pa-0 ma-0">
+      <v-row class="pa-0 ma-0">
         <v-col cols="12">
           <output-variables-charts v-if="hasUserAddedOutputVariables" />
           <v-subheader

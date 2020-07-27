@@ -1,12 +1,19 @@
 <template>
-  <div class="ma-1 pa-0">
-    <v-app-bar text dense class="rounded-lg">
-      <v-toolbar-title class="title primary--text">
-        ANOVA -
-        <span class="subtitle-1">1-way ANOVA for first-last visit change</span>
-      </v-toolbar-title>
-      <v-spacer />
-    </v-app-bar>
+  <div class="ma-0 pa-0">
+    <v-container fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card color="#eeeeee" class="pt-1">
+            <v-card-title class="primary--text pl-3 py-2">
+              ANOVA -
+              <span class="subtitle-1"
+                >1-way ANOVA for first-last visit change</span
+              >
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
 
     <v-container
       v-if="typeof anova_pvals === undefined || !anova_pvals.length"
