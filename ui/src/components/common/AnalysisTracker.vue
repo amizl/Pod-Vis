@@ -314,6 +314,7 @@ export default {
       show_error_dialog: false,
 
       // ConfirmationDialog
+      confirmation_title: '',
       confirmation_message: '',
       show_confirmation_dialog: false,
       target_uri: '',
