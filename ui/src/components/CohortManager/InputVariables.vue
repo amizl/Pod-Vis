@@ -11,7 +11,6 @@
         <v-col cols="12">
           <input-variables-charts
             v-if="hasUserAddedInputVariables"
-            class="ma-2"
           />
           <v-subheader
             v-else

@@ -6,24 +6,21 @@
         <v-col cols="12" class="pa-0 ma-0">
           <v-container class="pa-0 ma-0">
             <v-row class="pa-0 ma-0">
-              <v-col md="auto" class="pa-0 ma-0">
+              <v-col cols="2" class="pa-0 ma-0 pl-2 pt-1">
                 <span>
                   <img
                     :src="'/images/' + variable.category + '-icon-128.png'"
                     :title="variable.category"
                     style="height: 3em;"
-                    class="pl-2"
                   />
                 </span>
               </v-col>
 
-              <v-col md="auto">
-                <span class="text-h6 ml-1">{{
-                  getVariableLabel(variable)
-                }}</span>
+              <v-col cols="7" class="pa-0 ma-0 pt-0">
+		<div class="text-h6 ml-2 text-wrap">{{ getVariableLabel(variable) }}</div>
               </v-col>
 
-              <v-col align="right">
+              <v-col cols="3" class="pa-0 ma-0 pt-2 pr-2" align="right">
                 <span>
                   <v-btn
                     outlined
