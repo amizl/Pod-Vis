@@ -96,10 +96,8 @@
             </v-tooltip>
           </v-list-item-action>
 
-          <v-list-item-content>
-            <v-list-item-title v-if="showExpanded()">
-              <span class="primary--text">Minimize menu</span>
-            </v-list-item-title>
+          <v-list-item-content class="primary--text">
+            <span class="title-1">Minimize menu</span>
           </v-list-item-content>
         </v-list-item>
 
@@ -114,12 +112,10 @@
                 <v-icon color="primary" large>close</v-icon>
               </v-list-item-action>
             </template>
-            <span>Sign Out</span>
+            <span class="title-1">Sign Out</span>
           </v-tooltip>
-          <v-list-item-content>
-            <v-list-item-title>
-              <span class="primary--text"> Sign out </span>
-            </v-list-item-title>
+          <v-list-item-content class="primary--text">
+              <span class="title-1"> Sign out </span>
           </v-list-item-content>
         </v-list-item>
       </v-list>
