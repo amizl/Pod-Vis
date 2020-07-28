@@ -11,6 +11,10 @@
         <router-view />
       </transition>
     </v-main>
+    <v-footer class="indigo lighten-5" v-if="($route == null) || ($route.name == 'homepage') || ($route.name == 'signIn')"> 
+      <v-spacer></v-spacer>
+      <div class="font-weight-medium">&copy; 2020 University of Maryland, Baltimore</div>
+    </v-footer>
   </v-app>
 </template>
 

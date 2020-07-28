@@ -48,10 +48,6 @@
         </v-row>
       </v-container>
     </v-sheet>
-    <v-footer v-if="false" class="indigo lighten-5">
-      <v-spacer></v-spacer>
-      <div>&copy; 2020 University of Maryland, Baltimore</div>
-    </v-footer>
   </v-container>
 </template>
 
