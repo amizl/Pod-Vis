@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="ma-0 pa-2">
+  <v-container fluid fill-width class="ma-0 pa-2">
     <v-app-bar app class="primary">
       <v-icon color="white" large>home</v-icon>
       <v-toolbar-title class="white--text pl-2">Home Page</v-toolbar-title>
@@ -10,7 +10,7 @@
       :substep.sync="substep"
     ></analysis-tracker>
 
-    <v-sheet color="white" class="scroll rounded-lg shadow mt-2">
+    <v-sheet color="white" class="scroll rounded-lg shadow my-2">
       <v-container class="ma-2">
         <v-row>
           <v-col cols="12">
@@ -48,6 +48,10 @@
         </v-row>
       </v-container>
     </v-sheet>
+    <v-footer v-if="false" class="indigo lighten-5">
+      <v-spacer></v-spacer>
+      <div>&copy; 2020 University of Maryland, Baltimore</div>
+    </v-footer>
   </v-container>
 </template>
 
