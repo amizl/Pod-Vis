@@ -8,7 +8,7 @@
     />
     <v-container v-show="expanded" fluid fill-width class="pa-0 ma-0">
       <v-row class="pa-0 ma-0">
-        <v-col cols="12" class="pa-0 ma-0">
+        <v-col cols="12">
           <input-variables-charts
             v-if="hasUserAddedInputVariables"
             class="ma-2"
