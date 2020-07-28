@@ -8,6 +8,7 @@
           name="email"
           label="Email"
           type="text"
+          autocomplete="username"
           :rules="[() => !!email || 'This field is required']"
           required
         )
@@ -17,6 +18,7 @@
           name="password"
           label="Password"
           type="password"
+          autocomplete="current-password"
           :rules="[() => !!password || 'This field is required']"
           required
         )
