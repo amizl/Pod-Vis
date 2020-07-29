@@ -11,7 +11,9 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" v-on="{ ...tooltip }">Home Page</span>
+              <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
+                >Home Page</span
+              >
             </template>
             <span class="subtitle-1">{{ step_descr['1'] }}</span>
           </v-tooltip>
@@ -28,7 +30,7 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" v-on="{ ...tooltip }"
+              <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
                 >Dataset Manager</span
               >
             </template>
@@ -47,7 +49,7 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" v-on="{ ...tooltip }"
+              <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
                 >Cohort Manager</span
               >
             </template>
@@ -66,7 +68,7 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" v-on="{ ...tooltip }"
+              <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
                 >Summary Matrix</span
               >
             </template>
@@ -85,7 +87,7 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" v-on="{ ...tooltip }"
+              <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
                 >Data Explorer</span
               >
             </template>
