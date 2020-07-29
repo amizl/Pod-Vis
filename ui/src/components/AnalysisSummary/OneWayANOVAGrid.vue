@@ -35,11 +35,11 @@
             :hide-footer="true"
           >
             <template v-slot:item="props">
-              <tr :class="{ selectedRow: isOVSelected(props.item) }">
-                <td
-                  class="text-subtitle-1 text-xs-left"
-                  @click="table_row_click(props.item)"
-                >
+              <tr
+                :class="{ selectedRow: isOVSelected(props.item) }"
+                @click="table_row_click(props.item)"
+              >
+                <td class="text-subtitle-1 text-xs-left">
                   {{ props.item.category }}
                 </td>
                 <td class="text-subtitle-1 text-xs-left">
@@ -53,9 +53,13 @@
                   :key="props.item.id"
                   class="text-xs-left"
                   :style="{ backgroundColor: table_cell_color(props.item) }"
-                  @click="table_cell_click(props.item)"
                 >
                   {{ table_cell(props.item) }}
+                </td>
+                <td>
+                  <v-icon v-if="isOVSelected(props.item)" large
+                    >chevron_right</v-icon
+                  >
                 </td>
               </tr>
             </template>
@@ -80,12 +84,12 @@ export default {
       selected: [],
       headers: [
         {
-          text: 'Outcome Category',
+          text: 'Category',
           value: 'label',
           class: 'text-subtitle-1 font-weight-bold',
         },
         {
-          text: 'Outcome Variable',
+          text: 'Scale',
           value: 'label',
           class: 'text-subtitle-1 font-weight-bold',
         },
@@ -102,6 +106,11 @@ export default {
         {
           text: 'p-Value',
           value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
+        },
+        {
+          text: '',
+          value: '',
           class: 'text-subtitle-1 font-weight-bold',
         },
       ],
@@ -218,9 +227,6 @@ export default {
     table_row_click(ov) {
       this.setSelectedOutcomeVariable(ov);
     },
-    table_cell_click(ov) {
-      this.setSelectedOutcomeVariable(ov);
-    },
     isOVSelected(ov) {
       if (this.selectedOutcomeVariable == ov) {
         return true;
@@ -231,4 +237,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+tr.selectedRow {
+  background-color: rgb(236, 177, 212);
+}
+</style>
