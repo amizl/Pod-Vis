@@ -11,9 +11,16 @@
         <router-view />
       </transition>
     </v-main>
-    <v-footer class="indigo lighten-5" v-if="($route == null) || ($route.name == 'homepage') || ($route.name == 'signIn')"> 
+    <v-footer
+      v-if="
+        $route == null || $route.name == 'homepage' || $route.name == 'signIn'
+      "
+      class="indigo lighten-5"
+    >
       <v-spacer></v-spacer>
-      <div class="font-weight-medium">&copy; 2020 University of Maryland, Baltimore</div>
+      <div class="font-weight-medium">
+        &copy; 2020 University of Maryland, Baltimore
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -39,10 +46,13 @@ export default {
 </script>
 
 <style>
+/* Global (mostly) font size setting */
+html {
+  font-size: 1em !important;
+}
 
-/* Global (sort of) font size setting */
 .v-application {
-    font-size: 1.2em !important;
+  font-size: 1.1rem !important;
 }
 
 /* Circled number in stepper step */
@@ -65,7 +75,7 @@ div.v-card__text {
 
 /* Increase font size of D3 axis labels - CohortManager charts */
 g.tick text {
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 
 /* Transition effect for changing routes */
