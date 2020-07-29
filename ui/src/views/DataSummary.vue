@@ -57,7 +57,6 @@ import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/dataSummary/types';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import VisitVariablesToolbar from '@/components/DataSummary/VisitVariablesToolbar.vue';
-import VisitTimesList from '@/components/DataSummary/VisitTimesList.vue';
 import VisitTimesTable from '@/components/DataSummary/VisitTimesTable.vue';
 import BubbleChart from '@/components/DataSummary/BubbleChart/BubbleChart.vue';
 import SaveFirstLastVisitBtnDialog from '@/components/BuildDataset/SaveFirstLastVisitBtnDialog.vue';
@@ -67,7 +66,6 @@ export default {
   components: {
     AnalysisTracker,
     VisitVariablesToolbar,
-    VisitTimesList,
     VisitTimesTable,
     BubbleChart,
     SaveFirstLastVisitBtnDialog,
