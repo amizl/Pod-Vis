@@ -12,6 +12,18 @@
       <v-row class="pa-0 ma-0">
         <v-col cols="12" class="pa-0 ma-0">
           <v-sheet color="white" class="scroll rounded-lg shadow mt-2">
+            <v-container fluid fill-width class="ma-0 pa-0">
+              <v-row class="ma-0 pa-0">
+                <v-col cols="12" class="ma-0 pa-0">
+                  <v-card color="#eeeeee" class="pt-1">
+                    <v-card-title class="primary--text pl-3 py-2"
+                      >Saved Study Datasets
+                    </v-card-title>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
+
             <collection-table
               class="pb-1"
               show-collections="all"

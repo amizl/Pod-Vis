@@ -11,11 +11,22 @@
     ></analysis-tracker>
 
     <v-sheet color="white" class="scroll rounded-lg shadow my-2">
-      <v-container class="ma-2">
+      <v-container fluid fill-width class="ma-0 pa-0">
+        <v-row class="ma-0 pa-0">
+          <v-col cols="12" class="ma-0 pa-0">
+            <v-card color="#eeeeee" class="pt-1">
+              <v-card-title class="primary--text pl-3 py-2"
+                >Welcome to POD-Vis
+              </v-card-title>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <v-container class="ma-2 my-4">
         <v-row>
           <v-col cols="12">
-            <div class="title">Welcome to POD-Vis</div>
-            <div class="text--primary subtitle mt-4">
+            <div class="text--primary title">
               Please choose one of the following options to get started:
             </div>
           </v-col>
@@ -46,6 +57,8 @@
             >
           </v-col>
         </v-row>
+
+        <v-row> <v-col cols="12"> </v-col> </v-row>
       </v-container>
     </v-sheet>
   </v-container>
