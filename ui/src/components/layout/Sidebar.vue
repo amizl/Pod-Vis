@@ -115,7 +115,7 @@
             <span class="title-1">Sign Out</span>
           </v-tooltip>
           <v-list-item-content class="primary--text">
-              <span class="title-1"> Sign out </span>
+            <span class="title-1"> Sign out </span>
           </v-list-item-content>
         </v-list-item>
       </v-list>
