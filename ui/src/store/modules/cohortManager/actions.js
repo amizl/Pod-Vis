@@ -255,12 +255,38 @@ export default {
     } else {
       // Remove subjects within our filtered data sets from our unfiltered so
       // we can have separate samples
-      unfilteredData = unfilteredData.filter(
-        data =>
-          !filteredData
-            .map(({ subjectId }) => subjectId)
-            .includes(data.subject_id)
+      var filteredDataSubjIds = {};
+      filteredData.map(d => {
+        filteredDataSubjIds[d.subject_id] = 1;
+      });
+      var numFilteredSubjIds = Object.keys(filteredDataSubjIds).length;
+
+      var unfilteredDataSubjIds = {};
+      unfilteredData.map(d => {
+        unfilteredDataSubjIds[d.subject_id] = 1;
+      });
+      var numUnfilteredSubjIds = Object.keys(unfilteredDataSubjIds).length;
+
+      var remainderData = unfilteredData.filter(
+        data => !(data.subject_id in filteredDataSubjIds)
       );
+      var remainderDataSubjIds = {};
+      remainderData.map(d => {
+        remainderDataSubjIds[d.subject_id] = 1;
+      });
+      var numRemainderSubjIds = Object.keys(remainderDataSubjIds).length;
+
+      // sanity check - unfiltered subjects should be split into two distinct groups
+      if (numRemainderSubjIds + numFilteredSubjIds !== numUnfilteredSubjIds) {
+        console.log(
+          'ERROR - data filtering failed numFiltered=' +
+            numFilteredSubjIds +
+            ' numUnfiltered=' +
+            numUnfilteredSubjIds +
+            ' numRemainder=' +
+            numRemainderSubjIds
+        );
+      }
 
       // pass _all_ observation variables, not just the selected ones
       const outputVars = [];
@@ -275,9 +301,9 @@ export default {
       var cb = async function(reqnum) {
         try {
           const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
-            filteredData,
-            unfilteredData,
-            outputVariables,
+            filteredData: filteredData,
+            unfilteredData: remainderData,
+            outputVariables: outputVariables,
           });
 
           if (state[stateTypes.REQUEST_NUM] > reqnum) {
