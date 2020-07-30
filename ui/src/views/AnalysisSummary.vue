@@ -53,7 +53,11 @@
     <v-container v-else fluid fill-width class="ma-0 pa-0 pt-2">
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
-          <cohort-table :cohorts="selectedCohorts" title="Selected Cohorts" />
+          <cohort-table
+            title="Selected Cohorts"
+            :cohorts="selectedCohorts"
+            :report-max-overlap="true"
+          />
         </v-col>
       </v-row>
 
