@@ -15,7 +15,7 @@
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn flat color="red lighten-2" @click="close()">
+        <v-btn text color="red lighten-2" @click="close()">
           <v-icon left>close</v-icon> Cancel
         </v-btn>
         <v-btn color="primary" @click="navigationConfirmed()"> OK</v-btn>
