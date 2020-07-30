@@ -31,7 +31,11 @@
         <v-col cols="12" class="pa-0 ma-0">
           <v-data-table :headers="headers" :items="anova_pvals" dense>
             <template v-slot:item="props">
-              <tr>
+              <tr
+                :class="{
+                  selectedRow: detailed_view.label == props.item.label,
+                }"
+              >
                 <td class="text-subtitle-1 text-xs-left">
                   {{ props.item.label }}
                 </td>
@@ -98,9 +102,14 @@ export default {
   computed: {
     ...mapState('dataExplorer', {
       anova_pvals: state.ANOVA_PVALS,
+      detailed_view: state.DETAILED_VIEW,
     }),
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+tr.selectedRow {
+  background-color: rgb(236, 177, 212);
+}
+</style>
