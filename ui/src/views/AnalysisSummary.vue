@@ -42,8 +42,8 @@
         <cohort-table
           title="Choose Cohorts"
           :cohorts="collection_cohorts"
-          :show-select="true"
-          :report-max-overlap="true"
+          show-select
+          report-max-selected-overlap
           @selectedCohorts="updateSelectedCohorts"
         />
       </v-col>
@@ -56,7 +56,7 @@
           <cohort-table
             title="Selected Cohorts"
             :cohorts="selectedCohorts"
-            :report-max-overlap="true"
+            report-max-overlap
           />
         </v-col>
       </v-row>
@@ -119,7 +119,6 @@ export default {
       outcomeVariables: deState.OUTCOME_VARIABLES,
     }),
     substep() {
-      //      return (this.cohortIds && (this.cohortIds != "")) ? '4.2' : '4.1';
       return this.selectedCohorts.length > 0 ? '4.2' : '4.1';
     },
     // cohorts are collection-specific

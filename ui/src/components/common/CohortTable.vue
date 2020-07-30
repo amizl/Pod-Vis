@@ -53,19 +53,23 @@
           <td class="subtitle-1 text-xs-left">{{ item.query_string }}</td>
         </template>
 
-        <template v-slot:item.overlaps="{ item }">
-          <td class="subtitle-1 text-xs-left">{{ item.overlaps }}</td>
+        <template v-slot:item.color="{ item }">
+          <v-chip small :color="item.color" class="my-1" />
         </template>
       </v-data-table>
 
-      <div v-if="reportMaxOverlap" class="ma-0 pa-3" style="height: 3em">
-        <div v-if="showSelect && maxSelectedOverlap" class="pa-0">
-          <v-icon class="pa-1" color="error" medium>warning</v-icon>
-          <span>{{ 'WARNING: ' + maxSelectedOverlap.descr }}</span>
-        </div>
-        <div v-if="!showSelect && maxOverlap" class="pa-0">
+      <div
+        v-if="reportMaxOverlap || reportMaxSelectedOverlap"
+        class="ma-0 pa-3"
+        style="height: 3em"
+      >
+        <div v-if="reportMaxOverlap && maxOverlap" class="pa-0">
           <v-icon class="pa-1" color="error" medium>warning</v-icon>
           <span>{{ 'WARNING: ' + maxOverlap.descr }}</span>
+        </div>
+        <div v-if="reportMaxSelectedOverlap && maxSelectedOverlap" class="pa-0">
+          <v-icon class="pa-1" color="error" medium>warning</v-icon>
+          <span>{{ 'WARNING: ' + maxSelectedOverlap.descr }}</span>
         </div>
       </div>
     </v-sheet>
@@ -86,7 +90,23 @@ export default {
       type: Array,
       required: true,
     },
+    // cohorts to select on initial load
+    selectCohorts: {
+      type: Array,
+      required: false,
+      default: x => [],
+    },
     showSelect: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showColors: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    reportMaxSelectedOverlap: {
       type: Boolean,
       required: false,
       default: false,
@@ -106,30 +126,33 @@ export default {
   },
   computed: {
     headers() {
-      var hdrs = [
-        {
-          text: 'Cohort Name',
-          value: 'label',
-          class: 'text-subtitle-1 font-weight-bold',
-        },
-        {
-          text: 'Cohort Size',
-          value: 'size',
-          class: 'text-subtitle-1 font-weight-bold',
-        },
-        {
-          text: 'Query',
-          value: 'query_string',
-          class: 'text-subtitle-1 font-weight-bold',
-        },
-      ];
-      if (this.showSelect) {
+      var hdrs = [];
+      hdrs.push({
+        text: 'Cohort Name',
+        value: 'label',
+        class: 'text-subtitle-1 font-weight-bold',
+      });
+
+      if (this.showColors) {
         hdrs.push({
-          text: 'Overlaps',
-          value: 'overlaps',
+          text: 'Color',
+          value: 'color',
           class: 'text-subtitle-1 font-weight-bold',
         });
       }
+
+      hdrs.push({
+        text: 'Cohort Size',
+        value: 'size',
+        class: 'text-subtitle-1 font-weight-bold',
+      });
+
+      hdrs.push({
+        text: 'Query',
+        value: 'query_string',
+        class: 'text-subtitle-1 font-weight-bold',
+      });
+
       return hdrs;
     },
   },
@@ -137,7 +160,7 @@ export default {
     selected(nsel) {
       this.$emit('selectedCohorts', nsel);
       // compute and store maximum overlap between any two _selected_ cohorts
-      if (this.reportMaxOverlap) {
+      if (this.reportMaxSelectedOverlap) {
         var max_o = this.computeMaxOverlap(nsel);
         this.maxSelectedOverlap = max_o;
         this.$emit('maxSelectedOverlap', max_o);
@@ -150,6 +173,9 @@ export default {
       var max_o = this.computeMaxOverlap(this.cohorts);
       this.maxOverlap = max_o;
       this.$emit('maxOverlap', max_o);
+    }
+    if (this.selectCohorts) {
+      this.selected = this.selectCohorts;
     }
   },
   methods: {

@@ -50,6 +50,7 @@ export default new Router({
         collectionId: +route.query.collection,
         variableId: +route.query.variable,
         cohortIds: route.query.cohorts,
+        visibleCohortIds: route.query.visibleCohorts,
       }),
     },
     {

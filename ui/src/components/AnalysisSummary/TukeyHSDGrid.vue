@@ -226,11 +226,16 @@ export default {
     },
     table_cell_click(cohort1, cohort2) {
       const cid = this.collection.id;
-      this.$router.push(
-        `explore?collection=${cid}&variable=${
-          this.selectedOutcomeVariable.id
-        }&cohorts=${cohort1.id},${cohort2.id}`
-      );
+      var de_url =
+        'explore?collection=' +
+        cid +
+        '&variable=' +
+        this.selectedOutcomeVariable.id +
+        '&cohorts=' +
+        this.selectedCohorts.map(c => c.id).join(',') +
+        '&visibleCohorts=' +
+        [cohort1.id, cohort2.id].join(',');
+      this.$router.push(de_url);
     },
   },
 };

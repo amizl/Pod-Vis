@@ -48,7 +48,15 @@
             <v-row class="ma-0 pa-0 pt-2">
               <v-col cols="12" class="ma-0 pa-0">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
-                  <cohorts />
+                  <cohort-table
+                    title="Selected Cohorts"
+                    :cohorts="selectedCohorts"
+                    :select-cohorts="visibleCohorts"
+                    show-select
+                    show-colors
+                    report-max-overlap
+                    @selectedCohorts="updateVisibleCohorts"
+                  />
                 </v-sheet>
               </v-col>
             </v-row>
@@ -83,7 +91,7 @@ import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/dataExplorer/types';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import SummaryView from '@/components/DataExplorer/SummaryView.vue';
-import Cohorts from '@/components/DataExplorer/Cohorts.vue';
+import CohortTable from '@/components/common/CohortTable.vue';
 import Analytics from '@/components/DataExplorer/Analytics.vue';
 import DetailedView from '@/components/DataExplorer/DetailedView.vue';
 
@@ -92,7 +100,7 @@ export default {
     AnalysisTracker,
     Analytics,
     SummaryView,
-    Cohorts,
+    CohortTable,
     DetailedView,
   },
   props: {
@@ -105,7 +113,14 @@ export default {
       required: false,
       default: undefined,
     },
+    // comma-delimited list of cohort ids to display
     cohortIds: {
+      type: String,
+      required: false,
+      default: undefined,
+    },
+    // comma-delimited list of cohort ids to select
+    visibleCohortIds: {
       type: String,
       required: false,
       default: undefined,
@@ -115,11 +130,25 @@ export default {
     return {
       isLoading: false,
       substep: '5.1',
+      selectedCohorts: [],
+      // TODO - assign stable color to each newly-created cohort (in CohortManager?)
+      colors: [
+        '#e41a1c',
+        '#377eb8',
+        '#4daf4a',
+        '#984ea3',
+        '#ff7f00',
+        '#ffff33',
+        '#a65628',
+        '#f781bf',
+        '#999999',
+      ],
     };
   },
   computed: {
     ...mapState('dataExplorer', {
       cohorts: state.COHORTS,
+      visibleCohorts: state.VISIBLE_COHORTS,
       collection: state.COLLECTION,
       outcomeVariables: state.OUTCOME_VARIABLES,
     }),
@@ -135,9 +164,14 @@ export default {
     const varsAdded = {};
     const outcomeVars = [];
 
-    this.cohorts
+    // determine selected cohorts and assign colors
+    this.selectedCohorts = this.getCohortsFromIdList(this.cohortIds);
+    let ind = 0;
+    this.selectedCohorts
       .filter(v => v.collection_id === this.collectionId)
       .forEach(c => {
+        c.color = this.colors[ind];
+        ind += 1;
         const outputVars = c.output_variables;
         outputVars.forEach(ov => {
           const { id } = ov.observation_ontology;
@@ -165,21 +199,9 @@ export default {
       this.setDetailedView(null);
     }
 
-    // initialize page with preselected list of cohorts displayed in detailed view
-    if (typeof this.cohortIds !== 'undefined' && this.cohortIds !== '') {
-      const cids = this.cohortIds.split(',');
-      const cidD = {};
-      cids.forEach(cid => {
-        cidD[cid] = 1;
-      });
-      const vc = [];
-      this.cohorts.forEach(c => {
-        if (c.id in cidD) {
-          vc.push(c);
-        }
-      });
-      this.setVisibleCohorts(vc);
-    }
+    // preselect cohorts in visibleCohortIds
+    var vc = this.getCohortsFromIdList(this.visibleCohortIds);
+    this.setVisibleCohorts(vc);
   },
   methods: {
     ...mapActions('dataExplorer', {
@@ -190,6 +212,25 @@ export default {
       setDetailedView: actions.SET_DETAILED_VIEW,
       setVisibleCohorts: actions.SET_VISIBLE_COHORTS,
     }),
+    updateVisibleCohorts(vc) {
+      this.setVisibleCohorts(vc);
+    },
+    getCohortsFromIdList(idList) {
+      var sc = [];
+      if (typeof idList !== 'undefined' && idList !== '') {
+        const cids = {};
+        var collectionId = this.collection.id;
+        idList.split(',').forEach(c => {
+          cids[c] = 1;
+        });
+        this.cohorts.forEach(c => {
+          if (c.collection_id === collectionId && c.id in cids) {
+            sc.push(c);
+          }
+        });
+      }
+      return sc;
+    },
   },
 };
 </script>
