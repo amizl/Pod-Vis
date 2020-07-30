@@ -58,8 +58,8 @@
               ]"
               prepend-inner-icon="table_chart"
               label="Comparator cohort name prefix:"
-              box
-              flat
+              filled
+              text
               background-color="grey lighten-4"
               class="mt-2"
             >
@@ -75,7 +75,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="red lighten-2" @click="dialog = false">
+          <v-btn text color="red lighten-2" @click="dialog = false">
             <v-icon left>close</v-icon> Cancel
           </v-btn>
           <v-btn
