@@ -12,6 +12,17 @@
         >Summary Matrix
         <div class="subheading">Dataset: {{ collection.label }}</div>
       </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        v-if="substep === '4.1'"
+        color="primary--text"
+        :disabled="tableCohortsSelected.length < 2"
+        @click="goto4p2()"
+      >
+        Continue</v-btn
+      >
     </v-app-bar>
 
     <analysis-tracker
@@ -20,9 +31,29 @@
       :collection-id="collectionId"
     ></analysis-tracker>
 
-    <v-container fluid fill-width class="ma-0 pa-0 pt-2">
+    <!-- Step 4.1 -->
+    <v-container
+      v-if="substep === '4.1'"
+      fluid
+      fill-width
+      class="ma-0 pa-0 pt-2"
+    >
+      <v-col cols="12" class="ma-0 pa-0">
+        <cohort-table
+          title="Choose Cohorts"
+          :cohorts="collection_cohorts"
+          :show-select="true"
+          @selectedCohorts="updateSelectedCohorts"
+        />
+      </v-col>
+    </v-container>
+
+    <!-- Step 4.2 -->
+    <v-container v-else fluid fill-width class="ma-0 pa-0 pt-2">
       <v-row class="ma-0 pa-0">
-        <v-col cols="12" class="ma-0 pa-0"> <cohort-table /> </v-col>
+        <v-col cols="12" class="ma-0 pa-0">
+          <cohort-table :cohorts="selectedCohorts" title="Selected Cohorts" />
+        </v-col>
       </v-row>
 
       <v-row class="ma-0 pa-0 mt-2">
@@ -36,7 +67,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import { actions } from '@/store/modules/analysisSummary/types';
+import { actions, state } from '@/store/modules/analysisSummary/types';
 import {
   actions as deActions,
   state as deState,
@@ -60,33 +91,57 @@ export default {
       type: Number,
       required: true,
     },
+    cohortIds: {
+      type: String,
+      required: false,
+      default: undefined,
+    },
   },
   data() {
     return {
       isLoading: false,
-      substep: '4.1',
+      tableCohortsSelected: [],
     };
   },
   computed: {
+    ...mapState('analysisSummary', {
+      selectedCohorts: state.SELECTED_COHORTS,
+    }),
     ...mapState('dataExplorer', {
       cohorts: deState.COHORTS,
       collection: deState.COLLECTION,
       data: deState.DATA,
       outcomeVariables: deState.OUTCOME_VARIABLES,
     }),
-  },
-  async created() {
-    this.isLoading = true;
-    await this.fetchCollection(this.collectionId);
-    await this.fetchData();
-    await this.fetchCohorts();
+    substep() {
+      //      return (this.cohortIds && (this.cohortIds != "")) ? '4.2' : '4.1';
+      return this.selectedCohorts.length > 0 ? '4.2' : '4.1';
+    },
+    // cohorts are collection-specific
+    collection_cohorts() {
+      const cch = [];
+      const cid = this.collection.id;
 
-    // set outcome variables to union of cohorts' output variables
-    const varsAdded = {};
-    const outcomeVars = [];
-    this.cohorts
-      .filter(v => v.collection_id === this.collectionId)
-      .forEach(c => {
+      this.cohorts.forEach(e => {
+        if (e.collection_id === cid) {
+          cch.push(e);
+        }
+      });
+
+      return cch;
+    },
+  },
+  watch: {
+    async selectedCohorts(selCohorts) {
+      if (selCohorts.length == 0) {
+        return;
+      }
+      await this.analyzeCohortsDE(selCohorts);
+
+      // set outcome variables to union of cohorts' output variables
+      const varsAdded = {};
+      const outcomeVars = [];
+      this.selectedCohorts.forEach(c => {
         const outputVars = c.output_variables;
         outputVars.forEach(ov => {
           const { id } = ov.observation_ontology;
@@ -96,24 +151,87 @@ export default {
           }
         });
       });
-    await this.setOutcomeVariables(outcomeVars);
-    await this.analyzeCohorts({
-      collection: this.collection,
-      cohorts: this.cohorts,
-      data: this.data,
-    });
+      await this.setOutcomeVariables(outcomeVars);
+      await this.analyzeCohorts({
+        collection: this.collection,
+        cohorts: this.selectedCohorts,
+        data: this.data,
+      });
+    },
+  },
+  async created() {
+    this.isLoading = true;
+    // reset selected cohorts
+    this.setSelectedCohorts([]);
+    await this.fetchCollection(this.collectionId);
+    await this.fetchData();
+    await this.fetchCohorts();
+    // set cohorts from cohortIds property, if defined
+    var selCohorts = this.getSelectedCohortsFromIdList();
+    if (selCohorts.length > 0) {
+      this.setSelectedCohorts(selCohorts);
+    }
     this.isLoading = false;
   },
   methods: {
     ...mapActions('analysisSummary', {
+      setSelectedCohorts: actions.SET_SELECTED_COHORTS,
       analyzeCohorts: actions.ANALYZE_COHORTS,
     }),
     ...mapActions('dataExplorer', {
+      analyzeCohortsDE: deActions.ANALYZE_COHORTS,
       fetchCohorts: deActions.FETCH_COHORTS,
       fetchCollection: deActions.FETCH_COLLECTION,
       fetchData: deActions.FETCH_DATA,
       setOutcomeVariables: deActions.SET_OUTCOME_VARIABLES,
     }),
+    // cohorts currently selected in step 4.1
+    updateSelectedCohorts(sc) {
+      this.tableCohortsSelected = sc;
+    },
+    // cohorts selected for step 4.2
+    getSelectedCohortsFromIdList() {
+      var sc = [];
+      if (typeof this.cohortIds !== 'undefined' && this.cohortIds !== '') {
+        const cids = {};
+        var collectionId = this.collection.id;
+        this.cohortIds.split(',').forEach(c => {
+          cids[c] = 1;
+        });
+        this.cohorts.forEach(c => {
+          if (c.collection_id === collectionId && c.id in cids) {
+            sc.push(c);
+          }
+        });
+      }
+      return sc;
+    },
+    async updateCohortIds() {
+      await this.analyzeCohortsDE(selCohorts);
+
+      // set outcome variables to union of cohorts' output variables
+      const varsAdded = {};
+      const outcomeVars = [];
+      this.selectedCohorts.forEach(c => {
+        const outputVars = c.output_variables;
+        outputVars.forEach(ov => {
+          const { id } = ov.observation_ontology;
+          if (!(id in varsAdded)) {
+            varsAdded[id] = 1;
+            outcomeVars.push(ov.observation_ontology);
+          }
+        });
+      });
+      await this.setOutcomeVariables(outcomeVars);
+      await this.analyzeCohorts({
+        collection: this.collection,
+        cohorts: this.selectedCohorts,
+        data: this.data,
+      });
+    },
+    async goto4p2() {
+      this.setSelectedCohorts(this.tableCohortsSelected);
+    },
   },
 };
 </script>

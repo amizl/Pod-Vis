@@ -3,6 +3,10 @@ import { ErrorNotification } from '@/store/modules/notifications/notifications';
 import { actions, mutations } from './types';
 
 export default {
+  [actions.SET_SELECTED_COHORTS]({ commit }, cohorts) {
+    commit(mutations.SET_SELECTED_COHORTS, cohorts);
+  },
+
   [actions.SET_SELECTED_OUTCOME_VARIABLE]({ commit }, outcomeVariable) {
     commit(mutations.SET_SELECTED_OUTCOME_VARIABLE, outcomeVariable);
   },

@@ -9,14 +9,7 @@
           <v-container fluid fill-width class="ma-0 pa-0">
             <v-row class="ma-0 pa-0">
               <v-col cols="12" class="ma-0 pa-0">
-                <v-card
-                  :color="
-                    this.selectedOutcomeVariable != null
-                      ? 'rgb(236,177,212)'
-                      : '#eeeeee'
-                  "
-                  class="pt-1"
-                >
+                <v-card color="#eeeeee" class="pt-1">
                   <v-card-title class="primary--text pl-3 py-2"
                     >Tukey Range/HSD Test
                     <v-spacer />
@@ -110,11 +103,11 @@ export default {
   },
   computed: {
     ...mapState('analysisSummary', {
+      selectedCohorts: state.SELECTED_COHORTS,
       selectedOutcomeVariable: state.SELECTED_OUTCOME_VARIABLE,
       pairwiseTukeyHsdPvals: state.PAIRWISE_TUKEY_HSD_PVALS,
     }),
     ...mapState('dataExplorer', {
-      cohorts: deState.COHORTS,
       collection: deState.COLLECTION,
       outcomeVariables: deState.OUTCOME_VARIABLES,
       anova_pvals: deState.ANOVA_PVALS,
@@ -125,7 +118,7 @@ export default {
       const cid = this.collection.id;
       let ccnum = 0;
 
-      this.cohorts.forEach(e => {
+      this.selectedCohorts.forEach(e => {
         if (e.collection_id === cid) {
           e.color = { value: '#d0d0d0', text: 'Grey' };
           e.index = ccnum;

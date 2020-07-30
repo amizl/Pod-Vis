@@ -170,7 +170,7 @@
           Click on "CHOOSE PREDICTOR VARIABLES" below and select one or more
           variables, then click here to
           <v-btn small outlined color="primary--text" @click="goto3p2()"
-            >Continue</v-btn
+            >CONTINUE</v-btn
           >.
         </v-stepper-content>
 
@@ -239,14 +239,28 @@
 
     <v-stepper v-if="step === '4'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
-        <v-stepper-step step="4.1"
-          >Choose a variable from the One-Way ANOVA table (top), then click on
-          one of the p-values in the Tukey/Range HSD test table (bottom) to
-          compare those cohorts in the Data Explorer.</v-stepper-step
-        >
+        <v-stepper-step step="4.1">Choose cohorts to compare.</v-stepper-step>
         <v-divider></v-divider>
+        <v-stepper-step step="4.2"
+          >Select a variable from One-Way ANOVA table</v-stepper-step
+        >
       </v-stepper-header>
+
+      <v-stepper-items>
+        <v-stepper-content step="4.1">
+          Choose two or more cohorts to compare, then click "Continue".
+        </v-stepper-content>
+        <v-stepper-content step="4.2">
+          Select a variable from the One-Way ANOVA table to see the all-vs-all
+          cohort comparison via the Tukey/Range HSD Test. Click on a P-value in
+          that table to compare those cohorts in the Data Explorer.
+        </v-stepper-content>
+      </v-stepper-items>
     </v-stepper>
+
+    <!--(top), then click on
+          one of the p-values in the Tukey/Range HSD test table (bottom) to
+          compare those cohorts in the Data Explorer. -->
 
     <v-stepper v-if="step === '5'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">

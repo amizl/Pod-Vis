@@ -60,6 +60,7 @@ export default new Router({
       props: route => ({
         user: route.params.user,
         collectionId: +route.query.collection,
+        cohortIds: route.query.cohorts,
       }),
     },
     {

@@ -51,7 +51,7 @@
                 </td>
                 <td
                   :key="props.item.id"
-                  class="text-xs-left"
+                  class="text-subtitle-1 text-xs-left"
                   :style="{ backgroundColor: table_cell_color(props.item) }"
                 >
                   {{ table_cell(props.item) }}
@@ -121,25 +121,9 @@ export default {
       selectedOutcomeVariable: state.SELECTED_OUTCOME_VARIABLE,
     }),
     ...mapState('dataExplorer', {
-      cohorts: deState.COHORTS,
-      collection: deState.COLLECTION,
       outcomeVariables: deState.OUTCOME_VARIABLES,
       anova_pvals: deState.ANOVA_PVALS,
     }),
-    // cohorts are collection-specific
-    collection_cohorts() {
-      const cch = [];
-      const cid = this.collection.id;
-
-      this.cohorts.forEach(e => {
-        if (e.collection_id === cid) {
-          e.color = { value: '#d0d0d0', text: 'Grey' };
-          cch.push(e);
-        }
-      });
-
-      return cch;
-    },
     pval_dict() {
       const ap = this.anova_pvals;
       const pd = {};
@@ -147,12 +131,6 @@ export default {
         pd[a.label] = a;
       });
       return pd;
-    },
-    items() {
-      return [this.collection_cohorts[0]];
-    },
-    outcomeVars() {
-      return [this.outcomeVariables];
     },
   },
   created() {
@@ -168,7 +146,7 @@ export default {
         const { fval } = pd[ov.label];
         return `${format('.3f')(fval)}`;
       }
-      return null;
+      return 'X';
     },
     variable_pval(ov) {
       const pd = this.pval_dict;
