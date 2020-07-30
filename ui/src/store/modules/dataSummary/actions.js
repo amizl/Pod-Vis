@@ -33,14 +33,14 @@ export default {
       var lastVisits = {};
       var visitVar = null;
       data.collection.observation_variables.forEach(ov => {
-        if (ov['first_visit_event']) {
-          visitVar = 'Visit Event';
-          firstVisits[ov['ontology']['id']] = ov['first_visit_event'];
-          lastVisits[ov['ontology']['id']] = ov['last_visit_event'];
-        } else {
+        if (ov['first_visit_num']) {
           visitVar = 'Visit Number';
           firstVisits[ov['ontology']['id']] = ov['first_visit_num'];
           lastVisits[ov['ontology']['id']] = ov['last_visit_num'];
+        } else {
+          visitVar = 'Visit Event';
+          firstVisits[ov['ontology']['id']] = ov['first_visit_event'];
+          lastVisits[ov['ontology']['id']] = ov['last_visit_event'];
         }
       });
       commit(mutations.SET_VISIT_VARIABLE, visitVar);

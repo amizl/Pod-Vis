@@ -306,6 +306,18 @@ export default {
           'ST',
         ];
       }
+      // if events are all numeric, sort them numerically
+      var numericEvents = true;
+      this.uniqueEvents.forEach(e => {
+        if (isNaN(e)) {
+          numericEvents = false;
+        }
+      });
+      if (numericEvents) {
+        this.uniqueEvents = this.uniqueEvents
+          .map(a => +a)
+          .sort((a, b) => a - b);
+      }
 
       // Compute firstLast and lastFirst visits
       // TODO - duplicated from VisitVariablesToolbar
