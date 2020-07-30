@@ -43,6 +43,7 @@
           title="Choose Cohorts"
           :cohorts="collection_cohorts"
           :show-select="true"
+          :report-max-overlap="true"
           @selectedCohorts="updateSelectedCohorts"
         />
       </v-col>
