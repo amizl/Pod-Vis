@@ -9,6 +9,7 @@
     :items="datasets"
     item-key="study_name"
     class="pb-1"
+    disable-pagination
     hide-default-footer
   >
     <template v-slot:item.project_name="{ item }">

@@ -40,7 +40,8 @@
             :headers="headers"
             :items="items"
             class="elevation-1"
-            :hide-default-footer="true"
+            hide-default-footer
+	    disable-pagination
             dense
           >
             <template v-slot:item="props">

@@ -6,6 +6,7 @@
       :headers="headers"
       :items="visibleCollections"
       item-key="label"
+      disable-pagination
       hide-default-footer
     >
       <template v-slot:item="props">
