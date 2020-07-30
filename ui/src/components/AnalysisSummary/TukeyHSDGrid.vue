@@ -41,7 +41,7 @@
             :items="items"
             class="elevation-1"
             hide-default-footer
-	    disable-pagination
+            disable-pagination
             dense
           >
             <template v-slot:item="props">
