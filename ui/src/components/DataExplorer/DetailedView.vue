@@ -23,6 +23,7 @@
          <v-btn text color="#3FB551" class="white--text mr-2 py-1" value="line">LINE</v-btn>
         </v-btn-toggle>
 	-->
+        <!--
         <span class="pl-2">X-Axis:</span>
         <v-btn-toggle v-model="xaxis" class="pl-2" mandatory>
           <v-btn text color="primary" class="white--text" value="visits"
@@ -32,6 +33,7 @@
             >DAYS</v-btn
           >
         </v-btn-toggle>
+-->
         <v-checkbox
           v-model="draw_raw"
           label="Show Raw Data"
@@ -40,6 +42,11 @@
         <v-checkbox
           v-model="draw_mean"
           label="Overlay Mean/SD"
+          class="pl-3"
+        ></v-checkbox>
+        <v-checkbox
+          v-model="show_population_counts"
+          label="Show Study Population Counts"
           class="pl-3"
         ></v-checkbox>
       </v-row>
@@ -64,6 +71,7 @@
             :line-style="line_style"
             :draw-mean="draw_mean"
             :draw-raw="draw_raw"
+            :show-population-counts="show_population_counts"
             :xaxis="xaxis"
             class="pa-0 ma-0"
           />
@@ -87,7 +95,8 @@ export default {
       line_style: 'bezier',
       draw_mean: true,
       draw_raw: true,
-      xaxis: 'visits',
+      show_population_counts: false,
+      xaxis: 'visit_event',
     };
   },
   computed: {

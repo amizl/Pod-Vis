@@ -18,9 +18,10 @@
 <script>
 import { mapState } from 'vuex';
 import { state } from '@/store/modules/dataExplorer/types';
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear, scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
 import { max, mean, deviation } from 'd3-array';
+import { sortByVisitEvent, sortVisitEvents } from '@/utils/helpers';
 
 export default {
   directives: {
@@ -53,6 +54,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    showPopulationCounts: {
+      type: Boolean,
+      required: true,
+    },
     xaxis: {
       type: String,
       required: true,
@@ -75,7 +80,7 @@ export default {
       height: 0,
       initialWidth: 0,
       initialHeight: 0,
-      margin: { top: 20, right: 50, bottom: 100, left: 50 },
+      margin: { top: 20, right: 75, bottom: 100, left: 75 },
       tick_font: '15px sans-serif',
       label_font: '20px sans-serif',
       y_axis_pad_frac: 0.1,
@@ -89,6 +94,7 @@ export default {
       visibleCohorts: state.VISIBLE_COHORTS,
       collection: state.COLLECTION,
     }),
+    // get raw data, *for a specific variable/dimension*
     getRawData() {
       const filtered = this.rawData.filter(
         d => d.observation_ontology_id === this.dimensionName
@@ -117,7 +123,10 @@ export default {
         });
       });
 
-      return filtered;
+      // sort by visit event
+      var visit_evt_fn = x => x.visit_event;
+      var sorted = sortByVisitEvent(filtered, visit_evt_fn);
+      return sorted;
     },
     yAxisRangeMax() {
       const rd = this.getRawData;
@@ -129,6 +138,11 @@ export default {
     // x-axis
     // --------------------------------------------------
     xaccessor() {
+      if (this.xaxis === 'visit_event') {
+        return x => x.visit_event;
+      } else if (this.xaxis === 'visit_num') {
+        return x => x.visit_num;
+      }
       if (this.xaxis === 'days') {
         return function(x) {
           return x.subject_event_day;
@@ -139,13 +153,21 @@ export default {
       };
     },
     timepoints() {
-      const rd = this.getRawData;
+      // timepoints for current variable only
+      //      const rd = this.getRawData;
+      // return all timepoints
+      const rd = this.rawData;
       const timepoints = {};
       const xacc = this.xaccessor;
+      var numericEvents = true;
       rd.forEach(x => {
-        timepoints[xacc(x)] = 1;
+        var xa = xacc(x);
+        if (isNaN(xa)) {
+          numericEvents = false;
+        }
+        timepoints[xa] = 1;
       });
-      return Object.keys(timepoints).sort((a, b) => a - b);
+      return sortVisitEvents(Object.keys(timepoints));
     },
     xmin() {
       const tp = this.timepoints;
@@ -153,15 +175,14 @@ export default {
     },
     xmax() {
       const tp = this.timepoints;
-      // TODO - allow user to adjust xmax up to the limit
       return tp[tp.length - 1];
     },
     xDimensionScale() {
-      return scaleLinear()
-        .domain([this.xmin, this.xmax])
+      const tp = this.timepoints;
+      return scaleBand()
+        .domain(tp)
         .range([0, this.computedWidth]);
     },
-
     computedWidth() {
       const { left, right } = this.margin;
       const { width } = this;
@@ -196,6 +217,9 @@ export default {
       this.updateCanvas();
     },
     drawMean() {
+      this.updateCanvas();
+    },
+    showPopulationCounts() {
       this.updateCanvas();
     },
     cohorts() {
@@ -316,21 +340,23 @@ export default {
       const meanPath = [];
       const meanMinusSDPath = [];
       const meanPlusSDPath = [];
+      const tpts = this.timepoints;
 
-      const sortedTp = Object.keys(tp2data).sort((a, b) => a - b);
-
-      sortedTp.forEach(tp => {
-        const data = tp2data[tp];
-        const mn = mean(data);
-        let sd = deviation(data);
-        // TODO - determine whether this is the best approach - normally sd is undefined for a sample of size 1
-        if (sd === undefined) {
-          sd = 0;
+      tpts.forEach(tp => {
+        if (tp in tp2data) {
+          const data = tp2data[tp];
+          const mn = mean(data);
+          let sd = deviation(data);
+          // TODO - determine whether this is the best approach - normally sd is undefined for a sample of size 1
+          if (sd === undefined) {
+            sd = 0;
+          }
+          //          console.log("tp= " + tp + " data.length=" + data.length);
+          const xp = xds(tp);
+          meanPath.push({ x: xp, y: ds(mn) });
+          meanMinusSDPath.push({ x: xp, y: ds(mn - sd) });
+          meanPlusSDPath.push({ x: xp, y: ds(mn + sd) });
         }
-        const xp = xds(tp);
-        meanPath.push({ x: xp, y: ds(mn) });
-        meanMinusSDPath.push({ x: xp, y: ds(mn - sd) });
-        meanPlusSDPath.push({ x: xp, y: ds(mn + sd) });
       });
 
       return [meanPath, meanMinusSDPath, meanPlusSDPath];
@@ -503,23 +529,22 @@ export default {
       }
     },
 
-    drawSubjectCountsVerticalAxis(yscale, maxSubjects, which) {
+    drawSubjectCountsVerticalAxis(yscale, maxSubjects, which, xOffset) {
       const tickCount = 3;
       const tickSize = 6;
       const ticks = yscale.ticks(tickCount);
       const tickFormat = yscale.tickFormat(tickCount);
-      let x1 = 0;
-      let x2 = -tickSize;
+      let x1 = xOffset;
+      let x2 = xOffset - tickSize;
       let tickOffset = -3;
       let textAlign = 'right';
 
       if (which === 'right') {
-        x1 = this.computedWidth;
-        x2 = this.computedWidth + tickSize;
+        x1 = this.computedWidth + xOffset;
+        x2 = this.computedWidth + xOffset + tickSize;
         tickOffset = 3;
         textAlign = 'left';
       }
-
       this.context.font = this.tick_font;
       this.context.beginPath();
       ticks.forEach(d => {
@@ -536,105 +561,75 @@ export default {
       });
     },
 
-    // plot number of subjects remaining at each timepoint/visit
+    // plot number of subjects at each timepoint/visit
     // TODO - move computation of subject counts out of the draw loop
     drawSubjectCounts() {
       const rd = this.getRawData;
-      const cohorts = this.selectedCohorts();
+      const selCohorts = this.selectedCohorts();
       const xacc = this.xaccessor;
-      let tickCount = 10;
       const tpts = this.timepoints;
 
-      // compute last timepoint for each subject
-      const subj2lasttp = {};
+      // count total number of subject ids at each timepoint
+      const tp2subjIds = {};
       rd.forEach(r => {
-        if (
-          !(r.subject_id in subj2lasttp) ||
-          subj2lasttp[r.subject_id] < xacc(r)
-        ) {
-          subj2lasttp[r.subject_id] = xacc(r);
+        var evt = xacc(r);
+        if (!(evt in tp2subjIds)) {
+          tp2subjIds[evt] = {};
+        }
+        tp2subjIds[evt][r.subject_id] = 1;
+      });
+
+      const tp2subjCount = {};
+      const tp2cohortSubjCounts = {};
+
+      var maxSubjects = 0;
+      Object.keys(tp2subjIds).forEach(tp => {
+        var subj_ids_d = tp2subjIds[tp];
+        var n_subj = Object.keys(subj_ids_d).length;
+
+        // population count - all subjects
+        tp2subjCount[tp] = n_subj;
+
+        // per-cohort counts
+        var cc = {};
+        tp2cohortSubjCounts[tp] = cc;
+
+        selCohorts.forEach(c => {
+          var n_cohort_subjs = 0;
+          c.subject_ids.forEach(sid => {
+            if (sid in subj_ids_d) {
+              n_cohort_subjs += 1;
+            }
+          });
+          cc[c.id] = n_cohort_subjs;
+          if (n_cohort_subjs > maxSubjects) {
+            maxSubjects = n_cohort_subjs;
+          }
+        });
+
+        if (this.showPopulationCounts) {
+          if (n_subj > maxSubjects) {
+            maxSubjects = n_subj;
+          }
         }
       });
 
-      const maxSubjects = Object.keys(subj2lasttp).length;
-
-      // map timepoint to list of subjects for whom it is the last visit
-      const last2subjects = {};
-      Object.keys(subj2lasttp).forEach(sid => {
-        const tp = subj2lasttp[sid];
-        if (!(tp in last2subjects)) {
-          last2subjects[tp] = [];
-        }
-        last2subjects[tp].push(sid);
-      });
-
-      // map timepoint to remaining subjects in each cohort
-      const tp2ccounts = {};
-
-      const ccounts = {};
-      ccounts.population = {};
-      Object.keys(subj2lasttp).forEach(x => {
-        ccounts.population[x] = 1;
-      });
-      cohorts.forEach(c => {
-        ccounts[c.label] = {};
-        c.subject_ids.forEach(sid => {
-          ccounts[c.label][sid] = 1;
-        });
-      });
-
-      Object.keys(last2subjects)
-        .sort((a, b) => a - b)
-        .forEach(tp => {
-          // shallow copy
-          tp2ccounts[tp] = {
-            population: Object.assign({}, ccounts.population),
-          };
-          cohorts.forEach(c => {
-            tp2ccounts[tp][c.label] = Object.assign({}, ccounts[c.label]);
-          });
-
-          // update cohorts, including total population
-          const subjids = last2subjects[tp];
-          subjids.forEach(x => {
-            delete ccounts.population[x];
-            cohorts.forEach(c => {
-              delete ccounts[c.label][x];
-            });
-          });
-        });
-
-      if (this.xaxis === 'visits') {
-        tickCount = tpts.length;
-      }
-      const xscale = scaleLinear()
-        .domain([this.xmin, this.xmax])
-        .range([0, this.computedWidth]);
       const yscale = scaleLinear()
         .domain([0, maxSubjects])
         .range([this.computedHeight + 90, this.computedHeight + 40]);
-      const ticks = xscale.ticks(tickCount);
 
-      // add missing timepoints to tp2ccounts
-      let lastTp = -1;
-      let tnum = 0;
-      Object.keys(tp2ccounts)
-        .sort((a, b) => a - b)
-        .forEach(tp => {
-          while (ticks[tnum] <= tp) {
-            tp2ccounts[ticks[tnum]] = tp2ccounts[tp];
-            tnum += 1;
-          }
-          lastTp = tp;
-        });
+      const xOffset =
+        -(this.xDimensionScale(tpts[1]) - this.xDimensionScale(tpts[0])) / 2.0;
 
-      this.drawSubjectCountsVerticalAxis(yscale, maxSubjects, 'left');
-      this.drawSubjectCountsVerticalAxis(yscale, maxSubjects, 'right');
+      this.drawSubjectCountsVerticalAxis(yscale, maxSubjects, 'left', xOffset);
+      this.drawSubjectCountsVerticalAxis(yscale, maxSubjects, 'right', xOffset);
 
       // plot subject counts
-      const barsWidth = xscale(ticks[1]) - xscale(ticks[0]) - 2;
-      const nBars = cohorts.length + 1;
+      const barsWidth =
+        this.xDimensionScale(tpts[1]) - this.xDimensionScale(tpts[0]) - 2;
+      const nBars = selCohorts.length + (this.showPopulationCounts ? 1 : 0);
       const barWidth = barsWidth / nBars;
+      const xscale = this.xDimensionScale;
 
       const drawBar = function(
         context,
@@ -649,7 +644,7 @@ export default {
         context.strokeStyle = 'white';
         context.globalAlpha = opacity;
         context.beginPath();
-        const x1 = xscale(time) + barnum * barWidth;
+        const x1 = xOffset + xscale(time) + barnum * barWidth;
         const x2 = x1 + barWidth;
         const y1 = yscale(startSubjCount);
         const y2 = yscale(endSubjCount);
@@ -664,21 +659,24 @@ export default {
       };
 
       this.context.font = this.label_font;
-      ticks.forEach(d => {
-        if (d >= this.xmax) return;
+      tpts.forEach(tpt => {
         let barnum = 0;
 
-        // population
-        const subjCount = Object.keys(tp2ccounts[d].population).length;
-        drawBar(this.context, d, barnum, 0, subjCount, '#F8D580', 0.7);
-        barnum += 1;
+        // study population count
+        const subjCount = tp2subjCount[tpt];
+        if (this.showPopulationCounts) {
+          drawBar(this.context, tpt, barnum, 0, subjCount, '#F8D580', 0.7);
+          barnum += 1;
+        }
 
-        // using multiple bar graph instead of stacked bar graph because the cohorts are not disjoint
+        // using multiple bar graph instead of stacked bar graph because the cohorts are not necessarily disjoint
         const bars = [];
 
-        cohorts.forEach(c => {
-          const sc = Object.keys(tp2ccounts[d][c.label]).length;
-          bars.push({ tp: d, score: sc, color: c.color });
+        selCohorts.forEach(c => {
+          if (tpt in tp2cohortSubjCounts) {
+            const sc = tp2cohortSubjCounts[tpt][c.id];
+            bars.push({ tp: tpt, score: sc, color: c.color });
+          }
         });
 
         // TODO - sort bars in same order that cohorts are listed in Cohorts panel?
@@ -776,20 +774,19 @@ export default {
       const tp = this.timepoints;
       const { xmax } = this;
 
-      if (this.xaxis === 'visits') {
+      if (this.xaxis !== 'days') {
         tickCount = tp.length;
       }
 
-      const scale = scaleLinear()
-        .domain([this.xmin, this.xmax])
-        .range([0, this.computedWidth]);
-      const ticks = scale.ticks(tickCount);
-      const tickFormat = scale.tickFormat(tickCount);
+      const scale = this.xDimensionScale;
 
       this.context.beginPath();
-      ticks.forEach(d => {
-        this.context.moveTo(scale(d), this.dimensionScale(0));
-        this.context.lineTo(scale(d), this.dimensionScale(0) + tickSize);
+      tp.forEach(d => {
+        this.context.moveTo(this.xDimensionScale(d), this.dimensionScale(0));
+        this.context.lineTo(
+          this.xDimensionScale(d),
+          this.dimensionScale(0) + tickSize
+        );
       });
       this.context.strokeStyle = 'black';
       this.context.stroke();
@@ -805,9 +802,9 @@ export default {
 
       this.context.textAlign = 'center';
       this.context.textBaseline = 'middle';
-      ticks.forEach(d => {
+      tp.forEach(d => {
         this.context.fillText(
-          tickFormat(d),
+          d,
           this.xDimensionScale(d),
           this.dimensionScale(0) + tickSize + tickPadding * 2
         );
