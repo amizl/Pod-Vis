@@ -33,6 +33,7 @@ import { colors } from '@/utils/colors';
 import {
   getObservationVariableIds,
   getObservationVariableNames,
+  sortVisitEvents,
 } from '@/utils/helpers';
 
 export default {
@@ -277,47 +278,7 @@ export default {
       );
 
       this.eventCount = this.uniqueEvents.length;
-      // HACK for PPMI
-      if (
-        this.uniqueEvents.join(',') ==
-        'BL,PW,SC,ST,U01,V01,V02,V03,V04,V05,V06,V07,V08,V09,V10,V11,V12,V13,V14,V15,V16'
-      ) {
-        this.uniqueEvents = [
-          'SC',
-          'BL',
-          'U01',
-          'V01',
-          'V02',
-          'V03',
-          'V04',
-          'V05',
-          'V06',
-          'V07',
-          'V08',
-          'V09',
-          'V10',
-          'V11',
-          'V12',
-          'V13',
-          'V14',
-          'V15',
-          'V16',
-          'PW',
-          'ST',
-        ];
-      }
-      // if events are all numeric, sort them numerically
-      var numericEvents = true;
-      this.uniqueEvents.forEach(e => {
-        if (isNaN(e)) {
-          numericEvents = false;
-        }
-      });
-      if (numericEvents) {
-        this.uniqueEvents = this.uniqueEvents
-          .map(a => +a)
-          .sort((a, b) => a - b);
-      }
+      this.uniqueEvents = sortVisitEvents(this.uniqueEvents);
 
       // Compute firstLast and lastFirst visits
       // TODO - duplicated from VisitVariablesToolbar

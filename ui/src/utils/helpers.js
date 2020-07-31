@@ -144,3 +144,70 @@ export function getObservationVariableIds(c) {
   getCollectionVarIds(c.observation_variables);
   return Object.keys(collectionVarIds);
 }
+
+// PPMI-specific workaround
+export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
+  var numericEvents = true;
+  unsorted_list.forEach(e => {
+    if (isNaN(event_accessor_fn(e))) {
+      numericEvents = false;
+    }
+  });
+
+  // sort numerically
+  if (numericEvents) {
+    return unsorted_list.sort(
+      (a, b) => event_accessor_fn(a) - event_accessor_fn(b)
+    );
+  }
+
+  var uniqueEvents = [
+    'SC',
+    'BL',
+    'U01',
+    'V01',
+    'V02',
+    'V03',
+    'V04',
+    'V05',
+    'V06',
+    'V07',
+    'V08',
+    'V09',
+    'V10',
+    'V11',
+    'V12',
+    'V13',
+    'V14',
+    'V15',
+    'V16',
+    'PW',
+    'ST',
+  ];
+
+  var evtIdx = {};
+  var ind = 1;
+  uniqueEvents.forEach(e => {
+    evtIdx[e] = ind++;
+  });
+  function getIndex(evt) {
+    return evt in evtIdx ? evtIdx[evt] : ind + 1;
+  }
+
+  function sortFn(a, b) {
+    var a_evt = event_accessor_fn(a);
+    var b_evt = event_accessor_fn(b);
+    var a_i = getIndex(a_evt);
+    var b_i = getIndex(b_evt);
+    if (a_i < b_i) return -1;
+    if (b_i < a_i) return 1;
+    return a_evt.localeCompare(b_evt);
+  }
+
+  return unsorted_list.sort(sortFn);
+}
+
+export function sortVisitEvents(events) {
+  var acc_fn = x => x;
+  return sortByVisitEvent(events, acc_fn);
+}
