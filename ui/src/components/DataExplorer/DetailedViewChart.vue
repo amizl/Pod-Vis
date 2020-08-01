@@ -22,6 +22,7 @@ import { scaleLinear, scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
 import { max, mean, deviation } from 'd3-array';
 import { sortByVisitEvent, sortVisitEvents } from '@/utils/helpers';
+import { colors } from '@/utils/colors';
 
 export default {
   directives: {
@@ -92,6 +93,7 @@ export default {
       tick_font: '15px sans-serif',
       label_font: '20px sans-serif',
       y_axis_pad_frac: 0.1,
+      colors: colors,
     };
   },
   computed: {
@@ -748,10 +750,10 @@ export default {
         var barWidth = xscale(tpts[1]) - xscale(tpts[0]);
 
         var fve = obs_vars[0].first_visit_event;
-        drawHighlight(this.context, fve, barWidth, 'green', 0.15);
+        drawHighlight(this.context, fve, barWidth, colors['firstVisit'], 0.15);
 
         var lve = obs_vars[0].last_visit_event;
-        drawHighlight(this.context, lve, barWidth, 'red', 0.15);
+        drawHighlight(this.context, lve, barWidth, colors['lastVisit'], 0.15);
       }
       this.context.strokeStyle = 'black';
       this.context.fillStyle = 'black';
