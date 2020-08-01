@@ -6,12 +6,13 @@
           <v-card color="#eeeeee" class="pt-1">
             <v-card-title class="primary--text pl-3 py-2"
               >{{ title }}
-	      <v-spacer />
-	      <v-toolbar-items>
-		<v-icon v-if="expanded" @click="expanded = false"
-			>expand_less</v-icon>
+              <v-spacer />
+              <v-toolbar-items>
+                <v-icon v-if="expanded" @click="expanded = false"
+                  >expand_less</v-icon
+                >
                 <v-icon v-else @click="expanded = true">expand_more</v-icon>
-	      </v-toolbar-items>
+              </v-toolbar-items>
             </v-card-title>
           </v-card>
         </v-col>
