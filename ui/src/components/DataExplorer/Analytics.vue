@@ -33,8 +33,10 @@
             <template v-slot:item="props">
               <tr
                 :class="{
-                  selectedRow: detailed_view && (detailed_view.label == props.item.label),
+                  selectedRow:
+                    detailed_view && detailed_view.label == props.item.label,
                 }"
+                @click="table_row_click(props.item)"
               >
                 <td class="text-subtitle-1 text-xs-left">
                   {{ props.item.label }}
@@ -55,8 +57,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { state } from '@/store/modules/dataExplorer/types';
+import { mapActions, mapState } from 'vuex';
+import { actions, state } from '@/store/modules/dataExplorer/types';
 import { format } from 'd3-format';
 
 export default {
@@ -103,7 +105,21 @@ export default {
     ...mapState('dataExplorer', {
       anova_pvals: state.ANOVA_PVALS,
       detailed_view: state.DETAILED_VIEW,
+      outcomeVariables: state.OUTCOME_VARIABLES,
     }),
+  },
+  methods: {
+    ...mapActions('dataExplorer', {
+      setDetailedView: actions.SET_DETAILED_VIEW,
+    }),
+
+    table_row_click(clicked) {
+      this.outcomeVariables.forEach(ov => {
+        if (ov.label == clicked.label) {
+          this.setDetailedView(ov);
+        }
+      });
+    },
   },
 };
 </script>
