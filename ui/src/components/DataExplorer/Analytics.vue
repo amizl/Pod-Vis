@@ -33,7 +33,7 @@
             <template v-slot:item="props">
               <tr
                 :class="{
-                  selectedRow: detailed_view.label == props.item.label,
+                  selectedRow: detailed_view && (detailed_view.label == props.item.label),
                 }"
               >
                 <td class="text-subtitle-1 text-xs-left">
