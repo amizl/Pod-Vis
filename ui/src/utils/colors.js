@@ -69,7 +69,9 @@ export let colors = {
   'warn-text': '#F8D5F0',
 
   firstVisit: '#8bdb35',
+  'firstVisit-opacity': '0.4',
   lastVisit: '#db5454',
+  'lastVisit-opacity': '0.4',
 };
 
 export function getNumSubjectsColor(nSubjects) {

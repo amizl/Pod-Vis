@@ -491,6 +491,7 @@ export default {
         var_name,
         visit,
         color,
+	opacity,
         chart,
         is_first
       ) {
@@ -505,7 +506,7 @@ export default {
           .attr('width', x.bandwidth())
           .attr('height', y.bandwidth())
           .style('fill', 'none')
-          .style('opacity', '0.4')
+          .style('opacity', opacity)
           .attr('stroke', color)
           .attr('stroke-width', '3');
       };
@@ -515,6 +516,7 @@ export default {
         var_name,
         visit,
         color,
+        opacity,
         chart,
         is_first
       ) {
@@ -529,7 +531,7 @@ export default {
           .attr('width', x.bandwidth())
           .attr('height', y.bandwidth())
           .style('fill', color)
-          .style('opacity', '0.4')
+          .style('opacity', opacity)
           .attr('stroke', 'black')
           .attr('stroke-width', '0.5');
 
@@ -712,6 +714,7 @@ export default {
               varIdToName[ov['ontology']['id']],
               ov['first_' + vvl],
               colors['firstVisit'],
+              colors['firstVisit-opacity'],
               this,
               true
             );
@@ -722,6 +725,7 @@ export default {
               varIdToName[ov['ontology']['id']],
               ov['last_' + vvl],
               colors['lastVisit'],
+              colors['lastVisit-opacity'],
               this,
               false
             );
@@ -746,6 +750,7 @@ export default {
             varIdToName[vid],
             fv,
             colors['firstVisit'],
+            colors['firstVisit-opacity'],
             this,
             true
           );
@@ -756,6 +761,7 @@ export default {
             varIdToName[vid],
             lv,
             colors['lastVisit'],
+            colors['lastVisit-opacity'],
             this,
             false
           );
