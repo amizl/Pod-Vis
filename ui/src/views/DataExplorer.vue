@@ -62,7 +62,13 @@
             </v-row>
 
             <v-row class="ma-0 pa-0 pt-2" min-height="400px">
-              <v-col cols="7" class="ma-0 pa-0">
+              <v-col cols="5" class="ma-0 pa-0">
+                <v-sheet color="white" height="100%" class="rounded-lg shadow">
+                  <analytics />
+                </v-sheet>
+              </v-col>
+
+	      <v-col cols="7" class="ma-0 pa-0 pl-2">
                 <v-sheet
                   color="white"
                   height="100%"
@@ -70,12 +76,6 @@
                   class="rounded-lg shadow"
                 >
                   <detailed-view min-height="400px" />
-                </v-sheet>
-              </v-col>
-
-              <v-col cols="5" class="ma-0 pa-0 pl-2">
-                <v-sheet color="white" height="100%" class="rounded-lg shadow">
-                  <analytics />
                 </v-sheet>
               </v-col>
             </v-row>
