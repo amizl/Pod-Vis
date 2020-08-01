@@ -77,7 +77,7 @@
             :draw-mean="draw_mean"
             :draw-raw="draw_raw"
             :show-population-counts="show_population_counts"
-	    :show-first-last-visit="show_first_last_visit"
+            :show-first-last-visit="show_first_last_visit"
             :xaxis="xaxis"
             class="pa-0 ma-0"
           />

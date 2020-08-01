@@ -152,6 +152,16 @@ export default {
       collection: state.COLLECTION,
       outcomeVariables: state.OUTCOME_VARIABLES,
     }),
+    collectionCohorts() {
+      var cc = [];
+      var collectionId = this.collection.id;
+      this.cohorts.forEach(c => {
+        if (c.collection_id == collectionId) {
+          cc.push(c);
+        }
+      });
+      return cc;
+    },
   },
   async created() {
     this.isLoading = true;
@@ -165,7 +175,13 @@ export default {
     const outcomeVars = [];
 
     // determine selected cohorts and assign colors
-    this.selectedCohorts = this.getCohortsFromIdList(this.cohortIds);
+    var selectedCohorts = this.getCohortsFromIdList(this.cohortIds);
+    // if nothing selected then include all cohorts
+    if (!selectedCohorts || selectedCohorts.length === 0) {
+      selectedCohorts = this.collectionCohorts;
+    }
+    this.selectedCohorts = selectedCohorts;
+
     let ind = 0;
     this.selectedCohorts
       .filter(v => v.collection_id === this.collectionId)
