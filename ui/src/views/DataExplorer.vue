@@ -168,7 +168,6 @@ export default {
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
     await this.fetchCohorts();
-    this.isLoading = false;
 
     // set outcome variables to union of cohorts' output variables
     const varsAdded = {};
@@ -199,6 +198,8 @@ export default {
       });
     this.setOutcomeVariables(outcomeVars);
 
+    await this.analyzeCohorts(this.selectedCohorts);
+
     // initialize page with preselected variable in the highlight view
     if (
       typeof this.variableId !== 'undefined' &&
@@ -218,9 +219,11 @@ export default {
     // preselect cohorts in visibleCohortIds
     var vc = this.getCohortsFromIdList(this.visibleCohortIds);
     this.setVisibleCohorts(vc);
+    this.isLoading = false;
   },
   methods: {
     ...mapActions('dataExplorer', {
+      analyzeCohorts: actions.ANALYZE_COHORTS,
       fetchCohorts: actions.FETCH_COHORTS,
       fetchCollection: actions.FETCH_COLLECTION,
       fetchData: actions.FETCH_DATA,
