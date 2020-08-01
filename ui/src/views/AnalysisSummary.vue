@@ -62,7 +62,7 @@
       </v-row>
 
       <v-row class="ma-0 pa-0 mt-2">
-        <v-col cols="6" class="ma-0 pa-0"> <one-way-anova-grid /> </v-col>
+        <v-col cols="6" class="ma-0 pa-0"> <analytics-panel /> </v-col>
 
         <v-col cols="6" class="ma-0 pa-0 pl-2"> <tukey-hsd-grid /> </v-col>
       </v-row>
@@ -78,16 +78,16 @@ import {
   state as deState,
 } from '@/store/modules/dataExplorer/types';
 
-import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
-import OneWayAnovaGrid from '@/components/AnalysisSummary/OneWayANOVAGrid.vue';
 import TukeyHsdGrid from '@/components/AnalysisSummary/TukeyHSDGrid.vue';
+import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
+import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import CohortTable from '@/components/common/CohortTable.vue';
 
 export default {
   name: 'AnalysisSummary',
   components: {
     AnalysisTracker,
-    OneWayAnovaGrid,
+    AnalyticsPanel,
     TukeyHsdGrid,
     CohortTable,
   },

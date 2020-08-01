@@ -9,7 +9,7 @@
                 <v-col cols="12" class="ma-0 pa-0">
                   <v-card color="#eeeeee" class="pt-1">
                     <v-card-title class="primary--text pl-3 py-2"
-                      >One-Way ANOVA
+                      >{{ title }}
                       <v-spacer />
                       <v-chip color="#FEEDDE">p &lt; 1</v-chip>
                       <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
@@ -78,7 +78,13 @@ import { format } from 'd3-format';
 
 export default {
   components: {},
-  props: {},
+  props: {
+    title: {
+      type: String,
+      required: false,
+      default: 'Analytics',
+    },
+  },
   data() {
     return {
       selected: [],
@@ -108,6 +114,7 @@ export default {
           value: 0,
           class: 'text-subtitle-1 font-weight-bold',
         },
+        // extra column to display right-facing arrow/chevron
         {
           text: '',
           value: '',
