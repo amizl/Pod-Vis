@@ -71,11 +71,11 @@
         style="height: 3em"
       >
         <div v-if="reportMaxOverlap && maxOverlap" class="pa-0">
-          <v-icon class="pa-1" color="error" medium>warning</v-icon>
+          <v-icon class="pa-1" color="warning" medium>warning</v-icon>
           <span>{{ 'WARNING: ' + maxOverlap.descr }}</span>
         </div>
         <div v-if="reportMaxSelectedOverlap && maxSelectedOverlap" class="pa-0">
-          <v-icon class="pa-1" color="error" medium>warning</v-icon>
+          <v-icon class="pa-1" color="warning" medium>warning</v-icon>
           <span>{{ 'WARNING: ' + maxSelectedOverlap.descr }}</span>
         </div>
       </div>
