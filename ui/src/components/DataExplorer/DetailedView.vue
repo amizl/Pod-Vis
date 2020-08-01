@@ -49,6 +49,11 @@
           label="Show Study Population Counts"
           class="pl-3"
         ></v-checkbox>
+        <v-checkbox
+          v-model="show_first_last_visit"
+          label="Show First/Last Visit"
+          class="pl-3"
+        ></v-checkbox>
       </v-row>
     </v-container>
 
@@ -72,6 +77,7 @@
             :draw-mean="draw_mean"
             :draw-raw="draw_raw"
             :show-population-counts="show_population_counts"
+	    :show-first-last-visit="show_first_last_visit"
             :xaxis="xaxis"
             class="pa-0 ma-0"
           />
@@ -96,6 +102,7 @@ export default {
       draw_mean: true,
       draw_raw: true,
       show_population_counts: false,
+      show_first_last_visit: true,
       xaxis: 'visit_event',
     };
   },

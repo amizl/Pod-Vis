@@ -48,15 +48,23 @@ export default {
     },
     drawRaw: {
       type: Boolean,
-      required: true,
+      required: false,
+      default: true,
     },
     drawMean: {
       type: Boolean,
-      required: true,
+      required: false,
+      default: true,
     },
     showPopulationCounts: {
       type: Boolean,
-      required: true,
+      required: false,
+      default: false,
+    },
+    showFirstLastVisit: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     xaxis: {
       type: String,
@@ -220,6 +228,9 @@ export default {
       this.updateCanvas();
     },
     showPopulationCounts() {
+      this.updateCanvas();
+    },
+    showFirstLastVisit() {
       this.updateCanvas();
     },
     cohorts() {
@@ -889,7 +900,9 @@ export default {
         this.drawData();
         this.drawAxes();
         this.drawSubjectCounts();
-        this.highlightFirstAndLastVisit();
+        if (this.showFirstLastVisit) {
+          this.highlightFirstAndLastVisit();
+        }
         this.context.translate(-this.margin.left, 0);
       }
     },
