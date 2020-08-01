@@ -6,13 +6,19 @@
           <v-card color="#eeeeee" class="pt-1">
             <v-card-title class="primary--text pl-3 py-2"
               >{{ title }}
+	      <v-spacer />
+	      <v-toolbar-items>
+		<v-icon v-if="expanded" @click="expanded = false"
+			>expand_less</v-icon>
+                <v-icon v-else @click="expanded = true">expand_more</v-icon>
+	      </v-toolbar-items>
             </v-card-title>
           </v-card>
         </v-col>
       </v-row>
     </v-container>
 
-    <v-sheet color="white" class="rounded-lg shadow">
+    <v-sheet v-show="expanded" color="white" class="rounded-lg shadow">
       <!-- no cohorts selected -->
       <v-container
         v-if="!cohorts || cohorts.length == 0"
@@ -120,6 +126,7 @@ export default {
   data() {
     return {
       selected: [],
+      expanded: true,
       maxOverlap: null,
       maxSelectedOverlap: null,
     };
