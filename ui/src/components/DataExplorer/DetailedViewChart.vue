@@ -686,15 +686,64 @@ export default {
         });
       });
 
+      // bottom margin caption
       this.context.strokeStyle = 'black';
       this.context.fillStyle = 'black';
       this.context.textAlign = 'center';
 
       this.context.fillText(
-        'number of subjects remaining',
-        xscale(this.xmax / 2),
+        'number of subjects with measurements',
+        (xscale(tpts[0]) + xscale(tpts[tpts.length - 1])) / 2,
         yscale(0) + 12
       );
+    },
+
+    highlightFirstAndLastVisit(yscale) {
+      var tpts = this.timepoints;
+      var xscale = this.xDimensionScale;
+      var yscale = this.dimensionScale;
+      var cheight = this.computedHeight + 30;
+
+      const drawHighlight = function(
+        context,
+        time,
+        barWidth,
+        color,
+        opacity = 1
+      ) {
+        context.fillStyle = color;
+        context.strokeStyle = 'white';
+        context.globalAlpha = opacity;
+        context.beginPath();
+        const x1 = xscale(time) - barWidth / 2;
+        const x2 = x1 + barWidth;
+        const y1 = 0;
+        const y2 = cheight;
+        context.moveTo(x1, y1);
+        context.lineTo(x1, y2);
+        context.lineTo(x2, y2);
+        context.lineTo(x2, y1);
+        context.lineTo(x1, y1);
+        context.fill();
+        context.stroke();
+        context.globalAlpha = 1;
+      };
+
+      // highlight first/last visit
+      var obs_vars = this.collection.observation_variables_list.filter(
+        ov => ov.ontology.id === this.dimensionName
+      );
+      if (obs_vars.length === 1) {
+        var barWidth = xscale(tpts[1]) - xscale(tpts[0]);
+
+        var fve = obs_vars[0].first_visit_event;
+        drawHighlight(this.context, fve, barWidth, 'green', 0.15);
+
+        var lve = obs_vars[0].last_visit_event;
+        drawHighlight(this.context, lve, barWidth, 'red', 0.15);
+      }
+      this.context.strokeStyle = 'black';
+      this.context.fillStyle = 'black';
     },
 
     drawLeftAxis() {
@@ -840,6 +889,7 @@ export default {
         this.drawData();
         this.drawAxes();
         this.drawSubjectCounts();
+        this.highlightFirstAndLastVisit();
         this.context.translate(-this.margin.left, 0);
       }
     },

@@ -26,6 +26,8 @@ export default {
         data.collection.observation_variables
       );
 
+      data.collection.observation_variables_list =
+        data.collection.observation_variables;
       data.collection.subject_variables = subjectVariables;
       data.collection.observation_variables = observationVariables;
       commit(mutations.SET_COLLECTION, data.collection);
