@@ -11,20 +11,8 @@
                     <v-card-title class="primary--text pl-3 py-2"
                       >{{ title }}
                       <v-spacer />
-                      <v-chip :color="colors['pvals']['1']['color']"
-                        >p &lt; 1</v-chip
-                      >
-                      <v-chip :color="colors['pvals']['0.1']['color']"
-                        >p &lt; 0.1</v-chip
-                      >
-                      <v-chip :color="colors['pvals']['0.01']['color']"
-                        >p &lt; 0.01</v-chip
-                      >
-                      <v-chip :color="colors['pvals']['0.001']['color']"
-                        >p &lt; 0.001</v-chip
-                      >
-                      <v-chip :color="colors['pvals']['0.0001']['color']"
-                        >p &lt; 0.0001</v-chip
+                      <v-chip v-for="x in ['1', '0.1', '0.01', '0.001', '0.0001']" :color="colors['pvals'][x]['color']"
+                        >p &lt; {{ x }}</v-chip
                       >
                     </v-card-title>
                   </v-card>
@@ -41,8 +29,8 @@
             dense
             :headers="headers"
             :items="outcomeVariables"
-            class="elevation-1"
-            :hide-footer="true"
+	    disable-pagination
+            hide-footer
           >
             <template v-slot:item="props">
               <tr
@@ -50,12 +38,29 @@
                 @click="table_row_click(props.item)"
               >
                 <td class="text-subtitle-1 text-xs-left">
-                  {{ props.item.category }}
+		  <v-row align="center">
+		    <v-tooltip bottom v-if="showCategoryIcons" color="primary">
+		      <template v-slot:activator="{ on: tooltip }">
+			<img v-on="{ ...tooltip }"
+			     :src="'/images/' + props.item.category + '-icon-128.png'"
+			     :title="props.item.category"
+			     style="height:2em"
+			     class="ma-1"
+			     />
+		      </template>
+		      <span>{{ props.item.category }}</span>
+		    </v-tooltip>
+                  {{ props.item.label }}
+		  </v-row>
                 </td>
                 <td class="text-subtitle-1 text-xs-left">
-                  {{ props.item.label }}
-                </td>
-                <td class="text-subtitle-1 text-xs-left">1-way ANOVA</td>
+		  <v-tooltip bottom color="primary">
+		    <template v-slot:activator="{ on: tooltip }">
+		      <span v-on="{ ...tooltip }">1WA</span>
+		    </template>
+		    <span>1-way ANOVA</span>
+		    </v-tooltip>
+		</td>
                 <td class="text-subtitle-1 text-xs-left">
                   {{ variable_fval(props.item) }}
                 </td>
@@ -95,23 +100,23 @@ export default {
       required: false,
       default: 'Analytics',
     },
+    showCategoryIcons: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
       selected: [],
       headers: [
         {
-          text: 'Category',
-          value: 'label',
-          class: 'text-subtitle-1 font-weight-bold',
-        },
-        {
           text: 'Scale',
           value: 'label',
           class: 'text-subtitle-1 font-weight-bold',
         },
         {
-          text: 'Statistical Test',
+          text: 'Test',
           value: 'label',
           class: 'text-subtitle-1 font-weight-bold',
         },
