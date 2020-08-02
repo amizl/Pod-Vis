@@ -90,16 +90,16 @@ h6 {
   background-color: #FDD0A2;
 }
 
-.pval-lt-0p05 {
+.pval-lt-0p01 {
   background-color: #FDAE6B;
 }
 
-.pval-lt-0p01 {
+.pval-lt-0p001 {
   background-color: #FD8D3C;
 }
 
-.pval-lt-0p001 {
-  background-color: #E6550D;
+.pval-lt-0p0001 {
+  background-color: #F16913;
 }
 
 .var-chart {

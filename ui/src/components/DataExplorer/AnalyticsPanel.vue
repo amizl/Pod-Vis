@@ -11,11 +11,21 @@
                     <v-card-title class="primary--text pl-3 py-2"
                       >{{ title }}
                       <v-spacer />
-                      <v-chip color="#FEEDDE">p &lt; 1</v-chip>
-                      <v-chip color="#FDD0A2">p &lt; 0.1</v-chip>
-                      <v-chip color="#FDAE6B">p &lt; 0.01</v-chip>
-                      <v-chip color="#FD8D3C">p &lt; 0.001</v-chip>
-                      <v-chip color="#F16913">p &lt; 0.0001</v-chip>
+                      <v-chip :color="colors['pvals']['1']['color']"
+                        >p &lt; 1</v-chip
+                      >
+                      <v-chip :color="colors['pvals']['0.1']['color']"
+                        >p &lt; 0.1</v-chip
+                      >
+                      <v-chip :color="colors['pvals']['0.01']['color']"
+                        >p &lt; 0.01</v-chip
+                      >
+                      <v-chip :color="colors['pvals']['0.001']['color']"
+                        >p &lt; 0.001</v-chip
+                      >
+                      <v-chip :color="colors['pvals']['0.0001']['color']"
+                        >p &lt; 0.0001</v-chip
+                      >
                     </v-card-title>
                   </v-card>
                 </v-col>
@@ -75,6 +85,7 @@ import { mapActions, mapState } from 'vuex';
 import { state as deState } from '@/store/modules/dataExplorer/types';
 import { actions, state } from '@/store/modules/analysisSummary/types';
 import { format } from 'd3-format';
+import { colors } from '@/utils/colors';
 
 export default {
   components: {},
@@ -121,6 +132,7 @@ export default {
           class: 'text-subtitle-1 font-weight-bold',
         },
       ],
+      colors: colors,
     };
   },
   computed: {
@@ -173,41 +185,29 @@ export default {
       }
       return pval;
     },
-    table_cell_class(ov) {
+    table_cell_aux(ov, which) {
       const pd = this.pval_dict;
       if (ov.label in pd) {
         const { pval } = pd[ov.label];
-        let ccl = 'pval-lt-1';
+        let ccl = this.colors['pvals']['1'][which];
         if (pval < 0.0001) {
-          ccl = 'pval-lt-0p001';
+          ccl = this.colors['pvals']['0.0001'][which];
         } else if (pval < 0.001) {
-          ccl = 'pval-lt-0p01';
+          ccl = this.colors['pvals']['0.001'][which];
         } else if (pval < 0.01) {
-          ccl = 'pval-lt-0p05';
+          ccl = this.colors['pvals']['0.01'][which];
         } else if (pval < 0.1) {
-          ccl = 'pval-lt-0p1';
+          ccl = this.colors['pvals']['0.1'][which];
         }
         return ccl;
       }
       return '';
     },
+    table_cell_class(ov) {
+      return this.table_cell_aux(ov, 'class');
+    },
     table_cell_color(ov) {
-      const pd = this.pval_dict;
-      if (ov.label in pd) {
-        const { pval } = pd[ov.label];
-        let ccl = '#FEEDDE';
-        if (pval < 0.0001) {
-          ccl = '#F16913';
-        } else if (pval < 0.001) {
-          ccl = '#FD8D3C';
-        } else if (pval < 0.01) {
-          ccl = '#FDAE6B';
-        } else if (pval < 0.1) {
-          ccl = '#FDD0A2';
-        }
-        return ccl;
-      }
-      return '';
+      return this.table_cell_aux(ov, 'color');
     },
     table_row_click(ov) {
       this.setSelectedOutcomeVariable(ov);

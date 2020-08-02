@@ -72,6 +72,14 @@ export let colors = {
   'firstVisit-opacity': '0.4',
   lastVisit: '#db5454',
   'lastVisit-opacity': '0.4',
+
+  pvals: {
+    '1': { color: '#FEEDDE', class: 'pval-lt-1' },
+    '0.1': { color: '#FDD0A2', class: 'pval-lt-0p1' },
+    '0.01': { color: '#FDAE6B', class: 'pval-lt-0p01' },
+    '0.001': { color: '#FD8D3C', class: 'pval-lt-0p001' },
+    '0.0001': { color: '#F16913', class: 'pval-lt-0p0001' },
+  },
 };
 
 export function getNumSubjectsColor(nSubjects) {
