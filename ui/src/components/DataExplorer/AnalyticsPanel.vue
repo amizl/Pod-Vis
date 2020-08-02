@@ -11,7 +11,9 @@
                     <v-card-title class="primary--text pl-3 py-2"
                       >{{ title }}
                       <v-spacer />
-                      <v-chip v-for="x in ['1', '0.1', '0.01', '0.001', '0.0001']" :color="colors['pvals'][x]['color']"
+                      <v-chip
+                        v-for="x in ['1', '0.1', '0.01', '0.001', '0.0001']"
+                        :color="colors['pvals'][x]['color']"
                         >p &lt; {{ x }}</v-chip
                       >
                     </v-card-title>
@@ -29,7 +31,7 @@
             dense
             :headers="headers"
             :items="outcomeVariables"
-	    disable-pagination
+            disable-pagination
             hide-footer
           >
             <template v-slot:item="props">
@@ -38,29 +40,32 @@
                 @click="table_row_click(props.item)"
               >
                 <td class="text-subtitle-1 text-xs-left">
-		  <v-row align="center">
-		    <v-tooltip bottom v-if="showCategoryIcons" color="primary">
-		      <template v-slot:activator="{ on: tooltip }">
-			<img v-on="{ ...tooltip }"
-			     :src="'/images/' + props.item.category + '-icon-128.png'"
-			     :title="props.item.category"
-			     style="height:2em"
-			     class="ma-1"
-			     />
-		      </template>
-		      <span>{{ props.item.category }}</span>
-		    </v-tooltip>
-                  {{ props.item.label }}
-		  </v-row>
+                  <v-row align="center">
+                    <v-tooltip v-if="showCategoryIcons" bottom color="primary">
+                      <template v-slot:activator="{ on: tooltip }">
+                        <img
+                          :src="
+                            '/images/' + props.item.category + '-icon-128.png'
+                          "
+                          :title="props.item.category"
+                          style="height:2em"
+                          class="ma-1"
+                          v-on="{ ...tooltip }"
+                        />
+                      </template>
+                      <span>{{ props.item.category }}</span>
+                    </v-tooltip>
+                    {{ props.item.label }}
+                  </v-row>
                 </td>
                 <td class="text-subtitle-1 text-xs-left">
-		  <v-tooltip bottom color="primary">
-		    <template v-slot:activator="{ on: tooltip }">
-		      <span v-on="{ ...tooltip }">1WA</span>
-		    </template>
-		    <span>1-way ANOVA</span>
-		    </v-tooltip>
-		</td>
+                  <v-tooltip bottom color="primary">
+                    <template v-slot:activator="{ on: tooltip }">
+                      <span v-on="{ ...tooltip }">1WA</span>
+                    </template>
+                    <span>1-way ANOVA</span>
+                  </v-tooltip>
+                </td>
                 <td class="text-subtitle-1 text-xs-left">
                   {{ variable_fval(props.item) }}
                 </td>
@@ -87,8 +92,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import { state as deState } from '@/store/modules/dataExplorer/types';
-import { actions, state } from '@/store/modules/analysisSummary/types';
+import { state } from '@/store/modules/dataExplorer/types';
 import { format } from 'd3-format';
 import { colors } from '@/utils/colors';
 
@@ -99,6 +103,16 @@ export default {
       type: String,
       required: false,
       default: 'Analytics',
+    },
+    selectedVariable: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+    autoselectFirstVariable: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     showCategoryIcons: {
       type: Boolean,
@@ -140,13 +154,17 @@ export default {
       colors: colors,
     };
   },
+  mounted() {
+    if (this.autoselectFirstVariable && this.selectedVariable == null) {
+      if (this.outcomeVariables && this.outcomeVariables.length > 0) {
+        this.$emit('variableSelected', this.outcomeVariables[0]);
+      }
+    }
+  },
   computed: {
-    ...mapState('analysisSummary', {
-      selectedOutcomeVariable: state.SELECTED_OUTCOME_VARIABLE,
-    }),
     ...mapState('dataExplorer', {
-      outcomeVariables: deState.OUTCOME_VARIABLES,
-      anova_pvals: deState.ANOVA_PVALS,
+      outcomeVariables: state.OUTCOME_VARIABLES,
+      anova_pvals: state.ANOVA_PVALS,
     }),
     pval_dict() {
       const ap = this.anova_pvals;
@@ -157,18 +175,12 @@ export default {
       return pd;
     },
   },
-  created() {
-    this.setSelectedOutcomeVariable(null);
-  },
   methods: {
-    ...mapActions('analysisSummary', {
-      setSelectedOutcomeVariable: actions.SET_SELECTED_OUTCOME_VARIABLE,
-    }),
     variable_fval(ov) {
       const pd = this.pval_dict;
       if (ov.label in pd) {
         const { fval } = pd[ov.label];
-        return `${format('.3f')(fval)}`;
+        return `${format('.2f')(fval)}`;
       }
       return 'X';
     },
@@ -215,10 +227,10 @@ export default {
       return this.table_cell_aux(ov, 'color');
     },
     table_row_click(ov) {
-      this.setSelectedOutcomeVariable(ov);
+      this.$emit('variableSelected', ov);
     },
     isOVSelected(ov) {
-      if (this.selectedOutcomeVariable == ov) {
+      if (this.selectedVariable == ov) {
         return true;
       }
       return false;

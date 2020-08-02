@@ -63,14 +63,14 @@
 
       <v-row class="ma-0 pa-0 mt-2">
         <v-col cols="6" class="ma-0 pa-0">
-	  <analytics-panel
-	    :show-category-icons="true"
-	    />
-	</v-col>
+          <analytics-panel
+            :selected-variable="selectedOutcomeVariable"
+            :show-category-icons="true"
+            @variableSelected="variableSelected"
+          />
+        </v-col>
 
-        <v-col cols="6" class="ma-0 pa-0 pl-2">
-	  <tukey-hsd-grid />
-	</v-col>
+        <v-col cols="6" class="ma-0 pa-0 pl-2"> <tukey-hsd-grid /> </v-col>
       </v-row>
     </v-container>
   </v-container>
@@ -117,6 +117,7 @@ export default {
   computed: {
     ...mapState('analysisSummary', {
       selectedCohorts: state.SELECTED_COHORTS,
+      selectedOutcomeVariable: state.SELECTED_OUTCOME_VARIABLE,
     }),
     ...mapState('dataExplorer', {
       cohorts: deState.COHORTS,
@@ -187,6 +188,7 @@ export default {
     ...mapActions('analysisSummary', {
       setSelectedCohorts: actions.SET_SELECTED_COHORTS,
       analyzeCohorts: actions.ANALYZE_COHORTS,
+      setSelectedOutcomeVariable: actions.SET_SELECTED_OUTCOME_VARIABLE,
     }),
     ...mapActions('dataExplorer', {
       analyzeCohortsDE: deActions.ANALYZE_COHORTS,
@@ -195,6 +197,9 @@ export default {
       fetchData: deActions.FETCH_DATA,
       setOutcomeVariables: deActions.SET_OUTCOME_VARIABLES,
     }),
+    variableSelected(v) {
+      this.setSelectedOutcomeVariable(v);
+    },
     // cohorts currently selected in step 4.1
     updateSelectedCohorts(sc) {
       this.tableCohortsSelected = sc;

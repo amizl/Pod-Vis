@@ -37,14 +37,6 @@
           ></analysis-tracker>
 
           <v-container fluid fill-width class="ma-0 pa-0 pt-1">
-            <v-row class="ma-0 pa-0">
-              <v-col cols="12" class="ma-0 pa-0">
-                <v-sheet color="white" height="100%" class="rounded-lg shadow">
-                  <summary-view />
-                </v-sheet>
-              </v-col>
-            </v-row>
-
             <v-row class="ma-0 pa-0 pt-2">
               <v-col cols="12" class="ma-0 pa-0">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
@@ -64,7 +56,12 @@
             <v-row class="ma-0 pa-0 pt-2" min-height="400px">
               <v-col cols="5" class="ma-0 pa-0">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
-                  <analytics />
+                  <analytics-panel
+                    :selected-variable="detailedView"
+                    :show-category-icons="true"
+                    autoselect-first-variable
+                    @variableSelected="variableSelected"
+                  />
                 </v-sheet>
               </v-col>
 
@@ -90,16 +87,14 @@
 import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/dataExplorer/types';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
-import SummaryView from '@/components/DataExplorer/SummaryView.vue';
 import CohortTable from '@/components/common/CohortTable.vue';
-import Analytics from '@/components/DataExplorer/Analytics.vue';
+import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
 import DetailedView from '@/components/DataExplorer/DetailedView.vue';
 
 export default {
   components: {
     AnalysisTracker,
-    Analytics,
-    SummaryView,
+    AnalyticsPanel,
     CohortTable,
     DetailedView,
   },
@@ -148,6 +143,7 @@ export default {
   computed: {
     ...mapState('dataExplorer', {
       cohorts: state.COHORTS,
+      detailedView: state.DETAILED_VIEW,
       visibleCohorts: state.VISIBLE_COHORTS,
       collection: state.COLLECTION,
       outcomeVariables: state.OUTCOME_VARIABLES,
@@ -231,6 +227,9 @@ export default {
       setDetailedView: actions.SET_DETAILED_VIEW,
       setVisibleCohorts: actions.SET_VISIBLE_COHORTS,
     }),
+    variableSelected(nv) {
+      this.setDetailedView(nv);
+    },
     updateVisibleCohorts(vc) {
       this.setVisibleCohorts(vc);
     },

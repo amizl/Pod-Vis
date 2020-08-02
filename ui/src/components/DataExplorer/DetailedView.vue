@@ -34,24 +34,25 @@
           >
         </v-btn-toggle>
 -->
+        <span class="pl-2">Show:</span>
         <v-checkbox
           v-model="draw_raw"
-          label="Show Raw Data"
+          label="Raw Data"
           class="pl-3"
         ></v-checkbox>
         <v-checkbox
           v-model="draw_mean"
-          label="Overlay Mean/SD"
+          label="Mean/SD"
           class="pl-3"
         ></v-checkbox>
         <v-checkbox
           v-model="show_population_counts"
-          label="Show Study Population Counts"
+          label="Population Counts"
           class="pl-3"
         ></v-checkbox>
         <v-checkbox
           v-model="show_first_last_visit"
-          label="Show First/Last Visit"
+          label="First/Last Visit"
           class="pl-3"
         ></v-checkbox>
       </v-row>
@@ -65,6 +66,7 @@
           <div
             v-if="!detailedView"
             class="display-1 primary--text text--lighten-5 pt-5 mt-5"
+            align="center"
           >
             SELECT OUTCOME VARIABLE
           </div>
