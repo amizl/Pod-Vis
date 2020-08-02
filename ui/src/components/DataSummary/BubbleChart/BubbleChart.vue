@@ -491,7 +491,7 @@ export default {
         var_name,
         visit,
         color,
-	opacity,
+        opacity,
         chart,
         is_first
       ) {

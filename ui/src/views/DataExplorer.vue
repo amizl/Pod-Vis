@@ -68,7 +68,7 @@
                 </v-sheet>
               </v-col>
 
-	      <v-col cols="7" class="ma-0 pa-0 pl-2">
+              <v-col cols="7" class="ma-0 pa-0 pl-2">
                 <v-sheet
                   color="white"
                   height="100%"

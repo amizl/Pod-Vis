@@ -750,10 +750,22 @@ export default {
         var barWidth = xscale(tpts[1]) - xscale(tpts[0]);
 
         var fve = obs_vars[0].first_visit_event;
-        drawHighlight(this.context, fve, barWidth, colors['firstVisit'], colors['firstVisit-opacity']);
+        drawHighlight(
+          this.context,
+          fve,
+          barWidth,
+          colors['firstVisit'],
+          colors['firstVisit-opacity']
+        );
 
         var lve = obs_vars[0].last_visit_event;
-        drawHighlight(this.context, lve, barWidth, colors['lastVisit'], colors['lastVisit-opacity']);
+        drawHighlight(
+          this.context,
+          lve,
+          barWidth,
+          colors['lastVisit'],
+          colors['lastVisit-opacity']
+        );
       }
       this.context.strokeStyle = 'black';
       this.context.fillStyle = 'black';
