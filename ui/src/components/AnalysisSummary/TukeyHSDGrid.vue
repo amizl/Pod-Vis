@@ -20,6 +20,26 @@
                     <v-chip color="#F16913">p &lt; 0.0001</v-chip>
                   </v-card-title>
                   <v-card-title class="primary--text pa-0 pl-3">
+                    <v-tooltip
+                      v-if="selectedOutcomeVariable"
+                      bottom
+                      color="primary"
+                    >
+                      <template v-slot:activator="{ on: tooltip }">
+                        <img
+                          :src="
+                            '/images/' +
+                              selectedOutcomeVariable.category +
+                              '-icon-128.png'
+                          "
+                          :title="selectedOutcomeVariable.category"
+                          style="height:2em"
+                          class="ma-1"
+                          v-on="{ ...tooltip }"
+                        />
+                      </template>
+                      <span>{{ selectedOutcomeVariable.category }}</span>
+                    </v-tooltip>
                     {{
                       this.selectedOutcomeVariable
                         ? this.selectedOutcomeVariable.label
