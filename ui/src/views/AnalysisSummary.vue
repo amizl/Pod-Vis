@@ -62,9 +62,15 @@
       </v-row>
 
       <v-row class="ma-0 pa-0 mt-2">
-        <v-col cols="6" class="ma-0 pa-0"> <analytics-panel /> </v-col>
+        <v-col cols="6" class="ma-0 pa-0">
+	  <analytics-panel
+	    :show-category-icons="true"
+	    />
+	</v-col>
 
-        <v-col cols="6" class="ma-0 pa-0 pl-2"> <tukey-hsd-grid /> </v-col>
+        <v-col cols="6" class="ma-0 pa-0 pl-2">
+	  <tukey-hsd-grid />
+	</v-col>
       </v-row>
     </v-container>
   </v-container>
