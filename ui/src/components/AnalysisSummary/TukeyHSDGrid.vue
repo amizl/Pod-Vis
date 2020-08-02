@@ -171,7 +171,7 @@ export default {
   methods: {
     update_pval_dict() {
       const pd = {};
-      if (typeof this.selectedOutcomeVariable === 'undefined') return;
+      if (!this.selectedOutcomeVariable || (typeof this.selectedOutcomeVariable === 'undefined')) return;
       if (this.collection_cohorts.length < 3) return;
       if (!(this.selectedOutcomeVariable.label in this.pairwiseTukeyHsdPvals)) {
         console.log(
