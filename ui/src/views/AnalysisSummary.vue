@@ -67,6 +67,7 @@
             :selected-variable="selectedOutcomeVariable"
             :show-category-icons="true"
             :expanded="expandAnalytics"
+            :color-scale-when-minimized="true"
             @variableSelected="variableSelected"
             @expandClicked="analyticsExpandClicked"
           />

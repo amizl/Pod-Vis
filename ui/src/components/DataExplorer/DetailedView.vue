@@ -5,9 +5,27 @@
         <v-col cols="12" class="ma-0 pa-0">
           <v-card color="#eeeeee" class="pt-1">
             <v-card-title class="primary--text pl-3 py-2">
-              Detailed View<span v-if="detailedView" class="subtitle-1">
-                - {{ detailedView.label }}</span
-              >
+              Detailed View
+              <!-- <span v-if="detailedView" class="subtitle-1">
+                - {{ detailedView.label }}</span    > -->
+            </v-card-title>
+
+            <v-card-title class="primary--text pa-0 pl-3">
+              <v-tooltip v-if="detailedView" bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <img
+                    :src="'/images/' + detailedView.category + '-icon-128.png'"
+                    :title="detailedView.category"
+                    style="height:1.75em"
+                    class="ma-1"
+                    v-on="{ ...tooltip }"
+                  />
+                </template>
+                <span>{{ detailedView.category }}</span>
+              </v-tooltip>
+              <span v-if="detailedView" class="subtitle-1">
+                {{ detailedView.label }}
+              </span>
             </v-card-title>
           </v-card>
         </v-col>

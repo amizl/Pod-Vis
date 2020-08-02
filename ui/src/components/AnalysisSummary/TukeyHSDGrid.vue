@@ -33,18 +33,16 @@
                               '-icon-128.png'
                           "
                           :title="selectedOutcomeVariable.category"
-                          style="height:2em"
+                          style="height:1.75em"
                           class="ma-1"
                           v-on="{ ...tooltip }"
                         />
                       </template>
                       <span>{{ selectedOutcomeVariable.category }}</span>
                     </v-tooltip>
-                    {{
-                      this.selectedOutcomeVariable
-                        ? this.selectedOutcomeVariable.label
-                        : '-'
-                    }}
+                    <span v-if="selectedOutcomeVariable" class="subtitle-1">
+                      {{ selectedOutcomeVariable.label }}
+                    </span>
                   </v-card-title>
                 </v-card>
               </v-col>

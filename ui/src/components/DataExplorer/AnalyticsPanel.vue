@@ -49,7 +49,14 @@
                 :class="{ selectedRow: isOVSelected(props.item) }"
                 @click="table_row_click(props.item)"
               >
-                <td class="text-subtitle-1 text-xs-left">
+                <td
+                  class="text-subtitle-1 text-xs-left"
+                  :style="
+                    expanded || !colorScaleWhenMinimized
+                      ? ''
+                      : { backgroundColor: pval_table_cell_color(props.item) }
+                  "
+                >
                   <v-row align="center">
                     <v-tooltip v-if="showCategoryIcons" bottom color="primary">
                       <template v-slot:activator="{ on: tooltip }">
@@ -65,7 +72,23 @@
                       </template>
                       <span>{{ props.item.category }}</span>
                     </v-tooltip>
-                    {{ props.item.label }}
+                    <v-tooltip v-if="!expanded" bottom color="primary">
+                      <template v-slot:activator="{ on: tooltip }">
+                        <span v-on="{ ...tooltip }">{{
+                          props.item.label
+                        }}</span>
+                      </template>
+                      <span>{{
+                        props.item.label +
+                          '  Test: ' +
+                          '1-way ANOVA' +
+                          '  F-Statistic:' +
+                          variable_fval(props.item) +
+                          '  p-Value:' +
+                          pval_table_cell(props.item)
+                      }}</span>
+                    </v-tooltip>
+                    <span v-else>{{ props.item.label }}</span>
                   </v-row>
                 </td>
                 <td v-if="expanded" class="text-subtitle-1 text-xs-left">
@@ -83,9 +106,11 @@
                   v-if="expanded"
                   :key="props.item.id"
                   class="text-subtitle-1 text-xs-left"
-                  :style="{ backgroundColor: table_cell_color(props.item) }"
+                  :style="{
+                    backgroundColor: pval_table_cell_color(props.item),
+                  }"
                 >
-                  {{ table_cell(props.item) }}
+                  {{ pval_table_cell(props.item) }}
                 </td>
                 <td>
                   <v-icon v-if="isOVSelected(props.item)" large
@@ -131,6 +156,11 @@ export default {
       default: true,
     },
     expanded: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    colorScaleWhenMinimized: {
       type: Boolean,
       required: false,
       default: true,
@@ -212,20 +242,20 @@ export default {
       if (ov.label in pd) {
         const { pval } = pd[ov.label];
         if (pval < 0.0001) {
-          return 'p<0.0001';
+          return '<0.0001';
         }
-        return `p=${format('.4f')(pval)}`;
+        return `${format('.4f')(pval)}`;
       }
       return null;
     },
-    table_cell(ov) {
+    pval_table_cell(ov) {
       let pval = this.variable_pval(ov);
       if (pval === null) {
         return 'X';
       }
       return pval;
     },
-    table_cell_aux(ov, which) {
+    pval_table_cell_aux(ov, which) {
       const pd = this.pval_dict;
       if (ov.label in pd) {
         const { pval } = pd[ov.label];
@@ -243,11 +273,11 @@ export default {
       }
       return '';
     },
-    table_cell_class(ov) {
-      return this.table_cell_aux(ov, 'class');
+    pval_table_cell_class(ov) {
+      return this.pval_table_cell_aux(ov, 'class');
     },
-    table_cell_color(ov) {
-      return this.table_cell_aux(ov, 'color');
+    pval_table_cell_color(ov) {
+      return this.pval_table_cell_aux(ov, 'color');
     },
     table_row_click(ov) {
       this.$emit('variableSelected', ov);
