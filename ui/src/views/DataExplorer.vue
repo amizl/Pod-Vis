@@ -54,18 +54,20 @@
             </v-row>
 
             <v-row class="ma-0 pa-0 pt-2" min-height="400px">
-              <v-col cols="5" class="ma-0 pa-0">
+              <v-col :cols="expandAnalytics ? 5 : 3" class="ma-0 pa-0">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <analytics-panel
                     :selected-variable="detailedView"
                     :show-category-icons="true"
                     autoselect-first-variable
+                    :expanded="expandAnalytics"
                     @variableSelected="variableSelected"
+                    @expandClicked="analyticsExpandClicked"
                   />
                 </v-sheet>
               </v-col>
 
-              <v-col cols="7" class="ma-0 pa-0 pl-2">
+              <v-col :cols="expandAnalytics ? 7 : 9" class="ma-0 pa-0 pl-2">
                 <v-sheet
                   color="white"
                   height="100%"
@@ -126,6 +128,7 @@ export default {
       isLoading: false,
       substep: '5.1',
       selectedCohorts: [],
+      expandAnalytics: true,
       // TODO - assign stable color to each newly-created cohort (in CohortManager?)
       colors: [
         '#e41a1c',
@@ -229,6 +232,9 @@ export default {
     }),
     variableSelected(nv) {
       this.setDetailedView(nv);
+    },
+    analyticsExpandClicked(nv) {
+      this.expandAnalytics = nv;
     },
     updateVisibleCohorts(vc) {
       this.setVisibleCohorts(vc);

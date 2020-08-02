@@ -62,15 +62,19 @@
       </v-row>
 
       <v-row class="ma-0 pa-0 mt-2">
-        <v-col cols="6" class="ma-0 pa-0">
+        <v-col :cols="expandAnalytics ? 5 : 3" class="ma-0 pa-0">
           <analytics-panel
             :selected-variable="selectedOutcomeVariable"
             :show-category-icons="true"
+            :expanded="expandAnalytics"
             @variableSelected="variableSelected"
+            @expandClicked="analyticsExpandClicked"
           />
         </v-col>
 
-        <v-col cols="6" class="ma-0 pa-0 pl-2"> <tukey-hsd-grid /> </v-col>
+        <v-col :cols="expandAnalytics ? 7 : 9" class="ma-0 pa-0 pl-2">
+          <tukey-hsd-grid />
+        </v-col>
       </v-row>
     </v-container>
   </v-container>
@@ -112,6 +116,7 @@ export default {
     return {
       isLoading: false,
       tableCohortsSelected: [],
+      expandAnalytics: true,
     };
   },
   computed: {
@@ -199,6 +204,9 @@ export default {
     }),
     variableSelected(v) {
       this.setSelectedOutcomeVariable(v);
+    },
+    analyticsExpandClicked(nv) {
+      this.expandAnalytics = nv;
     },
     // cohorts currently selected in step 4.1
     updateSelectedCohorts(sc) {

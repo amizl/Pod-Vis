@@ -13,9 +13,19 @@
                       <v-spacer />
                       <v-chip
                         v-for="x in ['1', '0.1', '0.01', '0.001', '0.0001']"
+                        v-if="expanded"
                         :color="colors['pvals'][x]['color']"
                         >p &lt; {{ x }}</v-chip
                       >
+                      <v-spacer v-if="expanded" />
+                      <v-toolbar-items>
+                        <v-icon v-if="expanded" @click="expandClicked(false)"
+                          >chevron_left</v-icon
+                        >
+                        <v-icon v-else @click="expandClicked(true)"
+                          >chevron_right</v-icon
+                        >
+                      </v-toolbar-items>
                     </v-card-title>
                   </v-card>
                 </v-col>
@@ -58,7 +68,7 @@
                     {{ props.item.label }}
                   </v-row>
                 </td>
-                <td class="text-subtitle-1 text-xs-left">
+                <td v-if="expanded" class="text-subtitle-1 text-xs-left">
                   <v-tooltip bottom color="primary">
                     <template v-slot:activator="{ on: tooltip }">
                       <span v-on="{ ...tooltip }">1WA</span>
@@ -66,10 +76,11 @@
                     <span>1-way ANOVA</span>
                   </v-tooltip>
                 </td>
-                <td class="text-subtitle-1 text-xs-left">
+                <td v-if="expanded" class="text-subtitle-1 text-xs-left">
                   {{ variable_fval(props.item) }}
                 </td>
                 <td
+                  v-if="expanded"
                   :key="props.item.id"
                   class="text-subtitle-1 text-xs-left"
                   :style="{ backgroundColor: table_cell_color(props.item) }"
@@ -78,7 +89,7 @@
                 </td>
                 <td>
                   <v-icon v-if="isOVSelected(props.item)" large
-                    >chevron_right</v-icon
+                    >arrow_right_alt</v-icon
                   >
                 </td>
               </tr>
@@ -119,38 +130,15 @@ export default {
       required: false,
       default: true,
     },
+    expanded: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
       selected: [],
-      headers: [
-        {
-          text: 'Scale',
-          value: 'label',
-          class: 'text-subtitle-1 font-weight-bold',
-        },
-        {
-          text: 'Test',
-          value: 'label',
-          class: 'text-subtitle-1 font-weight-bold',
-        },
-        {
-          text: 'F-Statistic',
-          value: 0,
-          class: 'text-subtitle-1 font-weight-bold',
-        },
-        {
-          text: 'p-Value',
-          value: 0,
-          class: 'text-subtitle-1 font-weight-bold',
-        },
-        // extra column to display right-facing arrow/chevron
-        {
-          text: '',
-          value: '',
-          class: 'text-subtitle-1 font-weight-bold',
-        },
-      ],
       colors: colors,
     };
   },
@@ -166,6 +154,41 @@ export default {
       outcomeVariables: state.OUTCOME_VARIABLES,
       anova_pvals: state.ANOVA_PVALS,
     }),
+
+    headers() {
+      var headers = [
+        {
+          text: 'Scale',
+          value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
+        },
+      ];
+      if (this.expanded) {
+        headers.push({
+          text: 'Test',
+          value: 'label',
+          class: 'text-subtitle-1 font-weight-bold',
+        });
+        headers.push({
+          text: 'F-Statistic',
+          value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
+        });
+        headers.push({
+          text: 'p-Value',
+          value: 0,
+          class: 'text-subtitle-1 font-weight-bold',
+        });
+      }
+      // extra column to display right-facing arrow/chevron
+      headers.push({
+        text: '',
+        value: '',
+        class: 'text-subtitle-1 font-weight-bold',
+      });
+      return headers;
+    },
+
     pval_dict() {
       const ap = this.anova_pvals;
       const pd = {};
@@ -230,10 +253,10 @@ export default {
       this.$emit('variableSelected', ov);
     },
     isOVSelected(ov) {
-      if (this.selectedVariable == ov) {
-        return true;
-      }
-      return false;
+      return this.selectedVariable == ov;
+    },
+    expandClicked(expand) {
+      this.$emit('expandClicked', expand);
     },
   },
 };
