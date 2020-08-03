@@ -74,7 +74,7 @@
         </v-col>
 
         <v-col :cols="expandAnalytics ? 7 : 9" class="ma-0 pa-0 pl-2">
-          <tukey-hsd-grid />
+          <tukey-hsd-heatmap />
         </v-col>
       </v-row>
     </v-container>
@@ -89,7 +89,7 @@ import {
   state as deState,
 } from '@/store/modules/dataExplorer/types';
 
-import TukeyHsdGrid from '@/components/AnalysisSummary/TukeyHSDGrid.vue';
+import TukeyHsdHeatmap from '@/components/AnalysisSummary/TukeyHSDHeatmap.vue';
 import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import CohortTable from '@/components/common/CohortTable.vue';
@@ -99,7 +99,7 @@ export default {
   components: {
     AnalysisTracker,
     AnalyticsPanel,
-    TukeyHsdGrid,
+    TukeyHsdHeatmap,
     CohortTable,
   },
   props: {
