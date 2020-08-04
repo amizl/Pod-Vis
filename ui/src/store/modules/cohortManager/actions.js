@@ -243,10 +243,7 @@ export default {
     let { unfilteredData, outputVariables } = state;
     const collection = state[stateTypes.COLLECTION];
 
-    // TODO - run another test instead
-    if (!collection.is_longitudinal) {
-      //	console.log("cross-sectional dataset detected, not running Mann-Whitney rank test");
-    } else if (filteredData.length === unfilteredData.length) {
+    if (filteredData.length === unfilteredData.length) {
       // increment requestnum to ensure any previously-submitted request is ignored
       var cb = function(reqnum) {};
       commit(mutations.INCREMENT_REQUEST_NUM, { callback: cb });

@@ -1,11 +1,12 @@
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_current_user
-from scipy.stats import mannwhitneyu, f_oneway
+from scipy.stats import mannwhitneyu, f_oneway, chi2_contingency
 from functools import reduce
 from . import api
 from .exceptions import ResourceNotFound, BadRequest
 from ..auth.exceptions import AuthFailure
 from .. import models
+import numpy as np
 import pandas as pd
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
 import sys
@@ -955,9 +956,6 @@ def compute_mannwhitneyu():
 
     pvals = []
     for output_variable in output_variables:
-        # test doesn't apply to longitudinal categorical variables
-        if output_variable['data_category'] == 'Categorical':
-            continue
         
         # Output variables that are simply "change" or "firstVisit" will have the
         # id of "change-208" or "firstVisit-208". We want to detect this so we can
@@ -975,31 +973,90 @@ def compute_mannwhitneyu():
             if unfiltered_data[0].get(variable_id) is None:
                 continue
 
-        filtered_sample = [data.get(variable_id).get('change') for data in filtered_data]
-        unfiltered_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
-
         err = None
-        n_filtered = len(filtered_sample)
-        n_unfiltered = len(unfiltered_sample)
+        n_filtered = len(filtered_data)
+        n_unfiltered = len(unfiltered_data)
+
         if n_filtered < 20:
             err = "Filtered sample size < 20"
         elif n_unfiltered < 20:
             err = "Unfiltered sample size < 20"
-            
-        # TODO - use of 'None' default for alternative is deprecated, see https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html
-        u, pval = mannwhitneyu(filtered_sample, unfiltered_sample, alternative='two-sided')
+  
 
-        # common language effect size f = U/(n1 * n2)
-        f = u / (n_filtered * n_unfiltered)
+        # Categorical variable - chi-square test
+        if (output_variable['data_category'] == 'Categorical') and (not output_variable['is_longitudinal']):
+            # TODO - get ordered list of all categories
+            all_categories = {}
+            filtered_counts = {}
+            unfiltered_counts = {}
+
+            for d in filtered_data:
+                v = d.get(variable_id).get('value')
+                all_categories[v] = True
+                if v not in filtered_counts:
+                    filtered_counts[v] = 0
+                filtered_counts[v] += 1
+
+            for d in unfiltered_data:
+                v = d.get(variable_id).get('value')
+                all_categories[v] = True
+                if v not in unfiltered_counts:
+                    unfiltered_counts[v] = 0
+                unfiltered_counts[v] += 1
+
+            def get_count(n, d):
+                if n in d:
+                    return d[n]
+                return 0
+                
+            fcounts = []
+            ucounts = []
+            counts_lt5 = 0
+            
+            for c in all_categories.keys():
+                fc = get_count(c, filtered_counts)
+                fcounts.append(fc)
+                if fc < 5:
+                    counts_lt5 += 1
+                uc = get_count(c, unfiltered_counts)
+                ucounts.append(uc)
+                if uc < 5:
+                    counts_lt5 += 1
+
+            if counts_lt5 > 0:
+                err = "Cell frequencies < 5"
+                    
+            obs = np.array([fcounts, ucounts])
+            g, p, dof, expctd = chi2_contingency(obs)
+
+            pvals.append(dict(label=variable_label,
+                              test_name="Pearson's chi-squared test",
+                              test_abbrev='PCS',
+                              pval=p,
+                              effect_size=None,
+                              effect_size_descr=None,
+                              chi2=g,
+                              dof=dof,
+                              error=err))
+
+        # Continuous variable: 2-Sided Mann-Whitney U-Test
+        elif (output_variable['data_category'] != 'Categorical') and (output_variable['is_longitudinal']):
+            filtered_sample = [data.get(variable_id).get('change') for data in filtered_data]
+            unfiltered_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
+
+            u, pval = mannwhitneyu(filtered_sample, unfiltered_sample, alternative='two-sided')
+
+            # common language effect size f = U/(n1 * n2)
+            f = u / (n_filtered * n_unfiltered)
         
-        pvals.append(dict(label=variable_label,
-                          test_name='2-Sided Mann-Whitney U Test',
-                          test_abbrev='2SMWU',
-                          pval=pval,
-                          effect_size=f,
-                          effect_size_descr='Common language effect size.',
-                          u_statistic=u,
-                          error=err))
+            pvals.append(dict(label=variable_label,
+                              test_name='2-Sided Mann-Whitney U Test',
+                              test_abbrev='2SMWU',
+                              pval=pval,
+                              effect_size=f,
+                              effect_size_descr='Common language effect size.',
+                              u_statistic=u,
+                              error=err))
 
     return jsonify({
         "success": True,

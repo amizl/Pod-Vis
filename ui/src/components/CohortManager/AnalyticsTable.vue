@@ -18,20 +18,19 @@
         <v-row>
           <v-col cols="12">
             <v-subheader class="subheading primary--text text--lighten-4">
-              <div v-if="collection.is_longitudinal">
+              <div>
                 Add variables and apply filters to them to view statistical test
                 results for all outcome variables.
-              </div>
-              <div v-else>
-                Statistical tests for cross-sectional data are not yet
-                implemented.
               </div>
             </v-subheader>
           </v-col>
         </v-row>
       </v-container>
       <div v-else>
-        <v-toolbar-title class="primary--text title ml-3 mt-2">
+        <v-toolbar-title
+          v-if="collection.is_longitudinal"
+          class="primary--text title ml-3 mt-2"
+        >
           Comparing cohort vs. remainder change:</v-toolbar-title
         >
 
@@ -69,11 +68,15 @@
               <td class="text-subtitle-1 text-xs-left">
                 {{ props.item.label }}
               </td>
-              <td
-                class="text-subtitle-1 text-xs-left"
-                :title="props.item.test_name"
-              >
-                {{ props.item.test_abbrev }}
+              <td class="text-subtitle-1 text-xs-left">
+                <v-tooltip bottom color="primary">
+                  <template v-slot:activator="{ on: tooltip }">
+                    <div v-on="{ ...tooltip }">
+                      {{ props.item.test_abbrev }}
+                    </div>
+                  </template>
+                  <span>{{ props.item.test_name }}</span>
+                </v-tooltip>
               </td>
               <td
                 v-if="props.item.error"
@@ -85,9 +88,28 @@
               <td
                 v-if="!props.item.error"
                 class="text-subtitle-1 text-xs-right"
-                :title="props.item.effect_size_descr"
               >
-                {{ props.item.effect_size | formatEffectSize }}
+                <v-tooltip
+                  v-if="collection.is_longitudinal"
+                  bottom
+                  color="primary"
+                >
+                  <template v-slot:activator="{ on: tooltip }">
+                    <div v-on="{ ...tooltip }">
+                      {{ props.item.effect_size | formatEffectSize }}
+                    </div>
+                  </template>
+                  <span>{{ props.item.effect_size_descr }}</span>
+                </v-tooltip>
+
+                <v-tooltip v-else bottom color="primary">
+                  <template v-slot:activator="{ on: tooltip }">
+                    <div v-on="{ ...tooltip }">
+                      {{ props.item.chi2 | formatChiSquared }}
+                    </div>
+                  </template>
+                  <span>Chi-squared statistic</span>
+                </v-tooltip>
               </td>
               <td
                 v-if="!props.item.error"
@@ -120,13 +142,26 @@ export default {
     formatEffectSize(size) {
       return format('.2f')(size);
     },
+    formatChiSquared(cs) {
+      return format('.2f')(cs);
+    },
   },
   data() {
     return {
       highlight_by_pval: false,
       pval_thresholds: ['None', 0.1, 0.05, 0.01, 0.001, 0.0001],
       pvt: 'None',
-      headers: [
+      expanded: true,
+    };
+  },
+  computed: {
+    ...mapState('cohortManager', {
+      pvals: state.PVALS,
+      pval_threshold: state.PVAL_THRESHOLD,
+      collection: state.COLLECTION,
+    }),
+    headers() {
+      var headers = [
         {
           text: 'Variable',
           align: 'left',
@@ -142,7 +177,7 @@ export default {
           class: 'text-subtitle-1 font-weight-bold',
         },
         {
-          text: 'Effect Size',
+          text: this.collection.is_longitudinal ? 'Effect Size' : 'Chi2',
           align: 'left',
           sortable: true,
           value: 'effect_size',
@@ -155,16 +190,9 @@ export default {
           value: 'pval',
           class: 'text-subtitle-1 font-weight-bold',
         },
-      ],
-      expanded: true,
-    };
-  },
-  computed: {
-    ...mapState('cohortManager', {
-      pvals: state.PVALS,
-      pval_threshold: state.PVAL_THRESHOLD,
-      collection: state.COLLECTION,
-    }),
+      ];
+      return headers;
+    },
   },
   watch: {
     pvt(newPvt) {
