@@ -239,7 +239,7 @@ class Collection(db.Model):
             ov = obsid2obs[obs_id]
             
             # Categorical observations
-            if (study.study.longitudinal == 0) or (last_obs_category == 'Categorical'):
+            if (study.study.longitudinal == 0):
                 obs_val = group_rows[0]['value']
                 if group_rows[0]['value_type'] == 'int':
                     obs_val = group_rows[0]['int_value']
@@ -282,7 +282,9 @@ class Collection(db.Model):
                         to_update = last
 
                 if to_update is not None:
-                    if gr['value_type'] == 'int':
+                    if gr['value_type'] == 'char':
+                        to_update['value'] = gr['value']
+                    elif gr['value_type'] == 'int':
                         to_update['value'] = gr['int_value']
                     elif gr['value_type'] == 'decimal':
                         to_update['value'] = gr['dec_value']
@@ -292,25 +294,29 @@ class Collection(db.Model):
 
             if (first['value'] is None) or (last['value'] is None):
                 return
-                
-            # http://www.andrewshamlet.net/2017/07/07/python-tutorial-roc/
-            N = first['value']
-            M = last['value'] - N
-            
-            # normalize by duration in years
-            n_years = last['date'].year - first['date'].year
-            if n_years <= 0:
-                n_years = 1
 
+            # compute change, rate of change if variable is not categorical:
+            M = None
             roc = None
 
-            # rate of change may be undefined if N = 0
-            try:
-                roc = ((M / N) * 100) / n_years # / 365.25)
-            except decimal.InvalidOperation:
-                pass
-            except decimal.DivisionByZero:
-                pass
+            if (last_obs_category != 'Categorical'):
+            
+                # http://www.andrewshamlet.net/2017/07/07/python-tutorial-roc/
+                N = first['value']
+                M = last['value'] - N
+                
+                # normalize by duration in years
+                n_years = last['date'].year - first['date'].year
+                if n_years <= 0:
+                    n_years = 1
+
+                # rate of change may be undefined if N = 0
+                try:
+                    roc = ((M / N) * 100) / n_years # / 365.25)
+                except decimal.InvalidOperation:
+                    pass
+                except decimal.DivisionByZero:
+                    pass
 
             observations.append(
                 dict(
