@@ -3,9 +3,10 @@
     <!-- ParallelCoordinates plot - requires first + last visit selected -->
     <v-row
       v-if="
-        !variable.selected_measures ||
-          ('firstVisit' in variable.selected_measures &&
-            'lastVisit' in variable.selected_measures)
+            (variable.data_category !== 'Categorical') &&
+            (!variable.selected_measures ||
+            ('firstVisit' in variable.selected_measures &&
+            'lastVisit' in variable.selected_measures))
       "
       class="pa-2 ma-0"
     >
@@ -30,11 +31,17 @@
             <v-col cols="12" class="pa-0 ma-0">
               First Visit: {{ firstVisitLabel }}
               <HistogramChart
+		v-if="(variable.data_category !== 'Categorical')"
                 :id="`firstVisit-${dimensionName}`"
                 class="ma-1"
                 :dimension-name="`${variable.label} - First Visit`"
                 :variable="variable"
-              />
+		/>
+	      <ColumnChart
+		v-else
+		:id="variable.id"
+		:dimension-name="`${variable.label} - First Visit`"
+		/>
             </v-col>
           </v-row>
           <v-row
@@ -44,11 +51,17 @@
             <v-col cols="12" class="pa-0 ma-0">
               Last Visit: {{ lastVisitLabel }}
               <HistogramChart
+		v-if="(variable.data_category !== 'Categorical')"
                 :id="`lastVisit-${dimensionName}`"
                 class="ma-1"
                 :dimension-name="`${variable.label} - Last Visit`"
                 :variable="variable"
-              />
+		/>
+	      <ColumnChart
+		v-else
+		:id="variable.id"
+		:dimension-name="`${variable.label} - Last Visit`"
+		/>
             </v-col>
           </v-row>
         </v-container>
@@ -58,8 +71,9 @@
     <!-- Individual plots for Change, Rate of Change -->
 
     <v-row
-      v-if="
-        !variable.selected_measures || 'change' in variable.selected_measures
+      v-if="            
+	    (variable.data_category !== 'Categorical') &&
+            (!variable.selected_measures || 'change' in variable.selected_measures)
       "
       class="pa-2 ma-0"
       :class="highlightChange ? 'highlight-var' : 'not-highlight-var'"
@@ -75,7 +89,9 @@
     </v-row>
 
     <v-row
-      v-if="!variable.selected_measures || 'roc' in variable.selected_measures"
+      v-if="
+	    (variable.data_category !== 'Categorical') &&
+	    (!variable.selected_measures || 'roc' in variable.selected_measures)"
       class="pa-2 ma-0"
       :class="'not-highlight-var'"
     >
@@ -93,10 +109,12 @@
 
 <script>
 import ParallelCoordinates from '@/components/CohortManager/ParallelCoordinates.vue';
+import ColumnChart from '@/components/CohortManager/BarChart/BarChart.vue';
 import HistogramChart from '@/components/CohortManager/HistogramChart/HistogramChart.vue';
 
 export default {
   components: {
+    ColumnChart,
     ParallelCoordinates,
     HistogramChart,
   },
