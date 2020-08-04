@@ -46,7 +46,7 @@
           >
             <template v-slot:item="props">
               <tr
-                :class="{ selectedRow: isOVSelected(props.item) }"
+                :class="isOVSelectedClass(props.item)"
                 @click="table_row_click(props.item)"
               >
                 <td
@@ -281,6 +281,9 @@ export default {
     },
     table_row_click(ov) {
       this.$emit('variableSelected', ov);
+    },
+    isOVSelectedClass(ov) {
+      return this.selectedVariable == ov ? 'selectedRow' : '';
     },
     isOVSelected(ov) {
       return this.selectedVariable == ov;
