@@ -279,4 +279,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+tr.selectedRow {
+  background-color: rgb(236, 177, 212);
+}
+tbody {
+  tr:hover {
+    background-color: transparent !important;
+  }
+}
+</style>
