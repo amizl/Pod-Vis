@@ -265,7 +265,10 @@ export default {
           iv.children.forEach(cv => {
             if (cv.inSelected) {
               selectedInputVars.push(cv);
-            } else {
+            } else if (
+              cv.data_category != 'Categorical' ||
+              (cv.label != 'Change' && cv.label != 'Rate of Change')
+            ) {
               allSelected = false;
             }
           });
@@ -285,7 +288,12 @@ export default {
       // check/uncheck all child variables to match the master checkbox
       if (v.children) {
         v.children.forEach(c => {
-          c.inSelected = v.inSelected;
+          if (
+            c.data_category != 'Categorical' ||
+            (c.label != 'Change' && c.label != 'Rate of Change')
+          ) {
+            c.inSelected = v.inSelected;
+          }
         });
       }
       this.$nextTick(() => this.updateSelectedVars());

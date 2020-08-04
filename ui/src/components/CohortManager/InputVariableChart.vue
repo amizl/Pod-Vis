@@ -58,12 +58,13 @@
             bar-tooltip="Click to add or remove this value from the cohort filter"
           />
           <HistogramChart
-            v-else
+            v-else-if="variable.data_category !== 'Categorical'"
             :id="variable.id"
             :dimension-name="dimension"
             :variable="variable"
             input-variable
           />
+          <ColumnChart v-else :id="variable.id" :dimension-name="dimension" />
         </v-col>
       </v-row>
     </v-container>
