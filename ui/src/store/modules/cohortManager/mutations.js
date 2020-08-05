@@ -252,6 +252,7 @@ export default {
    */
   [mutations.RESET_COHORTS](state) {
     state[stateTypes.COHORTS] = [];
+    state[stateTypes.COHORT] = { id: null };
   },
   /**
    * Reset is loading back to original state.
