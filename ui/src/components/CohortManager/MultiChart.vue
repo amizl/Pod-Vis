@@ -16,6 +16,7 @@
           :variable="variable"
           :first-visit-label="firstVisitLabel"
           :last-visit-label="lastVisitLabel"
+          @userChangedVariable="userChangedVariable"
         />
       </v-col>
     </v-row>
@@ -36,11 +37,13 @@
                 class="ma-1"
                 :dimension-name="`${variable.label} - First Visit`"
                 :variable="variable"
+                @userChangedVariable="userChangedVariable"
               />
               <ColumnChart
                 v-else
                 :id="variable.id"
                 :dimension-name="`${variable.label} - First Visit`"
+                @userChangedVariable="userChangedVariable"
               />
             </v-col>
           </v-row>
@@ -56,11 +59,13 @@
                 class="ma-1"
                 :dimension-name="`${variable.label} - Last Visit`"
                 :variable="variable"
+                @userChangedVariable="userChangedVariable"
               />
               <ColumnChart
                 v-else
                 :id="variable.id"
                 :dimension-name="`${variable.label} - Last Visit`"
+                @userChangedVariable="userChangedVariable"
               />
             </v-col>
           </v-row>
@@ -85,6 +90,7 @@
           :id="`change-${dimensionName}`"
           :dimension-name="`${variable.label} - Change`"
           :variable="variable"
+          @userChangedVariable="userChangedVariable"
         />
       </v-col>
     </v-row>
@@ -103,6 +109,7 @@
           :id="`roc-${dimensionName}`"
           :dimension-name="`${variable.label} - Rate of Change`"
           :variable="variable"
+          @userChangedVariable="userChangedVariable"
         />
       </v-col>
     </v-row>
@@ -142,6 +149,11 @@ export default {
       type: String,
       required: false,
       default: 'Last Visit',
+    },
+  },
+  methods: {
+    userChangedVariable() {
+      this.$emit('userChangedVariable');
     },
   },
 };

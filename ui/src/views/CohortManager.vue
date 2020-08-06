@@ -14,7 +14,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <CohortSelection class="mt-2" @selectedCohort="cohortLoaded" />
+        <CohortSelection class="mt-2" @selectedCohort="cohortSelected" />
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
@@ -93,6 +93,8 @@
                 :expanded.sync="inExpanded"
                 :highlighted="inHighlighted"
                 class="ma-0 pt-0"
+                @userSelectedInputVariables="userSelectedVariables"
+                @userChangedInputVariable="userChangedVariable"
               />
             </v-sheet>
           </v-col>
@@ -107,6 +109,8 @@
               :highlighted="outHighlighted"
               :disabled="true"
               class="ma-0 pt-0"
+              @userSelectedOutputVariables="userSelectedVariables"
+              @userChangedOutputVariable="userChangedVariable"
             />
           </v-col>
           <v-col cols="5" class="ma-0 pa-0">
@@ -152,6 +156,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      isLoadingCohort: false,
       substep: '3.1',
       inExpanded: true,
       outExpanded: false,
@@ -217,14 +222,21 @@ export default {
       fetchData: actions.FETCH_DATA,
       resetAllStoreData: actions.RESET_ALL_STORE_DATA,
       setCohort: actions.SET_COHORT,
+      setCohortNoReset: actions.SET_COHORT_NO_RESET,
     }),
+    userSelectedVariables() {
+      this.setCohortNoReset({ id: -1 });
+    },
+    userChangedVariable() {
+      this.setCohortNoReset({ id: -1 });
+    },
     cohortSaved(success) {
       this.substep = '3.5';
     },
     // create entirely new cohort resetting everything
     createNew(success) {
       // return to "choose predictor variables" step
-      this.setCohort({ id: null });
+      this.setNewCohort({ id: null });
       this.substep = '3.1';
     },
     // create new cohort similar to the most-recently-created one
@@ -233,12 +245,13 @@ export default {
       // load last cohort in the list
       if (ncc > 0) {
         var last_cohort = this.collection_cohorts[ncc - 1];
-        this.setCohort(last_cohort);
+        this.setNewCohort(last_cohort);
       }
       // return to "add filters" step
       this.substep = '3.3';
     },
-    cohortLoaded(newCohort) {
+    cohortSelected(newCohort) {
+      this.setNewCohort(newCohort);
       if (
         newCohort.label !== 'New Cohort' &&
         newCohort.label !== 'Choose Cohort'
@@ -250,6 +263,16 @@ export default {
     },
     cohortDeleted() {
       this.substep = '3.1';
+    },
+    async setNewCohort(newCohort) {
+      if (this.isLoadingCohort) {
+        console.log(
+          'WARNING - setNewCohort called when cohort load in progress'
+        );
+      }
+      this.isLoadingCohort = true;
+      await this.setCohort(newCohort);
+      this.isLoadingCohort = false;
     },
   },
 };

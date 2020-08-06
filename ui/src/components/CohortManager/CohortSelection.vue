@@ -49,20 +49,25 @@ export default {
   },
   watch: {
     selectedCohort(newCohort) {
-      this.setCohort(newCohort);
-      this.$emit('selectedCohort', newCohort);
+      if (newCohort != this.cohort) {
+        this.$emit('selectedCohort', newCohort);
+      }
     },
-    cohort() {
-      this.selectedCohort = this.cohort;
+    cohort(nc) {
+      if (this.selectedCohort != nc) {
+        this.selectedCohort = nc;
+      }
     },
   },
   created() {
     this.fetchCohorts();
+    if (this.selectedCohort != this.cohort) {
+      this.selectedCohort = this.cohort;
+    }
   },
   methods: {
     ...mapActions('cohortManager', {
       fetchCohorts: actions.FETCH_COHORTS,
-      setCohort: actions.SET_COHORT,
     }),
   },
 };

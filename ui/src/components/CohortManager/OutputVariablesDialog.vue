@@ -235,18 +235,18 @@ export default {
             });
           }
         });
+
+        // and reset everything else
+        this.outputVariables.forEach(iv => {
+          if (iv.children) {
+            iv.children.forEach(cv => {
+              cv.outSelected = cv.id in selectedVarsD;
+            });
+          }
+
+          iv.outSelected = iv.id in selectedVarsD;
+        });
       }
-
-      // and reset everything else
-      this.outputVariables.forEach(iv => {
-        if (iv.children) {
-          iv.children.forEach(cv => {
-            cv.outSelected = cv.id in selectedVarsD;
-          });
-        }
-
-        iv.outSelected = iv.id in selectedVarsD;
-      });
     },
   },
   async created() {
@@ -322,10 +322,9 @@ export default {
           return measures[k];
         });
         this.setOutputVariables(measures_list);
-
-        //        this.setOutputVariables(oVars);
         // workaround for v-checkboxes not always updating correctly
         this.$forceUpdate();
+        this.$emit('userSelectedOutputVariables', true);
       }
     },
 

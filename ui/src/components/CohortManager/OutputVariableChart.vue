@@ -28,7 +28,7 @@
                     outlined
                     medium
                     class="together primary--text text--lighten-3 ma-0 pa-0 ml-2"
-                    @click="clearAllFilters({ dimension })"
+                    @click="resetClicked"
                   >
                     Reset
                   </v-btn>
@@ -54,6 +54,7 @@
             "
             :id="variable.id"
             :dimension-name="dimension"
+            @userChangedVariable="userChangedOutputVariable"
           />
           <HistogramChart
             v-else-if="variable.is_longitudinal === false"
@@ -61,6 +62,7 @@
             :dimension-name="variable.label"
             :input-variable="false"
             :variable="variable"
+            @userChangedVariable="userChangedOutputVariable"
           />
           <MultiChart
             v-else
@@ -72,6 +74,7 @@
             :first-visit-label="getFirstVisitLabel()"
             :last-visit-label="getLastVisitLabel()"
             width="400px"
+            @userChangedVariable="userChangedOutputVariable"
           />
         </v-col>
       </v-row>
@@ -124,6 +127,13 @@ export default {
       addDimension: actions.ADD_DIMENSION,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    resetClicked() {
+      this.clearAllFilters(this.dimension);
+      this.$emit('userResetOutputVariable', this.dimension);
+    },
+    userChangedOutputVariable() {
+      this.$emit('userChangedOutputVariable', this.dimension);
+    },
     clearAllFilters(dim) {
       this.clearFilter(dim);
       // cover all the bases for the MultiChart/longitudinal case

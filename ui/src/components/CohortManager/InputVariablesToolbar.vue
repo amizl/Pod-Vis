@@ -4,7 +4,10 @@
       <v-col cols="12" class="ma-0 pa-0">
         <v-card color="#eeeeee">
           <v-card-title class="primary--text pl-3 py-2">
-            <input-variables-dialog @dialogOpened="opened" />
+            <input-variables-dialog
+              @dialogOpened="opened"
+              @userSelectedInputVariables="userSelectedInputVariables"
+            />
 
             <v-divider vertical class="ml-4 mr-4"> </v-divider>
 
@@ -112,6 +115,9 @@ export default {
   methods: {
     expandClicked() {
       this.$emit('expandClicked', !this.expanded);
+    },
+    userSelectedInputVariables() {
+      this.$emit('userSelectedInputVariables', true);
     },
     tween(startValue, endValue, prop) {
       const vm = this;

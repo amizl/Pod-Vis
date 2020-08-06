@@ -402,6 +402,9 @@ export default {
     updatePopulationMean() {
       this.populationMean = this.yScale(mean(this.populationData));
     },
+    userChangedVariable() {
+      this.$emit('userChangedVariable', this.dimensionName);
+    },
     initializeBrush() {
       const brushEl = this.$refs.brush;
 
@@ -509,6 +512,7 @@ export default {
       // assumes at most 1 filter, which appears to be the case
       this.filter = newFilter;
       this.updateSelected();
+      this.$emit('userChangedVariable', this.dimensionName);
     },
     brushed() {
       const { selection } = event;

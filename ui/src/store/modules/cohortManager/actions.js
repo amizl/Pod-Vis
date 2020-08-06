@@ -392,6 +392,9 @@ export default {
     ]);
     dispatch(actions.SET_OUTPUT_VARIABLES, outputVariables);
   },
+  async [actions.SET_COHORT_NO_RESET]({ commit, dispatch, getters }, cohort) {
+    commit(mutations.SET_COHORT, cohort);
+  },
   async [actions.DELETE_SELECTED_COHORT]({ state, dispatch }) {
     try {
       const { cohort } = state;

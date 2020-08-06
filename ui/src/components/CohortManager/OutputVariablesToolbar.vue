@@ -4,7 +4,10 @@
       <v-col cols="12" class="ma-0 pa-0">
         <v-card color="#eeeeee">
           <v-card-title class="primary--text pl-3 py-2">
-            <output-variables-dialog @dialogOpened="opened" />
+            <output-variables-dialog
+              @dialogOpened="opened"
+              @userSelectedOutputVariables="userSelectedOutputVariables"
+            />
 
             <v-divider vertical class="ml-4 mr-4"> </v-divider>
 
@@ -99,6 +102,9 @@ export default {
     }),
     expandClicked() {
       this.$emit('expandClicked', !this.expanded);
+    },
+    userSelectedOutputVariables() {
+      this.$emit('userSelectedOutputVariables', true);
     },
     highlight(newSubset) {
       this.setHighlightedSubset(newSubset);

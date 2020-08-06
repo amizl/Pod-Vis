@@ -6,7 +6,11 @@
         :key="outputVariable.id"
         :class="index > 0 ? 'ml-2 pb-1' : 'pb-1'"
       >
-        <output-variable-chart :variable="outputVariable" />
+        <output-variable-chart
+          :variable="outputVariable"
+          @userResetOutputVariable="userChangedVariable"
+          @userChangedOutputVariable="userChangedVariable"
+        />
       </v-card>
     </v-card>
   </div>
@@ -50,6 +54,9 @@ export default {
   methods: {
     rerenderCharts() {
       this.chartsKey += 1;
+    },
+    userChangedVariable() {
+      this.$emit('userChangedOutputVariable', true);
     },
   },
 };

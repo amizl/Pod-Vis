@@ -5,11 +5,15 @@
       :highlighted="highlighted"
       class="ma-0 pa-0"
       @expandClicked="expandClicked"
+      @userSelectedInputVariables="userSelectedInputVariables"
     />
     <v-container v-show="expanded" fluid fill-width class="pa-0 ma-0">
       <v-row class="pa-0 ma-0">
         <v-col cols="12">
-          <input-variables-charts v-if="hasUserAddedInputVariables" />
+          <input-variables-charts
+            v-if="hasUserAddedInputVariables"
+            @userChangedInputVariable="userChangedInputVariable"
+          />
           <v-subheader
             v-else
             class="subheading primary--text text--lighten-4 text-h6"
@@ -64,6 +68,12 @@ export default {
     }),
     expandClicked(newval) {
       this.$emit('update:expanded', newval);
+    },
+    userSelectedInputVariables() {
+      this.$emit('userSelectedInputVariables', true);
+    },
+    userChangedInputVariable() {
+      this.$emit('userChangedInputVariable', true);
     },
   },
 };

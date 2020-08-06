@@ -260,6 +260,7 @@ export default {
           dimension: this.dimensionName,
         });
       }
+      this.$emit('userChangedVariable', this.dimensionName);
     },
     resizeChart() {
       this.height = 150;

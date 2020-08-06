@@ -5,11 +5,15 @@
       :highlighted="highlighted"
       class="ma-0 pa-0"
       @expandClicked="expandClicked"
+      @userSelectedOutputVariables="userSelectedOutputVariables"
     />
     <v-container v-show="true" fluid fill-width class="pa-0 ma-0">
       <v-row class="pa-0 ma-0">
         <v-col cols="12">
-          <output-variables-charts v-if="hasUserAddedOutputVariables" />
+          <output-variables-charts
+            v-if="hasUserAddedOutputVariables"
+            @userChangedOutputVariable="userChangedOutputVariable"
+          />
           <v-subheader
             v-else
             class="subheading primary--text text--lighten-4 text-h6"
@@ -61,6 +65,12 @@ export default {
   methods: {
     expandClicked(newval) {
       this.$emit('update:expanded', newval);
+    },
+    userSelectedOutputVariables() {
+      this.$emit('userSelectedOutputVariables', true);
+    },
+    userChangedOutputVariable() {
+      this.$emit('userChangedOutputVariable', true);
     },
   },
 };

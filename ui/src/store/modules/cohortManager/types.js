@@ -77,6 +77,7 @@ export const mutations = {
 export const actions = {
   FETCH_COHORTS: 'fetchCohorts',
   SET_COHORT: 'setCohort',
+  SET_COHORT_NO_RESET: 'setCohortNoReset',
   FETCH_COLLECTION: 'fetchCollection',
   FETCH_DATA: 'fetchData',
   ADD_INPUT_VARIABLE: 'addInputVariable',

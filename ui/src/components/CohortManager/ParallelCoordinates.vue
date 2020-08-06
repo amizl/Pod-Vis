@@ -20,6 +20,7 @@
           :y-min="minValueBetweenDimensions"
           :y-domain="maxValueBetweenDimensions"
           :variable="variable"
+          @userChangedVariable="userChangedVariable"
         />
       </v-col>
       <v-col cols="4" class="ma-0 pa-0">
@@ -42,6 +43,7 @@
           :y-min="minValueBetweenDimensions"
           :y-domain="maxValueBetweenDimensions"
           :variable="variable"
+          @userChangedVariable="userChangedVariable"
         />
       </v-col>
     </v-row>
@@ -242,6 +244,9 @@ export default {
     ...mapActions('cohortManager', {
       addDimension: actions.ADD_DIMENSION,
     }),
+    userChangedVariable() {
+      this.$emit('userChangedVariable');
+    },
     resizeChart() {
       this.height = 300;
       this.width = 180;

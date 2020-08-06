@@ -6,7 +6,11 @@
         :key="inputVariable.id"
         :class="index > 0 ? 'ml-2 pb-1' : 'pb-1'"
       >
-        <input-variable-chart :variable="inputVariable" />
+        <input-variable-chart
+          :variable="inputVariable"
+          @userResetInputVariable="userChangedVariable"
+          @userChangedInputVariable="userChangedVariable"
+        />
       </v-card>
     </v-card>
   </div>
@@ -50,6 +54,9 @@ export default {
   methods: {
     rerenderCharts() {
       this.chartsKey += 1;
+    },
+    userChangedVariable(v) {
+      this.$emit('userChangedInputVariable', true);
     },
   },
 };

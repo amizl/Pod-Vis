@@ -103,6 +103,7 @@
             :error-messages="rangeMinErrors"
             class="center-text pa-0 ma-0"
             type="number"
+            @change="userChangedVariable"
           ></v-text-field
         ></v-col>
         <v-col cols="1" class="pa-0 ma-0" align="center" justify="center">
@@ -114,6 +115,7 @@
             :error-messages="rangeMaxErrors"
             class="center-text pa-0 ma-0"
             type="number"
+            @change="userChangedVariable"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -503,6 +505,7 @@ export default {
       }
       this.selectedRange = null;
       this.selectRange(s);
+      this.$emit('userChangedVariable', this.dimension);
     },
     tfRangeMin(range_min) {
       this.updateSelectedRange();
@@ -518,7 +521,6 @@ export default {
     this.group = dimension.group();
     this.data = flattenGroupCounts(this.group.all());
     const [query] = this.findCohortQuery(this.dimensionName);
-
     if (typeof query !== 'undefined') {
       this.$nextTick(() => {
         const minValue = query.min_value;
@@ -551,6 +553,9 @@ export default {
       addFilter: actions.ADD_FILTER,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    userChangedVariable() {
+      this.$emit('userChangedVariable', this.dimensionName);
+    },
     initializeBrush() {
       const brushEl = this.$refs.brush;
 
@@ -624,6 +629,7 @@ export default {
         this.resetSelection();
         this.selectedRange = null;
         this.selectedPopSubset = null;
+        this.$emit('userChangedVariable', this.dimension);
         return;
       }
 
@@ -661,6 +667,7 @@ export default {
           maxValue: invertedHigh,
         },
       });
+      this.$emit('userChangedVariable', this.dimensionName);
     },
     brushed() {
       const { selection } = event;

@@ -220,18 +220,18 @@ export default {
         this.vars.forEach(v => {
           selectedVarsD[v.id] = true;
         });
+
+        // and reset everything else
+        this.inputVariables.forEach(iv => {
+          if (iv.children) {
+            iv.children.forEach(cv => {
+              cv.inSelected = cv.id in selectedVarsD;
+            });
+          }
+
+          iv.inSelected = iv.id in selectedVarsD;
+        });
       }
-
-      // and reset everything else
-      this.inputVariables.forEach(iv => {
-        if (iv.children) {
-          iv.children.forEach(cv => {
-            cv.inSelected = cv.id in selectedVarsD;
-          });
-        }
-
-        iv.inSelected = iv.id in selectedVarsD;
-      });
     },
   },
   computed: {
@@ -281,6 +281,7 @@ export default {
         this.setInputVariables(selectedInputVars.sort(this.scaleSortFn));
         // workaround for v-checkboxes not always updating correctly
         this.$forceUpdate();
+        this.$emit('userSelectedInputVariables', true);
       }
     },
 

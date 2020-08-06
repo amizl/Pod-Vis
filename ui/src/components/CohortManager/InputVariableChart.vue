@@ -27,7 +27,7 @@
                     outlined
                     medium
                     class="together primary--text text--lighten-3 ma-0 pa-0 ml-2"
-                    @click="clearFilter({ dimension })"
+                    @click="resetClicked"
                   >
                     Reset
                   </v-btn>
@@ -56,6 +56,7 @@
             :id="variable.id"
             :dimension-name="dimension"
             bar-tooltip="Click to add or remove this value from the cohort filter"
+            @userChangedVariable="userChangedInputVariable"
           />
           <HistogramChart
             v-else-if="variable.data_category !== 'Categorical'"
@@ -63,14 +64,20 @@
             :dimension-name="dimension"
             :variable="variable"
             input-variable
+            @userChangedVariable="userChangedInputVariable"
           />
-          <ColumnChart v-else :id="variable.id" :dimension-name="dimension" />
+          <ColumnChart
+            v-else
+            :id="variable.id"
+            :dimension-name="dimension"
+            @userChangedVariable="userChangedInputVariable"
+          />
         </v-col>
       </v-row>
     </v-container>
   </v-sheet>
 </template>
-
+columnchar
 <script>
 import ColumnChart from '@/components/CohortManager/BarChart/BarChart.vue';
 import HistogramChart from '@/components/CohortManager/HistogramChart/HistogramChart.vue';
@@ -94,6 +101,7 @@ export default {
   computed: {
     ...mapState('cohortManager', {
       collection: state.COLLECTION,
+      dimensions: state.DIMENSIONS,
       unfilteredData: state.UNFILTERED_DATA,
     }),
   },
@@ -105,6 +113,13 @@ export default {
       addDimension: actions.ADD_DIMENSION,
       clearFilter: actions.CLEAR_FILTER,
     }),
+    resetClicked() {
+      this.clearFilter({ dimension: this.dimension });
+      this.$emit('userResetInputVariable', this.dimension);
+    },
+    userChangedInputVariable() {
+      this.$emit('userChangedInputVariable', this.dimension);
+    },
     getChartTitle() {
       var title = this.variable.label;
       if (
