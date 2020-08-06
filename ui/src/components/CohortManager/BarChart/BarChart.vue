@@ -201,7 +201,21 @@ export default {
     this.dimension = dimension;
     this.group = dimension.group();
     this.data = this.group.all();
-    this.populationData = this.data.map(d => ({ ...d }));
+
+    var popCounts = {};
+    this.unfilteredData.forEach(d => {
+      var v = dimension.accessor(d);
+      if (!(v in popCounts)) {
+        popCounts[v] = 0;
+      }
+      popCounts[v] += 1;
+    });
+    var popData = [];
+    for (var k in popCounts) {
+      var c = popCounts[k];
+      popData.push({ key: k, value: c });
+    }
+    this.populationData = popData;
 
     // If there is a cohort selected then apply the appropriate
     // queries to the chart
