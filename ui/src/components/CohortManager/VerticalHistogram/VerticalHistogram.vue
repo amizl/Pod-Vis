@@ -11,10 +11,10 @@
           v-for="(bin, i) in popBins"
           :key="`population-${i}`"
           :x="left ? xScale(bin.length) : 0"
-          :y="yScale(bin.x1)"
+          :y="variable.flip_axis ? yScale(bin.x0) : yScale(bin.x1)"
           :height="
-            yScale(bin.x0) - yScale(bin.x1) - 1 > 0
-              ? yScale(bin.x0) - yScale(bin.x1) - 1
+            Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1 > 0
+              ? Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1
               : 0
           "
           :width="
@@ -35,10 +35,10 @@
           v-if="highlightedSubset === 'non-cohort'"
           :key="`pop-minus-cohort-${i}`"
           :x="getNonCohortX(left, bin)"
-          :y="yScale(bin.x1)"
+          :y="variable.flip_axis ? yScale(bin.x0) : yScale(bin.x1)"
           :height="
-            yScale(bin.x0) - yScale(bin.x1) - 1 > 0
-              ? yScale(bin.x0) - yScale(bin.x1) - 1
+            Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1 > 0
+              ? Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1
               : 0
           "
           :width="getNonCohortWidth(left, bin)"
@@ -50,10 +50,10 @@
           v-if="highlightedSubset === 'cohort'"
           :key="`cohort-${i}`"
           :x="getCohortX(left, bin)"
-          :y="yScale(bin.x1)"
+          :y="variable.flip_axis ? yScale(bin.x0) : yScale(bin.x1)"
           :height="
-            yScale(bin.x0) - yScale(bin.x1) - 1 > 0
-              ? yScale(bin.x0) - yScale(bin.x1) - 1
+            Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1 > 0
+              ? Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1
               : 0
           "
           :width="getCohortWidth(left, bin)"
@@ -243,7 +243,7 @@ export default {
     yScale() {
       return scaleLinear()
         .domain([this.yMin, this.yDomain])
-        .range([this.h, 0]);
+        .range(this.variable.flip_axis ? [0, this.h] : [this.h, 0]);
     },
     cohortXScale() {
       return scaleLinear()
@@ -360,7 +360,6 @@ export default {
     const dimension = this.dimensions[this.dimensionName];
     this.dimension = dimension;
     this.populationData = this.unfilteredData.map(dimension.accessor);
-
     this.group = dimension.group();
     this.data = flattenGroupCounts(this.group.all());
   },
@@ -446,26 +445,29 @@ export default {
     getClosestBins() {
       const { selection } = event;
       const [upper, lower] = selection.map(this.yScale.invert);
-      // TODO - this does not yet support flip_axis
+
+      var x1fn = x => (this.variable.flip_axis ? x.x0 : x.x1);
+      var x0fn = x => (this.variable.flip_axis ? x.x1 : x.x0);
+
       // Get closest bin to our upper selection (i.e., higher up on the screen)
       const closestBinToUpper = this.bins
-        .map(bin => bin.x1)
-        .map(x1 => Math.abs(x1 - upper))
+        .map(bin => x1fn(bin))
+        .map(x => Math.abs(x - upper))
         .reduce((acc, currVal) => Math.min(acc, currVal));
       const newUpperIdx = this.bins.findIndex(
-        bin => Math.abs(bin.x1 - upper) === closestBinToUpper
+        bin => Math.abs(x1fn(bin) - upper) === closestBinToUpper
       );
-      const newUpper = this.bins[newUpperIdx].x1;
+      const newUpper = x1fn(this.bins[newUpperIdx]);
 
       // Get closest bin to our lower selection (i.e., lower down on the screen)
       const closestBinToLower = this.bins
-        .map(bin => bin.x0)
-        .map(x0 => Math.abs(x0 - lower))
+        .map(bin => x0fn(bin))
+        .map(x => Math.abs(x - lower))
         .reduce((acc, currVal) => Math.min(acc, currVal));
       const newLowerIdx = this.bins.findIndex(
-        bin => Math.abs(bin.x0 - lower) === closestBinToLower
+        bin => Math.abs(x0fn(bin) - lower) === closestBinToLower
       );
-      const newLower = this.bins[newLowerIdx].x0;
+      const newLower = x0fn(this.bins[newLowerIdx]);
       return [newUpper, newLower].map(this.yScale);
     },
     brushedData() {
@@ -488,6 +490,12 @@ export default {
         .call(event.target.move, [high, low]);
 
       var [invertedHigh, invertedLow] = [high, low].map(this.yScale.invert);
+
+      if (invertedLow > invertedHigh) {
+        var tmp = invertedLow;
+        invertedLow = invertedHigh;
+        invertedHigh = tmp;
+      }
 
       // workaround for when entire range is selected
       var last_bin = this.bins[this.bins.length - 1];
@@ -560,7 +568,12 @@ export default {
       return false;
     },
     isBinSelected(bin) {
-      const [high, low] = this.selection.map(this.yScale.invert);
+      var [high, low] = this.selection.map(this.yScale.invert);
+      if (low > high) {
+        var tmp = low;
+        low = high;
+        high = tmp;
+      }
       const { x0, x1 } = bin;
 
       // padding must be adaptive - set to half the bin width/height

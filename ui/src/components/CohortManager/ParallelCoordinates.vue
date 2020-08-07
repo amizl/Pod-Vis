@@ -205,7 +205,11 @@ export default {
           this.minValueBetweenDimensions,
           this.maxValueBetweenDimensions,
         ])
-        .range([this.computedHeight, 0]);
+        .range(
+          this.variable.flip_axis
+            ? [0, this.computedHeight]
+            : [this.computedHeight, 0]
+        );
       return scale;
     },
     firstVisitAxis() {
