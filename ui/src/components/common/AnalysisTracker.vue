@@ -114,7 +114,7 @@
           step="2.2"
           ><span class="subtitle-1">Select Variables</span>
           <span
-            >Select variables and click on "SELECT VISITS"</span
+            >Select variables and click on "SAVE STUDY DATASET"</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
@@ -242,7 +242,7 @@
         <v-stepper-step step="4.1">Choose cohorts to compare.</v-stepper-step>
         <v-divider></v-divider>
         <v-stepper-step step="4.2"
-          >Select a variable from One-Way ANOVA table</v-stepper-step
+          >Select a variable from Analytics panel.</v-stepper-step
         >
       </v-stepper-header>
 
@@ -251,9 +251,9 @@
           Choose two or more cohorts to compare, then click "Continue".
         </v-stepper-content>
         <v-stepper-content step="4.2">
-          Select a variable from the One-Way ANOVA table to see the all-vs-all
+          Select a variable from the Analytics panel to see the all-vs-all
           cohort comparison via the Tukey/Range HSD Test. Click on a P-value in
-          that table to compare those cohorts in the Data Explorer.
+          that table to compare the corresponding pair of cohorts in the Data Explorer.
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -265,10 +265,9 @@
     <v-stepper v-if="step === '5'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step step="5.1"
-          >Explore all the data for a chosen variable and set of cohorts. Click
-          on an outcome variable in the Summary View (top) then choose one or
-          more cohorts to display in the Cohorts table below.</v-stepper-step
-        >
+  	>Select which cohorts to display in the Selected Cohorts table (top) then click
+          on an outcome variable in the Analytics panel (bottom left).
+	</v-stepper-step>
         <v-divider></v-divider>
       </v-stepper-header>
     </v-stepper>
