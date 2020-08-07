@@ -206,7 +206,7 @@ export default {
     dimensionScale() {
       const scale = scaleLinear()
         .domain([0, this.yAxisRangeMax])
-        .range([this.computedHeight, 0]);
+        .range(this.variable.flip_axis ? [this.margin.top, this.computedHeight] : [this.computedHeight, 0]);
       return scale;
     },
   },
@@ -853,13 +853,14 @@ export default {
       }
 
       const scale = this.xDimensionScale;
+      var y0 = this.variable.flip_axis ? this.dimensionScale(this.yAxisRangeMax) : this.dimensionScale(0);
 
       this.context.beginPath();
       tp.forEach(d => {
-        this.context.moveTo(this.xDimensionScale(d), this.dimensionScale(0));
+        this.context.moveTo(this.xDimensionScale(d), y0);
         this.context.lineTo(
           this.xDimensionScale(d),
-          this.dimensionScale(0) + tickSize
+          y0 + tickSize
         );
       });
       this.context.strokeStyle = 'black';
@@ -880,7 +881,7 @@ export default {
         this.context.fillText(
           d,
           this.xDimensionScale(d),
-          this.dimensionScale(0) + tickSize + tickPadding * 2
+          y0 + tickSize + tickPadding * 2
         );
       });
 
@@ -893,7 +894,7 @@ export default {
       this.context.fillText(
         caption,
         this.xDimensionScale(xmax / 2),
-        this.dimensionScale(0) + (tickSize + tickPadding) * 3
+        y0 + (tickSize + tickPadding) * 3
       );
     },
     drawAxes() {
