@@ -253,7 +253,8 @@
         <v-stepper-content step="4.2">
           Select a variable from the Analytics panel to see the all-vs-all
           cohort comparison via the Tukey/Range HSD Test. Click on a P-value in
-          that table to compare the corresponding pair of cohorts in the Data Explorer.
+          that table to compare the corresponding pair of cohorts in the Data
+          Explorer.
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -265,9 +266,10 @@
     <v-stepper v-if="step === '5'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step step="5.1"
-  	>Select which cohorts to display in the Selected Cohorts table (top) then click
-          on an outcome variable in the Analytics panel (bottom left).
-	</v-stepper-step>
+          >Select which cohorts to display in the Selected Cohorts table (top)
+          then click on an outcome variable in the Analytics panel (bottom
+          left).
+        </v-stepper-step>
         <v-divider></v-divider>
       </v-stepper-header>
     </v-stepper>
