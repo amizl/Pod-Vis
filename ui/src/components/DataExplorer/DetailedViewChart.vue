@@ -206,7 +206,11 @@ export default {
     dimensionScale() {
       const scale = scaleLinear()
         .domain([0, this.yAxisRangeMax])
-        .range(this.variable.flip_axis ? [this.margin.top, this.computedHeight] : [this.computedHeight, 0]);
+        .range(
+          this.variable.flip_axis
+            ? [this.margin.top, this.computedHeight]
+            : [this.computedHeight, 0]
+        );
       return scale;
     },
   },
@@ -271,8 +275,12 @@ export default {
   },
   methods: {
     onResize() {
-      this.resizeChart();
-      this.$nextTick(() => this.updateCanvas());
+      this.$nextTick(() => {
+        this.resizeChart();
+        this.$nextTick(() => {
+          this.updateCanvas();
+        });
+      });
     },
 
     selectedCohorts() {
@@ -853,15 +861,14 @@ export default {
       }
 
       const scale = this.xDimensionScale;
-      var y0 = this.variable.flip_axis ? this.dimensionScale(this.yAxisRangeMax) : this.dimensionScale(0);
+      var y0 = this.variable.flip_axis
+        ? this.dimensionScale(this.yAxisRangeMax)
+        : this.dimensionScale(0);
 
       this.context.beginPath();
       tp.forEach(d => {
         this.context.moveTo(this.xDimensionScale(d), y0);
-        this.context.lineTo(
-          this.xDimensionScale(d),
-          y0 + tickSize
-        );
+        this.context.lineTo(this.xDimensionScale(d), y0 + tickSize);
       });
       this.context.strokeStyle = 'black';
       this.context.stroke();

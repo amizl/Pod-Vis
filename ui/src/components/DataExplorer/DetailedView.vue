@@ -91,6 +91,7 @@
 
           <detailed-view-chart
             v-else
+            ref="dview_chart"
             :variable="detailedView"
             :dimension-name="detailedView.id"
             :line-style="line_style"
@@ -131,7 +132,12 @@ export default {
       detailedView: state.DETAILED_VIEW,
     }),
   },
-  methods: {},
+  methods: {
+    // workaround to force DetailedViewChart resize when expandAnalytics toggled
+    onResize() {
+      this.$refs.dview_chart.onResize();
+    },
+  },
 };
 </script>
 

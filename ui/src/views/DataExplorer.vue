@@ -74,7 +74,7 @@
                   min-height="400px"
                   class="rounded-lg shadow"
                 >
-                  <detailed-view min-height="400px" />
+                  <detailed-view ref="dview" min-height="400px" />
                 </v-sheet>
               </v-col>
             </v-row>
@@ -160,6 +160,12 @@ export default {
         }
       });
       return cc;
+    },
+  },
+  watch: {
+    // workaround to force DetailedViewChart resize when expandAnalytics toggled
+    expandAnalytics(expand) {
+      this.$refs.dview.onResize();
     },
   },
   async created() {
