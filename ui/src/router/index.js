@@ -29,7 +29,7 @@ export default new Router({
     {
       path: '/study_datasets',
       name: 'studyDataset',
-      component: () => import('@/views/StudyDataset.vue'),
+      component: () => import('@/views/StudyDatasets.vue'),
       beforeEnter: requireAuth,
     },
     {
@@ -89,6 +89,15 @@ export default new Router({
       path: '/datasets/:id',
       name: 'dataset',
       component: () => import('@/views/Dataset.vue'),
+      props: route => ({
+        id: +route.params.id,
+      }),
+      beforeEnter: requireAuth,
+    },
+    {
+      path: '/study_datasets/:id',
+      name: 'study_dataset',
+      component: () => import('@/views/StudyDataset.vue'),
       props: route => ({
         id: +route.params.id,
       }),

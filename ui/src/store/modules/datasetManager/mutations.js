@@ -7,6 +7,9 @@ export default {
   [mutations.SET_COLLECTIONS](state, collections) {
     state[stateTypes.COLLECTIONS] = collections;
   },
+  [mutations.SET_COLLECTION](state, collection) {
+    state[stateTypes.COLLECTION] = collection;
+  },
   [mutations.ADD_COLLECTION](state, collection) {
     state[stateTypes.COLLECTIONS].push(collection);
   },

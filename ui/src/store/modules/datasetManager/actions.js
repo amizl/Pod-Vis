@@ -79,7 +79,7 @@ export default {
 
     try {
       const { data } = await axios.get(
-        '/api/collections?include=cohort_counts&include=variables'
+        '/api/collections?include=cohort_counts&include=variables&include=studies'
       );
       data.collections.forEach(c => {
         c.date_generated_epoch = new Date(c.date_generated).getTime();
@@ -102,6 +102,35 @@ export default {
       dispatch(notification.dispatch, notification, { root: true });
     }
 
+    commit(mutations.SET_LOADING, false);
+  },
+  /**
+   * Fetch a single collection.
+   * @param {Object} context
+   */
+  async [actions.FETCH_COLLECTION]({ commit, dispatch }, collectionId) {
+    commit(mutations.SET_LOADING, true);
+
+    try {
+      const { data } = await axios.get(
+        '/api/collections/' + collectionId + '?include=cohort_counts&include=variables&include=studies'
+      );
+      var c = data.collection;
+      c.date_generated_epoch = new Date(c.date_generated).getTime();
+      c.has_visits_set = true;
+      c.observation_variables.forEach(v => {
+        if (
+          (v.first_visit_event == null && v.first_visit_num == null) ||
+          (v.last_visit_event == null && v.last_visit_num == null)
+        ) {
+          c.has_visits_set = false;
+        }
+      });
+      commit(mutations.SET_COLLECTION, c);
+    } catch (err) {
+      const notification = new ErrorNotification(err);
+      dispatch(notification.dispatch, notification, { root: true });
+    }
     commit(mutations.SET_LOADING, false);
   },
   async [actions.DELETE_COLLECTION]({ commit, dispatch }, collectionId) {
