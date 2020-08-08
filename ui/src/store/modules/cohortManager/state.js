@@ -17,4 +17,5 @@ export default {
   [state.HIGHLIGHTED_SUBSET]: 'cohort',
   [state.QUERIES]: {},
   [state.REQUEST_NUM]: 0,
+  [state.COMPARISON_MEASURE]: 'Change',
 };

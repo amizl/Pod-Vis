@@ -31,8 +31,16 @@
           v-if="collection.is_longitudinal"
           class="primary--text title ml-3 mt-2"
         >
-          Comparing cohort vs. remainder change:</v-toolbar-title
-        >
+          <div>
+            Comparing cohort vs. remainder
+            <v-select
+              v-model="selectedComparisonMeasure"
+              dense
+              :items="['Change', 'First Visit', 'Last Visit']"
+            >
+            </v-select>
+          </div>
+        </v-toolbar-title>
 
         <v-container
           align-center
@@ -152,6 +160,7 @@ export default {
       pval_thresholds: ['None', 0.1, 0.05, 0.01, 0.001, 0.0001],
       pvt: 'None',
       expanded: true,
+      selectedComparisonMeasure: 'Change',
     };
   },
   computed: {
@@ -159,6 +168,7 @@ export default {
       pvals: state.PVALS,
       pval_threshold: state.PVAL_THRESHOLD,
       collection: state.COLLECTION,
+      comparisonMeasure: state.COMPARISON_MEASURE,
     }),
     headers() {
       var headers = [
@@ -198,15 +208,19 @@ export default {
     pvt(newPvt) {
       this.setPvalThreshold(newPvt);
     },
+    selectedComparisonMeasure(measure) {
+      this.setComparisonMeasure(measure);
+    },
   },
   created() {
     this.pvt = this.pval_threshold;
+    this.selectedComparisonMeasure = this.comparisonMeasure;
   },
   methods: {
     ...mapActions('cohortManager', {
       setPvalThreshold: actions.SET_PVAL_THRESHOLD,
+      setComparisonMeasure: actions.SET_COMPARISON_MEASURE,
     }),
-
     updatePval(newPval) {
       this.setPvalThreshold(newPval);
     },

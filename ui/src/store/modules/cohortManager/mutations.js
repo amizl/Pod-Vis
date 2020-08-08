@@ -217,6 +217,14 @@ export default {
   [mutations.SET_HIGHLIGHTED_SUBSET](state, subset) {
     state[stateTypes.HIGHLIGHTED_SUBSET] = subset;
   },
+  /**
+   * Set comparison measure
+   * @param {Object} state
+   * @param {String} comparison measure
+   */
+  [mutations.SET_COMPARISON_MEASURE](state, measure) {
+    state[stateTypes.COMPARISON_MEASURE] = measure;
+  },
 
   /**
    * Set query for particular dimension.

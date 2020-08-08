@@ -15,6 +15,7 @@ export const state = {
   QUERIES: 'queries',
   HIGHLIGHTED_SUBSET: 'highlightedSubset',
   REQUEST_NUM: 'requestNum',
+  COMPARISON_MEASURE: 'comparisonMeasure',
 };
 
 // Getters
@@ -71,6 +72,7 @@ export const mutations = {
   RESET_QUERIES: 'resetQueries',
   REMOVE_COHORT: 'removeCohort',
   INCREMENT_REQUEST_NUM: 'incrementRequestNum',
+  SET_COMPARISON_MEASURE: 'setComparisonMeasure',
 };
 
 // Actions
@@ -100,4 +102,5 @@ export const actions = {
   RESET_PVAL_THRESHOLD: 'resetPvalThreshold',
   SET_HIGHLIGHTED_SUBSET: 'setHighlightedSubset',
   RESET_HIGHLIGHTED_SUBSET: 'resetHighlightedSubset',
+  SET_COMPARISON_MEASURE: 'setComparisonMeasure',
 };

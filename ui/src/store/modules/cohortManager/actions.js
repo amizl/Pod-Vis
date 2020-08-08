@@ -242,6 +242,15 @@ export default {
     const { filteredData } = state;
     let { unfilteredData, outputVariables } = state;
     const collection = state[stateTypes.COLLECTION];
+    const comparisonMeasure = state[stateTypes.COMPARISON_MEASURE];
+    // TODO - this mapping is already performed on the server side (more than once)
+    const m2f = {
+      'First Visit': 'firstVisit',
+      'Last Visit': 'lastVisit',
+      Change: 'change',
+      'Rate of Change': 'roc',
+    };
+    const comparisonField = m2f[comparisonMeasure];
 
     if (filteredData.length === unfilteredData.length) {
       // increment requestnum to ensure any previously-submitted request is ignored
@@ -253,9 +262,6 @@ export default {
       // Remove subjects within our filtered data sets from our unfiltered so
       // we can have separate samples
       var filteredDataSubjIds = {};
-      filteredData.map(d => {
-        filteredDataSubjIds[d.subject_id] = 1;
-      });
       var numFilteredSubjIds = Object.keys(filteredDataSubjIds).length;
 
       var unfilteredDataSubjIds = {};
@@ -298,6 +304,7 @@ export default {
       var cb = async function(reqnum) {
         try {
           const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
+            comparisonField: comparisonField,
             filteredData: filteredData,
             unfilteredData: remainderData,
             outputVariables: outputVariables,
@@ -437,5 +444,9 @@ export default {
   },
   [actions.RESET_HIGHLIGHTED_SUBSET]({ commit }) {
     commit(mutations.RESET_HIGHLIGHTED_SUBSET);
+  },
+  [actions.SET_COMPARISON_MEASURE]({ commit, dispatch }, measure) {
+    commit(mutations.SET_COMPARISON_MEASURE, measure);
+    dispatch(actions.ANALYZE_FILTERED);
   },
 };

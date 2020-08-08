@@ -9,6 +9,7 @@ from .. import models
 import numpy as np
 import pandas as pd
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
+import re
 import sys
 
 @api.route('/subjects')
@@ -950,6 +951,7 @@ def compute_pairwise_tukeyhsd():
 def compute_mannwhitneyu():
     """Compute Mann-Whitney rank test"""
     request_data = request.get_json()
+    comparison_field = request_data.get("comparisonField")
     filtered_data = request_data.get("filteredData")
     unfiltered_data = request_data.get("unfilteredData")
     output_variables = request_data.get("outputVariables")
@@ -981,7 +983,6 @@ def compute_mannwhitneyu():
             err = "Filtered sample size < 20"
         elif n_unfiltered < 20:
             err = "Unfiltered sample size < 20"
-  
 
         # Categorical variable - chi-square test
         if (output_variable['data_category'] == 'Categorical') and (not output_variable['is_longitudinal']):
@@ -1041,8 +1042,11 @@ def compute_mannwhitneyu():
 
         # Continuous variable: 2-Sided Mann-Whitney U-Test
         elif (output_variable['data_category'] != 'Categorical') and (output_variable['is_longitudinal']):
-            filtered_sample = [data.get(variable_id).get('change') for data in filtered_data]
-            unfiltered_sample = [data.get(variable_id).get('change') for data in unfiltered_data]
+            if (not re.match(r'^firstVisit|lastVisit|change|roc$', comparison_field)):
+                comparison_field = 'change';
+
+            filtered_sample = [data.get(variable_id).get(comparison_field) for data in filtered_data]
+            unfiltered_sample = [data.get(variable_id).get(comparison_field) for data in unfiltered_data]
 
             u, pval = mannwhitneyu(filtered_sample, unfiltered_sample, alternative='two-sided')
 
@@ -1050,6 +1054,7 @@ def compute_mannwhitneyu():
             f = u / (n_filtered * n_unfiltered)
         
             pvals.append(dict(label=variable_label,
+                              comparison_field=comparison_field,
                               test_name='2-Sided Mann-Whitney U Test',
                               test_abbrev='2SMWU',
                               pval=pval,

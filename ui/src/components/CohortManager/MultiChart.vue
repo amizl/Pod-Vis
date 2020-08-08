@@ -26,7 +26,10 @@
       <v-col cols="12" class="pa-0 ma-0">
         <v-container fill-width class="pa-0 ma-0">
           <v-row
-            v-if="!variable.selected_measures || ('firstVisit' in variable.selected_measures)"
+            v-if="
+              !variable.selected_measures ||
+                'firstVisit' in variable.selected_measures
+            "
             class="not-highlight-var pa-2 ma-0"
           >
             <v-col cols="12" class="pa-0 ma-0">
@@ -48,7 +51,10 @@
             </v-col>
           </v-row>
           <v-row
-            v-if="!variable.selected_measures || ('lastVisit' in variable.selected_measures)"
+            v-if="
+              !variable.selected_measures ||
+                'lastVisit' in variable.selected_measures
+            "
             class="not-highlight-var pa-2 ma-0"
           >
             <v-col cols="12" class="pa-0 ma-0">
