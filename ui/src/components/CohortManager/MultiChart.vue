@@ -88,7 +88,7 @@
             'change' in variable.selected_measures)
       "
       class="pa-2 ma-0"
-      :class="highlightChange ? 'highlight-var' : 'not-highlight-var'"
+      :class="'not-highlight-var'"
     >
       <v-col cols="12" class="pa-0 ma-0">
         Change: {{ firstVisitLabel }}-{{ lastVisitLabel }}
