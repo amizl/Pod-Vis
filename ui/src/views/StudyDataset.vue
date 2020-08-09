@@ -3,10 +3,9 @@
     <v-app-bar app class="primary">
       <v-icon color="white" large>menu_book</v-icon>
       <v-toolbar-title class="white--text pl-3"
-		       >Study Dataset Overview
+        >Study Dataset Overview
         <div class="subtitle-1">Dataset: {{ collection.label }}</div>
-      </v-toolbar-title
-      >
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tooltip bottom color="primary">
         <template v-slot:activator="{ on: tooltip }">
@@ -26,34 +25,39 @@
           <v-col cols="12" class="ma-0 pa-0">
             <v-card color="#eeeeee" class="pt-1">
               <v-card-title class="primary--text pl-3 py-2"
-			    >Overview
+                >Overview
               </v-card-title>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
-      
+
       <v-container fluid fill-width class="ma-0 pa-0 pt-2">
-	<v-row class="ma-0 pa-0">
+        <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
-	    
-	    <!-- Title and description -->
-	    <v-container fluid fill-width class="ma-0 pa-0 pt-0">
+            <!-- Title and description -->
+            <v-container fluid fill-width class="ma-0 pa-0 pt-0">
               <v-row class="ma-0 pa-0">
-		<v-col cols="12" class="ma-0 pa-0">
+                <v-col cols="12" class="ma-0 pa-0">
                   <v-card flat class="rounded-lg shadow">
                     <v-card-text>
-		      <p><span>Name:</span> {{ collection.label }}</p>
-                      <p><span>Created on:</span> {{ collection.date_generated_epoch | formatDate }}</p>
-		      <p><span>Public dataset:</span> {{ collection.is_public ? "yes" : "no" }}</p>
+                      <p><span>Name:</span> {{ collection.label }}</p>
+                      <p><span>Created by:</span> {{ collection.user_name }}</p>
+                      <p>
+                        <span>Created on:</span>
+                        {{ collection.date_generated_epoch | formatDate }}
+                      </p>
+                      <p>
+                        <span>Public dataset:</span>
+                        {{ collection.is_public ? 'yes' : 'no' }}
+                      </p>
                     </v-card-text>
                   </v-card>
-		</v-col>
+                </v-col>
               </v-row>
             </v-container>
-	    
           </v-col>
-	</v-row>
+        </v-row>
       </v-container>
     </v-sheet>
 
@@ -64,31 +68,50 @@
           <v-col cols="12" class="ma-0 pa-0">
             <v-card color="#eeeeee" class="pt-1">
               <v-card-title class="primary--text pl-3 py-2"
-			    >Source Datasets ({{ collection.studies.length }})
+                >Source Datasets ({{ collection.studies.length }})
+                <v-spacer />
+                <v-toolbar-items>
+                  <v-icon
+                    v-if="datasets_expanded"
+                    @click="datasets_expanded = false"
+                    >expand_less</v-icon
+                  >
+                  <v-icon v-else @click="datasets_expanded = true"
+                    >expand_more</v-icon
+                  >
+                </v-toolbar-items>
               </v-card-title>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
-      
-      <v-container fluid fill-width class="ma-0 pa-0 pt-2">
-	<v-row class="ma-0 pa-0">
+
+      <v-container
+        v-show="datasets_expanded"
+        fluid
+        fill-width
+        class="ma-0 pa-0 pt-2"
+      >
+        <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
-	    
-	    <v-container fluid fill-width class="ma-0 pa-0 pt-0">
+            <v-container fluid fill-width class="ma-0 pa-0 pt-0">
               <v-row class="ma-0 pa-0">
-		<v-col cols="12" class="ma-0 pa-0">
+                <v-col cols="12" class="ma-0 pa-0">
                   <v-card flat class="rounded-lg shadow">
                     <v-card-text>
-		      <p v-for="s in collection.studies">{{s.study.study_name}} - {{s.study.description}}</p>
+                      <p v-for="s in collection.studies">
+                        <span class="font-weight-bold">{{
+                          s.study.study_name
+                        }}</span>
+                        - {{ s.study.description }}
+                      </p>
                     </v-card-text>
                   </v-card>
-		</v-col>
+                </v-col>
               </v-row>
             </v-container>
-	    
           </v-col>
-	</v-row>
+        </v-row>
       </v-container>
     </v-sheet>
 
@@ -99,34 +122,49 @@
           <v-col cols="12" class="ma-0 pa-0">
             <v-card color="#eeeeee" class="pt-1">
               <v-card-title class="primary--text pl-3 py-2"
-			    >Demographic Variables ({{ collection.subject_variables.length }})
+                >Demographic Variables ({{
+                  collection.subject_variables.length
+                }})
+                <v-spacer />
+                <v-toolbar-items>
+                  <v-icon
+                    v-if="demo_vars_expanded"
+                    @click="demo_vars_expanded = false"
+                    >expand_less</v-icon
+                  >
+                  <v-icon v-else @click="demo_vars_expanded = true"
+                    >expand_more</v-icon
+                  >
+                </v-toolbar-items>
               </v-card-title>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
-      
-      <v-container fluid fill-width class="ma-0 pa-0 pt-2">
-	<v-row class="ma-0 pa-0">
+
+      <v-container
+        v-show="demo_vars_expanded"
+        fluid
+        fill-width
+        class="ma-0 pa-0 pt-2"
+      >
+        <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
-	    
-	    <v-container fluid fill-width class="ma-0 pa-0 pt-0">
+            <v-container fluid fill-width class="ma-0 pa-0 pt-0">
               <v-row class="ma-0 pa-0">
-		<v-col cols="12" class="ma-0 pa-0">
-                  <v-card flat class="rounded-lg shadow">
-                    <v-card-text>
-                    </v-card-text>
-                  </v-card>
-		</v-col>
+                <v-col cols="12" class="ma-0 pa-0">
+                  <simple-variable-table
+                    :variables="collection.subject_variables"
+                    dense
+                  />
+                </v-col>
               </v-row>
             </v-container>
-	    
           </v-col>
-	</v-row>
+        </v-row>
       </v-container>
     </v-sheet>
 
-    
     <!-- Observation Variables -->
     <v-sheet color="white" class="scroll rounded-lg shadow my-2">
       <v-container fluid fill-width class="ma-0 pa-0">
@@ -134,82 +172,60 @@
           <v-col cols="12" class="ma-0 pa-0">
             <v-card color="#eeeeee" class="pt-1">
               <v-card-title class="primary--text pl-3 py-2"
-			    >Observation Variables ({{ collection.observation_variables.length }})
+                >Observation Variables ({{
+                  collection.observation_variables.length
+                }})
+                <v-spacer />
+                <v-toolbar-items>
+                  <v-icon
+                    v-if="obs_vars_expanded"
+                    @click="obs_vars_expanded = false"
+                    >expand_less</v-icon
+                  >
+                  <v-icon v-else @click="obs_vars_expanded = true"
+                    >expand_more</v-icon
+                  >
+                </v-toolbar-items>
               </v-card-title>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
-      
-      <v-container fluid fill-width class="ma-0 pa-0 pt-2">
-	<v-row class="ma-0 pa-0">
+
+      <v-container
+        v-show="obs_vars_expanded"
+        fluid
+        fill-width
+        class="ma-0 pa-0 pt-2"
+      >
+        <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
-	    
-	    <v-container fluid fill-width class="ma-0 pa-0 pt-0">
+            <v-container fluid fill-width class="ma-0 pa-0 pt-0">
               <v-row class="ma-0 pa-0">
-		<v-col cols="12" class="ma-0 pa-0">
-                  <v-card flat class="rounded-lg shadow">
-                    <v-card-text>
-                    </v-card-text>
-                  </v-card>
-		</v-col>
+                <v-col cols="12" class="ma-0 pa-0">
+                  <simple-variable-table
+                    :variables="collection.observation_variables"
+                    dense
+                  />
+                </v-col>
               </v-row>
             </v-container>
-	    
           </v-col>
-	</v-row>
+        </v-row>
       </v-container>
     </v-sheet>
 
-        <!--
-
-          <v-container fluid fill-width class="ma-0 pa-0 pt-2">
-            <v-row class="ma-0 pa-0">
-              <v-col cols="12" class="ma-0 pa-0">
-                <v-card flat class="rounded-lg shadow pt-2">
-                  <v-card-title primary-title card color="white">
-                    <span class="title">Variables</span>
-                  </v-card-title>
-                  <variable-table :dataset-id="id" />
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-col>
-
-        <v-col cols="4" class="ma-0 pa-0 pl-2">
-          <v-card flat class="rounded-lg shadow">
-            <v-card-title primary-title card color="white">
-              <span class="title">Subject Summary</span>
-            </v-card-title>
-            <v-card-text v-if="summaryData">
-              <sunburst-chart
-                :data="summaryData"
-                :keyorder="groupBy"
-                :color="{ male: '#00AEEF', female: '#EC76BC' }"
-              >
-                <template
-                  v-slot:legend="{ data, color, colorScale, actions, nodes }"
-                >
-                  <sunburst-legend
-                    :data="data"
-                    :color-scale="colorScale"
-                    :color="color"
-                    :actions="actions"
-                    :nodes="nodes"
-                  ></sunburst-legend>
-                </template>
-              </sunburst-chart>
-            </v-card-text>
-            <v-card-text v-else>
-              <loading-spinner medium class="ma-5" />
-            </v-card-text>
-          </v-card>
+    <!-- Cohorts -->
+    <v-container fluid fill-width class="ma-0 pa-0 pt-2">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <cohort-table
+            :title="'Cohorts (' + collection.cohorts.length + ')'"
+            :cohorts="collection.cohorts"
+          />
         </v-col>
       </v-row>
     </v-container>
-    -->
-    
   </v-container>
 </template>
 
@@ -217,8 +233,9 @@
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
 import axios from 'axios';
-import VariableTable from '@/components/DatasetManager/VariableTable.vue';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
+import CohortTable from '@/components/common/CohortTable.vue';
+import SimpleVariableTable from '@/components/DatasetManager/SimpleVariableTable.vue';
 
 export default {
   filters: {
@@ -228,8 +245,9 @@ export default {
     },
   },
   components: {
-    VariableTable,
+    CohortTable,
     LoadingSpinner,
+    SimpleVariableTable,
   },
   props: {
     id: {
@@ -239,6 +257,9 @@ export default {
   },
   data() {
     return {
+      datasets_expanded: true,
+      demo_vars_expanded: true,
+      obs_vars_expanded: true,
     };
   },
   computed: {
@@ -247,7 +268,7 @@ export default {
     }),
   },
   async created() {
-     await this.fetchCollection(this.id);
+    await this.fetchCollection(this.id);
   },
   methods: {
     ...mapActions('datasetManager', {
