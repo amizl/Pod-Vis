@@ -600,12 +600,14 @@ def get_collection(collection_id):
 
     include = request.args.getlist('include')
     kwargs = {
+        "include_cohorts": "cohorts" in include,
         "include_studies": "studies" in include,
         "include_variables": "variables" in include
     }
 
     collection_d = collection.to_dict(**kwargs)
-
+    collection_d['user_name'] = user.name
+    
     # add scale categories
     get_obs_scale_category = models.ObservationOntology.get_var_category_fn()
     for ov in collection_d['observation_variables']:

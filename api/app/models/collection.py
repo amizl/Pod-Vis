@@ -551,6 +551,7 @@ class Collection(db.Model):
                 include_studies=False,
                 include_queries=False,
                 include_variables=False,
+                include_cohorts=False,
                 include_cohort_counts=False,
                 # for a public Collection, the cohort user_id may differ from the Collection user_id
                 cohort_user_id=None):
@@ -567,6 +568,18 @@ class Collection(db.Model):
             is_public=self.is_public,
         )
 
+        all_cohorts = None
+        user_cohorts = None
+        
+        if include_cohorts or include_cohort_counts:
+            all_cohorts = Cohort.find_all_by_collection_id(self.id)
+            if (cohort_user_id is None):
+                cohort_user_id = self.user_id
+            user_cohorts = [c for c in all_cohorts if c.user_id == cohort_user_id]
+                
+        if include_cohorts:
+            collection['cohorts'] = [cohort.to_dict() for cohort in user_cohorts]
+
         if include_studies:
             collection['studies'] = [study.to_dict(
                 include_study=True) for study in self.studies]
@@ -580,10 +593,6 @@ class Collection(db.Model):
             pass
 
         if include_cohort_counts:
-            all_cohorts = Cohort.find_all_by_collection_id(self.id)
-            if (cohort_user_id is None):
-                cohort_user_id = self.user_id
-            user_cohorts = [c for c in all_cohorts if c.user_id == cohort_user_id]
             collection['num_cohorts'] = len(user_cohorts)
         
         return collection
