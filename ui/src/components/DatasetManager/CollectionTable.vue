@@ -98,21 +98,20 @@
               :collection-name="props.item.label"
             />
           </td>
-	  <td class="text-subtitle-1 text-xs-left">
+          <td class="text-subtitle-1 text-xs-left">
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on: tooltip }">
-		<v-icon
-		  color="primary"
-		  class="mr-1"
-		  @click="routeToDatasetSummary(props.item.id)"
-		  v-on="{ ...tooltip }"
-		  >info</v-icon
-	        >
+                <v-icon
+                  color="primary"
+                  class="mr-1"
+                  @click="routeToDatasetSummary(props.item.id)"
+                  v-on="{ ...tooltip }"
+                  >info</v-icon
+                >
               </template>
               <span>View dataset summary.</span>
             </v-tooltip>
-	  </td>
-
+          </td>
         </tr>
         <tr v-for="(cohort, index) in props.item.cohorts">
           <td colspan="3">cohort row</td>

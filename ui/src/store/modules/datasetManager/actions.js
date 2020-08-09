@@ -113,7 +113,9 @@ export default {
 
     try {
       const { data } = await axios.get(
-        '/api/collections/' + collectionId + '?include=cohort_counts&include=variables&include=studies'
+        '/api/collections/' +
+          collectionId +
+          '?include=cohorts&include=variables&include=studies'
       );
       var c = data.collection;
       c.date_generated_epoch = new Date(c.date_generated).getTime();
