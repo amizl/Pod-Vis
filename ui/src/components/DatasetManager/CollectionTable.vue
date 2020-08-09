@@ -11,7 +11,16 @@
     >
       <template v-slot:item="props">
         <tr>
-          <td class="text-subtitle-1 text-xs-left">{{ props.item.label }}</td>
+          <td class="text-subtitle-1 text-xs-left">
+            <v-tooltip top color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <span v-on="{ ...tooltip }">{{ props.item.label }}</span>
+              </template>
+              <span class="subtitle-1">{{
+                getCollectionDescription(props.item)
+              }}</span>
+            </v-tooltip>
+          </td>
           <td class="text-subtitle-1 text-xs-left">
             {{ props.item.date_generated | formatDate }}
           </td>
@@ -130,6 +139,7 @@
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
 import DeleteCollectionButton from '@/components/dashboard/DeleteCollectionBtnDialog';
+import { getCollectionDescription } from '@/utils/helpers';
 
 export default {
   filters: {
@@ -150,6 +160,7 @@ export default {
   },
   data() {
     return {
+      getCollectionDescription: getCollectionDescription,
       headers: [
         {
           text: 'Study Dataset',

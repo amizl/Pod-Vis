@@ -145,6 +145,62 @@ export function getObservationVariableIds(c) {
   return Object.keys(collectionVarIds);
 }
 
+export function getCollectionVisitCounts(c, which) {
+  var counts = [];
+  var ch = {};
+  c.observation_variables.forEach(ov => {
+    var evt = null;
+    if (ov[which + '_visit_event'] != null) {
+      evt = ov[which + '_visit_event'];
+    } else if (ov[which + '_visit_num'] != null) {
+      evt = ov[which + '_visit_num'];
+    }
+
+    if (!(evt in ch)) {
+      ch[evt] = 0;
+    }
+    ch[evt] += 1;
+  });
+
+  // sort by decreasing count
+  Object.keys(ch)
+    .sort((a, b) => ch[b] - ch[a])
+    .forEach(k => {
+      counts.push({ visit: k, count: ch[k] });
+    });
+
+  return counts;
+}
+
+export function getCollectionDescription(c) {
+  var descr = c.label;
+  var nsv = c.subject_variables.length;
+  var nov = c.observation_variables.length;
+  descr += ': ';
+
+  var nc = c.num_cohorts;
+  descr += " " + nc + (nc == 1 ? "cohort." : " cohorts.");
+
+  descr += " " + (nsv + nov) + ' variables ';
+    
+  var nd = c.studies.length;
+  descr += 'from ' + nd + ' uploaded dataset(s) [';
+  descr += c.studies.map(s => s.study.study_name).join(',');
+  descr += ']';
+
+  if (c.has_visits_set) {
+    var fvs = getCollectionVisitCounts(c, 'first');
+    var lvs = getCollectionVisitCounts(c, 'last');
+    descr +=
+      ' First Visit: ' + fvs.map(v => v.visit + '[' + v.count + ']').join(',');
+    descr +=
+      ' Last Visit: ' + lvs.map(v => v.visit + '[' + v.count + ']').join(',');
+  }
+
+    
+  return descr;
+}
+
 // PPMI-specific workaround
 export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
   var numericEvents = true;
