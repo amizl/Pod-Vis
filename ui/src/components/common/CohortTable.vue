@@ -53,7 +53,9 @@
         </template>
 
         <template v-slot:item.size="{ item }">
-          <td class="subtitle-1 text-xs-left">{{ item.subject_ids.length }}</td>
+          <td class="subtitle-1 text-xs-left">
+            {{ item.subject_ids ? item.subject_ids.length : '?' }}
+          </td>
         </template>
 
         <template v-slot:item.query_string="{ item }">
