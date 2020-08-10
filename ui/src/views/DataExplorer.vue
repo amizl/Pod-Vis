@@ -26,7 +26,17 @@
             <v-icon color="white" large>explore</v-icon>
             <v-toolbar-title class="white--text pl-3"
               >Data Explorer
-              <div class="subtitle-1">Dataset: {{ collection.label }}</div>
+              <div class="subheading">
+                Dataset:
+                <v-tooltip bottom color="primary">
+                  <template v-slot:activator="{ on: tooltip }">
+                    <span v-on="{ ...tooltip }">{{ collection.label }}</span>
+                  </template>
+                  <span class="subtitle-1">{{
+                    getCollectionDescription(collection)
+                  }}</span>
+                </v-tooltip>
+              </div>
             </v-toolbar-title>
           </v-app-bar>
 
@@ -92,6 +102,7 @@ import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import CohortTable from '@/components/common/CohortTable.vue';
 import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
 import DetailedView from '@/components/DataExplorer/DetailedView.vue';
+import { getCollectionDescription } from '@/utils/helpers';
 
 export default {
   components: {
@@ -141,6 +152,7 @@ export default {
         '#f781bf',
         '#999999',
       ],
+      getCollectionDescription: getCollectionDescription,
     };
   },
   computed: {

@@ -10,7 +10,17 @@
       <v-icon color="white" large>grid_on</v-icon>
       <v-toolbar-title class="white--text pl-3"
         >Summary Matrix
-        <div class="subheading">Dataset: {{ collection.label }}</div>
+        <div class="subheading">
+          Dataset:
+          <v-tooltip bottom color="primary">
+            <template v-slot:activator="{ on: tooltip }">
+              <span v-on="{ ...tooltip }">{{ collection.label }}</span>
+            </template>
+            <span class="subtitle-1">{{
+              getCollectionDescription(collection)
+            }}</span>
+          </v-tooltip>
+        </div>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -88,6 +98,7 @@ import {
   actions as deActions,
   state as deState,
 } from '@/store/modules/dataExplorer/types';
+import { getCollectionDescription } from '@/utils/helpers';
 
 import TukeyHsdHeatmap from '@/components/AnalysisSummary/TukeyHSDHeatmap.vue';
 import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
@@ -118,6 +129,7 @@ export default {
       isLoading: false,
       tableCohortsSelected: [],
       expandAnalytics: true,
+      getCollectionDescription: getCollectionDescription,
     };
   },
   computed: {

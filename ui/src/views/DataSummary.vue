@@ -10,7 +10,17 @@
       <v-icon color="white" large>library_add</v-icon>
       <v-toolbar-title class="white--text pl-2"
         >Create New Study Dataset - Choose First & Last Visit
-        <div class="subtitle-1">Dataset: {{ collection.label }}</div>
+        <div class="subtitle-1">
+          Dataset:
+          <v-tooltip bottom color="primary">
+            <template v-slot:activator="{ on: tooltip }">
+              <span v-on="{ ...tooltip }">{{ collection.label }}</span>
+            </template>
+            <span class="subtitle-1">{{
+              getCollectionDescription(collection)
+            }}</span>
+          </v-tooltip>
+        </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <save-first-last-visit-btn-dialog />
@@ -60,6 +70,7 @@ import VisitVariablesToolbar from '@/components/DataSummary/VisitVariablesToolba
 import VisitTimesTable from '@/components/DataSummary/VisitTimesTable.vue';
 import BubbleChart from '@/components/DataSummary/BubbleChart/BubbleChart.vue';
 import SaveFirstLastVisitBtnDialog from '@/components/BuildDataset/SaveFirstLastVisitBtnDialog.vue';
+import { getCollectionDescription } from '@/utils/helpers';
 
 export default {
   name: 'DataSummary',
@@ -81,6 +92,7 @@ export default {
       isLoading: false,
       substep: '2.4',
       hideUnselectedVars: true,
+      getCollectionDescription: getCollectionDescription,
     };
   },
   computed: {

@@ -10,7 +10,17 @@
       <v-icon color="white" large>group_add</v-icon>
       <v-toolbar-title class="white--text pl-3"
         >Cohort Manager
-        <div class="subtitle-1">Dataset: {{ collection.label }}</div>
+        <div class="subtitle-1">
+          Dataset:
+          <v-tooltip bottom color="primary">
+            <template v-slot:activator="{ on: tooltip }">
+              <span v-on="{ ...tooltip }">{{ collection.label }}</span>
+            </template>
+            <span class="subtitle-1">{{
+              getCollectionDescription(collection)
+            }}</span>
+          </v-tooltip>
+        </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
@@ -125,6 +135,7 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions, state, getters } from '@/store/modules/cohortManager/types';
+import { getCollectionDescription } from '@/utils/helpers';
 
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import CohortSelection from '@/components/CohortManager/CohortSelection.vue';
@@ -162,6 +173,7 @@ export default {
       outExpanded: false,
       inHighlighted: true,
       outHighlighted: false,
+      getCollectionDescription: getCollectionDescription,
     };
   },
   computed: {

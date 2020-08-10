@@ -148,7 +148,11 @@ export function getObservationVariableIds(c) {
 export function getCollectionVisitCounts(c, which) {
   var counts = [];
   var ch = {};
-  c.observation_variables.forEach(ov => {
+  var obs_vars = c.observation_variables_list
+    ? c.observation_variables_list
+    : c.observation_variables;
+
+  obs_vars.forEach(ov => {
     var evt = null;
     if (ov[which + '_visit_event'] != null) {
       evt = ov[which + '_visit_event'];
@@ -174,17 +178,26 @@ export function getCollectionVisitCounts(c, which) {
 
 export function getCollectionDescription(c) {
   var descr = c.label;
+  var obs_vars = c.observation_variables_list
+    ? c.observation_variables_list
+    : c.observation_variables;
   var nsv = c.subject_variables.length;
-  var nov = c.observation_variables.length;
+  var nov = obs_vars.length;
   descr += ': ';
 
-  var nc = c.num_cohorts;
-  descr += " " + nc + (nc == 1 ? "cohort." : " cohorts.");
+  if (c.num_cohorts) {
+    var nc = c.num_cohorts;
+    descr += ' ' + nc + (nc == 1 ? 'cohort.' : ' cohorts.');
+  } else if (c.cohorts) {
+    var nc = c.cohorts.length;
+    descr += ' ' + nc + (nc == 1 ? 'cohort.' : ' cohorts.');
+  }
 
-  descr += " " + (nsv + nov) + ' variables ';
-    
+  descr += ' ' + (nsv + nov) + ' variables ';
+
   var nd = c.studies.length;
-  descr += 'from ' + nd + ' uploaded dataset(s) [';
+  descr +=
+    'from ' + nd + ' uploaded ' + (nd == 1 ? 'dataset' : 'datasets') + ' [';
   descr += c.studies.map(s => s.study.study_name).join(',');
   descr += ']';
 
@@ -192,12 +205,11 @@ export function getCollectionDescription(c) {
     var fvs = getCollectionVisitCounts(c, 'first');
     var lvs = getCollectionVisitCounts(c, 'last');
     descr +=
-      ' First Visit: ' + fvs.map(v => v.visit + '[' + v.count + ']').join(',');
+      ' First Visits: ' + fvs.map(v => v.visit + '[' + v.count + ']').join(',');
     descr +=
-      ' Last Visit: ' + lvs.map(v => v.visit + '[' + v.count + ']').join(',');
+      ' Last Visits: ' + lvs.map(v => v.visit + '[' + v.count + ']').join(',');
   }
 
-    
   return descr;
 }
 

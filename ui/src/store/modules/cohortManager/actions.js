@@ -30,7 +30,7 @@ export default {
 
     try {
       const { data } = await axios.get(
-        `/api/collections/${collectionId}?include=studies&include=variables`
+        `/api/collections/${collectionId}?include=studies&include=variables&include=cohorts`
       );
 
       // massage collection data... here
