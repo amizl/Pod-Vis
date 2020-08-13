@@ -66,6 +66,7 @@
           <cohort-table
             title="Selected Cohorts"
             :cohorts="selectedCohorts"
+	    show-colors
             report-max-overlap
           />
         </v-col>
@@ -103,6 +104,7 @@ import {
   state as deState,
 } from '@/store/modules/dataExplorer/types';
 import { getCollectionDescription } from '@/utils/helpers';
+import { colors } from '@/utils/colors';
 
 import BoxPlots from '@/components/AnalysisSummary/BoxPlots.vue';
 import TukeyHsdHeatmap from '@/components/AnalysisSummary/TukeyHSDHeatmap.vue';
@@ -136,6 +138,7 @@ export default {
       tableCohortsSelected: [],
       expandAnalytics: true,
       getCollectionDescription: getCollectionDescription,
+      colors: colors,
     };
   },
   computed: {
@@ -176,7 +179,11 @@ export default {
       // set outcome variables to union of cohorts' output variables
       const varsAdded = {};
       const outcomeVars = [];
+      let ind = 0;
+      let n_colors = this.colors['cohorts'].length;
       this.selectedCohorts.forEach(c => {
+        c.color = this.colors['cohorts'][ind % n_colors];
+        ind += 1;
         const outputVars = c.output_variables;
         outputVars.forEach(ov => {
           const { id } = ov.observation_ontology;

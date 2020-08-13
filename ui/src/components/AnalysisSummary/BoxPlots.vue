@@ -109,12 +109,11 @@
                   :y="boxplotStats[sc]['y1']"
                   :width="boxplotStats[sc]['q1_q3_w']"
                   :height="boxplotStats[sc]['box_h']"
-                  fill="lightblue"
+                  :fill="boxplotStats[sc]['color']"
                   stroke="black"
                 />
 
                 <!-- median line -->
-
                 <line
                   v-for="sc in Object.keys(boxplotStats)"
                   :x1="boxplotStats[sc]['median_x']"
@@ -122,6 +121,7 @@
                   :y1="boxplotStats[sc]['y1']"
                   :y2="boxplotStats[sc]['y2']"
                   stroke="black"
+		  stroke-width="2"
                 />
 
                 <!-- x-axis at top -->
@@ -341,6 +341,7 @@ export default {
 
         this.boxplotStats[c.id + '-' + visit] = {
           label: c.label + label_suffix,
+          color: c.color,
           x: x_offset,
           y: y_offset,
           y1: y_offset + pad_top,

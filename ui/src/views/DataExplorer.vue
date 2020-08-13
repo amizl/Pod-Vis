@@ -103,6 +103,7 @@ import CohortTable from '@/components/common/CohortTable.vue';
 import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
 import DetailedView from '@/components/DataExplorer/DetailedView.vue';
 import { getCollectionDescription } from '@/utils/helpers';
+import { colors } from '@/utils/colors';
 
 export default {
   components: {
@@ -141,17 +142,8 @@ export default {
       selectedCohorts: [],
       expandAnalytics: true,
       // TODO - assign stable color to each newly-created cohort (in CohortManager?)
-      colors: [
-        '#e41a1c',
-        '#377eb8',
-        '#4daf4a',
-        '#984ea3',
-        '#ff7f00',
-        '#ffff33',
-        '#a65628',
-        '#f781bf',
-        '#999999',
-      ],
+      colors: colors,
+
       getCollectionDescription: getCollectionDescription,
     };
   },
@@ -199,10 +191,11 @@ export default {
     this.selectedCohorts = selectedCohorts;
 
     let ind = 0;
+    let n_colors = this.colors['cohorts'].length;
     this.selectedCohorts
       .filter(v => v.collection_id === this.collectionId)
       .forEach(c => {
-        c.color = this.colors[ind];
+        c.color = this.colors['cohorts'][ind % n_colors];
         ind += 1;
         const outputVars = c.output_variables;
         outputVars.forEach(ov => {

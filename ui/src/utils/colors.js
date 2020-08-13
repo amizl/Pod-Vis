@@ -80,6 +80,19 @@ export let colors = {
     '0.001': { color: '#FD8D3C', class: 'pval-lt-0p001' },
     '0.0001': { color: '#F16913', class: 'pval-lt-0p0001' },
   },
+
+  cohorts: [
+      '#e41a1c',
+      '#377eb8',
+      '#4daf4a',
+      '#984ea3',
+      '#ff7f00',
+      '#ffff33',
+      '#a65628',
+      '#f781bf',
+      '#999999',
+  ],
+
 };
 
 export function getNumSubjectsColor(nSubjects) {
