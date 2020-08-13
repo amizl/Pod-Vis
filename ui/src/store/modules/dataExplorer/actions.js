@@ -25,7 +25,7 @@ export default {
           c.has_visits_set = false;
         }
       });
-	
+
       const subjectVariables = makeHierarchy(data.collection.subject_variables);
 
       subjectVariables.forEach(subjectVariable => {
