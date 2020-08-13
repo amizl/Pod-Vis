@@ -87,6 +87,10 @@
           <tukey-hsd-heatmap />
         </v-col>
       </v-row>
+
+      <v-row class="ma-0 pa-0 mt-2">
+        <v-col cols="12" class="ma-0 pa-0"> <box-plots /> </v-col>
+      </v-row>
     </v-container>
   </v-container>
 </template>
@@ -100,6 +104,7 @@ import {
 } from '@/store/modules/dataExplorer/types';
 import { getCollectionDescription } from '@/utils/helpers';
 
+import BoxPlots from '@/components/AnalysisSummary/BoxPlots.vue';
 import TukeyHsdHeatmap from '@/components/AnalysisSummary/TukeyHSDHeatmap.vue';
 import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
@@ -110,8 +115,9 @@ export default {
   components: {
     AnalysisTracker,
     AnalyticsPanel,
-    TukeyHsdHeatmap,
+    BoxPlots,
     CohortTable,
+    TukeyHsdHeatmap,
   },
   props: {
     collectionId: {
