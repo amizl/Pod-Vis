@@ -64,13 +64,6 @@ def process_demographics(input_dir):
     # Read the input as a pandas dataframe
     df_demo = pd.read_csv(os.path.join(input_dir, demographics_filename))
     
-    # Subset the frame for the columns needed
-    df_demo = df_demo.loc[:, ['SID', "AgeAtImplantation","gender", "maritalStatus", "DeceasedYN", "opdate1", "condate1", "opdate2", "condate2", "opdate3", "condate3", 
-                            "lAgeDeaf", "rAgeDeaf", "ear1", "ear2", "ear3", "Type1", "Type2", "Type3", "lPhysCauseLoss", "rPhysCauseLoss", "lAgeAidUse", "rAgeAidUse"]]
-
-#    print("df_demo before:")
-#    print(df_demo)
-    
     # Recode some of the variables such as gender, race
     df_demo['Study'] = "University of Iowa CI Patients"
 
@@ -89,8 +82,6 @@ def process_demographics(input_dir):
     df_demo['Age At Connection 2'] = ((df_demo['condate2'] - df_demo['opdate1']).dt.days/365.25) + df_demo['AgeAtImplantation']
     df_demo['Age At Operation 3'] = ((df_demo['opdate3'] - df_demo['opdate1']).dt.days/365.25) + df_demo['AgeAtImplantation']
     df_demo['Age At Connection 3'] = ((df_demo['condate3'] - df_demo['opdate1']).dt.days/365.25) + df_demo['AgeAtImplantation']
-    #pp.pprint(df_demo)
-    #exit()
 
     df_demo = df_demo.rename(columns={"SID": "SubjectNum", 
                                       "AgeAtImplantation": "Age At Operation 1", 
@@ -111,9 +102,9 @@ def process_demographics(input_dir):
                                       "rAgeAidUse": "Age at Right Hearing Aid Use"}, 
                             errors="raise")
 
-#    print("df_demo after:")
+    print("df_demo:")
     print(df_demo)
-#    exit()
+
     return df_demo
 
 # convert simple test_sess (e.g., "229R") to year value between approx -5 and 33
@@ -174,8 +165,6 @@ def process_CNC(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
     df = df.loc[:, ['SID','test_sess', 'AmplificationLeft', 'AmplificationRight', 'Condition', 'CncWord_Percent', 'CncPhon_Percent']]
-#    df['Amplification'] = df_demo[["AmplificationRight", "AmplificationLeft"]].apply(assign_amplification, axis = 1)
-#    df["DateCreated"] = df["DateCreated"].apply(lambda x: pd.to_datetime(x, format='%m/%d/%y', errors='coerce'))
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
@@ -193,14 +182,6 @@ def process_AZBio(filename, df_demo):
     df = pd.read_csv(filename)
     print("AZBio before:")
     pp.pprint(df)
-
-    df = df.loc[:, ['SID','test_sess', 'AmplificationLeft', 'AmplificationRight', "AzBioWord_Percent", "Condition"]]
-
-#   df['Amplification'] = df_demo[["AmplificationRight", "AmplificationLeft"]].apply(assign_amplification, axis = 1)
-
-    # Some times there seem to be multiple rows for the same event and date. In such situations we are
-    # arbitrarily deciding to use the first one that appears
-#    df = df.groupby(['SID', 'PostIntervention', 'DateCreated']).first().reset_index()
 
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
 
@@ -220,7 +201,6 @@ def process_BAI(filename):
     df = pd.read_csv(filename)
     # pp.pprint(df)
     
-    df = df.loc[:, ['SID', 'test_sess', 'AgeAtSession', 'testdate', 'YrsEdu', 'BAITotalRaw']]
     df["testdate"] = df["testdate"].apply(lambda x: pd.to_datetime(x, format='%m/%d/%y', errors='coerce'))
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
 
@@ -232,6 +212,8 @@ def process_BAI(filename):
                             "BAITotalRaw": "Beck Anxiety Inventory"}, 
                             errors="raise")
 
+    df = df.drop(['test_sess', 'Visit Date', 'AgeAtSession', 'YrsEdu'], axis=1)
+    
     print("BAI:")
     pp.pprint(df)
     return df
@@ -241,19 +223,19 @@ def process_BDI(filename):
     df = pd.read_csv(filename)
     # pp.pprint(df)
 
-    df = df.loc[:, ['SID', 'test_sess', 'AgeAtSession', 'testdate', 'YrsEdu', 'BDITotalRaw']]
     df["testdate"] = df["testdate"].apply(lambda x: pd.to_datetime(x, format='%m/%d/%y', errors='coerce'))
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
 
     # take only first measurement if more than one
     df = df.groupby(['SID', 'Visit']).first().reset_index()
-    
+
     df = df.rename(columns={"SID": "SubjectNum", 
                             "testdate": "Visit Date",
                             "BDITotalRaw": "Beck Depression Index"}, 
                             errors="raise")
 
-    df = df.loc[:, ['SubjectNum', 'Visit', 'Beck Depression Index']]
+    df = df.drop(['test_sess', 'Visit Date', 'AgeAtSession', 'YrsEdu'], axis=1)
+
     print("BDI:")
     pp.pprint(df)
     return df
@@ -262,7 +244,6 @@ def process_BVMT(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
     # pp.pprint(df)
-    df = df.loc[:, ['SID', 'test_sess', 'AgeAtSession', 'testdate', 'YrsEdu', 'TotRecRaw', 'TotRecTscore', 'DelRecRaw', 'DelRecTscore', 'RecDiscrimIndexRaw', 'RecDiscrimIndex%ile' ]]
 
     df["testdate"] = df["testdate"].apply(lambda x: pd.to_datetime(x, format='%m/%d/%y', errors='coerce'))
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
@@ -280,32 +261,16 @@ def process_BVMT(filename):
                             "RecDiscrimIndex%ile": "Recall Discrimination Percentile"},
                             errors="raise")
 
-    df = df.loc[:, ['SubjectNum', 'Visit', 'Total Recall Raw', 'Total Recall T Score', 'Delayed Recall Raw', 'Delayed Recall T Score', 'Recall Discrimination Raw', 'Recall Discrimination Percentile']]
+    df = df.drop(['test_sess', 'Visit Date', 'AgeAtSession', 'YrsEdu'], axis=1)
+
     print("BVMT:")
     pp.pprint(df)
-    return df
-
-def process_BVMT_percent(filename):
-    # Read the input as a pandas dataframe
-    df = pd.read_csv(filename)
-    # pp.pprint(df)
-    df['BVMT'] = df.loc[:, ['SID', 'testdate', 'RecDiscrimIndexpercent']].sum(axis=1, skipna = False) 
-    df = df.loc[:, ['SID', 'testdate', 'RecDiscrimIndexpercent']]
-    df["testdate"] = df["testdate"].apply(lambda x: pd.to_datetime(x, format='%m/%d/%y', errors='coerce'))
-    df["RecDiscrimIndexpercent"] = df["RecDiscrimIndexpercent"].apply(assign_RecDiscrimIndexpercent, axis = 1)
-
-
-    df = df.rename(columns={"SID": "SubjectNum", 
-                            "testdate": "Visit Date",
-                            "RecDiscrimIndexpercent": "Recall Discrimination Percent"}, 
-                            errors="raise")
     return df
 
 def process_HVLT(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
     # pp.pprint(df)
-    df = df.loc[:, ['SID', 'test_sess', 'AgeAtSession', 'testdate', 'TotRecRaw', 'TotRecTscore', 'DelRecRaw', 'DelRecTscore', 'RecDiscrim IndexRaw', 'RecDiscrim IndexTscore', 'RetRaw', 'RetTscore' ]]
     df["testdate"] = df["testdate"].apply(lambda x: pd.to_datetime(x, format='%m/%d/%y', errors='coerce'))
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
     
@@ -324,7 +289,8 @@ def process_HVLT(filename):
                             "RetTscore": "Retention T Score"},
                             errors="raise")
 
-    df = df.loc[:, ['SubjectNum', 'Visit', 'Total Recall Raw', 'Total Recall T Score', 'Delayed Recall Raw', 'Delayed Recall T Score', 'Recall Discrimination Index Raw', 'Recall Discrimination Index T Score', 'Retention Raw', 'Retention T Score']]
+    df = df.drop(['test_sess', 'Visit Date', 'AgeAtSession', 'YrsEdu'], axis=1)
+
     print("HVLT:")
     pp.pprint(df)
     return df
@@ -334,7 +300,6 @@ def process_Trails(filename):
     df = pd.read_csv(filename)
     # pp.pprint(df)
     
-    df = df.loc[:, ['SID', 'test_sess', 'AgeAtSession', 'testdate', 'YrsEdu', 'A Seconds to Complete', 'A SS', 'A T-score', 'B Seconds to Complete', 'B SS', 'B T-score']]
     df["testdate"] = df["testdate"].apply(lambda x: pd.to_datetime(x, format='%m/%d/%y', errors='coerce'))
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
     
@@ -345,7 +310,8 @@ def process_Trails(filename):
                             "testdate": "Visit Date"}, 
                             errors="raise")
 
-    df = df.loc[:, ['SubjectNum', 'Visit', 'A Seconds to Complete', 'A SS', 'A T-score', 'B Seconds to Complete', 'B SS', 'B T-score']]
+    df = df.drop(['test_sess', 'Visit Date', 'AgeAtSession', 'YrsEdu'], axis=1)
+    
     print("Trails:")
     pp.pprint(df)
     return df
@@ -354,7 +320,7 @@ def process_WAIS(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
     # pp.pprint(df)
-    df = df.loc[:, ['SID', 'test_sess', 'AgeAtSession', 'testdate', 'SimRaw', 'Sim SS', 'DigSp Raw', 'DigSp SS', 'MatReas Raw', 'MatReas SS']]
+
     df["testdate"] = df["testdate"].apply(lambda x: pd.to_datetime(x, format='%m/%d/%y', errors='coerce'))
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
     
@@ -370,7 +336,9 @@ def process_WAIS(filename):
                             "MatReas Raw": "WAIS Matrix Reasoning Raw",
                             "MatReas SS": "WAIS Matrix Reasoning Symbol Search"},
                             errors="raise")
-    df = df.loc[:, ['SubjectNum', 'Visit', 'WAIS Similarities Raw', 'WAIS Similarities Symbol Search', 'WAIS Digit Span Raw', 'WAIS Digit Span Symbol Search', 'WAIS Matrix Reasoning Raw', 'WAIS Matrix Reasoning Symbol Search']]
+
+    df = df.drop(['test_sess', 'Visit Date', 'AgeAtSession', 'YrsEdu'], axis=1)
+    
     print("WAIS:")
     pp.pprint(df)
     return df
@@ -379,7 +347,7 @@ def process_WRAT(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
     # pp.pprint(df)
-    df = df.loc[:, ['SID', 'test_sess', 'AgeAtSession', 'testdate', 'SimRaw', 'Sim SS']]
+
     df["testdate"] = df["testdate"].apply(lambda x: pd.to_datetime(x, format='%m/%d/%y', errors='coerce'))
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
     
@@ -392,7 +360,8 @@ def process_WRAT(filename):
                             "Sim SS": "WRAT Similarities Symbol Search"}, 
                             errors="raise")
 
-    df = df.loc[:, ['SubjectNum', 'Visit', 'WRAT Similarities Raw', 'WRAT Similarities Symbol Search']]
+    df = df.drop(['test_sess', 'Visit Date', 'AgeAtSession', 'YrsEdu'], axis=1)
+
     print("WRAT:")
     pp.pprint(df)
     return df
@@ -401,8 +370,7 @@ def process_NEO_FFI(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
     # pp.pprint(df)
-    df = df.loc[:, ['SID', 'test_sess', 'testdate', 'NeuRaw', 'NeuRank', 'NeuTScore', 'ExtroRaw', 'ExtroRank', 'ExtroTScore', 'OpenRaw',
-                    'OpenRank', 'OpenTScore', 'AgreeRaw', 'AgreeRank', 'AgreeTScore', 'ConsciRaw', 'ConsciRank', 'ConsciTScore' ]]
+
     df["testdate"] = df["testdate"].apply(lambda x: pd.to_datetime(x, format='%m/%d/%y', errors='coerce'))
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
     
@@ -428,7 +396,10 @@ def process_NEO_FFI(filename):
                             "ConsciTScore": "Conscientiousness T Score"}, 
                             errors="raise")
 
-    df.drop(['test_sess', 'Visit Date'], axis=1)
+    df = df.drop(['test_sess', 'Visit Date', 'AgeAtSession'], axis=1)
+
+    print("NEO_FFI:")
+    pp.pprint(df)
     return df
 
 def main():
@@ -449,7 +420,6 @@ def main():
     # Process the demographic variables
     df_demo = process_demographics(args.input_dir)
     df_test = df_demo
-    #pd.to_datetime(df_test['Enroll Date']).apply(lambda x: x.date()) 
     df_demo_long = pd.melt(df_test, id_vars=['SubjectNum'], var_name ='SubjectVar', value_name ='Value')
     df_demo_long = df_demo_long.dropna()
 
