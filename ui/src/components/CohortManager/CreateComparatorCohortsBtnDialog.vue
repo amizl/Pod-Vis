@@ -252,7 +252,7 @@ export default {
           for (var c = 0; c < nCohorts; c++) {
             var cohort = cohorts[c];
             this.selectCohortRange(cohort.cohort, this.rangeType);
-            this.saveCohort({ cohortName: cohort.name });
+            await this.saveCohort({ cohortName: cohort.name });
           }
 
           this.loading = false;
