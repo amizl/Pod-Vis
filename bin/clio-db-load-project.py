@@ -80,6 +80,9 @@ def main():
     
     entities = ["Project", "Subject Ontology", "Observation Ontology", "Subject Info", "Visit", "Observations", "Observations Summary"]
     for entity in entities:
+        # allow Observations Summary to be absent
+        if (entity not in df_entity_file_map) and (entity == 'Observations Summary'):
+            continue
         entity_file = df_entity_file_map.loc[entity]['File']
         pp.pprint(entity_file)
         entity_file = os.path.join(args.input_dir, entity_file)
