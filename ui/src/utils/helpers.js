@@ -91,7 +91,7 @@ export function getCohortSubjectIds(data, c) {
       dim.filterFunction(filterFn);
     } else if (q.min_value !== undefined && q.max_value !== undefined) {
       filterFn = function(d) {
-        return d >= q.min_value && d <= q.max_value;
+        return d >= q.min_value && d < q.max_value;
       };
       dim.filterFunction(filterFn);
     } else {
