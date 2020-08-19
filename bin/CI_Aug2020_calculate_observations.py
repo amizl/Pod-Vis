@@ -32,31 +32,6 @@ scale_file_map = {'CNC': "CNC.csv",
                    }
 pp = pprint.PrettyPrinter(indent=4)
 
-# Method to calculate the change and rate of change for each group passed as a dataframe
-def calc_duration_change(group):
-    sorted_group = group.sort_values(by = ['VisitDate'])
-    # pp.pprint(sorted_group)
-    min_index = 0
-    max_index = group.shape[0] - 1
-    # print(sorted_group.iloc[max_index, 1], sorted_group.iloc[min_index, 1])
-    duration = round((sorted_group.iloc[max_index, 1] - sorted_group.iloc[min_index, 1]).days/365.25, 2)
-    delta = sorted_group.iloc[max_index, 3] - sorted_group.iloc[min_index, 3]
-    if (duration == 0):
-        ds = pd.Series({'Duration': 0,
-                        'Change': delta,
-                        'ROC': 0}) 
-        return ds
-
-    # If the duration is valid then calculate ROC
-    rate_of_change = round(delta / duration, 2)
-
-    # print("Duration %4.2f change %8.2f ROC %8.2f" % (duration, delta, rate_of_change))
-    ds = pd.Series({'Duration': duration,
-                        'Change': delta,
-                        'ROC': rate_of_change})
-    # pp.pprint(ds)
-    return ds
-    
 def process_demographics(input_dir):
 
     demographics_filename = 'demo.csv'
@@ -673,16 +648,6 @@ def main():
     
     print("Generating summary information")
     df_groups_with_multiple = df_all_vars_long_sorted.groupby(['SubjectNum', 'Testname']).filter(lambda x: len(x) > 1)
-    #    pp.pprint(df_groups_with_multiple)
-    # Filter out categorical variables from observations
-#    cat_vars_list = ["ESS_State", "REM_RBD_State", "GDS"]
-#    cat_vars_list = []
-#    df_groups_with_multiple = df_groups_with_multiple[~df_groups_with_multiple.Testname.isin(cat_vars_list)]
-#    df_grouped_tests_summary = df_groups_with_multiple.groupby(['SubjectNum', 'Testname']).apply(calc_duration_change).reset_index()
-#    df_grouped_tests_summary = pd.melt(df_grouped_tests_summary.loc[:, ['SubjectNum', 'Testname', 'Change', 'ROC']], 
-#                                       id_vars=['SubjectNum', 'Testname'], var_name='Type', value_name="Value")
-#    df_grouped_tests_summary['Testname'] = df_grouped_tests_summary['Testname'] + "-" + df_grouped_tests_summary['Type']
-#    df_grouped_tests_summary = df_grouped_tests_summary.loc[:, ['SubjectNum', 'Testname', 'Value']] 
 
     # Once the dataframes are created write the table to a CSV file
     # pp.pprint(df_pilot_bio.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
@@ -707,13 +672,6 @@ def main():
     print("Writing " + filename)
     df_all_vars_long_sorted.to_csv(os.path.join(args.output_dir, observations_filename), index = False)
 
-    # summary file is irrelevant now that first + last visit are user-selectable
-    
-    # pp.pprint(df_grouped_tests_summary)
-#    filename = "UI_CI_obs_summary.csv"
-#    print("Writing " + filename)
-#    df_grouped_tests_summary.to_csv(os.path.join(args.output_dir, filename), index = False)
-
     # Before printing the subject visits calculate the age at visit
 #    df_unique_sub_visits = df_unique_sub_visits.merge(df_demo.loc[:, ['SubjectNum', 'Birthdate']], how="inner", on = ['SubjectNum'])
 #    df_unique_sub_visits['AgeAtVisit'] = df_unique_sub_visits["AgeAtNow"]
@@ -730,8 +688,7 @@ def main():
     print("Writing " + filename)
     df_visits.to_csv(os.path.join(args.output_dir, filename), index = False)
 
-    # Print a table of unique tests in the data by combining the tests in the summary as well as observation
-    # data frames
+    # Print a table of unique observation variables in the data
     unique_obs = df_all_vars_long.Testname.unique()
     df_unique_obs = pd.DataFrame({"Observations": unique_obs}).sort_values(by = ['Observations'])
     filename = "UI_CI_unique_obs.csv"
