@@ -513,22 +513,26 @@ def process_ger_dep(filename):
     # Add 1 point for each response of "No" (0) to any of the following variables:  GDSSATIS, GDSGSPIR, GDSHAPPY, GDSALIVE, GDSENRGY. 
     # Add 1 point for each response of "Yes" (1) to any of the following variables:  GDSDROPD, GDSEMPTY, GDSBORED, GDSAFRAD, GDSHLPLS, GDSHOME, GDSMEMRY, GDSWRTLS, GDSHOPLS, GDSBETER.  
     # Subjects with GDS >=5 are "Depressed".  Subjects with GDS <5 are "Not Depressed".
-    df_part1 = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', "GDSSATIS","GDSGSPIR","GDSHAPPY", "GDSALIVE","GDSENRGY"]]
-    df_part1 = df_part1.where(df_part1 != 0, other = 1)
-    df_part1['part_1'] = df_part1.loc[:, ["GDSSATIS","GDSGSPIR","GDSHAPPY", "GDSALIVE","GDSENRGY"]].sum(axis=1, skipna = False)
-    
-    df_part2 = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', "GDSDROPD","GDSEMPTY","GDSBORED","GDSAFRAD",
-                    "GDSHLPLS","GDSHOME","GDSMEMRY","GDSWRTLS","GDSHOPLS","GDSBETER"]]
-    df_part2 = df_part2.where(df_part2 != 1, other = 1)
-    df_part2['part_2'] = df_part2.loc[:, ["GDSDROPD","GDSEMPTY","GDSBORED","GDSAFRAD",
-                    "GDSHLPLS","GDSHOME","GDSMEMRY","GDSWRTLS","GDSHOPLS","GDSBETER"]].sum(axis=1, skipna = False)
+    no_vars = ["GDSSATIS","GDSGSPIR","GDSHAPPY","GDSALIVE","GDSENRGY"]
+    yes_vars = ["GDSDROPD","GDSEMPTY","GDSBORED","GDSAFRAD","GDSHLPLS","GDSHOME","GDSMEMRY","GDSWRTLS","GDSHOPLS","GDSBETER"]
+
+    p1_vars = ['PATNO', 'EVENT_ID', 'INFODT'] + no_vars
+    df_part1 = df.loc[:, p1_vars]
+    df_part1.loc[:, no_vars] = df_part1.loc[:, no_vars].applymap(lambda x: 1 if x == 0 else 0)
+    df_part1['part_1'] = df_part1.loc[:, no_vars].sum(axis=1, skipna = False)
+
+    p2_vars = ['PATNO', 'EVENT_ID', 'INFODT'] + yes_vars
+    df_part2 = df.loc[:, p2_vars]
+    df_part2['part_2'] = df_part2.loc[:, yes_vars].sum(axis=1, skipna = False)
     df_part1 = df_part1.merge(df_part2, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
     df = df_part1.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'part_1', 'part_2']]
+
     df['GDS_Score'] = df.loc[:, ['part_1', 'part_2']].sum(axis=1, skipna = False)
     df['GDS'] = np.where(df.GDS_Score >= 5, "Depressed", "Not Depressed")
+
     df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'GDS_Score', 'GDS']]    
 
-    # Some times there seem to be multiple rows for the same event and date. In such situations we are
+    # Sometimes there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
     df = df.rename(columns={"PATNO": "SubjectNum", 
