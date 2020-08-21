@@ -1,8 +1,5 @@
 <template>
-  <v-sheet
-    :color="this.selectedOutcomeVariable != null ? 'rgb(236,177,212)' : 'white'"
-    class="rounded-lg shadow"
-  >
+  <v-sheet color="white" class="rounded-lg shadow">
     <v-container fluid fill-width class="ma-0 pa-0">
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
@@ -152,7 +149,6 @@ export default {
 
       this.selectedCohorts.forEach(e => {
         if (e.collection_id === cid) {
-          e.color = { value: '#d0d0d0', text: 'Grey' };
           e.index = ccnum;
           ccnum += 1;
           cch.push(e);
