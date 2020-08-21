@@ -9,7 +9,6 @@
               <v-col cols="2" class="pa-0 ma-0 pl-2 pt-1">
                 <span>
                   <img
-                    v-if="variable.label !== 'Dataset'"
                     :src="'/images/' + variable.category + '-icon-128.png'"
                     :title="variable.category"
                     style="height: 3em;"

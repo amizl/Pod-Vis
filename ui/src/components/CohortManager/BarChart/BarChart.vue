@@ -8,9 +8,10 @@
             ref="bars"
             :transform="`translate(${margin.left}, ${margin.top})`"
           >
+            <!--              :key="d.key == 'null' ? `population-0` : `${id}-population-${d.key}`"-->
+
             <bar-rect
               v-for="d in populationData"
-              :key="`population-${d.key}`"
               :x="xScale(d.key)"
               :y="yScale(d.value)"
               :width="xScale.bandwidth()"
@@ -19,9 +20,10 @@
               :tooltip="barTooltip"
               @click.native="userClickedBar(d.key)"
             />
+            <!--              :key="d.key == 'null' ? `cohort-0` : `${id}-cohort-${d.key}`" -->
+
             <bar-rect
               v-for="d in data"
-              :key="`cohort-${d.key}`"
               :x="xScale(d.key)"
               :y="yScale(d.value)"
               :width="xScale.bandwidth()"
@@ -205,6 +207,7 @@ export default {
     var popCounts = {};
     this.unfilteredData.forEach(d => {
       var v = dimension.accessor(d);
+
       if (!(v in popCounts)) {
         popCounts[v] = 0;
       }
