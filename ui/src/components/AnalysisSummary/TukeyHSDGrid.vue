@@ -139,7 +139,6 @@ export default {
 
       this.selectedCohorts.forEach(e => {
         if (e.collection_id === cid) {
-          e.color = { value: '#d0d0d0', text: 'Grey' };
           e.index = ccnum;
           ccnum += 1;
           cch.push(e);
