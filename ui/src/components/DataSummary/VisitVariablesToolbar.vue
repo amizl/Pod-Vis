@@ -183,10 +183,10 @@ export default {
       }
       // Identify the unique events
       // TODO - ensure that these events are sorted chronologically
-      this.uniqueEvents = this.getUniqueList(
+      var uniqueEvents = this.getUniqueList(
         this.getColumn(this.collectionSummaries[this.visitVariable], 0)
       );
-      this.uniqueEvents = sortVisitEvents(this.uniqueEvents);
+      this.uniqueEvents = sortVisitEvents(uniqueEvents);
 
       var varIds = getObservationVariableIds(this.collection);
       var firstLastVisit = null;

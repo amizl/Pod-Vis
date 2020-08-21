@@ -66,7 +66,7 @@
           <cohort-table
             title="Selected Cohorts"
             :cohorts="selectedCohorts"
-	    show-colors
+            show-colors
             report-max-overlap
           />
         </v-col>
@@ -179,11 +179,7 @@ export default {
       // set outcome variables to union of cohorts' output variables
       const varsAdded = {};
       const outcomeVars = [];
-      let ind = 0;
-      let n_colors = this.colors['cohorts'].length;
       this.selectedCohorts.forEach(c => {
-        c.color = this.colors['cohorts'][ind % n_colors];
-        ind += 1;
         const outputVars = c.output_variables;
         outputVars.forEach(ov => {
           const { id } = ov.observation_ontology;
@@ -211,6 +207,7 @@ export default {
     // set cohorts from cohortIds property, if defined
     var selCohorts = this.getSelectedCohortsFromIdList();
     if (selCohorts.length > 0) {
+      this.setCohortColors(selCohorts);
       this.setSelectedCohorts(selCohorts);
     }
     this.isLoading = false;
@@ -255,6 +252,16 @@ export default {
       }
       return sc;
     },
+    setCohortColors(cohorts) {
+      let ind = 0;
+      let view = this;
+      let n_colors = this.colors['cohorts'].length;
+      cohorts.forEach(c => {
+        var nc = view.colors['cohorts'][ind % n_colors];
+        c.color = nc;
+        ind += 1;
+      });
+    },
     async updateCohortIds() {
       await this.analyzeCohortsDE(selCohorts);
 
@@ -279,7 +286,9 @@ export default {
       });
     },
     async goto4p2() {
-      this.setSelectedCohorts(this.tableCohortsSelected);
+      var sc = this.tableCohortsSelected;
+      this.setCohortColors(sc);
+      this.setSelectedCohorts(sc);
     },
   },
 };

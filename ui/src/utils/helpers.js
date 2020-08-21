@@ -218,35 +218,35 @@ export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
   var numericEvents = true;
   var pseudoNumericEvents = true;
   var pnRE = /^[A-Z]+(\-?[\d\.]+)$/i;
-    
+
   unsorted_list.forEach(e => {
     var evt = event_accessor_fn(e);
-    if (isNaN(evt)) {
-      numericEvents = false;
-    }
-    if (!evt.match(pnRE)) {
+
+    if (typeof evt == 'string' && !evt.match(pnRE)) {
       pseudoNumericEvents = false;
+    } else if (isNaN(evt)) {
+      numericEvents = false;
     }
   });
 
+  // sort numerically, ignorning non-numeric component
+  if (pseudoNumericEvents) {
+    var pnAccFn = a => {
+      var evt = event_accessor_fn(a);
+      var m = evt.match(pnRE)[1];
+      return m;
+    };
+
+    return unsorted_list.sort((a, b) => pnAccFn(a) - pnAccFn(b));
+  }
   // sort numerically
-  if (numericEvents) {
+  else if (numericEvents) {
     return unsorted_list.sort(
       (a, b) => event_accessor_fn(a) - event_accessor_fn(b)
     );
-  } else if (pseudoNumericEvents) {
-
-    var pnAccFn = a => {
-	var evt = event_accessor_fn(a);
-	var m = evt.match(pnRE)[1];
-	return m;
-    };
-      
-    return unsorted_list.sort(
-      (a, b) => pnAccFn(a) - pnAccFn(b)
-    );
   }
 
+  // sort alphabetically but put PPMI events in the correct order
   var uniqueEvents = [
     'SC',
     'BL',
