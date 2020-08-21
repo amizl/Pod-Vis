@@ -16,7 +16,7 @@
         </div>
         <div style="width: 100%;">
           <v-data-table
-            :items="[...this.inputVariables].sort(this.scaleSortFn)"
+            :items="sortScales([...this.inputVariables])"
             :headers="headers"
             item-key="id"
             hide-default-footer
@@ -29,7 +29,7 @@
       </v-card-title>
       <v-card-text style="padding: 0px 16px 16px 16px;">
         <v-data-table
-          :items="[...this.inputVariables].sort(this.scaleSortFn)"
+          :items="sortScales([...this.inputVariables])"
           :headers="headers"
           item-key="id"
           hide-default-header
@@ -42,7 +42,17 @@
           <template v-slot:item="props">
             <tr>
               <td class="text-subtitle-1" style="width: 20%;">
-                {{ props.item.category }}
+                <v-row align="center">
+                  <img
+                    :src="
+                          '/images/' + props.item.category + '-icon-128.png'
+                          "
+                    :title="props.item.category"
+                    style="height:2em"
+                    class="ma-1"
+                    />
+		  {{ props.item.category }}
+		</v-row>
               </td>
               <td class="text-subtitle-1" style="width: 20%;">
                 {{ props.item.label }}
@@ -111,6 +121,7 @@
 import { actions, state, getters } from '@/store/modules/cohortManager/types';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { uniqBy } from 'lodash';
+import { sortScales } from '@/utils/helpers';
 
 // traverse a list of variables and return the scale variables,
 // which are either at or adjacent to the leaves
@@ -146,9 +157,6 @@ export default {
   data: () => ({
     searchVariable: '',
     openInputVariableDialog: false,
-    scaleSortFn: function(a, b) {
-      return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
-    },
     headers: [
       {
         text: 'Category',
@@ -202,6 +210,7 @@ export default {
     ],
     inputVariables: [],
     propagateChanges: false,
+    sortScales: sortScales,
   }),
   watch: {
     openInputVariableDialog(open) {
