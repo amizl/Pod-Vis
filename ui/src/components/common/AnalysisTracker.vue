@@ -446,9 +446,7 @@ export default {
       }
     },
     gotoSummaryMatrix() {
-      if (this.step == 5) {
-        // no-op
-      } else if (this.step <= 2) {
+      if (this.step <= 2) {
         this.displayErrorDialog(
           'No Study Dataset',
           'A study dataset must be created before the Summary Matrix can be viewed. ' +
