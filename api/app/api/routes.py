@@ -467,7 +467,7 @@ def create_collection():
     dataset_var = models.SubjectOntology.find_by_label("Dataset")
     # ...creating it if it does not exist
     if dataset_var is None:
-        dataset_var = models.SubjectOntology(None, 'Dataset', 'char', 'Categorical');
+        dataset_var = models.SubjectOntology(None, 'Dataset', 'Dataset', None, 'char', 'Categorical');
         dataset_var.save_to_db()
         
     subj_var = models.CollectionSubjectVariable(collection.id, dataset_var.id)
@@ -967,10 +967,12 @@ def compute_mannwhitneyu():
         if isinstance(output_variable.get("id"), str) and "-" in output_variable.get("id"):
             variable_id = str(output_variable.get("parentID"))
             variable_label = output_variable.get("parentLabel")
+            variable_abbreviation = variable_label
         else:
             variable_id = str(output_variable.get("id"))
             variable_label = output_variable.get("label")
-
+            variable_abbreviation = output_variable.get("abbreviation")
+            
         # ignore parent ontology terms with no actual data
         # TODO - filter these correctly on the client side
         if unfiltered_data is not None:
@@ -1033,6 +1035,7 @@ def compute_mannwhitneyu():
             g, p, dof, expctd = chi2_contingency(obs)
 
             pvals.append(dict(label=variable_label,
+                              abbreviation=variable_abbreviation,
                               test_name="Pearson's chi-squared test",
                               test_abbrev='PCS',
                               pval=p,
@@ -1056,6 +1059,7 @@ def compute_mannwhitneyu():
             f = u / (n_filtered * n_unfiltered)
         
             pvals.append(dict(label=variable_label,
+                              abbreviation=variable_abbreviation,
                               comparison_field=comparison_field,
                               test_name='2-Sided Mann-Whitney U Test',
                               test_abbrev='2SMWU',

@@ -55,13 +55,13 @@ class Study(db.Model):
         """
         connection = db.engine.connect()
         query = text("""
-        SELECT parent.label as parent_label, so.label, so.id, COUNT(DISTINCT s.study_id) AS n_studies
+        SELECT parent.label as parent_label, so.label, so.id, so.abbreviation, so.description, COUNT(DISTINCT s.study_id) AS n_studies
         FROM subject s
         JOIN subject_attribute sa ON sa.subject_id = s.id
         JOIN subject_ontology so ON so.id = sa.subject_ontology_id
         LEFT OUTER JOIN subject_ontology parent on parent.id = so.parent_id
         WHERE s.study_id in :study_ids
-        GROUP BY parent.label, so.label, so.id
+        GROUP BY parent.label, so.label, so.id, so.abbreviation, so.description
         HAVING n_studies = (:n_studies)
         """)
 
@@ -74,6 +74,8 @@ class Study(db.Model):
         result = [{
             "category": row.parent_label if row.parent_label else None,
             "scale": row.label,
+            "abbreviation": row.abbreviation,
+            "description": row.description,
             "id": row.id,
         } for row in result_proxy]
 
@@ -195,7 +197,7 @@ class Study(db.Model):
         
         # get all variables measured in the study
         query = text("""
-            SELECT distinct oo.label as scale, oo.id, oo.data_category, oo.value_type, oo.flip_axis
+            SELECT distinct oo.label as scale, oo.id, oo.data_category, oo.value_type, oo.flip_axis, oo.abbreviation, oo.description
             FROM observation_ontology oo,
                  study s, 
                  subject subj, 
@@ -209,8 +211,9 @@ class Study(db.Model):
         """)
 
         result = [
-            dict(category=get_scale_category(scale_id), scale=scale, id=scale_id, data_category=data_category, value_type=value_type, flip_axis=flip_axis)
-            for scale, scale_id, data_category, value_type, flip_axis in
+            dict(category=get_scale_category(scale_id), scale=scale, id=scale_id, data_category=data_category,
+                 value_type=value_type, flip_axis=flip_axis, abbreviation=abbreviation, description=description)
+            for scale, scale_id, data_category, value_type, flip_axis, abbreviation, description in
             connection.execute(query, study_id=self.id).fetchall()
         ]
 

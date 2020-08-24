@@ -325,14 +325,16 @@ DROP TABLE IF EXISTS `observation_ontology`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `observation_ontology` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(255) DEFAULT NULL,
+  `abbreviation` varchar(45) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `description` varchar(2000) NULL,
   `parent_id` int(11) DEFAULT NULL,
   `value_type` enum('int','decimal','char','date') DEFAULT NULL,
   `data_category` enum('Categorical','Ordinal','Continuous') DEFAULT NULL,
   `flip_axis` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `fk_observation_ontology_observaton_ontology1` (`parent_id`),
-  CONSTRAINT `fk_observation_ontology_observaton_ontology1` FOREIGN KEY (`parent_id`) REFERENCES `observation_ontology` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_observation_ontology_observation_ontology1` (`parent_id`),
+  CONSTRAINT `fk_observation_ontology_observation_ontology1` FOREIGN KEY (`parent_id`) REFERENCES `observation_ontology` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=359 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -510,7 +512,9 @@ DROP TABLE IF EXISTS `subject_ontology`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `subject_ontology` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `abbreviation` varchar(45) NOT NULL,
   `label` varchar(255) NOT NULL,
+  `description` varchar(2000) NULL,
   `parent_id` int(11) DEFAULT NULL,
   `value_type` enum('int','decimal','char','date','string') DEFAULT NULL,
   `data_category` enum('Categorical','Ordinal','Continuous') DEFAULT NULL,

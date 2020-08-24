@@ -18,18 +18,21 @@ class SubjectOntology(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     parent_id = db.Column(db.Integer, db.ForeignKey("subject_ontology.id"))
+    abbreviation = db.Column(db.VARCHAR, nullable=True)
     label = db.Column(db.VARCHAR, nullable=False)
+    description = db.Column(db.VARCHAR, nullable=True)
     value_type = db.Column(db.Enum(ValueType))
     data_category = db.Column(db.Enum(DataCategory))
 
     parent = db.relationship("SubjectOntology", remote_side=[id])
 
-    def __init__(self,  parent_id, label, value_type, data_category):
+    def __init__(self,  parent_id, label, abbreviation, description, value_type, data_category):
         self.parent_id = parent_id
         self.label = label
+        self.abbreviation = abbreviation
+        self.description = description
         self.value_type = value_type
         self.data_category = data_category
-
 
     @classmethod
     def get_all_subject_ontology(cls):
@@ -115,7 +118,9 @@ class SubjectOntology(db.Model):
         ontology = dict(
           id=self.id,
           parent_id=self.parent_id,
-          label=self.label
+          abbreviation=self.abbreviation,
+          label=self.label,
+          description=self.description,
         )
 
         if self.value_type is not None:

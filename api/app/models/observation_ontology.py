@@ -18,7 +18,9 @@ class ObservationOntology(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     parent_id = db.Column(db.Integer, db.ForeignKey("observation_ontology.id"))
+    abbreviation = db.Column(db.VARCHAR, nullable=True)
     label = db.Column(db.VARCHAR, nullable=False)
+    description = db.Column(db.VARCHAR, nullable=True)
     value_type = db.Column(db.Enum(ValueType))
     data_category = db.Column(db.Enum(DataCategory))
     flip_axis = db.Column(db.Integer, nullable=True)
@@ -116,7 +118,9 @@ class ObservationOntology(db.Model):
         ontology = dict(
           id=self.id,
           parent_id=self.parent_id,
+          abbreviation=self.abbreviation,
           label=self.label,
+          description=self.description,
           flip_axis=self.flip_axis,
         )
 
