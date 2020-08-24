@@ -75,7 +75,7 @@
                     <v-tooltip v-if="!expanded" bottom color="primary">
                       <template v-slot:activator="{ on: tooltip }">
                         <span v-on="{ ...tooltip }">{{
-                          props.item.label
+                          props.item.abbreviation
                         }}</span>
                       </template>
                       <span>{{
@@ -88,7 +88,15 @@
                           pval_table_cell(props.item)
                       }}</span>
                     </v-tooltip>
-                    <span v-else>{{ props.item.label }}</span>
+
+                    <v-tooltip v-else top color="primary">
+                      <template v-slot:activator="{ on: tooltip }">
+                        <span v-on="{ ...tooltip }">
+                          {{ props.item.abbreviation }}
+                        </span>
+                      </template>
+                      <span>{{ props.item.label }}</span>
+                    </v-tooltip>
                   </v-row>
                 </td>
                 <td v-if="expanded" class="text-subtitle-1 text-xs-left">

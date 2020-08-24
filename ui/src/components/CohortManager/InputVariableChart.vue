@@ -17,7 +17,16 @@
               </v-col>
 
               <v-col cols="7" class="pa-0 ma-0 pt-0">
-                <div class="text-h6 ml-2 text-wrap">{{ getChartTitle() }}</div>
+                <div class="text-h6 ml-2 text-wrap">
+                  <v-tooltip top color="primary">
+                    <template v-slot:activator="{ on: tooltip }">
+                      <span v-on="{ ...tooltip }">
+                        {{ getChartTitle(variable, 'abbreviation') }}
+                      </span>
+                    </template>
+                    <span>{{ getChartTitle(variable, 'label') }}</span>
+                  </v-tooltip>
+                </div>
               </v-col>
 
               <v-col cols="3" class="pa-0 ma-0 pt-2 pr-2" align="right">
@@ -119,41 +128,37 @@ export default {
     userChangedInputVariable() {
       this.$emit('userChangedInputVariable', this.dimension);
     },
-    getChartTitle() {
-      var title = this.variable.label;
-      if (
-        this.variable.type == 'observation' &&
-        this.variable.is_longitudinal
-      ) {
-        var visit = this.variable.label;
-        //     var which = this.variable.label == 'First Visit' ? 'first' : 'last';
+    getChartTitle(v, which) {
+      var title = which == 'abbreviation' ? v.abbreviation : v.label;
+      if (v.type == 'observation' && v.is_longitudinal) {
         var fv = null;
         var lv = null;
+        var p_name = null;
 
         this.collection.observation_variables_list.forEach(ov => {
-          if (ov.ontology.id == this.variable.parentID) {
+          if (ov.ontology.id == v.parentID) {
             if (ov['first_visit_event']) {
               fv = ov['first_visit_event'];
               lv = ov['last_visit_event'];
+              p_name = ov['ontology'][which];
             } else {
               fv = ov['first_visit_num'];
               lv = ov['last_visit_num'];
+              p_name = ov['ontology'][which];
             }
           }
         });
-        if (this.variable.label == 'First Visit') {
-          title = this.variable.parentLabel + ' - ' + fv;
+        if (v.label == 'First Visit') {
+          title = p_name + ' - ' + (which == 'label' ? 'Visit=' : '') + fv;
         } else if (this.variable.label == 'Last Visit') {
-          title = this.variable.parentLabel + ' - ' + lv;
+          title = p_name + ' - ' + (which == 'label' ? 'Visit=' : '') + lv;
         } else {
-          title =
-            this.variable.parentLabel +
-            ' - ' +
-            this.variable.label +
-            ': ' +
-            fv +
-            '-' +
-            lv;
+          var label = v.label;
+          if (label == 'Rate of Change' && which == 'abbreviation') {
+            label = 'ROC';
+          }
+
+          title = p_name + ' - ' + label + ': ' + fv + '-' + lv;
         }
       }
       return title;

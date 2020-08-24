@@ -18,7 +18,14 @@
 
               <v-col cols="7" class="pa-0 ma-0 pt-0">
                 <div class="text-h6 ml-2 text-wrap">
-                  {{ getVariableLabel(variable) }}
+                  <v-tooltip top color="primary">
+                    <template v-slot:activator="{ on: tooltip }">
+                      <span v-on="{ ...tooltip }">
+                        {{ getVariableAbbreviation(variable) }}
+                      </span>
+                    </template>
+                    <span>{{ getVariableLabel(variable) }}</span>
+                  </v-tooltip>
                 </div>
               </v-col>
 
@@ -200,6 +207,12 @@ export default {
         return 'highlight-var-chart';
       }
       return 'var-chart';
+    },
+    getVariableAbbreviation(v) {
+      if (v.parentLabel) {
+        return `${v.parentLabel} - ${v.abbreviation}`;
+      }
+      return v.abbreviation;
     },
     getVariableLabel(v) {
       if (v.parentLabel) {

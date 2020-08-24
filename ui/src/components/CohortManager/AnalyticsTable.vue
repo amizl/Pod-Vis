@@ -74,7 +74,14 @@
           <template v-slot:item="props">
             <tr :class="getVariableClass(props.item)">
               <td class="text-subtitle-1 text-xs-left">
-                {{ props.item.label }}
+                <v-tooltip top color="primary">
+                  <template v-slot:activator="{ on: tooltip }">
+                    <span v-on="{ ...tooltip }">
+                      {{ props.item.abbreviation }}
+                    </span>
+                  </template>
+                  <span>{{ props.item.label }}</span>
+                </v-tooltip>
               </td>
               <td class="text-subtitle-1 text-xs-left">
                 <v-tooltip bottom color="primary">

@@ -25,8 +25,22 @@
       </td>
     </template>
 
-    <template v-slot:item.scale="{ item }">
-      <td class="subtitle-1 text-xs-left">{{ item.scale }}</td>
+    <template v-slot:item.abbreviation="{ item }">
+      <td class="subtitle-1 text-xs-left">
+        <v-tooltip top color="primary">
+          <template v-slot:activator="{ on: tooltip }">
+            <span v-on="{ ...tooltip }"> {{ item.abbreviation }} </span>
+          </template>
+          <span>{{ item.scale }}</span>
+        </v-tooltip>
+      </td>
+    </template>
+
+    <template v-slot:item.description="{ item }">
+      <td class="subtitle-1 text-xs-left" width="50%">
+        <span class="subtitle-2">{{ item.scale }}:</span><br />
+        {{ item.description }}
+      </td>
     </template>
   </v-data-table>
 </template>
@@ -63,9 +77,16 @@ export default {
         },
         {
           text: 'Scale',
-          value: 'scale',
+          value: 'abbreviation',
           sortable: true,
           class: 'text-subtitle-1 font-weight-bold',
+        },
+        {
+          text: 'Description',
+          value: 'description',
+          sortable: true,
+          class: 'text-subtitle-1 font-weight-bold descr',
+          width: '50%',
         },
       ],
     };

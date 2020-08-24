@@ -44,18 +44,23 @@
               <td class="text-subtitle-1" style="width: 20%;">
                 <v-row align="center">
                   <img
-                    :src="
-                          '/images/' + props.item.category + '-icon-128.png'
-                          "
+                    :src="'/images/' + props.item.category + '-icon-128.png'"
                     :title="props.item.category"
                     style="height:2em"
                     class="ma-1"
-                    />
-		  {{ props.item.category }}
-		</v-row>
+                  />
+                  {{ props.item.category }}
+                </v-row>
               </td>
               <td class="text-subtitle-1" style="width: 20%;">
-                {{ props.item.label }}
+                <v-tooltip top color="primary">
+                  <template v-slot:activator="{ on: tooltip }">
+                    <span v-on="{ ...tooltip }">
+                      {{ props.item.abbreviation }}
+                    </span>
+                  </template>
+                  <span>{{ props.item.label }}</span>
+                </v-tooltip>
               </td>
               <td class="text-subtitle-1" style="width: 12%;">
                 <v-simple-checkbox

@@ -24,7 +24,16 @@
     </template>
 
     <template v-slot:item.scale="{ item }">
-      <td class="subtitle-1 text-xs-left">{{ item.ontology.label }}</td>
+      <td class="subtitle-1 text-xs-left">
+        <v-tooltip top color="primary">
+          <template v-slot:activator="{ on: tooltip }">
+            <span v-on="{ ...tooltip }">
+              {{ item.ontology.abbreviation }}
+            </span>
+          </template>
+          <span>{{ item.ontology.label }}</span>
+        </v-tooltip>
+      </td>
     </template>
 
     <template v-slot:item.data_category="{ item }">

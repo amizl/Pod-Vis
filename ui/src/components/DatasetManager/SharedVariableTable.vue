@@ -71,7 +71,14 @@
             </v-row>
           </td>
           <td class="subtitle-1 text-xs-left">
-            <span>{{ props.item.scale }}</span>
+            <v-tooltip top color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <span v-on="{ ...tooltip }">
+                  {{ props.item.abbreviation }}
+                </span>
+              </template>
+              <span>{{ props.item.scale }}</span>
+            </v-tooltip>
           </td>
 
           <td
