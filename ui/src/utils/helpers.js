@@ -300,8 +300,8 @@ export function sortVisitEvents(events) {
 
 export function scaleSortFn(a, b) {
   // subject variables before observation, then sorted by category and scale name
-  if ((a.type == 'subject') && (b.type == 'observation')) return -1;
-  if ((a.type == 'observation') && (b.type == 'subject')) return 1;
+  if (a.type == 'subject' && b.type == 'observation') return -1;
+  if (a.type == 'observation' && b.type == 'subject') return 1;
   if (a.category < b.category) return -1;
   if (a.category > b.category) return -1;
   return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;

@@ -120,11 +120,11 @@ export default {
       var c = data.collection;
       c.date_generated_epoch = new Date(c.date_generated).getTime();
       c.has_visits_set = true;
-	c.subject_variables.forEach(v => {
-          if (v.ontology.label == "Dataset") {
-            v.ontology.category = "Dataset";
-          }
-	});
+      c.subject_variables.forEach(v => {
+        if (v.ontology.label == 'Dataset') {
+          v.ontology.category = 'Dataset';
+        }
+      });
       c.observation_variables.forEach(v => {
         if (
           (v.first_visit_event == null && v.first_visit_num == null) ||
