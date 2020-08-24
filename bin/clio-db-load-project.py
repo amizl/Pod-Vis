@@ -417,16 +417,32 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
 
         # Process the remaining lines
         for row in reader:
-            subject_var = row['Observations']
-            print("Processing variable: {}".format(subject_var))
+            abbrevation = None
+            label = None
+            description = None
 
+            # Old 1-column format - 'Observations'
+            if 'Observations' in row:
+                abbreviation = row['Observations']
+                label = row['Observations']
+                
+            # New 3-column format - SubjectVar, Label, Description
+            else:
+                abbreviation = row['SubjectVar']
+                if row['Label'] == '':
+                    row['Label'] = abbreviation
+                else:
+                    label = row['Label']
+                description = row['Description']
+            
+            print("Processing variable: {}".format(label))
 
             # Look for this observation in the field map
             #if df_col_names_field_map.isin([subject_var]).any().empty:
-             #   print("Variable {} is not in mapping file, skipping ....".format(subject_var))
-              #  continue
+            #   print("Variable {} is not in mapping file, skipping ....".format(subject_var))
+            #  continue
 
-            map_row = df_col_names_field_map.loc[subject_var]
+            map_row = df_col_names_field_map.loc[label]
             database_entity = map_row['Database Entity']
             value_type = map_row['Type']
             data_category = map_row['Data Type']
@@ -436,7 +452,7 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
             # Make sure that the variable belongs to the subject_ontology table, else skip
             # For instance the variable Study does not belong, so skip
             if (database_entity != "subject_ontology"):
-                print("Variable {} is not in subject ontology, skipping ....".format(subject_var))
+                print("Variable {} is not in subject ontology, skipping ....".format(label))
                 continue
 
             subject_ont_id = 0
@@ -449,7 +465,7 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
             if (category not in subject_ont):
                 print("Cannot find {} in subject ontology.".format(category))
                 # As the category ID does not exist in the database create it
-                category_id = create_subject_ontology_term(cursor, category)
+                category_id = create_subject_ontology_term(cursor, category, None, None)
                 conn.commit()
 
                 subject_ont[category] = {'id': category_id, 'parent_id': 0}
@@ -467,7 +483,7 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
                 if (scale not in subject_ont):
                     print("Cannot find {} in subject ontology.".format(scale))
                     # As the scale ID does not exist in the database create it
-                    scale_id = create_subject_ontology_term(cursor, scale, category_id)
+                    scale_id = create_subject_ontology_term(cursor, scale, abbreviation, description, category_id)
                     conn.commit()
 
                     subject_ont[scale] = {'id': scale_id, 'parent_id': 0}
@@ -479,16 +495,16 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
 
             # Check to see if the subject variable exists, if not create it    
             # If it does update it, else create a new entry
-            subject_ont_id = get_subject_ontology(cursor, subject_var)
-            print("Subject variable: {} ontology ID: {}\n".format(subject_var, subject_ont_id))
+            subject_ont_id = get_subject_ontology(cursor, label)
+            print("Subject variable: {} ontology ID: {}\n".format(label, subject_ont_id))
             if (subject_ont_id == 0):
                 # As the subject_ont ID does not exist in the database create it
-                subject_ont_id = create_subject_ontology_term(cursor, subject_var, parent_id, value_type, data_category)
+                subject_ont_id = create_subject_ontology_term(cursor, label, abbreviation, description, parent_id, value_type, data_category)
                 conn.commit()
-                subject_ont[subject_var] = {'id': subject_ont_id, 'parent_id': parent_id}
+                subject_ont[label] = {'id': subject_ont_id, 'parent_id': parent_id}
             else:
                 # As the ontology ID exists, update the ontology record
-                update_subject_ontology_term(cursor, subject_ont_id, subject_var, parent_id, value_type, data_category) 
+                update_subject_ontology_term(cursor, subject_ont_id, label, abbreviation, description, parent_id, value_type, data_category) 
                 conn.commit()
 
 
@@ -507,14 +523,22 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
 
         # Process the remaining lines
         for row in reader:
-            observation_var = row['Observations']
-            print("Processing variable: {}".format(observation_var))
+
+            # 3-columns expected - Testname, Label, Description
+            abbreviation = row['Testname']
+            if row['Label'] == '':
+                label = abbreviation
+            else:
+                label = row['Label']
+            description = row['Description']
+
+            print("Processing variable: {}".format(label))
 
             # Look for this observation in the field map
             # Because an observation could have summary values we have to handle thos as well
             # For instance Semantic Fluency has observations, but may also have change and ROC
             # as additional observation summary values that need to be handled
-            map_rows = df_col_names_field_map.loc[df_col_names_field_map['Testname'] == observation_var]
+            map_rows = df_col_names_field_map.loc[df_col_names_field_map['Testname'] == abbreviation]
             pp.pprint(map_rows)
             for index, row in map_rows.iterrows():
                 print(index, row['Entry Type'])
@@ -546,7 +570,7 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                 if (category not in observation_ont):
                     print("Cannot find {} in observation ontology.".format(category))
                     # As the category ID does not exist in the database create it
-                    category_id = create_observation_ontology_term(cursor, category)
+                    category_id = create_observation_ontology_term(cursor, category, category, None)
                     conn.commit()
     
                     observation_ont[category] = {'id': category_id, 'parent_id': 0}
@@ -564,7 +588,7 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                     if (scale not in observation_ont):
                         print("Cannot find {} in observation ontology.".format(scale))
                         # As the scale ID does not exist in the database create it
-                        scale_id = create_observation_ontology_term(cursor, scale, category_id)
+                        scale_id = create_observation_ontology_term(cursor, scale, scale, None, category_id)
                         conn.commit()
     
                         observation_ont[scale] = {'id': scale_id, 'parent_id': 0}
@@ -580,12 +604,12 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                 print("observation variable: {} ontology ID: {}\n".format(observation_term, observation_ont_id))
                 if (observation_ont_id == 0):
                     # As the observation_ont ID does not exist in the database create it
-                    observation_ont_id = create_observation_ontology_term(cursor, observation_term, parent_id, value_type, data_category, flip_axis)
+                    observation_ont_id = create_observation_ontology_term(cursor, observation_term, abbreviation, description, parent_id, value_type, data_category, flip_axis)
                     conn.commit()
                     observation_ont[observation_term] = {'id': observation_ont_id, 'parent_id': parent_id}
                 else:
                     # As the ontology ID exists, update the ontology record
-                    update_observation_ontology_term(cursor, observation_ont_id, observation_term, parent_id, value_type, data_category, flip_axis) 
+                    update_observation_ontology_term(cursor, observation_ont_id, observation_term, abbreviation, description, parent_id, value_type, data_category, flip_axis) 
                     conn.commit()
 
 
@@ -779,7 +803,7 @@ def get_subject_ontology(cursor, label):
     return ont_id    
 
 # Method to create and entry in the subject ontology table
-def create_subject_ontology_term(cursor, term, parent_id = None, value_type = None, data_category = None):
+def create_subject_ontology_term(cursor, term, abbreviation, description, parent_id = None, value_type = None, data_category = None):
     query_args = ()
     ont_id = 0
     # Sometimes value_type or data_category are missing when the label is a parent
@@ -787,15 +811,15 @@ def create_subject_ontology_term(cursor, term, parent_id = None, value_type = No
     if (value_type is None or data_category is None):
         # If the parent ID is None this must me a top level term so do not set parent ID
         if parent_id is None:
-            query = "INSERT INTO subject_ontology (label) VALUES (%s)"
-            query_args = (term,)
+            query = "INSERT INTO subject_ontology (label, abbreviation, description) VALUES (%s, %s, %s)"
+            query_args = (term, abbreviation, description)
         else:
-            query = "INSERT INTO subject_ontology (label, parent_id) VALUES (%s, %s)"
-            query_args = (term, parent_id)
+            query = "INSERT INTO subject_ontology (label, parent_id, abbreviation, description) VALUES (%s, %s, %s, %s)"
+            query_args = (term, parent_id, abbreviation, description)
 
     else:
-        query = "INSERT INTO subject_ontology (label, value_type, data_category, parent_id) VALUES (%s, %s, %s, %s)"
-        query_args = (term, value_type, data_category, parent_id)
+        query = "INSERT INTO subject_ontology (label, value_type, data_category, parent_id, abbreviation, description) VALUES (%s, %s, %s, %s, %s, %s)"
+        query_args = (term, value_type, data_category, parent_id, abbreviation, description)
 
     try:
         print("Executing query: '{}'".format(query))
@@ -810,22 +834,22 @@ def create_subject_ontology_term(cursor, term, parent_id = None, value_type = No
     return ont_id
 
 # Method to update and entry in the subject ontology table
-def update_subject_ontology_term(cursor, subject_ont_id, term, parent_id = None, value_type = None, data_category = None):
+def update_subject_ontology_term(cursor, subject_ont_id, term, abbreviation, description, parent_id = None, value_type = None, data_category = None):
     query_args = ()
     # Sometimes value_type or data_category are missing when the label is a parent
     # in such cases skip inserting these columns
     if (value_type is None or data_category is None):
         # If the parent ID is None this must me a top level term so do not set parent ID
         if parent_id is None:
-            query = "UPDATE subject_ontology set label = %s where id = %s"
-            query_args = (term, subject_ont_id)
+            query = "UPDATE subject_ontology set label = %s, abbreviation = %s, description = %s where id = %s"
+            query_args = (term, abbreviation, description, subject_ont_id)
         else:
-            query = "UPDATE subject_ontology set label = %s, parent_id = %s where id = %s"
-            query_args = (term, parent_id, subject_ont_id)
+            query = "UPDATE subject_ontology set label = %s, abbreviation = %s, description = %s, parent_id = %s where id = %s"
+            query_args = (term, abbreviation, description, parent_id, subject_ont_id)
 
     else:
-        query = "UPDATE subject_ontology set label = %s, value_type = %s, data_category = %s, parent_id = %s where id = %s"
-        query_args = (term, value_type, data_category, parent_id, subject_ont_id)
+        query = "UPDATE subject_ontology set label = %s, abbreviation = %s, description = %s, value_type = %s, data_category = %s, parent_id = %s where id = %s"
+        query_args = (term, value_type, abbreviation, description, data_category, parent_id, subject_ont_id)
 
     try:
         print("Executing query: '{}'".format(query))
@@ -855,8 +879,8 @@ def get_observation_ontology(cursor, label):
     return ont_id    
 
 # Method to create and entry in the observation ontology table
-def create_observation_ontology_term(cursor, term, parent_id = None, value_type = None, 
-                                        data_category = None, flip_axis = 0):
+def create_observation_ontology_term(cursor, term, abbreviation, description, parent_id = None, value_type = None, 
+                                     data_category = None, flip_axis = 0):
     query_args = ()
     # If flip axis is nan then set to zero
     if str(flip_axis) == 'nan':
@@ -868,15 +892,15 @@ def create_observation_ontology_term(cursor, term, parent_id = None, value_type 
     if (value_type is None or data_category is None):
         # If the parent ID is None this must me a top level term so do not set parent ID
         if parent_id is None:
-            query = "INSERT INTO observation_ontology (label) VALUES (%s)"
-            query_args = (term,)
+            query = "INSERT INTO observation_ontology (label, abbreviation, description) VALUES (%s, %s, %s)"
+            query_args = (term, abbreviation, description)
         else:
-            query = "INSERT INTO observation_ontology (label, parent_id) VALUES (%s, %s)"
-            query_args = (term, parent_id)
+            query = "INSERT INTO observation_ontology (label, parent_id, abbreviation, description) VALUES (%s, %s, %s, %s)"
+            query_args = (term, parent_id, abbreviation, description)
 
     else:
-        query = "INSERT INTO observation_ontology (label, value_type, data_category, parent_id, flip_axis) VALUES (%s, %s, %s, %s, %s)"
-        query_args = (term, value_type, data_category, parent_id, flip_axis)
+        query = "INSERT INTO observation_ontology (label, value_type, data_category, parent_id, abbreviation, description, flip_axis) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        query_args = (term, value_type, data_category, parent_id, abbreviation, description, flip_axis)
 
     try:
         print("Executing query: '{}'".format(query))
