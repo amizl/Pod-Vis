@@ -12,21 +12,35 @@
     class="pb-1"
   >
     <template v-slot:item.category="{ item }">
-      <td class="subtitle-1 text-xs-left">
-        <v-row align="center" class="pl-2"
-          ><span style="padding:0.5em 0.5em 0.25em 0em"
-            ><img
+      <td class="subtitle-1 text-xs-left nowrap">
+	<v-row fill-height align="center" class="nowrap">
+	<img
+              :src="'/images/' + item.category + '-icon-128.png'"
+              :title="item.category"
+              style="height:2.5em;"
+          /><span class="pl-2" height="100%">{{ item.category }}</span></v-row>
+      </td>
+
+      <!--
+      <td class="subtitle-1 text-xs-left nowrap">
+	<v-container fill-height class="pa-0">
+	  <v-row align="center" class="pa-0 ma-0">
+	    <v-col class="pa-0 ma-0">
+	    <img
               :src="'/images/' + item.category + '-icon-128.png'"
               :title="item.category"
               style="height:2.5em"
-          /></span>
-          {{ item.category }}</v-row
-        >
+              />
+	    </v-col>
+	    <v-col class="pl-2 ma-0">{{ item.category }}</v-col>
+          </v-row>
+	</v-container>
       </td>
+-->
     </template>
 
     <template v-slot:item.abbreviation="{ item }">
-      <td class="subtitle-1 text-xs-left">
+      <td class="subtitle-1 text-xs-left nowrap">
         <v-tooltip top color="primary">
           <template v-slot:activator="{ on: tooltip }">
             <span v-on="{ ...tooltip }"> {{ item.abbreviation }} </span>
@@ -37,9 +51,9 @@
     </template>
 
     <template v-slot:item.description="{ item }">
-      <td class="subtitle-1 text-xs-left" width="50%">
-        <span class="subtitle-2">{{ item.scale }}:</span><br />
-        {{ item.description }}
+      <td class="subtitle-1 text-xs-left">
+        <span class="subtitle-2">{{ item.scale }}:</span>
+        <span v-html="item.description"></span>
       </td>
     </template>
   </v-data-table>
@@ -47,6 +61,7 @@
 
 <script>
 import axios from 'axios';
+import { sortScales } from '@/utils/helpers';
 
 export default {
   props: {
@@ -86,7 +101,6 @@ export default {
           value: 'description',
           sortable: true,
           class: 'text-subtitle-1 font-weight-bold descr',
-          width: '50%',
         },
       ],
     };
@@ -119,7 +133,7 @@ export default {
     attrs.forEach(a => {
       a.type = 'subject';
     });
-    this.variables = [...this.variables, ...res.data.subject_attributes];
+    this.variables = sortScales([...this.variables, ...res.data.subject_attributes]);
     this.isLoading = false;
   },
   methods: {
@@ -143,4 +157,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+td.nowrap { word-break: keep-all; white-space: nowrap; }
+</style>
