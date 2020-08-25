@@ -993,7 +993,7 @@ def main():
     df_all_vars = df_all_vars.merge(df_benton_judgement, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
     # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
-    labels = ["SubjectNum", 'VisitCode', 'VisitDate', "MDS-UPDRS I", "MDS-UPDRS II", "MDS-UPDRS III", "MDS_UPDRS_Total"]
+    labels = ["SubjectNum", 'VisitCode', 'VisitDate', "MDS-UPDRS I", "MDS-UPDRS II", "MDS-UPDRS III", "MDS-UPDRS Total"]
     df_all_vars = df_all_vars.merge(df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels)], how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
     df_all_vars_sorted = df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate'])
     # pp.pprint(df_all_vars_sorted)
