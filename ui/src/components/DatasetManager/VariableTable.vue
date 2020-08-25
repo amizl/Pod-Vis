@@ -20,23 +20,6 @@
               style="height:2.5em;"
           /><span class="pl-2" height="100%">{{ item.category }}</span></v-row>
       </td>
-
-      <!--
-      <td class="subtitle-1 text-xs-left nowrap">
-	<v-container fill-height class="pa-0">
-	  <v-row align="center" class="pa-0 ma-0">
-	    <v-col class="pa-0 ma-0">
-	    <img
-              :src="'/images/' + item.category + '-icon-128.png'"
-              :title="item.category"
-              style="height:2.5em"
-              />
-	    </v-col>
-	    <v-col class="pl-2 ma-0">{{ item.category }}</v-col>
-          </v-row>
-	</v-container>
-      </td>
--->
     </template>
 
     <template v-slot:item.abbreviation="{ item }">
@@ -52,7 +35,7 @@
 
     <template v-slot:item.description="{ item }">
       <td class="subtitle-1 text-xs-left">
-        <span class="subtitle-2">{{ item.scale }}:</span>
+        <span class="subtitle-2">{{ item.scale }}: </span>
         <span v-html="item.description"></span>
       </td>
     </template>
