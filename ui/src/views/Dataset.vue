@@ -19,43 +19,24 @@
     <v-container fluid fill-width class="ma-0 pa-0 pt-2">
       <v-row class="ma-0 pa-0">
         <v-col cols="8" class="ma-0 pa-0">
-          <v-container fluid fill-width class="ma-0 pa-0 pt-0">
-            <v-row class="ma-0 pa-0">
-              <v-col cols="12" class="ma-0 pa-0">
-                <v-card flat class="rounded-lg shadow">
-                  <v-card-title primary-title card color="white">
-                    <p class="title mb-0 ">
-                      {{ dataset.study.study_name }} <br />
-                      <span class="subtitle-2 grey--text">
-                        {{ dataset.study.project.project_name }}
-                      </span>
-                    </p>
-                  </v-card-title>
-                  <v-card-text>
-                    <p>{{ dataset.study.description }}</p>
-                  </v-card-text>
-                  <v-card-actions v-if="dataset.sourceURL">
-                    <v-spacer></v-spacer>
-                    <v-btn :href="dataset.sourceURL" flat>Link to Study</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container>
-
-          <v-container fluid fill-width class="ma-0 pa-0 pt-2">
-            <v-row class="ma-0 pa-0">
-              <v-col cols="12" class="ma-0 pa-0">
-                <v-card flat class="rounded-lg shadow pt-2">
-                  <v-card-title primary-title card color="white">
-                    <span class="title">Variables</span>
-                  </v-card-title>
-                  <variable-table :dataset-id="id" />
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-col>
+          <v-card flat height="100%" class="rounded-lg shadow">
+            <v-card-title primary-title card color="white">
+              <p class="title mb-0 ">
+                {{ dataset.study.study_name }} <br />
+                <span class="subtitle-2 grey--text">
+                  {{ dataset.study.project.project_name }}
+                </span>
+              </p>
+            </v-card-title>
+            <v-card-text>
+              <p>{{ dataset.study.description }}</p>
+            </v-card-text>
+            <v-card-actions v-if="dataset.sourceURL">
+              <v-spacer></v-spacer>
+              <v-btn :href="dataset.sourceURL" flat>Link to Study</v-btn>
+            </v-card-actions>
+          </v-card>
+	</v-col>
 
         <v-col cols="4" class="ma-0 pa-0 pl-2">
           <v-card flat class="rounded-lg shadow">
@@ -84,6 +65,19 @@
             <v-card-text v-else>
               <loading-spinner medium class="ma-5" />
             </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-container fluid fill-width class="ma-0 pa-0 pt-2">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card flat class="rounded-lg shadow pt-2">
+            <v-card-title primary-title card color="white">
+              <span class="title">Variables</span>
+            </v-card-title>
+            <variable-table :dataset-id="id" />
           </v-card>
         </v-col>
       </v-row>
