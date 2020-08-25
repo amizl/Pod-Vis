@@ -465,7 +465,7 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
             if (category not in subject_ont):
                 print("Cannot find {} in subject ontology.".format(category))
                 # As the category ID does not exist in the database create it
-                category_id = create_subject_ontology_term(cursor, category, None, None)
+                category_id = create_subject_ontology_term(cursor, category, category, None)
                 conn.commit()
 
                 subject_ont[category] = {'id': category_id, 'parent_id': 0}
