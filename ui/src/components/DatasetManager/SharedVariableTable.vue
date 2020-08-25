@@ -123,6 +123,7 @@ import {
   getNumSubjectsColor,
   getNumSubjectsTextColor,
 } from '@/utils/colors';
+import { sortScales } from '@/utils/helpers';
 
 export default {
   components: {
@@ -244,7 +245,7 @@ export default {
       // TODO - retrieve data_category from database
       variable.data_category = 'Unknown';
     });
-    this.variables = [...this.variables, ...attributes];
+    this.variables = sortScales([...this.variables, ...attributes]);
     this.isLoading = false;
   },
   methods: {
