@@ -303,8 +303,12 @@ export function scaleSortFn(a, b) {
   if (a.type == 'subject' && b.type == 'observation') return -1;
   if (a.type == 'observation' && b.type == 'subject') return 1;
   if (a.category < b.category) return -1;
-  if (a.category > b.category) return -1;
-  return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
+  if (a.category > b.category) return 1;
+  if (a.label < b.label) return -1;
+  if (a.label > b.label) return 1;
+  if (a.scale < b.scale) return -1;
+  if (a.scale > b.scale) return 1;
+  return 0;
 }
 
 export function sortScales(scales) {
