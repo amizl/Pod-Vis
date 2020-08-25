@@ -421,19 +421,13 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
             label = None
             description = None
 
-            # Old 1-column format - 'Observations'
-            if 'Observations' in row:
-                abbreviation = row['Observations']
-                label = row['Observations']
-                
-            # New 3-column format - SubjectVar, Label, Description
+            # 3-column format - SubjectVar, Label, Description
+            abbreviation = row['SubjectVar']
+            if row['Label'] == '':
+                label = abbreviation
             else:
-                abbreviation = row['SubjectVar']
-                if row['Label'] == '':
-                    row['Label'] = abbreviation
-                else:
-                    label = row['Label']
-                description = row['Description']
+                label = row['Label']
+            description = row['Description']
             
             print("Processing variable: {}".format(label))
 

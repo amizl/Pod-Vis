@@ -18,6 +18,59 @@ import numpy as np
 import pprint
 import datetime as dt
 
+ATTRIBUTE_METADATA = [
+    {
+        'abbrev': 'Study',
+        'name': 'Study',
+        'descr': "The original/uploaded dataset.",
+    },
+    {
+        'abbrev': 'Race',
+        'name': 'Race',
+        'descr': "Subject race: either 'Asian', 'Black', 'White', 'Other', or 'Multi'.",
+    },
+    {
+        'abbrev': 'Birthdate',
+        'name': 'Birthdate',
+        'descr': "Subject birthdate.",
+    },
+    {
+        'abbrev': 'Sex',
+        'name': 'Sex',
+        'descr': "Binary gender, either 'Male' or 'Female'.",
+    },
+    {
+        'abbrev': 'Age At Enrollment',
+        'name': 'Age At Enrollment',
+        'descr': "Subject age at study enrollment.",
+    },
+    {
+        'abbrev': 'Age At Diagnosis',
+        'name': 'Age At Diagnosis',
+        'descr': "Subject age at primary disease diagnosis.",
+    },
+    {
+        'abbrev': 'Disease Status',
+        'name': 'Disease Status',
+        'descr': "Primary disease status - either 'Affected' or 'Unaffected'.",
+    },
+    {
+        'abbrev': 'Disease Duration',
+        'name': 'Disease Duration',
+        'descr': "Time in days from date of diagnosis to date of study enrollment.",
+    },
+    {
+        'abbrev': 'Enroll Date',
+        'name': 'Enroll Date',
+        'descr': "Date on which subject enrolled in the study.",
+    },
+    {
+        'abbrev': 'Diagnosis Date',
+        'name': 'Diagnosis Date',
+        'descr': "Date of subject's primary disease diagnosis.",
+    },
+]
+
 SCALE_METADATA = [
     {
         'abbrev': 'ApoE Genotype',
@@ -767,6 +820,30 @@ def process_rem_sleep(filename):
                             errors="raise")
     return df    
 
+def add_attribute_metadata(df):
+    # index metadata by abbreviation
+    md_index = {}
+    for md in ATTRIBUTE_METADATA:
+        abbrev = md['abbrev']
+        if abbrev in md_index:
+            sys.stderr.write("FATAL - duplicate entry in ATTRIBUTE_METADATA, abbreviation=" + abbrev)
+            sys.stderr.flush()
+            sys.exit(1)
+        md_index[abbrev] = md
+
+    def get_attribute_metadata(varname, which):
+        if varname in md_index:
+            return md_index[varname][which].replace('\n', '')
+        else:
+            sys.stderr.write("FATAL - couldn't find metadata entry for " + varname)
+            sys.stderr.flush()
+            sys.exit(1)
+
+    df['Label'] = df['SubjectVar'].apply(lambda x: get_attribute_metadata(x, 'name'))
+    df['Description'] = df['SubjectVar'].apply(lambda x: get_attribute_metadata(x, 'descr'))
+
+    return df
+        
 def add_scale_metadata(df):
     # index metadata by abbreviation
     smd_index = {}
@@ -1079,7 +1156,10 @@ def main():
     df_unique_obs.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # Print a table of unique subject variables in the data
-    df_unique_subject_vars = pd.DataFrame({"Observations": df_demo_long.SubjectVar.unique()})
+    df_unique_subject_vars = pd.DataFrame({"SubjectVar": df_demo_long.SubjectVar.unique()})
+    # add scale metadata
+    df_unique_subject_vars = add_attribute_metadata(df_unique_subject_vars)
+
     # pp.pprint(df_unique_subject_vars)
     filename = "ppmi_unique_subject_vars.csv"
     df_unique_subject_vars.to_csv(os.path.join(args.output_dir, filename), index = False)
