@@ -18,6 +18,190 @@ import numpy as np
 import pprint
 import datetime as dt
 
+SCALE_METADATA = [
+    {
+        'abbrev': 'ApoE Genotype',
+        'name': 'Apolipoprotein E Genotype',
+        'descr': "The ApoE genotype is a genetic risk factor for dementia, Alzheimer's disease, and cardiovascular disease. It includes three alleles (e2, e3, e4) that are located on chromosome 19q3.",
+    },
+    {
+        'abbrev': 'MoCA',
+        'name': 'Montreal Cognitive Assessment',
+        'descr': """The MoCA is a cognitive screening test designed to detect mild cognitive impairment and dementia. It assesses different cognitive
+domains including attention and concentration, executive functions, visuospatial skills, memory, language, abstraction, calculations, and orientation.""",
+    },
+    {
+        'abbrev': 'SNCA-rs356181',
+        'name': 'Synuclein Alpha Polymorphism- rs356181',
+        'descr': """The alpha-synuclein gene (SNCA) is responsible for encoding alpha-synuclein, and is associated with the risk of Parkinson's disease. 
+The protein alpha-synuclein is the major component of the Lewy body, an intraneuronal inclusion body that is the pathological hallmark of PD.""",
+    },
+    {
+        'abbrev': 'SNCA-rs3910105',
+        'name': 'Synuclein Alpha Polymorphism- rs3910105',
+        'descr': """The alpha-synuclein gene (SNCA) is responsible for encoding alpha-synuclein and is associated with the risk of Parkinson's disease. 
+The protein alpha-synuclein is the major component of the Lewy body, an intraneuronal inclusion body that is the pathological hallmark of PD. 
+SNCA-rs3910105 has been shown to have an effect on the availability of the dopamine transporter (DAT).""",
+    },
+    {
+        'abbrev': 'CSF-Abeta-42',
+        'name': 'Cerebrospinal fluid beta-amyloid 1&mdash;42',
+        'descr': """The cerebrospinal fluid level of &beta;-amyloid 1&mdash;42 (A&beta;42) is a biomarker and altered levels of A&beta;42 are associated with future 
+conversion to dementia due to Alzheimer's disease pathology.""",
+    },
+    {
+        'abbrev': 'Benton JOLO',
+        'name': 'Benton Judgment of Line Orientation',
+        'descr': """Benton JOLO is a standardized test of visuospatial skills associated with functioning of the parietal lobe in the brain's right 
+hemisphere. The test measures a person's ability to match the angle and orientation of lines in space. Subjects are asked to match two angled lines 
+to a set of 11 lines that are arranged in a semicircle.""",
+    },
+    {
+        'abbrev': 'HVLT-DR',
+        'name': 'Hopkins Verbal Learning Test- Delayed Recall',
+        'descr': """The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically 
+categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall.""",
+    },
+    {
+        'abbrev': 'HVLT-TR',
+        'name': 'Hopkins Verbal Learning Test- Total Recall',
+        'descr': """The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically 
+categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall.""",
+    },
+    {
+        'abbrev': 'HVLT-R',
+        'name': 'Hopkins Verbal Learning Test- Retention',
+        'descr': """The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically 
+categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall.""",
+    },
+    {
+        'abbrev': 'ESS Score',
+        'name': 'Epworth Sleepiness Scale Score',
+        'descr': """The ESS is a self-reported measure of daytime sleepiness- the propensity to fall asleep during common daily activities. Subjects 
+use a 4-point scale to rate their chances of dozing off while engaged in 8 common daytime activities (e.g. watching television, sitting and talking 
+to someone, sitting and reading). Scores from 0 to 10 is normal daytime sleepiness, 11-12 is mild excessive daytime sleepiness, 13-15 moderate 
+excessive daytime sleepiness, and 16-24 severe excessive daytime sleepiness. ESS Score displays the continuous data.""",
+    },
+    {
+        'abbrev': 'ESS State',
+        'name': 'Epworth Sleepiness Scale State',
+        'descr': """The ESS is a self-reported measure of daytime sleepiness- the propensity to fall asleep during common daily activities. Subjects 
+use a 4-point scale to rate their chances of dozing off while engaged in 8 common daytime activities (e.g. watching television, sitting and talking 
+to someone, sitting and reading). Scores from 0 to 10 is normal daytime sleepiness, 11-12 is mild excessive daytime sleepiness, 13-15 moderate 
+excessive daytime sleepiness, and 16-24 severe excessive daytime sleepiness. EES State categorizes study subjects into 2 groups: Sleepy and 
+Not Sleepy.""",
+    },
+    {
+        'abbrev': 'GDS State',
+        'name': 'Geriatric Depression State',
+        'descr': """The GDS is a screening test that is used to identify symptoms of depression in older adults. The scale is a 30-item, 
+self-report instrument that uses a "Yes/No" format. One point is assigned to each answer and the cumulative score is rated on a scoring 
+grid. The grid sets a range of 0-9 as "normal", 10-19 as "mildly depressed", and 20-30 as "severely depressed". GDS State categorizes 
+study subjects into 2 groups: Depressed and Not Depressed.""",
+    },
+    {
+        'abbrev': 'GDS Score',
+        'name': 'Geriatric Depression Scale Score',
+        'descr': """The GDS is a screening test that is used to identify symptoms of depression in older adults. The scale is a 30-item, 
+self-report instrument that uses a "Yes/No" format. One point is assigned to each answer and the cumulative score is rated on a scoring 
+grid. The grid sets a range of 0-9 as "normal", 10-19 as "mildly depressed", and 20-30 as "severely depressed". GDS Score displays 
+the continuous data.""",
+    },
+    {
+        'abbrev': 'LNS',
+        'name': 'Letter-Number Sequencing',
+        'descr': """LNS is a brief, standardized measure of executive function that measures verbal and visuospatial working memory, as 
+well as processing speed. The participant must first say the numbers in ascending order and then the letters in alphabetical order. LNS 
+is a subtest of the Wechsler Adult Intelligence Scale.""",
+    },
+    {
+        'abbrev': 'MDS-UPDRS I',
+        'name': "Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part I",
+        'descr': """MDS-UPDRS Part I assesses Nonmotor experiences of daily living (13 items) including cognition, hallucinations, 
+depression, apathy, sleep, lightheadedness, urinary problems, constipation and fatigue.""",
+    },
+    {
+        'abbrev': 'MDS-UPDRS II',
+        'name': "Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part II",
+        'descr': """MDS-UPDRS Part II assesses Motor experiences of daily living (13 items) including problems with speech, drooling, 
+eating, dressing, hygiene, handwriting, tremor and walking.""",
+
+    },
+    {
+        'abbrev': 'MDS-UPDRS III',
+        'name': "Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part III",
+        'descr': """MDS-UPDRS Part III is an assessment of the Motor Examination (18 items) performed by the clinician including problems
+with facial expression, speech, tremor, rigidity, rapid repetitive movements (hands, arms, feet, legs), chair rising, posture, gait and balance.""",
+    },
+    {
+        'abbrev': 'MDS-UPDRS Total',
+        'name': "Movement Disorder Society-Unified Parkinson's Disease Rating Scale Total",
+        'descr': """The UPDRS is the most commonly used scale for the clinical study of Parkinson's disease. In 2007, the Movement Disorder 
+Society published a revision of the UPDRS, known as the MDS-UPDRS. The modified UPDRS retains the four-part structure. The revised subscales 
+are titled: Part I: Nonmotor experiences of daily living (13 items), Part II: Motor experiences of daily living (13 items), Part III: Motor 
+examination (18 items), and Part IV: Motor complications (6 items). The Total score comprises Parts I-III.""",
+    },
+    {
+        'abbrev': 'RBDQ Score',
+        'name': 'Rapid Eye Movement (REM) Sleep Behavior Disorder Screening Questionnaire',
+        'descr': """The RBDQ assesses symptoms of REM Sleep Behavior Disorder including the frequency and content of dreams, and
+their relationship to nocturnal movements and behaviors, self-injuries and injuries of the bed-partner, nocturnal vocalizations,
+sudden limb movements and complex movements during sleep, nocturnal awakenings, and disturbed sleep in general. The RBDQ is a
+self-rated instrument consisting of 10 yes-no questions. RBDQ Score displays the continuous RBDQ data from the study population.""",
+    },
+    {
+        'abbrev': 'RBDQ State',
+        'name': 'Rapid Eye Movement (REM) Sleep Behavior Disorder Screening Questionnaire State',
+        'descr': """The RBDQ assesses symptoms of REM Sleep Behavior Disorder including the frequency and content of dreams, and
+their relationship to nocturnal movements and behaviors, self-injuries and injuries of the bed-partner, nocturnal vocalizations,
+sudden limb movements and complex movements during sleep, nocturnal awakenings, and disturbed sleep in general. The RBDQ is a
+self-rated instrument consisting of 10 yes-no questions. RBDQ State uses a validated cut-off to categorize subjects into 2 groups
+with and without REM sleep behavior disorder. """,
+    },
+    {
+        'abbrev': 'SCOPA-AUT',
+        'name': "Scales for Outcomes in Parkinson's disease - Autonomic Dysfunction",
+        'descr': """The SCOPA-AUT evaluates autonomic symptoms in Parkinson's disease and other neurodegenerative conditions.
+The scale is self-completed and consists of 25 items assessing the following domains: gastrointestinal (7), urinary (6),
+cardiovascular (3), thermoregulatory (4), pupillomotor (1), and sexual (2 items for men and 2 items for women).""",
+    },
+    {
+        'abbrev': 'SDM',
+        'name': 'Symbol Digit Modalities',
+        'descr': """SDM measures attention, perceptual speed, motor speed, and visual scanning. It consists of digit-symbol 
+pairs followed by a list of digits. Under each digit the subject should write down the corresponding symbol as fast as possible. 
+The number of correct symbols within the allowed time is measured.""",
+    },
+    {
+        'abbrev': 'STAI',
+        'name': 'State-Trait Anxiety Inventory',
+        'descr': """The STAI is a self-reported measure of levels of state and trait anxiety, based on two 20-item subscales. 
+State anxiety is defined as a transient emotional status resulting from situational stress. Trait anxiety is a predisposition 
+to react with anxiety in stressful situations.""",
+    },
+    {
+        'abbrev': 'SF',
+        'name': 'Semantic Fluency',
+        'descr': """SF measures verbal fluency. The semantic (or category) fluency task consists of verbally naming as many 
+words from a single category as possible in sixty seconds. Typically, semantic fluency is scored by counting the number of 
+correct unique semantic category items produced.""",
+    },
+    {
+        'abbrev': 'SE ADL Scale',
+        'name': "Schwab & England Activities of Daily Living Scale",
+        'descr': """The SE ADL Scale is a clinician rating of the patient's daily function. The clinician rates performance
+of daily activities from 0% to 100% with 10% intervals, where 100% is "Completely independent. . .Unaware of difficulty" and
+0% is "Vegetative functions...Bedridden." """,
+    },
+    {
+        'abbrev': 'CSF-Hemoglobin',
+        'name': 'Cerebrospinal fluid hemoglobin',
+        'descr': """The cerebrospinal fluid level of hemoglobin is analyzed to evaluate the quality of CSF collection,
+to use as an index of the degree of blood contamination, and to control for the possible effect of hemolysis on the
+CSF &alpha;-synuclein level.""",
+    },
+]
+
 scale_file_map = {'Semantic Fluency' : "Semantic_Fluency.csv",
                    'Benton Judgement of Line' : "Benton_Judgment_of_Line_Orientation.csv",
                    'MDS-UPDRS1-1' : "MDS_UPDRS_Part_I.csv",
@@ -167,7 +351,7 @@ def process_demographics(input_dir, study_suffix):
     return df_demo
 
 
-# The biospecimen file has a few of the genetic test reslt. We will be filtering the file for these and
+# The biospecimen file has a few of the genetic test result. We will be filtering the file for these and
 # returning the values for these tests
 def process_biospecimen(filename):
     # Read the input as a pandas dataframe
@@ -180,8 +364,8 @@ def process_biospecimen(filename):
     # "APOE GENOTYPE", "ApoE_Genotype", "ApoE Genotype", "rs3910105", "rs356181"
     test_list = ["APOE GENOTYPE", "ApoE_Genotype", "ApoE Genotype", "rs3910105", "rs356181"]   
     df = df[df['TESTNAME'].isin(test_list)] 
-    df['TESTNAME'] = df['TESTNAME'].apply(lambda x: 'SNCA - rs356181' if x == "rs356181" else x) 
-    df['TESTNAME'] = df['TESTNAME'].apply(lambda x: 'SNCA - rs3910105' if x == "rs3910105" else x) 
+    df['TESTNAME'] = df['TESTNAME'].apply(lambda x: 'SNCA-rs356181' if x == "rs356181" else x) 
+    df['TESTNAME'] = df['TESTNAME'].apply(lambda x: 'SNCA-rs3910105' if x == "rs3910105" else x) 
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
@@ -219,8 +403,8 @@ def process_pilot_biospecimen(filename):
 def process_semantic_fluency(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df['SemanticFluency'] = df.loc[:, ['VLTANIM', 'VLTVEG', 'VLTFRUIT']].sum(axis=1, skipna = False) 
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'SemanticFluency']]
+    df['SF'] = df.loc[:, ['VLTANIM', 'VLTVEG', 'VLTFRUIT']].sum(axis=1, skipna = False) 
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'SF']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
@@ -243,7 +427,8 @@ def process_benton_judgement(filename):
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
     df = df.rename(columns={"PATNO": "SubjectNum", 
                             "EVENT_ID": "VisitCode", 
-                            "INFODT": "VisitDate"}, 
+                            "INFODT": "VisitDate",
+                            "BentonJudgment": "Benton JOLO"}, 
                             errors="raise")
     return df
 
@@ -280,9 +465,9 @@ def process_mds_updrs_1_2(filename):
 def process_mds_updrs_2(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df['MDS_UPDRS_2'] = df.loc[:, ["NUPSOURC","NP2SPCH","NP2SALV","NP2SWAL","NP2EAT","NP2DRES","NP2HYGN","NP2HWRT","NP2HOBB",
+    df['MDS-UPDRS II'] = df.loc[:, ["NUPSOURC","NP2SPCH","NP2SALV","NP2SWAL","NP2EAT","NP2DRES","NP2HYGN","NP2HWRT","NP2HOBB",
                                     "NP2TURN","NP2TRMR","NP2RISE","NP2WALK","NP2FREZ"]].sum(axis=1, skipna = False) 
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'MDS_UPDRS_2']]
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'MDS-UPDRS II']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
@@ -296,12 +481,12 @@ def process_mds_updrs_2(filename):
 def process_mds_updrs_3(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df['MDS_UPDRS_3'] = df.loc[:, ["NP3SPCH","NP3FACXP","NP3RIGN","NP3RIGRU","NP3RIGLU","PN3RIGRL","NP3RIGLL","NP3FTAPR","NP3FTAPL","NP3HMOVR",
+    df['MDS-UPDRS III'] = df.loc[:, ["NP3SPCH","NP3FACXP","NP3RIGN","NP3RIGRU","NP3RIGLU","PN3RIGRL","NP3RIGLL","NP3FTAPR","NP3FTAPL","NP3HMOVR",
                                     "NP3HMOVL","NP3PRSPR","NP3PRSPL","NP3TTAPR","NP3TTAPL","NP3LGAGR","NP3LGAGL","NP3RISNG","NP3GAIT","NP3FRZGT",
                                     "NP3PSTBL","NP3POSTR","NP3BRADY","NP3PTRMR","NP3PTRML","NP3KTRMR","NP3KTRML","NP3RTARU","NP3RTALU","NP3RTARL",
                                     "NP3RTALL","NP3RTALJ","NP3RTCON"
                                     ]].sum(axis=1, skipna = False) 
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'MDS_UPDRS_3']]
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'MDS-UPDRS III']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
@@ -326,7 +511,7 @@ def process_moca(filename):
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
     df = df.rename(columns={"PATNO": "SubjectNum", 
                             "EVENT_ID": "VisitCode", 
-                            "MCATOT": "MOCA", 
+                            "MCATOT": "MoCA", 
                             "INFODT": "VisitDate"}, 
                             errors="raise")
     return df
@@ -341,7 +526,7 @@ def process_lns(filename):
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
     df = df.rename(columns={"PATNO": "SubjectNum", 
                             "EVENT_ID": "VisitCode", 
-                            "LNS_TOTRAW": "LNS_Total_Raw", 
+                            "LNS_TOTRAW": "LNS", 
                             "INFODT": "VisitDate"}, 
                             errors="raise")
     return df    
@@ -356,9 +541,9 @@ def process_hvlt(filename):
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
     df = df.rename(columns={"PATNO": "SubjectNum", 
                             "EVENT_ID": "VisitCode", 
-                            "DVT_TOTAL_RECALL": "DVT_Total_Recall", 
-                            "DVT_DELAYED_RECALL": "DVT_Delayed_Recall", 
-                            "DVT_RETENTION": "DVT_Retention", 
+                            "DVT_TOTAL_RECALL": "HVLT-TR", 
+                            "DVT_DELAYED_RECALL": "HVLT-DR", 
+                            "DVT_RETENTION": "HVLT-R", 
                             "INFODT": "VisitDate"}, 
                             errors="raise")
     return df    
@@ -366,9 +551,9 @@ def process_hvlt(filename):
 def process_ess(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df['ESS_Score'] = df.loc[:, ["ESS1","ESS2","ESS3","ESS4","ESS5","ESS6","ESS7","ESS8"]].sum(axis=1, skipna = False)
-    df['ESS_State'] = np.where(df.ESS_Score >= 10, "Sleepy", "Not Sleepy")
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'ESS_Score', 'ESS_State']]
+    df['ESS Score'] = df.loc[:, ["ESS1","ESS2","ESS3","ESS4","ESS5","ESS6","ESS7","ESS8"]].sum(axis=1, skipna = False)
+    df['ESS State'] = np.where(df['ESS Score'] >= 10, "Sleepy", "Not Sleepy")
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'ESS Score', 'ESS State']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
@@ -389,7 +574,7 @@ def process_mse_adl(filename):
     df = df.groupby(['PATNO', 'EVENT_ID', 'INFODT']).first().reset_index()
     df = df.rename(columns={"PATNO": "SubjectNum", 
                             "EVENT_ID": "VisitCode", 
-                            "MSEADLG": "MSEADL", 
+                            "MSEADLG": "SE ADL Scale", 
                             "INFODT": "VisitDate"}, 
                             errors="raise")
     return df    
@@ -527,10 +712,10 @@ def process_ger_dep(filename):
     df_part1 = df_part1.merge(df_part2, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
     df = df_part1.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'part_1', 'part_2']]
 
-    df['GDS_Score'] = df.loc[:, ['part_1', 'part_2']].sum(axis=1, skipna = False)
-    df['GDS'] = np.where(df.GDS_Score >= 5, "Depressed", "Not Depressed")
+    df['GDS Score'] = df.loc[:, ['part_1', 'part_2']].sum(axis=1, skipna = False)
+    df['GDS State'] = np.where(df['GDS Score'] >= 5, "Depressed", "Not Depressed")
 
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'GDS_Score', 'GDS']]    
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'GDS Score', 'GDS State']]
 
     # Sometimes there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
@@ -569,9 +754,9 @@ def process_rem_sleep(filename):
 
     df_part1 = df_part1.merge(df_part2, how="outer", on = ['PATNO', 'EVENT_ID', 'INFODT'])
     df = df_part1.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'part_1', 'part_2']]
-    df['REM_RBD_Score'] = df.loc[:, ['part_1', 'part_2']].sum(axis=1, skipna = False)
-    df['REM_RBD_State'] = np.where(df.REM_RBD_Score >= 5, "REM RBD Positive", "REM RBD Negative")
-    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'REM_RBD_Score', 'REM_RBD_State']]
+    df['RBDQ Score'] = df.loc[:, ['part_1', 'part_2']].sum(axis=1, skipna = False)
+    df['RBDQ State'] = np.where(df['RBDQ Score'] >= 5, "REM RBD Positive", "REM RBD Negative")
+    df = df.loc[:, ['PATNO', 'EVENT_ID', 'INFODT', 'RBDQ Score', 'RBDQ State']]
 
     # Some times there seem to be multiple rows for the same event and date. In such situations we are
     # arbitrarily deciding to use the first one that appears
@@ -582,6 +767,37 @@ def process_rem_sleep(filename):
                             errors="raise")
     return df    
 
+def add_scale_metadata(df):
+    # index metadata by abbreviation
+    smd_index = {}
+    for md in SCALE_METADATA:
+        abbrev = md['abbrev']
+        if abbrev in smd_index:
+            sys.stderr.write("FATAL - duplicate entry in SCALE_METADATA, abbreviation=" + abbrev)
+            sys.stderr.flush()
+            sys.exit(1)
+        smd_index[abbrev] = md
+
+    def get_scale_metadata(testname, which):
+        m = re.match(r'^(.*)(-(Change|ROC))$', testname)
+        if m:
+            base_testname = m.group(1)
+            extension = m.group(2)
+        else:
+            base_testname = testname
+            extension = ''
+            
+        if base_testname in smd_index:
+            return smd_index[base_testname][which].replace('\n', '')
+        else:
+            sys.stderr.write("FATAL - couldn't find metadata entry for " + testname)
+            sys.stderr.flush()
+            sys.exit(1)
+
+    df['Label'] = df['Testname'].apply(lambda x: get_scale_metadata(x, 'name'))
+    df['Description'] = df['Testname'].apply(lambda x: get_scale_metadata(x, 'descr'))
+
+    return df
 
 def main():
     # Parse the arguments
@@ -680,7 +896,7 @@ def main():
 
     # Process UPDRS by merging and adding across the three measures
     df_mds_updrs1 = df_mds_updrs1_1.merge(df_mds_updrs1_2, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
-    df_mds_updrs1['MDS_UPDRS_1'] = df_mds_updrs1.loc[:, ["MDS_UPDRS_1_1", "MDS_UPDRS_1_2"]].sum(axis=1, skipna = False)
+    df_mds_updrs1['MDS-UPDRS I'] = df_mds_updrs1.loc[:, ["MDS_UPDRS_1_1", "MDS_UPDRS_1_2"]].sum(axis=1, skipna = False)
     # pp.pprint(df_mds_updrs1)
 
     df_mds_updrs = df_mds_updrs1.merge(df_mds_updrs2, how="outer", 
@@ -689,9 +905,9 @@ def main():
                                         on = ['SubjectNum', 'VisitCode', 'VisitDate']
                                        )
     # pp.pprint(df_mds_updrs)
-    labels = ["MDS_UPDRS_1", "MDS_UPDRS_2", "MDS_UPDRS_3"]
+    labels = ["MDS-UPDRS I", "MDS-UPDRS II", "MDS-UPDRS III"]
     # pp.pprint(df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels)])
-    df_mds_updrs['MDS_UPDRS_Total'] = df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels) ].sum(axis=1, skipna = False)
+    df_mds_updrs['MDS-UPDRS Total'] = df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels) ].sum(axis=1, skipna = False)
     # pp.pprint(df_mds_updrs.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
     # Merge al the dataframes to create a big matrix of observations
@@ -700,7 +916,7 @@ def main():
     df_all_vars = df_all_vars.merge(df_benton_judgement, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
     # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
-    labels = ["SubjectNum", 'VisitCode', 'VisitDate', "MDS_UPDRS_1", "MDS_UPDRS_2", "MDS_UPDRS_3", "MDS_UPDRS_Total"]
+    labels = ["SubjectNum", 'VisitCode', 'VisitDate', "MDS-UPDRS I", "MDS-UPDRS II", "MDS-UPDRS III", "MDS_UPDRS_Total"]
     df_all_vars = df_all_vars.merge(df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels)], how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
     df_all_vars_sorted = df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate'])
     # pp.pprint(df_all_vars_sorted)
@@ -714,12 +930,12 @@ def main():
     # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
     # Merge HVLT
-    labels = ["SubjectNum", 'VisitCode', 'VisitDate', 'DVT_Total_Recall', 'DVT_Delayed_Recall', 'DVT_Retention']
+    labels = ["SubjectNum", 'VisitCode', 'VisitDate', 'HVLT-TR', 'HVLT-DR', 'HVLT-R']
     df_all_vars = df_all_vars.merge(df_hvlt.loc[:, df_hvlt.columns.intersection(labels)], how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
     # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
     # Merge ESS
-    labels = ["SubjectNum", 'VisitCode', 'VisitDate', "ESS_Score", "ESS_State"]
+    labels = ["SubjectNum", 'VisitCode', 'VisitDate', "ESS Score", "ESS State"]
     df_all_vars = df_all_vars.merge(df_ess.loc[:, df_ess.columns.intersection(labels)], how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
     # pp.pprint(df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate']))
 
@@ -784,7 +1000,7 @@ def main():
     df_groups_with_multiple = df_all_vars_long_sorted.groupby(['SubjectNum', 'Testname']).filter(lambda x: len(x) > 1)
     pp.pprint(df_groups_with_multiple)
     # Filter out categorical variables from observations
-    cat_vars_list = ["ESS_State", "REM_RBD_State", "GDS"]
+    cat_vars_list = ["ESS State", "RBDQ State", "GDS State"]
     df_groups_with_multiple = df_groups_with_multiple[~df_groups_with_multiple.Testname.isin(cat_vars_list)]
     df_grouped_tests_summary = df_groups_with_multiple.groupby(['SubjectNum', 'Testname']).apply(calc_duration_change).reset_index()
     df_grouped_tests_summary = pd.melt(df_grouped_tests_summary.loc[:, ['SubjectNum', 'Testname', 'Change', 'ROC']], 
@@ -802,6 +1018,8 @@ def main():
     df_all_obs = df_all_obs.append(df_bio)
     df_all_obs['Value'] = df_all_obs['Value'].map(lambda x: 0 if x == "below detection limit" else x)
     df_all_obs['Testname'] = df_all_obs['Testname'].map(lambda x: "ApoE Genotype" if x == "APOE GENOTYPE" else x)
+    df_all_obs['Testname'] = df_all_obs['Testname'].map(lambda x: "CSF-Abeta-42" if x == "Abeta 42" else x)
+    df_all_obs['Testname'] = df_all_obs['Testname'].map(lambda x: "CSF-Hemoglobin" if x == "CSF Hemoglobin" else x)
     df_all_obs = df_all_obs.sort_values(by = ['SubjectNum', 'VisitNum', 'Testname'])
 
     print("Merged observations:")
@@ -851,9 +1069,11 @@ def main():
     unique_obs = df_all_obs.Testname.unique()
     unique_summary_obs = df_grouped_tests_summary.Testname.unique()
     unique_all_obs = np.concatenate([unique_obs, unique_summary_obs])
-    pp.pprint(unique_all_obs)
-    # df_unique_obs = pd.DataFrame({"Observations": df_all_obs.Testname.unique()})
-    df_unique_obs = pd.DataFrame({"Observations": unique_all_obs})
+
+    df_unique_obs = pd.DataFrame({"Testname": unique_all_obs})
+    # add scale metadata
+    df_unique_obs = add_scale_metadata(df_unique_obs)
+
     pp.pprint(df_unique_obs)
     filename = "ppmi_unique_obs.csv"
     df_unique_obs.to_csv(os.path.join(args.output_dir, filename), index = False)
