@@ -298,7 +298,9 @@ export function sortVisitEvents(events) {
   return sortByVisitEvent(events, acc_fn);
 }
 
-export function scaleSortFn(a, b) {
+export function scaleSortFn(sa, sb) {
+  var a = sa.ontology ? sa.ontology : sa;
+  var b = sb.ontology ? sb.ontology : sb;
   // subject variables before observation, then sorted by category and scale name
   if (a.type == 'subject' && b.type == 'observation') return -1;
   if (a.type == 'observation' && b.type == 'subject') return 1;

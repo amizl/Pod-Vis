@@ -154,7 +154,7 @@
               <v-row class="ma-0 pa-0">
                 <v-col cols="12" class="ma-0 pa-0">
                   <simple-variable-table
-                    :variables="collection.subject_variables"
+                    :variables="sortScales([...collection.subject_variables])"
                     dense
                   />
                 </v-col>
@@ -204,7 +204,7 @@
               <v-row class="ma-0 pa-0">
                 <v-col cols="12" class="ma-0 pa-0">
                   <simple-variable-table
-                    :variables="collection.observation_variables"
+                    :variables="sortScales([...collection.observation_variables])"
                     dense
                   />
                 </v-col>
@@ -236,6 +236,7 @@ import axios from 'axios';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import CohortTable from '@/components/common/CohortTable.vue';
 import SimpleVariableTable from '@/components/DatasetManager/SimpleVariableTable.vue';
+import { sortScales } from '@/utils/helpers';
 
 export default {
   filters: {
@@ -260,6 +261,7 @@ export default {
       datasets_expanded: true,
       demo_vars_expanded: true,
       obs_vars_expanded: true,
+      sortScales: sortScales,
     };
   },
   computed: {
