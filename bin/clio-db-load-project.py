@@ -843,7 +843,7 @@ def update_subject_ontology_term(cursor, subject_ont_id, term, abbreviation, des
 
     else:
         query = "UPDATE subject_ontology set label = %s, abbreviation = %s, description = %s, value_type = %s, data_category = %s, parent_id = %s where id = %s"
-        query_args = (term, value_type, abbreviation, description, data_category, parent_id, subject_ont_id)
+        query_args = (term, abbreviation, description, value_type, data_category, parent_id, subject_ont_id)
 
     try:
         print("Executing query: '{}'".format(query))
@@ -909,8 +909,9 @@ def create_observation_ontology_term(cursor, term, abbreviation, description, pa
     return ont_id    
 
 # Method to update and entry in the observation ontology table
-def update_observation_ontology_term(cursor, observation_ont_id, term, parent_id = None, value_type = None, 
-                                        data_category = None, flip_axis = 0):
+def update_observation_ontology_term(cursor, observation_ont_id, term, abbreviation, description, parent_id = None, value_type = None, 
+                                     data_category = None, flip_axis = 0):
+
     query_args = ()
     
     # If flip axis is nan then set to zero
@@ -922,15 +923,15 @@ def update_observation_ontology_term(cursor, observation_ont_id, term, parent_id
     if (value_type is None or data_category is None):
         # If the parent ID is None this must me a top level term so do not set parent ID
         if parent_id is None:
-            query = "UPDATE observation_ontology set label = %s where id = %s"
-            query_args = (term, observation_ont_id)
+            query = "UPDATE observation_ontology set label = %s, abbreviation = %s, description = %s where id = %s"
+            query_args = (term, abbreviation, description, observation_ont_id)
         else:
-            query = "UPDATE observation_ontology set label = %s, parent_id = %s where id = %s"
-            query_args = (term, parent_id, observation_ont_id)
+            query = "UPDATE observation_ontology set label = %s, abbreviation = %s, description = %s, parent_id = %s where id = %s"
+            query_args = (term, abbreviation, description, parent_id, observation_ont_id)
 
     else:
-        query = "UPDATE observation_ontology set label = %s, value_type = %s, data_category = %s, parent_id = %s, flip_axis = %s where id = %s"
-        query_args = (term, value_type, data_category, parent_id, flip_axis, observation_ont_id)
+        query = "UPDATE observation_ontology set label = %s, abbreviation = %s, description = %s, value_type = %s, data_category = %s, parent_id = %s, flip_axis = %s where id = %s"
+        query_args = (term, abbreviation, description, value_type, data_category, parent_id, flip_axis, observation_ont_id)
 
     try:
         print("Executing query: '{}'".format(query))
