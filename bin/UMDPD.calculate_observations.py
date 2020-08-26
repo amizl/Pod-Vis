@@ -97,7 +97,7 @@ eating, bathing, getting in/out of bed, grooming, toileting).""",
         'name': "Mini-Mental State Examination",
         'descr': """The MMSE is a 30-point questionnaire that is used to measure cognitive impairment. It is used in clinical and research 
 settings to estimate the severity and progression of cognitive impairment. The MMSE includes tasks of registration (repeating words), 
-attention, calculation, recall, language, ability to follow simple commands andÊorientation. It was originally introduced by Folstein 
+attention, calculation, recall, language, ability to follow simple commands and orientation. It was originally introduced by Folstein 
 et al. in 1975.""",
     },
     {
