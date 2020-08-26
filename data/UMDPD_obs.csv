@@ -1,4 +1,4 @@
-SubjectNum,VisitDay,Depression T Score,Anxiety T Score,UPDRS I,UPDRS II,UPDRS III,UPDRS IV,UPDRS Total,CIRS Total,ADLs,IADLs,OARS Total,MMSE,HYSTG,VisitDate,VisitNum,VisitCode
+SubjectNum,VisitDay,BSI-18 Depression,BSI-18 Anxiety,UPDRS Part I,UPDRS Part II,UPDRS Part III,UPDRS Part IV,"UPDRS Total (Parts I, II, III)",CIRS-G Total,OARS ADLs,OARS IADLs,OARS Total,MMSE,HY Stages,VisitDate,VisitNum,VisitCode
 2,0,,,1.0,6.0,9.0,1.0,15.0,,7.0,7.0,14.0,27.0,1.0,2000-01-01,1,1
 2,168,,,1.0,,12.0,0.0,,,,,,,1.0,2000-06-17,2,2
 3,0,59.0,48.0,0.0,9.0,27.0,0.0,36.0,10.0,7.5,7.0,14.5,30.0,2.0,2000-01-01,1,1

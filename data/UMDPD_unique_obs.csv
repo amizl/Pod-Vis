@@ -1,40 +1,40 @@
-Observations
-UPDRS I
-UPDRS II
-UPDRS III
-UPDRS IV
-UPDRS Total
-ADLs
-IADLs
-OARS Total
-MMSE
-HYSTG
-Depression T Score
-Anxiety T Score
-CIRS Total
-HYSTG-Change
-UPDRS I-Change
-UPDRS III-Change
-UPDRS IV-Change
-ADLs-Change
-Anxiety T Score-Change
-CIRS Total-Change
-Depression T Score-Change
-IADLs-Change
-MMSE-Change
-OARS Total-Change
-UPDRS II-Change
-UPDRS Total-Change
-HYSTG-ROC
-UPDRS I-ROC
-UPDRS III-ROC
-UPDRS IV-ROC
-ADLs-ROC
-Anxiety T Score-ROC
-CIRS Total-ROC
-Depression T Score-ROC
-IADLs-ROC
-MMSE-ROC
-OARS Total-ROC
-UPDRS II-ROC
-UPDRS Total-ROC
+Testname,Label,Description
+UPDRS Part I,Parkinson's Disease Rating Scale Part I,"Part I: Mentation, Behavior and Mood has 4 items that focus on cognition, hallucinations/delusions, depression and motivation."
+UPDRS Part II,Parkinson's Disease Rating Scale Part II,"Part II: Activities of Daily Living has 13 items that focus on Parkinson's symptoms (e.g. tremor, falling, swallowing) and ADLs (e.g. dressing, walking, handwriting)."
+UPDRS Part III,Parkinson's Disease Rating Scale Part III,"Part III: Motor Examination has 14 items that are completed by the clinician performing the neurological exam. These items focus on motor tasks affected by Parkinson's disease including tremor, rigidity, rapid repetitive movements (bradykinesia), walking and balance. Several items generate multiple scores for the different body parts (e.g. neck, arms and legs)."
+UPDRS Part IV,Parkinson's Disease Rating Scale Part IV,"Part IV: Complications of Therapy has 11 items that focus on symptoms associated with disease progression and drug-related side effects including dyskinesias, motor fluctuations, and orthostatic hypotension."
+"UPDRS Total (Parts I, II, III)","Unified ParkinsonÕs Disease Rating Scale Total Score (Parts I, II, III)","The UPDRS is the most commonly used scale for the clinical study of Parkinson's disease. The UPDRS is used to follow disease progression and to measure response to treatment. The UPDRS includes 4 Parts (subscales) but only Parts I, II and III are included in the Total Score. The 4 parts are: Part I: Mentation, behavior, and mood; Part II: Activities of daily life (ADLs), Part III: Motor Examination and Part IV: Complications of therapy. A new version of the original UPDRS was developed in 2007; this new version is called the Movement Disorder Society-Unified Parkinson's Disease Rating Scale (MDS-UPDRS)."
+OARS ADLs,Older Americans Resource and Services Activities of Daily Living,"The OARS Activities of Daily Living Subscale assesses performance on 7 Activities of Daily Living (ADLs; dressing, walking, eating, bathing, getting in/out of bed, grooming, toileting)."
+OARS IADLs,Older Americans Resource and Services Instrumental Activities of Daily Living,"The OARS Instrumental Activities of Daily Living Subscale assesses performance on 7 Instrumental Activities of Daily Living (IADLs; housework, traveling, shopping, preparing meals, managing money, managing medications, using the telephone."
+OARS Total,Older Americans Resource and Services Disability Subscale,"The OARS Total Disability Subscale is comprised of 7 Activities of Daily Living (ADLs; e.g. dressing, walking, bathing) and 7 Instrumental Activities of Daily Living (IADLs; e.g. shopping, preparing meals, managing money)."
+MMSE,Mini-Mental State Examination,"The MMSE is a 30-point questionnaire that is used to measure cognitive impairment. It is used in clinical and research settings to estimate the severity and progression of cognitive impairment. The MMSE includes tasks of registration (repeating words), attention, calculation, recall, language, ability to follow simple commands andÊorientation. It was originally introduced by Folstein et al. in 1975."
+HY Stages,Hoehn and Yahr Stages,"The HY Stages are a commonly used system for describing how the symptoms of Parkinson's disease progress. Originally published in 1967 by Margaret Hoehn and Melvin Yahr to include stages 1 through 5 and later modified with the addition of intermediate stages, 1.5 and 2.5."
+BSI-18 Depression,Brief Symptom Inventory-18 Depression Subscale,"The BSI-18 is an 18-item self-report checklist that assesses psychological symptoms. Depression severity is described as a t-score, where 50 is the normative score and the standard deviation is 10."
+BSI-18 Anxiety,Brief Symptom Inventory-18 Anxiety Subscale,"The BSI-18 is an 18-item self-report checklist that assesses psychological symptoms. Anxiety severity is described as a t-score, where 50 is the normative score and the standard deviation is 10."
+CIRS-G Total,Cumulative Illness Rating Scale-Geriatrics Version,"CIRS-G measures the number and severity of chronic medical illnesses based on ratings of each of 14 body systems (e.g. Heart disease, Respiratory disease). Developed in 1968 by BS Linn and revised in 1991 for aged patients by MD Miller."
+HY Stages-Change,Hoehn and Yahr Stages,"The HY Stages are a commonly used system for describing how the symptoms of Parkinson's disease progress. Originally published in 1967 by Margaret Hoehn and Melvin Yahr to include stages 1 through 5 and later modified with the addition of intermediate stages, 1.5 and 2.5."
+UPDRS Part I-Change,Parkinson's Disease Rating Scale Part I,"Part I: Mentation, Behavior and Mood has 4 items that focus on cognition, hallucinations/delusions, depression and motivation."
+UPDRS Part III-Change,Parkinson's Disease Rating Scale Part III,"Part III: Motor Examination has 14 items that are completed by the clinician performing the neurological exam. These items focus on motor tasks affected by Parkinson's disease including tremor, rigidity, rapid repetitive movements (bradykinesia), walking and balance. Several items generate multiple scores for the different body parts (e.g. neck, arms and legs)."
+UPDRS Part IV-Change,Parkinson's Disease Rating Scale Part IV,"Part IV: Complications of Therapy has 11 items that focus on symptoms associated with disease progression and drug-related side effects including dyskinesias, motor fluctuations, and orthostatic hypotension."
+BSI-18 Anxiety-Change,Brief Symptom Inventory-18 Anxiety Subscale,"The BSI-18 is an 18-item self-report checklist that assesses psychological symptoms. Anxiety severity is described as a t-score, where 50 is the normative score and the standard deviation is 10."
+BSI-18 Depression-Change,Brief Symptom Inventory-18 Depression Subscale,"The BSI-18 is an 18-item self-report checklist that assesses psychological symptoms. Depression severity is described as a t-score, where 50 is the normative score and the standard deviation is 10."
+CIRS-G Total-Change,Cumulative Illness Rating Scale-Geriatrics Version,"CIRS-G measures the number and severity of chronic medical illnesses based on ratings of each of 14 body systems (e.g. Heart disease, Respiratory disease). Developed in 1968 by BS Linn and revised in 1991 for aged patients by MD Miller."
+MMSE-Change,Mini-Mental State Examination,"The MMSE is a 30-point questionnaire that is used to measure cognitive impairment. It is used in clinical and research settings to estimate the severity and progression of cognitive impairment. The MMSE includes tasks of registration (repeating words), attention, calculation, recall, language, ability to follow simple commands andÊorientation. It was originally introduced by Folstein et al. in 1975."
+OARS ADLs-Change,Older Americans Resource and Services Activities of Daily Living,"The OARS Activities of Daily Living Subscale assesses performance on 7 Activities of Daily Living (ADLs; dressing, walking, eating, bathing, getting in/out of bed, grooming, toileting)."
+OARS IADLs-Change,Older Americans Resource and Services Instrumental Activities of Daily Living,"The OARS Instrumental Activities of Daily Living Subscale assesses performance on 7 Instrumental Activities of Daily Living (IADLs; housework, traveling, shopping, preparing meals, managing money, managing medications, using the telephone."
+OARS Total-Change,Older Americans Resource and Services Disability Subscale,"The OARS Total Disability Subscale is comprised of 7 Activities of Daily Living (ADLs; e.g. dressing, walking, bathing) and 7 Instrumental Activities of Daily Living (IADLs; e.g. shopping, preparing meals, managing money)."
+UPDRS Part II-Change,Parkinson's Disease Rating Scale Part II,"Part II: Activities of Daily Living has 13 items that focus on Parkinson's symptoms (e.g. tremor, falling, swallowing) and ADLs (e.g. dressing, walking, handwriting)."
+"UPDRS Total (Parts I, II, III)-Change","Unified ParkinsonÕs Disease Rating Scale Total Score (Parts I, II, III)","The UPDRS is the most commonly used scale for the clinical study of Parkinson's disease. The UPDRS is used to follow disease progression and to measure response to treatment. The UPDRS includes 4 Parts (subscales) but only Parts I, II and III are included in the Total Score. The 4 parts are: Part I: Mentation, behavior, and mood; Part II: Activities of daily life (ADLs), Part III: Motor Examination and Part IV: Complications of therapy. A new version of the original UPDRS was developed in 2007; this new version is called the Movement Disorder Society-Unified Parkinson's Disease Rating Scale (MDS-UPDRS)."
+HY Stages-ROC,Hoehn and Yahr Stages,"The HY Stages are a commonly used system for describing how the symptoms of Parkinson's disease progress. Originally published in 1967 by Margaret Hoehn and Melvin Yahr to include stages 1 through 5 and later modified with the addition of intermediate stages, 1.5 and 2.5."
+UPDRS Part I-ROC,Parkinson's Disease Rating Scale Part I,"Part I: Mentation, Behavior and Mood has 4 items that focus on cognition, hallucinations/delusions, depression and motivation."
+UPDRS Part III-ROC,Parkinson's Disease Rating Scale Part III,"Part III: Motor Examination has 14 items that are completed by the clinician performing the neurological exam. These items focus on motor tasks affected by Parkinson's disease including tremor, rigidity, rapid repetitive movements (bradykinesia), walking and balance. Several items generate multiple scores for the different body parts (e.g. neck, arms and legs)."
+UPDRS Part IV-ROC,Parkinson's Disease Rating Scale Part IV,"Part IV: Complications of Therapy has 11 items that focus on symptoms associated with disease progression and drug-related side effects including dyskinesias, motor fluctuations, and orthostatic hypotension."
+BSI-18 Anxiety-ROC,Brief Symptom Inventory-18 Anxiety Subscale,"The BSI-18 is an 18-item self-report checklist that assesses psychological symptoms. Anxiety severity is described as a t-score, where 50 is the normative score and the standard deviation is 10."
+BSI-18 Depression-ROC,Brief Symptom Inventory-18 Depression Subscale,"The BSI-18 is an 18-item self-report checklist that assesses psychological symptoms. Depression severity is described as a t-score, where 50 is the normative score and the standard deviation is 10."
+CIRS-G Total-ROC,Cumulative Illness Rating Scale-Geriatrics Version,"CIRS-G measures the number and severity of chronic medical illnesses based on ratings of each of 14 body systems (e.g. Heart disease, Respiratory disease). Developed in 1968 by BS Linn and revised in 1991 for aged patients by MD Miller."
+MMSE-ROC,Mini-Mental State Examination,"The MMSE is a 30-point questionnaire that is used to measure cognitive impairment. It is used in clinical and research settings to estimate the severity and progression of cognitive impairment. The MMSE includes tasks of registration (repeating words), attention, calculation, recall, language, ability to follow simple commands andÊorientation. It was originally introduced by Folstein et al. in 1975."
+OARS ADLs-ROC,Older Americans Resource and Services Activities of Daily Living,"The OARS Activities of Daily Living Subscale assesses performance on 7 Activities of Daily Living (ADLs; dressing, walking, eating, bathing, getting in/out of bed, grooming, toileting)."
+OARS IADLs-ROC,Older Americans Resource and Services Instrumental Activities of Daily Living,"The OARS Instrumental Activities of Daily Living Subscale assesses performance on 7 Instrumental Activities of Daily Living (IADLs; housework, traveling, shopping, preparing meals, managing money, managing medications, using the telephone."
+OARS Total-ROC,Older Americans Resource and Services Disability Subscale,"The OARS Total Disability Subscale is comprised of 7 Activities of Daily Living (ADLs; e.g. dressing, walking, bathing) and 7 Instrumental Activities of Daily Living (IADLs; e.g. shopping, preparing meals, managing money)."
+UPDRS Part II-ROC,Parkinson's Disease Rating Scale Part II,"Part II: Activities of Daily Living has 13 items that focus on Parkinson's symptoms (e.g. tremor, falling, swallowing) and ADLs (e.g. dressing, walking, handwriting)."
+"UPDRS Total (Parts I, II, III)-ROC","Unified ParkinsonÕs Disease Rating Scale Total Score (Parts I, II, III)","The UPDRS is the most commonly used scale for the clinical study of Parkinson's disease. The UPDRS is used to follow disease progression and to measure response to treatment. The UPDRS includes 4 Parts (subscales) but only Parts I, II and III are included in the Total Score. The 4 parts are: Part I: Mentation, behavior, and mood; Part II: Activities of daily life (ADLs), Part III: Motor Examination and Part IV: Complications of therapy. A new version of the original UPDRS was developed in 2007; this new version is called the Movement Disorder Society-Unified Parkinson's Disease Rating Scale (MDS-UPDRS)."

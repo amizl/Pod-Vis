@@ -1,5 +1,5 @@
-Observations
-Sex
-Study
-Race
-Age At Diagnosis
+SubjectVar,Label,Description
+Sex,Sex,"Binary gender, either 'Male' or 'Female'."
+Study,Study,The original/uploaded dataset.
+Race,Race,"Subject race: either 'Asian', 'Black', 'White', 'More than one race', 'Native American or Alaska Native', or 'Unknown Race'."
+Age At Diagnosis,Age At Diagnosis,Subject age at primary disease diagnosis.
