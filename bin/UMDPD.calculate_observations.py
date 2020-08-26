@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-This script is used to parse the winnow data and extract the unique observation names,
+This script is used to parse the UMD PD data and extract the unique observation names,
 and observations and generate the subject and observation ontology list, subject attributes,
 visit observations, and subject summary files from the file. If there are any transformations
 that need to be performed on the data, they are performed here.
@@ -16,6 +16,116 @@ import numpy as np
 import os
 import pprint
 import datetime as dt
+
+ATTRIBUTE_METADATA = [
+    {
+        'abbrev': 'Study',
+        'name': 'Study',
+        'descr': "The original/uploaded dataset.",
+    },
+    {
+        'abbrev': 'Sex',
+        'name': 'Sex',
+        'descr': "Binary gender, either 'Male' or 'Female'.",
+    },
+    {
+        'abbrev': 'Race',
+        'name': 'Race',
+        'descr': "Subject race: either 'Asian', 'Black', 'White', 'More than one race', 'Native American or Alaska Native', or 'Unknown Race'.",
+    },
+    {
+        'abbrev': 'Age At Diagnosis',
+        'name': 'Age At Diagnosis',
+        'descr': "Subject age at primary disease diagnosis.",
+    },
+]
+
+SCALE_METADATA = [
+    {
+        'abbrev': 'UPDRS Part I',
+        'name': "Parkinson's Disease Rating Scale Part I",
+        'descr': """Part I: Mentation, Behavior and Mood has 4 items that focus on cognition, hallucinations/delusions, depression and motivation.""",
+    },
+    {
+        'abbrev': 'UPDRS Part II',
+        'name': "Parkinson's Disease Rating Scale Part II",
+        'descr': """Part II: Activities of Daily Living has 13 items that focus on Parkinson's symptoms (e.g. tremor, falling, swallowing) and 
+ADLs (e.g. dressing, walking, handwriting).""",
+    },
+    {
+        'abbrev': 'UPDRS Part III',
+        'name': "Parkinson's Disease Rating Scale Part III",
+        'descr': """Part III: Motor Examination has 14 items that are completed by the clinician performing the neurological exam. These items 
+focus on motor tasks affected by Parkinson's disease including tremor, rigidity, rapid repetitive movements (bradykinesia), walking and balance. 
+Several items generate multiple scores for the different body parts (e.g. neck, arms and legs).""",
+    },
+    {
+        'abbrev': 'UPDRS Part IV',
+        'name': "Parkinson's Disease Rating Scale Part IV",
+        'descr': """Part IV: Complications of Therapy has 11 items that focus on symptoms associated with disease progression and drug-related 
+side effects including dyskinesias, motor fluctuations, and orthostatic hypotension.""",
+    },
+    {
+        'abbrev': 'UPDRS Total (Parts I, II, III)',
+        'name': "Unified ParkinsonÕs Disease Rating Scale Total Score (Parts I, II, III)",
+        'descr': """The UPDRS is the most commonly used scale for the clinical study of Parkinson's disease. The UPDRS is used to follow disease 
+progression and to measure response to treatment. The UPDRS includes 4 Parts (subscales) but only Parts I, II and III are included in the Total 
+Score. The 4 parts are: Part I: Mentation, behavior, and mood; Part II: Activities of daily life (ADLs), Part III: Motor Examination and Part IV: 
+Complications of therapy. A new version of the original UPDRS was developed in 2007; this new version is called the Movement Disorder 
+Society-Unified Parkinson's Disease Rating Scale (MDS-UPDRS).""",
+    },
+    {
+        'abbrev': 'OARS Total',
+        'name': "Older Americans Resource and Services Disability Subscale",
+        'descr': """The OARS Total Disability Subscale is comprised of 7 Activities of Daily Living (ADLs; e.g. dressing, walking, bathing) and 
+7 Instrumental Activities of Daily Living (IADLs; e.g. shopping, preparing meals, managing money).""",
+    },
+    {
+        'abbrev': 'OARS ADLs',
+        'name': "Older Americans Resource and Services Activities of Daily Living",
+        'descr': """The OARS Activities of Daily Living Subscale assesses performance on 7 Activities of Daily Living (ADLs; dressing, walking, 
+eating, bathing, getting in/out of bed, grooming, toileting).""",
+    },
+    {
+        'abbrev': 'OARS IADLs',
+        'name': "Older Americans Resource and Services Instrumental Activities of Daily Living",
+        'descr': """The OARS Instrumental Activities of Daily Living Subscale assesses performance on 7 Instrumental Activities of Daily Living 
+(IADLs; housework, traveling, shopping, preparing meals, managing money, managing medications, using the telephone.""",
+    },
+    {
+        'abbrev': 'MMSE',
+        'name': "Mini-Mental State Examination",
+        'descr': """The MMSE is a 30-point questionnaire that is used to measure cognitive impairment. It is used in clinical and research 
+settings to estimate the severity and progression of cognitive impairment. The MMSE includes tasks of registration (repeating words), 
+attention, calculation, recall, language, ability to follow simple commands andÊorientation. It was originally introduced by Folstein 
+et al. in 1975.""",
+    },
+    {
+        'abbrev': 'BSI-18 Depression',
+        'name': "Brief Symptom Inventory-18 Depression Subscale",
+        'descr': """The BSI-18 is an 18-item self-report checklist that assesses psychological symptoms. Depression severity is described 
+as a t-score, where 50 is the normative score and the standard deviation is 10.""",
+    },
+    {
+        'abbrev': 'BSI-18 Anxiety',
+        'name': "Brief Symptom Inventory-18 Anxiety Subscale",
+        'descr': """The BSI-18 is an 18-item self-report checklist that assesses psychological symptoms. Anxiety severity is described 
+as a t-score, where 50 is the normative score and the standard deviation is 10.""",
+    },
+    {
+        'abbrev': 'CIRS-G Total',
+        'name': "Cumulative Illness Rating Scale-Geriatrics Version",
+        'descr': """CIRS-G measures the number and severity of chronic medical illnesses based on ratings of each of 14 body systems 
+(e.g. Heart disease, Respiratory disease). Developed in 1968 by BS Linn and revised in 1991 for aged patients by MD Miller.""",
+    },
+    {
+        'abbrev': 'HY Stages',
+        'name': "Hoehn and Yahr Stages",
+        'descr': """The HY Stages are a commonly used system for describing how the symptoms of Parkinson's disease progress. 
+Originally published in 1967 by Margaret Hoehn and Melvin Yahr to include stages 1 through 5 and later modified with the addition 
+of intermediate stages, 1.5 and 2.5.""",
+    },
+]
 
 scale_file_map = {'UPDRS I' : "UMDPD_data.csv",
                    'UPDRS II' : "UMDPD_data.csv",
@@ -109,7 +219,7 @@ def process_UPDRS_I(filename):
 
     df = df.rename(columns={"WinnowID": "SubjectNum", 
                             "daysfromfirstvisit": "VisitDay",
-                            "UPDRS_I": "UPDRS I"}, 
+                            "UPDRS_I": "UPDRS Part I"}, 
                     errors="raise")  
     return df
     #pp.pprint(df)
@@ -126,7 +236,7 @@ def process_UPDRS_II(filename):
     df = df.groupby(['WinnowID', 'daysfromfirstvisit']).first().reset_index()
     df = df.rename(columns={"WinnowID": "SubjectNum", 
                             "daysfromfirstvisit": "VisitDay",
-                            "UPDRS_II": "UPDRS II"}, 
+                            "UPDRS_II": "UPDRS Part II"}, 
                             errors="raise")
     return df
     #pp.pprint(df)
@@ -141,7 +251,7 @@ def process_UPDRS_III(filename):
     df = df.groupby(['WinnowID', 'daysfromfirstvisit']).first().reset_index()
     df = df.rename(columns={"WinnowID": "SubjectNum", 
                             "daysfromfirstvisit": "VisitDay",
-                            "UPDRS_Piii": "UPDRS III"}, 
+                            "UPDRS_Piii": "UPDRS Part III"}, 
                             errors="raise")
     return df
     #pp.pprint(df)
@@ -156,7 +266,7 @@ def process_UPDRS_IV(filename):
     df = df.groupby(['WinnowID', 'daysfromfirstvisit']).first().reset_index()
     df = df.rename(columns={"WinnowID": "SubjectNum", 
                             "daysfromfirstvisit": "VisitDay",
-                            "UPDRS_IV": "UPDRS IV"}, 
+                            "UPDRS_IV": "UPDRS Part IV"}, 
                             errors="raise")
     return df
 
@@ -168,7 +278,7 @@ def process_UPDRS_Total(filename):
     df = df.groupby(['WinnowID', 'daysfromfirstvisit']).first().reset_index()
     df = df.rename(columns={"WinnowID": "SubjectNum", 
                             "daysfromfirstvisit": "VisitDay",
-                            "UPDRS_T": "UPDRS Total"}, 
+                            "UPDRS_T": "UPDRS Total (Parts I, II, III)"}, 
                             errors="raise")
     return df    
 
@@ -180,7 +290,7 @@ def process_Depression_T_Score(filename):
     df = df.groupby(['WinnowID', 'daysfromfirstvisit']).first().reset_index()
     df = df.rename(columns={"WinnowID": "SubjectNum", 
                             "daysfromfirstvisit": "VisitDay",
-                            "DEP_TSC": "Depression T Score"}, 
+                            "DEP_TSC": "BSI-18 Depression"}, 
                             errors="raise")
     return df   
 
@@ -194,7 +304,7 @@ def process_Anxiety_T_Score(filename):
     df = df.groupby(['WinnowID', 'daysfromfirstvisit']).first().reset_index()
     df = df.rename(columns={"WinnowID": "SubjectNum", 
                             "daysfromfirstvisit": "VisitDay",
-                            "ANX_TSC": "Anxiety T Score"}, 
+                            "ANX_TSC": "BSI-18 Anxiety"}, 
                             errors="raise")
     return df   
     #pp.pprint(df)
@@ -208,7 +318,7 @@ def process_CIRS_Total(filename):
     df = df.groupby(['WinnowID', 'daysfromfirstvisit']).first().reset_index()
     df = df.rename(columns={"WinnowID": "SubjectNum", 
                             "daysfromfirstvisit": "VisitDay",
-                            "CIRS_T": "CIRS Total"}, 
+                            "CIRS_T": "CIRS-G Total"}, 
                             errors="raise")
     return df   
 
@@ -220,7 +330,7 @@ def process_ADLs(filename):
     df = df.groupby(['WinnowID', 'daysfromfirstvisit']).first().reset_index()
     df = df.rename(columns={"WinnowID": "SubjectNum", 
                             "daysfromfirstvisit": "VisitDay",
-                            "OARS_A": "ADLs"}, 
+                            "OARS_A": "OARS ADLs"}, 
                             errors="raise")
     return df   
 
@@ -232,7 +342,7 @@ def process_IADLs(filename):
     df = df.groupby(['WinnowID', 'daysfromfirstvisit']).first().reset_index()
     df = df.rename(columns={"WinnowID": "SubjectNum", 
                             "daysfromfirstvisit": "VisitDay",
-                            "OARS_I": "IADLs"}, 
+                            "OARS_I": "OARS IADLs"}, 
                             errors="raise")
     return df   
 
@@ -268,10 +378,67 @@ def process_Hoehn_and_Yahr_Stage(filename):
 
     df = df.groupby(['WinnowID', 'daysfromfirstvisit']).first().reset_index()
     df = df.rename(columns={"WinnowID": "SubjectNum", 
-                            "daysfromfirstvisit": "VisitDay"}, 
+                            "daysfromfirstvisit": "VisitDay",
+                            "HYSTG": "HY Stages",}, 
                             errors="raise")
     return df   
     #pp.pprint(df)
+
+def add_attribute_metadata(df):
+    # index metadata by abbreviation
+    md_index = {}
+    for md in ATTRIBUTE_METADATA:
+        abbrev = md['abbrev']
+        if abbrev in md_index:
+            sys.stderr.write("FATAL - duplicate entry in ATTRIBUTE_METADATA, abbreviation=" + abbrev)
+            sys.stderr.flush()
+            sys.exit(1)
+        md_index[abbrev] = md
+
+    def get_attribute_metadata(varname, which):
+        if varname in md_index:
+            return md_index[varname][which].replace('\n', '')
+        else:
+            sys.stderr.write("FATAL - couldn't find metadata entry for " + varname)
+            sys.stderr.flush()
+            sys.exit(1)
+
+    df['Label'] = df['SubjectVar'].apply(lambda x: get_attribute_metadata(x, 'name'))
+    df['Description'] = df['SubjectVar'].apply(lambda x: get_attribute_metadata(x, 'descr'))
+
+    return df
+        
+def add_scale_metadata(df):
+    # index metadata by abbreviation
+    smd_index = {}
+    for md in SCALE_METADATA:
+        abbrev = md['abbrev']
+        if abbrev in smd_index:
+            sys.stderr.write("FATAL - duplicate entry in SCALE_METADATA, abbreviation=" + abbrev)
+            sys.stderr.flush()
+            sys.exit(1)
+        smd_index[abbrev] = md
+
+    def get_scale_metadata(testname, which):
+        m = re.match(r'^(.*)(-(Change|ROC))$', testname)
+        if m:
+            base_testname = m.group(1)
+            extension = m.group(2)
+        else:
+            base_testname = testname
+            extension = ''
+            
+        if base_testname in smd_index:
+            return smd_index[base_testname][which].replace('\n', '')
+        else:
+            sys.stderr.write("FATAL - couldn't find metadata entry for " + testname)
+            sys.stderr.flush()
+            sys.exit(1)
+
+    df['Label'] = df['Testname'].apply(lambda x: get_scale_metadata(x, 'name'))
+    df['Description'] = df['Testname'].apply(lambda x: get_scale_metadata(x, 'descr'))
+
+    return df
 
 def main():
     # Parse the arguments
@@ -373,7 +540,7 @@ def main():
     #exit()
 
 
-    labels = ["SubjectNum", 'VisitDay', "UPDRS I", "UPDRS II", "UPDRS III", "UPDRS IV", "UPDRS Total"]
+    labels = ["SubjectNum", 'VisitDay', "UPDRS Part I", "UPDRS Part II", "UPDRS Part III", "UPDRS Part IV", "UPDRS Total (Parts I, II, III)"]
     df_all_vars = df_all_vars.merge(df_UPDRS.loc[:, df_UPDRS.columns.intersection(labels)], how="outer", on = ['SubjectNum', 'VisitDay'])
     df_all_vars_sorted = df_all_vars.sort_values(by = ['SubjectNum', 'VisitDay'])
     # pp.pprint(df_all_vars_sorted)
@@ -487,13 +654,19 @@ def main():
     unique_all_obs = np.concatenate([unique_obs, unique_summary_obs])
     #pp.pprint(unique_all_obs)
     # df_unique_obs = pd.DataFrame({"Observations": df_all_obs.Testname.unique()})
-    df_unique_obs = pd.DataFrame({"Observations": unique_all_obs})
+    df_unique_obs = pd.DataFrame({"Testname": unique_all_obs})
+    # add scale metadata
+    df_unique_obs = add_scale_metadata(df_unique_obs)
+
     #pp.pprint(df_unique_obs)
     filename = "UMDPD_unique_obs.csv"
     df_unique_obs.to_csv(os.path.join(args.output_dir, filename), index = False)
 
     # Print a table of unique subject variables in the data
-    df_unique_subject_vars = pd.DataFrame({"Observations": df_demo_long.SubjectVar.unique()})
+    df_unique_subject_vars = pd.DataFrame({"SubjectVar": df_demo_long.SubjectVar.unique()})
+    # add scale metadata
+    df_unique_subject_vars = add_attribute_metadata(df_unique_subject_vars)
+
     # pp.pprint(df_unique_subject_vars)
     filename = "UMDPD_unique_subject_vars.csv"
     df_unique_subject_vars.to_csv(os.path.join(args.output_dir, filename), index = False)
