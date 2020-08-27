@@ -83,9 +83,9 @@
                           '  Test: ' +
                           '1-way ANOVA' +
                           '  F-Statistic:' +
-                          variable_fval(props.item) +
+			  props.item.f_statistic +
                           '  p-Value:' +
-                          pval_table_cell(props.item)
+                          props.item.p_value
                       }}</span>
                     </v-tooltip>
 
@@ -108,7 +108,7 @@
                   </v-tooltip>
                 </td>
                 <td v-if="expanded" class="text-subtitle-1 text-xs-left">
-                  {{ variable_fval(props.item) }}
+                  {{ props.item.f_statistic }}
                 </td>
                 <td
                   v-if="expanded"
@@ -118,7 +118,7 @@
                     backgroundColor: pval_table_cell_color(props.item),
                   }"
                 >
-                  {{ pval_table_cell(props.item) }}
+                  {{ props.item.p_value }}
                 </td>
                 <td>
                   <v-icon v-if="isOVSelected(props.item)" large
@@ -186,6 +186,15 @@ export default {
         this.$emit('variableSelected', this.outcomeVariables[0]);
       }
     }
+    this.update_pvals();
+  },
+  watch: {
+    anova_pvals() {
+      this.update_pvals();
+    },
+    outcomeVariables() {
+      this.update_pvals();
+    },
   },
   computed: {
     ...mapState('dataExplorer', {
@@ -209,12 +218,14 @@ export default {
         });
         headers.push({
           text: 'F-Statistic',
-          value: 0,
+          value: 'f_statistic',
+          sortable: true,
           class: 'text-subtitle-1 font-weight-bold',
         });
         headers.push({
           text: 'p-Value',
-          value: 0,
+          value: 'p_value',
+          sortable: true,
           class: 'text-subtitle-1 font-weight-bold',
         });
       }
@@ -255,6 +266,13 @@ export default {
         return `${format('.4f')(pval)}`;
       }
       return null;
+  },
+  update_pvals() {
+    var ap = this;
+    this.outcomeVariables.forEach(v => {
+      v.p_value = ap.variable_pval(v);
+      v.f_statistic = ap.variable_fval(v);
+     });
     },
     pval_table_cell(ov) {
       let pval = this.variable_pval(ov);
