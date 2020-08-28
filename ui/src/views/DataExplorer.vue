@@ -206,8 +206,8 @@ export default {
           }
         });
       });
-    this.setOutcomeVariables(outcomeVars);
 
+    await this.setOutcomeVariables(outcomeVars);
     await this.analyzeCohorts(this.selectedCohorts);
 
     // initialize page with preselected variable in the highlight view
