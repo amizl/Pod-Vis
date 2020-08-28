@@ -38,15 +38,18 @@
       <v-row>
         <v-col cols="12">
           <v-data-table
+            ref="ovars_table"
             dense
             :headers="headers"
-            :items="outcomeVariables"
-            disable-pagination
+            :items="ovars"
+            item-key="id"
             hide-footer
+            sort-by="p_value"
           >
             <template v-slot:item="props">
               <tr
-                :class="isOVSelectedClass(props.item)"
+                :key="props.index"
+                :class="{ selectedRow: isOVSelected(props.item) }"
                 @click="table_row_click(props.item)"
               >
                 <td
@@ -83,9 +86,9 @@
                           '  Test: ' +
                           '1-way ANOVA' +
                           '  F-Statistic:' +
-			  props.item.f_statistic +
+                          format_fval(props.item.f_statistic) +
                           '  p-Value:' +
-                          props.item.p_value
+                          format_pval(props.item.p_value)
                       }}</span>
                     </v-tooltip>
 
@@ -108,7 +111,7 @@
                   </v-tooltip>
                 </td>
                 <td v-if="expanded" class="text-subtitle-1 text-xs-left">
-                  {{ props.item.f_statistic }}
+                  {{ format_fval(props.item.f_statistic) }}
                 </td>
                 <td
                   v-if="expanded"
@@ -118,7 +121,7 @@
                     backgroundColor: pval_table_cell_color(props.item),
                   }"
                 >
-                  {{ props.item.p_value }}
+                  {{ format_pval(props.item.p_value) }}
                 </td>
                 <td>
                   <v-icon v-if="isOVSelected(props.item)" large
@@ -178,15 +181,8 @@ export default {
     return {
       selected: [],
       colors: colors,
+      ovars: [],
     };
-  },
-  mounted() {
-    if (this.autoselectFirstVariable && this.selectedVariable == null) {
-      if (this.outcomeVariables && this.outcomeVariables.length > 0) {
-        this.$emit('variableSelected', this.outcomeVariables[0]);
-      }
-    }
-    this.update_pvals();
   },
   watch: {
     anova_pvals() {
@@ -195,6 +191,17 @@ export default {
     outcomeVariables() {
       this.update_pvals();
     },
+  },
+  mounted() {
+    this.update_pvals();
+    if (this.autoselectFirstVariable && this.selectedVariable == null) {
+      if (this.outcomeVariables && this.outcomeVariables.length > 0) {
+        this.$emit('variableSelected', this.outcomeVariables[0]);
+      }
+    }
+    if (this.outcomeVariables && this.outcomeVariables.length > 0) {
+      this.ovars = this.outcomeVariables;
+    }
   },
   computed: {
     ...mapState('dataExplorer', {
@@ -233,6 +240,7 @@ export default {
       headers.push({
         text: '',
         value: '',
+        sortable: false,
         class: 'text-subtitle-1 font-weight-bold',
       });
       return headers;
@@ -248,31 +256,42 @@ export default {
     },
   },
   methods: {
+    format_fval(fv) {
+      if (fv == null) {
+        return 'X';
+      }
+      return `${format('.2f')(fv)}`;
+    },
+    format_pval(pval) {
+      if (pval < 0.0001) {
+        return '<0.0001';
+      }
+      return `${format('.4f')(pval)}`;
+    },
     variable_fval(ov) {
       const pd = this.pval_dict;
       if (ov.label in pd) {
         const { fval } = pd[ov.label];
-        return `${format('.2f')(fval)}`;
+        return fval;
       }
-      return 'X';
+      return null;
     },
     variable_pval(ov) {
       const pd = this.pval_dict;
       if (ov.label in pd) {
         const { pval } = pd[ov.label];
-        if (pval < 0.0001) {
-          return '<0.0001';
-        }
-        return `${format('.4f')(pval)}`;
+        return pval;
       }
       return null;
-  },
-  update_pvals() {
-    var ap = this;
-    this.outcomeVariables.forEach(v => {
-      v.p_value = ap.variable_pval(v);
-      v.f_statistic = ap.variable_fval(v);
-     });
+    },
+    update_pvals() {
+      var ap = this;
+      this.outcomeVariables.forEach(v => {
+        v.p_value = ap.variable_pval(v);
+        v.f_statistic = ap.variable_fval(v);
+      });
+
+      this.ovars = [...this.outcomeVariables];
     },
     pval_table_cell(ov) {
       let pval = this.variable_pval(ov);
@@ -307,9 +326,6 @@ export default {
     },
     table_row_click(ov) {
       this.$emit('variableSelected', ov);
-    },
-    isOVSelectedClass(ov) {
-      return this.selectedVariable == ov ? 'selectedRow' : '';
     },
     isOVSelected(ov) {
       return this.selectedVariable == ov;
