@@ -13,12 +13,13 @@
   >
     <template v-slot:item.category="{ item }">
       <td class="subtitle-1 text-xs-left nowrap">
-	<v-row fill-height align="center" class="nowrap">
-	<img
-              :src="'/images/' + item.category + '-icon-128.png'"
-              :title="item.category"
-              style="height:2.5em;"
-          /><span class="pl-2" height="100%">{{ item.category }}</span></v-row>
+        <v-row fill-height align="center" class="nowrap">
+          <img
+            :src="'/images/' + item.category + '-icon-128.png'"
+            :title="item.category"
+            style="height:2.5em;"
+          /><span class="pl-2" height="100%">{{ item.category }}</span></v-row
+        >
       </td>
     </template>
 
@@ -116,7 +117,10 @@ export default {
     attrs.forEach(a => {
       a.type = 'subject';
     });
-    this.variables = sortScales([...this.variables, ...res.data.subject_attributes]);
+    this.variables = sortScales([
+      ...this.variables,
+      ...res.data.subject_attributes,
+    ]);
     this.isLoading = false;
   },
   methods: {
@@ -141,5 +145,8 @@ export default {
 </script>
 
 <style scoped>
-td.nowrap { word-break: keep-all; white-space: nowrap; }
+td.nowrap {
+  word-break: keep-all;
+  white-space: nowrap;
+}
 </style>

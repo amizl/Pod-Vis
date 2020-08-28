@@ -36,7 +36,7 @@
               <v-btn :href="dataset.sourceURL" flat>Link to Study</v-btn>
             </v-card-actions>
           </v-card>
-	</v-col>
+        </v-col>
 
         <v-col cols="4" class="ma-0 pa-0 pl-2">
           <v-card flat class="rounded-lg shadow">

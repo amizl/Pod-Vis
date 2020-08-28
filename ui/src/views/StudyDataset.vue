@@ -204,7 +204,9 @@
               <v-row class="ma-0 pa-0">
                 <v-col cols="12" class="ma-0 pa-0">
                   <simple-variable-table
-                    :variables="sortScales([...collection.observation_variables])"
+                    :variables="
+                      sortScales([...collection.observation_variables])
+                    "
                     dense
                   />
                 </v-col>
