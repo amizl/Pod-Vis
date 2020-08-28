@@ -9,7 +9,7 @@
     disable-pagination
     class="pb-1"
   >
-    <template v-slot:item.category="{ item }">
+    <template v-slot:item.category_icon="{ item }">
       <td class="subtitle-1 text-xs-left">
         <v-row align="center" class="pl-2"
           ><img
@@ -18,8 +18,13 @@
             style="height:2.5em"
             class="pa-1"
           />
-          {{ item.ontology.category }}</v-row
-        >
+        </v-row>
+      </td>
+    </template>
+
+    <template v-slot:item.category="{ item }">
+      <td class="subtitle-1 text-xs-left">
+        <v-row align="center" class="pl-2"> {{ item.ontology.category }}</v-row>
       </td>
     </template>
 
@@ -69,6 +74,12 @@ export default {
   data() {
     return {
       headers: [
+        {
+          text: '',
+          value: 'category_icon',
+          sortable: false,
+          class: 'text-subtitle-1 font-weight-bold',
+        },
         {
           text: 'Category',
           value: 'category',

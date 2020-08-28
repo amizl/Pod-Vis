@@ -11,14 +11,21 @@
     disable-pagination
     class="pb-1"
   >
-    <template v-slot:item.category="{ item }">
+    <template v-slot:item.category_icon="{ item }">
       <td class="subtitle-1 text-xs-left nowrap">
         <v-row fill-height align="center" class="nowrap">
           <img
             :src="'/images/' + item.category + '-icon-128.png'"
             :title="item.category"
             style="height:2.5em;"
-          /><span class="pl-2" height="100%">{{ item.category }}</span></v-row
+        /></v-row>
+      </td>
+    </template>
+
+    <template v-slot:item.category="{ item }">
+      <td class="subtitle-1 text-xs-left nowrap">
+        <v-row fill-height align="center" class="nowrap">
+          <span class="pl-2" height="100%">{{ item.category }}</span></v-row
         >
       </td>
     </template>
@@ -68,6 +75,12 @@ export default {
       selected: [],
       variables: [],
       headers: [
+        {
+          text: '',
+          value: 'category_icon',
+          sortable: false,
+          class: 'text-subtitle-1 font-weight-bold',
+        },
         {
           text: 'Category',
           value: 'category',
