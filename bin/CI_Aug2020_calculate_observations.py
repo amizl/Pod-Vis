@@ -861,6 +861,7 @@ def generate_field_mapping(df_unique_subj_vars, df_unique_obs, demographics_file
     # process subject attributes
     for index, row in df_unique_subj_vars.iterrows():
         obs = row['SubjectVar']
+        label = row['Label']
         stype = ''
         data_type = ''
         flip_axis=''
@@ -881,7 +882,7 @@ def generate_field_mapping(df_unique_subj_vars, df_unique_obs, demographics_file
             sys.stderr.flush()
             sys.exit(1)
 
-        nr = ['Demographics','','subject_ontology',obs,demographics_file,'Property',obs,obs,stype,data_type,flip_axis,ordinal_sort]
+        nr = ['Demographics','','subject_ontology',label,demographics_file,'Property',obs,obs,stype,data_type,flip_axis,ordinal_sort]
         fmvals.append(nr)
 
         # subject_visit?
@@ -1175,7 +1176,7 @@ def main():
     # pp.pprint(df_all_vars_long_sorted)
 
     observations_filename = "UI_CI_Aug2020_obs_long.csv"
-    files.append(["Observations", filename])
+    files.append(["Observations", observations_filename])
     print("Writing " + filename)
     df_all_vars_long_sorted.to_csv(os.path.join(args.output_dir, observations_filename), index = False)
 
