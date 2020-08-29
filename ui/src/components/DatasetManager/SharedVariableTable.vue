@@ -77,7 +77,7 @@
                   {{ props.item.abbreviation }}
                 </span>
               </template>
-              <span>{{ props.item.scale }}</span>
+              <span v-html="props.item.scale"></span>
             </v-tooltip>
           </td>
 

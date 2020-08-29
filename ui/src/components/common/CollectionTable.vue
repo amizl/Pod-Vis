@@ -3,7 +3,7 @@
   <v-data-table v-else :headers="headers" :items="collections" item-key="label">
     <template v-slot:items="props">
       <tr>
-        <td class="text-xs-left">{{ props.item.label }}</td>
+        <td class="text-xs-left"><span v-html="props.item.label"></span></td>
       </tr>
     </template>
     <template v-slot:no-data>

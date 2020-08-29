@@ -73,23 +73,27 @@
                           v-on="{ ...tooltip }"
                         />
                       </template>
-                      <span>{{ props.item.category }}</span>
+                      <span v-html="props.item.category"></span>
                     </v-tooltip>
                     <v-tooltip v-if="!expanded" bottom color="primary">
                       <template v-slot:activator="{ on: tooltip }">
-                        <span v-on="{ ...tooltip }">{{
-                          props.item.abbreviation
-                        }}</span>
+                        <span
+                          v-on="{ ...tooltip }"
+                          v-html="props.item.abbreviation"
+                        ></span>
                       </template>
-                      <span>{{
-                        props.item.label +
-                          '  Test: ' +
-                          '1-way ANOVA' +
-                          '  F-Statistic:' +
-                          format_fval(props.item.f_statistic) +
-                          '  p-Value:' +
-                          format_pval(props.item.p_value)
-                      }}</span>
+                      <span
+                        v-html="
+                          props.item.label +
+                            '  Test: ' +
+                            '1-way ANOVA' +
+                            '  F-Statistic:' +
+                            format_fval(props.item.f_statistic) +
+                            '  p-Value:' +
+                            format_pval(props.item.p_value)
+                        "
+                      >
+                      </span>
                     </v-tooltip>
 
                     <v-tooltip v-else top color="primary">
@@ -98,7 +102,7 @@
                           {{ props.item.abbreviation }}
                         </span>
                       </template>
-                      <span>{{ props.item.label }}</span>
+                      <span v-html="props.item.label"></span>
                     </v-tooltip>
                   </v-row>
                 </td>

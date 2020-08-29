@@ -36,14 +36,14 @@
           <template v-slot:activator="{ on: tooltip }">
             <span v-on="{ ...tooltip }"> {{ item.abbreviation }} </span>
           </template>
-          <span>{{ item.scale }}</span>
+          <span v-html="item.scale"></span>
         </v-tooltip>
       </td>
     </template>
 
     <template v-slot:item.description="{ item }">
       <td class="subtitle-1 text-xs-left">
-        <span class="subtitle-2">{{ item.scale }}: </span>
+        <span class="subtitle-2" v-html="item.scale"></span>:
         <span v-html="item.description"></span>
       </td>
     </template>

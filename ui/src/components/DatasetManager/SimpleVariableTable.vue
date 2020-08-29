@@ -36,7 +36,7 @@
               {{ item.ontology.abbreviation }}
             </span>
           </template>
-          <span>{{ item.ontology.label }}</span>
+          <span v-html="item.ontology.label"></span>
         </v-tooltip>
       </td>
     </template>

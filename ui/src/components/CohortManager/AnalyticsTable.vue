@@ -80,7 +80,7 @@
                       {{ props.item.abbreviation }}
                     </span>
                   </template>
-                  <span>{{ props.item.label }}</span>
+                  <span v-html="props.item.label"></span>
                 </v-tooltip>
               </td>
               <td class="text-subtitle-1 text-xs-left">
@@ -90,7 +90,7 @@
                       {{ props.item.test_abbrev }}
                     </div>
                   </template>
-                  <span>{{ props.item.test_name }}</span>
+                  <span v-html="props.item.test_name"></span>
                 </v-tooltip>
               </td>
               <td

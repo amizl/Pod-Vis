@@ -28,7 +28,7 @@
               {{ props.item.category }}</v-row
             >
           </td>
-          <td>{{ props.item.scale }}</td>
+          <td><span v-html="props.item.scale"></span></td>
         </tr>
       </template>
       <template v-slot:no-data>

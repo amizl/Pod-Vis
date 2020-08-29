@@ -36,9 +36,7 @@
                       </template>
                       <span>{{ selectedOutcomeVariable.category }}</span>
                     </v-tooltip>
-                    <span v-if="selectedOutcomeVariable" class="subtitle-1">
-		      {{ selectedOutcomeVariable.label }}
-		    </span>
+                    <span v-if="selectedOutcomeVariable" class="subtitle-1" v-html="selectedOutcomeVariable.label"></span>
                   </v-card-title>
                 </v-card>
               </v-col>

@@ -49,7 +49,9 @@
         dense
       >
         <template v-slot:item.label="{ item }">
-          <td class="subtitle-1 text-xs-left">{{ item.label }}</td>
+          <td class="subtitle-1 text-xs-left">
+            <span v-html="item.label"></span>
+          </td>
         </template>
 
         <template v-slot:item.size="{ item }">

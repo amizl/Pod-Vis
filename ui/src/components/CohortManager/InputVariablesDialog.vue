@@ -59,7 +59,7 @@
                       {{ props.item.abbreviation }}
                     </span>
                   </template>
-                  <span>{{ props.item.label }}</span>
+                  <span v-html="props.item.label"></span>
                 </v-tooltip>
               </td>
               <td class="text-subtitle-1" style="width: 12%;">
