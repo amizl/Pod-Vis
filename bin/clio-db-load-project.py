@@ -24,6 +24,7 @@ patient_map = {}
 subject_attr_map = {}
 project_map = {}
 subject_ont = {}
+# observation ontology, indexed by abbreviation
 observation_ont = {}
 project_id = 1
 
@@ -61,8 +62,6 @@ def main():
     # Read the info from some of the tables as data frames
     df_project_info = get_project_info(conn)
     df_study_info = get_study_info(conn)
-    # df_subject_ont_info = get_subject_ontology_info(conn)
-    # df_observation_ont_info = get_observation_ontology_info(conn)
 
     # Load some of the info as dictionaries
     subject_ont = get_subject_ontology_index(cursor)
@@ -191,7 +190,7 @@ def process_subject_observations(cursor, conn, obs_file, observation_ont, df_col
             key = testname
         else:
             key = index 
-        print("Key for this map is: {}".format(key))
+        print("Key for this map is: {} field name is: {}".format(key, field_name))
 
         colname_to_fields[key] = field_name
         colname_to_data_type[key] = data_type
@@ -234,11 +233,10 @@ def process_subject_observations(cursor, conn, obs_file, observation_ont, df_col
 
 
             print("Subject: {} ID: {} Visit Num: {} Testname: {} Value: {}".format(subject_num, subject_id, visit_num, testname, value))
-            observation_term = colname_to_fields[testname]
             value_type = colname_to_data_type[testname]
 
-            if observation_term in observation_ont:
-                obs_ont_id = observation_ont[observation_term]["id"]
+            if testname in observation_ont:
+                obs_ont_id = observation_ont[testname]["id"]
             else:
                 print("WARN: Cannot find testname {} in observation ontology. Skipping entry .....".format(testname))
                 continue
@@ -491,6 +489,7 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
             # If it does update it, else create a new entry
             subject_ont_id = get_subject_ontology(cursor, label)
             print("Subject variable: {} ontology ID: {}\n".format(label, subject_ont_id))
+
             if (subject_ont_id == 0):
                 # As the subject_ont ID does not exist in the database create it
                 subject_ont_id = create_subject_ontology_term(cursor, label, abbreviation, description, parent_id, value_type, data_category)
@@ -518,7 +517,7 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
         # Process the remaining lines
         for row in reader:
 
-            # 3-columns expected - Testname, Label, Description
+            # 3-columns expected - Testname, Label, Description (Testname is the abbreviation)
             abbreviation = row['Testname']
             if row['Label'] == '':
                 label = abbreviation
@@ -526,7 +525,7 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                 label = row['Label']
             description = row['Description']
 
-            print("Processing variable: {}".format(label))
+            print("Processing variable: {}, label = {}".format(abbreviation, label))
 
             # Look for this observation in the field map
             # Because an observation could have summary values we have to handle thos as well
@@ -546,7 +545,7 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                 entry_type = row['Entry Type']
                 observation_term = index
 
-                print("Processing observation term: {} flip axis: {}".format(observation_term, flip_axis))
+                print("Processing observation term: {} flip axis: {} index: {}".format(observation_term, flip_axis, index))
 
                 # Make sure that the variable belongs to the observation_ontology table, else skip
                 # For instance the variable Study does not belong, so skip
@@ -566,7 +565,6 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                     # As the category ID does not exist in the database create it
                     category_id = create_observation_ontology_term(cursor, category, category, None)
                     conn.commit()
-    
                     observation_ont[category] = {'id': category_id, 'parent_id': 0}
                 else:
                     category_id = observation_ont[category]['id']
@@ -584,7 +582,6 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                         # As the scale ID does not exist in the database create it
                         scale_id = create_observation_ontology_term(cursor, scale, scale, None, category_id)
                         conn.commit()
-    
                         observation_ont[scale] = {'id': scale_id, 'parent_id': 0}
                     else:
                         scale_id = observation_ont[scale]['id']
@@ -594,16 +591,22 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
 
                 # Check to see if the observation variable exists, if not create it    
                 # If it does update it, else create a new entry
-                observation_ont_id = get_observation_ontology(cursor, observation_term)
-                print("observation variable: {} ontology ID: {}\n".format(observation_term, observation_ont_id))
+                observation_ont_id = get_observation_ontology(cursor, abbreviation)
+                print("observation variable: {} ontology ID: {}\n".format(abbreviation, observation_ont_id))
+                
+                term_label = label
+                m = re.match(r'^.*(-ROC|-Change)$', abbreviation)
+                if m:
+                    term_label = term_label + m.group(1)
+
                 if (observation_ont_id == 0):
                     # As the observation_ont ID does not exist in the database create it
-                    observation_ont_id = create_observation_ontology_term(cursor, observation_term, abbreviation, description, parent_id, value_type, data_category, flip_axis)
+                    observation_ont_id = create_observation_ontology_term(cursor, term_label, abbreviation, description, parent_id, value_type, data_category, flip_axis)
                     conn.commit()
-                    observation_ont[observation_term] = {'id': observation_ont_id, 'parent_id': parent_id}
+                    observation_ont[abbreviation] = {'id': observation_ont_id, 'parent_id': parent_id}
                 else:
                     # As the ontology ID exists, update the ontology record
-                    update_observation_ontology_term(cursor, observation_ont_id, observation_term, abbreviation, description, parent_id, value_type, data_category, flip_axis) 
+                    update_observation_ontology_term(cursor, observation_ont_id, term_label, abbreviation, description, parent_id, value_type, data_category, flip_axis) 
                     conn.commit()
 
 
@@ -855,12 +858,12 @@ def update_subject_ontology_term(cursor, subject_ont_id, term, abbreviation, des
 
     print("Updated ontology entry '{}' in database with ID: {}.".format(term, subject_ont_id))
 
-def get_observation_ontology(cursor, label):
+def get_observation_ontology(cursor, abbreviation):
     ont_id = 0
-    query = "SELECT id, label, parent_id FROM observation_ontology where label = %s"
+    query = "SELECT id, label, parent_id FROM observation_ontology where abbreviation = %s"
     print("Executing query: '{}'".format(query))
     try:
-        cursor.execute(query, (label,))
+        cursor.execute(query, (abbreviation,))
 
         row = cursor.fetchone()
         if row is not None:
@@ -943,10 +946,6 @@ def update_observation_ontology_term(cursor, observation_ont_id, term, abbreviat
 
     print("Updated ontology entry '{}' in database with ID: {}.".format(term, observation_ont_id))
 
-def add_observation_ontology_term(cursor, ont, term, parent_id=None):
-    query = "INSERT INTO observation_ontology (label, parent_id) VALUES (%s, %s)"
-    cursor.execute(query, (term, parent_id))
-    ont[term] = {'id': cursor.lastrowid, 'parent_id': parent_id}
 
 # Method that checks for the study in the database and returns the study ID, else zero
 def get_study_entry(cursor, study_name, project_id):
@@ -1279,7 +1278,7 @@ def get_subject_obs_summary(cursor, subject_id, obs_ont_id):
 
 def get_observation_ontology_index(cursor):
     idx = dict()
-    query = 'SELECT id, label, parent_id FROM observation_ontology'
+    query = 'SELECT id, abbreviation, parent_id FROM observation_ontology'
     try:
         cursor.execute(query)
         for row in cursor:
@@ -1304,27 +1303,6 @@ def get_subject_ontology_index(cursor):
         sys.exit()
 
     return idx
-
-def get_observation_ontology_info(conn):
-    query = 'SELECT id, label, parent_id, value_type, flip_axis FROM observation_ontology'
-    try:
-        df = pd.read_sql_query(query, conn)
-    except Exception as e:
-        print(e)
-        sys.exit()
-
-    return df
-
-def get_subject_ontology_info(conn):
-    query = "SELECT id, label, parent_id FROM subject_ontology"
-    try:
-        df = pd.read_sql_query(query, conn)
-
-    except Exception as e:
-        print(e)
-        sys.exit()
-
-    return df
 
 def get_project_info(conn):
     query = "SELECT id, project_name, user_id, project_url, primary_disease, is_public, description from project" 
