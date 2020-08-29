@@ -43,31 +43,31 @@ ATTRIBUTE_METADATA = [
 SCALE_METADATA = [
     {
         'abbrev': 'UPDRS Part I',
-        'name': "Parkinson's Disease Rating Scale Part I",
+        'name': "Unified Parkinson's Disease Rating Scale Part I",
         'descr': """Part I: Mentation, Behavior and Mood has 4 items that focus on cognition, hallucinations/delusions, depression and motivation.""",
     },
     {
         'abbrev': 'UPDRS Part II',
-        'name': "Parkinson's Disease Rating Scale Part II",
+        'name': "Unified Parkinson's Disease Rating Scale Part II",
         'descr': """Part II: Activities of Daily Living has 13 items that focus on Parkinson's symptoms (e.g. tremor, falling, swallowing) and 
 ADLs (e.g. dressing, walking, handwriting).""",
     },
     {
         'abbrev': 'UPDRS Part III',
-        'name': "Parkinson's Disease Rating Scale Part III",
+        'name': "Unified Parkinson's Disease Rating Scale Part III",
         'descr': """Part III: Motor Examination has 14 items that are completed by the clinician performing the neurological exam. These items 
 focus on motor tasks affected by Parkinson's disease including tremor, rigidity, rapid repetitive movements (bradykinesia), walking and balance. 
 Several items generate multiple scores for the different body parts (e.g. neck, arms and legs).""",
     },
     {
         'abbrev': 'UPDRS Part IV',
-        'name': "Parkinson's Disease Rating Scale Part IV",
+        'name': "Unified Parkinson's Disease Rating Scale Part IV",
         'descr': """Part IV: Complications of Therapy has 11 items that focus on symptoms associated with disease progression and drug-related 
 side effects including dyskinesias, motor fluctuations, and orthostatic hypotension.""",
     },
     {
         'abbrev': 'UPDRS Total (Parts I, II, III)',
-        'name': "Unified ParkinsonÕs Disease Rating Scale Total Score (Parts I, II, III)",
+        'name': "Unified Parkinson's Disease Rating Scale Total Score (Parts I, II, III)",
         'descr': """The UPDRS is the most commonly used scale for the clinical study of Parkinson's disease. The UPDRS is used to follow disease 
 progression and to measure response to treatment. The UPDRS includes 4 Parts (subscales) but only Parts I, II and III are included in the Total 
 Score. The 4 parts are: Part I: Mentation, behavior, and mood; Part II: Activities of daily life (ADLs), Part III: Motor Examination and Part IV: 
