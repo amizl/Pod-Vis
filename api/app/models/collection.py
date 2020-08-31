@@ -842,7 +842,8 @@ class Collection(db.Model):
             st = studies[study['id']]
             for fl in groups:
                 if fl in st:
-                    st[fl] += subj[fl]
+                    if subj[fl] is not None:
+                        st[fl] += subj[fl]
                 else:
                     st[fl] = subj[fl]
                    
