@@ -1,12 +1,12 @@
-Observations
-Study
-Race
-Birthdate
-Sex
-Ever smoker
-Ever drinker
-Age At Enrollment
-Age At Diagnosis
-Diagnosis Date
-Enroll Date
-Date of Last Follow Up
+SubjectVar,Label,Description
+Study,Study,The original/uploaded dataset.
+Race,Race,"Subject race: either 'White', 'Black', or 'Other'."
+Birthdate,Birthdate,Subject birthdate.
+Sex,Sex,"Binary gender, either 'Male' or 'Female'."
+Ever smoker,Ever smoker,Whether the subject has ever smoked: either 'Smoker' or 'Nonsmoker'.
+Ever drinker,Ever drinker,Whether the subject has ever consumed alcoholic beverages: either 'Drinker' or 'Nondrinker'.
+Age At Enrollment,Age At Enrollment,Subject age at study enrollment.
+Age At Diagnosis,Age At Diagnosis,Subject age at primary disease diagnosis.
+Diagnosis Date,Diagnosis Date,Date of subject's primary disease diagnosis.
+Enroll Date,Enroll Date,Date of subject's study enrollment.
+Follow-up Date,Date of Last Follow-Up,Date of subject's most recent follow-up visit.

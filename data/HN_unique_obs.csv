@@ -1,26 +1,26 @@
-Observations
-Occurrence #
-Tumor Stage
-Nodal Stage
-Metastasis
-Overall Stage
-Research lab p16
-Clinical lab p16
-Research lab HPV
-2nd Failure Type
-Status
-Treatment Modality
-Initial Chemotherapy Agent
-1st Failure Type
-Radiation Dosage
-Tumor Site
-Date of Death
-Time to death
-Age at death
-Time to 1st Failure
-1st Failure Initial Chemotherapy Agent
-1st Failure Treatment Modality
-1st Failure Site
-Second Line Chemotherapy Agent
-1st Failure Second Line Chemotherapy Agent
-1st Failure Radiation Dosage
+Testname,Label,Description
+Occurrence #,Occurrence number,"Occurrence number: either '1st primary', 'other primary', 'recurrence', or 'Unknown'."
+Tumor Stage,Tumor Stage at 1st occurrence,"Indicates tumor stage at first occurrence: either T1, T2, T3, T4a, T4b, or Unknown"
+Nodal Stage,Nodal Stage at 1st occurrence,"Indicates nodal stage at first occurrence: either N0, N1, N2, N3, N4, or Unknown."
+Metastasis,Metastases at 1st visit,"Indicates whether metastases were present at first visit: either M0, M1, or Unknown."
+Overall Stage,Overall TNM stage at 1st occurrence,"Indicated overall TNM stage at first occurrence: either I, II, III, IVa, IVb, IVc, or Unknown."
+Research lab p16,Research lab p16,"Laboratory testing evidence of p16 status: either 'p16 negative', 'p16 positive', or 'p16 unknown'."
+Clinical lab p16,Clinical lab p16,"Clinical assessment of p16 status: either 'p16 negative', 'p16 positive', or 'p16 unknown'."
+Research lab HPV,Research lab HPV,"Laboratory testing evidence of HPV status: either 'HPV negative', 'HPV positive', or 'HPV unknown'."
+Second Failure Type,Second Failure Type,"Type of second failure/recurrence: either 'locoregional', 'distant', 'locoregional and distant', or 'no known failure'."
+Status,Status,"Subject status: either 'Alive w/o disease', 'Alive w/ disease', 'Dead w/o disease', 'Dead w/ disease', 'Alive unk disease', 'Dead unk disease', or 'Unknown'."
+Treatment Modality,Treatment Modality,"Treatment used in the first documented occurrence: either 'CTX-RT', 'RT', 'CTX', 'Sx', 'Sx & RT', 'Sx & CTX-RT', 'Sx & CTX', or 'Unknown'."
+Initial Chemotherapy Agent,Initial Chemotherapy Agent,First chemotherapy used in initial occurrence.
+First Failure Type,First Failure Type,"Type of first failure/recurrence: either 'locoregional', 'distant', 'locoregional and distant', or 'no known failure'."
+Radiation Dosage,Radiation Dosage for initial occurrence,The radiation dosage in grays received during treatment of the initial occurrence.
+Tumor Site,Tumor Site,"Location of tumor at presentation: either 'oral cavity', 'oropharynx', 'larynx', 'hypopharynx', 'multiple', or 'Unknown'."
+Date of Death,Date of Death,Date of death.
+Time to Death,Time to Death,Time in years between enrollment and death.
+Age at Death,Age at Death,Age at death.
+Time to First Failure,Time to First Failure,Time in years between the end of the initial treatment and the first failure/recurrence.
+First Failure Initial Chemotherapy Agent,First Failure Initial Chemotherapy Agent,First chemotherapeutic agent used in the first failure/recurrence.
+First Failure Treatment Modality,First Failure Treatment Modality,"Treatment modality used in the first failure/recurrence: either 'CTX-RT', 'RT', 'CTX', 'Sx', 'Sx & RT', 'Sx & CTX-RT', 'Sx & CTX', or 'Unknown'."
+First Failure Site,First Failure Site,"Location of tumor at first failure/recurrence: either 'oral cavity', 'oropharynx', 'larynx', 'hypopharynx', 'multiple', or 'Unknown'."
+Second Line Chemotherapy Agent,Second Line Chemotherapy Agent,Second line chemotherapeutic agent used in initial occurrence.
+First Failure Second Line Chemotherapy Agent,First Failure Second Line Chemotherapy Agent,Second line chemotherapeutic agent used in first failure/recurrence.
+First Failure Radiation Dosage,First Failure Radiation Dosage,The radiation dosage in grays received during treatment of the first failure/recurrence.

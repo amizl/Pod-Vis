@@ -8,13 +8,209 @@ import numpy as np
 import pprint
 import datetime as dt
 
+ATTRIBUTE_METADATA = [
+    {
+        'abbrev': 'Study',
+        'name': 'Study',
+        'descr': "The original/uploaded dataset.",
+    },
+    {
+        'abbrev': 'Race',
+        'name': 'Race',
+        'descr': "Subject race: either 'White', 'Black', or 'Other'.",
+    },
+    {
+        'abbrev': 'Birthdate',
+        'name': 'Birthdate',
+        'descr': "Subject birthdate.",
+    },
+    {
+        'abbrev': 'Sex',
+        'name': 'Sex',
+        'descr': "Binary gender, either 'Male' or 'Female'.",
+    },
+    {
+        'abbrev': 'Ever smoker',
+        'name': 'Ever smoker',
+        'descr': "Whether the subject has ever smoked: either 'Smoker' or 'Nonsmoker'.",
+    },
+    {
+        'abbrev': 'Ever drinker',
+        'name': 'Ever drinker',
+        'descr': "Whether the subject has ever consumed alcoholic beverages: either 'Drinker' or 'Nondrinker'.",
+    },
+    {
+        'abbrev': 'Age At Enrollment',
+        'name': 'Age At Enrollment',
+        'descr': "Subject age at study enrollment.",
+    },
+    {
+        'abbrev': 'Age At Diagnosis',
+        'name': 'Age At Diagnosis',
+        'descr': "Subject age at primary disease diagnosis.",
+    },
+    {
+        'abbrev': 'Diagnosis Date',
+        'name': 'Diagnosis Date',
+        'descr': "Date of subject's primary disease diagnosis.",
+    },
+    {
+        'abbrev': 'Enroll Date',
+        'name': 'Enroll Date',
+        'descr': "Date of subject's study enrollment.",
+    },
+    {
+        'abbrev': 'Follow-up Date',
+        'name': 'Date of Last Follow-Up',
+        'descr': "Date of subject's most recent follow-up visit.",
+    },
+]
+
+SCALE_METADATA = [
+    {
+        'abbrev': 'Occurrence #',
+        'name': 'Occurrence number',
+        'descr': "Occurrence number: either '1st primary', 'other primary', 'recurrence', or 'Unknown'.",
+    },
+    {
+        'abbrev': 'Tumor Stage',
+        'name': 'Tumor Stage at 1st occurrence',
+        'descr': "Indicates tumor stage at first occurrence: either T1, T2, T3, T4a, T4b, or Unknown",
+    },
+    {
+        'abbrev': 'Nodal Stage',
+        'name': 'Nodal Stage at 1st occurrence',
+        'descr': "Indicates nodal stage at first occurrence: either N0, N1, N2, N3, N4, or Unknown.",
+    },
+    {
+        'abbrev': 'Metastasis',
+        'name': 'Metastases at 1st visit',
+        'descr': "Indicates whether metastases were present at first visit: either M0, M1, or Unknown.",
+    },
+    {
+        'abbrev': 'Overall Stage',
+        'name': 'Overall TNM stage at 1st occurrence',
+        'descr': "Indicated overall TNM stage at first occurrence: either I, II, III, IVa, IVb, IVc, or Unknown.",
+    },
+    {
+        'abbrev': 'Research lab p16',
+        'name': 'Research lab p16',
+        'descr': "Laboratory testing evidence of p16 status: either 'p16 negative', 'p16 positive', or 'p16 unknown'.",
+    },
+    {
+        'abbrev': 'Clinical lab p16',
+        'name': 'Clinical lab p16',
+        'descr': "Clinical assessment of p16 status: either 'p16 negative', 'p16 positive', or 'p16 unknown'.",
+    },
+    {
+        'abbrev': 'Research lab HPV',
+        'name': 'Research lab HPV',
+        'descr': "Laboratory testing evidence of HPV status: either 'HPV negative', 'HPV positive', or 'HPV unknown'.",
+    },
+    {
+        'abbrev': 'First Failure Type',
+        'name': 'First Failure Type',
+        'descr': "Type of first failure/recurrence: either 'locoregional', 'distant', 'locoregional and distant', or 'no known failure'.",
+    },
+    {
+        'abbrev': 'Second Failure Type',
+        'name': 'Second Failure Type',
+        'descr': "Type of second failure/recurrence: either 'locoregional', 'distant', 'locoregional and distant', or 'no known failure'.",
+    },
+    {
+        'abbrev': 'Status',
+        'name': 'Status',
+        'descr': "Subject status: either 'Alive w/o disease', 'Alive w/ disease', 'Dead w/o disease', 'Dead w/ disease', 'Alive unk disease', 'Dead unk disease', or 'Unknown'.",
+    },
+    {
+        'abbrev': 'Treatment Modality',
+        'name': 'Treatment Modality',
+        'descr': "Treatment used in the first documented occurrence: either 'CTX-RT', 'RT', 'CTX', 'Sx', 'Sx & RT', 'Sx & CTX-RT', 'Sx & CTX', or 'Unknown'.",
+    },
+    {
+        'abbrev': 'Initial Chemotherapy Agent',
+        'name': 'Initial Chemotherapy Agent',
+        'descr': "First chemotherapy used in initial occurrence.",
+    },
+    {
+        'abbrev': 'Second Line Chemotherapy Agent',
+        'name': 'Second Line Chemotherapy Agent',
+        'descr': 'Second line chemotherapeutic agent used in initial occurrence.',
+    },
+    {
+        'abbrev': 'Radiation Dosage',
+        'name': 'Radiation Dosage for initial occurrence',
+        'descr': "The radiation dosage in grays received during treatment of the initial occurrence.",
+    },
+    {
+        'abbrev': 'Tumor Site',
+        'name': 'Tumor Site',
+        'descr': "Location of tumor at presentation: either 'oral cavity', 'oropharynx', 'larynx', 'hypopharynx', 'multiple', or 'Unknown'.",
+    },
+    {
+        'abbrev': 'First Failure Site',
+        'name': 'First Failure Site',
+        'descr': "Location of tumor at first failure/recurrence: either 'oral cavity', 'oropharynx', 'larynx', 'hypopharynx', 'multiple', or 'Unknown'.",
+    },
+    {
+        'abbrev': 'First Failure Date',
+        'name': 'First Failure Date',
+        'descr': "Date of first failure/ recurrence.",
+    },
+    {
+        'abbrev': 'First Failure Diagnosis Date',
+        'name': 'First Failure Diagnosis Date',
+        'descr': "Diagnosis date of the first failure/recurrence.",
+    },
+    {
+        'abbrev': 'First Failure Initial Chemotherapy Agent',
+        'name': 'First Failure Initial Chemotherapy Agent',
+        'descr': "First chemotherapeutic agent used in the first failure/recurrence.",
+    },
+    {
+        'abbrev': 'First Failure Second Line Chemotherapy Agent',
+        'name': 'First Failure Second Line Chemotherapy Agent',
+        'descr': "Second line chemotherapeutic agent used in first failure/recurrence.",
+    },
+    {
+        'abbrev': 'First Failure Radiation Dosage',
+        'name': 'First Failure Radiation Dosage',
+        'descr': "The radiation dosage in grays received during treatment of the first failure/recurrence.",
+    },
+    {
+        'abbrev': 'First Failure Treatment Modality',
+        'name': 'First Failure Treatment Modality',
+        'descr': "Treatment modality used in the first failure/recurrence: either 'CTX-RT', 'RT', 'CTX', 'Sx', 'Sx & RT', 'Sx & CTX-RT', 'Sx & CTX', or 'Unknown'.",
+    },
+    {
+        'abbrev': 'Time to First Failure',
+        'name': 'Time to First Failure',
+        'descr': "Time in years between the end of the initial treatment and the first failure/recurrence.",
+    },
+    {
+        'abbrev': 'Date of Death',
+        'name': 'Date of Death',
+        'descr': "Date of death.",
+    },
+    {
+        'abbrev': 'Time to Death',
+        'name': 'Time to Death',
+        'descr': "Time in years between enrollment and death.",
+    },
+    {
+        'abbrev': 'Age at Death',
+        'name': 'Age at Death',
+        'descr': "Age at death.",
+    },
+]
+
 scale_file_map = {'demographics' : "HN_input_mod.csv",
-                   'First Occurrence' : "HN_input_mod.csv",
-                   'First Treatment': "HN_input_mod.csv",
-                   'failure1': "HN_input_mod.csv",
-                   'failure2': "HN_input_mod.csv",
-                   'death': "HN_input_mod.csv"}
-                   
+                  'First Occurrence' : "HN_input_mod.csv",
+                  'First Treatment': "HN_input_mod.csv",
+                  'failure1': "HN_input_mod.csv",
+                  'failure2': "HN_input_mod.csv",
+                  'death': "HN_input_mod.csv"}
+
 pp = pprint.PrettyPrinter(indent=4)
 
 def assign_race(row):
@@ -79,7 +275,7 @@ def process_demographics(input_dir):
                             "Gender": "Sex",
                             "Reg: 1st contact Date": "Enroll Date",
                             "Dx Date1": "Diagnosis Date",
-                            "Last f/u": "Date of Last Follow Up"
+                            "Last f/u": "Follow-up Date"
                             }, 
                             errors="raise")
     pp.pprint(df_demo)
@@ -176,7 +372,7 @@ def assign_p16clin(row):
     elif (row["p16clin"] == 1):
         return "p16 positive"
     else:
-        return "p16 unkown"
+        return "p16 unknown"
 
 def assign_HPVbest(row):
     if (row["HPVbest"] == 0):
@@ -312,18 +508,18 @@ def process_failure1(filename):
 
     df[['Failure date1','Tx End1']] = df[['Failure date1','Tx End1']].apply(lambda x: pd.to_datetime(x, format='%m/%d/%Y', errors='coerce'))
 
-    df["Time to 1st Failure"] = round((df["Failure date1"] - df["Tx End1"]).dt.days/365.25, 1)
+    df["Time to First Failure"] = round((df["Failure date1"] - df["Tx End1"]).dt.days/365.25, 1)
 
 
-    df = df.loc[:, ["lab code", "Initial Failure Type1", "Failure?", "Site2#", "TX2", "Total Primary Dose2", "ChemoAg2A", "ChemoAg2B", "Time to 1st Failure"]]
+    df = df.loc[:, ["lab code", "Initial Failure Type1", "Failure?", "Site2#", "TX2", "Total Primary Dose2", "ChemoAg2A", "ChemoAg2B", "Time to First Failure"]]
     df = df.groupby(['lab code']).first().reset_index()
     df = df.rename(columns={"lab code": "SubjectNum", 
-                            "Initial Failure Type1": "1st Failure Type",
-                            "Site2#": "1st Failure Site",
-                            "TX2": "1st Failure Treatment Modality",
-                            "Total Primary Dose2": "1st Failure Radiation Dosage",  
-                            "ChemoAg2A": "1st Failure Initial Chemotherapy Agent",
-                            "ChemoAg2B": "1st Failure Second Line Chemotherapy Agent"}, 
+                            "Initial Failure Type1": "First Failure Type",
+                            "Site2#": "First Failure Site",
+                            "TX2": "First Failure Treatment Modality",
+                            "Total Primary Dose2": "First Failure Radiation Dosage",  
+                            "ChemoAg2A": "First Failure Initial Chemotherapy Agent",
+                            "ChemoAg2B": "First Failure Second Line Chemotherapy Agent"}, 
                             errors="raise")
     return df
 
@@ -354,7 +550,7 @@ def process_failure2(filename):
     df = df.loc[:, ["lab code", "Second failure?","Time to 2nd failure", "Failure Type2"]]
     df = df.groupby(['lab code']).first().reset_index()
     df = df.rename(columns={"lab code": "SubjectNum", 
-                            "Failure Type2": "2nd Failure Type"}, 
+                            "Failure Type2": "Second Failure Type"}, 
                             errors="raise")
     return df
 
@@ -381,17 +577,73 @@ def process_death(filename):
 
     df[["Reg: 1st contact Date", "Date of Death", "Birthdate"]] = df[["Reg: 1st contact Date", "Date of Death", "Birthdate"]].apply(lambda x: pd.to_datetime(x, format='%m/%d/%Y', errors='coerce'))
 
-    df["Time to death"] = round((df["Date of Death"] - df["Reg: 1st contact Date"]).dt.days/365.2, 1)
+    df["Time to Death"] = round((df["Date of Death"] - df["Reg: 1st contact Date"]).dt.days/365.2, 1)
 
-    df["Age at death"] = round((df["Date of Death"] - df["Birthdate"]).dt.days/365.2, 1)
+    df["Age at Death"] = round((df["Date of Death"] - df["Birthdate"]).dt.days/365.2, 1)
 
     df['fullstatus#'] = df[["fullstatus#"]].apply(assign_statusnum, axis = 1)
 
-    df = df.loc[:, ["lab code", "Date of Death", "Time to death", "Age at death", "fullstatus#"]]
+    df = df.loc[:, ["lab code", "Date of Death", "Time to Death", "Age at Death", "fullstatus#"]]
     df = df.groupby(['lab code']).first().reset_index()
     df = df.rename(columns={"lab code": "SubjectNum",
                             "fullstatus#": "Status"}, 
                             errors="raise")
+    return df
+
+def add_attribute_metadata(df):
+    # index metadata by abbreviation
+    md_index = {}
+    for md in ATTRIBUTE_METADATA:
+        abbrev = md['abbrev']
+        if abbrev in md_index:
+            sys.stderr.write("FATAL - duplicate entry in ATTRIBUTE_METADATA, abbreviation=" + abbrev)
+            sys.stderr.flush()
+            sys.exit(1)
+        md_index[abbrev] = md
+
+    def get_attribute_metadata(varname, which):
+        if varname in md_index:
+            return md_index[varname][which].replace('\n', '')
+        else:
+            sys.stderr.write("FATAL - couldn't find metadata entry for " + varname)
+            sys.stderr.flush()
+            sys.exit(1)
+
+    df['Label'] = df['SubjectVar'].apply(lambda x: get_attribute_metadata(x, 'name'))
+    df['Description'] = df['SubjectVar'].apply(lambda x: get_attribute_metadata(x, 'descr'))
+
+    return df
+        
+def add_scale_metadata(df):
+    # index metadata by abbreviation
+    smd_index = {}
+    for md in SCALE_METADATA:
+        abbrev = md['abbrev']
+        if abbrev in smd_index:
+            sys.stderr.write("FATAL - duplicate entry in SCALE_METADATA, abbreviation=" + abbrev)
+            sys.stderr.flush()
+            sys.exit(1)
+        smd_index[abbrev] = md
+
+    def get_scale_metadata(testname, which):
+        m = re.match(r'^(.*)(-(Change|ROC))$', testname)
+        if m:
+            base_testname = m.group(1)
+            extension = m.group(2)
+        else:
+            base_testname = testname
+            extension = ''
+            
+        if base_testname in smd_index:
+            return smd_index[base_testname][which].replace('\n', '')
+        else:
+            sys.stderr.write("FATAL - couldn't find metadata entry for " + testname)
+            sys.stderr.flush()
+            sys.exit(1)
+
+    df['Label'] = df['Testname'].apply(lambda x: get_scale_metadata(x, 'name'))
+    df['Description'] = df['Testname'].apply(lambda x: get_scale_metadata(x, 'descr'))
+
     return df
 
 def main():
@@ -489,14 +741,18 @@ def main():
     unique_obs = df_all_obs.Testname.unique()
     unique_all_obs = np.concatenate([unique_obs])
     pp.pprint(unique_all_obs)
-    # df_unique_obs = pd.DataFrame({"Observations": df_all_obs.Testname.unique()})
-    df_unique_obs = pd.DataFrame({"Observations": unique_all_obs})
+    df_unique_obs = pd.DataFrame({"Testname": unique_all_obs})
+    # add scale metadata
+    df_unique_obs = add_scale_metadata(df_unique_obs)
     pp.pprint(df_unique_obs)
     filename = "HN_unique_obs.csv"
     df_unique_obs.to_csv(args.output_dir + filename, index = False)
 
     # Print a table of unique subject variables in the data
-    df_unique_subject_vars = pd.DataFrame({"Observations": df_demo_long.SubjectVar.unique()})
+    df_unique_subject_vars = pd.DataFrame({"SubjectVar": df_demo_long.SubjectVar.unique()})
+    # add scale metadata
+    df_unique_subject_vars = add_attribute_metadata(df_unique_subject_vars)
+
     # pp.pprint(df_unique_subject_vars)
     filename = "HN_unique_subject_vars.csv"
     df_unique_subject_vars.to_csv(args.output_dir + filename, index = False)

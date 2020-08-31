@@ -1,4 +1,4 @@
-SubjectNum,Study,Race,Birthdate,Sex,Ever smoker,Ever drinker,Age At Enrollment,Age At Diagnosis,Diagnosis Date,Enroll Date,Date of Last Follow Up
+SubjectNum,Study,Race,Birthdate,Sex,Ever smoker,Ever drinker,Age At Enrollment,Age At Diagnosis,Diagnosis Date,Enroll Date,Follow-up Date
 416,UMD Head and Neck Cancer Patients,White,1902-05-14,Female,Nonsmoker,Nondrinker,93.5,93.5,1995-11-03,1995-11-03,1995-12-18
 881,UMD Head and Neck Cancer Patients,White,1904-10-12,Male,Smoker,Unknown,95.6,95.3,2000-01-15,2000-05-18,2000-05-22
 1348,UMD Head and Neck Cancer Patients,White,1907-07-14,Male,Smoker,Nondrinker,100.0,100.0,2007-07-18,2007-07-14,2012-01-02
