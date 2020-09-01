@@ -60,7 +60,7 @@
                 variable.data_category === 'Categorical'
             "
             :id="variable.id"
-            :dimension-name="dimension"
+            :dimension-name="variable.label"
             @userChangedVariable="userChangedOutputVariable"
           />
           <HistogramChart
@@ -135,14 +135,14 @@ export default {
       clearFilter: actions.CLEAR_FILTER,
     }),
     resetClicked() {
-      this.clearAllFilters(this.dimension);
+      this.clearAllFilters();
       this.$emit('userResetOutputVariable', this.dimension);
     },
     userChangedOutputVariable() {
       this.$emit('userChangedOutputVariable', this.dimension);
     },
-    clearAllFilters(dim) {
-      this.clearFilter(dim);
+    clearAllFilters() {
+      this.clearFilter({ dimension: this.variable.label });
       // cover all the bases for the MultiChart/longitudinal case
       this.clearFilter({ dimension: this.variable.label + ' - First Visit' });
       this.clearFilter({ dimension: this.variable.label + ' - Last Visit' });
@@ -159,14 +159,14 @@ export default {
       if (variable.is_longitudinal) {
         measure = variable.id.split('-')[0];
         dimensionName = `${variable.parentLabel} - ${variable.label}`;
-        this.dimension = dimensionName;
         dimensionId = variable.parentID;
       } else {
         measure = 'value';
         dimensionName = variable.label;
-        this.dimension = dimensionName;
         dimensionId = variable.id;
       }
+      this.dimension = String(dimensionId).toString();
+
       const payload = {
         dimensionName,
         accessor: d => {
