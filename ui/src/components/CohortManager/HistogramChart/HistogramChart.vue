@@ -144,7 +144,7 @@
       <v-row class="pa-0 ma-0">
         <v-col cols="12" class="pa-0 ma-0">
           <create-comparator-cohorts-btn-dialog
-            :dimension-name="dimensionName"
+            :dimension-name="variable.abbreviation"
             :select-cohort-range="selectCohortRange"
             :reset-selection="resetSelection"
           />
