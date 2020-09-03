@@ -70,6 +70,7 @@
           dense
           hide-default-footer
           disable-pagination
+          sort-by="pval"
         >
           <template v-slot:item="props">
             <tr :class="getVariableClass(props.item)">
