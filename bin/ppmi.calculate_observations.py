@@ -1051,7 +1051,7 @@ def main():
     df_all_vars = df_all_vars.merge(df_unique_sub_visits, how="inner", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
     # pp.pprint(df_all_vars)
 
-    # Merge biospecimen  and pilot biospecimen test results to get the visit date
+    # Merge biospecimen and pilot biospecimen test results to get the visit date
     df_pilot_bio = df_unique_sub_visits.merge(df_pilot_bio, how="inner", on = ['SubjectNum', 'VisitCode'])
     df_bio = df_unique_sub_visits.merge(df_bio, how="inner", on = ['SubjectNum', 'VisitCode'])
 
