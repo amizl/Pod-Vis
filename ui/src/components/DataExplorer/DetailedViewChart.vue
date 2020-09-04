@@ -20,7 +20,7 @@ import { mapState } from 'vuex';
 import { state } from '@/store/modules/dataExplorer/types';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
-import { max, mean, deviation } from 'd3-array';
+import { min, max, mean, deviation } from 'd3-array';
 import { sortByVisitEvent, sortVisitEvents } from '@/utils/helpers';
 import { colors } from '@/utils/colors';
 
@@ -92,7 +92,6 @@ export default {
       margin: { top: 20, right: 75, bottom: 100, left: 75 },
       tick_font: '15px sans-serif',
       label_font: '20px sans-serif',
-      y_axis_pad_frac: 0.1,
       colors: colors,
     };
   },
@@ -104,44 +103,18 @@ export default {
       visibleCohorts: state.VISIBLE_COHORTS,
       collection: state.COLLECTION,
     }),
-    // get raw data, *for a specific variable/dimension*
-    getRawData() {
-      const filtered = this.rawData.filter(
-        d => d.observation_ontology_id === this.dimensionName
-      );
-
-      // group by subject id
-      const subj2data = {};
-      filtered.forEach(r => {
-        if (!(r.subject_id in subj2data)) {
-          subj2data[r.subject_id] = [];
-        }
-        subj2data[r.subject_id].push(r);
-      });
-
-      // compute subject-relative time in days
-      Object.keys(subj2data).forEach(k => {
-        const rows = subj2data[k];
-        const srows = rows.sort((a, b) => a.event_day - b.event_day);
-        const firstDay = srows[0].event_day;
-        let ind = 1;
-        rows.forEach(r => {
-          r.subject_event_day = r.event_day - firstDay;
-          r.subject_event_index = ind;
-          ind += 1;
-          // TODO - subject_event_index may differ from visit_num
-        });
-      });
-
-      // sort by visit event
-      var visit_evt_fn = x => x.visit_event;
-      var sorted = sortByVisitEvent(filtered, visit_evt_fn);
-      return sorted;
-    },
     yAxisRangeMax() {
-      const rd = this.getRawData;
+      // maximum raw data value
+      const rd = this.getRawData(true);
       const rmax = max(rd, d => d.value * 1.0);
-      return rmax * (1 + this.y_axis_pad_frac);
+      return rmax;
+    },
+    yAxisRangeMin() {
+      //      console.log("yAxisRangeMin called");
+      // minimum raw data value
+      const rd = this.getRawData(true);
+      const rmin = min(rd, d => d.value * 1.0);
+      return rmin;
     },
 
     // --------------------------------------------------
@@ -163,8 +136,6 @@ export default {
       };
     },
     timepoints() {
-      // timepoints for current variable only
-      //      const rd = this.getRawData;
       // return all timepoints
       const rd = this.rawData;
       const timepoints = {};
@@ -205,7 +176,7 @@ export default {
     },
     dimensionScale() {
       const scale = scaleLinear()
-        .domain([0, this.yAxisRangeMax])
+        .domain([this.yAxisRangeMin, this.yAxisRangeMax])
         .range(
           this.variable.flip_axis
             ? [this.margin.top, this.computedHeight]
@@ -274,6 +245,55 @@ export default {
     });
   },
   methods: {
+    // get raw data, *for a specific variable/dimension*
+    getRawData(filterBySubjects) {
+      var subj_ids = null;
+
+      // only return data relevant to the subjects in the visible cohorts
+      if (filterBySubjects) {
+        subj_ids = {};
+        this.visibleCohorts.forEach(c => {
+          c.subject_ids.forEach(sid => {
+            subj_ids[sid] = 1;
+          });
+        });
+      }
+
+      const filtered = this.rawData.filter(
+        d =>
+          d.observation_ontology_id === this.dimensionName &&
+          (subj_ids == null || d.subject_id in subj_ids)
+      );
+
+      // group by subject id
+      const subj2data = {};
+      filtered.forEach(r => {
+        if (!(r.subject_id in subj2data)) {
+          subj2data[r.subject_id] = [];
+        }
+        subj2data[r.subject_id].push(r);
+      });
+
+      // compute subject-relative time in days
+      Object.keys(subj2data).forEach(k => {
+        const rows = subj2data[k];
+        const srows = rows.sort((a, b) => a.event_day - b.event_day);
+        const firstDay = srows[0].event_day;
+        let ind = 1;
+        rows.forEach(r => {
+          r.subject_event_day = r.event_day - firstDay;
+          r.subject_event_index = ind;
+          ind += 1;
+          // TODO - subject_event_index may differ from visit_num
+        });
+      });
+
+      // sort by visit event
+      var visit_evt_fn = x => x.visit_event;
+      var sorted = sortByVisitEvent(filtered, visit_evt_fn);
+      return sorted;
+    },
+
     onResize() {
       this.$nextTick(() => {
         this.resizeChart();
@@ -306,7 +326,7 @@ export default {
     },
 
     getRawPaths(subjectIds) {
-      const rd = this.getRawData;
+      const rd = this.getRawData(false);
       const xds = this.xDimensionScale;
       const ds = this.dimensionScale;
       const xacc = this.xaccessor;
@@ -335,7 +355,7 @@ export default {
     },
 
     getMeanAndSDPaths(subjectIds) {
-      const rd = this.getRawData;
+      const rd = this.getRawData(false);
       const xds = this.xDimensionScale;
       const ds = this.dimensionScale;
       const xacc = this.xaccessor;
@@ -501,6 +521,7 @@ export default {
       if (slf.drawRaw) {
         cohorts.forEach(c => {
           const cohortSubjectIds = c.subject_ids;
+
           if (typeof cohortSubjectIds !== 'undefined') {
             // draw single path for each subject
             const paths = slf.getRawPaths(cohortSubjectIds);
@@ -585,7 +606,7 @@ export default {
     // plot number of subjects at each timepoint/visit
     // TODO - move computation of subject counts out of the draw loop
     drawSubjectCounts() {
-      const rd = this.getRawData;
+      const rd = this.getRawData(false);
       const selCohorts = this.selectedCohorts();
       const xacc = this.xaccessor;
       const tpts = this.timepoints;
@@ -863,7 +884,7 @@ export default {
       const scale = this.xDimensionScale;
       var y0 = this.variable.flip_axis
         ? this.dimensionScale(this.yAxisRangeMax)
-        : this.dimensionScale(0);
+        : this.dimensionScale(this.yAxisRangeMin);
 
       this.context.beginPath();
       tp.forEach(d => {
