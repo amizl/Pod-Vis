@@ -10,6 +10,7 @@ of UPDRS Totals, Semantic Fluency Totals, etc.
 """
 
 import argparse
+import dateutil
 import re
 import os
 import sys
@@ -18,7 +19,7 @@ import numpy as np
 import pprint
 import datetime as dt
 
-CI_STUDY = "University of Iowa CI Aug2020"
+CI_STUDY = "University of Iowa CI Aug2020 v2"
 
 ATTRIBUTE_METADATA = [
     {
@@ -214,6 +215,16 @@ measures reading skills, math skills, spelling, and comprehension.
 """
 
 SCALE_METADATA = [
+
+    # AZBio
+    {
+        'abbrev': 'AzBioWord_Percent',
+        'name': 'AZBio percentage of words correct',
+        'descr': """The AzBio Sentence Test is a speech intelligibility test. The AzBio sentence corpus 
+includes 1000 sentences recorded from two female and two male talkers. 165 sentences were selected from 
+each talker and then assigned to 33 lists of 20 sentences, each having 5 sentences from each talker.
+""",
+    },
 
     # Trail Making Test
     {
@@ -469,9 +480,6 @@ depression.""",
     },
 ]
 
-#Visit
-#VisitDate
-
 scale_file_map = {'CNC': "CNC.csv",
                    'edu': "edu.csv",
                    'AzBio' : "AzBio.csv",
@@ -500,8 +508,6 @@ def process_demographics(input_dir):
     df_demo["maritalStatus"] = df_demo["maritalStatus"].map(assign_MaritalStatus)
     df_demo['gender'] = df_demo['gender'].map(assign_Gender)
 
-#    df_demo['AgeAtImplantation'] = df_demo['AgeAtImplantation'].map(lambda x: round(x))
-    
     # Process some of the dates to assume the first of the month allow date operations
     # and then convert the datetime string to date
     df_demo[["opdate1", "condate1", "opdate2", "condate2", "opdate3", "condate3"]] = df_demo[["opdate1", "condate1", "opdate2", "condate2", "opdate3", "condate3"]].apply(lambda x: pd.to_datetime(x,  errors='raise'))
@@ -528,23 +534,49 @@ def process_demographics(input_dir):
 
     return df_demo
 
-# convert simple test_sess (e.g., "229R") to year value between approx -5 and 33
-def test_sess_simple_to_year(ts):
-    year = None
+def test_sess_simple_to_month(ts):
+    month = None
     m = re.match(r'^([\d\-\.]+)a?[LR]$', ts)
     if m:
-        # by 2 years
-#        year = int(float(m.group(1)) / 24.0)
-        
-        # by year
-        year = int(float(m.group(1)) / 12.0)
-
-        # by 6 month increments
-#        year = int(float(m.group(1)) / 6.0)
-#        year = year / 2.0
+        month = float(m.group(1))
     else:
         sys.stderr.write("couldn't parse test_sess " + ts)
         sys.exit()
+    return month
+
+def test_sess_to_month(ts):
+    month = None
+
+    if ts == "0":
+        return 0
+
+    m = re.match(r'^(.*)\/(.*)$', ts)
+
+    # handle "229R/61L" case
+    if m:
+        m1 = test_sess_simple_to_month(m.group(1))
+        m2 = test_sess_simple_to_month(m.group(2))
+        if m1 > m2:
+            month = m1
+        else:
+            month = m2
+
+    # handle "229R" case
+    else:
+        month = test_sess_simple_to_month(ts)
+
+    return month
+
+# convert simple test_sess (e.g., "229R") to year value. Any negative values become -1.
+def test_sess_simple_to_year(ts):
+    year = None
+    month = test_sess_simple_to_month(ts)
+
+    if month < 0:
+        year = -1
+    else:
+        # find closest year
+        year = round(month / 12.0)
     return str(year)
 
 # convert simple test_sess (e.g., "229R/61L") to year value between approx -5 and 33
@@ -569,7 +601,25 @@ def test_sess_to_year(ts):
         yr = test_sess_simple_to_year(ts)
 
     return "Y" + str(yr)
-        
+
+# convert simple test_sess (e.g., "229R/61L") to year value between approx -5 and 33
+def test_sess_to_testdate_fn(subj_condates):
+    
+    def test_sess_to_testdate(row):
+        sn = row['SID']
+        ts = row['test_sess']
+        month = test_sess_to_month(ts)
+        if sn not in subj_condates:
+            sys.stderr.write("ERROR - demographic info missing for SID=" + str(sn) + "\n")
+            sys.stderr.flush()
+            return None
+        cd1 = subj_condates[sn]
+        testdate = cd1 + dateutil.relativedelta.relativedelta(months=int(month))
+#        print("test_sess_to_testdate called sn=" + str(sn) + " test_sess=" + str(ts) + " month=" + str(month) + " cd1=" + str(cd1) + " testdate=" + str(testdate))
+        return cd1
+            
+    return test_sess_to_testdate
+            
 def process_YrsEdu(filename):
     df['YrsEdu'] = df.loc[:, ['SID','YrsEdu']].sum(axis=1, skipna = False) 
     df = df.loc[:, ['SID','YrsEdu']]
@@ -606,22 +656,28 @@ def process_CNC(filename):
     pp.pprint(df)
     return df
 
-def process_AZBio(filename, df_demo):
+def process_AZBio(filename, subj_condates):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    print("AZBio before:")
-    pp.pprint(df)
+#    print("AZBio before:")
+#    pp.pprint(df)
 
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
 
-    df = df.rename(columns={"SID": "SubjectNum", 
-                            "test_sess": "Test Session",
-                            "AmplificationLeft": "Type of Amplification Left Ear",
-                            "AmplificationRight": "Type of Amplification Right Ear",
-                            "AzBioWord_Percent": "AZBio Percentage Correct"}, 
+#    df['testdate'] = df["test_sess"].apply(test_sess_to_testdate_fn(subj_condates))
+
+    df["testdate"] = df.apply(test_sess_to_testdate_fn(subj_condates), axis = 1)
+    
+    df = df.rename(columns={"SID": "SubjectNum",
+                            "testdate": "VisitDate"}, 
                             errors="raise")
 
-    print(df)
+#                            "AmplificationLeft": "Type of Amplification Left Ear",
+#                            "AmplificationRight": "Type of Amplification Right Ear"}, 
+
+    df = df.drop(['test_sess', 'AmplificationLeft', 'AmplificationRight', 'Condition'], axis=1)
+    print("AzBio:")
+    pp.pprint(df)
     return df
 
 
@@ -898,7 +954,9 @@ def generate_field_mapping(df_unique_subj_vars, df_unique_obs, demographics_file
             continue
 
         obs_info = {
-
+            # AzBio
+            'AzBioWord_Percent': { 'cat': 'General Disease Severity', 'descr': 'AZBio percentage of words correct', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            
             # Trails - Trail Making Test - neuropsychological test of visual attention and task switching
             'TMT A SS': { 'cat': 'Cognitive', 'descr': 'Trails Part A SS', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
             'TMT A Secs' : { 'cat': 'Cognitive', 'descr': 'Trails Part A Seconds to Complete', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
@@ -1052,7 +1110,18 @@ def main():
     df_demo = process_demographics(args.input_dir)
     df_demo_long = pd.melt(df_demo, id_vars=['SubjectNum'], var_name ='SubjectVar', value_name ='Value')
     df_demo_long = df_demo_long.dropna()
-    
+
+    # Mapping from SubjectNum to condate1
+    subj_condates = {}
+    for index, row in df_demo.iterrows():
+        sn = row['SubjectNum']
+        cd = row['condate1']
+        print("sn= " + str(sn) + " condate1=" + str(cd))
+        if sn in subj_condates:
+            sys.stderr.print("duplicate df_demo entry for SubjectNum=" + sn)
+            sys.exit(1)
+        subj_condates[sn] = cd
+        
     # Cycle through the scales and calculate the totals or any other transformations that need to be made
     for scale, filename in scale_file_map.items():
         if (scale == 'CNC'):
@@ -1060,7 +1129,7 @@ def main():
 #            df_CNC = process_CNC(os.path.join(args.input_dir, filename))
         elif (scale == 'AzBio'):
             print("Processing AzBio Sentence Test")
-#            df_AzBio = process_AZBio(os.path.join(args.input_dir, filename), df_demo)
+            df_AzBio = process_AZBio(os.path.join(args.input_dir, filename), subj_condates)
         elif (scale == 'BAI'):
             print("Processing Beck Anxiety Inventory")
             df_BAI = process_BAI(os.path.join(args.input_dir, filename))
@@ -1086,8 +1155,8 @@ def main():
             print("Processing Neo Five Factor Inventory Personality Test")
             df_NEO_FFI =  process_NEO_FFI(os.path.join(args.input_dir, filename))
 
-    # all data frames
-    dframes = [df_BAI, df_BDI, df_BVMT, df_HVLT, df_Trails, df_WAIS, df_WRAT, df_NEO_FFI]
+    # all data frames 
+    dframes = [df_AzBio, df_BAI, df_BDI, df_BVMT, df_HVLT, df_Trails, df_WAIS, df_WRAT, df_NEO_FFI]
 #    dframes = [df_AzBio, df_CNC, df_BAI, df_BDI, df_BVMT, df_HVLT, df_Trails, df_WAIS, df_WRAT, df_NEO_FFI]
     vcols = ['SubjectNum', 'Visit', 'VisitDate']
 
@@ -1100,10 +1169,20 @@ def main():
     for tdf in dframes[1:]:
         df_vis = tdf.loc[:, vcols]
         df_visits = df_visits.append(df_vis)
-
+        print("visits after append tdf:")
+        pp.pprint(df_visits)
+        
     # add VisitNum, VisitCode
     df_visits = df_visits.sort_values(by = ['SubjectNum', 'VisitDate']).groupby(['SubjectNum', 'Visit']).first().reset_index()
+
+    print("combined visits after groupby SubjectNum, Visit:")
+    pp.pprint(df_visits)
+        
     df_visits['VisitNum'] = df_visits.groupby(['SubjectNum']).cumcount()+1
+
+    print("combined visits after groupby SubjectNum, set VisitNum:")
+    pp.pprint(df_visits)
+        
     df_visits['VisitCode'] = df_visits['Visit']
 
     pd.set_option('display.max_colwidth', -1)
@@ -1115,7 +1194,8 @@ def main():
     df_all_vars = df_all_vars.drop(['VisitDate'], axis=1)
 
     for tdf in dframes[1:]:
-        tdf = tdf.drop(['VisitDate'], axis=1)
+        if 'VisitDate' in tdf.columns:
+            tdf = tdf.drop(['VisitDate'], axis=1)
         df_all_vars = df_all_vars.merge(tdf, how="outer", on = ['SubjectNum', 'Visit'])
     
     # merge to add VisitDate and VisitNum back
