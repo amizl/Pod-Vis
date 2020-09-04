@@ -136,12 +136,18 @@ class Cohort(db.Model):
     def query_desc(self):
         description = ''
         i = 0
+        nq = len(self.queries)
+        
         for query in self.queries:
             # If there is more than one query variable then append AND
             if i > 0:
                 description += ' AND '
 
-            subquery = '('
+            subquery = ''
+
+            if nq > 1:
+                subquery += '('
+            
             input_var = query.input_variable
             ont = None
             
@@ -150,18 +156,21 @@ class Cohort(db.Model):
             else:
                 ont = input_var.observation_ontology
 
-            subquery += ont.label
+            subquery += ont.abbreviation
             
             # If one of the derived variables are used then add the dimension
             if input_var.dimension_label:
-                subquery += "-" + input_var.get_dimension_value_str()
+                subquery += " " + input_var.get_dimension_value_abbreviation()
 
             if query.value:
                 subquery += " = " + query.value
             else:
-                subquery += ' between ' + str(query.min_value) + ' and ' + str(query.max_value)
-            
-            description += subquery + ')'
+                subquery += ' ' + str(query.min_value) + ' - ' + str(query.max_value)
+
+            description += subquery
+            if nq > 1:
+                description += ')'
+                
             i += 1
 
         return description

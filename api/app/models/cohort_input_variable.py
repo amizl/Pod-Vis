@@ -82,7 +82,7 @@ class CohortInputVariable(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    # Hack around ObservatonDimension not being JSON serializable.
+    # Hack around ObservationDimension not being JSON serializable.
     def get_dimension_value_str(self):
         value_str = ''
         if self.dimension_label is ObservationDimension.left_y_axis:
@@ -95,6 +95,17 @@ class CohortInputVariable(db.Model):
             value_str  = "roc"
         return value_str
 
+    # More user-friendly version of get_dimension_value_str
+    def get_dimension_value_abbreviation(self):
+        if self.dimension_label is ObservationDimension.left_y_axis:
+            return "First"
+        elif self.dimension_label is ObservationDimension.right_y_axis:
+            return "Last"
+        elif self.dimension_label is ObservationDimension.change:
+            return "Change"
+        elif self.dimension_label is ObservationDimension.roc:
+            return "ROC"
+    
     def to_dict(self):
         """Return attributes as a dict.
 
