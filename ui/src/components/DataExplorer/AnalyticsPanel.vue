@@ -14,7 +14,7 @@
                       <v-chip
                         v-for="x in ['1', '0.1', '0.01', '0.05', '0.001']"
                         v-if="expanded"
-                        :color="colors['pvals'][x]['color']"
+                        :color="colors['pvals'][x + '-' + colorScheme]['color']"
                         >p &lt; {{ x }}</v-chip
                       >
                       <v-spacer v-if="expanded" />
@@ -180,6 +180,11 @@ export default {
       required: false,
       default: true,
     },
+    colorScheme: {
+      type: String,
+      required: false,
+      default: 'val100',
+    },
   },
   data() {
     return {
@@ -308,15 +313,15 @@ export default {
       const pd = this.pval_dict;
       if (ov.label in pd) {
         const { pval } = pd[ov.label];
-        let ccl = this.colors['pvals']['1'][which];
+        let ccl = this.colors['pvals']['1' + '-' + this.colorScheme][which];
         if (pval < 0.001) {
-          ccl = this.colors['pvals']['0.001'][which];
+          ccl = this.colors['pvals']['0.001' + '-' + this.colorScheme][which];
         } else if (pval < 0.05) {
-          ccl = this.colors['pvals']['0.05'][which];
-	} else if (pval < 0.01) {
-          ccl = this.colors['pvals']['0.01'][which];
+          ccl = this.colors['pvals']['0.05' + '-' + this.colorScheme][which];
+        } else if (pval < 0.01) {
+          ccl = this.colors['pvals']['0.01' + '-' + this.colorScheme][which];
         } else if (pval < 0.1) {
-          ccl = this.colors['pvals']['0.1'][which];
+          ccl = this.colors['pvals']['0.1' + '-' + this.colorScheme][which];
         }
         return ccl;
       }

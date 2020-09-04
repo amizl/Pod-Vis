@@ -79,13 +79,47 @@
             :show-category-icons="true"
             :expanded="expandAnalytics"
             :color-scale-when-minimized="true"
+            :color-scheme="colorScheme"
             @variableSelected="variableSelected"
             @expandClicked="analyticsExpandClicked"
           />
+
+          <!-- color scheme chooser -->
+          <v-sheet color="white" class="rounded-lg shadow mt-2">
+            <v-container fluid fill-width class="ma-0 pa-0">
+              <v-row class="ma-0 pa-0">
+                <v-col cols="12" class="ma-0 pa-0">
+                  <v-sheet color="white" class="rounded-lg shadow">
+                    <v-container fluid fill-width class="ma-0 pa-0">
+                      <v-row class="ma-0 pa-0">
+                        <v-col cols="12" class="ma-0 pa-0">
+                          <v-card color="#eeeeee" class="pt-1">
+                            <v-card-title class="primary--text pl-3 py-2"
+                              >Color Scheme</v-card-title
+                            >
+                          </v-card>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-sheet>
+                  <div class="pa-2">
+                    Select p-Value color scheme:
+                    <v-select
+                      v-model="colorScheme"
+                      dense
+                      :items="colorSchemeItems"
+                    >
+                    </v-select>
+                  </div>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-sheet>
+          <!-- end color scheme chooser -->
         </v-col>
 
         <v-col :cols="expandAnalytics ? 7 : 9" class="ma-0 pa-0 pl-2">
-          <tukey-hsd-heatmap />
+          <tukey-hsd-heatmap :color-scheme="colorScheme" />
         </v-col>
       </v-row>
 
@@ -139,6 +173,14 @@ export default {
       expandAnalytics: true,
       getCollectionDescription: getCollectionDescription,
       colors: colors,
+      colorScheme: 'val80',
+      colorSchemeItems: [
+        { text: 'Brewer 6 class reds', value: 'brewer6r' },
+        { text: 'Brewer 6 class blues', value: 'brewer6' },
+        { text: 'Brewer 5 class blues', value: 'brewer5' },
+        { text: 'Value 80 blues', value: 'val80' },
+        { text: 'Value 100 blues', value: 'val100' },
+      ],
     };
   },
   computed: {

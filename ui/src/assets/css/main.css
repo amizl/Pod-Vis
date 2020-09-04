@@ -81,25 +81,91 @@ h6 {
   border: 2px solid white;
 }
 
-/* Color gradient for P-value significance */
-.pval-lt-1 {
+/* Color gradients for P-value significance */
+
+/* Brewer 6 single-hue reds */
+.pval-lt-1-brewer6r {
+  background-color: #FEE5D9;
+}
+.pval-lt-0p1-brewer6r {
+  background-color: #FCBBA1;
+}
+.pval-lt-0p01-brewer6r {
+  background-color: #FC9272;
+}
+.pval-lt-0p05-brewer6r {
+  background-color: #FB6A4A;
+}
+.pval-lt-0p001-brewer6r {
+  background-color: #DE2D26;
+}
+
+/* Brewer 6 single-hue blues */
+.pval-lt-1-brewer6 {
+  background-color: #EFF3FF;
+}
+.pval-lt-0p1-brewer6 {
+    background-color: #C6DBEF;
+}
+.pval-lt-0p01-brewer6 {
+  background-color: #9ECAE1;
+}
+.pval-lt-0p06-brewer6 {
+  background-color: #6BAED6;
+}
+.pval-lt-0p001-brewer6 {
+  background-color: #3182BD;
+}
+
+/* Brewer 5 single-hue blues */
+.pval-lt-1-brewer5 {
+  background-color: #EFF3FF;
+}
+.pval-lt-0p1-brewer5 {
+    background-color: #BDD7E7;
+}
+.pval-lt-0p01-brewer5 {
+  background-color: #6BAED6;
+}
+.pval-lt-0p05-brewer5 {
+  background-color: #3182BD;
+}
+.pval-lt-0p001-brewer5 {
+  background-color: #08519C;
+}
+
+/* Value 100 */
+.pval-lt-1-val100 {
   background-color: #BFC9FF;
 }
-
-.pval-lt-0p1 {
+.pval-lt-0p1-val100 {
   background-color: #A6B3FF;
 }
-
-.pval-lt-0p01 {
+.pval-lt-0p01-val100 {
   background-color: #8C9EFF;
 }
-
-.pval-lt-0p05 {
+.pval-lt-0p05-val100 {
   background-color: #7388FF;
 }
-
-.pval-lt-0p001 {
+.pval-lt-0p001-val100 {
   background-color: #5973FF;
+}
+
+/* Value 80 */
+.pval-lt-1-val80 {
+  background-color: #A3AACF;
+}
+.pval-lt-0p1-val80 {
+  background-color: #8C97CF;
+}
+.pval-lt-0p01-val80 {
+  background-color: #7683CF;
+}
+.pval-lt-0p05-val80 {
+  background-color: #5F70CF;
+}
+.pval-lt-0p001-val80 {
+  background-color: #485CCF;
 }
 
 .var-chart {
