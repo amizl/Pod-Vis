@@ -12,7 +12,7 @@
                       >{{ title }}
                       <v-spacer />
                       <v-chip
-                        v-for="x in ['1', '0.1', '0.01', '0.001', '0.0001']"
+                        v-for="x in ['1', '0.1', '0.01', '0.05', '0.001']"
                         v-if="expanded"
                         :color="colors['pvals'][x]['color']"
                         >p &lt; {{ x }}</v-chip
@@ -309,11 +309,11 @@ export default {
       if (ov.label in pd) {
         const { pval } = pd[ov.label];
         let ccl = this.colors['pvals']['1'][which];
-        if (pval < 0.0001) {
-          ccl = this.colors['pvals']['0.0001'][which];
-        } else if (pval < 0.001) {
+        if (pval < 0.001) {
           ccl = this.colors['pvals']['0.001'][which];
-        } else if (pval < 0.01) {
+        } else if (pval < 0.05) {
+          ccl = this.colors['pvals']['0.05'][which];
+	} else if (pval < 0.01) {
           ccl = this.colors['pvals']['0.01'][which];
         } else if (pval < 0.1) {
           ccl = this.colors['pvals']['0.1'][which];

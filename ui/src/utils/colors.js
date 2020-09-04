@@ -98,15 +98,15 @@ export let colors = {
     '1': { color: '#BFC9FF', class: 'pval-lt-1' }, // sat = 25
     '0.1': { color: '#A6B3FF', class: 'pval-lt-0p1' }, // sat = 35
     '0.01': { color: '#8C9EFF', class: 'pval-lt-0p01' }, // sat = 45
-    '0.001': { color: '#7388FF', class: 'pval-lt-0p001' }, // sat = 55
-    '0.0001': { color: '#5973FF', class: 'pval-lt-0p0001' }, // sat = 65
+    '0.05': { color: '#7388FF', class: 'pval-lt-0p05' }, // sat = 55
+    '0.001': { color: '#5963FF', class: 'pval-lt-0p001' }, // sat = 65
 
-    // Trying again with the value at 81
+    // Trying again with the value at 80
     //    '1': { color: '#A3AACF', class: 'pval-lt-1' }, // sat = 21
     //    '0.1': { color: '#8C97CF', class: 'pval-lt-0p1' }, // sat = 32
     //    '0.01': { color: '#7683CF', class: 'pval-lt-0p01' }, // sat = 43
-    //    '0.001': { color: '#5F70CF', class: 'pval-lt-0p001' }, // sat = 54
-    //    '0.0001': { color: '#485CCF', class: 'pval-lt-0p0001' }, // sat = 65
+    //    '0.05': { color: '#5F70CF', class: 'pval-lt-0p05' }, // sat = 54
+    //    '0.001': { color: '#485CCF', class: 'pval-lt-0p001' }, // sat = 65
   },
 
   cohorts: [
