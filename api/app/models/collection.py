@@ -837,7 +837,9 @@ class Collection(db.Model):
                 studies[study['id']]['n_subjects'] += 1
             else:
                 studies[study['id']] = { 'id': study['id'], 'name': study['name'], 'n_subjects': 1 }
-
+                for fl in groups:
+                    studies[study['id']][fl] = 0
+                
             # add times
             st = studies[study['id']]
             for fl in groups:
