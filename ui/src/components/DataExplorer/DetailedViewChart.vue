@@ -103,17 +103,73 @@ export default {
       visibleCohorts: state.VISIBLE_COHORTS,
       collection: state.COLLECTION,
     }),
+
+    // --------------------------------------------------
+    // y-axis
+    // --------------------------------------------------
     yAxisRangeMax() {
+      var rmax = null;
+
       // maximum raw data value
       const rd = this.getRawData(true);
-      const rmax = max(rd, d => d.value * 1.0);
+      const rawmax = max(rd, d => d.value * 1.0);
+      if (this.drawRaw && (rmax == null || rawmax > rmax)) {
+        rmax = rawmax;
+      }
+
+      // maximum average data value (mean + 1 SD)
+      var avgmax = null;
+      var tp_msd = this.timepointsMeanAndSD;
+      const timepoints = this.timepoints;
+
+      timepoints.forEach(tp => {
+        if (tp in tp_msd) {
+          this.collectionCohorts.forEach(c => {
+            if (c.id in tp_msd[tp]) {
+              var d = tp_msd[tp][c.id];
+              var mv = d['mean'] + d['SD'];
+              if (avgmax == null || mv > avgmax) {
+                avgmax = mv;
+              }
+            }
+          });
+        }
+      });
+      if (this.drawMean && (rmax == null || avgmax > rmax)) {
+        rmax = avgmax;
+      }
       return rmax;
     },
     yAxisRangeMin() {
-      //      console.log("yAxisRangeMin called");
+      var rmin = null;
+
       // minimum raw data value
       const rd = this.getRawData(true);
-      const rmin = min(rd, d => d.value * 1.0);
+      const rawmin = min(rd, d => d.value * 1.0);
+      if (this.drawRaw && (rmin == null || rawmin < rmin)) {
+        rmin = rawmin;
+      }
+
+      // minimum average data value (mean - 1 SD)
+      var avgmin = null;
+      var tp_msd = this.timepointsMeanAndSD;
+      const timepoints = this.timepoints;
+      timepoints.forEach(tp => {
+        if (tp in tp_msd) {
+          this.collectionCohorts.forEach(c => {
+            if (c.id in tp_msd[tp]) {
+              var d = tp_msd[tp][c.id];
+              var mv = d['mean'] - d['SD'];
+              if (avgmin == null || mv < avgmin) {
+                avgmin = mv;
+              }
+            }
+          });
+        }
+      });
+      if (this.drawMean && (rmin == null || avgmin < rmin)) {
+        rmin = avgmin;
+      }
       return rmin;
     },
 
@@ -150,6 +206,67 @@ export default {
       });
       return sortVisitEvents(Object.keys(timepoints));
     },
+    // mean and standard deviation for each timepoint and cohort
+    timepointsMeanAndSD() {
+      const slf = this;
+      const rd = this.getRawData(true);
+      const cohorts = this.collectionCohorts;
+      const xacc = this.xaccessor;
+      var tp_means = {};
+
+      // subject id to cohort ids mapping
+      var sid2cids = {};
+      cohorts.forEach(c => {
+        if (typeof c.subject_ids !== 'undefined') {
+          c.subject_ids.forEach(sid => {
+            if (!(sid in sid2cids)) {
+              sid2cids[sid] = [];
+            }
+            sid2cids[sid].push(c.id);
+          });
+        }
+      });
+
+      // group raw data by timepoint and cohort
+      const tp2data = {};
+      rd.forEach(r => {
+        if (r.subject_id in sid2cids) {
+          var cids = sid2cids[r.subject_id];
+          const tp = xacc(r);
+          if (!(tp in tp2data)) {
+            tp2data[tp] = {};
+          }
+          cids.forEach(cid => {
+            if (!(cid in tp2data[tp])) {
+              tp2data[tp][cid] = [];
+            }
+            tp2data[tp][cid].push(r.value * 1.0);
+          });
+        }
+      });
+
+      const timepoints = this.timepoints;
+      // iterate over timepoints and cohorts, compute mean, SD
+      timepoints.forEach(tp => {
+        if (!(tp in tp_means)) {
+          tp_means[tp] = {};
+        }
+        cohorts.forEach(c => {
+          if (tp in tp2data && c.id in tp2data[tp]) {
+            var data = tp2data[tp][c.id];
+            const mn = mean(data);
+            let sd = deviation(data);
+            // TODO - determine whether this is the best approach - normally sd is undefined for a sample of size 1
+            if (sd === undefined) {
+              sd = 0;
+            }
+            tp_means[tp][c.id] = { mean: mn, SD: sd };
+          }
+        });
+      });
+
+      return tp_means;
+    },
     xmin() {
       const tp = this.timepoints;
       return tp[0];
@@ -183,6 +300,16 @@ export default {
             : [this.computedHeight, 0]
         );
       return scale;
+    },
+    collectionCohorts() {
+      const cch = [];
+      const th = this;
+      this.cohorts.forEach(e => {
+        if (e.collection_id === th.collection.id) {
+          cch.push(e);
+        }
+      });
+      return cch;
     },
   },
   watch: {
@@ -355,7 +482,7 @@ export default {
     },
 
     getMeanAndSDPaths(subjectIds) {
-      const rd = this.getRawData(false);
+      const rd = this.getRawData(true);
       const xds = this.xDimensionScale;
       const ds = this.dimensionScale;
       const xacc = this.xaccessor;
@@ -392,7 +519,6 @@ export default {
           if (sd === undefined) {
             sd = 0;
           }
-          //          console.log("tp= " + tp + " data.length=" + data.length);
           const xp = xds(tp);
           meanPath.push({ x: xp, y: ds(mn) });
           meanMinusSDPath.push({ x: xp, y: ds(mn - sd) });
@@ -537,6 +663,7 @@ export default {
         const groups = [];
 
         // get all paths
+        // TODO - rework this section to make use of this.timepointsMeanAndSD
         cohorts.forEach(c => {
           const cohortSubjectIds = c.subject_ids;
           if (typeof cohortSubjectIds !== 'undefined') {
@@ -807,18 +934,22 @@ export default {
       const ticks = this.dimensionScale.ticks(tickCount);
       const tickFormat = this.dimensionScale.tickFormat(tickCount);
 
+      // line along left side of figure
+      this.context.beginPath();
+      this.context.moveTo(0.5, 0);
+      this.context.lineTo(0.5, this.computedHeight);
+      this.context.strokeStyle = 'black';
+      this.context.stroke();
+
+      if (ticks.length <= 1) return;
+
+      // tick markings and labels
       this.context.font = this.tick_font;
       this.context.beginPath();
       ticks.forEach(d => {
         this.context.moveTo(0, this.dimensionScale(d));
         this.context.lineTo(-6, this.dimensionScale(d));
       });
-      this.context.strokeStyle = 'black';
-      this.context.stroke();
-
-      this.context.beginPath();
-      this.context.moveTo(0.5, 0);
-      this.context.lineTo(0.5, this.computedHeight);
       this.context.strokeStyle = 'black';
       this.context.stroke();
 
@@ -840,6 +971,19 @@ export default {
       const tickFormat = this.dimensionScale.tickFormat(tickCount);
       const { xmax } = this;
 
+      // line along right side of figure
+      this.context.beginPath();
+      this.context.moveTo(this.xDimensionScale(xmax) + 0.5, 0);
+      this.context.lineTo(
+        this.xDimensionScale(xmax) + 0.5,
+        this.computedHeight
+      );
+      this.context.strokeStyle = 'black';
+      this.context.stroke();
+
+      if (ticks.length <= 1) return;
+
+      // tick markings and labels
       this.context.beginPath();
       ticks.forEach(d => {
         this.context.moveTo(this.xDimensionScale(xmax), this.dimensionScale(d));
@@ -848,15 +992,6 @@ export default {
           this.dimensionScale(d)
         );
       });
-      this.context.strokeStyle = 'black';
-      this.context.stroke();
-
-      this.context.beginPath();
-      this.context.moveTo(this.xDimensionScale(xmax) + 0.5, 0);
-      this.context.lineTo(
-        this.xDimensionScale(xmax) + 0.5,
-        this.computedHeight
-      );
       this.context.strokeStyle = 'black';
       this.context.stroke();
 
@@ -882,9 +1017,7 @@ export default {
       }
 
       const scale = this.xDimensionScale;
-      var y0 = this.variable.flip_axis
-        ? this.dimensionScale(this.yAxisRangeMax)
-        : this.dimensionScale(this.yAxisRangeMin);
+      var y0 = this.computedHeight;
 
       this.context.beginPath();
       tp.forEach(d => {
@@ -905,6 +1038,7 @@ export default {
 
       this.context.textAlign = 'center';
       this.context.textBaseline = 'middle';
+      this.context.font = this.tick_font;
       tp.forEach(d => {
         this.context.fillText(
           d,
