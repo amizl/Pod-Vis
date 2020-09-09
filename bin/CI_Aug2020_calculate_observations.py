@@ -615,8 +615,7 @@ def test_sess_to_testdate_fn(subj_condates):
             return None
         cd1 = subj_condates[sn]
         testdate = cd1 + dateutil.relativedelta.relativedelta(months=int(month))
-#        print("test_sess_to_testdate called sn=" + str(sn) + " test_sess=" + str(ts) + " month=" + str(month) + " cd1=" + str(cd1) + " testdate=" + str(testdate))
-        return cd1
+        return testdate
             
     return test_sess_to_testdate
             
