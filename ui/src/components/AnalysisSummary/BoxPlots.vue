@@ -235,8 +235,13 @@ export default {
       var bp = this;
       this.collection.observation_variables_list.forEach(v => {
         if (v.ontology.id == ov.id) {
-          bp.firstVisit = v.first_visit_event;
-          bp.lastVisit = v.last_visit_event;
+          if (v.first_visit_event != null) {
+            bp.firstVisit = v.first_visit_event;
+            bp.lastVisit = v.last_visit_event;
+          } else {
+            bp.firstVisit = v.first_visit_num;
+            bp.lastVisit = v.last_visit_num;
+          }
         }
       });
 
