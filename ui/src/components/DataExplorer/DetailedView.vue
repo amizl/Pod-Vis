@@ -73,6 +73,11 @@
           label="First/Last Visit"
           class="pl-3"
         ></v-checkbox>
+        <v-checkbox
+          v-model="show_all_timepoints"
+          label="All Timepoints"
+          class="pl-3"
+        ></v-checkbox>
       </v-row>
     </v-container>
 
@@ -99,6 +104,7 @@
             :draw-raw="draw_raw"
             :show-population-counts="show_population_counts"
             :show-first-last-visit="show_first_last_visit"
+            :show-all-timepoints="show_all_timepoints"
             :xaxis="xaxis"
             class="pa-0 ma-0"
           />
@@ -124,6 +130,7 @@ export default {
       draw_raw: true,
       show_population_counts: false,
       show_first_last_visit: true,
+      show_all_timepoints: true,
       xaxis: 'visit_event',
     };
   },

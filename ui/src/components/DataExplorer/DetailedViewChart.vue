@@ -67,6 +67,11 @@ export default {
       required: false,
       default: false,
     },
+    showAllTimepoints: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     xaxis: {
       type: String,
       required: true,
@@ -192,8 +197,8 @@ export default {
       };
     },
     timepoints() {
-      // return all timepoints
-      const rd = this.rawData;
+      // show all timepoints or only timepoints for visible cohorts
+      const rd = this.showAllTimepoints ? this.rawData : this.getRawData(true);
       const timepoints = {};
       const xacc = this.xaccessor;
       var numericEvents = true;
@@ -335,6 +340,9 @@ export default {
       this.updateCanvas();
     },
     showFirstLastVisit() {
+      this.updateCanvas();
+    },
+    showAllTimepoints() {
       this.updateCanvas();
     },
     cohorts() {
