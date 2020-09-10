@@ -19,7 +19,7 @@ import numpy as np
 import pprint
 import datetime as dt
 
-CI_STUDY = "University of Iowa CI Aug2020 v2"
+CI_STUDY = "University of Iowa CI Aug2020 1yr bin"
 
 ATTRIBUTE_METADATA = [
     {
@@ -219,13 +219,43 @@ SCALE_METADATA = [
     # AZBio
     {
         'abbrev': 'AzBioWord_Percent',
-        'name': 'AZBio percentage of words correct',
+        'name': 'AZBio percentage of words correct.',
+        'descr': """The AzBio Sentence Test is a speech intelligibility test. The AzBio sentence corpus 
+includes 1000 sentences recorded from two female and two male talkers. 165 sentences were selected from 
+each talker and then assigned to 33 lists of 20 sentences, each having 5 sentences from each talker.
+""",
+    },
+    {
+        'abbrev': 'AzBioWord_Percent_Quiet',
+        'name': 'AZBio percentage of words correct under quiet listening condition.',
+        'descr': """The AzBio Sentence Test is a speech intelligibility test. The AzBio sentence corpus 
+includes 1000 sentences recorded from two female and two male talkers. 165 sentences were selected from 
+each talker and then assigned to 33 lists of 20 sentences, each having 5 sentences from each talker.
+""",
+    },
+    {
+        'abbrev': 'AzBioWord_Percent_NotQuiet',
+        'name': 'AZBio percentage of words correct under non-quiet listening condition.',
         'descr': """The AzBio Sentence Test is a speech intelligibility test. The AzBio sentence corpus 
 includes 1000 sentences recorded from two female and two male talkers. 165 sentences were selected from 
 each talker and then assigned to 33 lists of 20 sentences, each having 5 sentences from each talker.
 """,
     },
 
+    # CNC
+    {
+        'abbrev': 'CncWord_Percent',
+        'name': 'CNC percentage of words correct.',
+        'descr': """CNC percentage of words correct.
+""",
+    },
+    {
+        'abbrev': 'CncPhon_Percent',
+        'name': 'CNC percentage of phonemes correct.',
+        'descr': """CNC percentage of phonemes correct.
+""",
+    },
+    
     # Trail Making Test
     {
         'abbrev': 'TMT A SS',
@@ -261,114 +291,114 @@ each talker and then assigned to 33 lists of 20 sentences, each having 5 sentenc
     # Neo Five Factor Inventory Personality Test
     {
         'abbrev': 'AgreeRank',
-        'name': ' Neo Five Factor Inventory Agreeableness Rank',
+        'name': 'Neo Five Factor Inventory Agreeableness Rank',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'AgreeRaw',
-        'name': ' Neo Five Factor Inventory Agreeableness Raw Score',
+        'name': 'Neo Five Factor Inventory Agreeableness Raw Score',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'AgreeTScore',
-        'name': ' Neo Five Factor Inventory Agreeableness T Score',
+        'name': 'Neo Five Factor Inventory Agreeableness T Score',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'ConsciRank',
-        'name': ' Neo Five Factor Inventory Conscientiousness Rank',
+        'name': 'Neo Five Factor Inventory Conscientiousness Rank',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'ConsciRaw',
-        'name': ' Neo Five Factor Inventory Conscientiousness Raw Score',
+        'name': 'Neo Five Factor Inventory Conscientiousness Raw Score',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'ConsciTScore',
-        'name': ' Neo Five Factor Inventory Conscientiousness T Score',
+        'name': 'Neo Five Factor Inventory Conscientiousness T Score',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'ExtroRank',
-        'name': ' Neo Five Factor Inventory Extraversion Rank',
+        'name': 'Neo Five Factor Inventory Extraversion Rank',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'ExtroRaw',
-        'name': ' Neo Five Factor Inventory Extraversion Raw Score',
+        'name': 'Neo Five Factor Inventory Extraversion Raw Score',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'ExtroTScore',
-        'name': ' Neo Five Factor Inventory Extraversion T Score',
+        'name': 'Neo Five Factor Inventory Extraversion T Score',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'NeuRank',
-        'name': ' Neo Five Factor Inventory Neuroticism Rank',
+        'name': 'Neo Five Factor Inventory Neuroticism Rank',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'NeuRaw',
-        'name': ' Neo Five Factor Inventory Neuroticism Raw Score',
+        'name': 'Neo Five Factor Inventory Neuroticism Raw Score',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'NeuTScore',
-        'name': ' Neo Five Factor Inventory Neuroticism T Score',
+        'name': 'Neo Five Factor Inventory Neuroticism T Score',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'OpenRank',
-        'name': ' Neo Five Factor Inventory Openness Rank',
+        'name': 'Neo Five Factor Inventory Openness Rank',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'OpenRaw',
-        'name': ' Neo Five Factor Inventory Openness Raw Score',
+        'name': 'Neo Five Factor Inventory Openness Raw Score',
         'descr': NEO_FF_DESCR,
     },
     {
         'abbrev': 'OpenTScore',
-        'name': ' Neo Five Factor Inventory Openness T Score',
+        'name': 'Neo Five Factor Inventory Openness T Score',
         'descr': NEO_FF_DESCR,
     },
 
     # BVMT - Brief Visuospatial Memory Test
     {
         'abbrev': 'BVMT-DR Raw',
-        'name': ' BVMT Delayed Recall Raw',
+        'name': 'BVMT Delayed Recall Raw',
         'descr': BVMT_DESCR,
     },
     {
         'abbrev': 'BVMT-DR T Score',
-        'name': ' BVMT Delayed Recall T-Score',
+        'name': 'BVMT Delayed Recall T-Score',
         'descr': BVMT_DESCR,
     },
     {
         'abbrev': 'BVMT-TR Raw',
-        'name': ' BVMT Total Recall Raw',
+        'name': 'BVMT Total Recall Raw',
         'descr': BVMT_DESCR,
     },
     {
         'abbrev': 'BVMT-TR T Score',
-        'name': ' BVMT Total Recall T-Score',
+        'name': 'BVMT Total Recall T-Score',
         'descr': BVMT_DESCR,
     },
     {
         'abbrev': 'BVMT-RD Raw',
-        'name': ' BVMT Recall Discrimination Raw',
+        'name': 'BVMT Recall Discrimination Raw',
         'descr': BVMT_DESCR,
     },
     {
         'abbrev': 'BVMT-RD Percentile',
-        'name': ' BVMT Recall Discrimination Percentile',
+        'name': 'BVMT Recall Discrimination Percentile',
         'descr': BVMT_DESCR,
     },
     {
         'abbrev': 'BAITotalRaw',
-        'name': ' Beck Anxiety Inventory',
+        'name': 'Beck Anxiety Inventory',
         'descr': """The Beck Anxiety Inventory (BAI), created by Aaron T. Beck and other colleagues, is a 21-question 
 multiple-choice self-report inventory that is used for measuring the severity of anxiety in children and adults. The 
 questions used in this measure ask about common symptoms of anxiety that the subject has had during the past week 
@@ -378,7 +408,7 @@ Several studies have found the Beck Anxiety Inventory to be an accurate measure 
     },
     {
         'abbrev': 'BDITotalRaw',
-        'name': ' Beck Depression Inventory',
+        'name': 'Beck Depression Inventory',
         'descr': """The Beck Depression Inventory (BDI, BDI-1A, BDI-II), created by Aaron T. Beck, is a 21-question 
 multiple-choice self-report inventory, one of the most widely used psychometric tests for measuring the severity of 
 depression.""",
@@ -577,6 +607,10 @@ def test_sess_simple_to_year(ts):
     else:
         # find closest year
         year = round(month / 12.0)
+        # bin by 4 year increments
+#        year = round(month / 48.0)
+#        year = year * 4
+        
     return str(year)
 
 # convert simple test_sess (e.g., "229R/61L") to year value between approx -5 and 33
@@ -618,7 +652,24 @@ def test_sess_to_testdate_fn(subj_condates):
         return testdate
             
     return test_sess_to_testdate
-            
+
+def azbio_quiet(row):
+    pct = row['AzBioWord_Percent']
+    cond = row['Condition']
+#    print("checking cond=" + str(cond))
+    if re.match(r'.*Quiet.*', str(cond)):
+        return pct
+    return None
+
+def azbio_notquiet(row):
+    pct = row['AzBioWord_Percent']
+    cond = row['Condition']
+#    amp_l = row['AmplficationLeft']
+#    amp_r = row['AmplificationRight']
+    if re.match(r'.*Quiet.*', str(cond)):
+        return None
+    return pct
+
 def process_YrsEdu(filename):
     df['YrsEdu'] = df.loc[:, ['SID','YrsEdu']].sum(axis=1, skipna = False) 
     df = df.loc[:, ['SID','YrsEdu']]
@@ -639,19 +690,18 @@ def assign_Gender(g):
         return map[g.upper()]
     return 'Unknown'
 
-def process_CNC(filename):
+def process_CNC(filename, subj_condates):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
-    df = df.loc[:, ['SID','test_sess', 'AmplificationLeft', 'AmplificationRight', 'Condition', 'CncWord_Percent', 'CncPhon_Percent']]
 
-    # Some times there seem to be multiple rows for the same event and date. In such situations we are
-    # arbitrarily deciding to use the first one that appears
+    df['Visit'] = df["test_sess"].apply(test_sess_to_year)
+    df["testdate"] = df.apply(test_sess_to_testdate_fn(subj_condates), axis = 1)
+
     df = df.rename(columns={"SID": "SubjectNum", 
-                            "AmplificationLeft": "Type of Amplification Left Ear",
-                            "AmplificationRight": "Type of Amplification Right Ear",
-                            "CncWord_Percent": "CNC Word Percentage Correct",
-                            "CncPhon_Percent": "CNC Phoneme Percentage Correct"}, 
+                            "testdate": "VisitDate"}, 
                             errors="raise")
+
+    df = df.drop(['test_sess', 'AmplificationLeft', 'AmplificationRight', 'Condition'], axis=1)
     pp.pprint(df)
     return df
 
@@ -662,10 +712,11 @@ def process_AZBio(filename, subj_condates):
 #    pp.pprint(df)
 
     df['Visit'] = df["test_sess"].apply(test_sess_to_year)
-
-#    df['testdate'] = df["test_sess"].apply(test_sess_to_testdate_fn(subj_condates))
-
     df["testdate"] = df.apply(test_sess_to_testdate_fn(subj_condates), axis = 1)
+
+    # separate by condition
+    df["AzBioWord_Percent_Quiet"] = df.apply(azbio_quiet, axis = 1)
+    df["AzBioWord_Percent_NotQuiet"] = df.apply(azbio_notquiet, axis = 1)
     
     df = df.rename(columns={"SID": "SubjectNum",
                             "testdate": "VisitDate"}, 
@@ -678,7 +729,6 @@ def process_AZBio(filename, subj_condates):
     print("AzBio:")
     pp.pprint(df)
     return df
-
 
 def process_BAI(filename):
     # Read the input as a pandas dataframe
@@ -954,7 +1004,18 @@ def generate_field_mapping(df_unique_subj_vars, df_unique_obs, demographics_file
 
         obs_info = {
             # AzBio
-            'AzBioWord_Percent': { 'cat': 'General Disease Severity', 'descr': 'AZBio percentage of words correct', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            'AzBioWord_Percent': { 'cat': 'General Disease Severity', 'descr': 'AZBio percentage of words correct.',
+                                         'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            'AzBioWord_Percent_Quiet': { 'cat': 'General Disease Severity', 'descr': 'AZBio percentage of words correct under quiet listening condition.',
+                                         'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            'AzBioWord_Percent_NotQuiet': { 'cat': 'General Disease Severity', 'descr': 'AZBio percentage of words correct under non-quiet listening condition.',
+                                            'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+
+            # CNC
+            'CncWord_Percent': { 'cat': 'General Disease Severity', 'descr': 'CNC percentage of words correct.',
+                                 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            'CncPhon_Percent': { 'cat': 'General Disease Severity', 'descr': 'CNC percentage of phonemes correct.',
+                                 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
             
             # Trails - Trail Making Test - neuropsychological test of visual attention and task switching
             'TMT A SS': { 'cat': 'Cognitive', 'descr': 'Trails Part A SS', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
@@ -1037,13 +1098,16 @@ def generate_field_mapping(df_unique_subj_vars, df_unique_obs, demographics_file
 def add_attribute_metadata(df):
     # index metadata by abbreviation
     md_index = {}
+    name_index = {}
     for md in ATTRIBUTE_METADATA:
         abbrev = md['abbrev']
-        if abbrev in md_index:
+        name = md['name']
+        if (abbrev in md_index) or (name in name_index):
             sys.stderr.write("FATAL - duplicate entry in ATTRIBUTE_METADATA, abbreviation=" + abbrev)
             sys.stderr.flush()
             sys.exit(1)
         md_index[abbrev] = md
+        name_index[name] = md
 
     def get_attribute_metadata(varname, which):
         if varname in md_index:
@@ -1061,13 +1125,16 @@ def add_attribute_metadata(df):
 def add_scale_metadata(df):
     # index metadata by abbreviation
     smd_index = {}
+    name_index = {}
     for md in SCALE_METADATA: 
        abbrev = md['abbrev']
-       if abbrev in smd_index:
-           sys.stderr.write("FATAL - duplicate entry in SCALE_METADATA, abbreviation=" + abbrev)
+       name = md['name']
+       if (abbrev in smd_index) or (name in name_index):
+           sys.stderr.write("FATAL - duplicate entry in SCALE_METADATA, abbreviation=" + abbrev + " label=" + name)
            sys.stderr.flush()
            sys.exit(1)
        smd_index[abbrev] = md
+       name_index[name] = md
 
     def get_scale_metadata(testname, which):
         m = re.match(r'^(.*)(-(Change|ROC))$', testname)
@@ -1125,7 +1192,7 @@ def main():
     for scale, filename in scale_file_map.items():
         if (scale == 'CNC'):
             print("Processing Consonants Nucleus Consonants Test")
-#            df_CNC = process_CNC(os.path.join(args.input_dir, filename))
+            df_CNC = process_CNC(os.path.join(args.input_dir, filename), subj_condates)
         elif (scale == 'AzBio'):
             print("Processing AzBio Sentence Test")
             df_AzBio = process_AZBio(os.path.join(args.input_dir, filename), subj_condates)
@@ -1155,8 +1222,7 @@ def main():
             df_NEO_FFI =  process_NEO_FFI(os.path.join(args.input_dir, filename))
 
     # all data frames 
-    dframes = [df_AzBio, df_BAI, df_BDI, df_BVMT, df_HVLT, df_Trails, df_WAIS, df_WRAT, df_NEO_FFI]
-#    dframes = [df_AzBio, df_CNC, df_BAI, df_BDI, df_BVMT, df_HVLT, df_Trails, df_WAIS, df_WRAT, df_NEO_FFI]
+    dframes = [df_AzBio, df_CNC, df_BAI, df_BDI, df_BVMT, df_HVLT, df_Trails, df_WAIS, df_WRAT, df_NEO_FFI]
     vcols = ['SubjectNum', 'Visit', 'VisitDate']
 
     # build mapping from Visit -> VisitDate
