@@ -110,6 +110,24 @@ export function getCohortSubjectIds(data, c) {
   return cohortSubjectIds;
 }
 
+export function getObservationVariableAbbreviations(c) {
+  var collectionVarAbbreviations = {};
+  var getCollectionVarAbbreviations = function(vars) {
+    vars.forEach(v => {
+      if (v.children && v.children.length > 0) {
+        if (v.children[0].label === 'First Visit') {
+          collectionVarAbbreviations[v.abbreviation] = true;
+        } else {
+          getCollectionVarAbbreviations(v.children);
+        }
+      }
+    });
+  };
+
+  getCollectionVarAbbreviations(c.observation_variables);
+  return collectionVarAbbreviations;
+}
+
 export function getObservationVariableNames(c) {
   var collectionVarNames = {};
   var getCollectionVarNames = function(vars) {
@@ -230,6 +248,12 @@ export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
     }
   });
 
+  // sort numerically
+  if (numericEvents) {
+    return unsorted_list.sort(
+      (a, b) => event_accessor_fn(a) - event_accessor_fn(b)
+    );
+  }
   // sort numerically, ignorning non-numeric component
   if (pseudoNumericEvents) {
     var pnAccFn = a => {
@@ -240,12 +264,7 @@ export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
 
     return unsorted_list.sort((a, b) => pnAccFn(a) - pnAccFn(b));
   }
-  // sort numerically
-  else if (numericEvents) {
-    return unsorted_list.sort(
-      (a, b) => event_accessor_fn(a) - event_accessor_fn(b)
-    );
-  }
+
 
   // sort alphabetically but put PPMI events in the correct order
   var uniqueEvents = [

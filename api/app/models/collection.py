@@ -617,7 +617,7 @@ class Collection(db.Model):
         connection = db.engine.connect()
 
         query = text("""
-            SELECT sv.""" + query_by + """, oo.label, count(obs.id) as num_obs
+            SELECT sv.""" + query_by + """, oo.abbreviation, oo.label, count(obs.id) as num_obs
             FROM collection c, collection_study cs,
                  subject s, subject_visit sv, observation obs, observation_ontology oo
             WHERE c.id = (:id)
@@ -626,13 +626,13 @@ class Collection(db.Model):
             AND s.id = sv.subject_id
             AND sv.id = obs.subject_visit_id
             AND obs.observation_ontology_id = oo.id
-            GROUP by sv.""" + query_by + """, oo.label
+            GROUP by sv.""" + query_by + """, oo.abbreviation, oo.label
         """)
 
         result_proxy = connection.execute(query,id=collection_id).fetchall()
         result = []
         for row in result_proxy:
-            result.append([row[query_by], row.label, row.num_obs])
+            result.append([row[query_by], row.abbreviation, row.label, row.num_obs])
         return result
         
     @classmethod

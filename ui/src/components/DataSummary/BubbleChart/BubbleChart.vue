@@ -32,6 +32,7 @@ import { colors } from '@/utils/colors';
 // Util
 import {
   getObservationVariableIds,
+  getObservationVariableAbbreviations,
   getObservationVariableNames,
   sortVisitEvents,
 } from '@/utils/helpers';
@@ -311,13 +312,13 @@ export default {
 
       var testGroupCounts = this.getColumn(
         this.collectionSummaries[this.visitVariable],
-        2
+        3
       );
       this.minGroupCount = Math.min(...testGroupCounts);
       this.maxGroupCount = Math.max(...testGroupCounts);
 
       // lookup of variable names actually in the collection
-      var collectionVarNames = getObservationVariableNames(this.collection);
+      var collectionVarNames = getObservationVariableAbbreviations(this.collection);
       this.collectionVarNames = collectionVarNames;
 
       if (this.hideUnselectedVars) {
@@ -409,7 +410,7 @@ export default {
           return val;
         })
         .attr('r', function(d) {
-          var val = z(d[2]);
+          var val = z(d[3]);
           //  console.log('Count: ' + d[2] + ' z: ' + val);
           return val;
         })
@@ -700,7 +701,7 @@ export default {
 
       var varIdToName = {};
       this.collection.observation_variables_list.forEach(ov => {
-        varIdToName[ov['ontology']['id']] = ov['ontology']['label'];
+        varIdToName[ov['ontology']['id']] = ov['ontology']['abbreviation'];
       });
 
       // highlight saved first/last visit selections
