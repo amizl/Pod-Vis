@@ -137,7 +137,23 @@ export default {
   computed: {
     ...mapState('dataExplorer', {
       detailedView: state.DETAILED_VIEW,
+      collection: state.COLLECTION,
     }),
+  },
+  watch: {
+    detailedView(ndv) {
+      // find corresponding observation variable in collection
+      // and determine if first/last visit are by event or number
+      var obs_v = null;
+      this.collection.observation_variables_list.forEach(v => {
+        if (v.id == ndv.id) obs_v = v;
+      });
+      if (obs_v != null && obs_v.first_visit_event != null) {
+        this.xaxis = 'visit_event';
+      } else {
+        this.xaxis = 'visit_num';
+      }
+    },
   },
   methods: {
     // workaround to force DetailedViewChart resize when expandAnalytics toggled
