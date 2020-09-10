@@ -146,7 +146,7 @@ export default {
       // and determine if first/last visit are by event or number
       var obs_v = null;
       this.collection.observation_variables_list.forEach(v => {
-        if (v.id == ndv.id) obs_v = v;
+        if (v.ontology.id == ndv.id) obs_v = v;
       });
       if (obs_v != null && obs_v.first_visit_event != null) {
         this.xaxis = 'visit_event';
