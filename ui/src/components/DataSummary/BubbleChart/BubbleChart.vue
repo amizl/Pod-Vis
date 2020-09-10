@@ -318,7 +318,9 @@ export default {
       this.maxGroupCount = Math.max(...testGroupCounts);
 
       // lookup of variable names actually in the collection
-      var collectionVarNames = getObservationVariableAbbreviations(this.collection);
+      var collectionVarNames = getObservationVariableAbbreviations(
+        this.collection
+      );
       this.collectionVarNames = collectionVarNames;
 
       if (this.hideUnselectedVars) {

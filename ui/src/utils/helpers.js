@@ -265,7 +265,6 @@ export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
     return unsorted_list.sort((a, b) => pnAccFn(a) - pnAccFn(b));
   }
 
-
   // sort alphabetically but put PPMI events in the correct order
   var uniqueEvents = [
     'SC',
