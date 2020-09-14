@@ -134,43 +134,77 @@ class Cohort(db.Model):
 
     # Method to iterate over all the query parameters and return a human readable query
     def query_desc(self):
-        description = ''
-        i = 0
-        nq = len(self.queries)
-        
+
+        # Group queries by variable + dimension label - categorical vars must be treated differently
+        var2qs = {}
+
         for query in self.queries:
-            # If there is more than one query variable then append AND
-            if i > 0:
-                description += ' AND '
-
-            subquery = ''
-
-            if nq > 1:
-                subquery += '('
-            
             input_var = query.input_variable
             ont = None
-            
             if input_var.subject_ontology:
                 ont = input_var.subject_ontology
             else:
                 ont = input_var.observation_ontology
 
-            subquery += ont.abbreviation
-            
-            # If one of the derived variables are used then add the dimension
+            var_key = str(ont.id)
             if input_var.dimension_label:
-                subquery += " " + input_var.get_dimension_value_abbreviation()
-
-            if query.value:
-                subquery += " = " + query.value
-            else:
-                subquery += ' ' + str(query.min_value) + ' - ' + str(query.max_value)
-
-            description += subquery
-            if nq > 1:
-                description += ')'
+                var_key += ":" + input_var.get_dimension_value_abbreviation()
                 
+            if var_key not in var2qs:
+                var2qs[var_key] = []
+
+            var2qs[var_key].append({'query': query, 'abbreviation': ont.abbreviation, 'dimension_label': input_var.dimension_label })
+
+        description = ''
+        i = 0
+        nq = len(var2qs)
+
+        for var in var2qs:
+            qs = var2qs[var]
+            qsl = len(qs)
+            
+            # If there is more than one query variable then append AND
+            if i > 0:
+                description += ' AND '
+                
+            subquery = ''
+            if nq > 1:
+                subquery += '('
+
+            # single query
+            if qsl == 1:
+                query = qs[0]['query']
+                dimension_label = qs[0]['dimension_label']
+                subquery += qs[0]['abbreviation']
+                
+                # If one of the derived variables is used then add the dimension
+                if dimension_label:
+                    subquery += " " + query.input_variable.get_dimension_value_abbreviation()
+                if query.value:
+                    subquery += " = " + query.value
+                else:
+                    subquery += ' ' + str(query.min_value) + ' - ' + str(query.max_value)
+
+            # multiple queries - must be a categorical variable
+            else:
+                j = 0
+
+                subquery += qs[0]['abbreviation']
+                if qs[0]['dimension_label']:
+                    subquery += " " + qs[0]['query'].input_variable.get_dimension_value_abbreviation()
+
+                subquery += " IN ("
+                for q in qs:
+                    query = q['query']
+                    if j > 0:
+                        subquery += ", "
+                    subquery += "'" + query.value + "'"
+                    j += 1
+                subquery += ")"
+                
+            if nq > 1:
+                subquery += ')'
+            description += subquery
             i += 1
 
         return description

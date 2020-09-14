@@ -56,20 +56,24 @@ export function getCohortSubjectIds(data, c) {
     roc: 'roc',
   };
 
+  // group queries by variable - categorical vars must be treated differently
+  var var2qs = {};
   c.queries.forEach(q => {
-    // adapted from FIND_COHORT_QUERY
-    let filterFn;
+    let v_id;
     let accessor;
     let dim;
+    let dim_label = null;
 
     if (q.input_variable.subject_ontology === undefined) {
-      // convert dimension_label to data field name
-      const subfield = dimension2field[q.input_variable.dimension_label];
+      v_id = q.input_variable.observation_ontology.id;
+      dim_label = q.input_variable.dimension_label;
+      const subfield = dimension2field[dim_label];
       accessor = function(d) {
         return d[q.input_variable.observation_ontology.id][subfield];
       };
       dim = xf.dimension(accessor);
     } else {
+      v_id = q.input_variable.subject_ontology.id;
       const lbl = q.input_variable.subject_ontology.label;
       // special case for study
       if (lbl === 'Study') {
@@ -84,23 +88,52 @@ export function getCohortSubjectIds(data, c) {
       dim = xf.dimension(accessor);
     }
 
-    if (q.value !== undefined && q.value !== null) {
-      filterFn = function(d) {
-        return d === q.value;
-      };
-      dim.filterFunction(filterFn);
-    } else if (q.min_value !== undefined && q.max_value !== undefined) {
-      filterFn = function(d) {
-        var dv = d * 1.0;
-        return dv >= q.min_value && dv < q.max_value;
-      };
-      dim.filterFunction(filterFn);
-    } else {
-      throw new Error(`Unsupported query ${q}`);
+    var vkey = v_id;
+    if (dim_label != null) {
+      vkey += ':' + dim_label;
     }
+    if (!(vkey in var2qs)) {
+      var2qs[vkey] = { accessor: accessor, dim: dim, queries: [] };
+    }
+    var2qs[vkey]['queries'].push(q);
   });
-  const filt = xf.allFiltered();
 
+  Object.keys(var2qs).forEach(k => {
+    var v = var2qs[k];
+    var filterFn = null;
+    var nq = v['queries'].length;
+    if (nq == 0) throw new Error('No queries for variable ' + k);
+
+    // currently only categorical variables should have multiple queries
+    if (nq > 1) {
+      filterFn = function(d) {
+        var any_matches = false;
+        v['queries'].forEach(q => {
+          if (d === q.value) {
+            any_matches = true;
+          }
+        });
+        return any_matches;
+      };
+    } else {
+      var q = v['queries'][0];
+      if (q.value !== undefined && q.value !== null) {
+        filterFn = function(d) {
+          return d === q.value;
+        };
+      } else if (q.min_value !== undefined && q.max_value !== undefined) {
+        filterFn = function(d) {
+          var dv = d * 1.0;
+          return dv >= q.min_value && dv < q.max_value;
+        };
+      } else {
+        throw new Error(`Unsupported query ${q}`);
+      }
+    }
+    v['dim'].filterFunction(filterFn);
+  });
+
+  const filt = xf.allFiltered();
   const sids = {};
   filt.forEach(r => {
     sids[r.subject_id] = 1;
