@@ -528,12 +528,21 @@ def set_collection_observation_variable_visits(collection_id):
         vv = vvh[ov.observation_ontology_id]
         if 'first_visit_event' in vv:
             ov.first_visit_event = vv['first_visit_event']
+        else:
+            ov.first_visit_event = None
         if 'last_visit_event' in vv:
             ov.last_visit_event = vv['last_visit_event']
+        else:
+            ov.last_visit_event = None
         if 'first_visit_num' in vv:
             ov.first_visit_num = vv['first_visit_num']
+        else:
+            ov.first_visit_num = None
         if 'last_visit_num' in vv:
             ov.last_visit_num = vv['last_visit_num']
+        else:
+            ov.last_visit_num = None
+            
         ov.save_to_db()
         
     return jsonify({
