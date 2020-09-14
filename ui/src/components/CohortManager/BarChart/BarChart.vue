@@ -228,7 +228,7 @@ export default {
       // the chart is actually mounted to the DOM
       this.$nextTick(() => {
         queries.forEach(queryForThisChart =>
-          this.userClickedBar(queryForThisChart.value)
+          this.selectOrDeselectBar(queryForThisChart.value)
         );
       });
     }
@@ -253,7 +253,7 @@ export default {
       }
       return colors['population'];
     },
-    userClickedBar(key) {
+    selectOrDeselectBar(key) {
       if (this.selected.includes(key)) {
         this.selected = this.selected.filter(d => d !== key);
       } else {
@@ -277,6 +277,9 @@ export default {
           dimension: this.dimensionName,
         });
       }
+    },
+    userClickedBar(key) {
+      this.selectOrDeselectBar(key);
       this.$emit('userChangedVariable', this.dimensionName);
     },
     resizeChart() {
