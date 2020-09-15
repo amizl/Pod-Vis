@@ -34,6 +34,7 @@ export const actions = {
   ANALYZE_COHORTS: 'analyzeCohorts',
   SET_VISIBLE_COHORTS: 'setVisibleCohorts',
   SET_OUTCOME_VARIABLES: 'setOutcomeVariables',
+  CLEAR_DATA: 'clearData',
   FETCH_DATA: 'fetchData',
   FETCH_RAW_DATA: 'fetchRawData',
   SET_DETAILED_VIEW: 'setDetailedView',

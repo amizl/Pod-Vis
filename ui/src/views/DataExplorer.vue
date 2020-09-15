@@ -174,6 +174,7 @@ export default {
   },
   async created() {
     this.isLoading = true;
+    await this.clearData();
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
     await this.fetchCohorts();
@@ -236,6 +237,7 @@ export default {
       analyzeCohorts: actions.ANALYZE_COHORTS,
       fetchCohorts: actions.FETCH_COHORTS,
       fetchCollection: actions.FETCH_COLLECTION,
+      clearData: actions.CLEAR_DATA,
       fetchData: actions.FETCH_DATA,
       setOutcomeVariables: actions.SET_OUTCOME_VARIABLES,
       setDetailedView: actions.SET_DETAILED_VIEW,

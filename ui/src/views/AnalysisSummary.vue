@@ -242,7 +242,8 @@ export default {
   async created() {
     this.isLoading = true;
     // reset selected cohorts
-    this.setSelectedCohorts([]);
+    await this.setSelectedCohorts([]);
+    await this.clearData();
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
     await this.fetchCohorts();
@@ -264,6 +265,7 @@ export default {
       analyzeCohortsDE: deActions.ANALYZE_COHORTS,
       fetchCohorts: deActions.FETCH_COHORTS,
       fetchCollection: deActions.FETCH_COLLECTION,
+      clearData: deActions.CLEAR_DATA,
       fetchData: deActions.FETCH_DATA,
       setOutcomeVariables: deActions.SET_OUTCOME_VARIABLES,
     }),

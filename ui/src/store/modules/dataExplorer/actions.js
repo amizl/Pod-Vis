@@ -13,7 +13,6 @@ export default {
         `/api/collections/${collectionId}?include=studies&include=variables&include=cohorts`
       );
       // massage collection data... here
-
       var c = data.collection;
       c.date_generated_epoch = new Date(c.date_generated).getTime();
       c.has_visits_set = true;
@@ -44,18 +43,22 @@ export default {
       data.collection.observation_variables = observationVariables;
       commit(mutations.SET_COLLECTION, data.collection);
       dispatch(actions.SET_COHORT_SUBJECTS);
-    } catch ({ response }) {
+    } catch (err) {
       // Something went wrong...
       // user didn't have access to collection? collection not found?
       // Display notification via notifcation snackbar? Reroute? Display msg in cohort manager?
       // TODO...
 
       // Currently displays error message.
-      const notification = new ErrorNotification(response.data.error);
+      const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     } finally {
       commit(mutations.SET_LOADING, false);
     }
+  },
+  async [actions.CLEAR_DATA]({ commit, dispatch, state }) {
+    commit(mutations.SET_DATA, []);
+    commit(mutations.SET_RAW_DATA, []);
   },
   async [actions.FETCH_DATA]({ commit, dispatch, state }) {
     commit(mutations.SET_LOADING, true);
