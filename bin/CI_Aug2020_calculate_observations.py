@@ -19,7 +19,7 @@ import numpy as np
 import pprint
 import datetime as dt
 
-CI_STUDY = "University of Iowa CI Aug2020 1yr bin"
+CI_STUDY = "University of Iowa CI Aug2020 CNC best v2"
 
 ATTRIBUTE_METADATA = [
     {
@@ -256,6 +256,70 @@ each talker and then assigned to 33 lists of 20 sentences, each having 5 sentenc
 """,
     },
     
+    # CNC Best
+    {
+        'abbrev': 'CncBestWord_Percent',
+        'name': 'CNC percentage of words correct for the highest-scoring CNC result.',
+        'descr': """CNC percentage of words correct for the highest-scoring CNC result at a given visit/test.
+""",
+    },
+    {
+        'abbrev': 'CncBestPhon_Percent',
+        'name': 'CNC percentage of phonemes correct for the highest-scoring CNC result.',
+        'descr': """CNC percentage of phonemes correct for the highest-scoring CNC result at a given visit/test.
+""",
+    },
+    {
+        'abbrev': 'CncBest_Condition',
+        'name': 'Condition for the highest-scoring CNC result.',
+        'descr': """Listening condition for the highest-scoring CNC result at a given visit/test.',
+""",
+    },
+    {
+        'abbrev': 'CncBest_AmpLeft',
+        'name': 'AmplificationLeft for the highest-scoring CNC result.',
+        'descr': """AmplificationLeft for the highest-scoring CNC result at a given visit/test.',
+""",
+    },
+    {
+        'abbrev': 'CncBest_AmpRight',
+        'name': 'AmplificationRight for the highest-scoring CNC result.',
+        'descr': """AmplificationRight for the highest-scoring CNC result at a given visit/test.',
+""",
+    },
+
+        # CNC Worst
+    {
+        'abbrev': 'CncWorstWord_Percent',
+        'name': 'CNC percentage of words correct for the lowest-scoring CNC result.',
+        'descr': """CNC percentage of words correct for the lowest-scoring CNC result at a given visit/test.
+""",
+    },
+    {
+        'abbrev': 'CncWorstPhon_Percent',
+        'name': 'CNC percentage of phonemes correct for the lowest-scoring CNC result.',
+        'descr': """CNC percentage of phonemes correct for the lowest-scoring CNC result at a given visit/test.
+""",
+    },
+    {
+        'abbrev': 'CncWorst_Condition',
+        'name': 'Condition for the lowest-scoring CNC result.',
+        'descr': """Listening condition for the lowest-scoring CNC result at a given visit/test.',
+""",
+    },
+    {
+        'abbrev': 'CncWorst_AmpLeft',
+        'name': 'AmplificationLeft for the lowest-scoring CNC result.',
+        'descr': """AmplificationLeft for the lowest-scoring CNC result at a given visit/test.',
+""",
+    },
+    {
+        'abbrev': 'CncWorst_AmpRight',
+        'name': 'AmplificationRight for the lowest-scoring CNC result.',
+        'descr': """AmplificationRight for the lowest-scoring CNC result at a given visit/test.',
+""",
+    },
+
     # Trail Making Test
     {
         'abbrev': 'TMT A SS',
@@ -510,18 +574,21 @@ depression.""",
     },
 ]
 
-scale_file_map = {'CNC': "CNC.csv",
-                   'edu': "edu.csv",
-                   'AzBio' : "AzBio.csv",
-                   'BAI' : "BAI.csv",
-                   'BDI' : "BDI.csv",
-                   'BVMT' : "BVMT.csv",
-                   'HVLT' : "HVLT.csv",
-                   'NEO_FFI': "NEO-FFI.csv",
-                   'Trails': "Trails.csv",
-                   'WAIS': "WAIS.csv",
-                   'WRAT': 'WRAT.csv'
-                   }
+scale_file_map = {
+#    'CNC': "CNC.csv",
+    'CNC-best': "CNC-best.csv",
+    'CNC-worst': "CNC-worst.csv",
+    'edu': "edu.csv",
+    'AzBio' : "AzBio.csv",
+    'BAI' : "BAI.csv",
+    'BDI' : "BDI.csv",
+    'BVMT' : "BVMT.csv",
+    'HVLT' : "HVLT.csv",
+    'NEO_FFI': "NEO-FFI.csv",
+    'Trails': "Trails.csv",
+    'WAIS': "WAIS.csv",
+    'WRAT': 'WRAT.csv'
+}
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -702,6 +769,46 @@ def process_CNC(filename, subj_condates):
                             errors="raise")
 
     df = df.drop(['test_sess', 'AmplificationLeft', 'AmplificationRight', 'Condition'], axis=1)
+    pp.pprint(df)
+    return df
+
+def process_CNC_best(filename, subj_condates):
+    # Read the input as a pandas dataframe
+    df = pd.read_csv(filename)
+
+    df['Visit'] = df["test_sess"].apply(test_sess_to_year)
+    df["testdate"] = df.apply(test_sess_to_testdate_fn(subj_condates), axis = 1)
+
+    df = df.rename(columns={"SID": "SubjectNum", 
+                            "testdate": "VisitDate",
+                            "CncWord_Percent": "CncBestWord_Percent",
+                            "CncPhon_Percent": "CncBestPhon_Percent",
+                            "Condition": "CncBest_Condition",
+                            "AmplificationLeft": "CncBest_AmpLeft",
+                            "AmplificationRight": "CncBest_AmpRight",}, 
+                   errors="raise")
+
+    df = df.drop(['test_sess'], axis=1)
+    pp.pprint(df)
+    return df
+
+def process_CNC_worst(filename, subj_condates):
+    # Read the input as a pandas dataframe
+    df = pd.read_csv(filename)
+
+    df['Visit'] = df["test_sess"].apply(test_sess_to_year)
+    df["testdate"] = df.apply(test_sess_to_testdate_fn(subj_condates), axis = 1)
+
+    df = df.rename(columns={"SID": "SubjectNum", 
+                            "testdate": "VisitDate",
+                            "CncWord_Percent": "CncWorstWord_Percent",
+                            "CncPhon_Percent": "CncWorstPhon_Percent",
+                            "Condition": "CncWorst_Condition",
+                            "AmplificationLeft": "CncWorst_AmpLeft",
+                            "AmplificationRight": "CncWorst_AmpRight",}, 
+                   errors="raise")
+
+    df = df.drop(['test_sess'], axis=1)
     pp.pprint(df)
     return df
 
@@ -1016,7 +1123,31 @@ def generate_field_mapping(df_unique_subj_vars, df_unique_obs, demographics_file
                                  'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
             'CncPhon_Percent': { 'cat': 'General Disease Severity', 'descr': 'CNC percentage of phonemes correct.',
                                  'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
-            
+
+            # CNC-Best
+            'CncBestWord_Percent': { 'cat': 'General Disease Severity', 'descr': 'CNC percentage of words correct.',
+                                     'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            'CncBestPhon_Percent': { 'cat': 'General Disease Severity', 'descr': 'CNC percentage of phonemes correct.',
+                                     'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            'CncBest_Condition': { 'cat': 'General Disease Severity', 'descr': 'CNC best listening condition.',
+                                   'type': 'Char', 'data_type': 'Categorical', 'flip_axis': 0, 'ordinal_sort': '' },
+            'CncBest_AmpLeft': { 'cat': 'General Disease Severity', 'descr': 'CNC best AmplificationLeft.',
+                                 'type': 'Char', 'data_type': 'Categorical', 'flip_axis': 0, 'ordinal_sort': '' },
+            'CncBest_AmpRight': { 'cat': 'General Disease Severity', 'descr': 'CNC best AmplificationRight.',
+                                  'type': 'Char', 'data_type': 'Categorical', 'flip_axis': 0, 'ordinal_sort': '' },
+
+            # CNC-Worst
+            'CncWorstWord_Percent': { 'cat': 'General Disease Severity', 'descr': 'CNC percentage of words correct.',
+                                     'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            'CncWorstPhon_Percent': { 'cat': 'General Disease Severity', 'descr': 'CNC percentage of phonemes correct.',
+                                     'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            'CncWorst_Condition': { 'cat': 'General Disease Severity', 'descr': 'CNC worst listening condition.',
+                                   'type': 'Char', 'data_type': 'Categorical', 'flip_axis': 0, 'ordinal_sort': '' },
+            'CncWorst_AmpLeft': { 'cat': 'General Disease Severity', 'descr': 'CNC worst AmplificationLeft.',
+                                 'type': 'Char', 'data_type': 'Categorical', 'flip_axis': 0, 'ordinal_sort': '' },
+            'CncWorst_AmpRight': { 'cat': 'General Disease Severity', 'descr': 'CNC worst AmplificationRight.',
+                                  'type': 'Char', 'data_type': 'Categorical', 'flip_axis': 0, 'ordinal_sort': '' },
+
             # Trails - Trail Making Test - neuropsychological test of visual attention and task switching
             'TMT A SS': { 'cat': 'Cognitive', 'descr': 'Trails Part A SS', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
             'TMT A Secs' : { 'cat': 'Cognitive', 'descr': 'Trails Part A Seconds to Complete', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
@@ -1193,6 +1324,12 @@ def main():
         if (scale == 'CNC'):
             print("Processing Consonants Nucleus Consonants Test")
             df_CNC = process_CNC(os.path.join(args.input_dir, filename), subj_condates)
+        elif (scale == 'CNC-best'):
+            print("Processing Consonants Nucleus Consonants Test - Best score")
+            df_CNC_best = process_CNC_best(os.path.join(args.input_dir, filename), subj_condates)
+        elif (scale == 'CNC-worst'):
+            print("Processing Consonants Nucleus Consonants Test - Worst score")
+            df_CNC_worst = process_CNC_worst(os.path.join(args.input_dir, filename), subj_condates)
         elif (scale == 'AzBio'):
             print("Processing AzBio Sentence Test")
             df_AzBio = process_AZBio(os.path.join(args.input_dir, filename), subj_condates)
@@ -1222,7 +1359,7 @@ def main():
             df_NEO_FFI =  process_NEO_FFI(os.path.join(args.input_dir, filename))
 
     # all data frames 
-    dframes = [df_AzBio, df_CNC, df_BAI, df_BDI, df_BVMT, df_HVLT, df_Trails, df_WAIS, df_WRAT, df_NEO_FFI]
+    dframes = [df_AzBio, df_CNC_best, df_CNC_worst, df_BAI, df_BDI, df_BVMT, df_HVLT, df_Trails, df_WAIS, df_WRAT, df_NEO_FFI]
     vcols = ['SubjectNum', 'Visit', 'VisitDate']
 
     # build mapping from Visit -> VisitDate
@@ -1323,6 +1460,7 @@ def main():
     observations_filename = "UI_CI_Aug2020_obs_long.csv"
     files.append(["Observations", observations_filename])
     print("Writing " + filename)
+    df_all_vars_long_sorted = df_all_vars_long_sorted.drop_duplicates()
     df_all_vars_long_sorted.to_csv(os.path.join(args.output_dir, observations_filename), index = False)
 
     # Before printing the subject visits calculate the age at visit
