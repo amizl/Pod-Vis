@@ -11,6 +11,20 @@
         ></svg>
       </v-col>
     </v-row>
+
+    <!-- tooltips for scale abbreviations -->
+    <v-row v-if="canvasUpdated" class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0">
+        <v-tooltip
+          v-for="(cvt, index) in collectionVarTitles"
+          top
+          color="primary"
+          :activator="cvt['node']"
+        >
+          <span> {{ cvt['name'] }} </span>
+        </v-tooltip>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -34,6 +48,7 @@ import {
   getObservationVariableIds,
   getObservationVariableAbbreviations,
   getObservationVariableNames,
+  getObservationVariableAbbreviationToName,
   sortVisitEvents,
 } from '@/utils/helpers';
 
@@ -67,6 +82,7 @@ export default {
     return {
       isLoading: true,
       haveDimensions: false,
+      canvasUpdated: false,
       defaultCanvasWidth: 1200,
       defaultCanvasHeight: 1000,
       minPxPerCol: 18,
@@ -89,7 +105,8 @@ export default {
       testCount: 0,
       eventCount: 0,
       colors: colors,
-      collectionVarNames: {},
+      collectionVarAbbreviations: {},
+      collectionVarAbbreviationToName: {},
       firstVisitHandle: null,
       lastVisitHandle: null,
     };
@@ -102,6 +119,16 @@ export default {
       lastVisits: state.LAST_VISITS,
       visitVariable: state.VISIT_VARIABLE,
     }),
+    // link scale name, abbreviation to corresponding SVG text element
+    collectionVarTitles() {
+      var titles = [];
+      Object.keys(this.collectionVarAbbreviations).forEach(a => {
+        var name = this.collectionVarAbbreviationToName[a];
+        var node = document.getElementById(a);
+        titles.push({ abbrev: a, name: name, node: node });
+      });
+      return titles;
+    },
     domain() {
       // return Array(this.min, this.max);
       return [0, this.eventCount]; // [min, max]
@@ -183,9 +210,9 @@ export default {
     getCollectionSummaries() {
       if (this.hideUnselectedVars) {
         var summaries = [];
-        var collectionVarNames = this.collectionVarNames;
+        var collectionVarAbbreviations = this.collectionVarAbbreviations;
         this.collectionSummaries[this.visitVariable].forEach(s => {
-          if (s[1] in collectionVarNames) {
+          if (s[1] in collectionVarAbbreviations) {
             summaries.push(s);
           }
         });
@@ -318,15 +345,18 @@ export default {
       this.maxGroupCount = Math.max(...testGroupCounts);
 
       // lookup of variable names actually in the collection
-      var collectionVarNames = getObservationVariableAbbreviations(
+      var collectionVarAbbreviations = getObservationVariableAbbreviations(
         this.collection
       );
-      this.collectionVarNames = collectionVarNames;
+      this.collectionVarAbbreviations = collectionVarAbbreviations;
+      this.collectionVarAbbreviationToName = getObservationVariableAbbreviationToName(
+        this.collection
+      );
 
       if (this.hideUnselectedVars) {
         var selectedUniqueTests = [];
         uniqueTests.forEach(t => {
-          if (t in collectionVarNames) {
+          if (t in collectionVarAbbreviations) {
             selectedUniqueTests.push(t);
           }
         });
@@ -386,6 +416,7 @@ export default {
 
       var cvo = this.collectionVarOpacity;
       var vo = this.varOpacity;
+      var anames = this.collectionVarAbbreviationToName;
 
       mysvg
         .append('g')
@@ -393,8 +424,13 @@ export default {
         .call(d3.axisLeft(y))
         .selectAll('text')
         .style('opacity', function(d) {
-          return d in collectionVarNames ? cvo : vo;
+          return d in collectionVarAbbreviations ? cvo : vo;
+        })
+        .attr('id', function(d) {
+          return d;
         });
+      //        .append('v-tooltip').text(function(d) { return anames[d]; });
+      //        .append('title').text(function(d) { return anames[d]; });
 
       mysvg
         .append('g')
@@ -418,7 +454,7 @@ export default {
         })
         .style('fill', '#69b3a2')
         .style('opacity', function(d) {
-          return d[1] in collectionVarNames ? cvo : vo;
+          return d[1] in collectionVarAbbreviations ? cvo : vo;
         })
         .attr('stroke', 'black');
 
@@ -782,6 +818,7 @@ export default {
         this,
         false
       );
+      this.canvasUpdated = true;
     },
     ...mapMutations('dataSummary', {
       setFirstVisits: actions.SET_FIRST_VISITS,
