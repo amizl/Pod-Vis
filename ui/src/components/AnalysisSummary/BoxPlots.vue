@@ -64,10 +64,11 @@
                 <!-- labels -->
                 <text
                   v-for="sc in Object.keys(boxplotStats)"
+		  :id="sc"
                   :x="15"
                   :y="boxplotStats[sc]['y_center']"
                 >
-                  {{ boxplotStats[sc].label }}
+                  {{ boxplotStats[sc].short_label }}
                 </text>
 
                 <!-- endcap lines -->
@@ -130,6 +131,20 @@
             </svg>
           </v-col>
         </v-row>
+
+	<!-- tooltips for cohort + visit labels -->
+        <v-row class="ma-0 pa-0">
+          <v-col cols="12" class="ma-0 pa-0">
+            <v-tooltip
+              v-for="(sc, index) in Object.keys(boxplotStats)" top
+              color="primary"
+              :activator="boxplotStats[sc]['node']"
+              >
+              <span> {{ boxplotStats[sc]['label'] }} </span>
+            </v-tooltip>
+          </v-col>
+        </v-row>
+
       </v-container>
     </v-sheet>
   </v-sheet>
@@ -176,10 +191,10 @@ export default {
       width: 0,
       height: 0,
       boxplotStats: {},
-      margins: { top: 40, bottom: 40, left: 250, right: 20 },
       rowHeight: 100,
       rowPad: 15,
       maxValue: null,
+      maxLabelLen: 20,
       firstVisit: null,
       lastVisit: null,
     };
@@ -196,6 +211,10 @@ export default {
     }),
     xAxis() {
       return axisTop(this.xScale);
+    },
+    margins() {
+      var leftMargin = this.maxLabelLen * 10;
+      return { top: 40, bottom: 40, left: leftMargin, right: 20 };
     },
     // cohorts are collection-specific
     collection_cohorts() {
@@ -249,6 +268,13 @@ export default {
         this.updateStats();
       });
     },
+    maxLabelLen(mll) {
+      // change in maxLabelLen means change in left margin
+      this.$nextTick(() => {
+        this.updateStats();
+        this.resizeChart();
+      });
+    },
   },
   created() {},
   mounted() {
@@ -263,7 +289,16 @@ export default {
         this.updateStats();
       });
     },
-
+    updateMaxLabelLen() {
+      var mll = 20;
+      Object.keys(this.boxplotStats).forEach(k => {
+        var ll = this.boxplotStats[k].label.length;
+        if (ll > mll) {
+          mll = ll;
+        }
+      });
+      this.maxLabelLen = mll;
+    },
     resizeChart() {
       if (this.container == null) {
         return;
@@ -302,11 +337,11 @@ export default {
       pad_bottom,
       row_height,
       row2row_dist,
-      label_suffix
+      label_prefix
     ) {
       // compute boxplot stats for each cohort
       var x_offset = this.margins.left;
-
+      var max_ll = this.maxLabelLen;
       this.selectedCohorts.forEach(c => {
         const subjids = [];
         c.subject_ids.forEach(sid => {
@@ -339,9 +374,19 @@ export default {
         //        );
 
         var box_h = row_height - (pad_top + pad_bottom);
+var bpKey = c.id + "" + visit;
+var node = document.getElementById(bpKey);
+var shortLabelFn = function(label) {
+if (label.length > max_ll) {
+return label.substr(0,max_ll-3) + '...';
+}
+return label;
+};
 
-        this.boxplotStats[c.id + '-' + visit] = {
-          label: c.label + label_suffix,
+        this.boxplotStats[bpKey] = {
+          label: label_prefix + c.label,
+          short_label: shortLabelFn(label_prefix + c.label),
+          node: node,
           color: c.color,
           x: x_offset,
           y: y_offset,
@@ -364,7 +409,7 @@ export default {
         };
         y_offset += row2row_dist;
       });
-    },
+},
     updateStats() {
       if (!this.selectedOutcomeVariable) return;
 
@@ -386,7 +431,7 @@ export default {
         5,
         hrh,
         this.rowHeight,
-        ' | ' + this.firstVisit
+        this.firstVisit + " | "
       );
       this.updateStats_aux(
         'lastVisit',
@@ -395,8 +440,9 @@ export default {
         15,
         hrh,
         this.rowHeight,
-        ' | ' + this.lastVisit
+        this.lastVisit + " | "
       );
+      this.updateMaxLabelLen();
     },
   },
 };
