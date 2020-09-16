@@ -256,11 +256,12 @@ export default {
     },
 
     pval_dict() {
-      const ap = this.anova_pvals;
       const pd = {};
-      ap.forEach(a => {
-        pd[a.label] = a;
-      });
+      if (this.anova_pvals != null) {
+        this.anova_pvals.forEach(a => {
+          pd[a.label] = a;
+        });
+      }
       return pd;
     },
   },
