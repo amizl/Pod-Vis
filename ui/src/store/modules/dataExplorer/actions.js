@@ -44,12 +44,7 @@ export default {
       commit(mutations.SET_COLLECTION, data.collection);
       dispatch(actions.SET_COHORT_SUBJECTS);
     } catch (err) {
-      // Something went wrong...
-      // user didn't have access to collection? collection not found?
-      // Display notification via notifcation snackbar? Reroute? Display msg in cohort manager?
-      // TODO...
-
-      // Currently displays error message.
+      console.log(err);
       const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     } finally {
@@ -118,8 +113,9 @@ export default {
 
       commit(mutations.SET_DATA, wideData);
       commit(mutations.SET_RAW_DATA, data.raw_data);
-    } catch ({ response }) {
-      const notification = new ErrorNotification(response.data.error);
+    } catch (err) {
+      console.log(err);
+      const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     } finally {
       commit(mutations.SET_LOADING, false);
@@ -138,7 +134,9 @@ export default {
       const { data } = await axios.get('/api/cohorts');
       commit(mutations.SET_COHORTS, data.cohorts);
     } catch (err) {
-      // TODO
+      console.log(err);
+      const notification = new ErrorNotification(err);
+      dispatch(notification.dispatch, notification, { root: true });
     } finally {
       commit(mutations.SET_LOADING, false);
     }
@@ -192,8 +190,9 @@ export default {
         outputVariables,
       });
       commit(mutations.SET_ANOVA_PVALS, data.pvals);
-    } catch ({ response }) {
-      const notification = new ErrorNotification(response.data.error);
+    } catch (err) {
+      console.log(err);
+      const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     }
   },
