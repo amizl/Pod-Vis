@@ -181,7 +181,12 @@ export default {
     minWidth: {
       type: Number,
       required: false,
-      default: 550,
+      default: 300,
+    },
+    labelPxPerChar: {
+      type: Number,
+      required: false,
+      default: 10,
     },
   },
   data() {
@@ -213,7 +218,7 @@ export default {
       return axisTop(this.xScale);
     },
     margins() {
-      var leftMargin = this.maxLabelLen * 10;
+      var leftMargin = this.maxLabelLen * this.labelPxPerChar;
       return { top: 40, bottom: 40, left: leftMargin, right: 20 };
     },
     // cohorts are collection-specific
@@ -297,7 +302,13 @@ export default {
           mll = ll;
         }
       });
-      this.maxLabelLen = mll;
+
+     // never use more than half the available space for labels
+     var labelWidth = mll * this.labelPxPerChar;
+     if ((this.width > 0) && (labelWidth > (this.width/2))) {
+       mll = Math.floor((this.width/2) / this.labelPxPerChar);
+     }
+     this.maxLabelLen = mll;
     },
     resizeChart() {
       if (this.container == null) {
@@ -306,7 +317,7 @@ export default {
       var { width, height } = this.container.getBoundingClientRect();
       //      console.log("resizeChart() client height = " + height + " width = " + width);
 
-      // establish minimum size
+      // establish minimum height
       if (height < this.minHeight) {
         height = this.minHeight;
       }
