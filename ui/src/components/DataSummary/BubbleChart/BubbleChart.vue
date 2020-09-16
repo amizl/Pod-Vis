@@ -429,8 +429,6 @@ export default {
         .attr('id', function(d) {
           return d;
         });
-      //        .append('v-tooltip').text(function(d) { return anames[d]; });
-      //        .append('title').text(function(d) { return anames[d]; });
 
       mysvg
         .append('g')
