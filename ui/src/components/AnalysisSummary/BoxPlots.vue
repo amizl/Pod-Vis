@@ -54,7 +54,14 @@
       >
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
-            <svg ref="boxplots" :width="width" :height="height">
+
+            <div v-if="!selectedOutcomeVariable" column align-center justify-center fill-width>
+              <v-subheader class="title primary--text text--lighten-5">
+                NO SCALE SELECTED
+              </v-subheader>
+            </div>
+
+	    <svg v-else ref="boxplots" :width="width" :height="height">
               <g
                 v-if="
                   selectedOutcomeVariable &&

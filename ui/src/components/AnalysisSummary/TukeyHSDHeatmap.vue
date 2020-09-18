@@ -101,7 +101,7 @@
           </div>
           <div v-else column align-center justify-center fill-width>
             <v-subheader class="title primary--text text--lighten-5">
-              Select Variable from One-Way ANOVA table.
+              <v-icon x-large color="primary lighten-5">arrow_left</v-icon>SELECT SCALE FROM ANALYTICS PANEL
             </v-subheader>
           </div>
         </v-col>

@@ -91,7 +91,7 @@
             class="display-1 primary--text text--lighten-5 pt-5 mt-5"
             align="center"
           >
-            SELECT OUTCOME VARIABLE
+            NO SCALE SELECTED
           </div>
 
           <div
@@ -99,7 +99,7 @@
             class="display-1 primary--text text--lighten-5 pt-5 mt-5"
             align="center"
           >
-            SELECT COHORTS
+            NO COHORTS SELECTED
           </div>
 
           <detailed-view-chart
