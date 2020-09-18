@@ -12,7 +12,7 @@
                       >{{ title }}
                       <v-spacer />
                       <v-chip
-                        v-for="x in ['1', '0.1', '0.01', '0.05', '0.001']"
+                        v-for="x in ['1', '0.1', '0.05', '0.01', '0.001']"
                         v-if="expanded"
                         :color="colors['pvals'][x + '-' + colorScheme]['color']"
                         >p &lt; {{ x }}</v-chip

@@ -90,10 +90,10 @@ h6 {
 .pval-lt-0p1-brewer6r {
   background-color: #FCBBA1;
 }
-.pval-lt-0p01-brewer6r {
+.pval-lt-0p05-brewer6r {
   background-color: #FC9272;
 }
-.pval-lt-0p05-brewer6r {
+.pval-lt-0p01-brewer6r {
   background-color: #FB6A4A;
 }
 .pval-lt-0p001-brewer6r {
@@ -107,10 +107,10 @@ h6 {
 .pval-lt-0p1-brewer6 {
     background-color: #C6DBEF;
 }
-.pval-lt-0p01-brewer6 {
+.pval-lt-0p05-brewer6 {
   background-color: #9ECAE1;
 }
-.pval-lt-0p05-brewer6 {
+.pval-lt-0p01-brewer6 {
   background-color: #6BAED6;
 }
 .pval-lt-0p001-brewer6 {
@@ -124,10 +124,10 @@ h6 {
 .pval-lt-0p1-brewer5 {
     background-color: #BDD7E7;
 }
-.pval-lt-0p01-brewer5 {
+.pval-lt-0p05-brewer5 {
   background-color: #6BAED6;
 }
-.pval-lt-0p05-brewer5 {
+.pval-lt-0p01-brewer5 {
   background-color: #3182BD;
 }
 .pval-lt-0p001-brewer5 {
@@ -141,10 +141,10 @@ h6 {
 .pval-lt-0p1-val100 {
   background-color: #A6B3FF;
 }
-.pval-lt-0p01-val100 {
+.pval-lt-0p05-val100 {
   background-color: #8C9EFF;
 }
-.pval-lt-0p05-val100 {
+.pval-lt-0p01-val100 {
   background-color: #7388FF;
 }
 .pval-lt-0p001-val100 {
@@ -158,10 +158,10 @@ h6 {
 .pval-lt-0p1-val80 {
   background-color: #8C97CF;
 }
-.pval-lt-0p01-val80 {
+.pval-lt-0p05-val80 {
   background-color: #7683CF;
 }
-.pval-lt-0p05-val80 {
+.pval-lt-0p01-val80 {
   background-color: #5F70CF;
 }
 .pval-lt-0p001-val80 {
