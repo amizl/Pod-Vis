@@ -95,7 +95,7 @@
           </div>
 
           <div
-            v-else-if="!visibleCohorts || (visibleCohorts.length == 0)"
+            v-else-if="!visibleCohorts || visibleCohorts.length == 0"
             class="display-1 primary--text text--lighten-5 pt-5 mt-5"
             align="center"
           >

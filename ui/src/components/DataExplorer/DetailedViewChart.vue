@@ -1067,8 +1067,7 @@ export default {
       let caption = 'visit event';
       if (this.xaxis == 'visit_num') {
         caption = 'visit number';
-      }
-      else if (this.xaxis == 'days') {
+      } else if (this.xaxis == 'days') {
         caption = 'time in days since first visit';
       }
 

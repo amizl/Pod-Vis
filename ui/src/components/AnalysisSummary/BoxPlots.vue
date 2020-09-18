@@ -54,14 +54,19 @@
       >
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
-
-            <div v-if="!selectedOutcomeVariable" column align-center justify-center fill-width>
+            <div
+              v-if="!selectedOutcomeVariable"
+              column
+              align-center
+              justify-center
+              fill-width
+            >
               <v-subheader class="title primary--text text--lighten-5">
                 NO SCALE SELECTED
               </v-subheader>
             </div>
 
-	    <svg v-else ref="boxplots" :width="width" :height="height">
+            <svg v-else ref="boxplots" :width="width" :height="height">
               <g
                 v-if="
                   selectedOutcomeVariable &&
@@ -71,7 +76,7 @@
                 <!-- labels -->
                 <text
                   v-for="sc in Object.keys(boxplotStats)"
-		  :id="sc"
+                  :id="sc"
                   :x="15"
                   :y="boxplotStats[sc]['y_center']"
                 >
@@ -139,19 +144,19 @@
           </v-col>
         </v-row>
 
-	<!-- tooltips for cohort + visit labels -->
+        <!-- tooltips for cohort + visit labels -->
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
             <v-tooltip
-              v-for="(sc, index) in Object.keys(boxplotStats)" top
+              v-for="(sc, index) in Object.keys(boxplotStats)"
+              top
               color="primary"
               :activator="boxplotStats[sc]['node']"
-              >
+            >
               <span> {{ boxplotStats[sc]['label'] }} </span>
             </v-tooltip>
           </v-col>
         </v-row>
-
       </v-container>
     </v-sheet>
   </v-sheet>
@@ -310,12 +315,12 @@ export default {
         }
       });
 
-     // never use more than half the available space for labels
-     var labelWidth = mll * this.labelPxPerChar;
-     if ((this.width > 0) && (labelWidth > (this.width/2))) {
-       mll = Math.floor((this.width/2) / this.labelPxPerChar);
-     }
-     this.maxLabelLen = mll;
+      // never use more than half the available space for labels
+      var labelWidth = mll * this.labelPxPerChar;
+      if (this.width > 0 && labelWidth > this.width / 2) {
+        mll = Math.floor(this.width / 2 / this.labelPxPerChar);
+      }
+      this.maxLabelLen = mll;
     },
     resizeChart() {
       if (this.container == null) {
@@ -392,11 +397,11 @@ export default {
         //        );
 
         var box_h = row_height - (pad_top + pad_bottom);
-        var bpKey = c.id + "" + visit;
+        var bpKey = c.id + '' + visit;
         var node = document.getElementById(bpKey);
         var shortLabelFn = function(label) {
           if (label.length > max_ll) {
-            return label.substr(0,max_ll-3) + '...';
+            return label.substr(0, max_ll - 3) + '...';
           }
           return label;
         };
@@ -449,7 +454,7 @@ export default {
         5,
         hrh,
         this.rowHeight,
-        this.firstVisit + " | "
+        this.firstVisit + ' | '
       );
       this.updateStats_aux(
         'lastVisit',
@@ -458,7 +463,7 @@ export default {
         15,
         hrh,
         this.rowHeight,
-        this.lastVisit + " | "
+        this.lastVisit + ' | '
       );
       this.updateMaxLabelLen();
     },

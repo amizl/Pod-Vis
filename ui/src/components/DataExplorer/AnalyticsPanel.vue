@@ -200,12 +200,14 @@ export default {
     outcomeVariables() {
       this.update_pvals();
     },
-},
+  },
   mounted() {
     this.update_pvals();
     if (this.autoselectFirstVariable && this.selectedVariable == null) {
       if (this.outcomeVariables && this.outcomeVariables.length > 0) {
-        var vbest = this.outcomeVariables.sort(function(a,b) { return a.p_value - b.p_value; })[0];
+        var vbest = this.outcomeVariables.sort(function(a, b) {
+          return a.p_value - b.p_value;
+        })[0];
         this.$emit('variableSelected', vbest);
       }
     }
