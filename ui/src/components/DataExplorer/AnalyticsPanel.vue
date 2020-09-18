@@ -200,12 +200,13 @@ export default {
     outcomeVariables() {
       this.update_pvals();
     },
-  },
+},
   mounted() {
     this.update_pvals();
     if (this.autoselectFirstVariable && this.selectedVariable == null) {
       if (this.outcomeVariables && this.outcomeVariables.length > 0) {
-        this.$emit('variableSelected', this.outcomeVariables[0]);
+        var vbest = this.outcomeVariables.sort(function(a,b) { return a.p_value - b.p_value; })[0];
+        this.$emit('variableSelected', vbest);
       }
     }
     if (this.outcomeVariables && this.outcomeVariables.length > 0) {
@@ -300,7 +301,6 @@ export default {
         v.p_value = ap.variable_pval(v);
         v.f_statistic = ap.variable_fval(v);
       });
-
       this.ovars = [...this.outcomeVariables];
     },
     pval_table_cell(ov) {
