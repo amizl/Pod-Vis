@@ -244,6 +244,7 @@ export default {
   async created() {
     this.isLoading = true;
     // reset selected cohorts
+    await this.setSelectedOutcomeVariable(null);
     await this.setSelectedCohorts([]);
     await this.clearData();
     await this.fetchCollection(this.collectionId);
