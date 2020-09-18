@@ -385,14 +385,14 @@ export default {
         //        );
 
         var box_h = row_height - (pad_top + pad_bottom);
-var bpKey = c.id + "" + visit;
-var node = document.getElementById(bpKey);
-var shortLabelFn = function(label) {
-if (label.length > max_ll) {
-return label.substr(0,max_ll-3) + '...';
-}
-return label;
-};
+        var bpKey = c.id + "" + visit;
+        var node = document.getElementById(bpKey);
+        var shortLabelFn = function(label) {
+          if (label.length > max_ll) {
+            return label.substr(0,max_ll-3) + '...';
+          }
+          return label;
+        };
 
         this.boxplotStats[bpKey] = {
           label: label_prefix + c.label,
@@ -420,7 +420,7 @@ return label;
         };
         y_offset += row2row_dist;
       });
-},
+    },
     updateStats() {
       if (!this.selectedOutcomeVariable) return;
 
