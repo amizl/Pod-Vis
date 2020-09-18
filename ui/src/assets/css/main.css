@@ -134,6 +134,22 @@ h6 {
   background-color: #08519C;
 }
 
+.pval-lt-1-brewer5v2 {
+  background-color: #FFFFFF;
+}
+.pval-lt-0p1-brewer5v2 {
+    background-color: #EFF3FF;
+}
+.pval-lt-0p05-brewer5v2 {
+  background-color: #BDD7E7;
+}
+.pval-lt-0p01-brewer5v2 {
+  background-color: #6BAED6;
+}
+.pval-lt-0p001-brewer5v2 {
+  background-color: #3182BD;
+}
+
 /* Brewer 4 single-hue purples */
 .pval-lt-1-brewer4p {
   background-color: #FFFFFF;

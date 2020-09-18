@@ -87,6 +87,12 @@ export let colors = {
     '0.01-brewer5': { color: '#3182BD', class: 'pval-lt-0p01-brewer5' },
     '0.001-brewer5': { color: '#08519C', class: 'pval-lt-0p001-brewer5' },
 
+    '1-brewer5v2': { color: '#FFFFFF', class: 'pval-lt-1-brewer5v2' },
+    '0.1-brewer5v2': { color: '#EFF3FF', class: 'pval-lt-0p1-brewer5v2' },
+    '0.05-brewer5v2': { color: '#BDD7E7', class: 'pval-lt-0p05-brewer5v2' },
+    '0.01-brewer5v2': { color: '#6BAED6', class: 'pval-lt-0p01-brewer5v2' },
+    '0.001-brewer5v2': { color: '#3182BD', class: 'pval-lt-0p001-brewer5v2' },
+
     // Brewer 6 class single hue sequential (blue)
     '1-brewer6': { color: '#FFFFFF', class: 'pval-lt-1-brewer6' },
     '0.1-brewer6': { color: '#C6DBEF', class: 'pval-lt-0p1-brewer6' },

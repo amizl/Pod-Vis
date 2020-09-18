@@ -180,6 +180,7 @@ export default {
         { text: 'Brewer 6 class reds', value: 'brewer6r' },
         { text: 'Brewer 6 class blues', value: 'brewer6' },
         { text: 'Brewer 5 class blues', value: 'brewer5' },
+        { text: 'Brewer 5 class blues B', value: 'brewer5v2' },
         { text: 'Value 80 blues', value: 'val80' },
         { text: 'Value 100 blues', value: 'val100' },
       ],
