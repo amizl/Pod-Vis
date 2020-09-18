@@ -101,6 +101,20 @@ export let colors = {
     '0.01-brewer6r': { color: '#FB6A4A', class: 'pval-lt-0p01-brewer6r' },
     '0.001-brewer6r': { color: '#DE2D26', class: 'pval-lt-0p001-brewer6r' },
 
+    // Brewer 4 class single hue sequential (purple)    
+    '1-brewer4p': { color: '#FFFFFF', class: 'pval-lt-1-brewer4p' },
+    '0.1-brewer4p': { color: '#F2F0F7', class: 'pval-lt-0p1-brewer4p' },
+    '0.05-brewer4p': { color: '#CBC9E2', class: 'pval-lt-0p05-brewer4p' },
+    '0.01-brewer4p': { color: '#9E9AC8', class: 'pval-lt-0p01-brewer4p' },
+    '0.001-brewer4p': { color: '#6A51A3', class: 'pval-lt-0p001-brewer4p' },
+
+    // Brewer 5 class single hue sequential (purple)    
+    '1-brewer5p': { color: '#FFFFFF', class: 'pval-lt-1-brewer5p' },
+    '0.1-brewer5p': { color: '#F2F0F7', class: 'pval-lt-0p1-brewer5p' },
+    '0.05-brewer5p': { color: '#CBC9E2', class: 'pval-lt-0p05-brewer5p' },
+    '0.01-brewer5p': { color: '#9E9AC8', class: 'pval-lt-0p01-brewer5p' },
+    '0.001-brewer5p': { color: '#756BB1', class: 'pval-lt-0p001-brewer5p' },
+
     // Blues based off 3f51b5 (Vue primary)
     //    '1': { color: '#FFFFFF', class: 'pval-lt-1' }, // sat = 13
     //    '0.1': { color: '#8F95B5', class: 'pval-lt-0p1' }, // sat = 21

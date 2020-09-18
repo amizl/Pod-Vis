@@ -175,6 +175,8 @@ export default {
       colors: colors,
       colorScheme: 'val80',
       colorSchemeItems: [
+        { text: 'Brewer 4 class purples', value: 'brewer4p' },
+        { text: 'Brewer 5 class purples', value: 'brewer5p' },
         { text: 'Brewer 6 class reds', value: 'brewer6r' },
         { text: 'Brewer 6 class blues', value: 'brewer6' },
         { text: 'Brewer 5 class blues', value: 'brewer5' },

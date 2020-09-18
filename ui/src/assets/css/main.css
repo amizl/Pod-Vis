@@ -134,6 +134,40 @@ h6 {
   background-color: #08519C;
 }
 
+/* Brewer 4 single-hue purples */
+.pval-lt-1-brewer4p {
+  background-color: #FFFFFF;
+}
+.pval-lt-0p1-brewer4p {
+    background-color: #f2f0f7;
+}
+.pval-lt-0p05-brewer4p {
+  background-color: #cbc9e2;
+}
+.pval-lt-0p01-brewer4p {
+  background-color: #9e9ac8;
+}
+.pval-lt-0p001-brewer4p {
+  background-color: #6a51a3;
+}
+
+/* Brewer 5 single-hue purples */
+.pval-lt-1-brewer5p {
+  background-color: #FFFFFF;
+}
+.pval-lt-0p1-brewer5p {
+  background-color: #f2f0f7;
+}
+.pval-lt-0p05-brewer5p {
+  background-color: #cbc9e2;
+}
+.pval-lt-0p01-brewer5p {
+  background-color: #9e9ac8;
+}
+.pval-lt-0p001-brewer5p {
+  background-color: #756bb1;
+}
+
 /* Value 100 */
 .pval-lt-1-val100 {
   background-color: #FFFFFF;
