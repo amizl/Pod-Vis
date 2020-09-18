@@ -1064,16 +1064,18 @@ export default {
           y0 + tickSize + tickPadding * 2
         );
       });
-
-      let caption = 'visit number';
-      if (this.xaxis === 'days') {
+      let caption = 'visit event';
+      if (this.xaxis == 'visit_num') {
+        caption = 'visit number';
+      }
+      else if (this.xaxis == 'days') {
         caption = 'time in days since first visit';
       }
 
       this.context.font = this.label_font;
       this.context.fillText(
         caption,
-        this.xDimensionScale(xmax / 2),
+        this.computedWidth / 2,
         y0 + (tickSize + tickPadding) * 3
       );
     },
