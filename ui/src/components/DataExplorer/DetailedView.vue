@@ -94,6 +94,14 @@
             SELECT OUTCOME VARIABLE
           </div>
 
+          <div
+            v-else-if="!visibleCohorts || (visibleCohorts.length == 0)"
+            class="display-1 primary--text text--lighten-5 pt-5 mt-5"
+            align="center"
+          >
+            SELECT COHORTS
+          </div>
+
           <detailed-view-chart
             v-else
             ref="dview_chart"
@@ -138,6 +146,7 @@ export default {
     ...mapState('dataExplorer', {
       detailedView: state.DETAILED_VIEW,
       collection: state.COLLECTION,
+      visibleCohorts: state.VISIBLE_COHORTS,
     }),
   },
   watch: {
