@@ -158,7 +158,9 @@ export default {
   methods: {
     // workaround to force DetailedViewChart resize when expandAnalytics toggled
     onResize() {
-      this.$refs.dview_chart.onResize();
+      if (this.$refs.dview_chart) {
+        this.$refs.dview_chart.onResize();
+      }
     },
   },
 };
