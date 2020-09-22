@@ -271,11 +271,14 @@ export default {
   methods: {
     format_fval(fv) {
       if (fv == null) {
-        return 'X';
+        return '-';
       }
       return `${format('.2f')(fv)}`;
     },
     format_pval(pval) {
+      if (pval == null) {
+        return '-';
+      }
       if (pval < 0.0001) {
         return '<0.0001';
       }
@@ -308,7 +311,7 @@ export default {
     pval_table_cell(ov) {
       let pval = this.variable_pval(ov);
       if (pval === null) {
-        return 'X';
+        return '-';
       }
       return pval;
     },
