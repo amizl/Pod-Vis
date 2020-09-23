@@ -202,6 +202,14 @@ export default {
     state[stateTypes.PVALS] = pvals;
   },
   /**
+   * Set pvals request status
+   * @param {Object} state
+   * @param {status} either NULL, 'loading', or 'loaded'
+   */
+  [mutations.SET_PVALS_REQUEST_STATUS](state, status) {
+    state[stateTypes.PVALS_REQUEST_STATUS] = status;
+  },
+  /**
    * Set pval threshold
    * @param {Object} state
    * @param {Array} threshold P value threshold.
@@ -350,8 +358,9 @@ export default {
    * Increment request number and return the result via callback.
    * @param {Object} state
    */
-  [mutations.INCREMENT_REQUEST_NUM](state, { callback }) {
-    state[stateTypes.REQUEST_NUM] = state[stateTypes.REQUEST_NUM] + 1;
-    callback(state[stateTypes.REQUEST_NUM]);
+  [mutations.INCREMENT_PVALS_REQUEST_NUM](state, { callback }) {
+    state[stateTypes.PVALS_REQUEST_NUM] =
+      state[stateTypes.PVALS_REQUEST_NUM] + 1;
+    callback(state[stateTypes.PVALS_REQUEST_NUM]);
   },
 };
