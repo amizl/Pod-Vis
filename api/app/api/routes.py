@@ -9,6 +9,7 @@ from .. import models
 import numpy as np
 import pandas as pd
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
+from statsmodels.formula.api import nominal_gee
 import re
 import sys
 
@@ -697,7 +698,10 @@ def get_all_cohorts():
         for iv in c['input_variables']:
             if 'subject_ontology' in iv:
                 so = iv['subject_ontology']
-                so['category'] = get_subj_scale_category(so['id'])
+                if iv['subject_ontology']['label'] == 'Dataset':
+                    so['category'] = 'Dataset'
+                else:
+                    so['category'] = get_subj_scale_category(so['id'])
             if 'observation_ontology' in iv:
                 oo = iv['observation_ontology']
                 oo['category'] = get_obs_scale_category(oo['id'])
@@ -997,22 +1001,87 @@ def compute_mannwhitneyu():
         elif n_unfiltered < 20:
             err = "Unfiltered sample size < 20"
 
-        # Categorical variable - chi-square test
-        if (output_variable['data_category'] == 'Categorical') and (not output_variable['is_longitudinal']):
+        if (not re.match(r'^firstVisit|lastVisit|change|roc$', comparison_field)):
+            comparison_field = 'change';
+
+        # Longitudinal categorical variable 
+        if (output_variable['data_category'] == 'Categorical') and (output_variable['is_longitudinal']) and (comparison_field == 'change'):
+            # filtered + unfiltered data
+            data = [];
+            # subject id counter
+            snum = 1
+
+            # assign each nominal outcome a different integer
+            outcomes = {}
+            onum = 1
+            def get_outcome_index(outcome):
+                nonlocal onum
+                if outcome not in outcomes:
+                    outcomes[outcome] = onum
+                    onum += 1
+                return outcomes[outcome]
+            
+            for d in filtered_data:
+                fv = d.get(variable_id).get('firstVisit')
+                lv = d.get(variable_id).get('lastVisit')
+                data.append({ 'subject_id': snum, 'group': 1, 'time': 1, 'outcome': get_outcome_index(fv) })
+                data.append({ 'subject_id': snum, 'group': 1, 'time': 2, 'outcome': get_outcome_index(lv) })
+                snum += 1
+
+            for d in unfiltered_data:
+                fv = d.get(variable_id).get('firstVisit')
+                lv = d.get(variable_id).get('lastVisit')
+                data.append({ 'subject_id': snum, 'group': 2, 'time': 1, 'outcome': get_outcome_index(fv) })
+                data.append({ 'subject_id': snum, 'group': 2, 'time': 2, 'outcome': get_outcome_index(lv) })
+                snum += 1
+
+            df = pd.DataFrame(data)
+
+            # TODO - handle ordinal variables
+            model = nominal_gee("outcome ~ group", "subject_id", df)
+            results = model.fit()
+            converged = True
+            if (not results.converged):
+                converged = False
+
+            # DEBUG
+            sys.stderr.write("RESULTS FOR " + output_variable['label'] + "\n")
+            sys.stderr.write(str(results.summary()) + "\n")
+            sys.stderr.write("pvalues=" + str(results.pvalues) + "\n")
+            sys.stderr.write("pvalues[1]=" + str(results.pvalues[1]) + "\n")
+            sys.stderr.flush()
+
+            pvals.append(dict(label=variable_label,
+                              abbreviation=variable_abbreviation,
+                              test_name="Nominal Generalized Estimation Equation model",
+                              test_abbrev='NGEE',
+                              converged=converged,
+                              pval=results.pvalues[1],
+                              effect_size=None,
+                              effect_size_descr=None,
+                              error=err))
+            
+            
+        # Non-longitudinal categorical variable - use chi-square test
+        elif (output_variable['data_category'] == 'Categorical') and ((not output_variable['is_longitudinal'] or (comparison_field != "change"))):
             # TODO - get ordered list of all categories
             all_categories = {}
             filtered_counts = {}
             unfiltered_counts = {}
-
+            field = comparison_field
+            # no choice of comparison field for non-longitudinal variables
+            if not output_variable['is_longitudinal']:
+                field = 'value'
+            
             for d in filtered_data:
-                v = d.get(variable_id).get('value')
+                v = d.get(variable_id).get(field)
                 all_categories[v] = True
                 if v not in filtered_counts:
                     filtered_counts[v] = 0
                 filtered_counts[v] += 1
 
             for d in unfiltered_data:
-                v = d.get(variable_id).get('value')
+                v = d.get(variable_id).get(field)
                 all_categories[v] = True
                 if v not in unfiltered_counts:
                     unfiltered_counts[v] = 0
@@ -1054,11 +1123,8 @@ def compute_mannwhitneyu():
                               dof=dof,
                               error=err))
 
-        # Continuous variable: 2-Sided Mann-Whitney U-Test
+        # Longitudinal continuous variable: 2-Sided Mann-Whitney U-Test
         elif (output_variable['data_category'] != 'Categorical') and (output_variable['is_longitudinal']):
-            if (not re.match(r'^firstVisit|lastVisit|change|roc$', comparison_field)):
-                comparison_field = 'change';
-
             filtered_sample = [data.get(variable_id).get(comparison_field) for data in filtered_data]
             unfiltered_sample = [data.get(variable_id).get(comparison_field) for data in unfiltered_data]
 
