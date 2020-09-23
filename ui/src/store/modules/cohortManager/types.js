@@ -11,10 +11,12 @@ export const state = {
   CROSS_FILTER: 'crossFilter',
   DIMENSIONS: 'dimensions',
   PVALS: 'pvals',
+  PVALS_REQUEST_NUM: 'pvalsRequestNum',
+  PVALS_REQUEST_STATUS: 'pvalsRequestStatus',
+  PVALS_REQUEST_DELAY_SECS: 'pvalsRequestDelaySecs',
   PVAL_THRESHOLD: 'pvalThreshold',
   QUERIES: 'queries',
   HIGHLIGHTED_SUBSET: 'highlightedSubset',
-  REQUEST_NUM: 'requestNum',
   COMPARISON_MEASURE: 'comparisonMeasure',
 };
 
@@ -53,6 +55,8 @@ export const mutations = {
   ADD_FILTER: 'addFilter',
   CLEAR_FILTER: 'clearFilter',
   SET_PVALS: 'setPvals',
+  SET_PVALS_REQUEST_DELAY_SECS: 'setPvalsRequestDelaySecs',
+  SET_PVALS_REQUEST_STATUS: 'setPvalsRequestStatus',
   SET_PVAL_THRESHOLD: 'setPvalThreshold',
   SET_HIGHLIGHTED_SUBSET: 'setHighlightedSubset',
   SET_QUERY: 'setQuery',
@@ -71,7 +75,7 @@ export const mutations = {
   RESET_HIGHLIGHTED_SUBSET: 'resetHighlightedSubset',
   RESET_QUERIES: 'resetQueries',
   REMOVE_COHORT: 'removeCohort',
-  INCREMENT_REQUEST_NUM: 'incrementRequestNum',
+  INCREMENT_PVALS_REQUEST_NUM: 'incrementPvalsRequestNum',
   SET_COMPARISON_MEASURE: 'setComparisonMeasure',
 };
 

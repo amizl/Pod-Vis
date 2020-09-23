@@ -12,10 +12,11 @@ export default {
   [state.CROSS_FILTER]: null,
   [state.DIMENSIONS]: {},
   [state.PVALS]: [],
+  [state.PVALS_REQUEST_NUM]: 0,
+  [state.PVALS_REQUEST_DELAY_SECS]: 1,
+  [state.PVALS_REQUEST_STATUS]: null,
   [state.PVAL_THRESHOLD]: 0.001,
-  [state.PVALS_REQUEST]: [],
   [state.HIGHLIGHTED_SUBSET]: 'cohort',
   [state.QUERIES]: {},
-  [state.REQUEST_NUM]: 0,
   [state.COMPARISON_MEASURE]: 'Change',
 };

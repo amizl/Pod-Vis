@@ -223,14 +223,12 @@ export default {
     commit(mutations.SET_QUERY, { dimension, query });
     commit(mutations.ADD_FILTER, { dimension, filter });
     commit(mutations.UPDATE_FILTERED_DATA);
-
     dispatch(actions.ANALYZE_FILTERED);
   },
   [actions.CLEAR_FILTER]({ commit, dispatch }, { dimension }) {
     commit(mutations.CLEAR_QUERY, dimension);
     commit(mutations.CLEAR_FILTER, { dimension });
     commit(mutations.UPDATE_FILTERED_DATA);
-
     dispatch(actions.ANALYZE_FILTERED);
   },
   [actions.CLEAR_ALL_FILTERS]({ dispatch, state }) {
@@ -252,13 +250,23 @@ export default {
     };
     const comparisonField = m2f[comparisonMeasure];
 
-    if (filteredData.length === unfilteredData.length) {
+    // selected cohort is empty or equal to study population - nothing to compare
+    if (
+      filteredData.length === unfilteredData.length ||
+      filteredData.length == 0
+    ) {
       // increment requestnum to ensure any previously-submitted request is ignored
       var cb = function(reqnum) {};
-      commit(mutations.INCREMENT_REQUEST_NUM, { callback: cb });
+      commit(mutations.INCREMENT_PVALS_REQUEST_NUM, { callback: cb });
       // Nothing is filtered
+      commit(mutations.SET_PVALS_REQUEST_STATUS, null);
       commit(mutations.SET_PVALS, []);
-    } else {
+    }
+    // selected cohort is strict subset of study population
+    else {
+      //      console.log("analyzeFiltered called at " + new Date().getTime() + " with requestNum=" + (state[stateTypes.PVALS_REQUEST_NUM]+1));
+      commit(mutations.SET_PVALS_REQUEST_STATUS, 'loading');
+
       // Remove subjects within our filtered data sets from our unfiltered so
       // we can have separate samples
       var filteredDataSubjIds = {};
@@ -300,28 +308,39 @@ export default {
       });
       outputVariables = outputVars;
 
-      // TODO - actually cancel superseded pending requests instead of just ignoring them
+      // TODO - cancel superseded pending requests instead of just ignoring them
       var cb = async function(reqnum) {
-        try {
-          const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
-            comparisonField: comparisonField,
-            filteredData: filteredData,
-            unfilteredData: remainderData,
-            outputVariables: outputVariables,
-          });
-
-          if (state[stateTypes.REQUEST_NUM] > reqnum) {
-            //		console.log("request " + reqnum + " is no longer current, ignoring return value");
-          } else {
-            commit(mutations.SET_PVALS, data.pvals);
+        // wait PVALS_REQUEST_DELAY_SECS before sending request to ensure the filtered data isn't still changing
+        setTimeout(async function() {
+          if (state[stateTypes.PVALS_REQUEST_NUM] > reqnum) {
+            //		  console.log("reqnum " + reqnum + " is no longer current, skipping request");
+            return;
           }
-        } catch ({ response }) {
-          const notification = new ErrorNotification(response.data.error);
-          dispatch(notification.dispatch, notification, { root: true });
-        }
+          //	      console.log("reqnum " + reqnum + " is still current, sending request");
+
+          try {
+            const { data } = await axios.post(`/api/compute-mannwhitneyu`, {
+              comparisonField: comparisonField,
+              filteredData: filteredData,
+              unfilteredData: remainderData,
+              outputVariables: outputVariables,
+            });
+
+            if (state[stateTypes.PVALS_REQUEST_NUM] > reqnum) {
+              //		      console.log("request " + reqnum + " is no longer current, ignoring return value");
+            } else {
+              //		      console.log("accepting request " + reqnum);
+              commit(mutations.SET_PVALS_REQUEST_STATUS, 'loaded');
+              commit(mutations.SET_PVALS, data.pvals);
+            }
+          } catch ({ response }) {
+            const notification = new ErrorNotification(response.data.error);
+            dispatch(notification.dispatch, notification, { root: true });
+          }
+        }, state[stateTypes.PVALS_REQUEST_DELAY_SECS] * 1000);
       };
 
-      commit(mutations.INCREMENT_REQUEST_NUM, { callback: cb });
+      commit(mutations.INCREMENT_PVALS_REQUEST_NUM, { callback: cb });
     }
   },
   async [actions.SAVE_COHORT]({ commit, dispatch, state }, { cohortName }) {
@@ -340,20 +359,6 @@ export default {
       inputVariables
     );
 
-    // queriesMappedToVariables
-    //   .filter(query => query.variable.type === 'study')
-    //   .forEach(query => {
-    //     console.log(query);
-    //     const { studies } = collection;
-    //     const queryStudies = query.query.map(({ value }) => {
-    //       const study = studies.find(({ study }) => study.study_name === value);
-    //       return study;
-    //     });
-
-    //     query.variable.id = study.study.id;
-    //   });
-
-    // console.log(queriesMappedToVariables);
     try {
       const { data } = await axios.post('/api/cohorts', {
         queries: queriesMappedToVariables,

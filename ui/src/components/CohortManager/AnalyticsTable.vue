@@ -14,129 +14,147 @@
     </v-container>
 
     <div v-show="expanded">
-      <v-container v-if="!pvals || !pvals.length" fluid fill-height>
+      <v-container
+        v-if="pvals_request_status == null || pvals_request_status == 'loading'"
+        fluid
+        fill-height
+      >
         <v-row>
           <v-col cols="12">
             <v-subheader class="subheading primary--text text--lighten-4">
-              <div>
+              <div v-if="pvals_request_status == null">
                 Add variables and apply filters to them to view statistical test
                 results for all outcome variables.
+              </div>
+              <div v-else-if="pvals_request_status == 'loading'">
+                <v-subheader class="title primary--text text--lighten-4">
+                  <loading-spinner />
+                </v-subheader>
               </div>
             </v-subheader>
           </v-col>
         </v-row>
       </v-container>
-      <div v-else>
-        <v-toolbar-title
-          v-if="collection.is_longitudinal"
-          class="primary--text title ml-3 mt-2"
-        >
-          <div>
-            Comparing cohort vs. remainder
-            <v-select
-              v-model="selectedComparisonMeasure"
-              dense
-              :items="['Change', 'First Visit', 'Last Visit']"
-            >
-            </v-select>
-          </div>
-        </v-toolbar-title>
 
-        <v-container
-          align-center
-          fluid
-          pa-0
-          mt-3
-          pl-4
-          style="border: 4px solid rgb(236,118,188); border-radius: 0.4rem;"
-        >
-          <v-row class="pa-0 ma-0">
-            <v-col class="pa-0 ma-0">
-              <span class="pa-0 mr-1 subtitle-1">Highlight P &lt;</span
-              ><v-radio-group v-model="pvt" row>
-                <v-radio
-                  v-for="pv in pval_thresholds"
-                  :label="pv.toString()"
-                  :value="pv"
-                ></v-radio>
-              </v-radio-group>
-            </v-col>
-          </v-row>
-        </v-container>
+      <v-container v-else fluid fill-height class="ma-0 pa-0">
+        <v-row>
+          <v-col cols="12">
+            <div>
+              <v-toolbar-title
+                v-if="collection.is_longitudinal"
+                class="primary--text title ml-3 mt-2"
+              >
+                <span>
+                  Compare cohort vs. remainder
+                  <v-select
+                    v-model="selectedComparisonMeasure"
+                    dense
+                    :full-width="false"
+                    :items="['Change', 'First Visit', 'Last Visit']"
+                  >
+                  </v-select>
+                </span>
+              </v-toolbar-title>
 
-        <v-data-table
-          :headers="headers"
-          :items="pvals"
-          dense
-          hide-default-footer
-          disable-pagination
-          sort-by="pval"
-        >
-          <template v-slot:item="props">
-            <tr :class="getVariableClass(props.item)">
-              <td class="text-subtitle-1 text-xs-left">
-                <v-tooltip top color="primary">
-                  <template v-slot:activator="{ on: tooltip }">
-                    <span v-on="{ ...tooltip }">
-                      {{ props.item.abbreviation }}
-                    </span>
-                  </template>
-                  <span v-html="props.item.label"></span>
-                </v-tooltip>
-              </td>
-              <td class="text-subtitle-1 text-xs-left">
-                <v-tooltip bottom color="primary">
-                  <template v-slot:activator="{ on: tooltip }">
-                    <div v-on="{ ...tooltip }">
-                      {{ props.item.test_abbrev }}
-                    </div>
-                  </template>
-                  <span v-html="props.item.test_name"></span>
-                </v-tooltip>
-              </td>
-              <td
-                v-if="props.item.error"
-                class="text-subtitle-1 text-xs-left error"
-                colspan="2"
+              <v-container
+                align-center
+                fluid
+                pa-0
+                mt-0
+                pl-4
+                style="border: 4px solid rgb(236,118,188); border-radius: 0.4rem;"
               >
-                {{ props.item.error }}
-              </td>
-              <td
-                v-if="!props.item.error"
-                class="text-subtitle-1 text-xs-right"
-              >
-                <v-tooltip
-                  v-if="collection.is_longitudinal"
-                  bottom
-                  color="primary"
-                >
-                  <template v-slot:activator="{ on: tooltip }">
-                    <div v-on="{ ...tooltip }">
-                      {{ props.item.effect_size | formatEffectSize }}
-                    </div>
-                  </template>
-                  <span>{{ props.item.effect_size_descr }}</span>
-                </v-tooltip>
+                <v-row class="pa-0 ma-0">
+                  <v-col class="pa-0 ma-0">
+                    <span class="pa-0 mr-1 subtitle-1">Highlight P &lt;</span
+                    ><v-radio-group v-model="pvt" row>
+                      <v-radio
+                        v-for="pv in pval_thresholds"
+                        :label="pv.toString()"
+                        :value="pv"
+                      ></v-radio>
+                    </v-radio-group>
+                  </v-col>
+                </v-row>
+              </v-container>
 
-                <v-tooltip v-else bottom color="primary">
-                  <template v-slot:activator="{ on: tooltip }">
-                    <div v-on="{ ...tooltip }">
-                      {{ props.item.chi2 | formatChiSquared }}
-                    </div>
-                  </template>
-                  <span>Chi-squared statistic</span>
-                </v-tooltip>
-              </td>
-              <td
-                v-if="!props.item.error"
-                class="text-subtitle-1 text-xs-right"
+              <v-data-table
+                v-if="pvals_request_status == 'loaded'"
+                :headers="headers"
+                :items="pvals"
+                dense
+                hide-default-footer
+                disable-pagination
+                sort-by="pval"
               >
-                {{ props.item.pval | formatPValue }}
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-      </div>
+                <template v-slot:item="props">
+                  <tr :class="getVariableClass(props.item)">
+                    <td class="text-subtitle-1 text-xs-left">
+                      <v-tooltip top color="primary">
+                        <template v-slot:activator="{ on: tooltip }">
+                          <span v-on="{ ...tooltip }">
+                            {{ props.item.abbreviation }}
+                          </span>
+                        </template>
+                        <span v-html="props.item.label"></span>
+                      </v-tooltip>
+                    </td>
+                    <td class="text-subtitle-1 text-xs-left">
+                      <v-tooltip bottom color="primary">
+                        <template v-slot:activator="{ on: tooltip }">
+                          <div v-on="{ ...tooltip }">
+                            {{ props.item.test_abbrev }}
+                          </div>
+                        </template>
+                        <span v-html="props.item.test_name"></span>
+                      </v-tooltip>
+                    </td>
+                    <td
+                      v-if="props.item.error"
+                      class="text-subtitle-1 text-xs-left error"
+                      colspan="2"
+                    >
+                      {{ props.item.error }}
+                    </td>
+                    <td
+                      v-if="!props.item.error"
+                      class="text-subtitle-1 text-xs-right"
+                    >
+                      <v-tooltip
+                        v-if="collection.is_longitudinal"
+                        bottom
+                        color="primary"
+                      >
+                        <template v-slot:activator="{ on: tooltip }">
+                          <div v-on="{ ...tooltip }">
+                            {{ props.item.effect_size | formatEffectSize }}
+                          </div>
+                        </template>
+                        <span>{{ props.item.effect_size_descr }}</span>
+                      </v-tooltip>
+
+                      <v-tooltip v-else bottom color="primary">
+                        <template v-slot:activator="{ on: tooltip }">
+                          <div v-on="{ ...tooltip }">
+                            {{ props.item.chi2 | formatChiSquared }}
+                          </div>
+                        </template>
+                        <span>Chi-squared statistic</span>
+                      </v-tooltip>
+                    </td>
+                    <td
+                      v-if="!props.item.error"
+                      class="text-subtitle-1 text-xs-right"
+                    >
+                      {{ props.item.pval | formatPValue }}
+                    </td>
+                  </tr>
+                </template>
+              </v-data-table>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
   </v-sheet>
 </template>
@@ -156,10 +174,10 @@ export default {
       }
     },
     formatEffectSize(size) {
-      return (size == null) ? "-" : format('.2f')(size);
+      return size == null ? '-' : format('.2f')(size);
     },
     formatChiSquared(cs) {
-      return (cs == null) ? "-" : format('.2f')(cs);
+      return cs == null ? '-' : format('.2f')(cs);
     },
   },
   data() {
@@ -174,6 +192,7 @@ export default {
   computed: {
     ...mapState('cohortManager', {
       pvals: state.PVALS,
+      pvals_request_status: state.PVALS_REQUEST_STATUS,
       pval_threshold: state.PVAL_THRESHOLD,
       collection: state.COLLECTION,
       comparisonMeasure: state.COMPARISON_MEASURE,
