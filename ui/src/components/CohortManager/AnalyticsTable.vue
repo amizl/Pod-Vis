@@ -156,10 +156,10 @@ export default {
       }
     },
     formatEffectSize(size) {
-      return format('.2f')(size);
+      return (size == null) ? "-" : format('.2f')(size);
     },
     formatChiSquared(cs) {
-      return format('.2f')(cs);
+      return (cs == null) ? "-" : format('.2f')(cs);
     },
   },
   data() {
