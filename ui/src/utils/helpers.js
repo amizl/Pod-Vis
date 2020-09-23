@@ -76,7 +76,7 @@ export function getCohortSubjectIds(data, c) {
       v_id = q.input_variable.subject_ontology.id;
       const lbl = q.input_variable.subject_ontology.label;
       // special case for study/dataset
-	if ((lbl === 'Study') || (lbl === 'Dataset')) {
+      if (lbl === 'Study' || lbl === 'Dataset') {
         accessor = function(d) {
           return d.study.study_name;
         };
