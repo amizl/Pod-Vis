@@ -182,12 +182,14 @@ export default {
       });
     });
     outputVariables = outputVars;
+    const comparisonField = 'change';
 
     try {
       const { data } = await axios.post(`/api/compute-anova`, {
         numGroups,
         groups,
         outputVariables,
+        comparisonField,
       });
       commit(mutations.SET_ANOVA_PVALS, data.pvals);
     } catch (err) {

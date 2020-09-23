@@ -109,9 +109,11 @@
                 <td v-if="expanded" class="text-subtitle-1 text-xs-left">
                   <v-tooltip bottom color="primary">
                     <template v-slot:activator="{ on: tooltip }">
-                      <span v-on="{ ...tooltip }">1WA</span>
+                      <span v-on="{ ...tooltip }">{{
+                        props.item.test_abbrev ? props.item.test_abbrev : '-'
+                      }}</span>
                     </template>
-                    <span>1-way ANOVA</span>
+                    <span>{{ props.item.test_name }}</span>
                   </v-tooltip>
                 </td>
                 <td v-if="expanded" class="text-subtitle-1 text-xs-left">
@@ -300,20 +302,30 @@ export default {
       }
       return null;
     },
+    get_variable(ov) {
+      const pd = this.pval_dict;
+      if (ov.label in pd) {
+        return pd[ov.label];
+      }
+      return null;
+    },
     update_pvals() {
       var ap = this;
       this.outcomeVariables.forEach(v => {
-        v.p_value = ap.variable_pval(v);
-        v.f_statistic = ap.variable_fval(v);
+        var ov = ap.get_variable(v);
+        if (ov == null) {
+          v.p_value = null;
+          v.f_statistic = null;
+          v.test_name = null;
+          v.test_abbrev = null;
+        } else {
+          v.p_value = ov.pval;
+          v.f_statistic = ov.fval;
+          v.test_name = ov.test_name;
+          v.test_abbrev = ov.test_abbrev;
+        }
       });
       this.ovars = [...this.outcomeVariables];
-    },
-    pval_table_cell(ov) {
-      let pval = this.variable_pval(ov);
-      if (pval === null) {
-        return '-';
-      }
-      return pval;
     },
     pval_table_cell_aux(ov, which) {
       const pd = this.pval_dict;

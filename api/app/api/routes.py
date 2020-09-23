@@ -882,37 +882,98 @@ def demo_parcoords():
 def compute_anova():
     """Compute 1-way ANOVA test"""
     request_data = request.get_json()
+    comparison_field = request_data.get("comparisonField")
     groups = request_data.get("groups")
     output_variables = request_data.get("outputVariables")
 
+    if (not re.match(r'^firstVisit|lastVisit|change|roc$', comparison_field)):
+        comparison_field = 'change';
+        
     pvals = []
 
     for output_variable in output_variables:
-        # test doesn't apply to longitudinal categorical variables
-        if output_variable['data_category'] == 'Categorical':
-            continue
-
         # Output variables that are simply "change" or "firstVisit" will have the
         # id of "change-208" or "firstVisit-208". We want to detect this so we can
         # use the correct id
         if isinstance(output_variable.get("id"), str) and "-" in output_variable.get("id"):
             variable_id = str(output_variable.get("parentID"))
             variable_label = output_variable.get("parentLabel")
+            variable_abbreviation = variable_label
         else:
             variable_id = str(output_variable.get("id"))
             variable_label = output_variable.get("label")
-
-        samples = []
-        for g in groups:
-            sample = []
-            for data in g:
-                change = data.get(variable_id).get('change')
-                if change is not None:
-                    sample.append(float(change))
-            samples.append(sample)
+            variable_abbreviation = output_variable.get("abbreviation")
+        
+        # Longitudinal categorical variable
+        if output_variable['data_category'] == 'Categorical':
+            # TODO - code repeated from compute_mannwhitneyu
+            data = [];
+            variable_id = str(output_variable['id'])
             
-        fval, pval = f_oneway(*samples)
-        pvals.append(dict(label=variable_label, pval=pval, fval=fval))
+            # assign each nominal outcome a different integer
+            outcomes = {}
+            onum = 1
+            def get_outcome_index(outcome):
+                nonlocal onum
+                if outcome not in outcomes:
+                    outcomes[outcome] = onum
+                    onum += 1
+                return outcomes[outcome]
+
+            gnum = 1
+            for g in groups:
+                for subj in g:
+                    snum = subj.get('subject_id')
+                    fv_value = subj.get(variable_id).get('firstVisit')
+                    lv_value = subj.get(variable_id).get('lastVisit')
+                    if (fv_value is not None) and (lv_value is not None):
+                        data.append({ 'subject_id': snum, 'group': gnum, 'time': 1, 'outcome': get_outcome_index(fv_value) })
+                        data.append({ 'subject_id': snum, 'group': gnum, 'time': 2, 'outcome': get_outcome_index(lv_value) })
+                gnum += 1
+
+            df = pd.DataFrame(data)
+
+            # TODO - handle ordinal variables
+            model = nominal_gee("outcome ~ group", "subject_id", df)
+            results = model.fit()
+            converged = True
+            if (not results.converged):
+                converged = False
+
+            # DEBUG
+#            sys.stderr.write("RESULTS FOR " + output_variable['label'] + "\n")
+#            sys.stderr.write(str(results.summary()) + "\n")
+#            sys.stderr.write("pvalues=" + str(results.pvalues) + "\n")
+#            sys.stderr.write("pvalues[1]=" + str(results.pvalues[1]) + "\n")
+#            sys.stderr.flush()
+                
+            pvals.append(dict(label=variable_label,
+                              abbreviation=variable_abbreviation,
+                              test_name="Nominal Generalized Estimation Equation model",
+                              test_abbrev='NGEE',
+                              converged=converged,
+                              pval=results.pvalues[1],
+                              fval=None))
+
+        # Longitudinal continuous/numeric variable
+        else:
+            samples = []
+            for g in groups:
+                sample = []
+                for data in g:
+                    value = data.get(variable_id).get(comparison_field)
+                    if value is not None:
+                        sample.append(float(value))
+                samples.append(sample)
+            
+            fval, pval = f_oneway(*samples)
+            pvals.append(dict(label=variable_label,
+                              abbreviation=variable_abbreviation,
+                              test_name="1-Way ANOVA",
+                              test_abbrev='1WA',
+                              pval=pval,
+                              fval=fval,
+            ))
          
     return jsonify({
         "success": True,
@@ -1045,11 +1106,11 @@ def compute_mannwhitneyu():
                 converged = False
 
             # DEBUG
-            sys.stderr.write("RESULTS FOR " + output_variable['label'] + "\n")
-            sys.stderr.write(str(results.summary()) + "\n")
-            sys.stderr.write("pvalues=" + str(results.pvalues) + "\n")
-            sys.stderr.write("pvalues[1]=" + str(results.pvalues[1]) + "\n")
-            sys.stderr.flush()
+#            sys.stderr.write("RESULTS FOR " + output_variable['label'] + "\n")
+#            sys.stderr.write(str(results.summary()) + "\n")
+#            sys.stderr.write("pvalues=" + str(results.pvalues) + "\n")
+#            sys.stderr.write("pvalues[1]=" + str(results.pvalues[1]) + "\n")
+#            sys.stderr.flush()
 
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
