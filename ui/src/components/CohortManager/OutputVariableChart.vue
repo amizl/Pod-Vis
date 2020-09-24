@@ -60,12 +60,14 @@
                 variable.data_category === 'Categorical'
             "
             :id="variable.id"
+            :key="'ovcc-' + variable.id"
             :dimension-name="variable.label"
             @userChangedVariable="userChangedOutputVariable"
           />
           <HistogramChart
             v-else-if="variable.is_longitudinal === false"
             :id="variable.id"
+            :key="'ovhc-' + variable.id"
             :dimension-name="variable.label"
             :input-variable="false"
             :variable="variable"
@@ -73,7 +75,7 @@
           />
           <MultiChart
             v-else
-            :key="resetCount"
+            :key="'ovmc-' + variable.id"
             class="ma-1"
             :variable="variable"
             :dimension-name="dimension"

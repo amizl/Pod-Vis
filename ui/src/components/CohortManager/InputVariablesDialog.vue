@@ -293,8 +293,6 @@ export default {
       });
       if (this.propagateChanges) {
         this.setInputVariables(selectedInputVars.sort(this.scaleSortFn));
-        // workaround for v-checkboxes not always updating correctly
-        this.$forceUpdate();
         this.$emit('userSelectedInputVariables', true);
       }
     },

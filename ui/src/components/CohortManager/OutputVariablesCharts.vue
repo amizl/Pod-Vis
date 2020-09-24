@@ -1,12 +1,13 @@
-><template>
-  <div :key="chartsKey" class="xscrollable px-2">
+<template>
+  <div class="xscrollable px-2">
     <v-card class="d-flex flex-row pb-1">
       <v-card
         v-for="(outputVariable, index) in outputVariables"
-        :key="outputVariable.id"
+        :key="'vc-' + outputVariable.id"
         :class="index > 0 ? 'ml-2 pb-1' : 'pb-1'"
       >
         <output-variable-chart
+          :key="'ovc-' + outputVariable.id"
           :variable="outputVariable"
           @userResetOutputVariable="userChangedVariable"
           @userChangedOutputVariable="userChangedVariable"
@@ -29,32 +30,12 @@ export default {
   components: {
     OutputVariableChart,
   },
-  data() {
-    return {
-      chartsKey: 0,
-    };
-  },
   computed: {
     ...mapState('cohortManager', {
       outputVariables: state.OUTPUT_VARIABLES,
     }),
   },
-  watch: {
-    /**
-     * Watch for user adding input variables. When this happens,
-     * we want to trigger a rerender so all the charts' dimensions
-     * resize according to the available space in the flex area.
-     * We can achieve a forecful rerender by updating the key of
-     * the parent component.
-     */
-    outputVariables() {
-      this.rerenderCharts();
-    },
-  },
   methods: {
-    rerenderCharts() {
-      this.chartsKey += 1;
-    },
     userChangedVariable() {
       this.$emit('userChangedOutputVariable', true);
     },

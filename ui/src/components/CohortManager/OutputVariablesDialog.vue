@@ -255,11 +255,14 @@ export default {
         this.outputVariables.forEach(iv => {
           if (iv.children) {
             iv.children.forEach(cv => {
-              cv.outSelected = cv.id in selectedVarsD;
+              var outSel = cv.id in selectedVarsD;
+              if (cv.outSelected != outSel) {
+                cv.outSelected = outSel;
+              }
             });
           }
-
-          iv.outSelected = iv.id in selectedVarsD;
+          var ivSel = iv.id in selectedVarsD;
+          if (iv.outSelected != ivSel) iv.outSelected = ivSel;
         });
       }
     },
@@ -309,10 +312,8 @@ export default {
       });
       if (this.propagateChanges) {
         let oVars = selectedOutputVars.sort(this.scaleSortFn);
-
         // First Visit, Change, etc
         const dimensions = oVars.filter(variable => !variable.children);
-
         // Parent measures
         let measures = {};
         const obsD = this.observationVariablesD;
@@ -332,13 +333,10 @@ export default {
             measures[d.id] = d;
           }
         });
-
         const measures_list = Object.keys(measures).map(function(k) {
           return measures[k];
         });
         this.setOutputVariables(measures_list);
-        // workaround for v-checkboxes not always updating correctly
-        this.$forceUpdate();
         this.$emit('userSelectedOutputVariables', true);
       }
     },
