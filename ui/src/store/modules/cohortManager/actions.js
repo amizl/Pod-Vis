@@ -74,7 +74,7 @@ export default {
           child.type = 'observation';
           if (data.collection.is_longitudinal) {
             child.is_longitudinal = true;
-            child.children = [
+            var children = [
               {
                 ...child,
                 id: `firstVisit-${child.id}`,
@@ -89,21 +89,26 @@ export default {
                 parentLabel: child.label,
                 label: 'Last Visit',
               },
-              {
-                ...child,
-                id: `change-${child.id}`,
-                parentID: child.id,
-                parentLabel: child.label,
-                label: 'Change',
-              },
-              {
-                ...child,
-                id: `roc-${child.id}`,
-                parentID: child.id,
-                parentLabel: child.label,
-                label: 'Rate of Change',
-              },
             ];
+            if (child.data_category == 'Continuous') {
+              children.push(
+                {
+                  ...child,
+                  id: `change-${child.id}`,
+                  parentID: child.id,
+                  parentLabel: child.label,
+                  label: 'Change',
+                },
+                {
+                  ...child,
+                  id: `roc-${child.id}`,
+                  parentID: child.id,
+                  parentLabel: child.label,
+                  label: 'Rate of Change',
+                }
+              );
+            }
+            child.children = children;
           } else {
             child.is_longitudinal = false;
           }

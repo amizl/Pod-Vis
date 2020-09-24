@@ -176,18 +176,24 @@ export default {
             return obs_var;
           });
 
-    const ALL_DIMENSIONS_SELECTED = 4;
+    // index output vars
+    var ovars = {};
+    state.cohort.output_variables.map(v => {
+      ovars[v.observation_ontology_id] = v;
+    });
+
     const outcomeMeasures = nest()
       .key(d => d.parentID)
       .entries(outputVariables)
-      .filter(d => d.values.length === ALL_DIMENSIONS_SELECTED)
+      .filter(d => {
+        var v = ovars[Number(d.key)];
+        var nc = v.observation_ontology.data_category == 'Categorical' ? 2 : 4;
+        return d.values.length === nc;
+      })
       .map(d => {
-        const id = Number(d.key);
-        const observation = state.cohort.output_variables.find(
-          dt => dt.observation_ontology_id === id
-        );
+        var v = ovars[Number(d.key)];
         return {
-          ...observation.observation_ontology,
+          ...v.observation_ontology,
           children: d.values,
         };
       });
