@@ -75,7 +75,7 @@
           />
           <MultiChart
             v-else
-            :key="'ovmc-' + variable.id"
+            :key="'ovmc-' + variable.id + '-' + getSelectedMeasuresKey(variable)"
             class="ma-1"
             :variable="variable"
             :dimension-name="dimension"
@@ -242,6 +242,21 @@ export default {
     getLastVisitLabel() {
       return this.getVisitLabel(false);
     },
+    getSelectedMeasuresKey(v) {
+      var key = "";
+      if (!('selected_measures' in v)) {
+        return "all";
+      }
+
+      ["firstVisit", "lastVisit", "change", "roc"].forEach(m => {
+        if ((m in v['selected_measures']) && v['selected_measures'][m]) {
+          key += "1";
+        } else {
+          key += "0";
+        }
+      });
+    return key;
+    }
   },
 };
 </script>
