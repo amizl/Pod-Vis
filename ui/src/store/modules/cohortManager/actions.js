@@ -236,10 +236,14 @@ export default {
     commit(mutations.UPDATE_FILTERED_DATA);
     dispatch(actions.ANALYZE_FILTERED);
   },
-  [actions.CLEAR_ALL_FILTERS]({ dispatch, state }) {
-    Object.keys(state[stateTypes.DIMENSIONS]).forEach(dimension => {
-      dispatch(actions.CLEAR_FILTER, { dimension });
+  [actions.CLEAR_ALL_FILTERS]({ commit, dispatch, state }) {
+    var dimensions = Object.keys(state[stateTypes.DIMENSIONS]);
+    dimensions.forEach(dimension => {
+      commit(mutations.CLEAR_QUERY, dimension);
+      commit(mutations.CLEAR_FILTER, { dimension });
     });
+    commit(mutations.UPDATE_FILTERED_DATA);
+    dispatch(actions.ANALYZE_FILTERED);
   },
   async [actions.ANALYZE_FILTERED]({ commit, dispatch, state }) {
     const { filteredData } = state;
