@@ -168,7 +168,7 @@ export default {
               type: 'observation',
             };
 
-            if (dimension !== '') {
+            if (dimension != '') {
               obs_var['parentID'] = variable.observation_ontology_id;
               obs_var['parentLabel'] = variable.observation_ontology.label;
             }
@@ -178,14 +178,19 @@ export default {
 
     // index output vars
     var ovars = {};
-    state.cohort.output_variables.map(v => {
-      ovars[v.observation_ontology_id] = v;
-    });
+    if (state.cohort.output_variables) {
+      state.cohort.output_variables.map(v => {
+        ovars[v.observation_ontology_id] = v;
+      });
+    }
 
     const outcomeMeasures = nest()
       .key(d => d.parentID)
       .entries(outputVariables)
       .filter(d => {
+        if (d.key == null) {
+	  return true;
+	}
         var v = ovars[Number(d.key)];
         var nc = v.observation_ontology.data_category == 'Categorical' ? 2 : 4;
         return d.values.length === nc;
