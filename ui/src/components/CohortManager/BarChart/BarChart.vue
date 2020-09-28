@@ -197,6 +197,9 @@ export default {
         this.selected = [];
       }
     },
+    cohort(new_cohort) {
+      this.updateSelectionFromCohortQuery();
+    },
   },
   created() {
     const dimension = this.dimensions[this.dimensionName];
@@ -206,11 +209,11 @@ export default {
 
     var popCounts = {};
     this.unfilteredData.forEach(d => {
-      var v = dimension.accessor(d);
+    var v = dimension.accessor(d);
 
-      if (!(v in popCounts)) {
-        popCounts[v] = 0;
-      }
+    if (!(v in popCounts)) {
+      popCounts[v] = 0;
+    }
       popCounts[v] += 1;
     });
     var popData = [];
@@ -219,19 +222,7 @@ export default {
       popData.push({ key: k, value: c });
     }
     this.populationData = popData;
-
-    // If there is a cohort selected then apply the appropriate
-    // queries to the chart
-    if (this.hasUserSelectedCohort) {
-      const queries = this.findCohortQuery(this.dimensionName);
-      // we want to delay updating the chart a cycle until
-      // the chart is actually mounted to the DOM
-      this.$nextTick(() => {
-        queries.forEach(queryForThisChart =>
-          this.selectOrDeselectBar(queryForThisChart.value)
-        );
-      });
-    }
+    this.updateSelectionFromCohortQuery();
   },
   destroyed() {
     this.clearFilter({
@@ -285,6 +276,20 @@ export default {
     resizeChart() {
       this.height = 150;
       this.width = 350;
+    },
+    updateSelectionFromCohortQuery() {
+      // If there is a cohort selected then apply the appropriate
+      // queries to the chart
+      if (this.hasUserSelectedCohort) {
+        const queries = this.findCohortQuery(this.dimensionName);
+        // we want to delay updating the chart a cycle until
+        // the chart is actually mounted to the DOM
+        this.$nextTick(() => {
+          queries.forEach(queryForThisChart =>
+            this.selectOrDeselectBar(queryForThisChart.value)
+          );
+        });
+      }
     },
   },
 };

@@ -368,11 +368,6 @@ export default {
     },
     bins() {
       return this.hist(this.data);
-      // return histogram()
-      //   .domain(this.xScale.domain())
-      //   .thresholds(this.xScale.ticks(30))(this.data);
-      // .domain(this.cohortXScale.domain())
-      // .thresholds(this.cohortXScale.ticks(30))(this.data);
     },
     popMinusBins() {
       // subtract bins from population bins to get popMinusBins
@@ -513,6 +508,9 @@ export default {
     tfRangeMax(range_max) {
       this.updateSelectedRange();
     },
+    cohort(new_cohort) {
+      this.updateRangeFromCohortQuery();
+    },
   },
   created() {
     const dimension = this.dimensions[this.dimensionName];
@@ -520,23 +518,7 @@ export default {
     this.populationData = this.unfilteredData.map(dimension.accessor);
     this.group = dimension.group();
     this.data = flattenGroupCounts(this.group.all());
-    const [query] = this.findCohortQuery(this.dimensionName);
-    if (typeof query !== 'undefined') {
-      this.$nextTick(() => {
-        const minValue = query.min_value;
-        const maxValue = query.max_value;
-        // Filter dimension to be within selection
-        this.addFilter({
-          dimension: this.dimensionName,
-          filter: d => d >= minValue && d < maxValue,
-          query: {
-            minValue,
-            maxValue,
-          },
-        });
-      });
-    }
-
+    this.updateRangeFromCohortQuery();
     this.updateRangeFromQuery();
   },
   destroyed() {
@@ -834,6 +816,24 @@ export default {
       var min = this.getCohortRangeEndpoint(ss.min, ext, sorted_d);
       var max = this.getCohortRangeEndpoint(ss.max, ext, sorted_d);
       this.selectRange({ min, max });
+    },
+    updateRangeFromCohortQuery() {
+      const [query] = this.findCohortQuery(this.dimensionName);
+      if (typeof query !== 'undefined') {
+        this.$nextTick(() => {
+          const minValue = query.min_value;
+          const maxValue = query.max_value;
+          // Filter dimension to be within selection
+          this.addFilter({
+            dimension: this.dimensionName,
+            filter: d => d >= minValue && d < maxValue,
+            query: {
+              minValue,
+              maxValue,
+            },
+          });
+        });
+      }
     },
     updateRangeFromQuery() {
       // there should only be one query for a histogram...
