@@ -218,9 +218,6 @@ export default {
     sortScales: sortScales,
   }),
   computed: {
-    ...mapGetters('cohortManager', {
-      hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
-    }),
     ...mapState('cohortManager', {
       collection: state.COLLECTION,
       vars: state.OUTPUT_VARIABLES,
@@ -241,7 +238,6 @@ export default {
       let selectedVarsD = {};
 
       // pull vars from user-selected cohort
-      if (this.hasUserSelectedCohort) {
         this.vars.forEach(v => {
           selectedVarsD[v.id] = true;
           if (v.children) {
@@ -264,7 +260,6 @@ export default {
           var ivSel = iv.id in selectedVarsD;
           if (iv.outSelected != ivSel) iv.outSelected = ivSel;
         });
-      }
     },
   },
   async created() {

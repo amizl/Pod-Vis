@@ -230,7 +230,6 @@ export default {
       let selectedVarsD = {};
 
       // pull vars from user-selected cohort
-      if (this.hasUserSelectedCohort) {
         this.vars.forEach(v => {
           selectedVarsD[v.id] = true;
         });
@@ -245,13 +244,9 @@ export default {
 
           iv.inSelected = iv.id in selectedVarsD;
         });
-      }
     },
   },
   computed: {
-    ...mapGetters('cohortManager', {
-      hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
-    }),
     ...mapState('cohortManager', {
       collection: state.COLLECTION,
       vars: state.INPUT_VARIABLES,
