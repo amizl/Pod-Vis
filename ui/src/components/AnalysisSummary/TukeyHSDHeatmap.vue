@@ -196,7 +196,7 @@ export default {
       if (this.collection_cohorts.length < 3) return;
       if (!(this.selectedOutcomeVariable.label in this.pairwiseTukeyHsdPvals)) {
         console.log(
-          'No results found for ' + this.selectedOutcomeVariable.label
+          'TukeyHSDHeatmap: no results found for ' + this.selectedOutcomeVariable.label
         );
         this.pval_dict = {};
         return;
