@@ -932,8 +932,6 @@ def compute_anova():
                 gnum += 1
 
             df = pd.DataFrame(data)
-            sys.stderr.write("df=" + str(df))
-            sys.stderr.flush()
             
             # TODO - handle ordinal variables, not just nominal
             model = nominal_gee("outcome ~ group", "subject_id", df)
