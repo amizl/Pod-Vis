@@ -15,6 +15,7 @@
                         v-for="x in ['1', '0.1', '0.05', '0.01', '0.001']"
                         v-if="expanded"
                         :color="colors['pvals'][x + '-' + colorScheme]['color']"
+			:class="((colorScheme == 'brewer5') && (x == '0.001')) ? 'white--text' : ''"
                         >p &lt; {{ x }}</v-chip
                       >
                       <v-spacer v-if="expanded" />
@@ -57,7 +58,8 @@
                   :style="
                     expanded || !colorScaleWhenMinimized
                       ? ''
-                      : { backgroundColor: pval_table_cell_color(props.item) }
+                      : { backgroundColor: pval_table_cell_color(props.item), 
+		      color: pval_table_text_color(props.item) }
                   "
                 >
                   <v-row align="center">
@@ -125,6 +127,7 @@
                   class="text-subtitle-1 text-xs-left"
                   :style="{
                     backgroundColor: pval_table_cell_color(props.item),
+                    color: pval_table_text_color(props.item)
                   }"
                 >
                   {{ format_pval(props.item.p_value) }}
@@ -350,6 +353,16 @@ export default {
     },
     pval_table_cell_color(ov) {
       return this.pval_table_cell_aux(ov, 'color');
+    },
+    pval_table_text_color(ov) {
+      if (this.colorScheme == 'brewer5') {
+        const pd = this.pval_dict;
+        if (ov.label in pd) {
+          const { pval } = pd[ov.label];
+	  if (pval < 0.001) { return 'white'; }
+        }
+      }
+      return 'black';
     },
     table_row_click(ov) {
       this.$emit('variableSelected', ov);

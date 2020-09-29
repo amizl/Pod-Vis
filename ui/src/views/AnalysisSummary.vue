@@ -102,7 +102,7 @@
                       </v-row>
                     </v-container>
                   </v-sheet>
-                  <div class="pa-2">
+                  <div v-if="false" class="pa-2">
                     Select p-Value color scheme:
                     <v-select
                       v-model="colorScheme"
@@ -173,7 +173,7 @@ export default {
       expandAnalytics: true,
       getCollectionDescription: getCollectionDescription,
       colors: colors,
-      colorScheme: 'val80',
+      colorScheme: 'brewer5',
       colorSchemeItems: [
         { text: 'Brewer 4 class purples', value: 'brewer4p' },
         { text: 'Brewer 5 class purples', value: 'brewer5p' },

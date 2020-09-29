@@ -13,6 +13,7 @@
 		    <v-chip
 		      v-for="x in ['1', '0.1', '0.05', '0.01', '0.001']"
                       :color="colors['pvals'][x + '-' + colorScheme]['color']"
+		      :class="((colorScheme == 'brewer5') && (x == '0.001')) ? 'white--text' : ''"
                       >p &lt; {{ x }}</v-chip>
                   </v-card-title>
                   <v-card-title class="primary--text pa-0 pl-3">
@@ -66,7 +67,7 @@
                   :key="c.id"
                   :class="'text-subtitle-1 ' + table_cell_class(c, props.item)"
                   align="center"
-		  :style="((c == highlight_row) && (props.item == highlight_col)) ? 'border: 1px solid blue;' : 'border: 1px solid white;'"
+		  :style="table_cell_style(c, props.item)"
 		  @mouseover="if (c.index < props.item.index) {highlight_cell(c, props.item);}"
 		  @mouseleave="unhighlight_cells()"
                 >
@@ -252,6 +253,22 @@ export default {
    table_cell_class(cohort1, cohort2) {
      return this.table_cell_aux(cohort1, cohort2, 'class');
    },
+   table_text_color(cohort1, cohort2) {
+      const pd = this.pval_dict;
+      if ((cohort1.id in pd) && (cohort2.id in pd[cohort1.id])) {
+        const pval = pd[cohort1.id][cohort2.id];
+	if (this.colorScheme == 'brewer5') {
+	  if (pval < 0.001) { return 'white'; }
+        }
+      }
+      return 'black';
+    },
+    table_cell_style(cohort1, cohort2) {
+      var style = {};		     
+      style['color'] = this.table_text_color(cohort1, cohort2);
+      style['border'] = (((cohort1 == this.highlight_row) && (cohort2 == this.highlight_col)) ? 'border: 1px solid blue;' : 'border: 1px solid white;');
+      return style;
+    },
    table_cell_click(cohort1, cohort2) {
       const cid = this.collection.id;
       var de_url =

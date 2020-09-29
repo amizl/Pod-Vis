@@ -71,6 +71,7 @@
                     :show-category-icons="true"
                     autoselect-first-variable
                     :expanded="expandAnalytics"
+		    color-scheme="brewer5"
                     @variableSelected="variableSelected"
                     @expandClicked="analyticsExpandClicked"
                   />
