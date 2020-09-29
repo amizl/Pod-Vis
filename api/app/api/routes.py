@@ -905,7 +905,7 @@ def compute_anova():
             variable_abbreviation = output_variable.get("abbreviation")
         
         # Longitudinal categorical variable
-        if output_variable['data_category'] == 'Categorical':
+        if (output_variable['data_category'] == 'Categorical') and output_variable['is_longitudinal']:
             # TODO - code repeated from compute_mannwhitneyu
             data = [];
             variable_id = str(output_variable['id'])
@@ -932,20 +932,15 @@ def compute_anova():
                 gnum += 1
 
             df = pd.DataFrame(data)
-
-            # TODO - handle ordinal variables
+            sys.stderr.write("df=" + str(df))
+            sys.stderr.flush()
+            
+            # TODO - handle ordinal variables, not just nominal
             model = nominal_gee("outcome ~ group", "subject_id", df)
             results = model.fit()
             converged = True
             if (not results.converged):
                 converged = False
-
-            # DEBUG
-#            sys.stderr.write("RESULTS FOR " + output_variable['label'] + "\n")
-#            sys.stderr.write(str(results.summary()) + "\n")
-#            sys.stderr.write("pvalues=" + str(results.pvalues) + "\n")
-#            sys.stderr.write("pvalues[1]=" + str(results.pvalues[1]) + "\n")
-#            sys.stderr.flush()
                 
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
@@ -956,7 +951,7 @@ def compute_anova():
                               fval=None))
 
         # Longitudinal continuous/numeric variable
-        else:
+        elif output_variable['is_longitudinal']:
             samples = []
             for g in groups:
                 sample = []
@@ -974,7 +969,17 @@ def compute_anova():
                               pval=pval,
                               fval=fval,
             ))
-         
+
+        # Cross-sectional not yet supported
+        else:
+            pvals.append(dict(label=variable_label,
+                              abbreviation=variable_abbreviation,
+                              test_name="Cross-sectional data not yet supported",
+                              test_abbrev='N/A',
+                              pval=None,
+                              fval=None,
+            ))
+
     return jsonify({
         "success": True,
         "pvals": pvals,
@@ -989,8 +994,8 @@ def compute_pairwise_tukeyhsd():
     results = {}
 
     for output_variable in output_variables:
-        # test doesn't apply to longitudinal categorical variables
-        if output_variable['data_category'] == 'Categorical':
+        # test doesn't apply to longitudinal categorical variables or cross-sectional variables
+        if (output_variable['data_category'] == 'Categorical') or (not output_variable['is_longitudinal']):
             continue
 
         if isinstance(output_variable.get("id"), str) and "-" in output_variable.get("id"):
