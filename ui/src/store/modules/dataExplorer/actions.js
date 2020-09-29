@@ -26,17 +26,32 @@ export default {
       });
 
       const subjectVariables = makeHierarchy(data.collection.subject_variables);
-
       subjectVariables.forEach(subjectVariable => {
         subjectVariable.children.forEach(child => {
           child.type = 'subject';
         });
       });
 
+      // determine whether this is longitudinal or cross-sectional data
+      data.collection.is_longitudinal = true;
+      data.collection.studies.forEach(s => {
+        if (s.study.longitudinal === 0) data.collection.is_longitudinal = false;
+      });
+
       const observationVariables = makeHierarchy(
         data.collection.observation_variables
       );
 
+	observationVariables.forEach(observationVariable => {
+          observationVariable.children.forEach(child => {
+            child.type = 'observation';
+            if (data.collection.is_longitudinal) {
+              child.is_longitudinal = true;
+  	    } else {
+	      child.is_longitudinal = false;
+	    }
+  	})});
+	
       data.collection.observation_variables_list =
         data.collection.observation_variables;
       data.collection.subject_variables = subjectVariables;
@@ -91,9 +106,10 @@ export default {
         .rollup(values =>
           values
             .map(d => {
-              const { observation, change, roc, min, max, ...rest } = d;
+              const { observation, value, change, roc, min, max, ...rest } = d;
               return {
                 [observation]: {
+       	          value,
                   change,
                   roc,
                   firstVisit: min,
