@@ -135,7 +135,7 @@ export default {
     return {
       line_style: 'bezier',
       draw_mean: true,
-      draw_raw: true,
+      draw_raw: false,
       show_population_counts: false,
       show_first_last_visit: true,
       show_all_timepoints: true,
