@@ -55,6 +55,7 @@
           show-select
           report-max-selected-overlap
           @selectedCohorts="updateSelectedCohorts"
+	  disable-pagination
         />
       </v-col>
     </v-container>

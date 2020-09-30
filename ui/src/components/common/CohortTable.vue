@@ -46,6 +46,8 @@
         :items="cohorts"
         item-key="id"
         :show-select="showSelect"
+	:disable-pagination="disablePagination"
+	:hide-default-footer="disablePagination"
         dense
       >
         <template v-slot:item.label="{ item }">
@@ -123,6 +125,11 @@ export default {
       default: false,
     },
     reportMaxOverlap: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    disablePagination: {
       type: Boolean,
       required: false,
       default: false,
