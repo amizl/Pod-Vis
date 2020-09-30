@@ -44,6 +44,14 @@
         </svg>
       </v-col>
     </v-row>
+
+    <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="center-text pa-0 ma-0"
+          >Current Selection:
+	{{ (selected && (selected.length > 0)) ? selected.join(",") : "-" }}
+      </v-col>
+    </v-row>
+
   </v-container>
 </template>
 
