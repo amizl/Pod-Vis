@@ -63,6 +63,7 @@
             "
             :id="variable.id"
             :dimension-name="dimension"
+	    show-selection
             bar-tooltip="Click to add or remove this value from the cohort filter"
             @userChangedVariable="userChangedInputVariable"
           />
@@ -78,6 +79,7 @@
             v-else
             :id="variable.id"
             :dimension-name="dimension"
+	    show-selection
             @userChangedVariable="userChangedInputVariable"
           />
         </v-col>

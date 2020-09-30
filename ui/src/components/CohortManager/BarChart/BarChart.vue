@@ -45,7 +45,7 @@
       </v-col>
     </v-row>
 
-    <v-row class="ma-0 pa-0">
+    <v-row v-if="showSelection" class="ma-0 pa-0">
         <v-col cols="12" class="center-text pa-0 ma-0"
           >Current Selection:
 	{{ (selected && (selected.length > 0)) ? selected.join(",") : "-" }}
@@ -121,6 +121,11 @@ export default {
       type: String,
       required: false,
       default: '',
+    },
+    showSelection: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   data() {
