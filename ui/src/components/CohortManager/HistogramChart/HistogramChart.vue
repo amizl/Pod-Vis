@@ -134,7 +134,7 @@
             :items="popSubsetItems"
             item-text="label"
             item-value="id"
-            label="Prearranged Selections"
+            label="Pre-Programmed Selections"
             class="pa-0 ma-0"
             return-object
           ></v-select>
