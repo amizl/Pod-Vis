@@ -85,7 +85,7 @@
           />
 
           <!-- color scheme chooser -->
-          <v-sheet color="white" class="rounded-lg shadow mt-2">
+          <v-sheet v-if="false" color="white" class="rounded-lg shadow mt-2">
             <v-container fluid fill-width class="ma-0 pa-0">
               <v-row class="ma-0 pa-0">
                 <v-col cols="12" class="ma-0 pa-0">
@@ -102,7 +102,7 @@
                       </v-row>
                     </v-container>
                   </v-sheet>
-                  <div v-if="false" class="pa-2">
+                  <div class="pa-2">
                     Select p-Value color scheme:
                     <v-select
                       v-model="colorScheme"
