@@ -16,7 +16,7 @@
         </div>
         <div style="width: 100%;">
           <v-data-table
-            :items="sortScales([...this.inputVariables])"
+            :items="this.inputVariables"
             :headers="headers"
             item-key="id"
             hide-default-footer
@@ -29,7 +29,7 @@
       </v-card-title>
       <v-card-text style="padding: 0px 16px 16px 16px;">
         <v-data-table
-          :items="sortScales([...this.inputVariables])"
+	  :items="this.inputVariables"
           :headers="headers"
           item-key="id"
           hide-default-header
@@ -64,7 +64,7 @@
               </td>
               <td class="text-subtitle-1" style="width: 12%;">
                 <v-simple-checkbox
-                  v-model="props.item.inSelected"
+                  v-model="props.item.inmSelected"
                   hide-details
                   @input="masterCbChange(props.item)"
                 ></v-simple-checkbox>
@@ -134,7 +134,7 @@ var getScaleVars = function(scaleVars, vars) {
   let has_first_and_last = false;
 
   vars.forEach(v => {
-    if (v.children && v.children.length > 0) {
+    if (v.children && (v.children.length > 0)) {
       // check whether the children are 'first visit', 'last visit', etc.
       if (v.children[0].label !== 'First Visit') {
         getScaleVars(scaleVars, v.children);
@@ -225,26 +225,31 @@ export default {
         this.$emit('dialogOpened', true);
       }
     },
-    cohort() {
+    cohort(c) {
       this.updateInputVars();
+    },
+    vars(v) {
       let selectedVarsD = {};
 
       // pull vars from user-selected cohort
-        this.vars.forEach(v => {
-          selectedVarsD[v.id] = true;
-        });
+      this.vars.forEach(v => {
+        selectedVarsD[v.id] = true;
+      });
 
-        // and reset everything else
-        this.inputVariables.forEach(iv => {
-          if (iv.children) {
-            iv.children.forEach(cv => {
-              cv.inSelected = cv.id in selectedVarsD;
-            });
-          }
-
-          iv.inSelected = iv.id in selectedVarsD;
-        });
-    },
+      // and reset everything else
+      this.inputVariables.forEach(iv => {
+        if (iv.children && (iv.children.length > 0)) {
+          let allSelected = true;
+          iv.children.forEach(cv => {
+            cv.inSelected = cv.id in selectedVarsD;
+            if (!cv.inSelected) allSelected = false;
+          });
+          iv.inmSelected = allSelected;
+        } else {
+          iv.inmSelected = iv.id in selectedVarsD;
+        }
+      });
+     },
   },
   computed: {
     ...mapState('cohortManager', {
@@ -264,12 +269,12 @@ export default {
       let vars = [];
       getScaleVars(vars, this.collection.subject_variables);
       getScaleVars(vars, this.collection.observation_variables);
-      this.inputVariables = vars;
+      this.inputVariables = sortScales(vars);
     },
     updateSelectedVars() {
       let selectedInputVars = [];
       this.inputVariables.forEach(iv => {
-        if (iv.children && iv.children.length > 0) {
+        if (iv.children && (iv.children.length > 0)) {
           let allSelected = true;
           iv.children.forEach(cv => {
             if (cv.inSelected) {
@@ -281,8 +286,8 @@ export default {
               allSelected = false;
             }
           });
-          iv.inSelected = allSelected;
-        } else if (iv.inSelected) {
+          if (iv.inmSelected != allSelected) iv.inmSelected = allSelected;
+        } else if (iv.inmSelected) {
           selectedInputVars.push(iv);
         }
       });
@@ -300,7 +305,7 @@ export default {
             c.data_category != 'Categorical' ||
             (c.label != 'Change' && c.label != 'Rate of Change')
           ) {
-            c.inSelected = v.inSelected;
+            c.inSelected = v.inmSelected;
           }
         });
       }

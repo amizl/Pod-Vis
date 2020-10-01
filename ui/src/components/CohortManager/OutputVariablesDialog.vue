@@ -14,7 +14,8 @@
         <div style="width: 100%; padding: 16px;">Choose Outcome Variables</div>
         <div style="width: 100%;">
           <v-data-table
-            :items="sortScales([...this.outputVariables])"
+            :items="this.outputVariables"
+	    key="ovd-header"
             :headers="headers"
             item-key="id"
             hide-default-footer
@@ -29,7 +30,8 @@
       <v-card-text style="padding: 0px 16px 16px 16px;">
         <v-data-table
           :headers="headers"
-          :items="sortScales([...this.outputVariables])"
+          :items="this.outputVariables"
+	  key="ovd"
           item-key="id"
           hide-default-header
           hide-default-footer
@@ -63,7 +65,7 @@
               </td>
               <td class="text-subtitle-1" style="width 12%;">
                 <v-simple-checkbox
-                  v-model="props.item.outSelected"
+                  v-model="props.item.outmSelected"
                   hide-details
                   @input="masterCbChange(props.item)"
                 ></v-simple-checkbox>
@@ -233,32 +235,41 @@ export default {
         this.$emit('dialogOpened', true);
       }
     },
-    cohort() {
+    cohort(c) {
       this.updateOutputVars();
+    },
+    vars() {
       let selectedVarsD = {};
 
       // pull vars from user-selected cohort
         this.vars.forEach(v => {
-          selectedVarsD[v.id] = true;
-          if (v.children) {
+          if (v.children && (v.children.length > 0))  {
             v.children.forEach(c => {
-              selectedVarsD[c.id] = true;
+              if (!("outSelected" in c) || c.outSelected) {
+                selectedVarsD[c.id] = true;
+              }
             });
+          } else {
+            selectedVarsD[v.id] = true;
           }
         });
 
         // and reset everything else
         this.outputVariables.forEach(iv => {
-          if (iv.children) {
+          if (iv.children && (iv.children.length > 0)) {
+            let allSelected = true;
             iv.children.forEach(cv => {
               var outSel = cv.id in selectedVarsD;
               if (cv.outSelected != outSel) {
                 cv.outSelected = outSel;
               }
+              if (!outSel) allSelected = false;
             });
+            iv.outmSelected = allSelected;
+          } else {
+            var ivSel = iv.id in selectedVarsD;
+            if (iv.outmSelected != ivSel) iv.outmSelected = ivSel;
           }
-          var ivSel = iv.id in selectedVarsD;
-          if (iv.outSelected != ivSel) iv.outSelected = ivSel;
         });
     },
   },
@@ -273,7 +284,7 @@ export default {
     updateOutputVars() {
       let vars = [];
       getScaleVars(vars, this.collection.observation_variables);
-      this.outputVariables = vars;
+      this.outputVariables = sortScales(vars);
 
       const obsD = this.observationVariablesD;
       const indexVars = function(vars) {
@@ -300,8 +311,8 @@ export default {
               allSelected = false;
             }
           });
-          iv.outSelected = allSelected;
-        } else if (iv.outSelected) {
+          if (iv.outmSelected != allSelected) iv.outmSelected = allSelected;
+        } else if (iv.outmSelected) {
           selectedOutputVars.push(iv);
         }
       });
@@ -344,7 +355,7 @@ export default {
             c.data_category != 'Categorical' ||
             (c.label != 'Change' && c.label != 'Rate of Change')
           ) {
-            c.outSelected = v.outSelected;
+            c.outSelected = v.outmSelected;
           }
         });
       }
