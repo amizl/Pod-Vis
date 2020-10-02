@@ -330,8 +330,8 @@ export default {
         this.setInputVariables(selectedInputVars.sort(this.scaleSortFn));
         this.$emit('userSelectedInputVariables', true);
       }
-this.updateColumnCheckboxes();
-},
+     this.updateColumnCheckboxes();
+    },
 
     // column master checkbox clicked
     columnCheckboxChange(which) {
