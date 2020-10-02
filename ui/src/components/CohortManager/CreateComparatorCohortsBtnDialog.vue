@@ -26,7 +26,7 @@
           >
             WARNING:<br clear="both" /><br clear="both" />Outcome variable
             filters will not be saved with the cohort unless they are moved to
-            the INPUT VARIABLES section.
+            the PREDICTOR VARIABLES section.
           </span>
         </v-card-title>
 
