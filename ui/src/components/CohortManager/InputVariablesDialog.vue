@@ -22,10 +22,43 @@
             hide-default-footer
             dense
             style="width: 100%;"
+	    class="blue-grey lighten-5"
           >
             <template v-slot:item="props"> </template>
           </v-data-table>
-        </div>
+
+          <v-data-table
+            :items="this.inputVariables"
+            :headers="headers"
+            item-key="id"
+            hide-default-footer
+            dense
+            style="width: 100%;"
+	    class="blue-grey lighten-5"
+            >
+	    <template v-slot:header.category="{ header }">
+	    </template>
+            <template v-slot:header.label="{ header }">
+	    </template>
+	    <template v-slot:header.all="{ header }">
+	      <v-simple-checkbox v-model="columnCheckboxes['all']" hide-details @input="columnCheckboxChange('all')" />
+	    </template>
+	    <template v-slot:header.fv="{ header }">
+	      <v-simple-checkbox v-model="columnCheckboxes['firstVisit']" hide-details @input="columnCheckboxChange('firstVisit')" />
+	    </template>
+    	    <template v-slot:header.lv="{ header }">
+	      <v-simple-checkbox v-model="columnCheckboxes['lastVisit']" hide-details @input="columnCheckboxChange('lastVisit')" />
+	    </template>
+    	    <template v-slot:header.ch="{ header }">
+	      <v-simple-checkbox v-model="columnCheckboxes['change']" hide-details @input="columnCheckboxChange('change')" />
+	    </template>
+   	    <template v-slot:header.roc="{ header }">
+	      <v-simple-checkbox v-model="columnCheckboxes['ROC']" hide-details @input="columnCheckboxChange('ROC')" />
+	    </template>
+	    <template v-slot:item="props"> </template>
+          </v-data-table>
+
+	</div>
       </v-card-title>
       <v-card-text style="padding: 0px 16px 16px 16px;">
         <v-data-table
@@ -160,6 +193,8 @@ export default {
     },
   },
   data: () => ({
+    // checkboxes to select all items in a column
+    columnCheckboxes: { 'all': false, 'firstVisit': false, 'lastVisit': false, 'change': false, 'ROC': false },
     searchVariable: '',
     openInputVariableDialog: false,
     headers: [
@@ -179,35 +214,35 @@ export default {
       },
       {
         text: 'All',
-        value: '',
+        value: 'all',
         width: '12%',
         sortable: false,
         class: 'text-subtitle-1 font-weight-bold',
       },
       {
         text: 'First Visit',
-        value: '',
+        value: 'fv',
         width: '12%',
         sortable: false,
         class: 'text-subtitle-1 font-weight-bold',
       },
       {
         text: 'Last Visit',
-        value: '',
+        value: 'lv',
         width: '12%',
         sortable: false,
         class: 'text-subtitle-1 font-weight-bold',
       },
       {
         text: 'Change',
-        value: '',
+        value: 'ch',
         width: '12%',
         sortable: false,
         class: 'text-subtitle-1 font-weight-bold',
       },
       {
         text: 'ROC',
-        value: '',
+        value: 'roc',
         width: '12%',
         sortable: false,
         class: 'text-subtitle-1 font-weight-bold',
@@ -295,8 +330,46 @@ export default {
         this.setInputVariables(selectedInputVars.sort(this.scaleSortFn));
         this.$emit('userSelectedInputVariables', true);
       }
+this.updateColumnCheckboxes();
+},
+
+    // column master checkbox clicked
+    columnCheckboxChange(which) {
+      var cn = ['firstVisit', 'lastVisit', 'change', 'ROC'].findIndex(x => x == which);
+      var vm = this;
+      this.inputVariables.forEach(v => {
+        if (which == 'all') {
+          v.inmSelected = vm.columnCheckboxes['all'];
+          vm.masterCbChange(v);
+        } else if ((cn != -1) && v.children && (v.children.length > cn)) {
+          v.children[cn].inSelected = vm.columnCheckboxes[which];
+        }
+      });
+      this.$nextTick(() => this.updateSelectedVars());
     },
 
+    // update state of column master checkboxes based on the current state
+    updateColumnCheckboxes() {
+      var cbStates = {'all': true, 'firstVisit': true, 'lastVisit': true, 'change': true, 'ROC': true};
+      this.inputVariables.forEach(v => {
+        if (!v.inmSelected) {
+          cbStates['all'] = false;
+        }
+        var i = 0;
+        ['firstVisit', 'lastVisit', 'change', 'ROC'].forEach(m => {
+          if (v.children && (v.children.length > i) && (!v.children[i].inSelected)) {
+            cbStates[m] = false;
+          }
+          i += 1;
+        });
+      });
+      var vm = this;
+      Object.keys(cbStates).forEach(k => {
+        if (vm.columnCheckboxes[k] != cbStates[k]) vm.columnCheckboxes[k] = cbStates[k];
+      });
+   },
+
+    // row master checkbox clicked
     masterCbChange(v) {
       // check/uncheck all child variables to match the master checkbox
       if (v.children) {
