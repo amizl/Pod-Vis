@@ -42,7 +42,11 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 // Directives
 import resize from 'vue-resize-directive';
-import { colors } from '@/utils/colors';
+import {
+  colors,
+  getNumSubjectsColor,
+  getNumSubjectsTextColor,
+} from '@/utils/colors';
 // Util
 import {
   getObservationVariableIds,
@@ -89,7 +93,7 @@ export default {
       maxPxPerRow: 40,
       margin: {
         top: 70,
-        right: 100,
+        right: 180,
         bottom: 40,
         left: 220,
       },
@@ -454,7 +458,81 @@ export default {
         .style('opacity', function(d) {
           return d[1] in collectionVarAbbreviations ? cvo : vo;
         })
-        .attr('stroke', 'black');
+      .attr('stroke', 'black');
+
+      // generate row counts, indexed by scale name
+      // for now we're just going to take min(first_visit_count, last_visit_count)
+
+      var varNameToId = {};
+      this.collection.observation_variables_list.forEach(ov => {
+        varNameToId[ov['ontology']['abbreviation']] = ov['ontology']['id'];
+      });
+
+      var vm = this;
+      var rowCounts = {};
+      var maxCount = 0;
+
+      this.getCollectionSummaries().forEach(cs => {
+        var visit = cs[0];
+        var scale = cs[1];
+        var count = cs[3];
+        var scaleId = varNameToId[cs[1]];
+
+        // is this visit one of those selected for this variable?
+        if ((vm.firstVisits[scaleId] == visit) || (vm.lastVisits[scaleId] == visit)) {
+          if (!(scale in rowCounts)) {
+            rowCounts[scale] = { 'count': count, 'n_visits': 1 };
+          }
+          else {
+            if (count < rowCounts[scale]['count']) rowCounts[scale]['count'] = count;
+            rowCounts[scale]['n_visits'] += 1;
+          }
+        }
+      });
+
+      // only 1 visit found means no subjects with first + last
+      this.uniqueTests.forEach(t => {
+        if (t in rowCounts) {
+          var rc = rowCounts[t];
+          if (rc['n_visits'] < 2) rc['count'] = 0;
+          if (rc['count'] > maxCount) { maxCount = rc['count']; }
+        }
+      });
+
+      var rcFontSize = 16;
+      var qrcfs = Math.floor(rcFontSize / 4);
+      var maxCountLen = String(maxCount).length;
+
+      // row counts - color-coded background rectangles
+      mysvg
+        .append('g')
+        .selectAll('dot')
+        .data(uniqueTests.filter(t => t in rowCounts))
+        .enter()
+        .append('rect')
+        .attr('x', margin.left + width)
+        .attr('y', function(d) { return y(d); })
+        .attr('width', rcFontSize * (maxCountLen + 1.5))
+        .attr('height', y_bw )
+        .attr('rx', qrcfs*2)
+        .attr('ry', qrcfs*2)
+        .style('fill', function(d) { return getNumSubjectsColor(rowCounts[d]['count']); })
+        .style('stroke', 'white')
+        .style('stroke-width', qrcfs);
+
+      // row counts
+      mysvg
+        .append('g')
+        .selectAll('dot')
+        .data(uniqueTests.filter(t => t in rowCounts))
+        .enter()
+        .append('text')
+        .attr('x', margin.left + width + 10)
+        .attr('y', function(d) { return y(d) + y_hbw + qrcfs; })
+        .text(function(d) { var ct = rowCounts[d]['count']; return ct == 0 ? '0' : '<= ' + ct; })
+        .style('font-size', rcFontSize)
+        .style('font-family', 'sans-serif')
+        .style('color', function(d) { return getNumSubjectsTextColor(rowCounts[d]['count']); })
 
       mysvg
         .append('text')
@@ -476,7 +554,7 @@ export default {
       mysvg
         .append('g')
         .append('rect')
-        .attr('x', width + margin.left + 10)
+        .attr('x', width + margin.left + 90)
         .attr('y', margin.top)
         .attr('width', max_radius * 5)
         .attr('height', max_radius * 11)
@@ -491,7 +569,7 @@ export default {
         .data(cirCounts)
         .enter()
         .append('circle')
-        .attr('cx', width + margin.left + 30)
+        .attr('cx', width + margin.left + 110)
         .attr('cy', function(d, i) {
           var val = (5 - i) * max_radius * 1.8 + margin.top;
           return val;
@@ -513,7 +591,7 @@ export default {
         .enter()
         .append('text')
         .attr('text-anchor', 'middle')
-        .attr('x', width + margin.left + max_radius * 2 + 30)
+        .attr('x', width + margin.left + max_radius * 2 + 110)
         .attr('y', function(d, i) {
           var val = (5 - i) * max_radius * 1.8 + margin.top + 5;
           return val;
