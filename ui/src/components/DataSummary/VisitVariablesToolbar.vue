@@ -18,8 +18,8 @@
               <v-spacer />
               <v-chip
                 class="title"
-                :color="colors['population']"
-                :text-color="colors['cohort']"
+                :color="getNumSubjectsColor(numSelectedSubjects)"
+                :text-color="getNumSubjectsTextColor(numSelectedSubjects)"
                 >Study Population - {{ numSelectedSubjects }}</v-chip
               >
             </v-card-title>
@@ -67,7 +67,11 @@
 import axios from 'axios';
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/dataSummary/types';
-import { colors } from '@/utils/colors';
+import {
+  colors,
+  getNumSubjectsColor,
+  getNumSubjectsTextColor,
+} from '@/utils/colors';
 import {
   getObservationVariableIds,
   getObservationVariableNames,
@@ -84,6 +88,8 @@ export default {
       numSubjects: 0,
       colors: colors,
       hideUnselectedVars: true,
+      getNumSubjectsColor: getNumSubjectsColor,
+      getNumSubjectsTextColor: getNumSubjectsTextColor,
     };
   },
   computed: {
