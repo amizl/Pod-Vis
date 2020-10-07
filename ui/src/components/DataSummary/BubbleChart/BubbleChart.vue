@@ -532,6 +532,8 @@ export default {
             rc['descr'] = "no subjects had a measurement for " + t + " recorded at " + rc['other'] + " visit " + other_visit;
           }
           if (rc['count'] > maxCount) { maxCount = rc['count']; }
+        } else {
+          rowCounts[t] = { 'count': 0, 'n_visits': 0, 'descr': "no subjects had a measurement for " + t + " recorded at the selected first or last visit" };
         }
       });
 
