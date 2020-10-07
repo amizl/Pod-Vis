@@ -25,6 +25,21 @@
         </v-tooltip>
       </v-col>
     </v-row>
+
+    <!-- tooltips for scale abbreviations -->
+    <v-row v-if="canvasUpdated" class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0">
+        <v-tooltip
+          v-for="(scale, index) in Object.keys(rowCounts)"
+          top
+          color="primary"
+          :activator="rowCounts[scale]['node']"
+        >
+          <span> {{ rowCounts[scale]['descr']}} </span>
+        </v-tooltip>
+      </v-col>
+    </v-row>
+
   </v-container>
 </template>
 
@@ -113,6 +128,7 @@ export default {
       collectionVarAbbreviationToName: {},
       firstVisitHandle: null,
       lastVisitHandle: null,
+      rowCounts: {},
     };
   },
   computed: {
@@ -475,6 +491,10 @@ export default {
       var rowCounts = {};
       var maxCount = 0;
 
+      var countDescrFn = function(count, scale, visit) {
+        return count + " subject(s) had a measurement for " + scale + " recorded at visit " + visit;
+      };
+
       this.getCollectionSummaries().forEach(cs => {
         var visit = cs[0];
         var scale = cs[1];
@@ -484,10 +504,13 @@ export default {
         // is this visit one of those selected for this variable?
         if ((vm.firstVisits[scaleId] == visit) || (vm.lastVisits[scaleId] == visit)) {
           if (!(scale in rowCounts)) {
-            rowCounts[scale] = { 'count': count, 'n_visits': 1 };
+            rowCounts[scale] = { 'count': count, 'n_visits': 1, 'descr': countDescrFn(count, scale, visit) };
           }
           else {
-            if (count < rowCounts[scale]['count']) rowCounts[scale]['count'] = count;
+            if (count < rowCounts[scale]['count']) {
+              rowCounts[scale]['count'] = count;
+              rowCounts[scale]['descr'] = countDescrFn(count, scale, visit);
+            }
             rowCounts[scale]['n_visits'] += 1;
           }
         }
@@ -502,6 +525,7 @@ export default {
         }
       });
 
+      this.rowCounts = rowCounts;
       var rcFontSize = 16;
       var qrcfs = Math.floor(rcFontSize / 4);
       var maxCountLen = String(maxCount).length;
@@ -521,7 +545,7 @@ export default {
         .attr('ry', qrcfs*2)
         .style('fill', function(d) { return getNumSubjectsColor(rowCounts[d]['count']); })
         .style('stroke', 'white')
-        .style('stroke-width', qrcfs);
+        .style('stroke-width', qrcfs)
 
       // row counts
       mysvg
@@ -530,12 +554,19 @@ export default {
         .data(uniqueTests.filter(t => t in rowCounts))
         .enter()
         .append('text')
+        .attr('id', function(d) {
+          return 'hr-' + d;
+          })
         .attr('x', margin.left + width + 15)
         .attr('y', function(d) { return y(d) + y_hbw + qrcfs; })
         .text(function(d) { var ct = rowCounts[d]['count']; return ct == 0 ? '0' : '<= ' + ct; })
         .style('font-size', rcFontSize)
         .style('font-family', 'sans-serif')
         .style('color', function(d) { return getNumSubjectsTextColor(rowCounts[d]['count']); })
+
+      Object.keys(rowCounts).forEach(k => {
+        rowCounts[k]['node'] = document.getElementById('hr-' + k);
+      });
 
       // display large visit variable caption (e.g., Visit Event vs. Visit Number)
       mysvg
