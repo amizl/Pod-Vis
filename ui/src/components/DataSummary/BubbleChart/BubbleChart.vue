@@ -407,6 +407,7 @@ export default {
         .scaleBand()
         .domain(this.uniqueEvents)
         .range([0, width]);
+      var nEvents = this.uniqueEvents.length;
 
       // y-axis labeled by variable/test name
       var y = d3
@@ -491,8 +492,8 @@ export default {
       var rowCounts = {};
       var maxCount = 0;
 
-      var countDescrFn = function(count, scale, visit) {
-        return count + " subject(s) had a measurement for " + scale + " recorded at visit " + visit;
+      var countDescrFn = function(count, scale, which, visit) {
+        return count + " subject(s) had a measurement for " + scale + " recorded at " + which + " visit " + visit;
       };
 
       this.getCollectionSummaries().forEach(cs => {
@@ -500,27 +501,36 @@ export default {
         var scale = cs[1];
         var count = cs[3];
         var scaleId = varNameToId[cs[1]];
+        var which = null;
+        var other = null;
+
+        if (vm.firstVisits[scaleId] == visit) { which = 'first'; other = 'last'; }
+        if (vm.lastVisits[scaleId] == visit) { which = 'last'; other = 'first'; }
 
         // is this visit one of those selected for this variable?
-        if ((vm.firstVisits[scaleId] == visit) || (vm.lastVisits[scaleId] == visit)) {
+        if (which != null) {
           if (!(scale in rowCounts)) {
-            rowCounts[scale] = { 'count': count, 'n_visits': 1, 'descr': countDescrFn(count, scale, visit) };
+            rowCounts[scale] = { 'count': count, 'n_visits': 1, 'descr': countDescrFn(count, scale, which, visit), 'other': other, 'scale_id': scaleId };
           }
           else {
             if (count < rowCounts[scale]['count']) {
               rowCounts[scale]['count'] = count;
-              rowCounts[scale]['descr'] = countDescrFn(count, scale, visit);
+              rowCounts[scale]['descr'] = countDescrFn(count, scale, which, visit);
             }
             rowCounts[scale]['n_visits'] += 1;
           }
         }
       });
 
-      // only 1 visit found means no subjects with first + last
       this.uniqueTests.forEach(t => {
         if (t in rowCounts) {
           var rc = rowCounts[t];
-          if ((vm.is_longitudinal) && (rc['n_visits'] < 2)) rc['count'] = 0;
+          // only 1 visit found means no subjects with first + last
+          if ((nEvents > 1) && (rc['n_visits'] < 2)) {
+            var other_visit = (rc['other'] == 'first') ? vm.firstVisits[rc['scale_id']] : vm.lastVisits[rc['scale_id']]; 
+            rc['count'] = 0;
+            rc['descr'] = "no subjects had a measurement for " + t + " recorded at " + rc['other'] + " visit " + other_visit;
+          }
           if (rc['count'] > maxCount) { maxCount = rc['count']; }
         }
       });
