@@ -287,7 +287,6 @@ export default {
           this.setAllFirstVisits(this.uniqueEvents[0]);
         } else {
           this.firstVisitHandle = selectedVisits[0];
-          this.setAllFirstVisits(selectedVisits[0]);
         }
       } else {
         if (selectedVisits[0] == null) {
@@ -299,7 +298,6 @@ export default {
           );
         } else {
           this.lastVisitHandle = selectedVisits[0];
-          this.setAllLastVisits(selectedVisits[0]);
         }
       }
     },
@@ -388,11 +386,13 @@ export default {
         .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+      // x-axis labeled by visit
       var x = d3
         .scaleBand()
         .domain(this.uniqueEvents)
         .range([0, width]);
 
+      // y-axis labeled by variable/test name
       var y = d3
         .scaleBand()
         .domain(this.uniqueTests)
@@ -411,6 +411,7 @@ export default {
         .domain([this.minGroupCount, this.maxGroupCount])
         .range([1, max_radius * 0.8]);
 
+      // rotate visit names by 45 degrees to fit longer visit names
       mysvg
         .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
@@ -422,6 +423,7 @@ export default {
       var vo = this.varOpacity;
       var anames = this.collectionVarAbbreviationToName;
 
+      // display unselected variables/tests as grayed-out
       mysvg
         .append('g')
         .attr('transform', 'translate(' + margin.left + ', 0)')
@@ -434,6 +436,7 @@ export default {
           return d;
         });
 
+      // draw a circle for each scale, visit pair
       mysvg
         .append('g')
         .selectAll('dot')
@@ -494,7 +497,7 @@ export default {
       this.uniqueTests.forEach(t => {
         if (t in rowCounts) {
           var rc = rowCounts[t];
-          if (rc['n_visits'] < 2) rc['count'] = 0;
+          if ((vm.is_longitudinal) && (rc['n_visits'] < 2)) rc['count'] = 0;
           if (rc['count'] > maxCount) { maxCount = rc['count']; }
         }
       });
@@ -510,9 +513,9 @@ export default {
         .data(uniqueTests.filter(t => t in rowCounts))
         .enter()
         .append('rect')
-        .attr('x', margin.left + width)
+        .attr('x', margin.left + width + 5)
         .attr('y', function(d) { return y(d); })
-        .attr('width', rcFontSize * (maxCountLen + 2.5))
+        .attr('width', rcFontSize * 5)
         .attr('height', y_bw )
         .attr('rx', qrcfs*2)
         .attr('ry', qrcfs*2)
@@ -527,13 +530,14 @@ export default {
         .data(uniqueTests.filter(t => t in rowCounts))
         .enter()
         .append('text')
-        .attr('x', margin.left + width + 10)
+        .attr('x', margin.left + width + 15)
         .attr('y', function(d) { return y(d) + y_hbw + qrcfs; })
         .text(function(d) { var ct = rowCounts[d]['count']; return ct == 0 ? '0' : '<= ' + ct; })
         .style('font-size', rcFontSize)
         .style('font-family', 'sans-serif')
         .style('color', function(d) { return getNumSubjectsTextColor(rowCounts[d]['count']); })
 
+      // display large visit variable caption (e.g., Visit Event vs. Visit Number)
       mysvg
         .append('text')
         .attr('text-anchor', 'middle')
@@ -542,7 +546,7 @@ export default {
         .text(this.visitVariable)
         .style('font-size', 25);
 
-      // Add legend to the plot
+      // Add legend to the plot showing reference circle sizes
       var circInt = (this.maxGroupCount - this.minGroupCount) / 4;
 
       var cirCounts = [];
@@ -583,7 +587,7 @@ export default {
         .style('opacity', '0.7')
         .attr('stroke', 'black');
 
-      // Append the text showing the count size
+      // Label legend circles with their sizes
       mysvg
         .append('g')
         .selectAll('dot')
@@ -601,6 +605,7 @@ export default {
           return d;
         });
 
+      // Draw border around a single cell - used to indicate a selection saved in the database
       var highlightCell = function(
         var_id,
         var_name,
@@ -626,6 +631,7 @@ export default {
           .attr('stroke-width', '3');
       };
 
+      // Add a draggable highlight to a single cell
       var addDraggableHighlight = function(
         var_id,
         var_name,
@@ -714,6 +720,7 @@ export default {
         dh(colRect);
       };
 
+      // Add a draggable bar that can be used to change all first or last visits at the same time
       var addDraggableHandle = function(visit, color, chart, is_first) {
         var cx = x(visit) + margin.left;
         var cy = margin.top - y.bandwidth();
