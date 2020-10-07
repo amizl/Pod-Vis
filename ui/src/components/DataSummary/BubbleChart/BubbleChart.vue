@@ -512,7 +512,7 @@ export default {
         .append('rect')
         .attr('x', margin.left + width)
         .attr('y', function(d) { return y(d); })
-        .attr('width', rcFontSize * (maxCountLen + 1.5))
+        .attr('width', rcFontSize * (maxCountLen + 2.5))
         .attr('height', y_bw )
         .attr('rx', qrcfs*2)
         .attr('ry', qrcfs*2)
