@@ -190,6 +190,134 @@ class Study(db.Model):
                 
         return subject_vars
 
+    @classmethod
+    def get_subject_variable_visits(cls, study_ids):
+        """Retrieve all subjects along with their visit/variable matrix
+
+        Args:
+            id: List of study IDs.
+
+        Returns:
+            All subjects in the named studies.
+
+        """                
+
+        # retrieve studies, index by id
+        studies = [cls.find_by_id(study_id) for study_id in study_ids]
+        id2study= {}
+        for study in studies:
+            id2study[study.id] = study
+
+        connection = db.engine.connect()
+
+        # Based on query from collection.get_data_for_cohort_manager
+        query_for_subject_obs_vars = text("""
+          SELECT
+              sv.subject_id as subject_id, s.study_id as study_id, oo.id as observation_ontology_id,
+              sv.event_date, sv.visit_num, sv.visit_event
+          FROM subject s, subject_visit sv, observation o, observation_ontology oo
+          WHERE s.study_id in :study_ids
+          AND s.id = sv.subject_id
+          AND sv.id = o.subject_visit_id
+          AND oo.id = o.observation_ontology_id
+          ORDER BY subject_id, study_id, observation_ontology_id, event_date, sv.visit_num
+        """)
+
+        result_proxy = connection.execute(
+            query_for_subject_obs_vars,
+            study_ids=study_ids).fetchall()
+
+        # dict mapping from subject id to dict of variables
+        subject_vars = {}
+
+        # build indexes of unique visits by visit_event and visit_num
+        visits = { 'event': {}, 'num': {} }
+
+        def add_visits(r):
+            study_id = r['study_id']
+            visit_event = r['visit_event']
+            visit_num = str(r['visit_num'])
+            if visit_event not in visits['event']:
+                visits['event'][visit_event] = { 'visit_event': visit_event, 'event_date': r['event_date'] }
+            if visit_num not in visits['num']:
+                visits['num'][visit_num] = { 'visit_num': visit_num, 'event_date': r['event_date'] }
+
+        for row in result_proxy:
+            rd = dict(row)
+            add_visits(rd)
+            subject_id = rd['subject_id']
+            study_id = rd['study_id']
+            visit_num = str(rd['visit_num'])
+            oo_id = rd['observation_ontology_id']
+            if subject_id not in subject_vars:
+                subject_vars[subject_id] = {}
+            if study_id not in subject_vars[subject_id]:
+                subject_vars[subject_id][study_id] = {}
+            if oo_id not in subject_vars[subject_id][study_id]:
+                subject_vars[subject_id][study_id][oo_id] = { 'event': {}, 'num': {} }
+            subject_vars[subject_id][study_id][oo_id]['event'][rd['visit_event']] = 1
+            subject_vars[subject_id][study_id][oo_id]['num'][visit_num] = 1
+
+        # convert dicts to arrays
+        visit_events = list(visits['event'].values())
+        visit_events.sort(key = lambda x: x['event_date'])
+        visit_nums = list(visits['num'].values())
+        visit_nums.sort(key = lambda x: x['visit_num'])
+        visit_lists = { 'event': visit_events, 'num': visit_nums }
+
+        # convert subject visits to bit strings
+        subject_vars_bs = {}
+        for subject_id in subject_vars:
+            subject_vars_bs[subject_id] = {}
+            for study_id in subject_vars[subject_id]:
+                subject_vars_bs[subject_id][study_id] = {}
+                for oo_id in subject_vars[subject_id][study_id]:
+                    # visit_event
+                    ve_str = ""
+                    for ve in visit_lists['event']:
+                        if ve['visit_event'] in subject_vars[subject_id][study_id][oo_id]['event']:
+                            ve_str += "1"
+                        else:
+                            ve_str += "0"
+
+                    # visit_num
+                    vn_str = ""
+                    for vn in visit_lists['num']:
+                        if vn['visit_num'] in subject_vars[subject_id][study_id][oo_id]['num']:
+                            vn_str += "1"
+                        else:
+                            vn_str += "0"
+
+                    subject_vars_bs[subject_id][study_id][oo_id] = { 'event': ve_str, 'num': vn_str }
+                
+        # add in subject/demographic variables, where there is no first/last visit requirement
+        query_for_subject_vars = text("""
+          SELECT
+              s.id as subject_id, s.study_id as study_id, so.id as subject_ontology_id
+          FROM subject s, subject_attribute sa, subject_ontology so
+          WHERE s.study_id in :study_ids
+          AND s.id = sa.subject_id
+          AND sa.subject_ontology_id = so.id
+          ORDER BY subject_id, study_id, subject_ontology_id
+        """)
+
+        result_proxy = connection.execute(
+            query_for_subject_vars,
+            study_ids=study_ids).fetchall()
+
+        for row in result_proxy:
+            rd = dict(row)
+            subj_id = rd['subject_id']
+            study_id = rd['study_id']
+            att_id = rd['subject_ontology_id']
+            if subj_id not in subject_vars_bs:
+                subject_vars_bs[subj_id] = {}
+            if study_id not in subject_vars_bs[subj_id]:
+                subject_vars_bs[subj_id][study_id] = {}
+            subject_vars_bs[subj_id][study_id][att_id] = 1
+
+        return { 'subjects': subject_vars_bs, 'visits': visit_lists }
+
     def get_variables(self):
         """Get all variables measured in a study."""
         get_scale_category = ObservationOntology.get_var_category_fn()

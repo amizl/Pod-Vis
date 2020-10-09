@@ -166,6 +166,21 @@ def get_subject_variables():
         "subjects": subjects
     })
 
+@api.route("/studies/subject_variable_visits")
+def get_subject_variable_visits():
+    """Retrieve all subjects for a set of studies, along with the variables supported by those subjects.
+
+    Example URL:
+      /api/studies/subject_variable_visits?id=1&id=2
+    """
+    study_ids = request.args.getlist('id')
+    visits = models.Study.get_subject_variable_visits(study_ids)
+
+    return jsonify({
+        "success": True,
+        "visits": visits
+    })
+
 @api.route('/studies/<int:study_id>/subjects')
 def get_study_subjects(study_id):
     """Get all subjects participating in a study.
