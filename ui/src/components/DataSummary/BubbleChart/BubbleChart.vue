@@ -500,7 +500,7 @@ export default {
         var visit = cs[0];
         var scale = cs[1];
         var count = cs[3];
-        var scaleId = varNameToId[cs[1]];
+        var scaleId = varNameToId[scale];
         var which = null;
         var other = null;
 
@@ -508,7 +508,7 @@ export default {
         if (vm.lastVisits[scaleId] == visit) { which = 'last'; other = 'first'; }
 
         // is this visit one of those selected for this variable?
-        if (which != null) {
+        if ((scale in collectionVarAbbreviations) && (which != null)) {
           if (!(scale in rowCounts)) {
             rowCounts[scale] = { 'count': count, 'n_visits': 1, 'descr': countDescrFn(count, scale, which, visit), 'other': other, 'scale_id': scaleId };
           }
@@ -532,7 +532,8 @@ export default {
             rc['descr'] = "no subjects had a measurement for " + t + " recorded at " + rc['other'] + " visit " + other_visit;
           }
           if (rc['count'] > maxCount) { maxCount = rc['count']; }
-        } else {
+        }
+        else if (t in collectionVarAbbreviations) {
           rowCounts[t] = { 'count': 0, 'n_visits': 0, 'descr': "no subjects had a measurement for " + t + " recorded at the selected first or last visit" };
         }
       });
