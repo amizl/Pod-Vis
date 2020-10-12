@@ -50,6 +50,7 @@
               v-model="selected"
               :datasets="selectedDatasets"
               selectable
+	      :useMoreAccurateSubjectCounts="true"
               @nSubjects="updateNumSubjects"
               @nObservationVars="updateNumObservationVars"
               @nSubjectVars="updateNumSubjectVars"
