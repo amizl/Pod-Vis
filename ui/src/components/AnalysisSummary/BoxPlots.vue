@@ -267,23 +267,7 @@ export default {
   },
   watch: {
     selectedOutcomeVariable(ov) {
-      // update first/last visit
-      var bp = this;
-      this.collection.observation_variables_list.forEach(v => {
-        if (v.ontology.id == ov.id) {
-          if (v.first_visit_event != null) {
-            bp.firstVisit = v.first_visit_event;
-            bp.lastVisit = v.last_visit_event;
-          } else {
-            bp.firstVisit = v.first_visit_num;
-            bp.lastVisit = v.last_visit_num;
-          }
-        }
-      });
-
-      this.$nextTick(() => {
-        this.updateStats();
-      });
+      this.updateVisits();
     },
     maxLabelLen(mll) {
       // change in maxLabelLen means change in left margin
@@ -293,16 +277,33 @@ export default {
       });
     },
   },
-  created() {},
   mounted() {
     this.container = this.$refs.bp_container;
     this.resizeChart();
-    this.updateStats();
+    this.updateVisits();
   },
   methods: {
     onResize() {
       this.$nextTick(() => {
         this.resizeChart();
+        this.updateStats();
+      });
+    },
+    updateVisits() {
+      var bp = this;
+      if (this.selectedOutcomeVariable == null) return; 
+      this.collection.observation_variables_list.forEach(v => {
+        if (v.ontology.id == bp.selectedOutcomeVariable.id) {
+          if (v.first_visit_event != null) {
+            bp.firstVisit = v.first_visit_event;
+            bp.lastVisit = v.last_visit_event;
+          } else if (v.first_visit_num != null) {
+            bp.firstVisit = v.first_visit_num;
+            bp.lastVisit = v.last_visit_num;
+          }
+        }
+      });
+      this.$nextTick(() => {
         this.updateStats();
       });
     },
@@ -446,7 +447,6 @@ export default {
       this.maxValue = Math.max(firstMax, lastMax);
 
       var hrh = this.rowHeight / 2.0;
-
       this.updateStats_aux(
         'firstVisit',
         this.margins.top,

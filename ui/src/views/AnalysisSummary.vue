@@ -125,7 +125,10 @@
       </v-row>
 
       <v-row class="ma-0 pa-0 mt-2">
-        <v-col cols="12" class="ma-0 pa-0"> <box-plots /> </v-col>
+        <v-col cols="12" class="ma-0 pa-0">
+	  <box-plots v-if="!selectedOutcomeVariable || (selectedOutcomeVariable.data_category == 'Continuous')" />
+	  <div v-else> Categorical var display </div>
+	</v-col>
       </v-row>
     </v-container>
   </v-container>
