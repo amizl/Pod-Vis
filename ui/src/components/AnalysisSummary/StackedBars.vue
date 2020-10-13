@@ -8,7 +8,7 @@
               <v-col cols="12" class="ma-0 pa-0">
                 <v-card color="#eeeeee" class="pt-1">
                   <v-card-title class="primary--text pl-3 py-2"
-                    >Selected Cohorts - Boxplots
+                    >Selected Cohorts - Bar Charts
                   </v-card-title>
 
                   <v-card-title class="primary--text pa-0 pl-3">
@@ -66,74 +66,54 @@
               </v-subheader>
             </div>
 
-            <svg v-else ref="boxplots" :width="width" :height="height">
+            <svg v-else ref="stackedbars" :width="width" :height="height">
               <g
                 v-if="
                   selectedOutcomeVariable &&
-                    selectedOutcomeVariable.data_category != 'Categorical'
+                    selectedOutcomeVariable.data_category == 'Categorical'
                 "
               >
                 <!-- labels -->
                 <text
-                  v-for="sc in Object.keys(boxplotStats)"
+                  v-for="sc in Object.keys(graphData)"
                   :id="sc"
                   :x="15"
-                  :y="boxplotStats[sc]['y_center']"
+                  :y="graphData[sc]['y_center']"
                 >
-                  {{ boxplotStats[sc].short_label }}
+                  {{ graphData[sc].short_label }}
                 </text>
 
-                <!-- endcap lines -->
-                <line
-                  v-for="sc in Object.keys(boxplotStats)"
-                  :x1="boxplotStats[sc]['min_x']"
-                  :x2="boxplotStats[sc]['min_x']"
-                  :y1="boxplotStats[sc]['y1']"
-                  :y2="boxplotStats[sc]['y2']"
+		<!-- bar graph rectangles -->
+		<rect
+                  v-for="(gr, index) in graphRects"
+		  :id="gr.key"
+                  :x="gr.x"
+                  :y="gr.y"
+                  :width="gr.w"
+                  :height="gr.h"
+                  :fill="gr.color"
                   stroke="black"
                 />
 
-                <line
-                  v-for="sc in Object.keys(boxplotStats)"
-                  :x1="boxplotStats[sc]['max_x']"
-                  :x2="boxplotStats[sc]['max_x']"
-                  :y1="boxplotStats[sc]['y1']"
-                  :y2="boxplotStats[sc]['y2']"
+		<!-- color key -->
+		<rect
+                  v-for="(gc, index) in graphColorKey"
+                  :x="gc.x"
+                  :y="gc.y"
+                  :width="20"
+                  :height="20"
+                  :fill="gc.color"
                   stroke="black"
                 />
-
-                <!-- center line -->
-                <line
-                  v-for="sc in Object.keys(boxplotStats)"
-                  :x1="boxplotStats[sc]['min_x']"
-                  :x2="boxplotStats[sc]['max_x']"
-                  :y1="boxplotStats[sc]['y_center']"
-                  :y2="boxplotStats[sc]['y_center']"
-                  stroke="black"
-                />
-
-                <!-- box -->
-                <rect
-                  v-for="sc in Object.keys(boxplotStats)"
-                  :x="boxplotStats[sc]['q1_x']"
-                  :y="boxplotStats[sc]['y1']"
-                  :width="boxplotStats[sc]['q1_q3_w']"
-                  :height="boxplotStats[sc]['box_h']"
-                  :fill="boxplotStats[sc]['color']"
-                  stroke="black"
-                />
-
-                <!-- median line -->
-                <line
-                  v-for="sc in Object.keys(boxplotStats)"
-                  :x1="boxplotStats[sc]['median_x']"
-                  :x2="boxplotStats[sc]['median_x']"
-                  :y1="boxplotStats[sc]['y1']"
-                  :y2="boxplotStats[sc]['y2']"
-                  stroke="black"
-                  stroke-width="2"
-                />
-
+                <!-- labels -->
+                <text
+                  v-for="(gc, index) in graphColorKey"
+                  :x="gc.x + 35"
+                  :y="gc.y + 15"
+                >
+                  {{ gc.label }}
+                </text>
+		
                 <!-- x-axis at top -->
                 <g
                   v-xaxis="xAxis"
@@ -144,19 +124,31 @@
           </v-col>
         </v-row>
 
-        <!-- tooltips for cohort + visit labels -->
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
+            <!-- tooltips for cohort + visit labels -->
             <v-tooltip
-              v-for="(sc, index) in Object.keys(boxplotStats)"
+              v-for="(sc, index) in Object.keys(graphData)"
               top
               color="primary"
-              :activator="boxplotStats[sc]['node']"
+              :activator="graphData[sc]['node']"
             >
-              <span> {{ boxplotStats[sc]['label'] }} </span>
+              <span> {{ graphData[sc]['label'] }} </span>
             </v-tooltip>
-          </v-col>
+
+	    <!-- tooltips for bar graph rectangles -->
+            <v-tooltip
+              v-for="(gr, index) in graphRects"
+              top
+              color="primary"
+              :activator="gr['node']"
+            >
+              <span> {{ gr['label'] }} </span>
+            </v-tooltip>
+
+	  </v-col>
         </v-row>
+
       </v-container>
     </v-sheet>
   </v-sheet>
@@ -207,7 +199,9 @@ export default {
       container: null,
       width: 0,
       height: 0,
-      boxplotStats: {},
+      graphData: {},
+      graphRects: [],
+      graphColorKey: [],
       rowHeight: 100,
       rowPad: 15,
       maxValue: null,
@@ -231,7 +225,7 @@ export default {
     },
     margins() {
       var leftMargin = this.maxLabelLen * this.labelPxPerChar;
-      return { top: 40, bottom: 40, left: leftMargin, right: 20 };
+      return { top: 80, bottom: 40, left: leftMargin, right: 20 };
     },
     // cohorts are collection-specific
     collection_cohorts() {
@@ -251,14 +245,6 @@ export default {
     },
     xScale() {
       var rt = this.width - this.margins.right;
-
-      // take flip_axis into account:
-      //      var range =
-      //        this.selectedOutcomeVariable && this.selectedOutcomeVariable.flip_axis
-      //          ? [rt, this.margins.left]
-      //          : [this.margins.left, rt];
-
-      // or not:
       var range = [this.margins.left, rt];
       return scaleLinear()
         .domain([0, this.maxValue])
@@ -272,7 +258,7 @@ export default {
     maxLabelLen(mll) {
       // change in maxLabelLen means change in left margin
       this.$nextTick(() => {
-        this.updateStats();
+        this.updateGraphData();
         this.resizeChart();
       });
     },
@@ -286,7 +272,7 @@ export default {
     onResize() {
       this.$nextTick(() => {
         this.resizeChart();
-        this.updateStats();
+        this.updateGraphData();
       });
     },
     updateVisits() {
@@ -304,13 +290,13 @@ export default {
         }
       });
       this.$nextTick(() => {
-        this.updateStats();
+        this.updateGraphData();
       });
     },
     updateMaxLabelLen() {
       var mll = 20;
-      Object.keys(this.boxplotStats).forEach(k => {
-        var ll = this.boxplotStats[k].label.length;
+      Object.keys(this.graphData).forEach(k => {
+        var ll = this.graphData[k].label.length;
         if (ll > mll) {
           mll = ll;
         }
@@ -343,27 +329,23 @@ export default {
         this.rowHeight * this.selectedCohorts.length +
         this.margins.top +
         this.margins.bottom;
-
-      //      console.log(
-      //        'resizeChart() setting this.height = ' +
-      //          height +
-      //          ' this.width = ' +
-      //          width
-      //      );
       this.height = height;
       this.width = width;
     },
+
     // visit = firstVisit or lastVisit
-    updateStats_aux(
+    updateGraphData_aux(
       visit,
       y_offset,
       pad_top,
       pad_bottom,
       row_height,
       row2row_dist,
-      label_prefix
+      label_prefix,
+      getBarColor
     ) {
-      // compute boxplot stats for each cohort
+      var vm = this;
+      var xScale = this.xScale;
       var x_offset = this.margins.left;
       var max_ll = this.maxLabelLen;
       this.selectedCohorts.forEach(c => {
@@ -371,35 +353,27 @@ export default {
         c.subject_ids.forEach(sid => {
           subjids[sid] = 1;
         });
+
         const cohortData = this.data
-          .filter(d => d.subject_id in subjids)
-          .map(x => x[this.selectedOutcomeVariable.id][visit])
-          .sort(ascending);
-
-        const cmin = min(cohortData);
-        const cmax = max(cohortData);
-
-        var q1 = quantile(cohortData, 0.25);
-        var median = quantile(cohortData, 0.5);
-        var q3 = quantile(cohortData, 0.75);
-        var interQuantileRange = q3 - q1;
-        var boxMin = q1 - 1.5 * interQuantileRange;
-        var boxMax = q3 + 1.5 * interQuantileRange;
-
-        //        console.log('cmin=' +
-        //          cmin +
-        //          ' cmax=' +
-        //          cmax +
-        //         ' median=' + median +
-        //         ' scale(cmin)=' +
-        //         this.xScale(cmin) +
-        //         ' scale(cmax)=' +
-        //         this.xScale(cmax) + " boxMin=" + boxMin + " boxMax=" + boxMax
-        //        );
-
+        .filter(d => d.subject_id in subjids)
+        .map(x => x[this.selectedOutcomeVariable.id][visit]);
+        var counts = {};
+        var total = 0;
+        cohortData.forEach(x => {
+          if (!(x in counts)) {
+            counts[x] = 0;
+          }
+          counts[x] += 1;
+          total += 1;
+        });
+        if ((vm.maxValue == null) || (total > vm.maxValue)) {
+          vm.maxValue = total;
+        }
+    
         var box_h = row_height - (pad_top + pad_bottom);
-        var bpKey = c.id + '' + visit;
-        var node = document.getElementById(bpKey);
+        var key = c.id + '-' + visit;
+        var node = document.getElementById(key);
+
         var shortLabelFn = function(label) {
           if (label.length > max_ll) {
             return label.substr(0, max_ll - 3) + '...';
@@ -407,7 +381,25 @@ export default {
           return label;
         };
 
-        this.boxplotStats[bpKey] = {
+        var ccount = 0;
+        var rnum = 1;
+    
+        Object.keys(counts)
+         .sort((x,y) => { return counts[y] - counts[x]; }).forEach(category => {
+          var count = counts[category];
+          var x1 = xScale(ccount);
+          var x2 = xScale(ccount + count);
+          var w = x2 - x1;
+          var color = getBarColor(category);
+          var key = c.id + '-' + visit + '-' + rnum;
+          var rnode = document.getElementById(key);
+          var label = category + " - " + count + " subject(s)";
+          vm.graphRects.push({'x': x1, 'y': y_offset + pad_top, 'w': w, 'h': row_height - (pad_bottom + pad_top), 'color': color, 'key': key, 'node': rnode, 'label': label });
+          ccount += count;
+          rnum++;
+        });
+    
+        this.graphData[key] = {
           label: label_prefix + c.label,
           short_label: shortLabelFn(label_prefix + c.label),
           node: node,
@@ -416,54 +408,57 @@ export default {
           y: y_offset,
           y1: y_offset + pad_top,
           y2: y_offset + row_height - pad_bottom,
-          y_center: y_offset + pad_top + box_h / 2.0,
-          min: cmin,
-          max: cmax,
-          min_x: this.xScale(cmin),
-          max_x: this.xScale(cmax),
-          max_min_w: Math.abs(this.xScale(cmax) - this.xScale(cmin)),
-          q1_x: this.xScale(q1),
-          median_x: this.xScale(median),
-          q3_x: this.xScale(q3),
-          q1_q3_w: Math.abs(this.xScale(q3) - this.xScale(q1)),
-          boxmin_x: this.xScale(boxMin),
-          boxmax_x: this.xScale(boxMax),
-          box_w: Math.abs(this.xScale(boxMax) - this.xScale(boxMin)),
+          y_center: y_offset + pad_top + box_h / 2,
           box_h: box_h,
         };
         y_offset += row2row_dist;
       });
     },
-    updateStats() {
+
+    updateGraphData() {
       if (!this.selectedOutcomeVariable) return;
 
-      this.boxplotStats = {};
-
-      // overall max value
-      var accFn = x => x[this.selectedOutcomeVariable.id];
-      var allData = this.data.map(x => accFn(x));
-      const firstMax = max(allData, d => d.firstVisit);
-      const lastMax = max(allData, d => d.lastVisit);
-      this.maxValue = Math.max(firstMax, lastMax);
-
+      this.graphData = {};
+      this.graphRects = [];
+      this.graphColorKey = [];
       var hrh = this.rowHeight / 2.0;
-      this.updateStats_aux(
+
+      // create stable assignment of bar graph categories to colors
+      var vm = this;
+      var cindex = 0;
+      var ncolors = this.colors['bar_graphs'].length;
+      var cat2color = {};
+      var ck_xoffset = 20;
+      var getBarColor = function(category) {
+        // assign color to new category, add entry to color key
+        if (!(category in cat2color)) {
+          cat2color[category] = vm.colors['bar_graphs'][cindex % ncolors];
+          cindex++;
+          vm.graphColorKey.push({ 'label': category, 'color': cat2color[category], 'x': ck_xoffset, 'y': 20 })
+          ck_xoffset += category.length * 15;
+         }
+        return cat2color[category];
+      };
+    
+      this.updateGraphData_aux(
         'firstVisit',
         this.margins.top,
         15,
         5,
         hrh,
         this.rowHeight,
-        this.firstVisit + ' | '
+        this.firstVisit + ' | ',
+        getBarColor
       );
-      this.updateStats_aux(
+      this.updateGraphData_aux(
         'lastVisit',
         this.margins.top + hrh,
         5,
         15,
         hrh,
         this.rowHeight,
-        this.lastVisit + ' | '
+        this.lastVisit + ' | ',
+        getBarColor
       );
       this.updateMaxLabelLen();
     },

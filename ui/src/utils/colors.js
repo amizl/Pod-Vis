@@ -154,6 +154,20 @@ export let colors = {
     '#f781bf',
     '#999999',
   ],
+
+  // Brewer 9 class qualitative
+  bar_graphs: [
+      '#8dd3c7',
+      '#ffffb3',
+      'bebada',
+      'fb8072',
+      '80b1d3',
+      'fdb462',
+      'b3de69',
+      'fccde5',
+      'd9d9d9',
+  ],
+
 };
 
 export function getNumSubjectsColor(nSubjects) {

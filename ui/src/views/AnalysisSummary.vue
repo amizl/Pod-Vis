@@ -127,7 +127,7 @@
       <v-row class="ma-0 pa-0 mt-2">
         <v-col cols="12" class="ma-0 pa-0">
 	  <box-plots v-if="!selectedOutcomeVariable || (selectedOutcomeVariable.data_category == 'Continuous')" />
-	  <div v-else> Categorical var display </div>
+	  <stacked-bars v-else />
 	</v-col>
       </v-row>
     </v-container>
@@ -145,6 +145,7 @@ import { getCollectionDescription } from '@/utils/helpers';
 import { colors } from '@/utils/colors';
 
 import BoxPlots from '@/components/AnalysisSummary/BoxPlots.vue';
+import StackedBars from '@/components/AnalysisSummary/StackedBars.vue';
 import TukeyHsdHeatmap from '@/components/AnalysisSummary/TukeyHSDHeatmap.vue';
 import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
@@ -157,6 +158,7 @@ export default {
     AnalyticsPanel,
     BoxPlots,
     CohortTable,
+    StackedBars,
     TukeyHsdHeatmap,
   },
   props: {
