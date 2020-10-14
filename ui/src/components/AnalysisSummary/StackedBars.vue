@@ -76,7 +76,7 @@
                 <!-- labels -->
                 <text
                   v-for="sc in Object.keys(graphData)"
-                  :id="sc"
+                  :ref="sc"
                   :x="15"
                   :y="graphData[sc]['y_center']"
                 >
@@ -86,7 +86,7 @@
 		<!-- bar graph rectangles -->
 		<rect
                   v-for="(gr, index) in graphRects"
-		  :id="gr.key"
+		  :ref="gr.key"
                   :x="gr.x"
                   :y="gr.y"
                   :width="gr.w"
@@ -124,7 +124,7 @@
           </v-col>
         </v-row>
 
-        <v-row class="ma-0 pa-0">
+        <v-row v-if="graphDataUpdated" class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
             <!-- tooltips for cohort + visit labels -->
             <v-tooltip
@@ -200,6 +200,7 @@ export default {
       width: 0,
       height: 0,
       graphData: {},
+      graphDataUpdated: false,
       graphRects: [],
       graphColorKey: [],
       rowHeight: 100,
@@ -262,8 +263,34 @@ export default {
         this.resizeChart();
       });
     },
+    graphData(gd) {
+      var vm = this;
+      var nodesFound = true;
+      this.$nextTick(() => {
+         Object.keys(vm.graphData).forEach(k => {
+           var node = vm.$refs[k];
+           if (node == null) {
+             nodesFound = false;
+           } else {
+             vm.graphData[k].node = node[0];
+           }
+         });
+         vm.graphRects.forEach(gr => {
+           var node = vm.$refs[gr.key];
+           if (node == null) {
+             nodesFound = false;
+           } else {
+             gr.node = node[0];
+           }
+         });
+         if (nodesFound) {
+           vm.graphDataUpdated = true;
+         }
+       });
+    },
   },
   mounted() {
+    this.graphDataUpdated = false;
     this.container = this.$refs.bp_container;
     this.resizeChart();
     this.updateVisits();
@@ -342,7 +369,9 @@ export default {
       row_height,
       row2row_dist,
       label_prefix,
-      getBarColor
+      getBarColor,
+      graphData,
+      graphRects
     ) {
       var vm = this;
       var xScale = this.xScale;
@@ -371,8 +400,7 @@ export default {
         }
     
         var box_h = row_height - (pad_top + pad_bottom);
-        var key = c.id + '-' + visit;
-        var node = document.getElementById(key);
+        var gkey = c.id + '-' + visit;
 
         var shortLabelFn = function(label) {
           if (label.length > max_ll) {
@@ -392,17 +420,16 @@ export default {
           var w = x2 - x1;
           var color = getBarColor(category);
           var key = c.id + '-' + visit + '-' + rnum;
-          var rnode = document.getElementById(key);
           var label = category + " - " + count + " subject(s)";
-          vm.graphRects.push({'x': x1, 'y': y_offset + pad_top, 'w': w, 'h': row_height - (pad_bottom + pad_top), 'color': color, 'key': key, 'node': rnode, 'label': label });
+          graphRects.push({'x': x1, 'y': y_offset + pad_top, 'w': w, 'h': row_height - (pad_bottom + pad_top), 'color': color, 'key': key, 'node': null, 'label': label });
           ccount += count;
           rnum++;
         });
     
-        this.graphData[key] = {
+        graphData[gkey] = {
           label: label_prefix + c.label,
           short_label: shortLabelFn(label_prefix + c.label),
-          node: node,
+          node: null,
           color: c.color,
           x: x_offset,
           y: y_offset,
@@ -419,7 +446,11 @@ export default {
       if (!this.selectedOutcomeVariable) return;
 
       this.graphData = {};
+      var gData = {};
+
       this.graphRects = [];
+      var gRects = [];
+    
       this.graphColorKey = [];
       var hrh = this.rowHeight / 2.0;
 
@@ -448,7 +479,8 @@ export default {
         hrh,
         this.rowHeight,
         this.firstVisit + ' | ',
-        getBarColor
+        getBarColor,
+        gData, gRects
       );
       this.updateGraphData_aux(
         'lastVisit',
@@ -458,8 +490,11 @@ export default {
         hrh,
         this.rowHeight,
         this.lastVisit + ' | ',
-        getBarColor
+        getBarColor,
+        gData, gRects
       );
+      this.graphData = gData;
+      this.graphRects = gRects;
       this.updateMaxLabelLen();
     },
   },

@@ -76,7 +76,7 @@
                 <!-- labels -->
                 <text
                   v-for="sc in Object.keys(boxplotStats)"
-                  :id="sc"
+                  :ref="sc"
                   :x="15"
                   :y="boxplotStats[sc]['y_center']"
                 >
@@ -145,7 +145,7 @@
         </v-row>
 
         <!-- tooltips for cohort + visit labels -->
-        <v-row class="ma-0 pa-0">
+        <v-row v-if="boxplotStatsUpdated" class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
             <v-tooltip
               v-for="(sc, index) in Object.keys(boxplotStats)"
@@ -208,6 +208,7 @@ export default {
       width: 0,
       height: 0,
       boxplotStats: {},
+      boxplotStatsUpdated: false,
       rowHeight: 100,
       rowPad: 15,
       maxValue: null,
@@ -276,8 +277,26 @@ export default {
         this.resizeChart();
       });
     },
+    boxplotStats(bps) {
+      var vm = this;
+      var nodesFound = true;
+      this.$nextTick(() => {
+         Object.keys(vm.boxplotStats).forEach(k => {
+           var node = vm.$refs[k];
+           if (node == null) {
+             nodesFound = false;
+           } else {
+             vm.boxplotStats[k].node = node[0];
+           }
+         });
+         if (nodesFound) {
+           vm.boxplotStatsUpdated = true;
+         }
+       });
+    },
   },
   mounted() {
+    this.boxplotStatsUpdated = false;
     this.container = this.$refs.bp_container;
     this.resizeChart();
     this.updateVisits();
@@ -361,7 +380,8 @@ export default {
       pad_bottom,
       row_height,
       row2row_dist,
-      label_prefix
+      label_prefix,
+      stats
     ) {
       // compute boxplot stats for each cohort
       var x_offset = this.margins.left;
@@ -399,7 +419,6 @@ export default {
 
         var box_h = row_height - (pad_top + pad_bottom);
         var bpKey = c.id + '' + visit;
-        var node = document.getElementById(bpKey);
         var shortLabelFn = function(label) {
           if (label.length > max_ll) {
             return label.substr(0, max_ll - 3) + '...';
@@ -407,10 +426,10 @@ export default {
           return label;
         };
 
-        this.boxplotStats[bpKey] = {
+        stats[bpKey] = {
           label: label_prefix + c.label,
           short_label: shortLabelFn(label_prefix + c.label),
-          node: node,
+          node: null,
           color: c.color,
           x: x_offset,
           y: y_offset,
@@ -438,6 +457,7 @@ export default {
       if (!this.selectedOutcomeVariable) return;
 
       this.boxplotStats = {};
+      var bpStats = {};
 
       // overall max value
       var accFn = x => x[this.selectedOutcomeVariable.id];
@@ -454,7 +474,8 @@ export default {
         5,
         hrh,
         this.rowHeight,
-        this.firstVisit + ' | '
+        this.firstVisit + ' | ',
+        bpStats
       );
       this.updateStats_aux(
         'lastVisit',
@@ -463,8 +484,10 @@ export default {
         15,
         hrh,
         this.rowHeight,
-        this.lastVisit + ' | '
+        this.lastVisit + ' | ',
+        bpStats
       );
+      this.boxplotStats = bpStats;
       this.updateMaxLabelLen();
     },
   },
