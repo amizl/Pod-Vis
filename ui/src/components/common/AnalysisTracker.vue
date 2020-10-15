@@ -266,9 +266,8 @@
     <v-stepper v-if="step === '5'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step step="5.1"
-          >Select which cohorts to display in the Selected Cohorts table (top)
-          then click on an outcome variable in the Analytics panel (bottom
-          left).
+	 >Select the cohorts and scale (i.e., outcome variable) to display in the Detailed View
+	  by using the Cohorts Included in Analysis table (top) and Analytics panel (bottom), respectively.
         </v-stepper-step>
         <v-divider></v-divider>
       </v-stepper-header>
