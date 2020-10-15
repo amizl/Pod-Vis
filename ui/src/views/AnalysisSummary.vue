@@ -50,7 +50,7 @@
     >
       <v-col cols="12" class="ma-0 pa-0">
         <cohort-table
-          title="Choose Cohorts"
+          title="Choose Cohorts to Include in Analysis"
           :cohorts="collection_cohorts"
           show-select
           report-max-selected-overlap
@@ -65,7 +65,7 @@
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <cohort-table
-            title="Selected Cohorts"
+            :title="'Cohorts Included in Analysis (' + selectedCohorts.length + ')'"
             :cohorts="selectedCohorts"
             show-colors
             report-max-overlap
