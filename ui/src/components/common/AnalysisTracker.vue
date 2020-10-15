@@ -267,7 +267,9 @@
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step step="5.1"
 	 >Select the cohorts and scale (i.e., outcome variable) to display in the Detailed View
-	  by using the Cohorts Included in Analysis table (top) and Analytics panel (bottom), respectively.
+	  by using the Cohorts Included in Analysis table (top) and the Analytics panel (bottom left), respectively.
+	  Use the checkboxes to control which cohorts appear in the Detailed View and click on the desired scale
+	  in the Analytics panel.
         </v-stepper-step>
         <v-divider></v-divider>
       </v-stepper-header>
