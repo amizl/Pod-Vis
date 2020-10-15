@@ -413,7 +413,7 @@ export default {
         var rnum = 1;
     
         Object.keys(counts)
-         .sort((x,y) => { return counts[y] - counts[x]; }).forEach(category => {
+         .sort((x,y) => { return x.localeCompare(y); }).forEach(category => {
           var count = counts[category];
           var pct = (count / total) * 100.0;
           var x1 = xScale(ccount);
