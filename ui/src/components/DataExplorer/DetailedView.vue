@@ -57,16 +57,19 @@
           v-model="draw_raw"
           label="Raw Data"
           class="pl-3"
+  	  :disabled="isDetailedViewCategorical"
         ></v-checkbox>
         <v-checkbox
           v-model="draw_mean"
           label="Mean/SD"
           class="pl-3"
+  	  :disabled="isDetailedViewCategorical"
         ></v-checkbox>
         <v-checkbox
           v-model="show_population_counts"
           label="Population Counts"
           class="pl-3"
+	  :disabled="isDetailedViewCategorical"
         ></v-checkbox>
         <v-checkbox
           v-model="show_first_last_visit"
@@ -76,6 +79,12 @@
         <v-checkbox
           v-model="show_all_timepoints"
           label="All Timepoints"
+          class="pl-3"
+        ></v-checkbox>
+        <v-checkbox
+	  v-if="isDetailedViewCategorical"
+          v-model="show_percentages"
+          label="Percentages"
           class="pl-3"
         ></v-checkbox>
       </v-row>
@@ -113,6 +122,7 @@
             :show-population-counts="show_population_counts"
             :show-first-last-visit="show_first_last_visit"
             :show-all-timepoints="show_all_timepoints"
+	    :show-percentages="show_percentages"
             :xaxis="xaxis"
             class="pa-0 ma-0"
           />
@@ -139,6 +149,7 @@ export default {
       show_population_counts: false,
       show_first_last_visit: true,
       show_all_timepoints: true,
+      show_percentages: false,
       xaxis: 'visit_event',
     };
   },
@@ -148,6 +159,9 @@ export default {
       collection: state.COLLECTION,
       visibleCohorts: state.VISIBLE_COHORTS,
     }),
+    isDetailedViewCategorical() {
+      return (this.detailedView && (this.detailedView.data_category == 'Categorical'));
+    },
   },
   watch: {
     detailedView(ndv) {

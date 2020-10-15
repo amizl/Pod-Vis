@@ -72,6 +72,11 @@ export default {
       required: false,
       default: false,
     },
+    showPercentages: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     xaxis: {
       type: String,
       required: true,
@@ -94,10 +99,16 @@ export default {
       height: 0,
       initialWidth: 0,
       initialHeight: 0,
-      margin: { top: 20, right: 75, bottom: 100, left: 75 },
+      margin: { top: 30, right: 75, bottom: 150, left: 75 },
       tick_font: '15px sans-serif',
       label_font: '20px sans-serif',
       colors: colors,
+      maxSubjects: 0,
+      maxTotalSubjects: 0,
+      tp2subjCount: {},
+      tp2cohortSubjCounts: {},
+      tp2cohortSubjCategoryCounts: {},
+      categoryColorKey: [],
     };
   },
   computed: {
@@ -114,6 +125,12 @@ export default {
     // --------------------------------------------------
     yAxisRangeMax() {
       var rmax = null;
+
+      // use total subject count for categorical vars
+      if (this.isCategorical) {
+        if (this.showPercentages) return 100;
+        return this.maxSubjects;
+      }
 
       // maximum raw data value
       const rd = this.getRawData(true);
@@ -146,6 +163,10 @@ export default {
       return rmax;
     },
     yAxisRangeMin() {
+      if (this.isCategorical) {
+        return 0;
+      }
+
       var rmin = null;
 
       // minimum raw data value
@@ -282,9 +303,20 @@ export default {
     },
     xDimensionScale() {
       const tp = this.timepoints;
-      return scaleBand()
-        .domain(tp)
-        .range([0, this.computedWidth]);
+
+      // add padding to allow bar charts to fit
+//      if (this.isCategorical) {
+        const ntp = tp.length;
+        const bw = this.computedWidth / (ntp-1);
+        const hbw = bw/2;
+        return scaleBand()
+          .domain(tp)
+          .range([hbw, this.computedWidth + hbw]);
+//      }
+
+//      return scaleBand()
+//        .domain(tp)
+//        .range([0, this.computedWidth]);
     },
     computedWidth() {
       const { left, right } = this.margin;
@@ -316,12 +348,17 @@ export default {
       });
       return cch;
     },
+    isCategorical() {
+      return (this.variable && (this.variable.data_category == 'Categorical'));
+    },
   },
   watch: {
     rawData() {
+      this.updateSubjectCounts();
       this.updateCanvas();
     },
     dimensionName() {
+      this.updateSubjectCounts();
       this.updateCanvas();
     },
     lineStyle() {
@@ -337,18 +374,24 @@ export default {
       this.updateCanvas();
     },
     showPopulationCounts() {
+      this.updateSubjectCounts();
       this.updateCanvas();
     },
     showFirstLastVisit() {
       this.updateCanvas();
     },
     showAllTimepoints() {
+      this.updateSubjectCounts();
+      this.updateCanvas();
+    },
+    showPercentages() {
       this.updateCanvas();
     },
     cohorts() {
       this.updateCanvas();
     },
     visibleCohorts() {
+      this.updateSubjectCounts();
       this.updateCanvas();
     },
   },
@@ -647,6 +690,93 @@ export default {
       context.globalAlpha = 1;
     },
 
+    drawCategoryColorKey() {
+      var vm = this;
+      vm.context.save();
+
+      this.context.textAlign = 'left';
+      this.context.textBaseline = 'middle';
+
+      this.categoryColorKey.forEach(ck => {
+        vm.context.strokeStyle = 'black';
+        vm.context.fillStyle = ck.color;
+        vm.context.fillRect(ck.x, ck.y, 20, 20);
+        vm.context.fillStyle = 'black';
+        vm.context.fillText(ck.label, ck.x + 30, ck.y + 10);
+      });
+
+      vm.context.restore();
+    },
+
+    drawCategoricalData() {
+      if (this.maxSubjects == 0) { this.updateSubjectCounts(); }
+      const cohorts = this.selectedCohorts();
+      const tpts = this.timepoints;
+      const xds = this.xDimensionScale;
+      const ds = this.dimensionScale;
+      const slf = this;
+      const bw = xds(tpts[1]) - xds(tpts[0]) - 3;
+      const hbw = bw/2;
+      const cbw = (bw / cohorts.length);
+      const y0 = ds(0);
+      this.categoryColorKey = [];
+
+      // assign colors to categories
+      // TODO - copied from StackedBars.vue
+      var cindex = 0;
+      var ncolors = this.colors['bar_graphs'].length;
+      var ck_xoffset = 0;
+      var cat2color = {};
+      var getBarColor = function(category) {
+        // assign color to new category, add entry to color key
+        if (!(category in cat2color)) {
+          cat2color[category] = slf.colors['bar_graphs'][cindex % ncolors];
+          cindex++;
+          slf.categoryColorKey.push({ 'label': category, 'color': cat2color[category], 'x': ck_xoffset, 'y': slf.computedHeight + 130 })
+          ck_xoffset += category.length * 17;
+         }
+        return cat2color[category];
+      };
+
+      tpts.forEach(tp => {
+        if (tp in this.tp2cohortSubjCounts) {
+          const scounts = this.tp2cohortSubjCategoryCounts[tp];
+          var bx = xds(tp) - hbw;
+          cohorts.forEach(c => {
+            if (c.id in scounts) {
+              var cat_counts = scounts[c.id];
+              var sorted_cats = Object.keys(cat_counts);
+              sorted_cats.sort((x, y) => { return x.localeCompare(y); });
+              var cumulative_count = 0;
+              var cumulative_pct = 0;
+              var total = 0;
+              sorted_cats.forEach(cc => { total += cat_counts[cc]; });
+
+              sorted_cats.forEach(cc => {
+                var count = cat_counts[cc];
+                var ccolor = getBarColor(cc);
+                var pct = (count / total) * 100.0;
+                var y1 = ds(cumulative_count);
+                var y2 = ds(cumulative_count + count);
+
+                if (this.showPercentages) {
+                  y1 = ds(cumulative_pct);
+                  y2 = ds(cumulative_pct + pct);
+                }
+
+                slf.context.fillStyle = ccolor;
+                this.context.fillRect(bx, y1, cbw-1, y2-y1);
+                cumulative_count += count;
+                cumulative_pct += pct;
+              });
+            }
+            bx += cbw;
+          });
+        }
+      });
+        slf.context.fillStyle = 'black';
+    },
+
     drawData() {
       const cohorts = this.selectedCohorts();
       const slf = this;
@@ -706,19 +836,19 @@ export default {
       }
     },
 
-    drawSubjectCountsVerticalAxis(yscale, maxSubjects, which, xOffset) {
+    drawSubjectCountsVerticalAxis(yscale, maxSubjects, which) {
       const tickCount = 3;
       const tickSize = 6;
       const ticks = yscale.ticks(tickCount);
       const tickFormat = yscale.tickFormat(tickCount);
-      let x1 = xOffset;
-      let x2 = xOffset - tickSize;
+      let x1 = 0;
+      let x2 = -tickSize;
       let tickOffset = -3;
       let textAlign = 'right';
 
       if (which === 'right') {
-        x1 = this.computedWidth + xOffset;
-        x2 = this.computedWidth + xOffset + tickSize;
+        x1 = this.computedWidth;
+        x2 = this.computedWidth + tickSize;
         tickOffset = 3;
         textAlign = 'left';
       }
@@ -738,13 +868,24 @@ export default {
       });
     },
 
-    // plot number of subjects at each timepoint/visit
-    // TODO - move computation of subject counts out of the draw loop
-    drawSubjectCounts() {
+    updateSubjectCounts() {
       const rd = this.getRawData(false);
       const selCohorts = this.selectedCohorts();
       const xacc = this.xaccessor;
-      const tpts = this.timepoints;
+      const isCategorical = this.isCategorical;
+
+      // map subject id to cohort(s)
+      const subjId2Cohorts = {};
+      selCohorts.forEach(c => {
+        c.subject_ids.forEach(sid => {
+          if (sid in subjId2Cohorts) {
+            subjId2Cohorts[sid].push(c);
+          } else {
+            subjId2Cohorts[sid] = [c];
+          }
+        });
+      });
+      const tp2cohortSubjCategoryCounts = {};
 
       // count total number of subject ids at each timepoint
       const tp2subjIds = {};
@@ -754,12 +895,34 @@ export default {
           tp2subjIds[evt] = {};
         }
         tp2subjIds[evt][r.subject_id] = 1;
+  
+        // compute category counts at each timepoint
+        if (r['data_category'] == 'Categorical') {
+          var category = r['value'];
+          if (!(evt in tp2cohortSubjCategoryCounts)) {
+            tp2cohortSubjCategoryCounts[evt] = {};
+          }
+          var cohorts = subjId2Cohorts[r.subject_id];
+          if (cohorts != null) {
+            cohorts.forEach(cohort => {
+              if (!(cohort.id in tp2cohortSubjCategoryCounts[evt])) {
+                tp2cohortSubjCategoryCounts[evt][cohort.id] = {};
+              }
+              if (!(category in tp2cohortSubjCategoryCounts[evt][cohort.id])) {
+                tp2cohortSubjCategoryCounts[evt][cohort.id][category] = 0;
+              } 
+              tp2cohortSubjCategoryCounts[evt][cohort.id][category]++;
+            });
+          }
+        }
       });
 
       const tp2subjCount = {};
       const tp2cohortSubjCounts = {};
 
       var maxSubjects = 0;
+      var maxTotalSubjects = 0;
+
       Object.keys(tp2subjIds).forEach(tp => {
         var subj_ids_d = tp2subjIds[tp];
         var n_subj = Object.keys(subj_ids_d).length;
@@ -770,6 +933,7 @@ export default {
         // per-cohort counts
         var cc = {};
         tp2cohortSubjCounts[tp] = cc;
+        var total_subjs = 0;
 
         selCohorts.forEach(c => {
           var n_cohort_subjs = 0;
@@ -779,34 +943,51 @@ export default {
             }
           });
           cc[c.id] = n_cohort_subjs;
+          total_subjs += n_cohort_subjs;
           if (n_cohort_subjs > maxSubjects) {
             maxSubjects = n_cohort_subjs;
           }
         });
 
-        if (this.showPopulationCounts) {
+        if (total_subjs > maxTotalSubjects) {
+          maxTotalSubjects = total_subjs;
+        }
+
+        if (this.showPopulationCounts && !this.isCategorical) {
           if (n_subj > maxSubjects) {
             maxSubjects = n_subj;
           }
         }
       });
 
+      this.tp2subjCount = tp2subjCount;
+      this.tp2cohortSubjCounts = tp2cohortSubjCounts;
+      this.tp2cohortSubjCategoryCounts = tp2cohortSubjCategoryCounts;
+      this.maxSubjects = maxSubjects;
+      this.maxTotalSubjects = maxTotalSubjects;
+    },
+
+    // plot number of subjects at each timepoint/visit
+    drawSubjectCounts() {
+      if (this.maxSubjects == 0) { this.updateSubjectCounts(); }
+
+      const tpts = this.timepoints;
+      const selCohorts = this.selectedCohorts();
+
       const yscale = scaleLinear()
-        .domain([0, maxSubjects])
+        .domain([0, this.maxSubjects])
         .range([this.computedHeight + 90, this.computedHeight + 40]);
 
-      const xOffset =
-        -(this.xDimensionScale(tpts[1]) - this.xDimensionScale(tpts[0])) / 2.0;
-
-      this.drawSubjectCountsVerticalAxis(yscale, maxSubjects, 'left', xOffset);
-      this.drawSubjectCountsVerticalAxis(yscale, maxSubjects, 'right', xOffset);
+      this.drawSubjectCountsVerticalAxis(yscale, this.maxSubjects, 'left');
+      this.drawSubjectCountsVerticalAxis(yscale, this.maxSubjects, 'right');
 
       // plot subject counts
       const barsWidth =
-        this.xDimensionScale(tpts[1]) - this.xDimensionScale(tpts[0]) - 2;
+        this.xDimensionScale(tpts[1]) - this.xDimensionScale(tpts[0]) - 3;
       const nBars = selCohorts.length + (this.showPopulationCounts ? 1 : 0);
       const barWidth = barsWidth / nBars;
       const xscale = this.xDimensionScale;
+      const xOffset = -(this.xDimensionScale.bandwidth() / 2);
 
       const drawBar = function(
         context,
@@ -840,7 +1021,7 @@ export default {
         let barnum = 0;
 
         // study population count
-        const subjCount = tp2subjCount[tpt];
+        const subjCount = this.tp2subjCount[tpt];
         if (this.showPopulationCounts) {
           drawBar(this.context, tpt, barnum, 0, subjCount, '#F8D580', 0.7);
           barnum += 1;
@@ -850,8 +1031,8 @@ export default {
         const bars = [];
 
         selCohorts.forEach(c => {
-          if (tpt in tp2cohortSubjCounts) {
-            const sc = tp2cohortSubjCounts[tpt][c.id];
+          if (tpt in this.tp2cohortSubjCounts) {
+            const sc = this.tp2cohortSubjCounts[tpt][c.id];
             bars.push({ tp: tpt, score: sc, color: c.color });
           }
         });
@@ -988,12 +1169,12 @@ export default {
       const ticks = this.dimensionScale.ticks(tickCount);
       const tickFormat = this.dimensionScale.tickFormat(tickCount);
       const { xmax } = this;
-
+      const x0 = this.computedWidth + 0.5;
       // line along right side of figure
       this.context.beginPath();
-      this.context.moveTo(this.xDimensionScale(xmax) + 0.5, 0);
+      this.context.moveTo(x0, 0);
       this.context.lineTo(
-        this.xDimensionScale(xmax) + 0.5,
+        x0,
         this.computedHeight
       );
       this.context.strokeStyle = 'black';
@@ -1004,9 +1185,9 @@ export default {
       // tick markings and labels
       this.context.beginPath();
       ticks.forEach(d => {
-        this.context.moveTo(this.xDimensionScale(xmax), this.dimensionScale(d));
+        this.context.moveTo(x0, this.dimensionScale(d));
         this.context.lineTo(
-          this.xDimensionScale(xmax) + tickSize,
+          x0 + tickSize,
           this.dimensionScale(d)
         );
       });
@@ -1018,7 +1199,7 @@ export default {
       ticks.forEach(d => {
         this.context.fillText(
           tickFormat(d),
-          this.xDimensionScale(xmax) + tickSize + tickPadding,
+          x0 + tickSize + tickPadding,
           this.dimensionScale(d)
         );
       });
@@ -1036,6 +1217,8 @@ export default {
 
       const scale = this.xDimensionScale;
       var y0 = this.computedHeight;
+      var bw = scale.bandwidth();
+      var hbw = bw/2;
 
       this.context.beginPath();
       tp.forEach(d => {
@@ -1046,9 +1229,9 @@ export default {
       this.context.stroke();
 
       this.context.beginPath();
-      this.context.moveTo(this.xDimensionScale(this.xmin), this.computedHeight);
+      this.context.moveTo(this.xDimensionScale(this.xmin) - hbw, this.computedHeight);
       this.context.lineTo(
-        this.xDimensionScale(xmax) + 0.5,
+        this.xDimensionScale(xmax) + 0.5 + hbw,
         this.computedHeight
       );
       this.context.strokeStyle = 'black';
@@ -1089,12 +1272,19 @@ export default {
         0,
         0,
         this.computedWidth + this.margin.left + 50,
-        this.computedHeight + 120
+        this.computedHeight + this.margin.bottom + this.margin.top
       );
       if (this.cohortsHaveSubjects()) {
         this.context.translate(this.margin.left, 0);
-        this.drawData();
+        if (this.isCategorical) {
+          this.drawCategoricalData();
+        } else {
+          this.drawData();
+        }
         this.drawAxes();
+        if (this.isCategorical) {
+          this.drawCategoryColorKey();
+        }
         this.drawSubjectCounts();
         if (this.showFirstLastVisit) {
           this.highlightFirstAndLastVisit();
