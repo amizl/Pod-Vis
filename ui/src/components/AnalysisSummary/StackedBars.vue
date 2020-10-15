@@ -415,12 +415,13 @@ export default {
         Object.keys(counts)
          .sort((x,y) => { return counts[y] - counts[x]; }).forEach(category => {
           var count = counts[category];
+          var pct = (count / total) * 100.0;
           var x1 = xScale(ccount);
           var x2 = xScale(ccount + count);
           var w = x2 - x1;
           var color = getBarColor(category);
           var key = c.id + '-' + visit + '-' + rnum;
-          var label = category + " - " + count + " subject(s)";
+          var label = category + " - " + count + " subject(s) [" + format('.1f')(pct) + "%]";
           graphRects.push({'x': x1, 'y': y_offset + pad_top, 'w': w, 'h': row_height - (pad_bottom + pad_top), 'color': color, 'key': key, 'node': null, 'label': label });
           ccount += count;
           rnum++;
