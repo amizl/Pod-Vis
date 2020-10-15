@@ -143,29 +143,30 @@ export let colors = {
     '0.001-val80': { color: '#485CCF', class: 'pval-lt-0p001-val80' }, // sat = 65
   },
 
+  // Brewer 9 class qualitative - darker colors
   cohorts: [
     '#e41a1c',
     '#377eb8',
     '#4daf4a',
     '#984ea3',
     '#ff7f00',
-    '#ffff33',
+    '#33ff33',
     '#a65628',
     '#f781bf',
     '#999999',
   ],
 
-  // Brewer 9 class qualitative
+  // Brewer 9 class qualitative - pastel colors with yellow moved to the end
   bar_graphs: [
       '#8dd3c7',
+      '#bebada',
+      '#fb8072',
+      '#80b1d3',
+      '#fdb462',
+      '#b3de69',
+      '#fccde5',
+      '#d9d9d9',
       '#ffffb3',
-      'bebada',
-      'fb8072',
-      '80b1d3',
-      'fdb462',
-      'b3de69',
-      'fccde5',
-      'd9d9d9',
   ],
 
 };
