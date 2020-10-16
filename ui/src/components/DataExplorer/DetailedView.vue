@@ -32,7 +32,7 @@
       </v-row>
     </v-container>
 
-    <v-container fluid fill-width class="pa-0 ma-0 pt-2 pl-2">
+    <v-container fluid fill-width class="pa-0 ma-0 pl-2">
       <v-row class="pl-2" align="center">
         <!--
         <span class="subheading primary--text mt-3 mr-2">Style:</span>
@@ -54,18 +54,21 @@
 -->
         <span class="pl-2">Show:</span>
         <v-checkbox
+	  	  	  v-if="!isDetailedViewCategorical"
           v-model="draw_raw"
           label="Raw Data"
           class="pl-3"
   	  :disabled="isDetailedViewCategorical"
         ></v-checkbox>
         <v-checkbox
+	  	  	  v-if="!isDetailedViewCategorical"
           v-model="draw_mean"
           label="Mean/SD"
           class="pl-3"
   	  :disabled="isDetailedViewCategorical"
         ></v-checkbox>
         <v-checkbox
+	  	  v-if="!isDetailedViewCategorical"
           v-model="show_population_counts"
           label="Population Counts"
           class="pl-3"
@@ -86,6 +89,7 @@
           v-model="show_percentages"
           label="Percentages"
           class="pl-3"
+	  :disabled="!isDetailedViewCategorical"
         ></v-checkbox>
       </v-row>
     </v-container>
