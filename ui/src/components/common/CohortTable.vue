@@ -50,7 +50,20 @@
 	:hide-default-footer="disablePagination"
         dense
       >
-        <template v-slot:item.label="{ item }">
+        <template v-slot:item.data-table-select="{ isSelected, select }">
+          <td class="pa-0 ma-0" justify="center" align="center">
+
+          <v-tooltip v-if="checkboxTooltip" bottom color="primary">
+            <template v-slot:activator="{ on: tooltip }">
+	    <v-simple-checkbox v-on="{ ...tooltip }" :value="isSelected" @input="select($event)" class="pa-0 ma-0" dense hide-details />
+	    </template>
+	    <span>{{ checkboxTooltip }}</span>
+	  </v-tooltip>
+	  <v-simple-checkbox v-else :value="isSelected" @input="select($event)" class="pa-0 ma-0" dense hide-details />
+          </td>
+        </template>
+
+	<template v-slot:item.label="{ item }">
           <td class="subtitle-1 text-xs-left">
             <span v-html="item.label"></span>
           </td>
@@ -133,6 +146,10 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    checkboxTooltip: {
+      type: String,
+      required: false,
     },
   },
   data() {

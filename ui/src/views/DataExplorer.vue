@@ -58,6 +58,7 @@
                     show-colors
                     report-max-overlap
                     @selectedCohorts="updateVisibleCohorts"
+		    checkboxTooltip="Click to show/hide this cohort in the Detailed View."
                   />
                 </v-sheet>
               </v-col>
