@@ -8,14 +8,22 @@
               <v-col cols="12" class="ma-0 pa-0">
                 <v-card color="#eeeeee" class="pt-1">
                   <v-card-title class="primary--text pl-3 py-2"
-                    >Tukey Range/HSD Test
+				>Cohort Comparison
                     <v-spacer />
 		    <v-chip
 		      v-for="x in ['1', '0.1', '0.05', '0.01', '0.001']"
                       :color="colors['pvals'][x + '-' + colorScheme]['color']"
 		      :class="((colorScheme == 'brewer5') && (x == '0.001')) ? 'white--text' : ''"
                       >p &lt; {{ x }}</v-chip>
-                  </v-card-title>
+		  </v-card-title>
+		  <v-card-subtitle v-if="!selectedOutcomeVariable || (selectedOutcomeVariable.data_category != 'Categorical') " class="primary--text">
+		    Showing Tukey Range/HSD Test Results
+		  </v-card-subtitle>
+
+		  <v-card-subtitle v-else class="primary--text">
+		    No pairwise cohort test available
+		  </v-card-subtitle>
+
                   <v-card-title class="primary--text pa-0 pl-3">
                     <v-tooltip
                       v-if="selectedOutcomeVariable"
@@ -196,9 +204,9 @@ export default {
         return;
       if (this.collection_cohorts.length < 3) return;
       if (!(this.selectedOutcomeVariable.label in this.pairwiseTukeyHsdPvals)) {
-        console.log(
-          'TukeyHSDHeatmap: no results found for ' + this.selectedOutcomeVariable.label
-        );
+//        console.log(
+//          'TukeyHSDHeatmap: no results found for ' + this.selectedOutcomeVariable.label
+//        );
         this.pval_dict = {};
         return;
       }
@@ -220,7 +228,7 @@ export default {
     table_cell(cohort1, cohort2) {
       if (cohort1.index < cohort2.index) {
         const pd = this.pval_dict;
-        if (!(cohort1.id in pd) || !(cohort2.id in pd[cohort1.id])) return null;
+        if (!(cohort1.id in pd) || !(cohort2.id in pd[cohort1.id])) return "View in Data Explorer";
         const pval = pd[cohort1.id][cohort2.id];
         if (pval < 0.0001) {
           return 'p<0.0001';
@@ -229,7 +237,7 @@ export default {
       }
       return null;
     },
-    table_cell_aux(cohort1, cohort2, which ) {
+    table_cell_aux(cohort1, cohort2, which) {
       const pd = this.pval_dict;
       if (!(cohort1.id in pd) || !(cohort2.id in pd[cohort1.id]))
         return (which == 'color') ? '#FFFFFF' : '';
