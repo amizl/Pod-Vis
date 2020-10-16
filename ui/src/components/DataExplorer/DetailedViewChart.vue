@@ -99,7 +99,7 @@ export default {
       height: 0,
       initialWidth: 0,
       initialHeight: 0,
-      margin: { top: 30, right: 75, bottom: 150, left: 75 },
+      margin: { top: 20, right: 75, bottom: 150, left: 75 },
       tick_font: '15px sans-serif',
       label_font: '20px sans-serif',
       colors: colors,
@@ -334,7 +334,7 @@ export default {
         .range(
           this.variable.flip_axis
             ? [this.margin.top, this.computedHeight]
-            : [this.computedHeight, 0]
+            : [this.computedHeight, 10]
         );
       return scale;
     },
