@@ -1,8 +1,14 @@
 <template>
   <div>
-    <v-btn color="primary--text" @click="dialog = !dialog">
-      <v-icon left>save</v-icon> CREATE COMPARATOR COHORTS
+    <v-tooltip bottom color="primary">
+      <template v-slot:activator="{ on: tooltip }">
+    <v-btn color="primary--text" @click="dialog = !dialog" v-on="{ ...tooltip }">
+      <v-icon left>save</v-icon>AUTO-CREATE COHORTS
     </v-btn>
+      </template>
+      <span class="subtitle-1">Automatically create and save multiple cohorts based on {{ dimensionName }} (e.g., quartiles, thirds, etc.)</span>
+    </v-tooltip>
+
     <v-dialog v-model="dialog" width="500" persistent>
       <v-card class="rounded-lg">
         <v-card-title primary-title>
