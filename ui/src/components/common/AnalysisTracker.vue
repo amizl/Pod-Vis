@@ -248,11 +248,11 @@
 
       <v-stepper-items>
         <v-stepper-content step="4.1">
-          Choose two or more cohorts to compare, then click "Continue".
+          Choose two or more cohorts to include in the analysis, then click "Continue".
         </v-stepper-content>
         <v-stepper-content step="4.2">
           Select a variable from the Analytics panel to see the all-vs-all
-          cohort comparison via the Tukey/Range HSD Test. Click on a P-value in
+          cohort comparison via the Tukey/Range HSD Test. Click on a cell in
           that table to compare the corresponding pair of cohorts in the Data
           Explorer.
         </v-stepper-content>
