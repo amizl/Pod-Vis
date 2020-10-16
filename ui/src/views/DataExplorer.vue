@@ -51,7 +51,7 @@
               <v-col cols="12" class="ma-0 pa-0">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <cohort-table
-		    :title="'Cohorts Included in Analysis (' + selectedCohorts.length + ')'"
+		    :title="'Cohorts Included in Analysis (' + selectedCohorts.length + ' of ' + collectionCohorts.length + ')'"
                     :cohorts="selectedCohorts"
                     :select-cohorts="visibleCohorts"
                     show-select

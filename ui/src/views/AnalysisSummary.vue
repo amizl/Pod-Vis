@@ -65,7 +65,7 @@
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <cohort-table
-            :title="'Cohorts Included in Analysis (' + selectedCohorts.length + ')'"
+            :title="'Cohorts Included in Analysis (' + selectedCohorts.length + ' of ' + collection_cohorts.length + ')'"
             :cohorts="selectedCohorts"
             show-colors
             report-max-overlap
