@@ -201,13 +201,15 @@ export default {
     const comparisonField = 'change';
 
     try {
-      const { data } = await axios.post(`/api/compute-anova`, {
+      const input = {
         numGroups,
         groups,
         outputVariables,
         comparisonField,
-      });
+      };
+      const { data } = await axios.post(`/api/compute-anova`, input);
       commit(mutations.SET_ANOVA_PVALS, data.pvals);
+      commit(mutations.SET_ANOVA_PVALS_INPUT, input);
     } catch (err) {
       console.log(err);
       const notification = new ErrorNotification(err);

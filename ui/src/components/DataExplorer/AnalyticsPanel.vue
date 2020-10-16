@@ -9,7 +9,15 @@
                 <v-col cols="12" class="ma-0 pa-0">
                   <v-card color="#eeeeee" class="pt-1">
                     <v-card-title class="primary--text pl-3 py-2"
-                      >{{ title }}
+				  >{{ title }} &nbsp;
+
+		      <v-tooltip v-if="anova_pvals_input" top color="primary">
+			<template v-slot:activator="{ on: tooltip }">
+			  <span v-on="{ ...tooltip }">{{ "(" + anova_pvals_input.numGroups + ")" }}</span>
+			  </template>
+			    <span>Statistical analysis was performed with {{ anova_pvals_input.numGroups }} cohort(s).</span>
+		      </v-tooltip>
+
                       <v-spacer />
                       <v-chip
                         v-for="x in ['1', '0.1', '0.05', '0.01', '0.001']"
@@ -224,6 +232,7 @@ export default {
     ...mapState('dataExplorer', {
       outcomeVariables: state.OUTCOME_VARIABLES,
       anova_pvals: state.ANOVA_PVALS,
+      anova_pvals_input: state.ANOVA_PVALS_INPUT,
     }),
 
     headers() {

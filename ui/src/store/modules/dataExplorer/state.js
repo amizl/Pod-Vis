@@ -10,4 +10,5 @@ export default {
   [state.IS_LOADING]: false,
   [state.DETAILED_VIEW]: null,
   [state.ANOVA_PVALS]: [],
+  [state.ANOVA_PVALS_INPUT]: null,
 };
