@@ -1,6 +1,8 @@
 1.0.0 (October 16, 2020)
  -Initial (pre-release) for preliminary user testing.
 
-1.0.1 (TBD)
+1.0.1 (October 27, 2020)
  -Add Changelog
- -Display version number to Sidebar
+ -Display version number in Sidebar
+ -Replace 'ROC' with 'Rate of Change' (#547)
+	
