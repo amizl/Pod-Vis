@@ -188,7 +188,7 @@
           <v-btn small outlined color="primary--text" @click="goto3p4()"
             >Continue</v-btn
           >
-          and/or use the "CREATE COMPARATOR COHORTS" buttons below to create and
+          and/or use the "AUTO-CREATE COHORTS" buttons below to create and
           save multiple cohorts at once.
         </v-stepper-content>
 
