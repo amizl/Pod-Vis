@@ -470,10 +470,8 @@ export default {
 	   });
          });
 
-       console.log("visit counts for " + vid + " : " + visitCounts.map(v => v['index'] + "/" + v['count']));
          // heuristic - sort by size and pick the top two, then sort by index
          visitCounts.sort((a, b) => b['count'] - a['count']);
-       console.log("sorted visit counts for " + vid + " : " + visitCounts.map(v => v['index'] + "/" + v['count']));
          var first_index = 0;
          var last_index = 0;
 
