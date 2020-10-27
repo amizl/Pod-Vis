@@ -242,7 +242,7 @@ export default {
         class: 'text-subtitle-1 font-weight-bold',
       },
       {
-        text: 'ROC',
+        text: 'Rate of Change',
         value: 'roc',
         width: '12%',
         sortable: false,

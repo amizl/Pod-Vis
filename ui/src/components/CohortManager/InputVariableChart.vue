@@ -157,7 +157,7 @@ export default {
         } else {
           var label = v.label;
           if (label == 'Rate of Change' && which == 'abbreviation') {
-            label = 'ROC';
+            label = 'Rate of Change';
           }
 
           title = p_name + ' - ' + label + ': ' + fv + '-' + lv;
