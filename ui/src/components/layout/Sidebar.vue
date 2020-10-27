@@ -25,6 +25,13 @@
         </div>
       </v-list-item>
 
+      <v-list-item class="justify-center">
+        <div class="font-weight-medium primary--text">
+	  <!--          v{{ VERSION }} -->
+	  v1.0.1
+	</div>
+      </v-list-item>
+
       <!-- Application links -->
       <v-list-item
         v-for="item in menuItems"
