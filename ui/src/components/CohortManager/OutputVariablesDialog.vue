@@ -273,11 +273,11 @@ export default {
     cohort(c) {
       this.updateOutputVars();
     },
-    vars() {
+    vars(newvars) {
       let selectedVarsD = {};
 
       // pull vars from user-selected cohort
-        this.vars.forEach(v => {
+        newvars.forEach(v => {
           if (v.children && (v.children.length > 0))  {
             v.children.forEach(c => {
               if (!("outSelected" in c) || c.outSelected) {
@@ -325,6 +325,8 @@ export default {
       const indexVars = function(vars) {
         vars.forEach(v => {
           obsD[v.id] = v;
+          if (!("inSelected" in v)) v.inSelected = false;
+          if (!("outSelected" in v)) v.outSelected = false;
           if (v.children) indexVars(v.children);
         });
       };

@@ -5,4 +5,4 @@
  -Add Changelog
  -Display version number in Sidebar
  -Replace 'ROC' with 'Rate of Change' (#547)
-	
+ -Fix checkbox/selection bug in output variables dialog (#549)
