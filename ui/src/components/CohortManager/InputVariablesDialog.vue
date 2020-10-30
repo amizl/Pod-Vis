@@ -41,7 +41,7 @@
             <template v-slot:header.label="{ header }">
 	    </template>
 	    <template v-slot:header.all="{ header }">
-	      <v-simple-checkbox v-model="columnCheckboxes['all']" hide-details @input="columnCheckboxChange('all')" />
+	      <v-simple-checkbox v-if="showAllVarsCheckbox" v-model="columnCheckboxes['all']" hide-details @input="columnCheckboxChange('all')" />
 	    </template>
 	    <template v-slot:header.fv="{ header }">
 	      <v-simple-checkbox v-model="columnCheckboxes['firstVisit']" hide-details @input="columnCheckboxChange('firstVisit')" />
@@ -190,6 +190,10 @@ export default {
     search: {
       type: String,
       default: '',
+    },
+    showAllVarsCheckbox: {
+      type: Boolean,
+      default: false,
     },
   },
   data: () => ({

@@ -7,7 +7,8 @@
             <output-variables-dialog
               @dialogOpened="opened"
               @userSelectedOutputVariables="userSelectedOutputVariables"
-            />
+	      :showAllVarsCheckbox="true"
+              />
 
             <v-divider vertical class="ml-4 mr-4"> </v-divider>
 

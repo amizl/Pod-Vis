@@ -7,6 +7,7 @@
             <input-variables-dialog
               @dialogOpened="opened"
               @userSelectedInputVariables="userSelectedInputVariables"
+	      :showAllVarsCheckbox="false"
             />
 
             <v-divider vertical class="ml-4 mr-4"> </v-divider>
