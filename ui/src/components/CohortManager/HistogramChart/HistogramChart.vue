@@ -1,17 +1,16 @@
 <template>
   <div>
-
     <v-container v-if="inputVariable" fill-width class="pa-0 mx-3 pb-2">
-       <v-row class="pa-0 ma-0">
-         <v-col cols="12" class="pa-0 ma-0 pr-4" align="end">
+      <v-row class="pa-0 ma-0">
+        <v-col cols="12" class="pa-0 ma-0 pr-4" align="end">
           <create-comparator-cohorts-btn-dialog
             :dimension-name="variable.abbreviation"
             :select-cohort-range="selectCohortRange"
             :reset-selection="resetSelection"
-            />
+          />
         </v-col>
       </v-row>
-     </v-container>
+    </v-container>
 
     <div ref="container">
       <svg ref="chart" :width="width" :height="height">
@@ -106,7 +105,6 @@
     </div>
 
     <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
-      
       <v-row class="pa-0 ma-0" justify="start" align="center">
         <v-col cols="5" class="center-text pa-0 ma-0"
           >Custom&nbsp;Selection:</v-col
@@ -154,7 +152,6 @@
           ></v-select>
         </v-col>
       </v-row>
-
     </v-container>
   </div>
 </template>
