@@ -186,7 +186,7 @@ export default {
       pval_thresholds: ['None', 0.1, 0.05, 0.01, 0.001, 0.0001],
       pvt: 'None',
       expanded: true,
-      selectedComparisonMeasure: 'Change',
+      selectedComparisonMeasure: 'Last Visit',
     };
   },
   computed: {

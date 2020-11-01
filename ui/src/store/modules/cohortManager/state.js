@@ -15,8 +15,8 @@ export default {
   [state.PVALS_REQUEST_NUM]: 0,
   [state.PVALS_REQUEST_DELAY_SECS]: 1,
   [state.PVALS_REQUEST_STATUS]: null,
-  [state.PVAL_THRESHOLD]: 0.001,
+  [state.PVAL_THRESHOLD]: 0.05,
   [state.HIGHLIGHTED_SUBSET]: 'cohort',
   [state.QUERIES]: {},
-  [state.COMPARISON_MEASURE]: 'Change',
+  [state.COMPARISON_MEASURE]: 'Last Visit',
 };
