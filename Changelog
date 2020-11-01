@@ -1,5 +1,7 @@
-1.0.2
+1.0.2 (November 1, 2020)
  -Remove "all variables" checkbox from InputVariablesDialog (#552)
+ -Change Analytics Panel defaults to "Last Visit" and p-val=0.05 (#554)
+ -Improve/simplify auto-create cohorts wizard (#553)
 
 1.0.1 (October 27, 2020)
  -Add Changelog
