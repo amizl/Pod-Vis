@@ -22,7 +22,7 @@
             hide-default-footer
             dense
             style="width: 100%;"
-	    class="blue-grey lighten-5"
+            class="blue-grey lighten-5"
           >
             <template v-slot:item="props"> </template>
           </v-data-table>
@@ -34,35 +34,53 @@
             hide-default-footer
             dense
             style="width: 100%;"
-	    class="blue-grey lighten-5"
-            >
-	    <template v-slot:header.category="{ header }">
-	    </template>
-            <template v-slot:header.label="{ header }">
-	    </template>
-	    <template v-slot:header.all="{ header }">
-	      <v-simple-checkbox v-if="showAllVarsCheckbox" v-model="columnCheckboxes['all']" hide-details @input="columnCheckboxChange('all')" />
-	    </template>
-	    <template v-slot:header.fv="{ header }">
-	      <v-simple-checkbox v-model="columnCheckboxes['firstVisit']" hide-details @input="columnCheckboxChange('firstVisit')" />
-	    </template>
-    	    <template v-slot:header.lv="{ header }">
-	      <v-simple-checkbox v-model="columnCheckboxes['lastVisit']" hide-details @input="columnCheckboxChange('lastVisit')" />
-	    </template>
-    	    <template v-slot:header.ch="{ header }">
-	      <v-simple-checkbox v-model="columnCheckboxes['change']" hide-details @input="columnCheckboxChange('change')" />
-	    </template>
-   	    <template v-slot:header.roc="{ header }">
-	      <v-simple-checkbox v-model="columnCheckboxes['ROC']" hide-details @input="columnCheckboxChange('ROC')" />
-	    </template>
-	    <template v-slot:item="props"> </template>
+            class="blue-grey lighten-5"
+          >
+            <template v-slot:header.category="{ header }"> </template>
+            <template v-slot:header.label="{ header }"> </template>
+            <template v-slot:header.all="{ header }">
+              <v-simple-checkbox
+                v-if="showAllVarsCheckbox"
+                v-model="columnCheckboxes['all']"
+                hide-details
+                @input="columnCheckboxChange('all')"
+              />
+            </template>
+            <template v-slot:header.fv="{ header }">
+              <v-simple-checkbox
+                v-model="columnCheckboxes['firstVisit']"
+                hide-details
+                @input="columnCheckboxChange('firstVisit')"
+              />
+            </template>
+            <template v-slot:header.lv="{ header }">
+              <v-simple-checkbox
+                v-model="columnCheckboxes['lastVisit']"
+                hide-details
+                @input="columnCheckboxChange('lastVisit')"
+              />
+            </template>
+            <template v-slot:header.ch="{ header }">
+              <v-simple-checkbox
+                v-model="columnCheckboxes['change']"
+                hide-details
+                @input="columnCheckboxChange('change')"
+              />
+            </template>
+            <template v-slot:header.roc="{ header }">
+              <v-simple-checkbox
+                v-model="columnCheckboxes['ROC']"
+                hide-details
+                @input="columnCheckboxChange('ROC')"
+              />
+            </template>
+            <template v-slot:item="props"> </template>
           </v-data-table>
-
-	</div>
+        </div>
       </v-card-title>
       <v-card-text style="padding: 0px 16px 16px 16px;">
         <v-data-table
-	  :items="this.inputVariables"
+          :items="this.inputVariables"
           :headers="headers"
           item-key="id"
           hide-default-header
@@ -167,7 +185,7 @@ var getScaleVars = function(scaleVars, vars) {
   let has_first_and_last = false;
 
   vars.forEach(v => {
-    if (v.children && (v.children.length > 0)) {
+    if (v.children && v.children.length > 0) {
       // check whether the children are 'first visit', 'last visit', etc.
       if (v.children[0].label !== 'First Visit') {
         getScaleVars(scaleVars, v.children);
@@ -198,7 +216,13 @@ export default {
   },
   data: () => ({
     // checkboxes to select all items in a column
-    columnCheckboxes: { 'all': false, 'firstVisit': false, 'lastVisit': false, 'change': false, 'ROC': false },
+    columnCheckboxes: {
+      all: false,
+      firstVisit: false,
+      lastVisit: false,
+      change: false,
+      ROC: false,
+    },
     searchVariable: '',
     openInputVariableDialog: false,
     headers: [
@@ -277,7 +301,7 @@ export default {
 
       // and reset everything else
       this.inputVariables.forEach(iv => {
-        if (iv.children && (iv.children.length > 0)) {
+        if (iv.children && iv.children.length > 0) {
           let allSelected = true;
           iv.children.forEach(cv => {
             cv.inSelected = cv.id in selectedVarsD;
@@ -288,7 +312,7 @@ export default {
           iv.inmSelected = iv.id in selectedVarsD;
         }
       });
-     },
+    },
   },
   computed: {
     ...mapState('cohortManager', {
@@ -313,7 +337,7 @@ export default {
     updateSelectedVars() {
       let selectedInputVars = [];
       this.inputVariables.forEach(iv => {
-        if (iv.children && (iv.children.length > 0)) {
+        if (iv.children && iv.children.length > 0) {
           let allSelected = true;
           iv.children.forEach(cv => {
             if (cv.inSelected) {
@@ -334,18 +358,20 @@ export default {
         this.setInputVariables(selectedInputVars.sort(this.scaleSortFn));
         this.$emit('userSelectedInputVariables', true);
       }
-     this.updateColumnCheckboxes();
+      this.updateColumnCheckboxes();
     },
 
     // column master checkbox clicked
     columnCheckboxChange(which) {
-      var cn = ['firstVisit', 'lastVisit', 'change', 'ROC'].findIndex(x => x == which);
+      var cn = ['firstVisit', 'lastVisit', 'change', 'ROC'].findIndex(
+        x => x == which
+      );
       var vm = this;
       this.inputVariables.forEach(v => {
         if (which == 'all') {
           v.inmSelected = vm.columnCheckboxes['all'];
           vm.masterCbChange(v);
-        } else if ((cn != -1) && v.children && (v.children.length > cn)) {
+        } else if (cn != -1 && v.children && v.children.length > cn) {
           v.children[cn].inSelected = vm.columnCheckboxes[which];
         }
       });
@@ -354,14 +380,24 @@ export default {
 
     // update state of column master checkboxes based on the current state
     updateColumnCheckboxes() {
-      var cbStates = {'all': true, 'firstVisit': true, 'lastVisit': true, 'change': true, 'ROC': true};
+      var cbStates = {
+        all: true,
+        firstVisit: true,
+        lastVisit: true,
+        change: true,
+        ROC: true,
+      };
       this.inputVariables.forEach(v => {
         if (!v.inmSelected) {
           cbStates['all'] = false;
         }
         var i = 0;
         ['firstVisit', 'lastVisit', 'change', 'ROC'].forEach(m => {
-          if (v.children && (v.children.length > i) && (!v.children[i].inSelected)) {
+          if (
+            v.children &&
+            v.children.length > i &&
+            !v.children[i].inSelected
+          ) {
             cbStates[m] = false;
           }
           i += 1;
@@ -369,9 +405,10 @@ export default {
       });
       var vm = this;
       Object.keys(cbStates).forEach(k => {
-        if (vm.columnCheckboxes[k] != cbStates[k]) vm.columnCheckboxes[k] = cbStates[k];
+        if (vm.columnCheckboxes[k] != cbStates[k])
+          vm.columnCheckboxes[k] = cbStates[k];
       });
-   },
+    },
 
     // row master checkbox clicked
     masterCbChange(v) {
