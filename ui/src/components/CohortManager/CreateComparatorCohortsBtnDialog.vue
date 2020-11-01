@@ -2,33 +2,37 @@
   <div>
     <v-tooltip bottom color="primary">
       <template v-slot:activator="{ on: tooltip }">
-    <v-btn color="primary--text" @click="dialog = !dialog" v-on="{ ...tooltip }">
-      <v-icon left>save</v-icon>AUTO-CREATE COHORTS
-    </v-btn>
+        <v-btn
+          color="primary--text"
+          @click="dialog = !dialog"
+          v-on="{ ...tooltip }"
+        >
+          <v-icon left>save</v-icon>AUTO-CREATE COHORTS
+        </v-btn>
       </template>
-      <span class="subtitle-1">Automatically create and save multiple cohorts based on {{ dimensionName }} (e.g., quartiles, thirds, etc.)</span>
+      <span class="subtitle-1"
+        >Automatically create and save multiple cohorts based on
+        {{ dimensionName }} (e.g., quartiles, thirds, etc.)</span
+      >
     </v-tooltip>
 
     <v-dialog v-model="dialog" width="500" persistent>
       <v-card class="rounded-lg">
         <v-card-title primary-title>
-          <span class="primary--text title pl-2"
-            >Create Comparator Cohorts</span
-          >
+          <span class="primary--text title">Auto-Create Cohorts</span>
           <br clear="both" />
           <span class="primary--text subtitle pl-2"
             >based on {{ dimensionName }}:</span
           >
           <span
             v-if="!outputVariables || outputVariables.length == 0"
-            class="red--text title pl-2 pt-4"
+            class="red--text title pt-4"
           >
-            WARNING:<br clear="both" /><br clear="both" />No outcome variables
-            selected.
+            WARNING:<br clear="both" />No outcome variables selected.
           </span>
           <span
             v-else-if="hasUserFilteredOutputVariables"
-            class="red--text title pl-2 pt-4"
+            class="red--text title pt-4"
           >
             WARNING:<br clear="both" /><br clear="both" />Outcome variable
             filters will not be saved with the cohort unless they are moved to
@@ -37,39 +41,71 @@
         </v-card-title>
 
         <v-card-text>
-          <v-form ref="form" v-model="valid" @submit.prevent="onSave">
+          <div class="pb-3">
+            Automatically create new cohorts from the
+            {{ filteredData.length }} subject(s) in the current Selected Cohort,
+            based on the {{ dimensionName }} scale:
+          </div>
+          <v-form
+            ref="form"
+            v-model="valid"
+            class="ma-0 pa-0"
+            @submit.prevent="onSave"
+          >
+            <v-list class="ma-0 pa-0">
+              <v-list-item class="ma-0 pa-0">
+                <v-chip class="primary"
+                  ><v-icon
+                    v-if="cohortChoice != null"
+                    class="ma-0 pa-0 white--text"
+                    small
+                    >check</v-icon
+                  ><span v-else class="white--text">1</span></v-chip
+                >
+                <v-select
+                  v-model="cohortChoice"
+                  :items="cohortChoices"
+                  label="Select cohorts to create"
+                  item-text="label"
+                  return-object
+                  class="pl-2"
+                >
+                </v-select>
+              </v-list-item>
+
+              <!--
             <v-select
               v-model="rangeType"
               :items="['current cohort', 'study population']"
-              label="Create comparator cohorts based on"
+              label="Create cohorts based on"
             >
             </v-select>
+	    -->
 
-            <v-select
-              v-model="cohortChoice"
-              :items="cohortChoices"
-              label="Select comparator cohorts to create"
-              item-text="label"
-              return-object
-            >
-            </v-select>
-            <v-text-field
-              ref="vtf"
-              v-model="cohortNamePrefix"
-              :rules="[
-                () => !!cohortNamePrefix || 'Cohort name prefix is required.',
-                () =>
-                  cohortNamePrefixOK() ||
-                  'A cohort with that name prefix already exists.',
-              ]"
-              prepend-inner-icon="table_chart"
-              label="Comparator cohort name prefix:"
-              filled
-              text
-              background-color="grey lighten-4"
-              class="mt-2"
-            >
-            </v-text-field>
+              <v-list-item class="ma-0 pa-0">
+                <v-chip :class="{ primary: cohortChoice != null }"
+                  ><span>2</span></v-chip
+                >
+                <v-text-field
+                  ref="vtf"
+                  v-model="cohortNamePrefix"
+                  :rules="[
+                    () =>
+                      !!cohortNamePrefix || 'Cohort name prefix is required.',
+                    () =>
+                      cohortNamePrefixOK() ||
+                      'A cohort with that name prefix already exists.',
+                  ]"
+                  prepend-inner-icon="table_chart"
+                  label="Enter/edit cohort name prefix:"
+                  text
+                  filled
+                  background-color="grey lighten-5"
+                  class="mt-2 pl-2"
+                >
+                </v-text-field>
+              </v-list-item>
+            </v-list>
             <span v-if="cohortChoice" class="primary--text body-1 mb-2">
               The following cohorts will be created:
               <ul>
@@ -173,6 +209,7 @@ export default {
       collection: state.COLLECTION,
       cohort: state.COHORT,
       cohorts: state.COHORTS,
+      filteredData: state.FILTERED_DATA,
       outputVariables: state.OUTPUT_VARIABLES,
     }),
     ...mapGetters('cohortManager', {
@@ -236,7 +273,7 @@ export default {
     newCohorts() {
       var cohorts = [];
       var nCohorts = this.cohortChoice.cohorts.length;
-      var rangeSuffix = '[C]';
+      var rangeSuffix = '';
       if (this.rangeType.startsWith('study population')) {
         rangeSuffix = '[P]';
       }
