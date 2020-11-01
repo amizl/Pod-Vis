@@ -158,17 +158,16 @@ export let colors = {
 
   // Brewer 9 class qualitative - pastel colors with yellow moved to the end
   bar_graphs: [
-      '#8dd3c7',
-      '#bebada',
-      '#fb8072',
-      '#80b1d3',
-      '#fdb462',
-      '#b3de69',
-      '#fccde5',
-      '#d9d9d9',
-      '#ffffb3',
+    '#8dd3c7',
+    '#bebada',
+    '#fb8072',
+    '#80b1d3',
+    '#fdb462',
+    '#b3de69',
+    '#fccde5',
+    '#d9d9d9',
+    '#ffffb3',
   ],
-
 };
 
 export function getNumSubjectsColor(nSubjects) {

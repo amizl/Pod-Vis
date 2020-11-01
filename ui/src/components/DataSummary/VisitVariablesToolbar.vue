@@ -16,20 +16,22 @@
                 >&nbsp;selected</v-chip
               >
               <v-spacer />
-              <v-tooltip
-              bottom
-              color="primary"
-              >
-              <template v-slot:activator="{ on: tooltip }">
-                <v-chip
-                  class="title"
-		  v-on="{ ...tooltip }"
-                  :color="getNumSubjectsColor(numSelectedSubjects)"
-                  :text-color="getNumSubjectsTextColor(numSelectedSubjects)"
-                  >Study Population - {{ numSelectedSubjects }}</v-chip
-								 >
-	      </template>
-	      <span>{{ numSelectedSubjects }} subject(s) had measurements recorded for <span style='font-style: italic;'>all</span> selected variables at the indicated first/last visit(s).</span>
+              <v-tooltip bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <v-chip
+                    class="title"
+                    :color="getNumSubjectsColor(numSelectedSubjects)"
+                    :text-color="getNumSubjectsTextColor(numSelectedSubjects)"
+                    v-on="{ ...tooltip }"
+                    >Study Population - {{ numSelectedSubjects }}</v-chip
+                  >
+                </template>
+                <span
+                  >{{ numSelectedSubjects }} subject(s) had measurements
+                  recorded for
+                  <span style="font-style: italic;">all</span> selected
+                  variables at the indicated first/last visit(s).</span
+                >
               </v-tooltip>
             </v-card-title>
           </v-card>

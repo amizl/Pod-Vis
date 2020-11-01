@@ -281,18 +281,18 @@ export default {
       var vm = this;
       var nodesFound = true;
       this.$nextTick(() => {
-         Object.keys(vm.boxplotStats).forEach(k => {
-           var node = vm.$refs[k];
-           if (node == null) {
-             nodesFound = false;
-           } else {
-             vm.boxplotStats[k].node = node[0];
-           }
-         });
-         if (nodesFound) {
-           vm.boxplotStatsUpdated = true;
-         }
-       });
+        Object.keys(vm.boxplotStats).forEach(k => {
+          var node = vm.$refs[k];
+          if (node == null) {
+            nodesFound = false;
+          } else {
+            vm.boxplotStats[k].node = node[0];
+          }
+        });
+        if (nodesFound) {
+          vm.boxplotStatsUpdated = true;
+        }
+      });
     },
   },
   mounted() {
@@ -310,7 +310,7 @@ export default {
     },
     updateVisits() {
       var bp = this;
-      if (this.selectedOutcomeVariable == null) return; 
+      if (this.selectedOutcomeVariable == null) return;
       this.collection.observation_variables_list.forEach(v => {
         if (v.ontology.id == bp.selectedOutcomeVariable.id) {
           if (v.first_visit_event != null) {

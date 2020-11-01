@@ -42,16 +42,17 @@ export default {
         data.collection.observation_variables
       );
 
-	observationVariables.forEach(observationVariable => {
-          observationVariable.children.forEach(child => {
-            child.type = 'observation';
-            if (data.collection.is_longitudinal) {
-              child.is_longitudinal = true;
-  	    } else {
-	      child.is_longitudinal = false;
-	    }
-  	})});
-	
+      observationVariables.forEach(observationVariable => {
+        observationVariable.children.forEach(child => {
+          child.type = 'observation';
+          if (data.collection.is_longitudinal) {
+            child.is_longitudinal = true;
+          } else {
+            child.is_longitudinal = false;
+          }
+        });
+      });
+
       data.collection.observation_variables_list =
         data.collection.observation_variables;
       data.collection.subject_variables = subjectVariables;
@@ -109,7 +110,7 @@ export default {
               const { observation, value, change, roc, min, max, ...rest } = d;
               return {
                 [observation]: {
-       	          value,
+                  value,
                   change,
                   roc,
                   firstVisit: min,

@@ -188,9 +188,12 @@ export default {
    */
   [mutations.CLEAR_FILTER](state, { dimension }) {
     const dimensions = state[stateTypes.DIMENSIONS];
-      const dim = dimensions[dimension];
-      if ((typeof dim !== 'undefined') && (typeof dim.currentFilter() !== 'undefined')) {
-        dim.filterAll();
+    const dim = dimensions[dimension];
+    if (
+      typeof dim !== 'undefined' &&
+      typeof dim.currentFilter() !== 'undefined'
+    ) {
+      dim.filterAll();
     }
   },
   /**

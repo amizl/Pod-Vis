@@ -5,10 +5,10 @@
         <v-card color="#eeeeee">
           <v-card-title class="primary--text pl-3 py-2">
             <output-variables-dialog
+              :show-all-vars-checkbox="true"
               @dialogOpened="opened"
               @userSelectedOutputVariables="userSelectedOutputVariables"
-	      :showAllVarsCheckbox="true"
-              />
+            />
 
             <v-divider vertical class="ml-4 mr-4"> </v-divider>
 

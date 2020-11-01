@@ -46,12 +46,11 @@
     </v-row>
 
     <v-row v-if="showSelection" class="ma-0 pa-0">
-        <v-col cols="12" class="center-text pa-0 ma-0"
-          >Current Selection:
-	{{ (selected && (selected.length > 0)) ? selected.join(",") : "-" }}
+      <v-col cols="12" class="center-text pa-0 ma-0"
+        >Current Selection:
+        {{ selected && selected.length > 0 ? selected.join(',') : '-' }}
       </v-col>
     </v-row>
-
   </v-container>
 </template>
 
@@ -222,11 +221,11 @@ export default {
 
     var popCounts = {};
     this.unfilteredData.forEach(d => {
-    var v = dimension.accessor(d);
+      var v = dimension.accessor(d);
 
-    if (!(v in popCounts)) {
-      popCounts[v] = 0;
-    }
+      if (!(v in popCounts)) {
+        popCounts[v] = 0;
+      }
       popCounts[v] += 1;
     });
     var popData = [];

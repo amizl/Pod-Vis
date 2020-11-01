@@ -46,24 +46,37 @@
         :items="cohorts"
         item-key="id"
         :show-select="showSelect"
-	:disable-pagination="disablePagination"
-	:hide-default-footer="disablePagination"
+        :disable-pagination="disablePagination"
+        :hide-default-footer="disablePagination"
         dense
       >
         <template v-slot:item.data-table-select="{ isSelected, select }">
           <td class="pa-0 ma-0" justify="center" align="center">
-
-          <v-tooltip v-if="checkboxTooltip" bottom color="primary">
-            <template v-slot:activator="{ on: tooltip }">
-	    <v-simple-checkbox v-on="{ ...tooltip }" :value="isSelected" @input="select($event)" class="pa-0 ma-0" dense hide-details />
-	    </template>
-	    <span>{{ checkboxTooltip }}</span>
-	  </v-tooltip>
-	  <v-simple-checkbox v-else :value="isSelected" @input="select($event)" class="pa-0 ma-0" dense hide-details />
+            <v-tooltip v-if="checkboxTooltip" bottom color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <v-simple-checkbox
+                  :value="isSelected"
+                  class="pa-0 ma-0"
+                  dense
+                  hide-details
+                  v-on="{ ...tooltip }"
+                  @input="select($event)"
+                />
+              </template>
+              <span>{{ checkboxTooltip }}</span>
+            </v-tooltip>
+            <v-simple-checkbox
+              v-else
+              :value="isSelected"
+              class="pa-0 ma-0"
+              dense
+              hide-details
+              @input="select($event)"
+            />
           </td>
         </template>
 
-	<template v-slot:item.label="{ item }">
+        <template v-slot:item.label="{ item }">
           <td class="subtitle-1 text-xs-left">
             <span v-html="item.label"></span>
           </td>

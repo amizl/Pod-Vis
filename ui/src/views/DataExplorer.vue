@@ -51,14 +51,20 @@
               <v-col cols="12" class="ma-0 pa-0">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <cohort-table
-		    :title="'Cohorts Included in Analysis (' + selectedCohorts.length + ' of ' + collectionCohorts.length + ')'"
+                    :title="
+                      'Cohorts Included in Analysis (' +
+                        selectedCohorts.length +
+                        ' of ' +
+                        collectionCohorts.length +
+                        ')'
+                    "
                     :cohorts="selectedCohorts"
                     :select-cohorts="visibleCohorts"
                     show-select
                     show-colors
                     report-max-overlap
+                    checkbox-tooltip="Show or hide this cohort in the Detailed View."
                     @selectedCohorts="updateVisibleCohorts"
-		    checkboxTooltip="Show or hide this cohort in the Detailed View."
                   />
                 </v-sheet>
               </v-col>
@@ -72,7 +78,7 @@
                     :show-category-icons="true"
                     autoselect-first-variable
                     :expanded="expandAnalytics"
-		    color-scheme="brewer5"
+                    color-scheme="brewer5"
                     @variableSelected="variableSelected"
                     @expandClicked="analyticsExpandClicked"
                   />

@@ -54,8 +54,8 @@
           :cohorts="collection_cohorts"
           show-select
           report-max-selected-overlap
+          disable-pagination
           @selectedCohorts="updateSelectedCohorts"
-	  disable-pagination
         />
       </v-col>
     </v-container>
@@ -65,7 +65,13 @@
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <cohort-table
-            :title="'Cohorts Included in Analysis (' + selectedCohorts.length + ' of ' + collection_cohorts.length + ')'"
+            :title="
+              'Cohorts Included in Analysis (' +
+                selectedCohorts.length +
+                ' of ' +
+                collection_cohorts.length +
+                ')'
+            "
             :cohorts="selectedCohorts"
             show-colors
             report-max-overlap
@@ -126,9 +132,14 @@
 
       <v-row class="ma-0 pa-0 mt-2">
         <v-col cols="12" class="ma-0 pa-0">
-	  <box-plots v-if="!selectedOutcomeVariable || (selectedOutcomeVariable.data_category == 'Continuous')" />
-	  <stacked-bars v-else />
-	</v-col>
+          <box-plots
+            v-if="
+              !selectedOutcomeVariable ||
+                selectedOutcomeVariable.data_category == 'Continuous'
+            "
+          />
+          <stacked-bars v-else />
+        </v-col>
       </v-row>
     </v-container>
   </v-container>

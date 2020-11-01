@@ -400,11 +400,11 @@ export default {
     //    const studyInputVariables =
     //      getters[getterTypes.FIND_COHORT_STUDY_INPUT_VARIABLES];
     const subjectInputVariables =
-	  getters[getterTypes.FIND_COHORT_SUBJECT_INPUT_VARIABLES];
+      getters[getterTypes.FIND_COHORT_SUBJECT_INPUT_VARIABLES];
     const observationInputVariables =
-	  getters[getterTypes.FIND_COHORT_OBSERVATION_INPUT_VARIABLES];
+      getters[getterTypes.FIND_COHORT_OBSERVATION_INPUT_VARIABLES];
     const outputVariables =
-	  getters[getterTypes.FIND_COHORT_OBSERVATION_OUTPUT_VARIABLES];
+      getters[getterTypes.FIND_COHORT_OBSERVATION_OUTPUT_VARIABLES];
     dispatch(actions.CLEAR_ALL_FILTERS);
     dispatch(actions.SET_INPUT_VARIABLES, [
       //      ...studyInputVariables,

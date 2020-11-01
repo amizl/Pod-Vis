@@ -168,10 +168,10 @@ export default {
               type: 'observation',
             };
 
-    	    obs_var['parentID'] = variable.observation_ontology_id;
+            obs_var['parentID'] = variable.observation_ontology_id;
             obs_var['parentLabel'] = variable.observation_ontology.label;
 
-              return obs_var;
+            return obs_var;
           });
 
     // index output vars
@@ -186,16 +186,16 @@ export default {
       .key(d => d.parentID)
       .entries(outputVariables)
       .filter(d => {
-          if ((d.key == null) || (d.key == 'undefined')) {
-	  return true;
-	}
+        if (d.key == null || d.key == 'undefined') {
+          return true;
+        }
         var v = ovars[Number(d.key)];
         var nc = v.observation_ontology.data_category == 'Categorical' ? 2 : 4;
         return d.values.length === nc;
       })
       .map(d => {
         var v = ovars[Number(d.key)];
-          return {
+        return {
           ...v.observation_ontology,
           children: d.values,
         };

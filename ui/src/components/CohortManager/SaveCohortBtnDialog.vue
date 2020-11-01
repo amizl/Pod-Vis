@@ -23,8 +23,8 @@
             class="red--text text--lighten-4 title pl-2 py-4"
           >
             WARNING:<br clear="both" />Outcome variable filters will not be
-            saved with the cohort unless they are moved to the PREDICTOR VARIABLES
-            section.<br clear="both" />
+            saved with the cohort unless they are moved to the PREDICTOR
+            VARIABLES section.<br clear="both" />
           </div>
 
           <v-form

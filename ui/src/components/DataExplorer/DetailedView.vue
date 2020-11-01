@@ -54,25 +54,25 @@
 -->
         <span class="pl-2">Show:</span>
         <v-checkbox
-	  	  	  v-if="!isDetailedViewCategorical"
+          v-if="!isDetailedViewCategorical"
           v-model="draw_raw"
           label="Raw Data"
           class="pl-3"
-  	  :disabled="isDetailedViewCategorical"
+          :disabled="isDetailedViewCategorical"
         ></v-checkbox>
         <v-checkbox
-	  	  	  v-if="!isDetailedViewCategorical"
+          v-if="!isDetailedViewCategorical"
           v-model="draw_mean"
           label="Mean/SD"
           class="pl-3"
-  	  :disabled="isDetailedViewCategorical"
+          :disabled="isDetailedViewCategorical"
         ></v-checkbox>
         <v-checkbox
-	  	  v-if="!isDetailedViewCategorical"
+          v-if="!isDetailedViewCategorical"
           v-model="show_population_counts"
           label="Population Counts"
           class="pl-3"
-	  :disabled="isDetailedViewCategorical"
+          :disabled="isDetailedViewCategorical"
         ></v-checkbox>
         <v-checkbox
           v-model="show_first_last_visit"
@@ -85,11 +85,11 @@
           class="pl-3"
         ></v-checkbox>
         <v-checkbox
-	  v-if="isDetailedViewCategorical"
+          v-if="isDetailedViewCategorical"
           v-model="show_percentages"
           label="Percentages"
           class="pl-3"
-	  :disabled="!isDetailedViewCategorical"
+          :disabled="!isDetailedViewCategorical"
         ></v-checkbox>
       </v-row>
     </v-container>
@@ -126,7 +126,7 @@
             :show-population-counts="show_population_counts"
             :show-first-last-visit="show_first_last_visit"
             :show-all-timepoints="show_all_timepoints"
-	    :show-percentages="show_percentages"
+            :show-percentages="show_percentages"
             :xaxis="xaxis"
             class="pa-0 ma-0"
           />
@@ -164,7 +164,9 @@ export default {
       visibleCohorts: state.VISIBLE_COHORTS,
     }),
     isDetailedViewCategorical() {
-      return (this.detailedView && (this.detailedView.data_category == 'Categorical'));
+      return (
+        this.detailedView && this.detailedView.data_category == 'Categorical'
+      );
     },
   },
   watch: {

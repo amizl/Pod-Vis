@@ -83,10 +83,10 @@
                   {{ graphData[sc].short_label }}
                 </text>
 
-		<!-- bar graph rectangles -->
-		<rect
+                <!-- bar graph rectangles -->
+                <rect
                   v-for="(gr, index) in graphRects"
-		  :ref="gr.key"
+                  :ref="gr.key"
                   :x="gr.x"
                   :y="gr.y"
                   :width="gr.w"
@@ -95,8 +95,8 @@
                   stroke="black"
                 />
 
-		<!-- color key -->
-		<rect
+                <!-- color key -->
+                <rect
                   v-for="(gc, index) in graphColorKey"
                   :x="gc.x"
                   :y="gc.y"
@@ -113,7 +113,7 @@
                 >
                   {{ gc.label }}
                 </text>
-		
+
                 <!-- x-axis at top -->
                 <g
                   v-xaxis="xAxis"
@@ -136,7 +136,7 @@
               <span> {{ graphData[sc]['label'] }} </span>
             </v-tooltip>
 
-	    <!-- tooltips for bar graph rectangles -->
+            <!-- tooltips for bar graph rectangles -->
             <v-tooltip
               v-for="(gr, index) in graphRects"
               top
@@ -145,10 +145,8 @@
             >
               <span> {{ gr['label'] }} </span>
             </v-tooltip>
-
-	  </v-col>
+          </v-col>
         </v-row>
-
       </v-container>
     </v-sheet>
   </v-sheet>
@@ -267,26 +265,26 @@ export default {
       var vm = this;
       var nodesFound = true;
       this.$nextTick(() => {
-         Object.keys(vm.graphData).forEach(k => {
-           var node = vm.$refs[k];
-           if (node == null) {
-             nodesFound = false;
-           } else {
-             vm.graphData[k].node = node[0];
-           }
-         });
-         vm.graphRects.forEach(gr => {
-           var node = vm.$refs[gr.key];
-           if (node == null) {
-             nodesFound = false;
-           } else {
-             gr.node = node[0];
-           }
-         });
-         if (nodesFound) {
-           vm.graphDataUpdated = true;
-         }
-       });
+        Object.keys(vm.graphData).forEach(k => {
+          var node = vm.$refs[k];
+          if (node == null) {
+            nodesFound = false;
+          } else {
+            vm.graphData[k].node = node[0];
+          }
+        });
+        vm.graphRects.forEach(gr => {
+          var node = vm.$refs[gr.key];
+          if (node == null) {
+            nodesFound = false;
+          } else {
+            gr.node = node[0];
+          }
+        });
+        if (nodesFound) {
+          vm.graphDataUpdated = true;
+        }
+      });
     },
   },
   mounted() {
@@ -304,7 +302,7 @@ export default {
     },
     updateVisits() {
       var bp = this;
-      if (this.selectedOutcomeVariable == null) return; 
+      if (this.selectedOutcomeVariable == null) return;
       this.collection.observation_variables_list.forEach(v => {
         if (v.ontology.id == bp.selectedOutcomeVariable.id) {
           if (v.first_visit_event != null) {
@@ -384,8 +382,8 @@ export default {
         });
 
         const cohortData = this.data
-        .filter(d => d.subject_id in subjids)
-        .map(x => x[this.selectedOutcomeVariable.id][visit]);
+          .filter(d => d.subject_id in subjids)
+          .map(x => x[this.selectedOutcomeVariable.id][visit]);
         var counts = {};
         var total = 0;
         cohortData.forEach(x => {
@@ -395,10 +393,10 @@ export default {
           counts[x] += 1;
           total += 1;
         });
-        if ((vm.maxValue == null) || (total > vm.maxValue)) {
+        if (vm.maxValue == null || total > vm.maxValue) {
           vm.maxValue = total;
         }
-    
+
         var box_h = row_height - (pad_top + pad_bottom);
         var gkey = c.id + '-' + visit;
 
@@ -411,22 +409,40 @@ export default {
 
         var ccount = 0;
         var rnum = 1;
-    
+
         Object.keys(counts)
-         .sort((x,y) => { return x.localeCompare(y); }).forEach(category => {
-          var count = counts[category];
-          var pct = (count / total) * 100.0;
-          var x1 = xScale(ccount);
-          var x2 = xScale(ccount + count);
-          var w = x2 - x1;
-          var color = getBarColor(category);
-          var key = c.id + '-' + visit + '-' + rnum;
-          var label = category + " - " + count + " subject(s) [" + format('.1f')(pct) + "%]";
-          graphRects.push({'x': x1, 'y': y_offset + pad_top, 'w': w, 'h': row_height - (pad_bottom + pad_top), 'color': color, 'key': key, 'node': null, 'label': label });
-          ccount += count;
-          rnum++;
-        });
-    
+          .sort((x, y) => {
+            return x.localeCompare(y);
+          })
+          .forEach(category => {
+            var count = counts[category];
+            var pct = (count / total) * 100.0;
+            var x1 = xScale(ccount);
+            var x2 = xScale(ccount + count);
+            var w = x2 - x1;
+            var color = getBarColor(category);
+            var key = c.id + '-' + visit + '-' + rnum;
+            var label =
+              category +
+              ' - ' +
+              count +
+              ' subject(s) [' +
+              format('.1f')(pct) +
+              '%]';
+            graphRects.push({
+              x: x1,
+              y: y_offset + pad_top,
+              w: w,
+              h: row_height - (pad_bottom + pad_top),
+              color: color,
+              key: key,
+              node: null,
+              label: label,
+            });
+            ccount += count;
+            rnum++;
+          });
+
         graphData[gkey] = {
           label: label_prefix + c.label,
           short_label: shortLabelFn(label_prefix + c.label),
@@ -451,7 +467,7 @@ export default {
 
       this.graphRects = [];
       var gRects = [];
-    
+
       this.graphColorKey = [];
       var hrh = this.rowHeight / 2.0;
 
@@ -466,12 +482,17 @@ export default {
         if (!(category in cat2color)) {
           cat2color[category] = vm.colors['bar_graphs'][cindex % ncolors];
           cindex++;
-          vm.graphColorKey.push({ 'label': category, 'color': cat2color[category], 'x': ck_xoffset, 'y': 20 })
+          vm.graphColorKey.push({
+            label: category,
+            color: cat2color[category],
+            x: ck_xoffset,
+            y: 20,
+          });
           ck_xoffset += category.length * 15;
-         }
+        }
         return cat2color[category];
       };
-    
+
       this.updateGraphData_aux(
         'firstVisit',
         this.margins.top,
@@ -481,7 +502,8 @@ export default {
         this.rowHeight,
         this.firstVisit + ' | ',
         getBarColor,
-        gData, gRects
+        gData,
+        gRects
       );
       this.updateGraphData_aux(
         'lastVisit',
@@ -492,7 +514,8 @@ export default {
         this.rowHeight,
         this.lastVisit + ' | ',
         getBarColor,
-        gData, gRects
+        gData,
+        gRects
       );
       this.graphData = gData;
       this.graphRects = gRects;

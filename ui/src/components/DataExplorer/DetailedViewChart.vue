@@ -305,18 +305,18 @@ export default {
       const tp = this.timepoints;
 
       // add padding to allow bar charts to fit
-//      if (this.isCategorical) {
-        const ntp = tp.length;
-        const bw = this.computedWidth / (ntp-1);
-        const hbw = bw/2;
-        return scaleBand()
-          .domain(tp)
-          .range([hbw, this.computedWidth + hbw]);
-//      }
+      //      if (this.isCategorical) {
+      const ntp = tp.length;
+      const bw = this.computedWidth / (ntp - 1);
+      const hbw = bw / 2;
+      return scaleBand()
+        .domain(tp)
+        .range([hbw, this.computedWidth + hbw]);
+      //      }
 
-//      return scaleBand()
-//        .domain(tp)
-//        .range([0, this.computedWidth]);
+      //      return scaleBand()
+      //        .domain(tp)
+      //        .range([0, this.computedWidth]);
     },
     computedWidth() {
       const { left, right } = this.margin;
@@ -349,7 +349,7 @@ export default {
       return cch;
     },
     isCategorical() {
-      return (this.variable && (this.variable.data_category == 'Categorical'));
+      return this.variable && this.variable.data_category == 'Categorical';
     },
   },
   watch: {
@@ -709,15 +709,17 @@ export default {
     },
 
     drawCategoricalData() {
-      if (this.maxSubjects == 0) { this.updateSubjectCounts(); }
+      if (this.maxSubjects == 0) {
+        this.updateSubjectCounts();
+      }
       const cohorts = this.selectedCohorts();
       const tpts = this.timepoints;
       const xds = this.xDimensionScale;
       const ds = this.dimensionScale;
       const slf = this;
       const bw = xds(tpts[1]) - xds(tpts[0]) - 3;
-      const hbw = bw/2;
-      const cbw = (bw / cohorts.length);
+      const hbw = bw / 2;
+      const cbw = bw / cohorts.length;
       const y0 = ds(0);
       this.categoryColorKey = [];
 
@@ -732,9 +734,14 @@ export default {
         if (!(category in cat2color)) {
           cat2color[category] = slf.colors['bar_graphs'][cindex % ncolors];
           cindex++;
-          slf.categoryColorKey.push({ 'label': category, 'color': cat2color[category], 'x': ck_xoffset, 'y': slf.computedHeight + 130 })
+          slf.categoryColorKey.push({
+            label: category,
+            color: cat2color[category],
+            x: ck_xoffset,
+            y: slf.computedHeight + 130,
+          });
           ck_xoffset += category.length * 17;
-         }
+        }
         return cat2color[category];
       };
 
@@ -746,11 +753,15 @@ export default {
             if (c.id in scounts) {
               var cat_counts = scounts[c.id];
               var sorted_cats = Object.keys(cat_counts);
-              sorted_cats.sort((x, y) => { return x.localeCompare(y); });
+              sorted_cats.sort((x, y) => {
+                return x.localeCompare(y);
+              });
               var cumulative_count = 0;
               var cumulative_pct = 0;
               var total = 0;
-              sorted_cats.forEach(cc => { total += cat_counts[cc]; });
+              sorted_cats.forEach(cc => {
+                total += cat_counts[cc];
+              });
 
               sorted_cats.forEach(cc => {
                 var count = cat_counts[cc];
@@ -765,7 +776,7 @@ export default {
                 }
 
                 slf.context.fillStyle = ccolor;
-                this.context.fillRect(bx, y1, cbw-1, y2-y1);
+                this.context.fillRect(bx, y1, cbw - 1, y2 - y1);
                 cumulative_count += count;
                 cumulative_pct += pct;
               });
@@ -774,7 +785,7 @@ export default {
           });
         }
       });
-        slf.context.fillStyle = 'black';
+      slf.context.fillStyle = 'black';
     },
 
     drawData() {
@@ -895,7 +906,7 @@ export default {
           tp2subjIds[evt] = {};
         }
         tp2subjIds[evt][r.subject_id] = 1;
-  
+
         // compute category counts at each timepoint
         if (r['data_category'] == 'Categorical') {
           var category = r['value'];
@@ -910,7 +921,7 @@ export default {
               }
               if (!(category in tp2cohortSubjCategoryCounts[evt][cohort.id])) {
                 tp2cohortSubjCategoryCounts[evt][cohort.id][category] = 0;
-              } 
+              }
               tp2cohortSubjCategoryCounts[evt][cohort.id][category]++;
             });
           }
@@ -969,7 +980,9 @@ export default {
 
     // plot number of subjects at each timepoint/visit
     drawSubjectCounts() {
-      if (this.maxSubjects == 0) { this.updateSubjectCounts(); }
+      if (this.maxSubjects == 0) {
+        this.updateSubjectCounts();
+      }
 
       const tpts = this.timepoints;
       const selCohorts = this.selectedCohorts();
@@ -1173,10 +1186,7 @@ export default {
       // line along right side of figure
       this.context.beginPath();
       this.context.moveTo(x0, 0);
-      this.context.lineTo(
-        x0,
-        this.computedHeight
-      );
+      this.context.lineTo(x0, this.computedHeight);
       this.context.strokeStyle = 'black';
       this.context.stroke();
 
@@ -1186,10 +1196,7 @@ export default {
       this.context.beginPath();
       ticks.forEach(d => {
         this.context.moveTo(x0, this.dimensionScale(d));
-        this.context.lineTo(
-          x0 + tickSize,
-          this.dimensionScale(d)
-        );
+        this.context.lineTo(x0 + tickSize, this.dimensionScale(d));
       });
       this.context.strokeStyle = 'black';
       this.context.stroke();
@@ -1218,7 +1225,7 @@ export default {
       const scale = this.xDimensionScale;
       var y0 = this.computedHeight;
       var bw = scale.bandwidth();
-      var hbw = bw/2;
+      var hbw = bw / 2;
 
       this.context.beginPath();
       tp.forEach(d => {
@@ -1229,7 +1236,10 @@ export default {
       this.context.stroke();
 
       this.context.beginPath();
-      this.context.moveTo(this.xDimensionScale(this.xmin) - hbw, this.computedHeight);
+      this.context.moveTo(
+        this.xDimensionScale(this.xmin) - hbw,
+        this.computedHeight
+      );
       this.context.lineTo(
         this.xDimensionScale(xmax) + 0.5 + hbw,
         this.computedHeight

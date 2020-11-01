@@ -35,11 +35,10 @@
           color="primary"
           :activator="rowCounts[scale]['node']"
         >
-          <span> {{ rowCounts[scale]['descr']}} </span>
+          <span> {{ rowCounts[scale]['descr'] }} </span>
         </v-tooltip>
       </v-col>
     </v-row>
-
   </v-container>
 </template>
 
@@ -478,7 +477,7 @@ export default {
         .style('opacity', function(d) {
           return d[1] in collectionVarAbbreviations ? cvo : vo;
         })
-      .attr('stroke', 'black');
+        .attr('stroke', 'black');
 
       // generate row counts, indexed by scale name
       // for now we're just going to take min(first_visit_count, last_visit_count)
@@ -493,7 +492,15 @@ export default {
       var maxCount = 0;
 
       var countDescrFn = function(count, scale, which, visit) {
-        return count + " subject(s) had a measurement for " + scale + " recorded at " + which + " visit " + visit;
+        return (
+          count +
+          ' subject(s) had a measurement for ' +
+          scale +
+          ' recorded at ' +
+          which +
+          ' visit ' +
+          visit
+        );
       };
 
       this.getCollectionSummaries().forEach(cs => {
@@ -504,18 +511,34 @@ export default {
         var which = null;
         var other = null;
 
-        if (vm.firstVisits[scaleId] == visit) { which = 'first'; other = 'last'; }
-        if (vm.lastVisits[scaleId] == visit) { which = 'last'; other = 'first'; }
+        if (vm.firstVisits[scaleId] == visit) {
+          which = 'first';
+          other = 'last';
+        }
+        if (vm.lastVisits[scaleId] == visit) {
+          which = 'last';
+          other = 'first';
+        }
 
         // is this visit one of those selected for this variable?
-        if ((scale in collectionVarAbbreviations) && (which != null)) {
+        if (scale in collectionVarAbbreviations && which != null) {
           if (!(scale in rowCounts)) {
-            rowCounts[scale] = { 'count': count, 'n_visits': 1, 'descr': countDescrFn(count, scale, which, visit), 'other': other, 'scale_id': scaleId };
-          }
-          else {
+            rowCounts[scale] = {
+              count: count,
+              n_visits: 1,
+              descr: countDescrFn(count, scale, which, visit),
+              other: other,
+              scale_id: scaleId,
+            };
+          } else {
             if (count < rowCounts[scale]['count']) {
               rowCounts[scale]['count'] = count;
-              rowCounts[scale]['descr'] = countDescrFn(count, scale, which, visit);
+              rowCounts[scale]['descr'] = countDescrFn(
+                count,
+                scale,
+                which,
+                visit
+              );
             }
             rowCounts[scale]['n_visits'] += 1;
           }
@@ -526,15 +549,32 @@ export default {
         if (t in rowCounts) {
           var rc = rowCounts[t];
           // only 1 visit found means no subjects with first + last
-          if ((nEvents > 1) && (rc['n_visits'] < 2)) {
-            var other_visit = (rc['other'] == 'first') ? vm.firstVisits[rc['scale_id']] : vm.lastVisits[rc['scale_id']]; 
+          if (nEvents > 1 && rc['n_visits'] < 2) {
+            var other_visit =
+              rc['other'] == 'first'
+                ? vm.firstVisits[rc['scale_id']]
+                : vm.lastVisits[rc['scale_id']];
             rc['count'] = 0;
-            rc['descr'] = "no subjects had a measurement for " + t + " recorded at " + rc['other'] + " visit " + other_visit;
+            rc['descr'] =
+              'no subjects had a measurement for ' +
+              t +
+              ' recorded at ' +
+              rc['other'] +
+              ' visit ' +
+              other_visit;
           }
-          if (rc['count'] > maxCount) { maxCount = rc['count']; }
-        }
-        else if (t in collectionVarAbbreviations) {
-          rowCounts[t] = { 'count': 0, 'n_visits': 0, 'descr': "no subjects had a measurement for " + t + " recorded at the selected first or last visit" };
+          if (rc['count'] > maxCount) {
+            maxCount = rc['count'];
+          }
+        } else if (t in collectionVarAbbreviations) {
+          rowCounts[t] = {
+            count: 0,
+            n_visits: 0,
+            descr:
+              'no subjects had a measurement for ' +
+              t +
+              ' recorded at the selected first or last visit',
+          };
         }
       });
 
@@ -551,14 +591,18 @@ export default {
         .enter()
         .append('rect')
         .attr('x', margin.left + width + 5)
-        .attr('y', function(d) { return y(d); })
+        .attr('y', function(d) {
+          return y(d);
+        })
         .attr('width', rcFontSize * 5)
-        .attr('height', y_bw )
-        .attr('rx', qrcfs*2)
-        .attr('ry', qrcfs*2)
-        .style('fill', function(d) { return getNumSubjectsColor(rowCounts[d]['count']); })
+        .attr('height', y_bw)
+        .attr('rx', qrcfs * 2)
+        .attr('ry', qrcfs * 2)
+        .style('fill', function(d) {
+          return getNumSubjectsColor(rowCounts[d]['count']);
+        })
         .style('stroke', 'white')
-        .style('stroke-width', qrcfs)
+        .style('stroke-width', qrcfs);
 
       // row counts
       mysvg
@@ -569,13 +613,20 @@ export default {
         .append('text')
         .attr('id', function(d) {
           return 'hr-' + d;
-          })
+        })
         .attr('x', margin.left + width + 15)
-        .attr('y', function(d) { return y(d) + y_hbw + qrcfs; })
-        .text(function(d) { var ct = rowCounts[d]['count']; return ct == 0 ? '0' : '<= ' + ct; })
+        .attr('y', function(d) {
+          return y(d) + y_hbw + qrcfs;
+        })
+        .text(function(d) {
+          var ct = rowCounts[d]['count'];
+          return ct == 0 ? '0' : '<= ' + ct;
+        })
         .style('font-size', rcFontSize)
         .style('font-family', 'sans-serif')
-        .style('color', function(d) { return getNumSubjectsTextColor(rowCounts[d]['count']); })
+        .style('color', function(d) {
+          return getNumSubjectsTextColor(rowCounts[d]['count']);
+        });
 
       Object.keys(rowCounts).forEach(k => {
         rowCounts[k]['node'] = document.getElementById('hr-' + k);

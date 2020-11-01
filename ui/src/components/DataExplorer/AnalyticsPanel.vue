@@ -9,21 +9,30 @@
                 <v-col cols="12" class="ma-0 pa-0">
                   <v-card color="#eeeeee" class="pt-1">
                     <v-card-title class="primary--text pl-3 py-2"
-				  >{{ title }} &nbsp;
+                      >{{ title }} &nbsp;
 
-		      <v-tooltip v-if="anova_pvals_input" top color="primary">
-			<template v-slot:activator="{ on: tooltip }">
-			  <span v-on="{ ...tooltip }">{{ "(" + anova_pvals_input.numGroups + ")" }}</span>
-			  </template>
-			    <span>Statistical analysis was performed with {{ anova_pvals_input.numGroups }} cohort(s).</span>
-		      </v-tooltip>
+                      <v-tooltip v-if="anova_pvals_input" top color="primary">
+                        <template v-slot:activator="{ on: tooltip }">
+                          <span v-on="{ ...tooltip }">{{
+                            '(' + anova_pvals_input.numGroups + ')'
+                          }}</span>
+                        </template>
+                        <span
+                          >Statistical analysis was performed with
+                          {{ anova_pvals_input.numGroups }} cohort(s).</span
+                        >
+                      </v-tooltip>
 
                       <v-spacer />
                       <v-chip
                         v-for="x in ['1', '0.1', '0.05', '0.01', '0.001']"
                         v-if="expanded"
                         :color="colors['pvals'][x + '-' + colorScheme]['color']"
-			:class="((colorScheme == 'brewer5') && (x == '0.001')) ? 'white--text' : ''"
+                        :class="
+                          colorScheme == 'brewer5' && x == '0.001'
+                            ? 'white--text'
+                            : ''
+                        "
                         >p &lt; {{ x }}</v-chip
                       >
                       <v-spacer v-if="expanded" />
@@ -66,8 +75,10 @@
                   :style="
                     expanded || !colorScaleWhenMinimized
                       ? ''
-                      : { backgroundColor: pval_table_cell_color(props.item), 
-		      color: pval_table_text_color(props.item) }
+                      : {
+                          backgroundColor: pval_table_cell_color(props.item),
+                          color: pval_table_text_color(props.item),
+                        }
                   "
                 >
                   <v-row align="center">
@@ -135,7 +146,7 @@
                   class="text-subtitle-1 text-xs-left"
                   :style="{
                     backgroundColor: pval_table_cell_color(props.item),
-                    color: pval_table_text_color(props.item)
+                    color: pval_table_text_color(props.item),
                   }"
                 >
                   {{ format_pval(props.item.p_value) }}
@@ -368,7 +379,9 @@ export default {
         const pd = this.pval_dict;
         if (ov.label in pd) {
           const { pval } = pd[ov.label];
-	  if (pval < 0.001) { return 'white'; }
+          if (pval < 0.001) {
+            return 'white';
+          }
         }
       }
       return 'black';

@@ -188,8 +188,8 @@
           <v-btn small outlined color="primary--text" @click="goto3p4()"
             >Continue</v-btn
           >
-          and/or use the "AUTO-CREATE COHORTS" buttons below to create and
-          save multiple cohorts at once.
+          and/or use the "AUTO-CREATE COHORTS" buttons below to create and save
+          multiple cohorts at once.
         </v-stepper-content>
 
         <v-stepper-content step="3.4">
@@ -248,7 +248,8 @@
 
       <v-stepper-items>
         <v-stepper-content step="4.1">
-          Choose two or more cohorts to include in the analysis, then click "Continue".
+          Choose two or more cohorts to include in the analysis, then click
+          "Continue".
         </v-stepper-content>
         <v-stepper-content step="4.2">
           Select a variable from the Analytics panel to see the all-vs-all
@@ -266,10 +267,11 @@
     <v-stepper v-if="step === '5'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step step="5.1"
-	 >Select the cohorts and scale (i.e., outcome variable) to display in the Detailed View
-	  by using the Cohorts Included in Analysis table (top) and the Analytics panel (bottom left), respectively.
-	  Use the checkboxes to control which cohorts appear in the Detailed View and click on the desired scale
-	  in the Analytics panel.
+          >Select the cohorts and scale (i.e., outcome variable) to display in
+          the Detailed View by using the Cohorts Included in Analysis table
+          (top) and the Analytics panel (bottom left), respectively. Use the
+          checkboxes to control which cohorts appear in the Detailed View and
+          click on the desired scale in the Analytics panel.
         </v-stepper-step>
         <v-divider></v-divider>
       </v-stepper-header>
