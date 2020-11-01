@@ -12,6 +12,12 @@
       hide-default-footer
       show-select
     >
+      <!-- Attempt to add 'Select All:' label to master checkbox. -->
+      <!--
+      <template v-slot:header.data-table-select="{ header }">
+        <span class="text-subtitle-1 font-weight-bold">Select All:</span>
+      </template>
+      -->
       <template
         v-for="ds in datasets"
         v-slot:[`header.${ds.study_name}`]="{ header }"
@@ -26,30 +32,6 @@
           >{{ getStudyCount(header.dataset.id) + ' selected' }}</v-chip
         >
       </template>
-
-      <!--
-      <template v-slot:header.="{ header }">
-        <tr>
-	  <th></th>
-          <th class="text-subtitle-1 text-xs-left">Domain<br /></th>
-          <th class="text-subtitle-1 text-xs-left">Variable<br /></th>
-          <th
-            v-for="dataset in datasets"
-            :key="dataset.id"
-            class="text-subtitle-1 text-xs-center"
-          >
-            {{ dataset.study_name }}<br />
-            <v-chip
-              disabled
-              :color="getNumSubjectsColor(getStudyCount(dataset.id))"
-              :text-color="getNumSubjectsTextColor(getStudyCount(dataset.id))"
-              class="title ma-2"
-              >{{ getStudyCount(dataset.id) + ' selected' }}</v-chip
-            >
-          </th>
-        </tr>
-      </template>
-      -->
 
       <template v-slot:item="props">
         <tr>
@@ -265,7 +247,11 @@ export default {
     getNumSubjectsTextColor,
     isLongitudinal() {
       var is_longitudinal = true;
-      this.datasets.forEach(d => {if (!d.i_longitudinal) { is_longitudinal = false; }});
+      this.datasets.forEach(d => {
+        if (!d.i_longitudinal) {
+          is_longitudinal = false;
+        }
+      });
       return is_longitudinal;
     },
     /**
@@ -304,7 +290,9 @@ export default {
      */
     computeStudyVariableCounts() {
       var svc = {};
-      var svars = this.useMoreAccurateSubjectCounts ? this.subject_variable_visits['subjects'] : this.subject_variables;
+      var svars = this.useMoreAccurateSubjectCounts
+        ? this.subject_variable_visits['subjects']
+        : this.subject_variables;
       var nvisits = this.isLongitudinal() ? 2 : 1;
 
       const subj_ids = Object.keys(svars);
@@ -320,11 +308,11 @@ export default {
             if (this.useMoreAccurateSubjectCounts) {
               if (typeof svars[subj_id][study_id][var_id] != 'number') {
                 var evtStr = svars[subj_id][study_id][var_id]['event'];
-                var nEvt = evtStr.split("1").length - 1;
-                var numStr = svars[subj_id][study_id][var_id]['num'];  
-              var nNum = numStr.split("1").length - 1;
-                if ((nEvt < nvisits) && (nNum < nvisits)) add_one = false;
-	      }
+                var nEvt = evtStr.split('1').length - 1;
+                var numStr = svars[subj_id][study_id][var_id]['num'];
+                var nNum = numStr.split('1').length - 1;
+                if (nEvt < nvisits && nNum < nvisits) add_one = false;
+              }
             }
 
             if (add_one) {
@@ -394,16 +382,16 @@ export default {
         });
       });
       return nSubjects;
-     },
+    },
 
-   /**
-    * Given a list of [variable_id, first_index, last_index], generate a set of subject counts
-    * using the data in subject_variable_visits.
-    *
-    * which - either 'event' or 'num'
-    */
+    /**
+     * Given a list of [variable_id, first_index, last_index], generate a set of subject counts
+     * using the data in subject_variable_visits.
+     *
+     * which - either 'event' or 'num'
+     */
     countSubjectsByVisits(vars, which) {
-      var subjCounts = { 'all': 0 };
+      var subjCounts = { all: 0 };
       var studyVarCounts = {};
       var subjs = this.subject_variable_visits['subjects'];
       var subjIds = Object.keys(subjs);
@@ -421,15 +409,17 @@ export default {
               include_subj = false;
             } else if (typeof s[study_id][v[0]] != 'number') {
               var vstring = s[study_id][v[0]][which];
-              if ((vstring.charAt(v[1]) == '0') || (vstring.charAt(v[2]) == '0')) {
+              if (vstring.charAt(v[1]) == '0' || vstring.charAt(v[2]) == '0') {
                 include_subj = false;
               }
             }
           });
         });
-        if ((vars.length > 0) && include_subj) {
+        if (vars.length > 0 && include_subj) {
           subjCounts['all'] += 1;
-          study_ids.forEach(study_id => { subjCounts[study_id] += 1; });
+          study_ids.forEach(study_id => {
+            subjCounts[study_id] += 1;
+          });
         }
       });
       return subjCounts;
@@ -441,54 +431,55 @@ export default {
      *
      * which - either 'event' or 'num'
      */
-     estimateMaxSubjects(var_ids, which) {
-       var subjs = this.subject_variable_visits['subjects'];
-       var subjIds = Object.keys(subjs);
-       var visits = this.subject_variable_visits['visits'][which];
-       var n_visits = visits.length;
+    estimateMaxSubjects(var_ids, which) {
+      var subjs = this.subject_variable_visits['subjects'];
+      var subjIds = Object.keys(subjs);
+      var visits = this.subject_variable_visits['visits'][which];
+      var n_visits = visits.length;
 
-       // simple heuristic based on selecting the two visits from each variable with the most subjects
-       var vars = [];
+      // simple heuristic based on selecting the two visits from each variable with the most subjects
+      var vars = [];
 
-       var_ids.forEach(vid => {
-         // get visit counts for variable vid
-         var visitCounts = [];
+      var_ids.forEach(vid => {
+        // get visit counts for variable vid
+        var visitCounts = [];
 
-         subjIds.forEach(sid => {
-           var s = subjs[sid];
-           var study_ids = Object.keys(s);
-           study_ids.forEach(study_id => {
-             if ((vid in s[study_id]) && (typeof s[study_id][vid] != 'number')) {
-               var vstring = s[study_id][vid][which];
-               for (var vis = 0; vis < n_visits; ++vis) {
-                 if (!(vis in visitCounts)) visitCounts[vis] = {'index': vis, 'count': 0};
-                 if (vstring.charAt(vis) == '1') {
-	           visitCounts[vis]['count'] += 1;
-                 }
-               }
-	     }
-	   });
-         });
+        subjIds.forEach(sid => {
+          var s = subjs[sid];
+          var study_ids = Object.keys(s);
+          study_ids.forEach(study_id => {
+            if (vid in s[study_id] && typeof s[study_id][vid] != 'number') {
+              var vstring = s[study_id][vid][which];
+              for (var vis = 0; vis < n_visits; ++vis) {
+                if (!(vis in visitCounts))
+                  visitCounts[vis] = { index: vis, count: 0 };
+                if (vstring.charAt(vis) == '1') {
+                  visitCounts[vis]['count'] += 1;
+                }
+              }
+            }
+          });
+        });
 
-         // heuristic - sort by size and pick the top two, then sort by index
-         visitCounts.sort((a, b) => b['count'] - a['count']);
-         var first_index = 0;
-         var last_index = 0;
+        // heuristic - sort by size and pick the top two, then sort by index
+        visitCounts.sort((a, b) => b['count'] - a['count']);
+        var first_index = 0;
+        var last_index = 0;
 
-         if (visitCounts.length > 1) {
-           if (visitCounts[0]['index'] < visitCounts[1]['index']) {
-	     first_index = visitCounts[0]['index'];
-	     last_index = visitCounts[1]['index'];
-	   } else {
-	     first_index = visitCounts[1]['index'];
-	     last_index = visitCounts[0]['index'];
-	   }
-         }
-	 vars.push([vid, first_index, last_index]);
-       });
-       var counts = this.countSubjectsByVisits(vars, which);
-       return counts;
-     },
+        if (visitCounts.length > 1) {
+          if (visitCounts[0]['index'] < visitCounts[1]['index']) {
+            first_index = visitCounts[0]['index'];
+            last_index = visitCounts[1]['index'];
+          } else {
+            first_index = visitCounts[1]['index'];
+            last_index = visitCounts[0]['index'];
+          }
+        }
+        vars.push([vid, first_index, last_index]);
+      });
+      var counts = this.countSubjectsByVisits(vars, which);
+      return counts;
+    },
   },
 };
 </script>
