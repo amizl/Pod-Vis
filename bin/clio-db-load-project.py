@@ -86,26 +86,26 @@ def main():
         pp.pprint(entity_file)
         entity_file = os.path.join(args.input_dir, entity_file)
         print("Processing entity: %s file: %s" % (entity, entity_file))
-        if entity is "Project":
+        if entity == "Project":
             print("Processing project and studies .....")
             has_longitudinal_data = process_projects_and_studies(cursor, conn, entity_file, df_project_info, df_study_info, df_col_names_field_map)
-        elif entity is "Subject Ontology":
+        elif entity == "Subject Ontology":
             print("Processing subject ontology .....")
             process_subject_ontology(cursor, conn, entity_file, subject_ont, df_col_names_field_map)
-        elif entity is "Observation Ontology":
+        elif entity == "Observation Ontology":
             print("Processing observation ontology .....")
             process_observation_ontology(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
-        elif entity is "Subject Info":
+        elif entity == "Subject Info":
             print("Processing subject information .....")
             process_subject_info(cursor, conn, entity_file, study_map, subject_ont, df_col_names_field_map)
             #exit()
-        elif entity is "Visit":
+        elif entity == "Visit":
             print("Processing visit information .....")
             process_subject_visits(cursor, conn, entity_file, df_col_names_field_map)
-        elif entity is "Observations":
+        elif entity == "Observations":
             print("Processing observations information .....")
             process_subject_observations(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
-        elif entity is "Observations Summary":
+        elif entity == "Observations Summary":
             print("Processing observations summary information, has_longitudinal_data=" + str(has_longitudinal_data) + " .....")
             if has_longitudinal_data:
                 process_subject_obs_summary(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
