@@ -291,10 +291,10 @@ export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
 
   unsorted_list.forEach(e => {
     var evt = event_accessor_fn(e);
-
     if (typeof evt == 'string' && !evt.match(pnRE)) {
       pseudoNumericEvents = false;
-    } else if (isNaN(evt)) {
+    }
+    if (isNaN(evt)) {
       numericEvents = false;
     }
   });
@@ -316,8 +316,11 @@ export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
     return unsorted_list.sort((a, b) => pnAccFn(a) - pnAccFn(b));
   }
 
-  // sort alphabetically but put PPMI events in the correct order
+  // sort alphabetically but put PPMI and EMA events in the correct order
   var uniqueEvents = [
+    'Pre',
+    '3 mo',
+    '6 mo',
     'SC',
     'BL',
     'U01',
