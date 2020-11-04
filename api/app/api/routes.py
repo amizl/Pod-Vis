@@ -1206,12 +1206,17 @@ def compute_mannwhitneyu():
         elif (output_variable['data_category'] != 'Categorical') and (output_variable['is_longitudinal']):
             filtered_sample = [data.get(variable_id).get(comparison_field) for data in filtered_data]
             unfiltered_sample = [data.get(variable_id).get(comparison_field) for data in unfiltered_data]
-
-            u, pval = mannwhitneyu(filtered_sample, unfiltered_sample, alternative='two-sided')
-
-            # common language effect size f = U/(n1 * n2)
-            f = u / (n_filtered * n_unfiltered)
-        
+            pval = None
+            u = None
+            f = None
+            
+            try:
+                u, pval = mannwhitneyu(filtered_sample, unfiltered_sample, alternative='two-sided')
+                # common language effect size f = U/(n1 * n2)
+                f = u / (n_filtered * n_unfiltered)
+            except ValueError as ve:
+                err = str(ve)
+                
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
                               comparison_field=comparison_field,
@@ -1222,7 +1227,7 @@ def compute_mannwhitneyu():
                               effect_size_descr='Common language effect size.',
                               u_statistic=u,
                               error=err))
-
+            
     return jsonify({
         "success": True,
         "pvals": pvals,
