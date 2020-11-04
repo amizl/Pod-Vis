@@ -28,7 +28,7 @@
       <v-list-item class="justify-center">
         <div class="font-weight-medium primary--text">
           <!--          v{{ VERSION }} -->
-          v1.0.2
+          v1.0.3
         </div>
       </v-list-item>
 
