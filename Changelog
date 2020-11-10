@@ -1,4 +1,6 @@
 1.0.3
+ -Limit histogram bins only if datatype is int (#558)
+ -Change all decimal datatypes to decimal(15,5) (#559)
 
 1.0.2 (November 1, 2020)
  -Remove "all variables" checkbox from InputVariablesDialog (#552)
