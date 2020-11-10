@@ -211,7 +211,7 @@ export default {
       highlightedSubset: state.HIGHLIGHTED_SUBSET,
     }),
     num_bins() {
-      if (this.variable.value_type === 'decimal' && this.yDomain < 30) {
+      if (this.variable.value_type === 'int' && this.yDomain < 30) {
         return this.yDomain + 1;
       } else {
         return 30;

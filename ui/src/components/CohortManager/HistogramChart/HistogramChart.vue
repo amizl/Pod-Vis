@@ -303,7 +303,7 @@ export default {
       var diff = ext[1] - ext[0];
       if (
         this.variable &&
-        this.variable.value_type === 'decimal' &&
+        this.variable.value_type === 'int' &&
         diff < 30
       ) {
         return diff + 1;
