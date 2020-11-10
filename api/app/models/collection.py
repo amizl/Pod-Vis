@@ -238,7 +238,7 @@ class Collection(db.Model):
 
             ov = obsid2obs[obs_id]
             
-            # Categorical observations
+            # observations in cross-sectional studies
             if (study.study.longitudinal == 0):
                 obs_val = group_rows[0]['value']
                 if group_rows[0]['value_type'] == 'int':
