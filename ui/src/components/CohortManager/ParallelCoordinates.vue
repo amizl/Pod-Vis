@@ -55,9 +55,7 @@ import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
 import { scalePoint, scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
-import { axisLeft, axisRight } from 'd3-axis';
 import { min, max } from 'd3-array';
-// import { line, curveMonotoneX } from 'd3-shape';
 import { colors } from '@/utils/colors';
 import VerticalHistogram from '@/components/CohortManager/VerticalHistogram/VerticalHistogram.vue';
 
@@ -211,16 +209,6 @@ export default {
             : [this.computedHeight, 0]
         );
       return scale;
-    },
-    firstVisitAxis() {
-      return axisLeft()
-        .scale(this.dimensionScale)
-        .tickSize(0);
-    },
-    lastVisitAxis() {
-      return axisRight()
-        .scale(this.dimensionScale)
-        .tickSize(0);
     },
   },
   watch: {
