@@ -27,8 +27,7 @@
 
       <v-list-item class="justify-center">
         <div class="font-weight-medium primary--text">
-          <!--          v{{ VERSION }} -->
-          v1.0.3
+          v{{ podvis_version }}
         </div>
       </v-list-item>
 
@@ -166,6 +165,11 @@ export default {
       if (window.localStorage.expand != value) {
         window.localStorage.expand = value;
       }
+    },
+  },
+  computed: {
+    podvis_version() {
+      return process.env.PODVIS_VERSION;
     },
   },
   created() {
