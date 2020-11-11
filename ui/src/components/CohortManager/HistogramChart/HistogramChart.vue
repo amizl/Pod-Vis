@@ -408,11 +408,8 @@ export default {
         .range([this.h, 0]);
       return yScale;
     },
-    xAxis() {
-      return axisBottom(this.xScale);
-    },
     populationXAxis() {
-      return axisBottom(this.xScale);
+      return axisBottom(this.xScale).ticks(8);
     },
     yAxis() {
       return axisLeft(this.yScale).ticks(3);
