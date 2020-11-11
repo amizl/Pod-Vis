@@ -211,8 +211,8 @@ export default {
       highlightedSubset: state.HIGHLIGHTED_SUBSET,
     }),
     num_bins() {
-      if (this.variable.value_type === 'int' && this.yDomain < 30) {
-        return this.yDomain + 1;
+      if (this.variable.value_type === 'int' && (this.yDomain - this.yMin) < 30) {
+        return this.yDomain - this.yMin + 1;
       } else {
         return 30;
       }
@@ -220,9 +220,9 @@ export default {
     margin() {
       return {
         top: 20,
-        right: this.left ? 30 : 10,
+        right: this.left ? 32 : 10,
         bottom: 10,
-        left: this.left ? 10 : 30,
+        left: this.left ? 10 : 35,
       };
     },
     w() {
