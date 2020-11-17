@@ -212,34 +212,564 @@ measures reading skills, math skills, spelling, and comprehension.
 """
 
 SCALE_METADATA = [
+    # EMA data
+    {
+        'abbrev': 'ATscore',
+        'name': 'AT Score',
+        'descr': 'AT Score',
+    },
+    {
+        'abbrev': 'BTscore',
+        'name': 'BT Score',
+        'descr': 'BT Score',
+    },
 
-    # EMA
+    # LC - Where were you?
+    {
+        'abbrev': 'LC1prec',
+        'name': 'Indoors at home',
+        'descr': 'Indoors at home during listening activity.',
+    },
+    {
+        'abbrev': 'LC2prec',
+        'name': 'Indoors not at home',
+        'descr': 'Indoors somewhere other than home during listening activity.',
+    },
+    {
+        'abbrev': 'LC3prec',
+        'name': 'Car',
+        'descr': 'In a car during listening activity.',
+    },
+    {
+        'abbrev': 'LC4prec',
+        'name': 'Outdoors',
+        'descr': 'Outdoors during listening activity.',
+    },
+
+    # AL - Were you actively listening most of the time during the previous 5-10 minutes
+    {
+        'abbrev': 'AL1prec',
+        'name': 'Actively listening',
+        'descr': 'Actively listening most of the time during the previous 5-10 minutes.',
+    },
+    
+    # SN - What kind of sounds were you listening to?
+    {
+        'abbrev': 'SN1prec',
+        'name': 'Listening to speech.',
+        'descr': 'Listening to speech.',
+    },
+    {
+        'abbrev': 'SN2prec',
+        'name': 'Listening to music.',
+        'descr': 'Listening to music.',
+    },
+    {
+        'abbrev': 'SN3prec',
+        'name': 'Listening to other sounds.',
+        'descr': 'Listening to other sounds.',
+    },
+
+    # ACS - What kind of speech listening activity were you engaged in?
     {
         'abbrev': 'ACS1prec',
-        'name': 'Speech Activity 1 prec',
-        'descr': 'Speech Activity 1 prec',
+        'name': 'Live conv. 1 person',
+        'descr': 'Live conversation with one person',
     },
     {
         'abbrev': 'ACS2prec',
-        'name': 'Speech Activity 2 prec',
-        'descr': 'Speech Activity 2 prec',
+        'name': 'Live conv. >1 person',
+        'descr': 'Live conversation with more than one person',
     },
     {
         'abbrev': 'ACS3prec',
-        'name': 'Speech Activity 3 prec',
-        'descr': 'Speech Activity 3 prec',
+        'name': 'Electronic conv.',
+        'descr': 'Conversation on electronic device',
     },
     {
         'abbrev': 'ACS4prec',
-        'name': 'Speech Activity 4 prec',
-        'descr': 'Speech Activity 4 prec',
+        'name': 'Speech listening, live',
+        'descr': 'Speech listening, live',
     },
     {
         'abbrev': 'ACS5prec',
-        'name': 'Speech Activity 5 prec',
-        'descr': 'Speech Activity 5 prec',
+        'name': 'Speech listening, electronic',
+        'descr': 'Speech listening on electronic device (TV, radio, etc.)',
+    },
+
+    # VC - Could you see the talker's face
+    {
+        'abbrev': 'VC1prec',
+        'name': 'No face visible',
+        'descr': "Could not see the talker's face.",
+    },
+    {
+        'abbrev': 'VC2prec',
+        'name': 'Some face visible',
+        'descr': "Could see the talker's face, but only sometimes.",
+    },
+    {
+        'abbrev': 'VC3prec',
+        'name': 'Always face visible',
+        'descr': "Could almost always see the talker's face.",
+    },
+
+    # TF - Were you familiar with the talker(s)?
+    {
+        'abbrev': 'TF1prec',
+        'name': 'Unfamiliar talker(s)',
+        'descr': 'Unfamiliar with the talker(s).',
+    },
+    {
+        'abbrev': 'TF2prec',
+        'name': 'Somewhat unfamiliar talker(s)',
+        'descr': 'Somewhat unfamiliar with the talker(s).',
+    },
+    {
+        'abbrev': 'TF3prec',
+        'name': 'Somewhat familiar talker(s)',
+        'descr': 'Somewhat familiar with the talker(s).',
+    },
+    {
+        'abbrev': 'TF4prec',
+        'name': 'Familiar talker(s)',
+        'descr': 'Familiar with the talker(s).',
+    },
+
+    # G - Who were you listening to?
+    {
+        'abbrev': 'G1prec',
+        'name': 'Listen to male adult.',
+        'descr': 'Listening to male adult(s).',
+    },
+    {
+        'abbrev': 'G2prec',
+        'name': 'Listen to female adult.',
+        'descr': 'Listening to female adult(s).',
+    },
+    {
+        'abbrev': 'G3prec',
+        'name': 'Listen to kid.',
+        'descr': 'Listening to kid(s).', 
+    },
+    {
+        'abbrev': 'G4prec',
+        'name': 'Listen to other.',
+        'descr': 'Listening to other(s).', 
+    },
+
+    # AC - What kind of music were you listening to?
+    {
+        'abbrev': 'AC1prec',
+        'name': 'Live music.',
+        'descr': 'Listening to live music.',
+    },
+    {
+        'abbrev': 'AC2prec',
+        'name': 'Recorded music.',
+        'descr': 'Listening to recorded music.',
+    },
+
+    # MG - Which best describes the genre of music you were listening to?
+    {
+        'abbrev': 'MG1prec',
+        'name': 'Classical music',
+        'descr': 'Listening to classical music.',
+    },
+    {
+        'abbrev': 'MG2prec',
+        'name': 'Pop/rock music',
+        'descr': 'Listening to pop/rock music.',
+    },
+    {
+        'abbrev': 'MG3prec',
+        'name': 'Jazz',
+        'descr': 'Listening to jazz.',
+    },
+    {
+        'abbrev': 'MG4prec',
+        'name': 'Country/folk music.',
+        'descr': 'Listening to country/folk music.',
+    },
+    {
+        'abbrev': 'MG5prec',
+        'name': 'Other music.',
+        'descr': 'Listening to other music.',
+    },
+
+    # ME - What was the most important aspect of the music to you?
+    {
+        'abbrev': 'ME1prec',
+        'name': 'Rhythm',
+        'descr': 'Rhythm was the most important aspect of the music to the listener.',
+    },
+    {
+        'abbrev': 'ME2prec',
+        'name': 'Melody',
+        'descr': 'Melody was the most important aspect of the music to the listener.',
+    },
+    {
+        'abbrev': 'ME3prec',
+        'name': 'Harmony/Accompaniment',
+        'descr': 'Harmony/Accompaniment was the most important aspect of the music to the listener.',
+    },
+    {
+        'abbrev': 'ME4prec',
+        'name': 'Lyrics',
+        'descr': 'The lyrics were the most important aspect of the music to the listener.',
+    },
+    {
+        'abbrev': 'ME5prec',
+        'name': 'Other',
+        'descr': 'Something else was the most important aspect of the music to the listener.',
+    },
+
+    # SD - How far away from you was the sound you were listening to?
+    {
+        'abbrev': 'SD1prec',
+        'name': 'No distance',
+        'descr': 'The source of the sound was no distance away from the listener (e.g., streaming.)',
+    },
+    {
+        'abbrev': 'SD2prec',
+        'name': '<3 feet',
+        'descr': 'The source of the sound was 3 feet or less from the listener.',
+    },
+    {
+        'abbrev': 'SD3prec',
+        'name': '4-10 feet',
+        'descr': 'The source of the sound was 4-10 feet from the listener.',
+    },
+    {
+        'abbrev': 'SD4prec',
+        'name': '>10 feet',
+        'descr': 'The source of the sound was 10 feet or more from the listener.',
+    },
+
+    # SL - Where was the sound you were trying to listen to? (relative to your head)
+    {
+        'abbrev': 'SL1prec',
+        'name': 'In front',
+        'descr': "The source of the sound was in front of the listener's head.",
+    },
+    {
+        'abbrev': 'SL2prec',
+        'name': 'In back',
+        'descr': "The source of the sound was in back of the listener's head.",
+    },
+    {
+        'abbrev': 'SL3prec',
+        'name': 'To the right',
+        'descr': "The source of the sound was to the right of the listener's head.",
+    },
+    {
+        'abbrev': 'SL4prec',
+        'name': 'To the left',
+        'descr': "The source of the sound was to the left of the listener's head.",
+    },
+    {
+        'abbrev': 'SL5prec',
+        'name': 'All around',
+        'descr': "The source of the sound was all around the listener's head.",
+    },
+
+    # NT - What were the environmental or background sounds?
+    {
+        'abbrev': 'NT1prec',
+        'name': 'Background - other talkers',
+        'descr': "The environmental or background sounds included other talkers.",
+    },
+    {
+        'abbrev': 'NT2prec',
+        'name': 'Background - music',
+        'descr': "The environmental or background sounds included music.",
+    },
+    {
+        'abbrev': 'NT3prec',
+        'name': 'Background - outdoor',
+        'descr': "The environmental or background sounds included outdoor noise (e.g., cars, wind)",
+    },
+    {
+        'abbrev': 'NT4prec',
+        'name': 'Background - indoor',
+        'descr': "The environmental or background sounds included indoor noise (e.g., fans, dishes, water)",
+    },
+    {
+        'abbrev': 'NT5prec',
+        'name': 'Background - other',
+        'descr': "The environmental or background sounds included other noises/sounds.",
+    },
+    {
+        'abbrev': 'NT6prec',
+        'name': 'Background - none',
+        'descr': "There were no environmental or background sounds.",
+    },
+
+    # NZ - Overall, how loud were the background/environmental sounds?
+    {
+        'abbrev': 'NZ1prec',
+        'name': 'Background - very loud',
+        'descr': "The environmental or background sounds were very loud.",
+    },
+    {
+        'abbrev': 'NZ2prec',
+        'name': 'Background - loud',
+        'descr': "The environmental or background sounds were loud.",
+    },
+    {
+        'abbrev': 'NZ3prec',
+        'name': 'Background - medium',
+        'descr': "The environmental or background sounds were medium.",
+    },
+    {
+        'abbrev': 'NZ4prec',
+        'name': 'Background - soft',
+        'descr': "The environmental or background sounds were soft.",
+    },
+    {
+        'abbrev': 'NZ5prec',
+        'name': 'Background - very soft',
+        'descr': "The environmental or background sounds were very soft.",
+    },
+
+    # SNR - The speech of interest was X when compared to all other sounds.
+    {
+        'abbrev': 'SNR1prec',
+        'name': 'Much louder',
+        'descr': "The speech of interest was much louder when compared to all other sounds.",
+    },
+    {
+        'abbrev': 'SNR2prec',
+        'name': 'Somewhat louder',
+        'descr': "The speech of interest was somewhat louder when compared to all other sounds.",
+    },
+    {
+        'abbrev': 'SNR3prec',
+        'name': 'Equally loud',
+        'descr': "The speech of interest was equally loud when compared to all other sounds.",
+    },
+    {
+        'abbrev': 'SNR4prec',
+        'name': 'Somewhat softer',
+        'descr': "The speech of interest was somewhat softer when compared to all other sounds.",
+    },
+    {
+        'abbrev': 'SNR5prec',
+        'name': 'Much softer',
+        'descr': "The speech of interest was much softer when compared to all other sounds.",
     },
     
+    # NL - Where were the background sounds relative to your head?
+    {
+        'abbrev': 'NL1prec',
+        'name': 'Background - in front',
+        'descr': "The background sounds were in front of the listener's head.",
+    },
+    {
+        'abbrev': 'NL2prec',
+        'name': 'Background - in back',
+        'descr': "The background sounds were in back of the listener's head.",
+    },
+    {
+        'abbrev': 'NL3prec',
+        'name': 'Background - to right',
+        'descr': "The background sounds were to the right of the listener's head.",
+    },
+    {
+        'abbrev': 'NL4prec',
+        'name': 'Background - to left',
+        'descr': "The background sounds were to the left of the listener's head.",
+    },
+    {
+        'abbrev': 'NL5prec',
+        'name': 'Background - all around',
+        'descr': "The background sounds were all around the listener's head.",
+    },
+
+    # PLG - Which of the following were the most important for you to achieve?
+    {
+        'abbrev': 'PLG1prec',
+        'name': 'Try - ignore sounds',
+        'descr': "The listener was trying to ignore sounds.",
+    },
+    {
+        'abbrev': 'PLG2prec',
+        'name': 'Try - be aware of sounds',
+        'descr': "The listener was trying to be aware of sounds.",
+    },
+    {
+        'abbrev': 'PLG3prec',
+        'name': 'Try - maintain listening comfort',
+        'descr': "The listener was trying to maintain listening comfort.",
+    },
+    {
+        'abbrev': 'PLG4prec',
+        'name': 'Try - locate sounds',
+        'descr': "The listener was trying to locate sounds.",
+    },
+    {
+        'abbrev': 'PLG5prec',
+        'name': 'Try - listen to speech/music',
+        'descr': "The listener was trying to listen to speech/music.",
+    },
+    {
+        'abbrev': 'PLG6prec',
+        'name': 'Try - converse',
+        'descr': "The listener was trying to converse.",
+    },
+    
+    # SLG - Which of the following best describes your goal?
+    {
+        'abbrev': 'SLG1prec',
+        'name': 'Goal - build relationship',
+        'descr': "The listener's goal was to build a relationship.",
+    },
+    {
+        'abbrev': 'SLG2prec',
+        'name': 'Goal - obtain info',
+        'descr': "The listener's goal was to obtain information.",
+    },
+    {
+        'abbrev': 'SLG3prec',
+        'name': 'Goal - action/plans',
+        'descr': "The listener's goal was to take action/make plans.",
+    },
+    {
+        'abbrev': 'SLG4prec',
+        'name': 'Goal - influence/convince',
+        'descr': "The listener's goal was to influence/convince others.",
+    },
+    {
+        'abbrev': 'SLG5prec',
+        'name': 'Goal - follow story',
+        'descr': "The listener's goal was to follow a story.",
+    },
+    {
+        'abbrev': 'SLG6prec',
+        'name': 'Goal - enjoy sound',
+        'descr': "The listener's goal was to enjoy the sound.",
+    },
+
+    # LS - Which of the following were you most focused on?
+    {
+        'abbrev': 'LS1prec',
+        'name': 'Focus - speaker',
+        'descr': "The listener was most focused on the speaker's thoughts and feelings.",
+    },
+    {
+        'abbrev': 'LS2prec',
+        'name': 'Focus - inconsistencies',
+        'descr': "The listener was most focused on the inconsistencies in what was being said.",
+    },
+    {
+        'abbrev': 'LS3prec',
+        'name': 'Focus - content',
+        'descr': "The listener was most focused on the content of what was being said.",
+    },
+    {
+        'abbrev': 'LS4prec',
+        'name': 'Focus - replying',
+        'descr': "The listener was most focused on replying or ending the activity.",
+    },
+
+    # VC - 
+    {
+        'abbrev': 'VCavg',
+        'name': "See talker's face?",
+        'descr': "Whether the listener could see the talker's face. 1 = No face visible, 2 = Could see the talker's face, but only sometimes, 3 = Could almost always see the talker's face.",
+    },
+
+    # TF - Familiar with talker?
+    {
+        'abbrev': 'TFavg',
+        'name': 'Familiar with talker?',
+        'descr': "Whether the listener was familiar with the talker(s). 1 = Unfamiliar, 2 = Somewhat unfamiliar, 3 = Somewhat familiar, 4 = Familiar.",
+    },
+
+    # NZ - Overall, how loud were the background/environmental sounds?
+    {
+        'abbrev': 'NZavg',
+        'name': 'Background loudness',
+        'descr': "Overall, how loud were the background/environmental sounds? 1 = Very loud, 2 = Loud, 3 = Medium, 4 = Soft, 5 = Very soft.",
+    },
+
+    # SNR - The speech of interest was X when compared to all other sounds.
+    {
+        'abbrev': 'SNRavg',
+        'name': 'Speech of interest',
+        'descr': "The speech of interest was X when compared to all other sounds. 1 = Much louder, 2 = Somewhat louder, 3 = Equally loud, 4 = Somewhat softer, 5 = Much softer.",
+    },
+
+    # SP - I could follow the conversation/speech
+    {
+        'abbrev': 'SPavg',
+        'name': 'Could follow conversation',
+        'descr': "The listener could follow the conversation/speech. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+    },
+
+    # LE - I had to strain to listen
+    {
+        'abbrev': 'LEavg',
+        'name': 'Had to strain to listen',
+        'descr': "Listener had to strain to listen. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+    },
+
+    # LCL - I could tell where the sounds were coming from right away.
+    {
+        'abbrev': 'LCLavg',
+        'name': 'Able to locate sounds',
+        'descr': "Listener could tell where the sounds were coming from right away. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+    },
+
+    # SQ - The sound quality of what I was listening to was great.
+    {
+        'abbrev': 'SQavg',
+        'name': 'Sound quality',
+        'descr': "The sound quality of what the listener was listening to was great. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+    },
+
+    # ST - I was satisified with my devices in the previous 5-10 minutes
+    {
+        'abbrev': 'STavg',
+        'name': 'Satisfied w/ devices',
+        'descr': "Listener was satisified with their devices in the previous 5-10 minutes. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+    },
+
+    # AR - My hearing difficulties limited what I wanted to do or say?
+    {
+        'abbrev': 'ARavg',
+        'name': 'Limited by hearing',
+        'descr': "Listener's hearing difficulties limited what they wanted to do or say? 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+    },
+
+    # DP - My hearing difficulties made me feel sad or depressed.
+    {
+        'abbrev': 'DPavg',
+        'name': 'Sad/depressed by hearing',
+        'descr': "Listener's hearing difficulties made them feel sad or depressed. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+    },
+
+    # SI - My hearing difficulties made me feel lonely or isolated.
+    {
+        'abbrev': 'SIavg',
+        'name': 'Lonely/isolated',
+        'descr': "Listener's hearing difficulties made them feel lonely or isolated. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+    },
+
+    # AX - My hearing difficulties made me feel nervous or anxious.
+    {
+        'abbrev': 'AXavg',
+        'name': 'Nervous/anxious',
+        'descr': "Listener's hearing difficulties made them feel nervous or anxious. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+    },
+
+    # IM - In this situation it was important for me to hear well.
+    {
+        'abbrev': 'IMavg',
+        'name': 'Important to hear well',
+        'descr': "In this situation it was important for the listener to hear well. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+    },
+
     # AZBio
     {
         'abbrev': 'AzBioWord_Percent',
