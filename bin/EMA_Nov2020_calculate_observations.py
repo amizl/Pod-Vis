@@ -227,135 +227,135 @@ SCALE_METADATA = [
     # LC - Where were you?
     {
         'abbrev': 'LC1prec',
-        'name': 'Indoors at home',
-        'descr': 'Indoors at home during listening activity.',
+        'name': 'Location - Indoors at home',
+        'descr': 'LC: Location. Indoors at home during listening activity.',
     },
     {
         'abbrev': 'LC2prec',
-        'name': 'Indoors not at home',
-        'descr': 'Indoors somewhere other than home during listening activity.',
+        'name': 'Location - Indoors not at home',
+        'descr': 'LC: Location. Indoors somewhere other than home during listening activity.',
     },
     {
         'abbrev': 'LC3prec',
-        'name': 'Car',
-        'descr': 'In a car during listening activity.',
+        'name': 'Location - Car',
+        'descr': 'LC: Location. In a car during listening activity.',
     },
     {
         'abbrev': 'LC4prec',
-        'name': 'Outdoors',
-        'descr': 'Outdoors during listening activity.',
+        'name': 'Location - Outdoors',
+        'descr': 'LC: Location. Outdoors during listening activity.',
     },
 
     # AL - Were you actively listening most of the time during the previous 5-10 minutes
     {
         'abbrev': 'AL1prec',
         'name': 'Actively listening',
-        'descr': 'Actively listening most of the time during the previous 5-10 minutes.',
+        'descr': 'AL1: Actively listening most of the time during the previous 5-10 minutes.',
     },
     
     # SN - What kind of sounds were you listening to?
     {
         'abbrev': 'SN1prec',
-        'name': 'Listening to speech.',
-        'descr': 'Listening to speech.',
+        'name': 'Sounds - speech',
+        'descr': 'SN: Sounds. Listening to speech.',
     },
     {
         'abbrev': 'SN2prec',
-        'name': 'Listening to music.',
-        'descr': 'Listening to music.',
+        'name': 'Sounds - music.',
+        'descr': 'SN: Sounds. Listening to music.',
     },
     {
         'abbrev': 'SN3prec',
-        'name': 'Listening to other sounds.',
-        'descr': 'Listening to other sounds.',
+        'name': 'Sounds - other.',
+        'descr': 'SN: Sounds. Listening to other sounds.',
     },
 
     # ACS - What kind of speech listening activity were you engaged in?
     {
         'abbrev': 'ACS1prec',
-        'name': 'Live conv. 1 person',
-        'descr': 'Live conversation with one person',
+        'name': 'Activity - Live conv. 1 person',
+        'descr': 'ACS: Speech Activity. Live conversation with one person',
     },
     {
         'abbrev': 'ACS2prec',
-        'name': 'Live conv. >1 person',
-        'descr': 'Live conversation with more than one person',
+        'name': 'Activity - Live conv. >1 person',
+        'descr': 'ACS: Speech Activity. Live conversation with more than one person',
     },
     {
         'abbrev': 'ACS3prec',
-        'name': 'Electronic conv.',
-        'descr': 'Conversation on electronic device',
+        'name': 'Activity - Electronic conv.',
+        'descr': 'ACS: Speech Activity. Conversation on electronic device',
     },
     {
         'abbrev': 'ACS4prec',
-        'name': 'Speech listening, live',
-        'descr': 'Speech listening, live',
+        'name': 'Activity - Speech listening, live',
+        'descr': 'ACS: Speech Activity. Speech listening, live',
     },
     {
         'abbrev': 'ACS5prec',
-        'name': 'Speech listening, electronic',
-        'descr': 'Speech listening on electronic device (TV, radio, etc.)',
+        'name': 'Activity - Speech listening, electronic',
+        'descr': 'ACS: Speech Activity. Speech listening on electronic device (TV, radio, etc.)',
     },
 
     # VC - Could you see the talker's face
     {
         'abbrev': 'VC1prec',
-        'name': 'No face visible',
-        'descr': "Could not see the talker's face.",
+        'name': 'Visual - face not visible',
+        'descr': "VC: Visual Communication. Could not see the talker's face.",
     },
     {
         'abbrev': 'VC2prec',
-        'name': 'Some face visible',
-        'descr': "Could see the talker's face, but only sometimes.",
+        'name': 'Visual - face sometimes visible',
+        'descr': "VC: Visual Communication. Could see the talker's face, but only sometimes.",
     },
     {
         'abbrev': 'VC3prec',
-        'name': 'Always face visible',
-        'descr': "Could almost always see the talker's face.",
+        'name': 'Vsiual - face always visible',
+        'descr': "VC: Visual Communication. Could almost always see the talker's face.",
     },
 
     # TF - Were you familiar with the talker(s)?
     {
         'abbrev': 'TF1prec',
-        'name': 'Unfamiliar talker(s)',
-        'descr': 'Unfamiliar with the talker(s).',
+        'name': 'Familiarity - Unfamiliar talker(s)',
+        'descr': 'TF: Talker familiarity. Unfamiliar with the talker(s).',
     },
     {
         'abbrev': 'TF2prec',
-        'name': 'Somewhat unfamiliar talker(s)',
-        'descr': 'Somewhat unfamiliar with the talker(s).',
+        'name': 'Familiarity - Somewhat unfamiliar talker(s)',
+        'descr': 'TF: Talker familiarity. Somewhat unfamiliar with the talker(s).',
     },
     {
         'abbrev': 'TF3prec',
-        'name': 'Somewhat familiar talker(s)',
-        'descr': 'Somewhat familiar with the talker(s).',
+        'name': 'Familiarity - Somewhat familiar talker(s)',
+        'descr': 'TF: Talker familiarity. Somewhat familiar with the talker(s).',
     },
     {
         'abbrev': 'TF4prec',
-        'name': 'Familiar talker(s)',
-        'descr': 'Familiar with the talker(s).',
+        'name': 'Familiarity - Familiar talker(s)',
+        'descr': 'TF: Talker familiarity. Familiar with the talker(s).',
     },
 
     # G - Who were you listening to?
     {
         'abbrev': 'G1prec',
-        'name': 'Listen to male adult.',
-        'descr': 'Listening to male adult(s).',
+        'name': 'Person - male adult',
+        'descr': 'G: Gender or type of person you were listening to. Listening to male adult(s).',
     },
     {
         'abbrev': 'G2prec',
-        'name': 'Listen to female adult.',
-        'descr': 'Listening to female adult(s).',
+        'name': 'Person - female adult',
+        'descr': 'G: Gender or type of person you were listening to. Listening to female adult(s).',
     },
     {
         'abbrev': 'G3prec',
-        'name': 'Listen to kid.',
-        'descr': 'Listening to kid(s).', 
+        'name': 'Person - kid',
+        'descr': 'G: Gender or type of person you were listening to. Listening to kid(s).', 
     },
     {
         'abbrev': 'G4prec',
-        'name': 'Listen to other.',
-        'descr': 'Listening to other(s).', 
+        'name': 'Person - other',
+        'descr': 'G: Gender or type of person you were listening to. Listening to other(s).', 
     },
 
     # AC - What kind of music were you listening to?
@@ -427,249 +427,249 @@ SCALE_METADATA = [
     # SD - How far away from you was the sound you were listening to?
     {
         'abbrev': 'SD1prec',
-        'name': 'No distance',
-        'descr': 'The source of the sound was no distance away from the listener (e.g., streaming.)',
+        'name': 'Distance - none',
+        'descr': 'SD: Sound distance. The source of the sound was no distance away from the listener (e.g., streaming.)',
     },
     {
         'abbrev': 'SD2prec',
-        'name': '<3 feet',
-        'descr': 'The source of the sound was 3 feet or less from the listener.',
+        'name': 'Distance - <3 feet',
+        'descr': 'SD: Sound distance. The source of the sound was 3 feet or less from the listener.',
     },
     {
         'abbrev': 'SD3prec',
-        'name': '4-10 feet',
-        'descr': 'The source of the sound was 4-10 feet from the listener.',
+        'name': 'Distance - 4-10 feet',
+        'descr': 'SD: Sound distance. The source of the sound was 4-10 feet from the listener.',
     },
     {
         'abbrev': 'SD4prec',
-        'name': '>10 feet',
-        'descr': 'The source of the sound was 10 feet or more from the listener.',
+        'name': 'Distance - >10 feet',
+        'descr': 'SD: Sound distance. The source of the sound was 10 feet or more from the listener.',
     },
 
     # SL - Where was the sound you were trying to listen to? (relative to your head)
     {
         'abbrev': 'SL1prec',
-        'name': 'In front',
-        'descr': "The source of the sound was in front of the listener's head.",
+        'name': 'Sound location - In front',
+        'descr': "SL: Sound location. The source of the sound was in front of the listener's head.",
     },
     {
         'abbrev': 'SL2prec',
-        'name': 'In back',
-        'descr': "The source of the sound was in back of the listener's head.",
+        'name': 'Sound location - In back',
+        'descr': "SL: Sound location. The source of the sound was in back of the listener's head.",
     },
     {
         'abbrev': 'SL3prec',
-        'name': 'To the right',
-        'descr': "The source of the sound was to the right of the listener's head.",
+        'name': 'Sound location - To the right',
+        'descr': "SL: Sound location. The source of the sound was to the right of the listener's head.",
     },
     {
         'abbrev': 'SL4prec',
-        'name': 'To the left',
-        'descr': "The source of the sound was to the left of the listener's head.",
+        'name': 'Sound location - To the left',
+        'descr': "SL: Sound location. The source of the sound was to the left of the listener's head.",
     },
     {
         'abbrev': 'SL5prec',
-        'name': 'All around',
-        'descr': "The source of the sound was all around the listener's head.",
+        'name': 'Sound location - All around',
+        'descr': "SL: Sound location. The source of the sound was all around the listener's head.",
     },
 
     # NT - What were the environmental or background sounds?
     {
         'abbrev': 'NT1prec',
-        'name': 'Background - other talkers',
-        'descr': "The environmental or background sounds included other talkers.",
+        'name': 'Background noise - other talkers',
+        'descr': "NT: type of noise in the background. The environmental or background sounds included other talkers.",
     },
     {
         'abbrev': 'NT2prec',
-        'name': 'Background - music',
-        'descr': "The environmental or background sounds included music.",
+        'name': 'Background noise - music',
+        'descr': "NT: type of noise in the background. The environmental or background sounds included music.",
     },
     {
         'abbrev': 'NT3prec',
-        'name': 'Background - outdoor',
-        'descr': "The environmental or background sounds included outdoor noise (e.g., cars, wind)",
+        'name': 'Background noise - outdoor',
+        'descr': "NT: type of noise in the background. The environmental or background sounds included outdoor noise (e.g., cars, wind)",
     },
     {
         'abbrev': 'NT4prec',
-        'name': 'Background - indoor',
-        'descr': "The environmental or background sounds included indoor noise (e.g., fans, dishes, water)",
+        'name': 'Background noise - indoor',
+        'descr': "NT: type of noise in the background. The environmental or background sounds included indoor noise (e.g., fans, dishes, water)",
     },
     {
         'abbrev': 'NT5prec',
-        'name': 'Background - other',
-        'descr': "The environmental or background sounds included other noises/sounds.",
+        'name': 'Background noise - other',
+        'descr': "NT: type of noise in the background. The environmental or background sounds included other noises/sounds.",
     },
     {
         'abbrev': 'NT6prec',
-        'name': 'Background - none',
-        'descr': "There were no environmental or background sounds.",
+        'name': 'Background noise - none',
+        'descr': "NT: type of noise in the background. There were no environmental or background sounds.",
     },
 
     # NZ - Overall, how loud were the background/environmental sounds?
     {
         'abbrev': 'NZ1prec',
-        'name': 'Background - very loud',
-        'descr': "The environmental or background sounds were very loud.",
+        'name': 'Background noise level - very loud',
+        'descr': "NZ: noise level (how loud was the noise.) The environmental or background sounds were very loud.",
     },
     {
         'abbrev': 'NZ2prec',
-        'name': 'Background - loud',
-        'descr': "The environmental or background sounds were loud.",
+        'name': 'Background noise level - loud',
+        'descr': "NZ: noise level (how loud was the noise.) The environmental or background sounds were loud.",
     },
     {
         'abbrev': 'NZ3prec',
-        'name': 'Background - medium',
-        'descr': "The environmental or background sounds were medium.",
+        'name': 'Background noise level - medium',
+        'descr': "NZ: noise level (how loud was the noise.) The environmental or background sounds were medium.",
     },
     {
         'abbrev': 'NZ4prec',
-        'name': 'Background - soft',
-        'descr': "The environmental or background sounds were soft.",
+        'name': 'Background noise level - soft',
+        'descr': "NZ: noise level (how loud was the noise.) The environmental or background sounds were soft.",
     },
     {
         'abbrev': 'NZ5prec',
-        'name': 'Background - very soft',
-        'descr': "The environmental or background sounds were very soft.",
+        'name': 'Background noise level - very soft',
+        'descr': "NZ: noise level (how loud was the noise.) The environmental or background sounds were very soft.",
     },
 
     # SNR - The speech of interest was X when compared to all other sounds.
     {
         'abbrev': 'SNR1prec',
-        'name': 'Much louder',
-        'descr': "The speech of interest was much louder when compared to all other sounds.",
+        'name': 'Signal to noise - Much louder',
+        'descr': "SNR: Signal to noise ratio. The speech of interest was much louder when compared to all other sounds.",
     },
     {
         'abbrev': 'SNR2prec',
-        'name': 'Somewhat louder',
-        'descr': "The speech of interest was somewhat louder when compared to all other sounds.",
+        'name': 'Signal to noise - Somewhat louder',
+        'descr': "SNR: Signal to noise ratio. The speech of interest was somewhat louder when compared to all other sounds.",
     },
     {
         'abbrev': 'SNR3prec',
-        'name': 'Equally loud',
-        'descr': "The speech of interest was equally loud when compared to all other sounds.",
+        'name': 'Signal to noise - Equally loud',
+        'descr': "SNR: Signal to noise ratio. The speech of interest was equally loud when compared to all other sounds.",
     },
     {
         'abbrev': 'SNR4prec',
-        'name': 'Somewhat softer',
-        'descr': "The speech of interest was somewhat softer when compared to all other sounds.",
+        'name': 'Signal to noise - Somewhat softer',
+        'descr': "SNR: Signal to noise ratio. The speech of interest was somewhat softer when compared to all other sounds.",
     },
     {
         'abbrev': 'SNR5prec',
-        'name': 'Much softer',
-        'descr': "The speech of interest was much softer when compared to all other sounds.",
+        'name': 'Signal to noise - Much softer',
+        'descr': "SNR: Signal to noise ratio. The speech of interest was much softer when compared to all other sounds.",
     },
     
     # NL - Where were the background sounds relative to your head?
     {
         'abbrev': 'NL1prec',
-        'name': 'Background - in front',
-        'descr': "The background sounds were in front of the listener's head.",
+        'name': 'Background noise location - in front',
+        'descr': "NL: Noise location. The background sounds were in front of the listener's head.",
     },
     {
         'abbrev': 'NL2prec',
-        'name': 'Background - in back',
-        'descr': "The background sounds were in back of the listener's head.",
+        'name': 'Background noise location - in back',
+        'descr': "NL: Noise location. The background sounds were in back of the listener's head.",
     },
     {
         'abbrev': 'NL3prec',
-        'name': 'Background - to right',
-        'descr': "The background sounds were to the right of the listener's head.",
+        'name': 'Background noise location - to right',
+        'descr': "NL: Noise location. The background sounds were to the right of the listener's head.",
     },
     {
         'abbrev': 'NL4prec',
-        'name': 'Background - to left',
-        'descr': "The background sounds were to the left of the listener's head.",
+        'name': 'Background noise location - to left',
+        'descr': "NL: Noise location. The background sounds were to the left of the listener's head.",
     },
     {
         'abbrev': 'NL5prec',
-        'name': 'Background - all around',
-        'descr': "The background sounds were all around the listener's head.",
+        'name': 'Background noise location - all around',
+        'descr': "NL: Noise location. The background sounds were all around the listener's head.",
     },
 
     # PLG - Which of the following were the most important for you to achieve?
     {
         'abbrev': 'PLG1prec',
-        'name': 'Try - ignore sounds',
-        'descr': "The listener was trying to ignore sounds.",
+        'name': 'Primary Goal - ignore sounds',
+        'descr': "PLG: Primary Listening Goal. The listener was trying to ignore sounds.",
     },
     {
         'abbrev': 'PLG2prec',
-        'name': 'Try - be aware of sounds',
-        'descr': "The listener was trying to be aware of sounds.",
+        'name': 'Primary Goal - be aware of sounds',
+        'descr': "PLG: Primary Listening Goal. The listener was trying to be aware of sounds.",
     },
     {
         'abbrev': 'PLG3prec',
-        'name': 'Try - maintain listening comfort',
-        'descr': "The listener was trying to maintain listening comfort.",
+        'name': 'Primary Goal - maintain listening comfort',
+        'descr': "PLG: Primary Listening Goal. The listener was trying to maintain listening comfort.",
     },
     {
         'abbrev': 'PLG4prec',
-        'name': 'Try - locate sounds',
-        'descr': "The listener was trying to locate sounds.",
+        'name': 'Primary Goal - locate sounds',
+        'descr': "PLG: Primary Listening Goal. The listener was trying to locate sounds.",
     },
     {
         'abbrev': 'PLG5prec',
-        'name': 'Try - listen to speech/music',
-        'descr': "The listener was trying to listen to speech/music.",
+        'name': 'Primary Goal - listen to speech/music',
+        'descr': "PLG: Primary Listening Goal. The listener was trying to listen to speech/music.",
     },
     {
         'abbrev': 'PLG6prec',
-        'name': 'Try - converse',
-        'descr': "The listener was trying to converse.",
+        'name': 'Primary Goal - converse',
+        'descr': "PLG: Primary Listening Goal. The listener was trying to converse.",
     },
     
     # SLG - Which of the following best describes your goal?
     {
         'abbrev': 'SLG1prec',
-        'name': 'Goal - build relationship',
-        'descr': "The listener's goal was to build a relationship.",
+        'name': 'Speech Goal - build relationship',
+        'descr': "SLG: Speech Listening Goal. The listener's goal was to build a relationship.",
     },
     {
         'abbrev': 'SLG2prec',
-        'name': 'Goal - obtain info',
-        'descr': "The listener's goal was to obtain information.",
+        'name': 'Speech Goal - obtain info',
+        'descr': "SLG: Speech Listening Goal. The listener's goal was to obtain information.",
     },
     {
         'abbrev': 'SLG3prec',
-        'name': 'Goal - action/plans',
-        'descr': "The listener's goal was to take action/make plans.",
+        'name': 'Speech Goal - action/plans',
+        'descr': "SLG: Speech Listening Goal. The listener's goal was to take action/make plans.",
     },
     {
         'abbrev': 'SLG4prec',
-        'name': 'Goal - influence/convince',
-        'descr': "The listener's goal was to influence/convince others.",
+        'name': 'Speech Goal - influence/convince',
+        'descr': "SLG: Speech Listening Goal. The listener's goal was to influence/convince others.",
     },
     {
         'abbrev': 'SLG5prec',
-        'name': 'Goal - follow story',
-        'descr': "The listener's goal was to follow a story.",
+        'name': 'Speech Goal - follow story',
+        'descr': "SLG: Speech Listening Goal. The listener's goal was to follow a story.",
     },
     {
         'abbrev': 'SLG6prec',
-        'name': 'Goal - enjoy sound',
-        'descr': "The listener's goal was to enjoy the sound.",
+        'name': 'Speech Goal - enjoy sound',
+        'descr': "SLG: Speech Listening Goal. The listener's goal was to enjoy the sound.",
     },
 
     # LS - Which of the following were you most focused on?
     {
         'abbrev': 'LS1prec',
         'name': 'Focus - speaker',
-        'descr': "The listener was most focused on the speaker's thoughts and feelings.",
+        'descr': "LS: Listening focus. The listener was most focused on the speaker's thoughts and feelings.",
     },
     {
         'abbrev': 'LS2prec',
         'name': 'Focus - inconsistencies',
-        'descr': "The listener was most focused on the inconsistencies in what was being said.",
+        'descr': "LS: Listening focus. The listener was most focused on the inconsistencies in what was being said.",
     },
     {
         'abbrev': 'LS3prec',
         'name': 'Focus - content',
-        'descr': "The listener was most focused on the content of what was being said.",
+        'descr': "LS: Listening focus. The listener was most focused on the content of what was being said.",
     },
     {
         'abbrev': 'LS4prec',
         'name': 'Focus - replying',
-        'descr': "The listener was most focused on replying or ending the activity.",
+        'descr': "LS: Listening focus. The listener was most focused on replying or ending the activity.",
     },
 
     # VC - 
@@ -704,70 +704,70 @@ SCALE_METADATA = [
     {
         'abbrev': 'SPavg',
         'name': 'Could follow conversation',
-        'descr': "The listener could follow the conversation/speech. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+        'descr': "SP: Speech perception. The listener could follow the conversation/speech. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
     },
 
     # LE - I had to strain to listen
     {
         'abbrev': 'LEavg',
         'name': 'Had to strain to listen',
-        'descr': "Listener had to strain to listen. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+        'descr': "LE: Listening effort. Listener had to strain to listen. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
     },
 
     # LCL - I could tell where the sounds were coming from right away.
     {
         'abbrev': 'LCLavg',
         'name': 'Able to locate sounds',
-        'descr': "Listener could tell where the sounds were coming from right away. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+        'descr': "LCL: Localization. Listener could tell where the sounds were coming from right away. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
     },
 
     # SQ - The sound quality of what I was listening to was great.
     {
         'abbrev': 'SQavg',
         'name': 'Sound quality',
-        'descr': "The sound quality of what the listener was listening to was great. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+        'descr': "SQ: Sound quality. The sound quality of what the listener was listening to was great. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
     },
 
     # ST - I was satisified with my devices in the previous 5-10 minutes
     {
         'abbrev': 'STavg',
         'name': 'Satisfied w/ devices',
-        'descr': "Listener was satisified with their devices in the previous 5-10 minutes. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+        'descr': "ST: Satisfaction. Listener was satisified with their devices in the previous 5-10 minutes. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
     },
 
     # AR - My hearing difficulties limited what I wanted to do or say?
     {
         'abbrev': 'ARavg',
         'name': 'Limited by hearing',
-        'descr': "Listener's hearing difficulties limited what they wanted to do or say? 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+        'descr': "AR: Activity restriction. Listener's hearing difficulties limited what they wanted to do or say? 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
     },
 
     # DP - My hearing difficulties made me feel sad or depressed.
     {
         'abbrev': 'DPavg',
         'name': 'Sad/depressed by hearing',
-        'descr': "Listener's hearing difficulties made them feel sad or depressed. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+        'descr': "DP: Depression. Listener's hearing difficulties made them feel sad or depressed. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
     },
 
     # SI - My hearing difficulties made me feel lonely or isolated.
     {
         'abbrev': 'SIavg',
         'name': 'Lonely/isolated',
-        'descr': "Listener's hearing difficulties made them feel lonely or isolated. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+        'descr': "SI: Social isolation. Listener's hearing difficulties made them feel lonely or isolated. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
     },
 
     # AX - My hearing difficulties made me feel nervous or anxious.
     {
         'abbrev': 'AXavg',
         'name': 'Nervous/anxious',
-        'descr': "Listener's hearing difficulties made them feel nervous or anxious. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+        'descr': "AX: Anxiety. Listener's hearing difficulties made them feel nervous or anxious. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
     },
 
     # IM - In this situation it was important for me to hear well.
     {
         'abbrev': 'IMavg',
         'name': 'Important to hear well',
-        'descr': "In this situation it was important for the listener to hear well. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
+        'descr': "IM: Importance. In this situation it was important for the listener to hear well. 1 = Strongly agree, 2 = Agree, 3 = Neutral, 4 = Disagree, 5 = Strongly disagree.",
     },
 
     # AZBio
@@ -1128,6 +1128,157 @@ depression.""",
     },
 ]
 
+CATEGORICAL_VARS = [
+    # Mental Health Domain: Anxiety
+    {
+        'input': 'BAITotalRaw',
+        'output': 'BAI',
+        'name': 'Beck Anxiety Index',
+        'descr': 'Measure of recent anxiety.',
+        'ranges': '0-7 Minimal, 8-15 Mild, 16-25 Moderate, 26-63 Severe',
+        'keyword': 'anxiety',
+        'cat': 'Mental Health',
+    },
+    # Mental Health Domain: Depression
+    {
+        'input': 'BDITotalRaw',
+        'output': 'BDI',
+        'name': 'Beck Depression Index',
+        'descr': 'Measure of recent depressive symptoms.',
+        'ranges': '0-13 Minimal, 14-19 Mild, 20-28 Moderate, 29-63 Severe',
+        'keyword': 'depression',
+        'cat': 'Mental Health',
+    },
+    # Cognitive Domain: Attention/Processing Speed
+    { 
+        'input': 'WAIS DigSp ss',
+        'output': 'WAIS Digit Span',
+        'name': 'Wechsler Adult Intelligence Scale-IV (WAIS) Digit Span',
+        'descr': 'Measures basic attention and working memory.',
+        'ranges': '>16 Very Superior, 14-15 Superior, 12-13 High Average, 8-11 Average, 6-7 Low Average, 4-5 Borderline, <3 Extremely Low',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    {
+        'input': 'TMT A T-score',
+        'output': 'Trails A',
+        'name': 'Trail Making Test - A',
+        'descr': 'Measures processing speed and visual scanning.',
+        'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    # Cognitive Domain: Executive Functioning
+    {
+        'input': 'WAIS MatReas ss',
+        'output': 'WAIS MatReas',
+        'name': 'WAIS Matrix Reasoning',
+        'descr': 'Measures visual abstract reasoning.',
+        'ranges': '>16 Very Superior, 14-15 Superior, 12-13 High Average, 8-11 Average, 6-7 Low Average, 4-5 Borderline, <3 Extremely Low',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    {
+        'input': 'WAIS Sim ss',
+        'output': 'WAIS Sim',
+        'name': 'WAIS Similarities',
+        'descr': 'Measures verbal abstract reasoning.',
+        'ranges': '>16 Very Superior, 14-15 Superior, 12-13 High Average, 8-11 Average, 6-7 Low Average, 4-5 Borderline, <3 Extremely Low',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    {
+        'input': 'TMT B T-score',
+        'output': 'Trails B',
+        'name': 'Trail Making Test - B',
+        'descr': 'Measures complex attention and processing speed, set-shifting, and cognitive flexibility (aspects of executive functioning.)',
+        'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    # Cognitive Domain: Premorbid Cognitive Functioning
+    {
+        'input': 'WRAT Sim ss',
+        'output': 'WRAT Sim',
+        'name': 'WRAT Similarities',
+        'descr': "Estimated level of cognitive functioning for most of one's life.",
+        'ranges': '>130 Very Superior, 120-129 Superior, 110-119 High Average, 90-109 Average, 80-89 Low Average, 70-79 Borderline, <70 Extremely Low',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    # Cognitive Domain: Verbal Learning
+    {
+        'input': 'HVLT-R T Score',
+        'output': 'HVLT-R',
+        'name': 'HVLT-Retention',
+        'descr': "Measures what percentage of verbal information was retained on spontaneous recall.",
+        'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    {
+        'input': 'HVLT-DR T Score',
+        'output': 'HVLT-DR',
+        'name': 'HVLT-Delayed Recall',
+        'descr': "Measures spontaneous recall of verbal information (i.e., how many words were remembered.)",
+        'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    {
+        'input': 'HVLT-TR T Score',
+        'output': 'HVLT-TR',
+        'name': 'HVLT-Total Recall',
+        'descr': "Measures verbal learning.",
+        'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    # Cognitive Domain: Visual Learning
+    {
+        'input': 'BVMT-TR T Score',
+        'output': 'BVMT-TR',
+        'name': 'BVMT-Total Recall',
+        'descr': "Measuers visual learning.",
+        'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    {
+        'input': 'BVMT-DR T Score',
+        'output': 'BVMT-DR',
+        'name': 'BVMT-Delayed Recall',
+        'descr': "Measures spontaneous recall of visual information (i.e., how many details of figure were remembered.)",
+        'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+    {
+        'input': 'BVMT-RD Percentile',
+        'output': 'BVMT-RD',
+        'name': 'BVMT-Discrimination Index',
+        'descr': "Measures recognition memory for visual information.)",
+        'ranges': '>16 Within Normal Limits (WNL), 11-16 Low Average, 6-10 Mild/Borderline Impairment, 3-5 Mild/Moderate Impairment, <1 Moderate to Severe Impairment',
+        'keyword': None,
+        'flip_axis': 1,
+        'cat': 'Cognitive',
+    },
+]
+
+for cv in CATEGORICAL_VARS:
+    SCALE_METADATA.append({ 'abbrev': cv['output'], 'name': cv['name'], 'descr': cv['descr']})
+
 pp = pprint.PrettyPrinter(indent=4)
 
 def process_demographics(input_dir):
@@ -1186,6 +1337,8 @@ def process_longitudinal_data(filename):
                             "SimSSWAIS": "WAIS Sim ss",
                             "MatReasSSWAIS": "WAIS MatReas ss",
                             "SimSSWRAT": "WRAT Sim ss",
+                            "TMT A SS": "TMT A ss",
+                            "TMT B SS": "TMT B ss",
     },
                    errors="raise")
 
@@ -1196,6 +1349,55 @@ def process_longitudinal_data(filename):
     
     return df
 
+def assign_categorical_vars(df):
+    for cv in CATEGORICAL_VARS:
+        if cv['input'] not in df:
+            print("skipping " + cv['input'])
+            continue
+        
+        # parse categories from ranges
+        range_strs = cv['ranges'].split(', ')
+        ranges = []
+    
+        for r in range_strs:
+            m1 = re.match(r'([<>])(\d+) (.*)', r)
+            if m1 is not None:
+                which = m1.group(1)
+                val = float(m1.group(2))
+                if which == '>':
+                    ranges.append({'min': val, 'max': None, 'name': m1.group(3)})
+                else:
+                    ranges.append({'min': None, 'max': val, 'name': m1.group(3)})
+
+            m2 = re.match(r'(\d+)-(\d+) (.*)', r)
+            if m2 is not None:
+                ranges.append({'min': float(m2.group(1)), 'max': float(m2.group(2)), 'name': m2.group(3)})
+
+            if (m1 is None) and (m2 is None):
+                print("FATAL - couldn't parse range " + r)
+                sys.exit(1)
+
+        def assign_val(v):
+            if pd.isnull(v):
+                return None
+
+            for r in ranges:
+                if r['min'] is None:
+                    if v <= r['max']:
+                        return r['name']
+                elif r['max'] is None:
+                    if v >= r['min']:
+                        return r['name']
+                elif (v <= r['max']) and (v >= r['min']):
+                    return r['name']
+                
+            print("FATAL - failed to find matching category for value " + str(v))
+            sys.exit(1)
+            
+        df[cv['output']] = df[cv['input']].map(assign_val)
+            
+    return df
+            
 def azbio_quiet(row):
     pct = row['AzBioWord_Percent']
     cond = row['Condition']
@@ -1355,6 +1557,7 @@ def generate_field_mapping(df_unique_subj_vars, df_unique_obs, demographics_file
 
             # BAI - Beck Anxiety Inventory
             "BAITotalRaw" : { 'cat': 'Mental Health', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            "BAI" : { 'cat': 'Mental Health', 'descr': None, 'type': 'Char', 'data_type': 'Categorical', 'flip_axis': 0, 'ordinal_sort': '' },
 
             # BDI - Beck Depression Index
             "BDITotalRaw" : { 'cat': 'Mental Health', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
@@ -1430,10 +1633,15 @@ def generate_field_mapping(df_unique_subj_vars, df_unique_obs, demographics_file
             p = 'NT' + str(n) + 'prec'
             obs_info[p] = { 'cat': 'General Disease Severity', 'descr': p, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' }
 
-
         # EMA - handle all /.*score/
         obs_info['ATscore'] = { 'cat': 'General Disease Severity', 'descr': 'ATscore', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' }
         obs_info['BTscore'] = { 'cat': 'General Disease Severity', 'descr': 'BTscore', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' }
+
+        for cv in CATEGORICAL_VARS:
+            flip_axis = 0
+            if 'flip_axis' in cv:
+                flip_axis = cv['flip_axis']
+            obs_info[cv['output']] = { 'cat': cv['cat'], 'descr': cv['descr'], 'type': 'Char', 'data_type': 'Categorical', 'flip_axis': flip_axis, 'ordinal_sort': '' }
         
         if obs not in obs_info:
             sys.stderr.write("Type/datatype could not be determined for " + obs + "\n")
@@ -1547,8 +1755,10 @@ def main():
     df_long = process_longitudinal_data(os.path.join(args.input_dir, 'Longitudinal.csv'))
     df_all_vars = df_long
 
-    # TODO - drop subjects not in df_long from df_demo
+    # Create categorical variables that correspond to each of the continuous variables
+    df_all_vars = assign_categorical_vars(df_all_vars)
     
+    # TODO - drop subjects not in df_long from df_demo
     pd.set_option('display.max_colwidth', None)
 
     # add VisitNum and sort
