@@ -104,6 +104,10 @@ export default {
       type: Object,
       required: true,
     },
+    useLongScaleNames: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return { dimension: null };
@@ -131,7 +135,13 @@ export default {
       this.$emit('userChangedInputVariable', this.dimension);
     },
     getChartTitle(v, which) {
-      var title = which == 'abbreviation' ? v.abbreviation : v.label;
+      var title = null;
+      if (which == 'abbreviation') {
+        title = this.useLongScaleNames ? v.label : v.abbreviation;
+      } else {
+        title = this.useLongScaleNames ? v.description : v.label;
+      }
+      
       if (v.type == 'observation' && v.is_longitudinal) {
         var fv = null;
         var lv = null;

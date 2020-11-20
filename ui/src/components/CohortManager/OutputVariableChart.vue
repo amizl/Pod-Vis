@@ -111,6 +111,10 @@ export default {
       type: Object,
       required: true,
     },
+    useLongScaleNames: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return { dimension: null, resetCount: 0 };
@@ -213,16 +217,18 @@ export default {
       return 'var-chart';
     },
     getVariableAbbreviation(v) {
+      var abbrev = this.useLongScaleNames ? v.label : v.abbreviation;
       if (v.parentLabel) {
-        return `${v.parentLabel} - ${v.abbreviation}`;
+        return `${v.parentLabel} - ${abbrev}`;
       }
-      return v.abbreviation;
+      return abbrev;
     },
     getVariableLabel(v) {
+      var lbl = this.useLongScaleNames ? v.description : v.label;
       if (v.parentLabel) {
-        return `${v.parentLabel} - ${v.label}`;
+        return `${v.parentLabel} - ${lbl}`;
       }
-      return v.label;
+      return lbl;
     },
     getVisitLabel(isFirst) {
       var which = isFirst ? 'first' : 'last';
