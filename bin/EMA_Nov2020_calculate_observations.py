@@ -71,17 +71,17 @@ ATTRIBUTE_METADATA = [
     },
     {
         'abbrev': 'UIHC1',
-        'name': 'Implant 1 at UIHC',
+        'name': 'Implant 1 at UIHC?',
         'descr': "Whether first implantation was performed at the University of Iowa Hearing Clinic: either 'Y' for yes or 'N' for no.",
     },
     {
         'abbrev': 'UIHC2',
-        'name': 'Implant 2 at UIHC',
+        'name': 'Implant 2 at UIHC?',
         'descr': "Whether second implantation was performed at the University of Iowa Hearing Clinic: either 'Y' for yes or 'N' for no.",
     },
     {
         'abbrev': 'UIHC3',
-        'name': 'Implant 3 at UIHC',
+        'name': 'Implant 3 at UIHC?',
         'descr': "Whether third implantation was performed at the University of Iowa Hearing Clinic: either 'Y' for yes or 'N' for no.",
     },
     {
@@ -876,8 +876,8 @@ each talker and then assigned to 33 lists of 20 sentences, each having 5 sentenc
 
     # Trail Making Test
     {
-        'abbrev': 'TMT A SS',
-        'name': 'Trail Making Test Part A SS',
+        'abbrev': 'TMT A ss',
+        'name': 'Trail Making Test Part A ss',
         'descr': TMT_DESCR,
     },
     {
@@ -891,8 +891,8 @@ each talker and then assigned to 33 lists of 20 sentences, each having 5 sentenc
         'descr': TMT_DESCR,
     },
     {
-        'abbrev': 'TMT B SS',
-        'name': 'Trail Making Test Part B SS',
+        'abbrev': 'TMT B ss',
+        'name': 'Trail Making Test Part B ss',
         'descr': TMT_DESCR,
     },
     {
@@ -1079,7 +1079,7 @@ depression.""",
         'descr': WAIS_DESCR,
     },
     {
-        'abbrev': 'WAIS Sim SS',
+        'abbrev': 'WAIS Sim ss',
         'name': 'WAIS Similarities Symbol Search',
         'descr': WAIS_DESCR,
     },
@@ -1089,7 +1089,7 @@ depression.""",
         'descr': WAIS_DESCR,
     },
     {
-        'abbrev': 'WAIS DigSp SS',
+        'abbrev': 'WAIS DigSp ss',
         'name': 'WAIS Digit Span Symbol Search',
         'descr': WAIS_DESCR,
     },
@@ -1099,7 +1099,7 @@ depression.""",
         'descr': WAIS_DESCR,
     },
     {
-        'abbrev': 'WAIS MatReas SS',
+        'abbrev': 'WAIS MatReas ss',
         'name': 'WAIS Matrix Reasoning Symbol Search',
         'descr': WAIS_DESCR,
     },
@@ -1110,7 +1110,7 @@ depression.""",
         'descr': WRAT_DESCR,
     },
     {
-        'abbrev': 'WRAT Sim SS',
+        'abbrev': 'WRAT Sim ss',
         'name': 'WRAT Similarities Symbol Search',
         'descr': WRAT_DESCR,
     },
@@ -1182,10 +1182,10 @@ def process_longitudinal_data(filename):
                             "TotRecTscoreHVLT": "HVLT-TR T Score",
                             "RecDiscrimIndexTscoreHVLT": "HVLT-RD Index T Score",
                             "RetTscoreHVLT": "HVLT-R T Score",
-                            "DigSpSSWAIS": "WAIS DigSp SS",
-                            "SimSSWAIS": "WAIS Sim SS",
-                            "MatReasSSWAIS": "WAIS MatReas SS",
-                            "SimSSWRAT": "WRAT Sim SS",
+                            "DigSpSSWAIS": "WAIS DigSp ss",
+                            "SimSSWAIS": "WAIS Sim ss",
+                            "MatReasSSWAIS": "WAIS MatReas ss",
+                            "SimSSWRAT": "WRAT Sim ss",
     },
                    errors="raise")
 
@@ -1327,10 +1327,10 @@ def generate_field_mapping(df_unique_subj_vars, df_unique_obs, demographics_file
                                   'type': 'Char', 'data_type': 'Categorical', 'flip_axis': 0, 'ordinal_sort': '' },
 
             # Trails - Trail Making Test - neuropsychological test of visual attention and task switching
-            'TMT A SS': { 'cat': 'Cognitive', 'descr': 'Trails Part A SS', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            'TMT A ss': { 'cat': 'Cognitive', 'descr': 'Trails Part A ss', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
             'TMT A Secs' : { 'cat': 'Cognitive', 'descr': 'Trails Part A Seconds to Complete', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
             'TMT A T-score': { 'cat': 'Cognitive', 'descr': 'Trails Part A T-score', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
-            'TMT B SS': { 'cat': 'Cognitive', 'descr': 'Trails Part B SS', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            'TMT B ss': { 'cat': 'Cognitive', 'descr': 'Trails Part B ss', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
             'TMT B Secs' : { 'cat': 'Cognitive', 'descr': 'Trails Part B Seconds to Complete', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
             'TMT B T-score': { 'cat': 'Cognitive', 'descr': 'Trails Part B T-score', 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
 
@@ -1361,15 +1361,15 @@ def generate_field_mapping(df_unique_subj_vars, df_unique_obs, demographics_file
 
             # WAIS - Processing Wechsler Adult Intelligence Scale IV
             "WAIS SimRaw" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
-            "WAIS Sim SS" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            "WAIS Sim ss" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
             "WAIS DigSp Raw" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
-            "WAIS DigSp SS" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            "WAIS DigSp ss" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
             "WAIS MatReas Raw" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
-            "WAIS MatReas SS" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            "WAIS MatReas ss" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
 
             # WRAT - Wide Range Achievement Test IV
             "WRAT SimRaw" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
-            "WRAT Sim SS" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
+            "WRAT Sim ss" : { 'cat': 'Cognitive', 'descr': None, 'type': 'Decimal', 'data_type': 'Continuous', 'flip_axis': 0, 'ordinal_sort': '' },
         }
 
         # Neo Five Factor Inventory Personality Test
