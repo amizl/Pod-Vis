@@ -51,6 +51,7 @@
               :datasets="selectedDatasets"
               selectable
               :use-more-accurate-subject-counts="true"
+	      :use-long-scale-names="useLongScaleNames"
               @nSubjects="updateNumSubjects"
               @nObservationVars="updateNumObservationVars"
               @nSubjectVars="updateNumSubjectVars"
@@ -140,6 +141,17 @@ export default {
     },
     updateNumSubjectVars(ns) {
       this.numSubjectVars = ns;
+    },
+    useLongScaleNames() {
+      const long_re = / EMA /;
+      var useLong = false;
+      this.selectedDatasets.forEach(sd => {
+	  if (sd.study_name.match(long_re)) {
+	      useLong = true;
+	  }
+      }
+      );
+      return useLong;
     },
   },
 };

@@ -56,10 +56,10 @@
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on: tooltip }">
                 <span v-on="{ ...tooltip }">
-                  {{ props.item.abbreviation }}
+                  {{ useLongScaleNames ? props.item.scale : props.item.abbrev }}
                 </span>
               </template>
-              <span v-html="props.item.scale"></span>
+              <span v-html="useLongScaleNames ? props.item.description : props.item.scale"></span>
             </v-tooltip>
           </td>
 
@@ -121,6 +121,10 @@ export default {
       default: false,
     },
     useMoreAccurateSubjectCounts: {
+      type: Boolean,
+      default: false,
+    },
+    useLongScaleNames: {
       type: Boolean,
       default: false,
     },
@@ -239,6 +243,7 @@ export default {
       // TODO - retrieve data_category from database
       variable.data_category = 'Unknown';
     });
+
     this.variables = sortScales([...this.variables, ...attributes]);
     this.isLoading = false;
   },
