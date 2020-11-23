@@ -159,17 +159,17 @@ export default {
       ],
     };
   },
+  computed: {
+    podvis_version() {
+      return process.env.PODVIS_VERSION;
+    },
+  },
   watch: {
     expand(value) {
       // cache if sidebar is toggled
       if (window.localStorage.expand != value) {
         window.localStorage.expand = value;
       }
-    },
-  },
-  computed: {
-    podvis_version() {
-      return process.env.PODVIS_VERSION;
     },
   },
   created() {

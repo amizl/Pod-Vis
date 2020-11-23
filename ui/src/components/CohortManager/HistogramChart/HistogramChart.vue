@@ -301,11 +301,7 @@ export default {
     num_bins() {
       var ext = extent(this.populationData);
       var diff = ext[1] - ext[0];
-      if (
-        this.variable &&
-        this.variable.value_type === 'int' &&
-        diff < 30
-      ) {
+      if (this.variable && this.variable.value_type === 'int' && diff < 30) {
         return diff + 1;
       } else {
         return 30;

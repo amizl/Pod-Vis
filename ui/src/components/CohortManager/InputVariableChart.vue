@@ -141,7 +141,7 @@ export default {
       } else {
         title = this.useLongScaleNames ? v.description : v.label;
       }
-      
+
       if (v.type == 'observation' && v.is_longitudinal) {
         var fv = null;
         var lv = null;

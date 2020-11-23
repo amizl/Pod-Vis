@@ -211,7 +211,7 @@ export default {
       highlightedSubset: state.HIGHLIGHTED_SUBSET,
     }),
     num_bins() {
-      if (this.variable.value_type === 'int' && (this.yDomain - this.yMin) < 30) {
+      if (this.variable.value_type === 'int' && this.yDomain - this.yMin < 30) {
         return this.yDomain - this.yMin + 1;
       } else {
         return 30;
