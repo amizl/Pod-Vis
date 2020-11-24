@@ -113,7 +113,7 @@ export default {
     useLongScaleNames: false,
   }),
   created() {
-    this.useLongScaleNames = this.useLongScaleNamesDefault();
+    this.useLongScaleNames = getLongScaleNameDefault(this.selectedDatasets);
   },
   computed: {
     ...mapState('datasetManager', {
@@ -153,9 +153,6 @@ export default {
     },
     updateNumSubjectVars(ns) {
       this.numSubjectVars = ns;
-    },
-    useLongScaleNamesDefault() {
-      return getLongScaleNameDefault(this.selectedDatasets);
     },
   },
 };

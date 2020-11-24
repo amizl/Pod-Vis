@@ -16,6 +16,12 @@
                 >&nbsp;selected</v-chip
               >
               <v-spacer />
+              <v-switch
+                v-model="useLongScaleNames"
+                label="Use long scale names"
+                class="pa-0 ma-0 pr-3"
+                hide-details
+              ></v-switch>
               <v-tooltip bottom color="primary">
                 <template v-slot:activator="{ on: tooltip }">
                   <v-chip
@@ -87,6 +93,7 @@ import {
   getObservationVariableIds,
   getObservationVariableNames,
   sortVisitEvents,
+  getLongScaleNameDefault,
 } from '@/utils/helpers';
 
 export default {
@@ -101,7 +108,12 @@ export default {
       hideUnselectedVars: true,
       getNumSubjectsColor: getNumSubjectsColor,
       getNumSubjectsTextColor: getNumSubjectsTextColor,
+      useLongScaleNames: false,
     };
+  },
+  created() {
+    var datasets = this.collection.studies.map(d => d.study);
+    this.useLongScaleNames = getLongScaleNameDefault(datasets);
   },
   computed: {
     ...mapState('dataSummary', {
@@ -187,6 +199,9 @@ export default {
     lastVisits(newval) {
       this.updateEvents();
       this.updateTimesBetweenVisits();
+    },
+    useLongScaleNames(newval) {
+      this.$emit('useLongScaleNames', newval);
     },
   },
   mounted() {

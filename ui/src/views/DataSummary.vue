@@ -23,7 +23,9 @@
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <save-first-last-visit-btn-dialog />
+      <save-first-last-visit-btn-dialog
+        :use-long-scale-names="useLongScaleNames"
+      />
     </v-app-bar>
 
     <analysis-tracker
@@ -43,6 +45,7 @@
             <visit-variables-toolbar
               class="ma-0 pa-0"
               @hideUnselectedVars="hideUnselectedVarsChanged"
+              @useLongScaleNames="useLongScaleNamesChanged"
             >
             </visit-variables-toolbar>
 
@@ -50,6 +53,7 @@
               :var-opacity="'0.3'"
               :collection-var-opacity="'0.8'"
               :hide-unselected-vars="hideUnselectedVars"
+              :use-long-scale-names="useLongScaleNames"
             >
             </bubble-chart>
             <v-spacer></v-spacer>
@@ -109,7 +113,6 @@ export default {
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
     await this.fetchCollectionSummaries(this.collectionId);
-    this.useLongScaleNames = this.useLongScaleNamesDefault();
     this.isLoading = false;
   },
   methods: {
@@ -120,9 +123,8 @@ export default {
     hideUnselectedVarsChanged(newval) {
       this.hideUnselectedVars = newval;
     },
-    useLongScaleNamesDefault() {
-      var datasets = this.collection.studies.map(d => d.study);
-      return getLongScaleNameDefault(datasets);
+    useLongScaleNamesChanged(newval) {
+      this.useLongScaleNames = newval;
     },
   },
 };

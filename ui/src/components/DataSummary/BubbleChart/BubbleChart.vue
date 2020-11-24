@@ -67,6 +67,7 @@ import {
   getObservationVariableAbbreviations,
   getObservationVariableNames,
   getObservationVariableAbbreviationToName,
+  getObservationVariableAbbreviationToDescription,
   sortVisitEvents,
 } from '@/utils/helpers';
 
@@ -94,6 +95,10 @@ export default {
     hideUnselectedVars: {
       type: Boolean,
       required: false,
+    },
+    useLongScaleNames: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -125,6 +130,7 @@ export default {
       colors: colors,
       collectionVarAbbreviations: {},
       collectionVarAbbreviationToName: {},
+      collectionVarAbbreviationToDescr: {},
       firstVisitHandle: null,
       lastVisitHandle: null,
       rowCounts: {},
@@ -142,7 +148,9 @@ export default {
     collectionVarTitles() {
       var titles = [];
       Object.keys(this.collectionVarAbbreviations).forEach(a => {
-        var name = this.collectionVarAbbreviationToName[a];
+        var name = this.useLongScaleNames
+          ? this.collectionVarAbbreviationToDescr[a]
+          : this.collectionVarAbbreviationToName[a];
         var node = document.getElementById(a);
         titles.push({ abbrev: a, name: name, node: node });
       });
@@ -210,6 +218,9 @@ export default {
       this.updateCanvas();
     },
     lastVisits() {
+      this.updateCanvas();
+    },
+    useLongScaleNames() {
       this.updateCanvas();
     },
   },
@@ -369,6 +380,9 @@ export default {
       this.collectionVarAbbreviationToName = getObservationVariableAbbreviationToName(
         this.collection
       );
+      this.collectionVarAbbreviationToDescr = getObservationVariableAbbreviationToDescription(
+        this.collection
+      );
 
       if (this.hideUnselectedVars) {
         var selectedUniqueTests = [];
@@ -437,7 +451,8 @@ export default {
 
       var cvo = this.collectionVarOpacity;
       var vo = this.varOpacity;
-      var anames = this.collectionVarAbbreviationToName;
+      var use_long = this.useLongScaleNames;
+      var cv2n = this.collectionVarAbbreviationToName;
 
       // display unselected variables/tests as grayed-out
       mysvg
@@ -445,6 +460,13 @@ export default {
         .attr('transform', 'translate(' + margin.left + ', 0)')
         .call(d3.axisLeft(y))
         .selectAll('text')
+        .text(function(d) {
+          if (use_long) {
+            return d in cv2n ? cv2n[d] : d;
+          } else {
+            return d;
+          }
+        })
         .style('opacity', function(d) {
           return d in collectionVarAbbreviations ? cvo : vo;
         })

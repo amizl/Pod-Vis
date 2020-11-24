@@ -50,6 +50,12 @@ import { getObservationVariableIds } from '@/utils/helpers';
 
 // which store?
 export default {
+  props: {
+    useLongScaleNames: {
+      type: Boolean,
+      default: false,
+    },
+  },
   computed: {
     ...mapState('dataSummary', {
       collection: state.COLLECTION,
@@ -86,7 +92,11 @@ export default {
       var lastVisits = this.lastVisits;
       var varIdToName = {};
       this.collection.observation_variables_list.forEach(ov => {
-        varIdToName[ov['ontology']['id']] = ov['ontology']['label'];
+        if (this.useLongScaleNames) {
+          varIdToName[ov['ontology']['id']] = ov['ontology']['label'];
+        } else {
+          varIdToName[ov['ontology']['id']] = ov['ontology']['abbreviation'];
+        }
       });
 
       cvIds.forEach(cvid => {

@@ -179,6 +179,24 @@ export function getObservationVariableAbbreviationToName(c) {
   return collectionVarAbbreviations;
 }
 
+export function getObservationVariableAbbreviationToDescription(c) {
+  var collectionVarAbbreviations = {};
+  var getCollectionVarAbbreviations = function(vars) {
+    vars.forEach(v => {
+      if (v.children && v.children.length > 0) {
+        if (v.children[0].label === 'First Visit') {
+          collectionVarAbbreviations[v.abbreviation] = v.description;
+        } else {
+          getCollectionVarAbbreviations(v.children);
+        }
+      }
+    });
+  };
+
+  getCollectionVarAbbreviations(c.observation_variables);
+  return collectionVarAbbreviations;
+}
+
 export function getObservationVariableNames(c) {
   var collectionVarNames = {};
   var getCollectionVarNames = function(vars) {
