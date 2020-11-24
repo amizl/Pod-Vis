@@ -70,7 +70,10 @@ import VisitVariablesToolbar from '@/components/DataSummary/VisitVariablesToolba
 import VisitTimesTable from '@/components/DataSummary/VisitTimesTable.vue';
 import BubbleChart from '@/components/DataSummary/BubbleChart/BubbleChart.vue';
 import SaveFirstLastVisitBtnDialog from '@/components/BuildDataset/SaveFirstLastVisitBtnDialog.vue';
-import { getCollectionDescription } from '@/utils/helpers';
+import {
+  getCollectionDescription,
+  getLongScaleNameDefault,
+} from '@/utils/helpers';
 
 export default {
   name: 'DataSummary',
@@ -93,6 +96,7 @@ export default {
       substep: '2.4',
       hideUnselectedVars: true,
       getCollectionDescription: getCollectionDescription,
+      useLongScaleNames: false,
     };
   },
   computed: {
@@ -105,6 +109,7 @@ export default {
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
     await this.fetchCollectionSummaries(this.collectionId);
+    this.useLongScaleNames = this.useLongScaleNamesDefault();
     this.isLoading = false;
   },
   methods: {
@@ -114,6 +119,10 @@ export default {
     }),
     hideUnselectedVarsChanged(newval) {
       this.hideUnselectedVars = newval;
+    },
+    useLongScaleNamesDefault() {
+      var datasets = this.collection.studies.map(d => d.study);
+      return getLongScaleNameDefault(datasets);
     },
   },
 };

@@ -38,8 +38,15 @@
           <v-sheet color="white" height="100%" class="rounded-lg shadow">
             <v-card color="#eeeeee" class="pt-1">
               <v-card-title class="primary--text pl-3 py-2"
-                >Shared Variables</v-card-title
-              >
+                >Shared Variables
+                <v-spacer />
+                <v-switch
+                  v-model="useLongScaleNames"
+                  label="Use long scale names"
+                  class="pa-0 ma-0"
+                  hide-details
+                ></v-switch>
+              </v-card-title>
               <v-card-subtitle class="primary--text pl-3"
                 >Select the variables to include in the new study
                 dataset.</v-card-subtitle
@@ -51,7 +58,7 @@
               :datasets="selectedDatasets"
               selectable
               :use-more-accurate-subject-counts="true"
-	      :use-long-scale-names="useLongScaleNames"
+              :use-long-scale-names="useLongScaleNames"
               @nSubjects="updateNumSubjects"
               @nObservationVars="updateNumObservationVars"
               @nSubjectVars="updateNumSubjectVars"
@@ -75,6 +82,7 @@ import {
   getNumSubjectsColor,
   getNumSubjectsTextColor,
 } from '@/utils/colors';
+import { getLongScaleNameDefault } from '@/utils/helpers';
 
 export default {
   components: {
@@ -102,7 +110,11 @@ export default {
     numObservationVars: 0,
     numSubjectVars: 0,
     colors: colors,
+    useLongScaleNames: false,
   }),
+  created() {
+    this.useLongScaleNames = this.useLongScaleNamesDefault();
+  },
   computed: {
     ...mapState('datasetManager', {
       selectedDatasets: state.SELECTED_DATASETS,
@@ -142,16 +154,8 @@ export default {
     updateNumSubjectVars(ns) {
       this.numSubjectVars = ns;
     },
-    useLongScaleNames() {
-      const long_re = / EMA /;
-      var useLong = false;
-      this.selectedDatasets.forEach(sd => {
-	  if (sd.study_name.match(long_re)) {
-	      useLong = true;
-	  }
-      }
-      );
-      return useLong;
+    useLongScaleNamesDefault() {
+      return getLongScaleNameDefault(this.selectedDatasets);
     },
   },
 };

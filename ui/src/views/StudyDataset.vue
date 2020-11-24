@@ -127,6 +127,12 @@
                 }})
                 <v-spacer />
                 <v-toolbar-items>
+                  <v-switch
+                    v-model="demoVarsUseLongNames"
+                    label="Use long scale names"
+                    class="pa-0 ma-0 pr-3"
+                    hide-details
+                  ></v-switch>
                   <v-icon
                     v-if="demo_vars_expanded"
                     @click="demo_vars_expanded = false"
@@ -155,6 +161,8 @@
                 <v-col cols="12" class="ma-0 pa-0">
                   <simple-variable-table
                     :variables="sortScales([...collection.subject_variables])"
+                    :show-first-and-last-visit="false"
+                    :use-long-scale-names="demoVarsUseLongNames"
                     dense
                   />
                 </v-col>
@@ -177,6 +185,13 @@
                 }})
                 <v-spacer />
                 <v-toolbar-items>
+                  <v-switch
+                    v-model="obsVarsUseLongNames"
+                    label="Use long scale names"
+                    class="pa-0 ma-0 pr-3"
+                    hide-details
+                  ></v-switch>
+
                   <v-icon
                     v-if="obs_vars_expanded"
                     @click="obs_vars_expanded = false"
@@ -207,6 +222,8 @@
                     :variables="
                       sortScales([...collection.observation_variables])
                     "
+                    :show-first-and-last-visit="true"
+                    :use-long-scale-names="obsVarsUseLongNames"
                     dense
                   />
                 </v-col>
@@ -238,7 +255,7 @@ import axios from 'axios';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import CohortTable from '@/components/common/CohortTable.vue';
 import SimpleVariableTable from '@/components/DatasetManager/SimpleVariableTable.vue';
-import { sortScales } from '@/utils/helpers';
+import { sortScales, getLongScaleNameDefault } from '@/utils/helpers';
 
 export default {
   filters: {
@@ -264,6 +281,8 @@ export default {
       demo_vars_expanded: true,
       obs_vars_expanded: true,
       sortScales: sortScales,
+      demoVarsUseLongNames: false,
+      obsVarsUseLongNames: false,
     };
   },
   computed: {
@@ -273,6 +292,9 @@ export default {
   },
   async created() {
     await this.fetchCollection(this.id);
+    var datasets = this.collection.studies.map(d => d.study);
+    this.demoVarsUseLongNames = getLongScaleNameDefault(datasets);
+    this.obsVarsUseLongNames = this.demoVarsUseLongNames;
   },
   methods: {
     ...mapActions('datasetManager', {

@@ -389,3 +389,14 @@ export function scaleSortFn(sa, sb) {
 export function sortScales(scales) {
   return scales.sort(scaleSortFn);
 }
+
+export function getLongScaleNameDefault(datasets) {
+  const long_re = / EMA /;
+  var useLong = false;
+  datasets.forEach(sd => {
+    if (sd.study_name.match(long_re)) {
+      useLong = true;
+    }
+  });
+  return useLong;
+}
