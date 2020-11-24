@@ -33,10 +33,20 @@
         <v-tooltip top color="primary">
           <template v-slot:activator="{ on: tooltip }">
             <span v-on="{ ...tooltip }">
-              {{ item.ontology.abbreviation }}
+              {{
+                useLongScaleNames
+                  ? item.ontology.label
+                  : item.ontology.abbreviation
+              }}
             </span>
           </template>
-          <span v-html="item.ontology.label"></span>
+          <span
+            v-html="
+              useLongScaleNames
+                ? item.ontology.description
+                : item.ontology.label
+            "
+          ></span>
         </v-tooltip>
       </td>
     </template>
@@ -70,15 +80,27 @@ export default {
       type: Boolean,
       default: false,
     },
+    showFirstAndLastVisit: {
+      type: Boolean,
+      default: false,
+    },
+    useLongScaleNames: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
-    return {
-      headers: [
+    return {};
+  },
+  computed: {
+    headers() {
+      var headers = [
         {
           text: '',
           value: 'category_icon',
           sortable: false,
           class: 'text-subtitle-1 font-weight-bold',
+          width: '1%',
         },
         {
           text: 'Category',
@@ -98,26 +120,30 @@ export default {
           sortable: true,
           class: 'text-subtitle-1 font-weight-bold',
         },
-        {
+      ];
+
+      if (this.showFirstAndLastVisit) {
+        headers.push({
           text: 'First Visit',
           value: 'first_visit',
           sortable: true,
           class: 'text-subtitle-1 font-weight-bold',
-        },
-        {
+        });
+        headers.push({
           text: 'Last Visit',
           value: 'last_visit',
           sortable: true,
           class: 'text-subtitle-1 font-weight-bold',
-        },
-        {
-          text: 'Flip Axis?',
-          value: 'flip_axis',
-          sortable: true,
-          class: 'text-subtitle-1 font-weight-bold',
-        },
-      ],
-    };
+        });
+      }
+      headers.push({
+        text: 'Flip Axis?',
+        value: 'flip_axis',
+        sortable: true,
+        class: 'text-subtitle-1 font-weight-bold',
+      });
+      return headers;
+    },
   },
   methods: {
     getFirstVisit(item) {
