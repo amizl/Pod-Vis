@@ -107,10 +107,20 @@
                 <v-tooltip top color="primary">
                   <template v-slot:activator="{ on: tooltip }">
                     <span v-on="{ ...tooltip }">
-                      {{ useLongScaleNames ? props.item.label : props.item.abbreviation }}
+                      {{
+                        useLongScaleNames
+                          ? props.item.label
+                          : props.item.abbreviation
+                      }}
                     </span>
                   </template>
-                  <span v-html="useLongScaleNames ? props.item.description : props.item.label"></span>
+                  <span
+                    v-html="
+                      useLongScaleNames
+                        ? props.item.description
+                        : props.item.label
+                    "
+                  ></span>
                 </v-tooltip>
               </td>
               <td class="text-subtitle-1" style="width: 12%;">
@@ -215,7 +225,7 @@ export default {
     },
     useLongScaleNames: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   data: () => ({
