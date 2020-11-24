@@ -56,7 +56,11 @@
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on: tooltip }">
                 <span v-on="{ ...tooltip }">
-                  {{ useLongScaleNames ? props.item.scale : props.item.abbreviation }}
+                  {{
+                    useLongScaleNames
+                      ? props.item.scale
+                      : props.item.abbreviation
+                  }}
                 </span>
               </template>
               <span
