@@ -111,10 +111,6 @@ export default {
       type: Object,
       required: true,
     },
-    useLongScaleNames: {
-      type: Boolean,
-      default: true,
-    },
   },
   data() {
     return { dimension: null, resetCount: 0 };
@@ -125,6 +121,7 @@ export default {
       pvals: state.PVALS,
       pval_threshold: state.PVAL_THRESHOLD,
       dimensions: state.DIMENSIONS,
+      useLongScaleNames: state.USE_LONG_SCALE_NAMES,
     }),
   },
   created() {

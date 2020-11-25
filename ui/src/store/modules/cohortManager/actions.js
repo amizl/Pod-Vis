@@ -463,4 +463,7 @@ export default {
     commit(mutations.SET_COMPARISON_MEASURE, measure);
     dispatch(actions.ANALYZE_FILTERED);
   },
+  [actions.SET_USE_LONG_SCALE_NAMES]({ commit, dispatch }, useLong) {
+    commit(mutations.SET_USE_LONG_SCALE_NAMES, useLong);
+  },
 };

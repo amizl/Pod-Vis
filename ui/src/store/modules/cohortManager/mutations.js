@@ -236,6 +236,14 @@ export default {
   [mutations.SET_COMPARISON_MEASURE](state, measure) {
     state[stateTypes.COMPARISON_MEASURE] = measure;
   },
+  /**
+   * Set use long scale names.
+   * @param {Object} state
+   * @param {String} whether to use long scale names
+   */
+  [mutations.SET_USE_LONG_SCALE_NAMES](state, useLong) {
+    state[stateTypes.USE_LONG_SCALE_NAMES] = useLong;
+  },
 
   /**
    * Set query for particular dimension.

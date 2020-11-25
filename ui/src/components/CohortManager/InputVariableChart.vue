@@ -104,10 +104,6 @@ export default {
       type: Object,
       required: true,
     },
-    useLongScaleNames: {
-      type: Boolean,
-      default: true,
-    },
   },
   data() {
     return { dimension: null };
@@ -117,6 +113,7 @@ export default {
       collection: state.COLLECTION,
       dimensions: state.DIMENSIONS,
       unfilteredData: state.UNFILTERED_DATA,
+      useLongScaleNames: state.USE_LONG_SCALE_NAMES,
     }),
   },
   created() {

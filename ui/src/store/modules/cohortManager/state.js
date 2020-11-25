@@ -19,4 +19,5 @@ export default {
   [state.HIGHLIGHTED_SUBSET]: 'cohort',
   [state.QUERIES]: {},
   [state.COMPARISON_MEASURE]: 'Last Visit',
+  [state.USE_LONG_SCALE_NAMES]: false,
 };

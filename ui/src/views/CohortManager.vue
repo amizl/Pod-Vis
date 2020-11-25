@@ -135,7 +135,10 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions, state, getters } from '@/store/modules/cohortManager/types';
-import { getCollectionDescription } from '@/utils/helpers';
+import {
+  getCollectionDescription,
+  getLongScaleNameDefault,
+} from '@/utils/helpers';
 
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import CohortSelection from '@/components/CohortManager/CohortSelection.vue';
@@ -226,6 +229,9 @@ export default {
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
+    var datasets = this.collection.studies.map(d => d.study);
+    var useLongScaleNames = getLongScaleNameDefault(datasets);
+    this.setUseLongScaleNames(useLongScaleNames);
     this.isLoading = false;
   },
   methods: {
@@ -235,6 +241,7 @@ export default {
       resetAllStoreData: actions.RESET_ALL_STORE_DATA,
       setCohort: actions.SET_COHORT,
       setCohortNoReset: actions.SET_COHORT_NO_RESET,
+      setUseLongScaleNames: actions.SET_USE_LONG_SCALE_NAMES,
     }),
     userSelectedVariables() {
       this.setCohortNoReset({ id: -1 });

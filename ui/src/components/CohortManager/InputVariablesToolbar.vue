@@ -27,6 +27,13 @@
 
             <v-spacer />
 
+            <v-switch
+              v-model="useLongScaleNamesSelect"
+              label="Use long scale names"
+              class="pa-0 ma-0 pr-3"
+              hide-details
+            ></v-switch>
+
             <v-chip
               class="white--text title"
               :style="'background: ' + colors['cohort']"
@@ -55,8 +62,8 @@
 
 <script>
 import InputVariablesDialog from '@/components/CohortManager/InputVariablesDialog.vue';
-import { mapState } from 'vuex';
-import { state } from '@/store/modules/cohortManager/types';
+import { mapActions, mapState } from 'vuex';
+import { actions, state } from '@/store/modules/cohortManager/types';
 import TWEEN from '@tweenjs/tween.js';
 import { colors } from '@/utils/colors';
 
@@ -85,9 +92,18 @@ export default {
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
       inputVariables: state.INPUT_VARIABLES,
+      useLongScaleNames: state.USE_LONG_SCALE_NAMES,
     }),
     animatedNumber() {
       return this.tweenData.toFixed(0);
+    },
+    useLongScaleNamesSelect: {
+      get() {
+        return this.useLongScaleNames;
+      },
+      set(value) {
+        this.setUseLongScaleNames(value);
+      },
     },
   },
   watch: {
@@ -112,8 +128,12 @@ export default {
   },
   created() {
     this.tweenData = this.filteredData.length;
+    this.useLongScaleNamesSelect = this.useLongScaleNames;
   },
   methods: {
+    ...mapActions('cohortManager', {
+      setUseLongScaleNames: actions.SET_USE_LONG_SCALE_NAMES,
+    }),
     expandClicked() {
       this.$emit('expandClicked', !this.expanded);
     },

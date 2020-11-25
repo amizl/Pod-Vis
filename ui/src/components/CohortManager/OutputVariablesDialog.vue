@@ -11,7 +11,15 @@
         class="title primary--text text--darken-3"
         style="padding: 16px 16px 0px 16px;"
       >
-        <div style="width: 100%; padding: 16px;">Choose Outcome Variables</div>
+        <div style="width: 100%; padding: 16px;">
+          Choose Outcome Variables
+          <v-switch
+            v-model="useLongScaleNamesSelect"
+            label="Use long scale names"
+            class="pa-0 ma-0"
+            hide-details
+          ></v-switch>
+        </div>
         <div style="width: 100%;">
           <v-data-table
             key="ovd-header"
@@ -224,10 +232,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    useLongScaleNames: {
-      type: Boolean,
-      default: false,
-    },
   },
   data: () => ({
     // checkboxes to select all items in a column
@@ -301,7 +305,16 @@ export default {
       collection: state.COLLECTION,
       vars: state.OUTPUT_VARIABLES,
       cohort: state.COHORT,
+      useLongScaleNames: state.USE_LONG_SCALE_NAMES,
     }),
+    useLongScaleNamesSelect: {
+      get() {
+        return this.useLongScaleNames;
+      },
+      set(value) {
+        this.setUseLongScaleNames(value);
+      },
+    },
   },
 
   watch: {
@@ -352,10 +365,12 @@ export default {
   },
   async created() {
     this.updateOutputVars();
+    this.useLongScaleNamesSelect = this.useLongScaleNames;
   },
   methods: {
     ...mapActions('cohortManager', {
       setOutputVariables: actions.SET_OUTPUT_VARIABLES,
+      setUseLongScaleNames: actions.SET_USE_LONG_SCALE_NAMES,
     }),
 
     updateOutputVars() {
