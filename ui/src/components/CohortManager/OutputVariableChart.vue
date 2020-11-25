@@ -192,7 +192,7 @@ export default {
           pv.label === v.label ||
           (pv.label === v.parentLabel && v.label === 'Change')
         ) {
-          if (pv.pval < pvt) {
+          if (pv.pval != null && pv.pval < pvt) {
             rv = true;
           }
         }

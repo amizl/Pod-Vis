@@ -167,6 +167,9 @@ import { format } from 'd3-format';
 export default {
   filters: {
     formatPValue(pvalue) {
+      if (pvalue == null) {
+        return '-';
+      }
       if (pvalue < 0.0001) {
         return '< 0.0001';
       } else {
@@ -252,7 +255,7 @@ export default {
       this.setPvalThreshold(newPval);
     },
     getVariableClass(v) {
-      if (v.pval < this.pval_threshold && !v.error) {
+      if (v.pval != null && v.pval < this.pval_threshold && !v.error) {
         return 'highlight-var-row';
       }
       return '';

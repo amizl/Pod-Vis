@@ -1140,7 +1140,6 @@ def compute_mannwhitneyu():
                               effect_size_descr=None,
                               error=err))
             
-            
         # Non-longitudinal categorical variable - use chi-square test
         elif (output_variable['data_category'] == 'Categorical') and ((not output_variable['is_longitudinal'] or (comparison_field != "change"))):
             # TODO - get ordered list of all categories
@@ -1226,6 +1225,18 @@ def compute_mannwhitneyu():
                               effect_size=f,
                               effect_size_descr='Common language effect size.',
                               u_statistic=u,
+                              error=err))
+
+        # Unsupported
+        else:
+            pvals.append(dict(label=variable_label,
+                              abbreviation=variable_abbreviation,
+                              comparison_field=comparison_field,
+                              test_name='Not supported',
+                              test_abbrev='N/A',
+                              pval=None,
+                              effect_size=None,
+                              effect_size_descr=None,
                               error=err))
             
     return jsonify({
