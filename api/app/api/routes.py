@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_current_user
-from scipy.stats import mannwhitneyu, f_oneway, chi2_contingency
+from scipy.stats import mannwhitneyu, f_oneway, chi2_contingency, ttest_ind
 from functools import reduce
 from . import api
 from .exceptions import ResourceNotFound, BadRequest
@@ -945,7 +945,7 @@ def compute_anova():
                         data.append({ 'subject_id': snum, 'group': gnum, 'time': 1, 'outcome': get_outcome_index(fv_value) })
                         data.append({ 'subject_id': snum, 'group': gnum, 'time': 2, 'outcome': get_outcome_index(lv_value) })
                 gnum += 1
-
+ 
             df = pd.DataFrame(data)
             
             # TODO - handle ordinal variables, not just nominal
@@ -1071,6 +1071,11 @@ def compute_mannwhitneyu():
             if unfiltered_data[0].get(variable_id) is None:
                 continue
 
+        field = comparison_field
+        # no choice of comparison field for non-longitudinal variables
+        if not output_variable['is_longitudinal']:
+            field = 'value'
+            
         err = None
         n_filtered = len(filtered_data)
         n_unfiltered = len(unfiltered_data)
@@ -1146,10 +1151,6 @@ def compute_mannwhitneyu():
             all_categories = {}
             filtered_counts = {}
             unfiltered_counts = {}
-            field = comparison_field
-            # no choice of comparison field for non-longitudinal variables
-            if not output_variable['is_longitudinal']:
-                field = 'value'
             
             for d in filtered_data:
                 v = d.get(variable_id).get(field)
@@ -1202,7 +1203,7 @@ def compute_mannwhitneyu():
                               error=err))
 
         # Longitudinal continuous variable: 2-Sided Mann-Whitney U-Test
-        elif (output_variable['data_category'] != 'Categorical') and (output_variable['is_longitudinal']):
+        elif (output_variable['data_category'] == 'Continuous') and (output_variable['is_longitudinal']):
             filtered_sample = [data.get(variable_id).get(comparison_field) for data in filtered_data]
             unfiltered_sample = [data.get(variable_id).get(comparison_field) for data in unfiltered_data]
             pval = None
@@ -1225,6 +1226,36 @@ def compute_mannwhitneyu():
                               effect_size=f,
                               effect_size_descr='Common language effect size.',
                               u_statistic=u,
+                              error=err))
+
+        # Non-longitudinal continuous variable - use t-test
+        elif (output_variable['data_category'] == 'Continuous') and (not output_variable['is_longitudinal']):
+
+            filtered_sample = [data.get(variable_id).get(field) for data in filtered_data]
+            unfiltered_sample = [data.get(variable_id).get(field) for data in unfiltered_data]
+            pval = None
+            t = None
+            f = None
+            
+            try:
+                t, pval = ttest_ind(filtered_sample, unfiltered_sample)
+                # effect size - Cohen's d - assumes population SD is equal for the two groups
+                nx = len(filtered_sample)
+                ny = len(unfiltered_sample)
+                dof = nx + ny - 2
+                f = (np.mean(filtered_sample) - np.mean(unfiltered_sample)) / np.sqrt(((nx-1)*np.std(filtered_sample, ddof=1) ** 2 + (ny-1)*np.std(unfiltered_sample, ddof=1) ** 2) / dof)
+            except ValueError as ve:
+                err = str(ve)
+                
+            pvals.append(dict(label=variable_label,
+                              abbreviation=variable_abbreviation,
+                              comparison_field=comparison_field,
+                              test_name='Standard independent T-test',
+                              test_abbrev='ITT',
+                              pval=pval,
+                              effect_size=f,
+                              effect_size_descr="Cohen's d",
+                              t_statistic=t,
                               error=err))
 
         # Unsupported
