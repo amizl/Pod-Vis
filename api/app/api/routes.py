@@ -1059,10 +1059,12 @@ def compute_mannwhitneyu():
         if isinstance(output_variable.get("id"), str) and "-" in output_variable.get("id"):
             variable_id = str(output_variable.get("parentID"))
             variable_label = output_variable.get("parentLabel")
+            variable_description = output_variable.get("description")
             variable_abbreviation = variable_label
         else:
             variable_id = str(output_variable.get("id"))
             variable_label = output_variable.get("label")
+            variable_description = output_variable.get("description")
             variable_abbreviation = output_variable.get("abbreviation")
             
         # ignore parent ontology terms with no actual data
@@ -1137,6 +1139,7 @@ def compute_mannwhitneyu():
 
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
+                              description=variable_description,
                               test_name="Nominal Generalized Estimation Equation model",
                               test_abbrev='NGEE',
                               converged=converged,
@@ -1193,6 +1196,7 @@ def compute_mannwhitneyu():
 
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
+                              description=variable_description,
                               test_name="Pearson's chi-squared test",
                               test_abbrev='PCS',
                               pval=p,
@@ -1219,6 +1223,7 @@ def compute_mannwhitneyu():
                 
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
+                              description=variable_description,
                               comparison_field=comparison_field,
                               test_name='2-Sided Mann-Whitney U Test',
                               test_abbrev='2SMWU',
@@ -1249,6 +1254,7 @@ def compute_mannwhitneyu():
                 
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
+                              description=variable_description,
                               comparison_field=comparison_field,
                               test_name='Standard independent T-test',
                               test_abbrev='ITT',
@@ -1262,6 +1268,7 @@ def compute_mannwhitneyu():
         else:
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
+                              description=variable_description,
                               comparison_field=comparison_field,
                               test_name='Not supported',
                               test_abbrev='N/A',

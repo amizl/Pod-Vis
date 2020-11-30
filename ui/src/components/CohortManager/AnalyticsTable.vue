@@ -93,10 +93,10 @@
                       <v-tooltip top color="primary">
                         <template v-slot:activator="{ on: tooltip }">
                           <span v-on="{ ...tooltip }">
-                            {{ props.item.abbreviation }}
+                            {{ useLongScaleNames ? props.item.label : props.item.abbreviation }}
                           </span>
                         </template>
-                        <span v-html="props.item.label"></span>
+                        <span v-html="useLongScaleNames ? props.item.description : props.item.label"></span>
                       </v-tooltip>
                     </td>
                     <td class="text-subtitle-1 text-xs-left">
@@ -199,6 +199,7 @@ export default {
       pval_threshold: state.PVAL_THRESHOLD,
       collection: state.COLLECTION,
       comparisonMeasure: state.COMPARISON_MEASURE,
+      useLongScaleNames: state.USE_LONG_SCALE_NAMES,
     }),
     headers() {
       var headers = [
