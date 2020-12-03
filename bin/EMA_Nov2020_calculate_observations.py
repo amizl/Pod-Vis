@@ -1132,8 +1132,8 @@ CATEGORICAL_VARS = [
     # Mental Health Domain: Anxiety
     {
         'input': 'BAITotalRaw',
-        'output': 'BAI',
-        'name': 'Beck Anxiety Index',
+        'output': 'BAI Range',
+        'name': 'Beck Anxiety Index Range',
         'descr': 'Measure of recent anxiety.',
         'ranges': '0-7 Minimal, 8-15 Mild, 16-25 Moderate, 26-63 Severe',
         'keyword': 'anxiety',
@@ -1142,8 +1142,8 @@ CATEGORICAL_VARS = [
     # Mental Health Domain: Depression
     {
         'input': 'BDITotalRaw',
-        'output': 'BDI',
-        'name': 'Beck Depression Index',
+        'output': 'BDI Range',
+        'name': 'Beck Depression Index Range',
         'descr': 'Measure of recent depressive symptoms.',
         'ranges': '0-13 Minimal, 14-19 Mild, 20-28 Moderate, 29-63 Severe',
         'keyword': 'depression',
@@ -1152,8 +1152,8 @@ CATEGORICAL_VARS = [
     # Cognitive Domain: Attention/Processing Speed
     { 
         'input': 'WAIS DigSp ss',
-        'output': 'WAIS Digit Span',
-        'name': 'Wechsler Adult Intelligence Scale-IV (WAIS) Digit Span',
+        'output': 'WAIS Digit Span Range',
+        'name': 'Wechsler Adult Intelligence Scale-IV (WAIS) Digit Span Range',
         'descr': 'Measures basic attention and working memory.',
         'ranges': '>16 Very Superior, 14-15 Superior, 12-13 High Average, 8-11 Average, 6-7 Low Average, 4-5 Borderline, <3 Extremely Low',
         'keyword': None,
@@ -1162,8 +1162,8 @@ CATEGORICAL_VARS = [
     },
     {
         'input': 'TMT A T-score',
-        'output': 'Trails A',
-        'name': 'Trail Making Test - A',
+        'output': 'Trails A Range',
+        'name': 'Trail Making Test - A Range',
         'descr': 'Measures processing speed and visual scanning.',
         'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
         'keyword': None,
@@ -1173,8 +1173,8 @@ CATEGORICAL_VARS = [
     # Cognitive Domain: Executive Functioning
     {
         'input': 'WAIS MatReas ss',
-        'output': 'WAIS MatReas',
-        'name': 'WAIS Matrix Reasoning',
+        'output': 'WAIS MatReas Range',
+        'name': 'WAIS Matrix Reasoning Range',
         'descr': 'Measures visual abstract reasoning.',
         'ranges': '>16 Very Superior, 14-15 Superior, 12-13 High Average, 8-11 Average, 6-7 Low Average, 4-5 Borderline, <3 Extremely Low',
         'keyword': None,
@@ -1183,8 +1183,8 @@ CATEGORICAL_VARS = [
     },
     {
         'input': 'WAIS Sim ss',
-        'output': 'WAIS Sim',
-        'name': 'WAIS Similarities',
+        'output': 'WAIS Sim Range',
+        'name': 'WAIS Similarities Range',
         'descr': 'Measures verbal abstract reasoning.',
         'ranges': '>16 Very Superior, 14-15 Superior, 12-13 High Average, 8-11 Average, 6-7 Low Average, 4-5 Borderline, <3 Extremely Low',
         'keyword': None,
@@ -1193,8 +1193,8 @@ CATEGORICAL_VARS = [
     },
     {
         'input': 'TMT B T-score',
-        'output': 'Trails B',
-        'name': 'Trail Making Test - B',
+        'output': 'Trails B Range',
+        'name': 'Trail Making Test - B Range',
         'descr': 'Measures complex attention and processing speed, set-shifting, and cognitive flexibility (aspects of executive functioning.)',
         'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
         'keyword': None,
@@ -1204,8 +1204,8 @@ CATEGORICAL_VARS = [
     # Cognitive Domain: Premorbid Cognitive Functioning
     {
         'input': 'WRAT Sim ss',
-        'output': 'WRAT Sim',
-        'name': 'WRAT Similarities',
+        'output': 'WRAT Sim Range',
+        'name': 'WRAT Similarities Range',
         'descr': "Estimated level of cognitive functioning for most of one's life.",
         'ranges': '>130 Very Superior, 120-129 Superior, 110-119 High Average, 90-109 Average, 80-89 Low Average, 70-79 Borderline, <70 Extremely Low',
         'keyword': None,
@@ -1215,8 +1215,8 @@ CATEGORICAL_VARS = [
     # Cognitive Domain: Verbal Learning
     {
         'input': 'HVLT-R T Score',
-        'output': 'HVLT-R',
-        'name': 'HVLT-Retention',
+        'output': 'HVLT-R Range',
+        'name': 'HVLT-Retention Range',
         'descr': "Measures what percentage of verbal information was retained on spontaneous recall.",
         'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
         'keyword': None,
@@ -1225,8 +1225,8 @@ CATEGORICAL_VARS = [
     },
     {
         'input': 'HVLT-DR T Score',
-        'output': 'HVLT-DR',
-        'name': 'HVLT-Delayed Recall',
+        'output': 'HVLT-DR Range',
+        'name': 'HVLT-Delayed Recall Range',
         'descr': "Measures spontaneous recall of verbal information (i.e., how many words were remembered.)",
         'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
         'keyword': None,
@@ -1235,8 +1235,8 @@ CATEGORICAL_VARS = [
     },
     {
         'input': 'HVLT-TR T Score',
-        'output': 'HVLT-TR',
-        'name': 'HVLT-Total Recall',
+        'output': 'HVLT-TR Range',
+        'name': 'HVLT-Total Recall Range',
         'descr': "Measures verbal learning.",
         'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
         'keyword': None,
@@ -1246,8 +1246,8 @@ CATEGORICAL_VARS = [
     # Cognitive Domain: Visual Learning
     {
         'input': 'BVMT-TR T Score',
-        'output': 'BVMT-TR',
-        'name': 'BVMT-Total Recall',
+        'output': 'BVMT-TR Range',
+        'name': 'BVMT-Total Recall Range',
         'descr': "Measuers visual learning.",
         'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
         'keyword': None,
@@ -1256,8 +1256,8 @@ CATEGORICAL_VARS = [
     },
     {
         'input': 'BVMT-DR T Score',
-        'output': 'BVMT-DR',
-        'name': 'BVMT-Delayed Recall',
+        'output': 'BVMT-DR Range',
+        'name': 'BVMT-Delayed Recall Range',
         'descr': "Measures spontaneous recall of visual information (i.e., how many details of figure were remembered.)",
         'ranges': '>70 Very Superior, 63-69 Superior, 57-62 High Average, 43-56 Average, 37-42 Low Average, 31-36 Mild/Borderline Impairment, 25-30 Moderate Impairment, <24 Severe Impairment',
         'keyword': None,
@@ -1266,8 +1266,8 @@ CATEGORICAL_VARS = [
     },
     {
         'input': 'BVMT-RD Percentile',
-        'output': 'BVMT-RD',
-        'name': 'BVMT-Discrimination Index',
+        'output': 'BVMT-RD Range',
+        'name': 'BVMT-Discrimination Index Range',
         'descr': "Measures recognition memory for visual information.)",
         'ranges': '>16 Within Normal Limits (WNL), 11-16 Low Average, 6-10 Mild/Borderline Impairment, 3-5 Mild/Moderate Impairment, <1 Moderate to Severe Impairment',
         'keyword': None,
@@ -1337,8 +1337,8 @@ def process_longitudinal_data(filename):
                             "SimSSWAIS": "WAIS Sim ss",
                             "MatReasSSWAIS": "WAIS MatReas ss",
                             "SimSSWRAT": "WRAT Sim ss",
-                            "TMT A SS": "TMT A ss",
-                            "TMT B SS": "TMT B ss",
+#                            "TMT A SS": "TMT A ss",
+#                            "TMT B SS": "TMT B ss",
     },
                    errors="raise")
 
