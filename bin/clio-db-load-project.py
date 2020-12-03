@@ -30,10 +30,17 @@ project_id = 1
 
 def main():
     parser = argparse.ArgumentParser( description='Put a description of your script here')
-    parser.add_argument('-i', '--input_file', type=str, required=True, help='Path to an input file that gives mapping between database modules and data files associated with module' )
-    parser.add_argument('-d', '--input_dir', type=str, required=True, help='Path to directory where the input files are located' )
-    parser.add_argument('-m', '--mapping_file', type=str, required=True, help='Path to the column names to field mapping file' )
+    parser.add_argument('-i', '--input_file', type=str, required=True,
+                        help='Path to an input file that gives mapping between database modules and data files associated with module' )
+    parser.add_argument('-d', '--input_dir', type=str, required=True,
+                        help='Path to directory where the input files are located' )
+    parser.add_argument('-m', '--mapping_file', type=str, required=True,
+                        help='Path to the column names to field mapping file' )
     parser.add_argument('-u', '--user', type=str, required=True, help='MySQL user name' )
+    parser.add_argument('-o', '--update_ontologies', dest='update_ontologies', required=False, default=False, action='store_true',
+                        help='Whether to allow updates to subject and observation ontologies.' )
+    parser.add_argument('-f', '--force_update_ontologies', dest='force_update_ontologies', required=False, default=False, action='store_true',
+                        help='Update subject and observation ontologies even when doing so would change the value_type or data_category, potentially corrupting existing datasets.')
     parser.add_argument('-p', '--password', type=str, required=True, help='MySQL password' )
     args = parser.parse_args()
 
@@ -91,10 +98,10 @@ def main():
             has_longitudinal_data = process_projects_and_studies(cursor, conn, entity_file, df_project_info, df_study_info, df_col_names_field_map)
         elif entity == "Subject Ontology":
             print("Processing subject ontology .....")
-            process_subject_ontology(cursor, conn, entity_file, subject_ont, df_col_names_field_map)
+            process_subject_ontology(cursor, conn, entity_file, subject_ont, df_col_names_field_map, args.update_ontologies, args.force_update_ontologies)
         elif entity == "Observation Ontology":
             print("Processing observation ontology .....")
-            process_observation_ontology(cursor, conn, entity_file, observation_ont, df_col_names_field_map)
+            process_observation_ontology(cursor, conn, entity_file, observation_ont, df_col_names_field_map, args.update_ontologies, args.force_update_ontologies)
         elif entity == "Subject Info":
             print("Processing subject information .....")
             process_subject_info(cursor, conn, entity_file, study_map, subject_ont, df_col_names_field_map)
@@ -403,7 +410,7 @@ def process_projects_and_studies(cursor, conn, project_file, df_project_info, df
 # Process the subject ontology file to create or update entries in the 'subject_ontology'
 # table. The file has the following columns:
 # Observations
-def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col_names_field_map):
+def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col_names_field_map, allow_updates, force_updates):
 
     # Open the file and iterate over the list
     with open(subject_ont_file) as ifh:
@@ -487,7 +494,7 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
 
             # Check to see if the subject variable exists, if not create it    
             # If it does update it, else create a new entry
-            subject_ont_id = get_subject_ontology(cursor, label)
+            subject_ont_id = get_subject_ontology_id(cursor, label)
             print("Subject variable: {} ontology ID: {}\n".format(label, subject_ont_id))
 
             if (subject_ont_id == 0):
@@ -497,14 +504,14 @@ def process_subject_ontology(cursor, conn, subject_ont_file, subject_ont, df_col
                 subject_ont[label] = {'id': subject_ont_id, 'parent_id': parent_id}
             else:
                 # As the ontology ID exists, update the ontology record
-                update_subject_ontology_term(cursor, subject_ont_id, label, abbreviation, description, parent_id, value_type, data_category) 
+                update_subject_ontology_term(cursor, subject_ont_id, label, abbreviation, description, parent_id, value_type, data_category, allow_updates, force_updates)
                 conn.commit()
 
 
 # Process the observation ontology file to create or update entries in the 'observation_ontology'
 # table. The file has the following columns:
 # Observations
-def process_observation_ontology(cursor, conn, observation_ont_file, observation_ont, df_col_names_field_map):
+def process_observation_ontology(cursor, conn, observation_ont_file, observation_ont, df_col_names_field_map, allow_updates, force_updates):
     #pp.pprint(df_col_names_field_map)
     # Open the file and iterate over the list
     with open(observation_ont_file) as ifh:
@@ -591,7 +598,7 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
 
                 # Check to see if the observation variable exists, if not create it    
                 # If it does update it, else create a new entry
-                observation_ont_id = get_observation_ontology(cursor, abbreviation)
+                observation_ont_id = get_observation_ontology_id(cursor, abbreviation)
                 print("observation variable: {} ontology ID: {}\n".format(abbreviation, observation_ont_id))
                 
                 term_label = label
@@ -606,7 +613,7 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                     observation_ont[abbreviation] = {'id': observation_ont_id, 'parent_id': parent_id}
                 else:
                     # As the ontology ID exists, update the ontology record
-                    update_observation_ontology_term(cursor, observation_ont_id, term_label, abbreviation, description, parent_id, value_type, data_category, flip_axis) 
+                    update_observation_ontology_term(cursor, observation_ont_id, term_label, abbreviation, description, parent_id, value_type, data_category, flip_axis, allow_updates, force_updates) 
                     conn.commit()
 
 
@@ -783,6 +790,31 @@ def update_subject_attribute(cursor, subject_id, ont_id, val, val_type):
         sys.exit()
 
 def get_subject_ontology(cursor, label):
+    ont = None
+    query = "SELECT * FROM subject_ontology where label = %s"
+    print("Executing query: '{}'".format(query))
+    try:
+        cursor.execute(query, (label,))
+
+        row = cursor.fetchone()
+        if row is not None:
+            nc = len(cursor.column_names)
+            ont = {}
+            for c in range(0, nc):
+                ont[cursor.column_names[c]] = row[c]
+            
+        row = cursor.fetchone()
+        if row is not None:
+            print("FATAL: subject_ontology query returned multiple rows for label = " + label)
+            sys.exit(1)
+            
+    except Exception as e:
+        print(e)
+        sys.exit()
+
+    return ont
+    
+def get_subject_ontology_id(cursor, label):
     ont_id = 0
     query = "SELECT id, label, parent_id FROM subject_ontology where label = %s"
     print("Executing query: '{}'".format(query))
@@ -831,8 +863,51 @@ def create_subject_ontology_term(cursor, term, abbreviation, description, parent
     return ont_id
 
 # Method to update and entry in the subject ontology table
-def update_subject_ontology_term(cursor, subject_ont_id, term, abbreviation, description, parent_id = None, value_type = None, data_category = None):
+def update_subject_ontology_term(cursor, subject_ont_id, term, abbreviation, description, parent_id = None, value_type = None, data_category = None, allow_updates = False, force_updates = False):
+
+    # check whether the ontology term has actually changed - if not then allow_updates/force_updates can be ignored
+    has_changes = False
+    has_type_change = False
+    so = get_subject_ontology(cursor, term)
+    if so['abbreviation'] != abbreviation:
+        has_changes = True
+    if so['label'] != term:
+        has_changes = True
+    if so['description'] != description:
+        has_changes = True
+    if so['parent_id'] != parent_id:
+        has_changes = True
+    if so['value_type'] != value_type.lower():
+        has_changes = True
+        has_type_change = True
+    if so['data_category'] != data_category:
+        has_changes = True
+        has_type_change = True
+
+    # no change to ontology
+    if not has_changes:
+        print("No change for subject_ontology entry '{}' in database with ID: {}.".format(term, subject_ont_id))
+        return
+
+    # type change
+    if has_type_change:
+        if not force_updates:
+            print("FATAL: subject_ontology update entails a type change, which may corrupt existing data. Rerun with --force_update_ontologies to update anyway.")
+            sys.exit(1)
+        else:
+            print("WARN: subject_ontology update entails a type change, which may corrupt existing data. Updating anyway due to --force_update_ontologies.")
+
+    # no type change
+    elif not allow_updates:
+        print("FATAL: subject_ontology update for term " + term + " disallowed. Rerun with --update_ontologies to override.")
+        print("current database entry = " + str(so))
+        print("update = { 'abbreviation': '" + abbreviation+ "', 'label': '" + term + "', 'description': '" + description +
+              "', 'parent_id': "+ str(parent_id) +", 'value_type': '" + value_type.lower() + "', 'data_category': '" +
+              data_category + "' }")
+        sys.exit(1)
+
     query_args = ()
+    
     # Sometimes value_type or data_category are missing when the label is a parent
     # in such cases skip inserting these columns
     if (value_type is None or data_category is None):
@@ -859,6 +934,26 @@ def update_subject_ontology_term(cursor, subject_ont_id, term, abbreviation, des
     print("Updated ontology entry '{}' in database with ID: {}.".format(term, subject_ont_id))
 
 def get_observation_ontology(cursor, abbreviation):
+    ont = None
+    query = "SELECT * FROM observation_ontology where abbreviation = %s"
+    print("Executing query: '{}'".format(query))
+    try:
+        cursor.execute(query, (abbreviation,))
+
+        row = cursor.fetchone()
+        if row is not None:
+            nc = len(cursor.column_names)
+            ont = {}
+            for c in range(0, nc):
+                ont[cursor.column_names[c]] = row[c]
+            
+    except Exception as e:
+        print(e)
+        sys.exit()
+
+    return ont
+    
+def get_observation_ontology_id(cursor, abbreviation):
     ont_id = 0
     query = "SELECT id, label, parent_id FROM observation_ontology where abbreviation = %s"
     print("Executing query: '{}'".format(query))
@@ -913,7 +1008,55 @@ def create_observation_ontology_term(cursor, term, abbreviation, description, pa
 
 # Method to update and entry in the observation ontology table
 def update_observation_ontology_term(cursor, observation_ont_id, term, abbreviation, description, parent_id = None, value_type = None, 
-                                     data_category = None, flip_axis = 0):
+                                     data_category = None, flip_axis = 0, allow_updates = False, force_updates = False):
+
+    # check whether the ontology term has actually changed - if not then allow_updates/force_updates can be ignored
+    has_changes = False
+    has_type_change = False
+    oo = get_observation_ontology(cursor, abbreviation)
+    if oo['abbreviation'] != abbreviation:
+        has_changes = True
+    if oo['label'] != term:
+        has_changes = True
+    if oo['description'] != description:
+        has_changes = True
+    if oo['parent_id'] != parent_id:
+        has_changes = True
+    if oo['value_type'] != value_type.lower():
+        has_changes = True
+        has_type_change = True
+    if oo['data_category'] != data_category:
+        has_changes = True
+        has_type_change = True
+    if oo['flip_axis'] != flip_axis:
+        has_changes = True
+
+    def print_diff():
+        print("current database entry = " + str(oo))
+        print("update = { 'abbreviation': '" + abbreviation+ "', 'label': '" + term + "', 'description': '" + description +
+              "', 'parent_id': "+ str(parent_id) +", 'value_type': '" + value_type.lower() + "', 'data_category': '" +
+              data_category + "', 'flip_axis': " + str(int(flip_axis)) + " }")
+        
+    # no change to ontology
+    if not has_changes:
+        print("No change for observation_ontology entry '{}' in database with ID: {}.".format(term, observation_ont_id))
+        return
+
+    # type change
+    if has_type_change:
+        if not force_updates:
+            print("FATAL: observation_ontology update entails a type change, which may corrupt existing data. Rerun with --force_update_ontologies to update anyway.")
+            print_diff()
+            sys.exit(1)
+        else:
+            print("WARN: observation_ontology update entails a type change, which may corrupt existing data. Updating anyway due to --force_update_ontologies.")
+            print_diff()
+            
+    # no type change
+    elif not allow_updates:
+        print("FATAL: observation_ontology update for term " + term + " disallowed. Rerun with --update_ontologies to override.")
+        print_diff()
+        sys.exit(1)
 
     query_args = ()
     
