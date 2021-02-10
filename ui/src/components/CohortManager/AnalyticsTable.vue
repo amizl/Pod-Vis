@@ -5,7 +5,7 @@
         <v-col cols="12" class="ma-0 pa-0">
           <v-card color="#eeeeee" class="pt-1">
             <v-card-title class="primary--text pl-3 py-2"
-              >ANALYTICS PANEL
+              >ANALYTICS
               <v-divider vertical class="ml-4 mr-4"> </v-divider>
             </v-card-title>
           </v-card>

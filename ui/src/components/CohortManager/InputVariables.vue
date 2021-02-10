@@ -18,7 +18,7 @@
             v-else
             class="subheading primary--text text--lighten-4 text-h6"
           >
-            ADD PREDICTOR VARIABLES
+            CHOOSE PREDICTOR VARIABLES
           </v-subheader>
         </v-col>
       </v-row>
