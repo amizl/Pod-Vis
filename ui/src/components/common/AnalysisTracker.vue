@@ -77,8 +77,6 @@
           </v-tooltip>
         </v-stepper-step>
       </v-stepper-header>
-
-      <v-stepper-items> </v-stepper-items>
     </v-stepper>
 
     <!-- substep trackers -->
@@ -118,7 +116,7 @@
           :complete="inputVariables.length > 0 || substep >= 2.4"
           step="2.1"
           ><span class="subtitle-1"
-            >Choose Predictor Variables</span
+            >Choose predictor variables</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
@@ -126,7 +124,7 @@
           :complete="outputVariables.length > 0 || substep >= 2.4"
           step="2.2"
           ><span class="subtitle-1"
-            >Choose Outcome Variables</span
+            >Choose outcome variables</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
@@ -135,88 +133,14 @@
             filteredData.length < unfilteredData.length || substep >= 2.4
           "
           step="2.3"
-          >Apply Filters to Variables</v-stepper-step
+          >Apply filters to define cohorts</v-stepper-step
         >
         <v-divider></v-divider>
         <v-stepper-step :complete="substep === '2.5'" step="2.4"
-          ><span class="subtitle-1">Save Cohort</span></v-stepper-step
+          ><span class="subtitle-1">Review charts and analytics</span></v-stepper-step
         >
 
-        <v-divider></v-divider>
-        <v-stepper-step step="2.5"
-          ><span class="subtitle-1">Repeat or Continue</span></v-stepper-step
-        >
       </v-stepper-header>
-      <v-stepper-items>
-        <v-stepper-content step="2.1">
-          Click on "CHOOSE PREDICTOR VARIABLES" below and select one or more
-          variables, then click here to
-          <v-btn small outlined color="primary--text" @click="goto2p2()"
-            >CONTINUE</v-btn
-          >.
-        </v-stepper-content>
-
-        <v-stepper-content step="2.2">
-          Click on "CHOOSE OUTCOME VARIABLES" below and select one or more
-          variables, then click here to
-          <v-btn small outlined color="primary--text" @click="goto2p3()"
-            >Continue</v-btn
-          >.
-        </v-stepper-content>
-
-        <v-stepper-content step="2.3">
-          Apply filters to predictor variables to define the desired cohort,
-          then click here to
-          <v-btn small outlined color="primary--text" @click="goto2p4()"
-            >Continue</v-btn
-          >
-          and/or use the "AUTO-CREATE COHORTS" buttons below to create and save
-          multiple cohorts at once.
-        </v-stepper-content>
-
-        <v-stepper-content step="2.4">
-          Click on "SAVE COHORT" in the toolbar above to name and save this
-          cohort.
-        </v-stepper-content>
-
-        <v-stepper-content step="2.5">
-          <div v-if="collection_cohorts.length < 3">
-            So far only {{ collection_cohorts.length }}
-            <span v-if="collection_cohorts.length === 1">cohort has</span>
-            <span v-else>cohorts have</span> been defined. To proceed to the
-            Summary Matrix a minimum of 3 distinct cohorts must be created and
-            saved. Click on:<br clear="both" />
-            <v-btn small outlined color="primary--text" @click="createSimilar()"
-              >Create Similar Cohort</v-btn
-            >
-            to create another cohort based on the last one<br clear="both" />
-            <v-btn small outlined color="primary--text" @click="createNew()"
-              >Create New Cohort</v-btn
-            >
-            to create a new cohort from scratch.
-          </div>
-          <div v-else>
-            {{ collection_cohorts.length }} cohorts have been created and saved.
-            Click on:<br clear="both" />
-            <v-btn small outlined color="primary--text" @click="createSimilar()"
-              >Create Similar Cohort</v-btn
-            >
-            to create another cohort based on the last one<br clear="both" />
-            <v-btn small outlined color="primary--text" @click="createNew()"
-              >Create New Cohort</v-btn
-            >
-            to create a new cohort from scratch<br clear="both" />
-            <v-btn
-              small
-              outlined
-              color="primary--text"
-              @click="gotoSummaryMatrix()"
-              >Continue</v-btn
-            >
-            to proceed to the Summary Matrix.
-          </div>
-        </v-stepper-content>
-      </v-stepper-items>
     </v-stepper>
 
     <v-stepper v-if="step === '3'" :value="substep" model="substep">
@@ -228,17 +152,6 @@
         >
       </v-stepper-header>
 
-      <v-stepper-items>
-        <v-stepper-content step="3.1">
-          Choose two or more cohorts to include in the analysis, then click
-          "Continue".
-        </v-stepper-content>
-        <v-stepper-content step="3.2">
-          Select a scale from the Analytics panel to see the all-vs-all
-          cohort comparison via the Tukey/Range HSD Test. Click on a cell in
-          that table to compare the corresponding pair of cohorts.
-        </v-stepper-content>
-      </v-stepper-items>
     </v-stepper>
 
     <v-stepper v-if="step === '4'" :value="substep" model="substep">
