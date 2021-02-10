@@ -84,7 +84,7 @@
 
     <div v-else fill-width class="ma-0 pa-0">
       <analysis-tracker
-        step="3"
+        step="2"
         :substep.sync="substep"
         :collection-id="collectionId"
         @createSimilar="createSimilar"
@@ -171,7 +171,7 @@ export default {
     return {
       isLoading: false,
       isLoadingCohort: false,
-      substep: '3.1',
+      substep: '2.1',
       inExpanded: true,
       outExpanded: false,
       inHighlighted: true,
@@ -203,22 +203,22 @@ export default {
   },
   watch: {
     substep() {
-      if (this.substep === '3.1') {
+      if (this.substep === '2.1') {
         this.inExpanded = true;
         this.outExpanded = false;
         this.inHighlighted = true;
         this.outHighlighted = false;
-      } else if (this.substep === '3.2') {
+      } else if (this.substep === '2.2') {
         this.inExpanded = false;
         this.outExpanded = true;
         this.inHighlighted = false;
         this.outHighlighted = true;
-      } else if (this.substep === '3.3') {
+      } else if (this.substep === '2.3') {
         this.inExpanded = true;
         this.outExpanded = true;
         this.inHighlighted = true;
         this.outHighlighted = false;
-      } else if (this.substep === '3.4') {
+      } else if (this.substep === '2.4') {
         this.inHighlighted = false;
         this.outHighlighted = false;
       }
@@ -250,13 +250,13 @@ export default {
       this.setCohortNoReset({ id: -1 });
     },
     cohortSaved(success) {
-      this.substep = '3.5';
+      this.substep = '2.5';
     },
     // create entirely new cohort resetting everything
     createNew(success) {
       // return to "choose predictor variables" step
       this.setNewCohort({ id: null });
-      this.substep = '3.1';
+      this.substep = '2.1';
     },
     // create new cohort similar to the most-recently-created one
     createSimilar(success) {
@@ -267,7 +267,7 @@ export default {
         this.setNewCohort(last_cohort);
       }
       // return to "add filters" step
-      this.substep = '3.3';
+      this.substep = '2.3';
     },
     cohortSelected(newCohort) {
       this.setNewCohort(newCohort);
@@ -275,13 +275,13 @@ export default {
         newCohort.label !== 'New Cohort' &&
         newCohort.label !== 'Choose Cohort'
       ) {
-        this.substep = '3.3';
+        this.substep = '2.3';
       } else {
-        this.substep = '3.1';
+        this.substep = '2.1';
       }
     },
     cohortDeleted() {
-      this.substep = '3.1';
+      this.substep = '2.1';
     },
     async setNewCohort(newCohort) {
       if (this.isLoadingCohort) {

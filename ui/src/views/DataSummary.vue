@@ -29,7 +29,7 @@
     </v-app-bar>
 
     <analysis-tracker
-      step="2"
+      step="1"
       :substep="substep"
       :collection-id="this.collection.id"
     ></analysis-tracker>
@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      substep: '2.4',
+      substep: '1.4',
       hideUnselectedVars: true,
       getCollectionDescription: getCollectionDescription,
       useLongScaleNames: false,

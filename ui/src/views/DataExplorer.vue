@@ -41,7 +41,7 @@
           </v-app-bar>
 
           <analysis-tracker
-            step="5"
+            step="4"
             :substep="substep"
             :collection-id="collectionId"
           ></analysis-tracker>
@@ -146,7 +146,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      substep: '5.1',
+      substep: '4.1',
       selectedCohorts: [],
       expandAnalytics: true,
       // TODO - assign stable color to each newly-created cohort (in CohortManager?)

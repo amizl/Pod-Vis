@@ -2,18 +2,19 @@
   <div style="background: white">
     <v-stepper v-model="step" :value="step" alt-labels>
       <v-stepper-header>
+
         <v-stepper-step
           :complete="step > 1"
           step="1"
           :style="stepStyle('1')"
           :class="stepClass('1')"
-          @click.native="gotoHomepage()"
+          @click.native="gotoDatasetManager()"
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Home Page</span
-              >
+                >{{ (step > 1) ? "Study dataset created" : "Create study dataset"}}</span
+				       >
             </template>
             <span class="subtitle-1">{{ step_descr['1'] }}</span>
           </v-tooltip>
@@ -26,12 +27,12 @@
           step="2"
           :style="stepStyle('2')"
           :class="stepClass('2')"
-          @click.native="gotoDatasetManager()"
+          @click.native="gotoCohortManager()"
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Dataset Manager</span
+                >{{ (step > 2) ? "Cohorts created" : "Manage cohorts" }}</span
               >
             </template>
             <span class="subtitle-1">{{ step_descr['2'] }}</span>
@@ -45,12 +46,12 @@
           step="3"
           :style="stepStyle('3')"
           :class="stepClass('3')"
-          @click.native="gotoCohortManager()"
+          @click.native="gotoSummaryMatrix()"
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Cohort Manager</span
+                >Summary Matrix</span
               >
             </template>
             <span class="subtitle-1">{{ step_descr['3'] }}</span>
@@ -64,34 +65,15 @@
           step="4"
           :style="stepStyle('4')"
           :class="stepClass('4')"
-          @click.native="gotoSummaryMatrix()"
-        >
-          <v-tooltip color="primary" bottom>
-            <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Summary Matrix</span
-              >
-            </template>
-            <span class="subtitle-1">{{ step_descr['4'] }}</span>
-          </v-tooltip>
-        </v-stepper-step>
-
-        <v-divider></v-divider>
-
-        <v-stepper-step
-          :complete="step > 5"
-          step="5"
-          :style="stepStyle('5')"
-          :class="stepClass('5')"
           @click.native="gotoDataExplorer()"
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Data Explorer</span
+                >Analyze cohorts</span
               >
             </template>
-            <span class="subtitle-1">{{ step_descr['5'] }}</span>
+            <span class="subtitle-1">{{ step_descr['4'] }}</span>
           </v-tooltip>
         </v-stepper-step>
       </v-stepper-header>
@@ -100,9 +82,9 @@
     </v-stepper>
 
     <!-- substep trackers -->
-    <v-stepper v-if="step === '2'" :value="substep" model="substep">
+    <v-stepper v-if="step === '1'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
-        <v-stepper-step :complete="substep !== '2.1' || step === '3'" step="2.1"
+        <v-stepper-step :complete="substep !== '1.1' || step === '2'" step="1.1"
           ><span class="subtitle-1">Choose Datasets</span>
           <span
             >Choose datasets and click "SELECT VARIABLES"</span
@@ -110,19 +92,19 @@
         >
         <v-divider></v-divider>
         <v-stepper-step
-          :complete="substep === '2.3' || substep === '2.4' || step === '3'"
-          step="2.2"
+          :complete="substep === '1.3' || substep === '1.4' || step === '2'"
+          step="1.2"
           ><span class="subtitle-1">Select Variables</span>
           <span
             >Select variables and click on "SAVE STUDY DATASET"</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="substep === '2.4' || step === '3'" step="2.3"
+        <v-stepper-step :complete="substep === '1.4' || step === '2'" step="1.3"
           ><span class="subtitle-1">Save Study Dataset</span></v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="step === '3'" step="2.4"
+        <v-stepper-step :complete="step === '2'" step="1.4"
           ><span class="subtitle-1"
             >Choose First & Last Visit</span
           ></v-stepper-step
@@ -130,19 +112,19 @@
       </v-stepper-header>
     </v-stepper>
 
-    <v-stepper v-if="step === '3'" :value="substep" model="substep">
+    <v-stepper v-if="step === '2'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step
-          :complete="inputVariables.length > 0 || substep >= 3.4"
-          step="3.1"
+          :complete="inputVariables.length > 0 || substep >= 2.4"
+          step="2.1"
           ><span class="subtitle-1"
             >Choose Predictor Variables</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
         <v-stepper-step
-          :complete="outputVariables.length > 0 || substep >= 3.4"
-          step="3.2"
+          :complete="outputVariables.length > 0 || substep >= 2.4"
+          step="2.2"
           ><span class="subtitle-1"
             >Choose Outcome Variables</span
           ></v-stepper-step
@@ -150,54 +132,54 @@
         <v-divider></v-divider>
         <v-stepper-step
           :complete="
-            filteredData.length < unfilteredData.length || substep >= 3.4
+            filteredData.length < unfilteredData.length || substep >= 2.4
           "
-          step="3.3"
+          step="2.3"
           >Apply Filters to Variables</v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="substep === '3.5'" step="3.4"
+        <v-stepper-step :complete="substep === '2.5'" step="2.4"
           ><span class="subtitle-1">Save Cohort</span></v-stepper-step
         >
 
         <v-divider></v-divider>
-        <v-stepper-step step="3.5"
+        <v-stepper-step step="2.5"
           ><span class="subtitle-1">Repeat or Continue</span></v-stepper-step
         >
       </v-stepper-header>
       <v-stepper-items>
-        <v-stepper-content step="3.1">
+        <v-stepper-content step="2.1">
           Click on "CHOOSE PREDICTOR VARIABLES" below and select one or more
           variables, then click here to
-          <v-btn small outlined color="primary--text" @click="goto3p2()"
+          <v-btn small outlined color="primary--text" @click="goto2p2()"
             >CONTINUE</v-btn
           >.
         </v-stepper-content>
 
-        <v-stepper-content step="3.2">
+        <v-stepper-content step="2.2">
           Click on "CHOOSE OUTCOME VARIABLES" below and select one or more
           variables, then click here to
-          <v-btn small outlined color="primary--text" @click="goto3p3()"
+          <v-btn small outlined color="primary--text" @click="goto2p3()"
             >Continue</v-btn
           >.
         </v-stepper-content>
 
-        <v-stepper-content step="3.3">
+        <v-stepper-content step="2.3">
           Apply filters to predictor variables to define the desired cohort,
           then click here to
-          <v-btn small outlined color="primary--text" @click="goto3p4()"
+          <v-btn small outlined color="primary--text" @click="goto2p4()"
             >Continue</v-btn
           >
           and/or use the "AUTO-CREATE COHORTS" buttons below to create and save
           multiple cohorts at once.
         </v-stepper-content>
 
-        <v-stepper-content step="3.4">
+        <v-stepper-content step="2.4">
           Click on "SAVE COHORT" in the toolbar above to name and save this
           cohort.
         </v-stepper-content>
 
-        <v-stepper-content step="3.5">
+        <v-stepper-content step="2.5">
           <div v-if="collection_cohorts.length < 3">
             So far only {{ collection_cohorts.length }}
             <span v-if="collection_cohorts.length === 1">cohort has</span>
@@ -237,36 +219,31 @@
       </v-stepper-items>
     </v-stepper>
 
-    <v-stepper v-if="step === '4'" :value="substep" model="substep">
+    <v-stepper v-if="step === '3'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
-        <v-stepper-step step="4.1">Choose cohorts to compare.</v-stepper-step>
+        <v-stepper-step step="3.1" :complete="substep == '3.2'">Choose cohorts to compare.</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="4.2"
-          >Select a variable from Analytics panel.</v-stepper-step
+        <v-stepper-step step="3.2"
+          >Select a scale from the Analytics panel.</v-stepper-step
         >
       </v-stepper-header>
 
       <v-stepper-items>
-        <v-stepper-content step="4.1">
+        <v-stepper-content step="3.1">
           Choose two or more cohorts to include in the analysis, then click
           "Continue".
         </v-stepper-content>
-        <v-stepper-content step="4.2">
-          Select a variable from the Analytics panel to see the all-vs-all
+        <v-stepper-content step="3.2">
+          Select a scale from the Analytics panel to see the all-vs-all
           cohort comparison via the Tukey/Range HSD Test. Click on a cell in
-          that table to compare the corresponding pair of cohorts in the Data
-          Explorer.
+          that table to compare the corresponding pair of cohorts.
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
 
-    <!--(top), then click on
-          one of the p-values in the Tukey/Range HSD test table (bottom) to
-          compare those cohorts in the Data Explorer. -->
-
-    <v-stepper v-if="step === '5'" :value="substep" model="substep">
+    <v-stepper v-if="step === '4'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
-        <v-stepper-step step="5.1"
+        <v-stepper-step step="4.1"
           >Select the cohorts and scale (i.e., outcome variable) to display in
           the Detailed View by using the Cohorts Included in Analysis table
           (top) and the Analytics panel (bottom left), respectively. Use the
@@ -320,11 +297,10 @@ export default {
   data() {
     return {
       step_descr: {
-        '1': 'Archive of Uploaded Datasets',
-        '2': 'Create your study dataset',
-        '3': 'Design your query: Choose predictors and outcomes',
-        '4': 'Compare cohorts in the Summary Matrix.',
-        '5': 'Examine cohorts and variables in the Data Explorer.',
+        '1': 'Create your study dataset',
+        '2': 'Design your query: Choose predictors and outcomes',
+        '3': 'Compare cohorts in the Summary Matrix.',
+        '4': 'Analyze cohorts and variables in the Data Explorer.',
       },
       expanded: true,
 
@@ -461,8 +437,8 @@ export default {
       }
     },
     // Cohort Manager sub-step transitions.
-    goto3p1() {
-      this.$emit('update:substep', '3.1');
+    goto2p1() {
+      this.$emit('update:substep', '2.1');
     },
     createNew() {
       this.$emit('createNew', true);
@@ -470,9 +446,9 @@ export default {
     createSimilar() {
       this.$emit('createSimilar', true);
     },
-    goto3p2() {
+    goto2p2() {
       if (this.inputVariables.length > 0) {
-        this.$emit('update:substep', '3.2');
+        this.$emit('update:substep', '2.2');
       } else {
         this.displayErrorDialog(
           'No Predictor Variables',
@@ -480,9 +456,9 @@ export default {
         );
       }
     },
-    goto3p3() {
+    goto2p3() {
       if (this.outputVariables.length > 0) {
-        this.$emit('update:substep', '3.3');
+        this.$emit('update:substep', '2.3');
       } else {
         this.displayErrorDialog(
           'No Outcome Variables',
@@ -490,9 +466,9 @@ export default {
         );
       }
     },
-    goto3p4() {
+    goto2p4() {
       if (this.filteredData.length < this.unfilteredData.length) {
-        this.$emit('update:substep', '3.4');
+        this.$emit('update:substep', '2.4');
       } else {
         this.displayErrorDialog(
           'No Cohort Filters Defined',
@@ -500,9 +476,9 @@ export default {
         );
       }
     },
-    goto3p5() {
+    goto2p5() {
       // TODO - check that collection was saved
-      this.$emit('update:substep', '3.5');
+      this.$emit('update:substep', '2.5');
     },
     displayErrorDialog(errorTitle, errorMsg) {
       this.error_title = errorTitle;

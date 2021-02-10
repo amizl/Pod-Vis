@@ -242,40 +242,37 @@ div.v-stepper__content {
     padding: 10px 24px 10px;
 }
 
-/* AnalysisTracker highlight style - original color scheme */
-/*
+/* AnalysisTracker highlight style - green/silver/grey color scheme */
+
 .tracker_step_highlight {
-    background: rgb(247,216,206,0.5) !important;
+    background: #eeeeee !important;
     border-left: 1px dotted black;
     border-right: 1px dotted black;
     border-top: 1px dotted black;
 }
 
 .toolbar_step_highlight {
-    background: rgb(247,216,206,0.5) !important;
-}
-*/
-/* AnalysisTracker highlight style - END original color scheme */
-
-/* AnalysisTracker highlight style - silver/grey color scheme */
-
-.tracker_step_highlight {
-    background: rgb(209,211,212,1) !important;
-    border-left: 1px dotted black;
-    border-right: 1px dotted black;
-    border-top: 1px dotted black;
+    background: #eeeeee !important;
 }
 
-.toolbar_step_highlight {
-    background: rgb(209,211,212,1) !important;
+/* completed step - #054d40 */
+/* active step - 11887b */
+/* inactive step -  c4c4c4*/
+
+div.v-stepper__step--complete span.v-stepper__step__step {
+    background: #054d40 !important;
 }
 
-div.v-stepper__step--inactive span.v-stepper__step__step {
-    background: rgb(147,149,152,1) !important;
+span.v-stepper__step__step {
+    background: #c4c4c4 !important;
 }
 
 span.v-stepper__step__step.primary {
-    background: #3f51b5 !important;
+    background: #11887b !important;
 }
 
-/* AnalysisTracker highlight style - END silver/grey color scheme */
+div.v-stepper__step--inactive span.v-stepper__step__step {
+    background: #c4c4c4 !important;
+}
+
+/* AnalysisTracker highlight style - END green/silver/grey color scheme */

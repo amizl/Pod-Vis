@@ -104,8 +104,8 @@ export default {
     collectionName: '',
     activeDataset: null,
     selected: [],
-    step: '2',
-    substep: '2.2',
+    step: '1',
+    substep: '1.2',
     numSubjects: 0,
     numObservationVars: 0,
     numSubjectVars: 0,
@@ -137,13 +137,13 @@ export default {
     },
     dialogOpened(isOpen) {
       if (isOpen) {
-        this.substep = '2.3';
+        this.substep = '1.3';
       } else {
-        this.substep = '2.2';
+        this.substep = '1.2';
       }
     },
     collectionSaved() {
-      this.step = '3';
+      this.step = '2';
     },
     updateNumSubjects(ns) {
       this.numSubjects = ns;

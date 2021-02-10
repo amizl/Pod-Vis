@@ -30,7 +30,7 @@
       >
     </v-app-bar>
 
-    <analysis-tracker step="2" substep="2.1"></analysis-tracker>
+    <analysis-tracker step="1" substep="1.1"></analysis-tracker>
 
     <v-container fluid fill-width class="ma-0 pa-0 pt-2">
       <v-row class="ma-0 pa-0">

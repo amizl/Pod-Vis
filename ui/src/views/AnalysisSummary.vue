@@ -26,24 +26,24 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        v-if="substep === '4.1'"
+        v-if="substep === '3.1'"
         color="primary--text"
         :disabled="tableCohortsSelected.length < 2"
-        @click="goto4p2()"
+        @click="goto3p2()"
       >
         Continue</v-btn
       >
     </v-app-bar>
 
     <analysis-tracker
-      step="4"
+      step="3"
       :substep="substep"
       :collection-id="collectionId"
     ></analysis-tracker>
 
-    <!-- Step 4.1 -->
+    <!-- Step 3.1 -->
     <v-container
-      v-if="substep === '4.1'"
+      v-if="substep === '3.1'"
       fluid
       fill-width
       class="ma-0 pa-0 pt-2"
@@ -60,7 +60,7 @@
       </v-col>
     </v-container>
 
-    <!-- Step 4.2 -->
+    <!-- Step 3.2 -->
     <v-container v-else fluid fill-width class="ma-0 pa-0 pt-2">
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
@@ -215,7 +215,7 @@ export default {
       outcomeVariables: deState.OUTCOME_VARIABLES,
     }),
     substep() {
-      return this.selectedCohorts.length > 0 ? '4.2' : '4.1';
+      return this.selectedCohorts.length > 0 ? '3.2' : '3.1';
     },
     // cohorts are collection-specific
     collection_cohorts() {
@@ -296,11 +296,11 @@ export default {
     analyticsExpandClicked(nv) {
       this.expandAnalytics = nv;
     },
-    // cohorts currently selected in step 4.1
+    // cohorts currently selected in step 3.1
     updateSelectedCohorts(sc) {
       this.tableCohortsSelected = sc;
     },
-    // cohorts selected for step 4.2
+    // cohorts selected for step 3.2
     getSelectedCohortsFromIdList() {
       var sc = [];
       if (typeof this.cohortIds !== 'undefined' && this.cohortIds !== '') {
@@ -350,7 +350,7 @@ export default {
         data: this.data,
       });
     },
-    async goto4p2() {
+    async goto3p2() {
       var sc = this.tableCohortsSelected;
       this.setCohortColors(sc);
       this.setSelectedCohorts(sc);

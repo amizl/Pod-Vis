@@ -5,11 +5,6 @@
       <v-toolbar-title class="white--text pl-2">Home Page</v-toolbar-title>
     </v-app-bar>
 
-    <analysis-tracker
-      :step.sync="step"
-      :substep.sync="substep"
-    ></analysis-tracker>
-
     <v-sheet color="white" class="scroll rounded-lg shadow my-2">
       <v-container fluid fill-width class="ma-0 pa-0">
         <v-row class="ma-0 pa-0">
@@ -74,8 +69,6 @@ export default {
   data() {
     return {
       selected_action: null,
-      step: '1',
-      substep: '1.0',
     };
   },
   computed: {},
