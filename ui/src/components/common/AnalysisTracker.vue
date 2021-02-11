@@ -13,7 +13,7 @@
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >{{ (step > 1) ? "Study dataset created" : "Create study dataset"}}</span
+                >{{ (step > 1) ? "Study&nbsp;dataset&nbsp;created" : "Create&nbsp;study&nbsp;dataset"}}</span
 				       >
             </template>
             <span class="subtitle-1">{{ step_descr['1'] }}</span>
@@ -32,7 +32,7 @@
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >{{ (step > 2) ? "Cohorts created" : "Manage cohorts" }}</span
+                >{{ (step > 2) ? "Cohorts&nbsp;created" : "Manage&nbsp;cohorts" }}</span
               >
             </template>
             <span class="subtitle-1">{{ step_descr['2'] }}</span>
@@ -51,7 +51,7 @@
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Summary Matrix</span
+                >Summary&nbsp;Matrix</span
               >
             </template>
             <span class="subtitle-1">{{ step_descr['3'] }}</span>
@@ -70,7 +70,7 @@
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Analyze cohorts</span
+                >Analyze&nbsp;cohorts</span
               >
             </template>
             <span class="subtitle-1">{{ step_descr['4'] }}</span>
