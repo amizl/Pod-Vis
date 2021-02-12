@@ -4,7 +4,11 @@ import {
   ErrorNotification,
   SuccessNotification,
 } from '@/store/modules/notifications/notifications';
-import { makeHierarchy, getInputVariablesFromQueries } from '@/utils/helpers';
+import {
+  makeHierarchy,
+  getInputVariablesFromQueries,
+  getCohortSubjectIds,
+} from '@/utils/helpers';
 import {
   actions,
   getters as getterTypes,
@@ -13,7 +17,7 @@ import {
 } from './types';
 
 export default {
-  async [actions.FETCH_COHORTS]({ commit }) {
+  async [actions.FETCH_COHORTS]({ commit, dispatch }) {
     commit(mutations.SET_LOADING, true);
 
     try {
@@ -24,6 +28,25 @@ export default {
     } finally {
       commit(mutations.SET_LOADING, false);
     }
+    dispatch(actions.SET_COHORT_SUBJECTS);
+  },
+  [actions.SET_COHORT_SUBJECTS]({ state }) {
+    const { cohorts, collection, data } = state;
+    if (
+      typeof collection === 'undefined' ||
+      typeof cohorts === 'undefined' ||
+      typeof data === 'undefined' ||
+      data.length === 0
+    ) {
+      return;
+    }
+    // compute subjects in each cohort
+    cohorts.forEach(c => {
+      if (c.collection_id === collection.id) {
+        const subjIds = getCohortSubjectIds(data, c);
+        c.subject_ids = subjIds;
+      }
+    });
   },
   async [actions.FETCH_COLLECTION]({ commit, dispatch }, collectionId) {
     commit(mutations.SET_LOADING, true);
@@ -194,6 +217,7 @@ export default {
         );
 
       commit(mutations.INITIALIZE_CROSS_FILTER, wideData);
+      commit(mutations.SET_DATA, wideData);
       commit(mutations.UPDATE_FILTERED_DATA);
     } catch ({ response }) {
       const notification = new ErrorNotification(response.data.error);
@@ -415,6 +439,18 @@ export default {
   },
   async [actions.SET_COHORT_NO_RESET]({ commit, dispatch, getters }, cohort) {
     commit(mutations.SET_COHORT, cohort);
+  },
+  async [actions.DELETE_COHORT]({ state, dispatch }, cohortId) {
+    try {
+      await axios.delete(`/api/cohorts/${cohortId}`);
+      dispatch(actions.REMOVE_COHORT, cohortId);
+      const notification = new SuccessNotification(`Successfully deleted`);
+      dispatch(notification.dispatch, notification, { root: true });
+    } catch ({ response }) {
+      console.log('cohort not deletedd');
+      const notification = new ErrorNotification(response.data.error);
+      dispatch(notification.dispatch, notification, { root: true });
+    }
   },
   async [actions.DELETE_SELECTED_COHORT]({ state, dispatch }) {
     try {

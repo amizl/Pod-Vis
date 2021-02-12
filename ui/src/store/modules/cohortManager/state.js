@@ -7,6 +7,7 @@ export default {
   [state.COLLECTION]: {},
   [state.UNFILTERED_DATA]: [],
   [state.FILTERED_DATA]: [],
+  [state.DATA]: [],
   [state.INPUT_VARIABLES]: [],
   [state.OUTPUT_VARIABLES]: [],
   [state.CROSS_FILTER]: null,

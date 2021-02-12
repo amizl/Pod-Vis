@@ -143,6 +143,14 @@ export default {
     state[stateTypes.OUTPUT_VARIABLES] = newOutputVariables;
   },
   /**
+   * Set data.
+   * @param {*} state
+   * @param {*} newData
+   */
+  [mutations.SET_DATA](state, newData) {
+    state[stateTypes.DATA] = newData;
+  },
+  /**
    * Add a dimension to crossfilter.
    *
    * We use dimensions to add filters.

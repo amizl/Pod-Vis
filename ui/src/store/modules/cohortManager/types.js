@@ -6,6 +6,7 @@ export const state = {
   COLLECTION: 'collection',
   UNFILTERED_DATA: 'unfilteredData',
   FILTERED_DATA: 'filteredData',
+  DATA: 'data',
   INPUT_VARIABLES: 'inputVariables',
   OUTPUT_VARIABLES: 'outputVariables',
   CROSS_FILTER: 'crossFilter',
@@ -22,7 +23,7 @@ export const state = {
 };
 
 // Getters
-export const getters = {
+nexport const getters = {
   HAS_USER_FILTERED_INPUT_VARIABLES: 'hasUserFilteredInputVariables',
   HAS_USER_FILTERED_OUTPUT_VARIABLES: 'hasUserFilteredOutputVariables',
   HAS_USER_SELECTED_COHORT: 'hasUserSelectedCohort',
@@ -84,6 +85,7 @@ export const mutations = {
 // Actions
 export const actions = {
   FETCH_COHORTS: 'fetchCohorts',
+  SET_COHORT_SUBJECTS: 'setCohortSubjects',
   SET_COHORT: 'setCohort',
   SET_COHORT_NO_RESET: 'setCohortNoReset',
   FETCH_COLLECTION: 'fetchCollection',
@@ -102,6 +104,7 @@ export const actions = {
   RESET_ALL_STORE_DATA: 'resetAllStoreData',
   SAVE_COHORT: 'saveCohort',
   CLEAR_ALL_FILTERS: 'clearAllFilters',
+  DELETE_COHORT: 'deleteCohort',
   DELETE_SELECTED_COHORT: 'deleteSelectedCohort',
   REMOVE_COHORT: 'removeCohort',
   SET_PVAL_THRESHOLD: 'setPvalThreshold',
