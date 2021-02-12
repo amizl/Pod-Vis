@@ -32,7 +32,7 @@
               <v-col cols="3" class="pa-0 ma-0 pt-2 pr-2" align="right">
                 <span>
                   <v-btn
-		    class="primary text--white ma-0 px-2 py-0"
+                    class="primary text--white ma-0 px-2 py-0"
                     @click="resetClicked"
                   >
                     Reset
