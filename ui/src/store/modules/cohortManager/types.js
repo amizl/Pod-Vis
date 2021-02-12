@@ -23,7 +23,7 @@ export const state = {
 };
 
 // Getters
-nexport const getters = {
+export const getters = {
   HAS_USER_FILTERED_INPUT_VARIABLES: 'hasUserFilteredInputVariables',
   HAS_USER_FILTERED_OUTPUT_VARIABLES: 'hasUserFilteredOutputVariables',
   HAS_USER_SELECTED_COHORT: 'hasUserSelectedCohort',
