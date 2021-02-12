@@ -85,7 +85,7 @@
     </v-container>
   </v-sheet>
 </template>
-columnchar
+
 <script>
 import ColumnChart from '@/components/CohortManager/BarChart/BarChart.vue';
 import HistogramChart from '@/components/CohortManager/HistogramChart/HistogramChart.vue';
