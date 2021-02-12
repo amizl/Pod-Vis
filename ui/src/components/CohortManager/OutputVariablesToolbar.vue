@@ -12,18 +12,27 @@
 
             <v-divider vertical class="ml-4 mr-4"> </v-divider>
 
-            <v-chip
-              v-if="outputVariables.length == 0"
-              color="primary"
-              class="white--text title"
-              >No variables selected</v-chip
-            >
-            <v-chip v-else color="primary" class="white--text title"
-              >{{ outputVariables.length }} variable<span
-                v-if="outputVariables.length != 1"
-                >s</span
-              >&nbsp;selected</v-chip
-            >
+            <v-tooltip bottom color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <span v-on="{ ...tooltip }">
+                  <v-chip
+                    label
+                    color="primary"
+                    class="white--text title mr-2"
+                    >{{ outputVariables.length }}</v-chip
+                  >
+                  <span class="black--text text-body-1"
+                    >Variable{{ outputVariables.length == 1 ? '' : 's' }}</span
+                  >
+                </span>
+              </template>
+              <span class="subtitle-1">
+                {{ outputVariables.length }} output variable{{
+                  outputVariables.length == 1 ? '' : 's'
+                }}
+                selected
+              </span>
+            </v-tooltip>
 
             <v-spacer />
 

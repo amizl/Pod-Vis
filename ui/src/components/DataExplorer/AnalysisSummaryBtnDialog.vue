@@ -3,13 +3,12 @@
     <v-tooltip bottom color="primary">
       <template v-slot:activator="{ on: tooltip }">
         <v-btn
-          color="primary--text"
+          class="primary text--white ma-0 px-2 py-0"
           :disabled="collection_cohorts.length < 2"
           @click="dialog = !dialog"
           v-on="{ ...tooltip }"
         >
-          <v-icon left>grid_on</v-icon>
-          Summary Matrix
+          Cohort Analysis
         </v-btn>
       </template>
       <span>View Summary Matrix for all Cohorts and Outcome Variables</span>

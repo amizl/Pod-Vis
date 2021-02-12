@@ -12,18 +12,68 @@
 
             <v-divider vertical class="ml-4 mr-4"> </v-divider>
 
-            <v-chip
-              v-if="inputVariables.length == 0"
-              color="primary"
-              class="white--text title"
-              >No variables selected</v-chip
-            >
-            <v-chip v-else color="primary" class="white--text title"
-              >{{ inputVariables.length }} variable<span
-                v-if="inputVariables.length != 1"
-                >s</span
-              >&nbsp;selected</v-chip
-            >
+            <v-tooltip bottom color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <span v-on="{ ...tooltip }">
+                  <v-chip
+                    label
+                    color="primary"
+                    class="white--text title mr-2"
+                    >{{ inputVariables.length }}</v-chip
+                  >
+                  <span class="black--text text-body-1"
+                    >Variable{{ inputVariables.length == 1 ? '' : 's' }}</span
+                  >
+                </span>
+              </template>
+              <span class="subtitle-1">
+                {{ inputVariables.length }} predictor variable{{
+                  inputVariables.length == 1 ? '' : 's'
+                }}
+                selected
+              </span>
+            </v-tooltip>
+
+            <v-tooltip bottom color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <span v-on="{ ...tooltip }">
+                  <v-chip
+                    label
+                    color="primary"
+                    class="white--text title mr-2 ml-5"
+                    :style="'background: ' + colors['cohort']"
+                    >{{ animatedNumber }}</v-chip
+                  >
+                  <span class="black--text text-body-1">Cohort</span>
+                </span>
+              </template>
+              <span class="subtitle-1">
+                {{ animatedNumber }} subject{{
+                  animatedNumber == 1 ? '' : 's'
+                }}
+                in selected cohort
+              </span>
+            </v-tooltip>
+
+            <v-tooltip bottom color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <span v-on="{ ...tooltip }">
+                  <v-chip
+                    label
+                    class="black--text title mr-2 ml-5"
+                    :style="'background: ' + colors['population']"
+                    >{{ unfilteredData.length }}</v-chip
+                  >
+                  <span class="black--text text-body-1">Population</span>
+                </span>
+              </template>
+              <span class="subtitle-1">
+                {{ unfilteredData.length }} subject{{
+                  unfilteredData.length == 1 ? '' : 's'
+                }}
+                in study population
+              </span>
+            </v-tooltip>
 
             <v-spacer />
 
@@ -34,23 +84,14 @@
               hide-details
             ></v-switch>
 
-            <v-chip
-              class="white--text title"
-              :style="'background: ' + colors['cohort']"
-              >Selected Cohort - {{ animatedNumber }}</v-chip
-            >
-            <v-chip
-              class="primary--text title"
-              :style="'background: ' + colors['population']"
-              >Study Population - {{ unfilteredData.length }}</v-chip
-            >
-
+<!--
             <v-toolbar-items>
               <v-icon v-if="expanded" @click="expandClicked"
                 >expand_less</v-icon
               >
               <v-icon v-else @click="expandClicked">expand_more</v-icon>
             </v-toolbar-items>
+-->
           </v-card-title>
         </v-card>
       </v-col>

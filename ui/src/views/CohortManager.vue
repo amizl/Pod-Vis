@@ -10,7 +10,8 @@
       <v-icon color="white" large>group_add</v-icon>
       <v-toolbar-title class="white--text pl-3"
         >Cohort Manager
-        <div class="subtitle-1">
+
+	<div class="subtitle-1">
           Dataset:
           <v-tooltip bottom color="primary">
             <template v-slot:activator="{ on: tooltip }">
@@ -20,32 +21,28 @@
               getCollectionDescription(collection)
             }}</span>
           </v-tooltip>
-        </div>
+
+	  <span class="ml-3">
+	  Selected Cohort:
+          <v-tooltip bottom color="primary">
+            <template v-slot:activator="{ on: tooltip }">
+              <span v-on="{ ...tooltip }">{{ cohort == null ? "none" : cohort.label }}</span>
+            </template>
+            <span class="subtitle-1">{{
+	      cohort == null ? "none" : cohort.query_string
+            }}</span>
+          </v-tooltip>
+	  </span>
+	  
+	</div>
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
+
       <v-toolbar-items>
-        <CohortSelection class="mt-2" @selectedCohort="cohortSelected" />
+	<v-checkbox dark></v-checkbox>
+        <span class="white--text font-weight-bold">Help Mode</span>
       </v-toolbar-items>
-
-      <v-spacer></v-spacer>
-
-      <delete-cohort-button class="mx-1" @cohortDeleted="cohortDeleted" />
-      <save-cohort-button
-        :cohorts="this.collection_cohorts"
-        class="mx-1"
-        @cohortSaved="cohortSaved"
-      />
-
-      <v-tooltip top color="primary">
-        <template v-slot:activator="{ on: tooltip }">
-          <analysis-summary-button
-            :collection-id="collectionId"
-            class="mx-1"
-            v-on="{ ...tooltip }"
-          />
-        </template>
-        <span>View Analysis Summary for all Cohorts and Outcome Variables</span>
-      </v-tooltip>
     </v-app-bar>
 
     <v-container
@@ -93,7 +90,7 @@
 
       <v-container fluid fill-width class="ma-0 pa-0 pt-2">
         <v-row class="ma-0 pa-0">
-          <v-col cols="12" class="ma-0 pa-0">
+          <v-col cols="8" class="ma-0 pa-0">
             <v-sheet
               color="white"
               height="100%"
@@ -108,12 +105,21 @@
               />
             </v-sheet>
           </v-col>
+          <v-col cols="4" class="ma-0 pa-0">
+            <manage-cohorts-table
+              class="ml-2"
+              :cohorts="collection_cohorts"
+              :collection-id="collectionId"
+              @selectedCohort="cohortSelected"
+              @newCohort="newCohort"
+            />
+          </v-col>
         </v-row>
       </v-container>
 
       <v-container fluid fill-width class="ma-0 pa-0 pt-2">
         <v-row class="ma-0 pa-0">
-          <v-col cols="7" class="ma-0 pa-0">
+          <v-col cols="8" class="ma-0 pa-0">
             <output-variables
               :expanded.sync="outExpanded"
               :highlighted="outHighlighted"
@@ -123,7 +129,7 @@
               @userChangedOutputVariable="userChangedVariable"
             />
           </v-col>
-          <v-col cols="5" class="ma-0 pa-0">
+          <v-col cols="4" class="ma-0 pa-0">
             <analytics-table class="ml-2" />
           </v-col>
         </v-row>
@@ -141,25 +147,19 @@ import {
 } from '@/utils/helpers';
 
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
-import CohortSelection from '@/components/CohortManager/CohortSelection.vue';
+import ManageCohortsTable from '@/components/CohortManager/ManageCohortsTable.vue';
 import AnalyticsTable from '@/components/CohortManager/AnalyticsTable.vue';
 import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
-import DeleteCohortButton from '@/components/CohortManager/DeleteCohortBtnDialog';
-import SaveCohortButton from '@/components/CohortManager/SaveCohortBtnDialog';
-import AnalysisSummaryButton from '@/components/DataExplorer/AnalysisSummaryBtnDialog';
 
 export default {
   name: 'CohortManager',
   components: {
     AnalysisTracker,
-    CohortSelection,
     InputVariables,
     OutputVariables,
+    ManageCohortsTable,
     AnalyticsTable,
-    SaveCohortButton,
-    DeleteCohortButton,
-    AnalysisSummaryButton,
   },
   props: {
     collectionId: {
@@ -185,7 +185,12 @@ export default {
     }),
     ...mapState('cohortManager', {
       collection: state.COLLECTION,
+      cohort: state.COHORT,
       cohorts: state.COHORTS,
+      inputVariables: state.INPUT_VARIABLES,
+      outputVariables: state.OUTPUT_VARIABLES,
+      filteredData: state.FILTERED_DATA,
+      unfilteredData: state.UNFILTERED_DATA,
     }),
     // cohorts are collection-specific
     collection_cohorts() {
@@ -204,18 +209,18 @@ export default {
   watch: {
     substep() {
       if (this.substep === '2.1') {
-        this.inExpanded = true;
-        this.outExpanded = false;
+//        this.inExpanded = true;
+//        this.outExpanded = false;
         this.inHighlighted = true;
         this.outHighlighted = false;
       } else if (this.substep === '2.2') {
-        this.inExpanded = false;
-        this.outExpanded = true;
+//        this.inExpanded = false;
+//        this.outExpanded = true;
         this.inHighlighted = false;
         this.outHighlighted = true;
       } else if (this.substep === '2.3') {
-        this.inExpanded = true;
-        this.outExpanded = true;
+//        this.inExpanded = true;
+//        this.outExpanded = true;
         this.inHighlighted = true;
         this.outHighlighted = false;
       } else if (this.substep === '2.4') {
@@ -223,12 +228,26 @@ export default {
         this.outHighlighted = false;
       }
     },
+    inputVariables(iv) {
+      this.updateSubstep();
+    },
+    outputVariables(ov) {
+      this.updateSubstep();
+    },
+    filteredData(fd) {
+      this.updateSubstep();
+    },
+    unfilteredData(ufd) {
+      this.updateSubstep();
+    },
   },
   async created() {
     this.resetAllStoreData();
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
+    await this.fetchCohorts();
+    this.newCohort();
     var datasets = this.collection.studies.map(d => d.study);
     var useLongScaleNames = getLongScaleNameDefault(datasets);
     this.setUseLongScaleNames(useLongScaleNames);
@@ -237,12 +256,30 @@ export default {
   methods: {
     ...mapActions('cohortManager', {
       fetchCollection: actions.FETCH_COLLECTION,
+      fetchCohorts: actions.FETCH_COHORTS,
       fetchData: actions.FETCH_DATA,
       resetAllStoreData: actions.RESET_ALL_STORE_DATA,
       setCohort: actions.SET_COHORT,
       setCohortNoReset: actions.SET_COHORT_NO_RESET,
       setUseLongScaleNames: actions.SET_USE_LONG_SCALE_NAMES,
     }),
+    updateSubstep() {
+      var n_iv = this.inputVariables.length;
+      var n_ov = this.outputVariables.length;
+      var has_filters = this.filteredData.length < this.unfilteredData.length;
+      var new_ss = this.substep;
+
+      if (n_iv > 0 && n_ov > 0 && has_filters) {
+        new_ss = '2.4';
+      } else if (n_iv > 0 && n_ov > 0) {
+        new_ss = '2.3';
+      } else if (n_iv > 0) {
+        new_ss = '2.2';
+      } else {
+        new_ss = '2.1';
+      }
+      if (new_ss != this.substep) this.substep = new_ss;
+    },
     userSelectedVariables() {
       this.setCohortNoReset({ id: -1 });
     },
@@ -250,7 +287,7 @@ export default {
       this.setCohortNoReset({ id: -1 });
     },
     cohortSaved(success) {
-      this.substep = '2.5';
+      this.createNew(success);
     },
     // create entirely new cohort resetting everything
     createNew(success) {
@@ -270,6 +307,9 @@ export default {
       this.substep = '2.3';
     },
     cohortSelected(newCohort) {
+      if (newCohort == this.cohort) {
+        return;
+      }
       this.setNewCohort(newCohort);
       if (
         newCohort.label !== 'New Cohort' &&
@@ -279,6 +319,9 @@ export default {
       } else {
         this.substep = '2.1';
       }
+    },
+    newCohort() {
+      this.setNewCohort({ id: -1, label: 'New Cohort' });
     },
     cohortDeleted() {
       this.substep = '2.1';

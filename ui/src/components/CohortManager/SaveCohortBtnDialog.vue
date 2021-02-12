@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-btn
+      class="primary text--white ma-0 px-2 py-0"
       :disabled="!hasUserFilteredInputVariables"
-      color="primary--text"
       @click="dialog = !dialog"
     >
-      <v-icon left>save</v-icon> SAVE COHORT
+      Save Cohort
     </v-btn>
     <!-- SAVE COLLECTION FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
