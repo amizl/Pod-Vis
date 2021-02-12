@@ -1,15 +1,14 @@
 <template>
   <div>
-    <v-container v-if="inputVariable" fill-width class="pa-0 mx-3 pb-2">
+    <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
+
       <v-row class="pa-0 ma-0">
-        <v-col cols="12" class="pa-0 ma-0 pr-4" align="end">
-          <create-comparator-cohorts-btn-dialog
-            :dimension-name="variable.abbreviation"
-            :select-cohort-range="selectCohortRange"
-            :reset-selection="resetSelection"
-          />
+        <v-col cols="12" class="pa-0 ma-0">
+          <v-checkbox hide-details v-model="snapToGrid" label="Select whole bars only" class="pa-0 ma-0 mt-1">
+          </v-checkbox>
         </v-col>
       </v-row>
+
     </v-container>
 
     <div ref="container">
@@ -104,55 +103,94 @@
       </svg>
     </div>
 
-    <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
-      <v-row class="pa-0 ma-0" justify="start" align="center">
-        <v-col cols="5" class="center-text pa-0 ma-0"
-          >Custom&nbsp;Selection:</v-col
-        >
-        <v-col cols="2" class="pa-0 ma-0" justify="start">
-          <v-text-field
-            v-model.number="tfRangeMin"
-            :error-messages="rangeMinErrors"
-            class="center-text pa-0 ma-0"
-            type="number"
-            @change="userChangedVariable"
-          ></v-text-field
-        ></v-col>
-        <v-col cols="1" class="pa-0 ma-0" align="center" justify="center">
-          -
-        </v-col>
-        <v-col cols="2" class="pa-0 ma-0">
-          <v-text-field
-            v-model.number="tfRangeMax"
-            :error-messages="rangeMaxErrors"
-            class="center-text pa-0 ma-0"
-            type="number"
-            @change="userChangedVariable"
-          ></v-text-field>
-        </v-col>
-      </v-row>
+    <v-tabs v-model="tab">
+      <v-tab key="manual">Manual</v-tab>
+      <v-tab key="predef">Pre-defined Ranges</v-tab>
+    </v-tabs>
 
-      <v-row class="pa-0 ma-0">
-        <v-col cols="12" class="pa-0 ma-0">
-          <v-checkbox v-model="snapToGrid" label="Select whole bars only">
-          </v-checkbox>
-        </v-col>
-      </v-row>
+    <v-tabs-items v-model="tab">
+      <!-- manual -->
+      <v-tab-item key="manual">
 
-      <v-row class="pa-0 ma-0">
-        <v-col cols="10" class="pa-0 ma-0">
-          <v-select
-            v-model="selectedPopSubset"
-            :items="popSubsetItems"
-            item-text="label"
-            item-value="id"
-            label="Pre-Programmed Selections"
-            class="pa-0 ma-0"
-            return-object
-          ></v-select>
-        </v-col>
-      </v-row>
-    </v-container>
+	<v-container v-if="inputVariable" fill-width class="pa-0 mx-3 mt-2">
+	  <v-row class="pa-0 ma-0">
+            <v-col cols="5" class="center-text pa-0 ma-0 font-weight-bold" justify="start"
+		   >Selected&nbsp;Range:</v-col>
+            <v-col cols="2" class="pa-0 ma-0" justify="start">
+              <v-text-field
+		v-model.number="tfRangeMin"
+		:error-messages="rangeMinErrors"
+		class="center-text pa-0 ma-0"
+		type="number"
+		@change="userChangedVariable"
+		></v-text-field
+		   ></v-col>
+            <v-col cols="1" class="pa-0 ma-0" align="center" justify="center">
+              -
+            </v-col>
+            <v-col cols="2" class="pa-0 ma-0">
+              <v-text-field
+		v-model.number="tfRangeMax"
+		:error-messages="rangeMaxErrors"
+		class="center-text pa-0 ma-0"
+		type="number"
+		@change="userChangedVariable"
+		></v-text-field>
+            </v-col>
+	  </v-row>
+	</v-container>
+      </v-tab-item>
+      
+      <!-- pre-defined ranges -->
+      <v-tab-item key="predef">
+	<v-container v-if="inputVariable" fill-width class="pa-0 mx-3 mt-2">
+
+	  <v-row class="pa-0 ma-0">
+            <v-col cols="12" class="pa-0 ma-0">
+	      <v-radio-group hide-details v-model="predef_radio" row class="pa-2 my-1">
+		<v-radio value="halves" label="Halves"></v-radio>
+		<v-radio value="tertiles" label="Tertiles"></v-radio>
+		<v-radio value="quartiles" label="Quartiles"></v-radio>
+	      </v-radio-group>
+
+	      <!--
+	      <v-select
+		v-model="selectedPopSubset"
+		:items="popSubsetItems"
+		item-text="label"
+		item-value="id"
+		label="Pre-Programmed Selections"
+		class="pa-0 ma-0"
+		return-object
+		></v-select> 
+	      -->
+            </v-col>
+	  </v-row>
+	  
+	  <v-row class="pa-0 ma-0 mb-1">
+            <v-col cols="12" class="pa-0 ma-0 pr-4" align="start">
+	      <v-btn class="primary text--white ma-0 px-2 mx-1 py-0"
+		     @click="comparePredefs"
+		     >Compare {{predef_radio}}</v-btn>
+
+	      <v-btn class="primary text--white ma-0 px-2 mx-1 py-0"
+		     @click="savePredefs"
+		     >Save {{predef_radio}}</v-btn>
+
+	      <!--
+	      <create-comparator-cohorts-btn-dialog
+		:dimension-name="variable.abbreviation"
+		:select-cohort-range="selectCohortRange"
+		:reset-selection="resetSelection"
+		/>
+	      -->
+            </v-col>
+	  </v-row>
+	</v-container>
+	
+      </v-tab-item>
+    </v-tabs-items>
+
   </div>
 </template>
 
@@ -255,6 +293,8 @@ export default {
       tfRangeMin: null,
       tfRangeMax: null,
       snapToGrid: true,
+      tab: "manual",
+      predef_radio: "tertiles",
     };
   },
   computed: {
@@ -915,6 +955,12 @@ export default {
         });
       }
     },
+    comparePredefs() {
+      console.log("compare predefs called");
+    },
+    savePredefs() {
+      console.log("save predefs called");
+    }
   },
 };
 </script>
