@@ -263,6 +263,10 @@ div.v-stepper__step--complete span.v-stepper__step__step {
     background: #054d40 !important;
 }
 
+div.v-stepper__step--complete span.v-stepper__step__step.primary {
+    background: #054d40 !important;
+}
+
 span.v-stepper__step__step {
     background: #c4c4c4 !important;
 }
