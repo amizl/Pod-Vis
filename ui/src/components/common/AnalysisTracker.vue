@@ -2,7 +2,6 @@
   <div style="background: white">
     <v-stepper v-model="step" :value="step" alt-labels>
       <v-stepper-header>
-
         <v-stepper-step
           :complete="step > 1"
           step="1"
@@ -12,9 +11,11 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >{{ (step > 1) ? "Study&nbsp;dataset&nbsp;created" : "Create&nbsp;study&nbsp;dataset"}}</span
-				       >
+              <span class="subtitle-1" align="center" v-on="{ ...tooltip }">{{
+                step > 1
+                  ? 'Study&nbsp;dataset&nbsp;created'
+                  : 'Create&nbsp;study&nbsp;dataset'
+              }}</span>
             </template>
             <span class="subtitle-1">{{ step_descr['1'] }}</span>
           </v-tooltip>
@@ -31,9 +32,9 @@
         >
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >{{ (step > 2) ? "Cohorts&nbsp;created" : "Manage&nbsp;cohorts" }}</span
-              >
+              <span class="subtitle-1" align="center" v-on="{ ...tooltip }">{{
+                step > 2 ? 'Cohorts&nbsp;created' : 'Manage&nbsp;cohorts'
+              }}</span>
             </template>
             <span class="subtitle-1">{{ step_descr['2'] }}</span>
           </v-tooltip>
@@ -137,21 +138,23 @@
         >
         <v-divider></v-divider>
         <v-stepper-step :complete="substep === '2.5'" step="2.4"
-          ><span class="subtitle-1">Review charts and analytics</span></v-stepper-step
+          ><span class="subtitle-1"
+            >Review charts and analytics</span
+          ></v-stepper-step
         >
-
       </v-stepper-header>
     </v-stepper>
 
     <v-stepper v-if="step === '3'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
-        <v-stepper-step step="3.1" :complete="substep == '3.2'">Choose cohorts to compare.</v-stepper-step>
+        <v-stepper-step step="3.1" :complete="substep == '3.2'"
+          >Choose cohorts to compare.</v-stepper-step
+        >
         <v-divider></v-divider>
         <v-stepper-step step="3.2"
           >Select a scale from the Analytics panel.</v-stepper-step
         >
       </v-stepper-header>
-
     </v-stepper>
 
     <v-stepper v-if="step === '4'" :value="substep" model="substep">
