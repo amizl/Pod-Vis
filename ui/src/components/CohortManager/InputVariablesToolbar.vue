@@ -84,7 +84,7 @@
               hide-details
             ></v-switch>
 
-<!--
+            <!--
             <v-toolbar-items>
               <v-icon v-if="expanded" @click="expandClicked"
                 >expand_less</v-icon
