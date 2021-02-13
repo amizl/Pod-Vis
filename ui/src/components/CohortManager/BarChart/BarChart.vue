@@ -8,8 +8,6 @@
             ref="bars"
             :transform="`translate(${margin.left}, ${margin.top})`"
           >
-            <!--              :key="d.key == 'null' ? `population-0` : `${id}-population-${d.key}`"-->
-
             <bar-rect
               v-for="d in populationData"
               :x="xScale(d.key)"
@@ -20,7 +18,6 @@
               :tooltip="barTooltip"
               @click.native="userClickedBar(d.key)"
             />
-            <!--              :key="d.key == 'null' ? `cohort-0` : `${id}-cohort-${d.key}`" -->
 
             <bar-rect
               v-for="d in data"
@@ -46,9 +43,46 @@
     </v-row>
 
     <v-row v-if="showSelection" class="ma-0 pa-0">
-      <v-col cols="12" class="center-text pa-0 ma-0"
-        >Current Selection:
-        {{ selected && selected.length > 0 ? selected.join(',') : '-' }}
+      <v-col cols="12" class="center-text pa-0 ma-0">
+        <v-tabs v-model="tab">
+          <v-tab key="cats">Selected Categories</v-tab>
+        </v-tabs>
+
+        <v-tabs-items v-model="tab">
+          <!-- selected categories -->
+          <v-tab-item key="cats">
+            <v-list dense class="pa-0 ma-0 mt-2">
+              <v-list-item v-for="d in data">
+                <v-list-item-icon class="ma-0 pa-0" justify="end">
+                  <v-checkbox
+                    v-model="cat_cbs"
+                    dense
+                    hide-details
+                    :label="d.key"
+                    :value="d.key"
+                  ></v-checkbox>
+                </v-list-item-icon>
+                <v-list-item-content class="pa-0 ma-0">
+                  <v-list-item-title
+                    align="end"
+                    justify="center"
+                    valign="center"
+                  >
+                    <v-chip
+                      small
+                      label
+                      color="primary"
+                      class="white--text title mx-2"
+                      align="end"
+                      justify="center"
+                      >{{ d.value }}</v-chip
+                    >
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-tab-item>
+        </v-tabs-items>
       </v-col>
     </v-row>
   </v-container>
@@ -145,6 +179,10 @@ export default {
       group: [],
       data: [],
       colors: colors,
+      // current tab
+      tab: 'cats',
+      // category checkboxes
+      cat_cbs: [],
     };
   },
   computed: {
@@ -207,10 +245,51 @@ export default {
 
       if (this.selected.length && !this.dimension.currentFilter()) {
         this.selected = [];
+        this.cat_cbs = [];
       }
     },
     cohort(new_cohort) {
       this.updateSelectionFromCohortQuery();
+    },
+    selected(new_sel) {
+      var sel_h = {};
+      new_sel.forEach(s => {
+        sel_h[s] = true;
+      });
+      // update checkboxes to match
+      var new_cat_cbs = [];
+      this.data.forEach(d => {
+        var sel = sel_h[d.key];
+        if (sel) new_cat_cbs.push(d.key);
+      });
+      this.cat_cbs = new_cat_cbs;
+    },
+    // category checkboxes modified
+    cat_cbs(new_cbs) {
+      // selected bars
+      var sel_b = {};
+      this.selected.forEach(s => {
+        sel_b[s] = true;
+      });
+
+      // selected checkboxes
+      var sel_c = {};
+      new_cbs.forEach(s => {
+        sel_c[s] = true;
+      });
+
+      // compare checkbox state with current selection
+      this.data.forEach(d => {
+        var k = d.key;
+        var bar_sel = sel_b[k];
+        var cb_val = sel_c[k];
+
+        if (cb_val && !bar_sel) {
+          this.selectOrDeselectBar(k);
+        } else if (!cb_val && bar_sel) {
+          this.selectOrDeselectBar(k);
+        }
+      });
     },
   },
   created() {
@@ -256,6 +335,20 @@ export default {
       }
       return colors['population'];
     },
+    selectBar(key) {
+      // already selected
+      if (this.selected.includes(key)) {
+        return;
+      }
+      this.selectOrDeselectBar(key);
+    },
+    deselectBar(key) {
+      // already deselected
+      if (!this.selected.includes(key)) {
+        return;
+      }
+      this.selectOrDeselectBar(key);
+    },
     selectOrDeselectBar(key) {
       if (this.selected.includes(key)) {
         this.selected = this.selected.filter(d => d !== key);
@@ -265,7 +358,7 @@ export default {
 
       const allBarsSelected =
         this.selected.length === this.xScale.domain().length;
-      if (!allBarsSelected && this.selected.length) {
+      if (this.selected.length) {
         this.addFilter({
           dimension: this.dimensionName,
           filter: d => this.selected.includes(d),
@@ -274,8 +367,6 @@ export default {
           })),
         });
       } else {
-        // We want to clear our filter if all the bars are selected or if
-        // no bars are selected.
         this.clearFilter({
           dimension: this.dimensionName,
         });
@@ -307,4 +398,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+div.v-input--checkbox {
+  padding: 0px;
+}
+</style>
+
