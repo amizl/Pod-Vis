@@ -11,7 +11,7 @@
       <v-toolbar-title class="white--text pl-3"
         >Cohort Manager
 
-	<div class="subtitle-1">
+        <div class="subtitle-1">
           Dataset:
           <v-tooltip bottom color="primary">
             <template v-slot:activator="{ on: tooltip }">
@@ -22,25 +22,26 @@
             }}</span>
           </v-tooltip>
 
-	  <span class="ml-3">
-	  Selected Cohort:
-          <v-tooltip bottom color="primary">
-            <template v-slot:activator="{ on: tooltip }">
-              <span v-on="{ ...tooltip }">{{ cohort == null ? "none" : cohort.label }}</span>
-            </template>
-            <span class="subtitle-1">{{
-	      cohort == null ? "none" : cohort.query_string
-            }}</span>
-          </v-tooltip>
-	  </span>
-	  
-	</div>
+          <span class="ml-3">
+            Selected Cohort:
+            <v-tooltip bottom color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <span v-on="{ ...tooltip }">{{
+                  cohort == null ? 'none' : cohort.label
+                }}</span>
+              </template>
+              <span class="subtitle-1">{{
+                cohort == null ? 'none' : cohort.query_string
+              }}</span>
+            </v-tooltip>
+          </span>
+        </div>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-toolbar-items>
-	<v-checkbox dark></v-checkbox>
+        <v-checkbox dark></v-checkbox>
         <span class="white--text font-weight-bold">Help Mode</span>
       </v-toolbar-items>
     </v-app-bar>
@@ -209,18 +210,18 @@ export default {
   watch: {
     substep() {
       if (this.substep === '2.1') {
-//        this.inExpanded = true;
-//        this.outExpanded = false;
+        //        this.inExpanded = true;
+        //        this.outExpanded = false;
         this.inHighlighted = true;
         this.outHighlighted = false;
       } else if (this.substep === '2.2') {
-//        this.inExpanded = false;
-//        this.outExpanded = true;
+        //        this.inExpanded = false;
+        //        this.outExpanded = true;
         this.inHighlighted = false;
         this.outHighlighted = true;
       } else if (this.substep === '2.3') {
-//        this.inExpanded = true;
-//        this.outExpanded = true;
+        //        this.inExpanded = true;
+        //        this.outExpanded = true;
         this.inHighlighted = true;
         this.outHighlighted = false;
       } else if (this.substep === '2.4') {
