@@ -104,7 +104,7 @@
 	    <!-- edit -->
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on: tooltip }">
-		<v-icon v-if="cohort && (item.id == cohort.id)" @click="editCohort(item)" color="white"f>edit</v-icon>
+		<v-icon v-if="cohort && (item.id == cohort.id)" color="white" @click="editCohort(item)">edit</v-icon>
 		<v-icon v-else @click="editCohort(item)">edit</v-icon>
               </template>
               <span class="subtitle-1"
@@ -116,7 +116,7 @@
 	    <!--delete -->
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on: tooltip }">
-		<delete-cohort-icon-dialog :cohort="item" :selected="cohort && (item.id == cohort.id)" @cohortDeleted="console.log('got msg'); cohortDeleted"></delete-cohort-icon-dialog>
+		<delete-cohort-icon-dialog :cohort="item" :selected="cohort && (item.id == cohort.id)" @cohortDeleted="cohortDeleted"></delete-cohort-icon-dialog>
               </template>
               <span class="subtitle-1"
                     >Delete cohort

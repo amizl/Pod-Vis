@@ -1,6 +1,8 @@
 <template>
   <span>
-    <v-icon @click="dialog = !dialog" :color="selected ? 'white' : ''">delete</v-icon>
+    <v-icon :color="selected ? 'white' : ''" @click="dialog = !dialog"
+      >delete</v-icon
+    >
 
     <!-- DELETE COHORT FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
@@ -60,7 +62,6 @@ export default {
     async onDeleteCohort() {
       try {
         await this.deleteCohort(this.cohort.id);
-console.log("emitting cohortDeleted message");
         this.$emit('cohortDeleted', true);
         this.dialog = false;
       } catch (err) {
