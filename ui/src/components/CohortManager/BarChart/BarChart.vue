@@ -52,7 +52,7 @@
           <!-- selected categories -->
           <v-tab-item key="cats">
             <v-list dense class="pa-0 ma-0 mt-2">
-              <v-list-item v-for="d in data">
+              <v-list-item v-for="d in sortedData">
                 <v-list-item-icon class="ma-0 pa-0" justify="end">
                   <v-checkbox
                     v-model="cat_cbs"
@@ -211,9 +211,15 @@ export default {
         .domain(this.data.map(c => c.key))
         .range(schemeCategory10);
     },
+    sortedPopulationData() {
+      return [...this.populationData].sort((x,y) => x.key.localeCompare(y.key));
+    },
+    sortedData() {
+      return [...this.data].sort((x,y) => x.key.localeCompare(y.key));
+    },
     xScale() {
       return scaleBand()
-        .domain(this.populationData.map(d => d.key))
+        .domain(this.sortedPopulationData.map(d => d.key))
         .range([0, this.w])
         .padding(0.05);
     },
