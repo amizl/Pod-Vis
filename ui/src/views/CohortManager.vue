@@ -203,8 +203,10 @@ export default {
           cch.push(e);
         }
       });
-
-      return cch;
+      // sort most recent first
+      // using id because resolution of date_generated isn't sufficiently high res
+      var scc = [...cch].sort((x,y) => y['id'] - x['id']);
+      return scc;
     },
   },
   watch: {
