@@ -39,7 +39,7 @@
       <v-container v-else fluid fill-height class="ma-0 pa-0">
         <v-row>
           <v-col cols="6" class="pb-0">
-            <div v-if="collection.is_longitudinal" class="ml-2">
+            <div class="ml-2">
               <v-toolbar-title
                 class="primary--text subtitle-1 font-weight-bold mb-1"
                 >Comparing</v-toolbar-title
@@ -87,7 +87,7 @@
           </v-col>
 
           <v-col cols="6" class="pb-0">
-            <div class="ml-2">
+            <div v-if="collection.is_longitudinal" class="ml-2">
               <v-toolbar-title
                 class="primary--text subtitle-1 font-weight-bold mb-1"
                 >Outcome Measure</v-toolbar-title
