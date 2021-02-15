@@ -442,10 +442,10 @@ export default {
       this.$emit('newCohort')
     },
     cohortSaved() {
-console.log("ManageCohortsTable.cohortSaved called");
+      console.log("ManageCohortsTable.cohortSaved called");
     },
     cohortDeleted() {
-console.log("ManageCohortsTable.cohortDeleted called");
+      console.log("ManageCohortsTable.cohortDeleted called");
       if (this.selectedRow != null) this.selectedRow.select(false);
       this.$emit('newCohort')
     },
@@ -456,7 +456,7 @@ console.log("ManageCohortsTable.cohortDeleted called");
 };
 </script>
 
-<style>
+<style scoped>
 tr.v-data-table__selected {
   background-color: #3f51b5 !important;
   color: #ffffff !important;
