@@ -10,6 +10,7 @@
           >
             <bar-rect
               v-for="d in populationData"
+              :key="'pd' + d.key"
               :x="xScale(d.key)"
               :y="yScale(d.value)"
               :width="xScale.bandwidth()"
@@ -21,6 +22,7 @@
 
             <bar-rect
               v-for="d in data"
+              :key="'d-' + d.key"
               :x="xScale(d.key)"
               :y="yScale(d.value)"
               :width="xScale.bandwidth()"
@@ -52,7 +54,7 @@
           <!-- selected categories -->
           <v-tab-item key="cats">
             <v-list dense class="pa-0 ma-0 mt-2">
-              <v-list-item v-for="d in sortedData">
+              <v-list-item v-for="d in sortedData" :key="d.key">
                 <v-list-item-icon class="ma-0 pa-0" justify="end">
                   <v-checkbox
                     v-model="cat_cbs"
@@ -212,10 +214,12 @@ export default {
         .range(schemeCategory10);
     },
     sortedPopulationData() {
-      return [...this.populationData].sort((x,y) => x.key.localeCompare(y.key));
+      return [...this.populationData].sort((x, y) =>
+        x.key.localeCompare(y.key)
+      );
     },
     sortedData() {
-      return [...this.data].sort((x,y) => x.key.localeCompare(y.key));
+      return [...this.data].sort((x, y) => x.key.localeCompare(y.key));
     },
     xScale() {
       return scaleBand()
@@ -409,4 +413,3 @@ div.v-input--checkbox {
   padding: 0px;
 }
 </style>
-
