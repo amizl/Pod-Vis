@@ -40,10 +40,17 @@
 
       <v-spacer></v-spacer>
 
-      <v-toolbar-items>
-        <v-checkbox dark></v-checkbox>
-        <span class="white--text font-weight-bold">Help Mode</span>
-      </v-toolbar-items>
+      <v-tooltip bottom color="primary">
+        <template v-slot:activator="{ on: tooltip }">
+          <v-toolbar-items v-on="{ ...tooltip }">
+            <v-checkbox v-model="helpMode" dark class="mt-5"></v-checkbox>
+            <span class="white--text font-weight-bold mt-5">Help Mode</span>
+          </v-toolbar-items>
+        </template>
+        <span class="subtitle-1">
+          {{ helpMode ? 'Disable' : 'Enable' }} help mode.
+        </span>
+      </v-tooltip>
     </v-app-bar>
 
     <v-container
@@ -131,7 +138,7 @@
             />
           </v-col>
           <v-col cols="4" class="ma-0 pa-0">
-            <analytics-table class="ml-2" />
+            <analytics-table class="ml-2" color-scheme="brewer5" />
           </v-col>
         </v-row>
       </v-container>
@@ -178,6 +185,7 @@ export default {
       inHighlighted: true,
       outHighlighted: false,
       getCollectionDescription: getCollectionDescription,
+      helpMode: false,
     };
   },
   computed: {
@@ -205,7 +213,7 @@ export default {
       });
       // sort most recent first
       // using id because resolution of date_generated isn't sufficiently high res
-      var scc = [...cch].sort((x,y) => y['id'] - x['id']);
+      var scc = [...cch].sort((x, y) => y['id'] - x['id']);
       return scc;
     },
   },

@@ -38,45 +38,98 @@
 
       <v-container v-else fluid fill-height class="ma-0 pa-0">
         <v-row>
-          <v-col cols="12">
-            <div>
+          <v-col cols="6" class="pb-0">
+            <div v-if="collection.is_longitudinal" class="ml-2">
               <v-toolbar-title
-                v-if="collection.is_longitudinal"
-                class="primary--text title ml-3 mt-2"
+                class="primary--text subtitle-1 font-weight-bold mb-1"
+                >Comparing</v-toolbar-title
               >
-                <span>
-                  Compare cohort vs. remainder
-                  <v-select
-                    v-model="selectedComparisonMeasure"
-                    dense
-                    :full-width="false"
-                    :items="['Change', 'First Visit', 'Last Visit']"
-                  >
-                  </v-select>
-                </span>
-              </v-toolbar-title>
 
-              <v-container
-                align-center
-                fluid
-                pa-0
-                mt-0
-                pl-4
-                style="border: 4px solid rgb(236,118,188); border-radius: 0.4rem;"
+              <v-tooltip bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <span v-on="{ ...tooltip }">
+                    <v-chip
+                      label
+                      color="primary"
+                      class="white--text title mr-2 mb-2"
+                      :style="'background: ' + colors['cohort']"
+                      >{{ cohortSize }}</v-chip
+                    >
+                    <span class="black--text text-body-1">Selected Cohort</span>
+                  </span>
+                </template>
+                <span class="subtitle-1">
+                  {{ cohortSize }} subject{{ cohortSize == 1 ? '' : 's' }} in
+                  selected cohort
+                </span>
+              </v-tooltip>
+
+              <v-tooltip bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <span v-on="{ ...tooltip }">
+                    <v-chip
+                      label
+                      class="black--text title mr-2"
+                      :style="'background: ' + colors['population']"
+                      >{{ remainderSize }}</v-chip
+                    >
+                    <span class="black--text text-body-1">Remainder</span>
+                  </span>
+                </template>
+                <span class="subtitle-1">
+                  {{ remainderSize }} subject{{
+                    remainderSize == 1 ? '' : 's'
+                  }}
+                  in remainder
+                </span>
+              </v-tooltip>
+            </div>
+          </v-col>
+
+          <v-col cols="6" class="pb-0">
+            <div class="ml-2">
+              <v-toolbar-title
+                class="primary--text subtitle-1 font-weight-bold mb-1"
+                >Outcome Measure</v-toolbar-title
               >
-                <v-row class="pa-0 ma-0">
-                  <v-col class="pa-0 ma-0">
-                    <span class="pa-0 mr-1 subtitle-1">Highlight P &lt;</span
-                    ><v-radio-group v-model="pvt" row>
-                      <v-radio
-                        v-for="pv in pval_thresholds"
-                        :label="pv.toString()"
-                        :value="pv"
-                      ></v-radio>
-                    </v-radio-group>
-                  </v-col>
-                </v-row>
-              </v-container>
+              <v-radio-group
+                v-model="selectedComparisonMeasure"
+                hide-details
+                class="ma-0 pa-0"
+              >
+                <v-radio
+                  v-for="m in ['Change', 'First Visit', 'Last Visit']"
+                  :key="m"
+                  :label="m"
+                  :value="m"
+                ></v-radio>
+              </v-radio-group>
+            </div>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12" class="pt-0">
+            <div align="center">
+              <div class="pa-1 py-4">
+                <v-chip
+                  v-for="pv in pval_thresholds"
+                  :color="getPvalColor(pv)"
+                  :class="
+                    (colorScheme == 'brewer5' && pv == '0.001'
+                      ? 'white--text'
+                      : '') + ' px-2 mx-1'
+                  "
+                  :style="
+                    pval_threshold == pv
+                      ? 'border: 2px solid rgb(236,118,188);'
+                      : 'border: 2px solid black;'
+                  "
+                  @click="setPvalThreshold(pv)"
+                >
+                  p &lt; {{ pv }}</v-chip
+                >
+              </div>
 
               <v-data-table
                 v-if="pvals_request_status == 'loaded'"
@@ -88,7 +141,8 @@
                 sort-by="pval"
               >
                 <template v-slot:item="props">
-                  <tr :class="getVariableClass(props.item)">
+                  <!--                  <tr :class="getVariableClass(props.item)"> -->
+                  <tr>
                     <td class="text-subtitle-1 text-xs-left">
                       <v-tooltip top color="primary">
                         <template v-slot:activator="{ on: tooltip }">
@@ -155,6 +209,10 @@
                     <td
                       v-if="!props.item.error"
                       class="text-subtitle-1 text-xs-right"
+                      :style="{
+                        backgroundColor: pval_table_cell_color(props.item.pval),
+                        color: pval_table_text_color(props.item.pval),
+                      }"
                     >
                       {{ props.item.pval | formatPValue }}
                     </td>
@@ -173,6 +231,7 @@
 import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
 import { format } from 'd3-format';
+import { colors } from '@/utils/colors';
 
 export default {
   filters: {
@@ -180,8 +239,8 @@ export default {
       if (pvalue == null) {
         return '-';
       }
-      if (pvalue < 0.0001) {
-        return '< 0.0001';
+      if (pvalue < 0.001) {
+        return '< 0.001';
       } else {
         return format('.4f')(pvalue);
       }
@@ -193,13 +252,21 @@ export default {
       return cs == null ? '-' : format('.2f')(cs);
     },
   },
+  props: {
+    colorScheme: {
+      type: String,
+      required: false,
+      default: 'val100',
+    },
+  },
   data() {
     return {
       highlight_by_pval: false,
-      pval_thresholds: ['None', 0.1, 0.05, 0.01, 0.001, 0.0001],
+      pval_thresholds: [1, 0.1, 0.05, 0.01, 0.001],
       pvt: 'None',
       expanded: true,
       selectedComparisonMeasure: 'Last Visit',
+      colors: colors,
     };
   },
   computed: {
@@ -210,6 +277,8 @@ export default {
       collection: state.COLLECTION,
       comparisonMeasure: state.COMPARISON_MEASURE,
       useLongScaleNames: state.USE_LONG_SCALE_NAMES,
+      filteredData: state.FILTERED_DATA,
+      unfilteredData: state.UNFILTERED_DATA,
     }),
     headers() {
       var headers = [
@@ -244,6 +313,12 @@ export default {
       ];
       return headers;
     },
+    cohortSize() {
+      return this.filteredData.length;
+    },
+    remainderSize() {
+      return this.unfilteredData.length - this.filteredData.length;
+    },
   },
   watch: {
     pvt(newPvt) {
@@ -271,8 +346,43 @@ export default {
       }
       return '';
     },
+    getPvalColor(pv) {
+      var c = colors['pvals'][pv.toString() + '-' + this.colorScheme];
+      if (c) {
+        return c['color'];
+      } else {
+        return 'white';
+      }
+    },
     expandClicked() {
       this.expanded = !this.expanded;
+    },
+    pval_table_cell_aux(pval, which) {
+      let ccl = this.colors['pvals']['1' + '-' + this.colorScheme][which];
+      if (pval < 0.001) {
+        ccl = this.colors['pvals']['0.001' + '-' + this.colorScheme][which];
+      } else if (pval < 0.05) {
+        ccl = this.colors['pvals']['0.05' + '-' + this.colorScheme][which];
+      } else if (pval < 0.01) {
+        ccl = this.colors['pvals']['0.01' + '-' + this.colorScheme][which];
+      } else if (pval < 0.1) {
+        ccl = this.colors['pvals']['0.1' + '-' + this.colorScheme][which];
+      }
+      return ccl;
+    },
+    pval_table_cell_class(pval) {
+      return this.pval_table_cell_aux(pval, 'class');
+    },
+    pval_table_cell_color(pval) {
+      return this.pval_table_cell_aux(pval, 'color');
+    },
+    pval_table_text_color(pval) {
+      if (this.colorScheme == 'brewer5') {
+        if (pval < 0.001) {
+          return 'white';
+        }
+      }
+      return 'black';
     },
   },
 };
