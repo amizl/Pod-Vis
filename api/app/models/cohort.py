@@ -120,7 +120,9 @@ class Cohort(db.Model):
             queries=[query.to_dict() for query in self.queries],
             input_variables=input_vars,
             output_variables=output_vars,
-            query_string = self.query_desc()
+            query_string = self.query_desc(),
+            date_generated = self.date_generated,
+            last_modified = self.last_modified
             # instantiation_type=str(self.instantiation_type)
         )
 
