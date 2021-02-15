@@ -106,15 +106,15 @@
       </svg>
     </div>
 
-    <v-tabs v-model="tab">
+    <v-tabs v-if="inputVariable" v-model="tab">
       <v-tab key="manual">Manual</v-tab>
       <v-tab key="predef">Pre-defined Ranges</v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-if="inputVariable" v-model="tab">
       <!-- manual -->
       <v-tab-item key="manual">
-        <v-container v-if="inputVariable" fill-width class="pa-0 mx-3 mt-2">
+        <v-container fill-width class="pa-0 mx-3 mt-2">
           <v-row class="pa-0 ma-0">
             <v-col
               cols="5"
