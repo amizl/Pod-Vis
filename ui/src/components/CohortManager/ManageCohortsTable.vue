@@ -47,6 +47,7 @@
         :show-select="showSelect"
         :disable-pagination="disablePagination"
         :hide-default-footer="disablePagination"
+	class="cohorts"
 	dense
         @click:row="rowClicked"
       >
@@ -456,8 +457,8 @@ export default {
 };
 </script>
 
-<style scoped>
-tr.v-data-table__selected {
+<style>
+div.cohorts tr.v-data-table__selected {
   background-color: #3f51b5 !important;
   color: #ffffff !important;
 }
