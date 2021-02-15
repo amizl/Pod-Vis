@@ -401,6 +401,8 @@ export default {
         cohort_name: cohortName,
         collection_id: collection.id,
       });
+      var subj_ids = subjectsInCohort.map(s => s.id);
+      data.cohort.subject_ids = subj_ids;
       commit(mutations.ADD_COHORT, data.cohort);
 
       // Uncomment to reset all variables/filters after saving cohort:
