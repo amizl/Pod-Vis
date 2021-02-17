@@ -9,7 +9,7 @@ export const state = {
   RAW_DATA: 'rawData',
   DETAILED_VIEW: 'detailedView',
   ANOVA_PVALS: 'anovaPvals',
-  ANOVA_PVALS: 'anovaPvalsInput',
+  ANOVA_PVALS_INPUT: 'anovaPvalsInput',
 };
 
 // Getters
