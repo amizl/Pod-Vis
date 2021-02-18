@@ -1,80 +1,84 @@
 <template>
-<v-tooltip bottom color="primary">
-  <template v-slot:activator="{ on: tooltip }">
-  <v-sheet v-on="{ ...tooltip }" color="white" class="rounded-lg shadow ma-0 pa-0">
-    <v-container ref="bp_container" fluid fill-width class="ma-0 pa-0">
-      <v-row class="ma-0 pa-0">
-        <v-col cols="12" class="ma-0 pa-0" align="center" justify="center">
-          <svg ref="boxplots" :width="width" :height="height" class="mt-1">
-            <g>
-              <!-- endcap lines -->
-              <line
-                v-for="sc in Object.keys(boxplotStats)"
-                :x1="boxplotStats[sc]['min_x']"
-                :x2="boxplotStats[sc]['min_x']"
-                :y1="boxplotStats[sc]['y1']"
-                :y2="boxplotStats[sc]['y2']"
-                stroke="black"
-              />
+  <v-tooltip bottom color="primary">
+    <template v-slot:activator="{ on: tooltip }">
+      <v-sheet
+        color="white"
+        class="rounded-lg shadow ma-0 pa-0"
+        v-on="{ ...tooltip }"
+      >
+        <v-container ref="bp_container" fluid fill-width class="ma-0 pa-0">
+          <v-row class="ma-0 pa-0">
+            <v-col cols="12" class="ma-0 pa-0" align="center" justify="center">
+              <svg ref="boxplots" :width="width" :height="height" class="mt-1">
+                <g>
+                  <!-- endcap lines -->
+                  <line
+                    v-for="sc in Object.keys(boxplotStats)"
+                    :x1="boxplotStats[sc]['min_x']"
+                    :x2="boxplotStats[sc]['min_x']"
+                    :y1="boxplotStats[sc]['y1']"
+                    :y2="boxplotStats[sc]['y2']"
+                    stroke="black"
+                  />
 
-              <line
-                v-for="sc in Object.keys(boxplotStats)"
-                :x1="boxplotStats[sc]['max_x']"
-                :x2="boxplotStats[sc]['max_x']"
-                :y1="boxplotStats[sc]['y1']"
-                :y2="boxplotStats[sc]['y2']"
-                stroke="black"
-              />
+                  <line
+                    v-for="sc in Object.keys(boxplotStats)"
+                    :x1="boxplotStats[sc]['max_x']"
+                    :x2="boxplotStats[sc]['max_x']"
+                    :y1="boxplotStats[sc]['y1']"
+                    :y2="boxplotStats[sc]['y2']"
+                    stroke="black"
+                  />
 
-              <!-- center line -->
-              <line
-                v-for="sc in Object.keys(boxplotStats)"
-                :x1="boxplotStats[sc]['min_x']"
-                :x2="boxplotStats[sc]['max_x']"
-                :y1="boxplotStats[sc]['y_center']"
-                :y2="boxplotStats[sc]['y_center']"
-                stroke="black"
-              />
+                  <!-- center line -->
+                  <line
+                    v-for="sc in Object.keys(boxplotStats)"
+                    :x1="boxplotStats[sc]['min_x']"
+                    :x2="boxplotStats[sc]['max_x']"
+                    :y1="boxplotStats[sc]['y_center']"
+                    :y2="boxplotStats[sc]['y_center']"
+                    stroke="black"
+                  />
 
-              <!-- box -->
-              <rect
-                v-for="sc in Object.keys(boxplotStats)"
-                :x="boxplotStats[sc]['q1_x']"
-                :y="boxplotStats[sc]['y1']"
-                :width="boxplotStats[sc]['q1_q3_w']"
-                :height="boxplotStats[sc]['box_h']"
-                :fill="boxplotStats[sc]['color']"
-                stroke="black"
-              />
+                  <!-- box -->
+                  <rect
+                    v-for="sc in Object.keys(boxplotStats)"
+                    :x="boxplotStats[sc]['q1_x']"
+                    :y="boxplotStats[sc]['y1']"
+                    :width="boxplotStats[sc]['q1_q3_w']"
+                    :height="boxplotStats[sc]['box_h']"
+                    :fill="boxplotStats[sc]['color']"
+                    stroke="black"
+                  />
 
-              <!-- median line -->
-              <line
-                v-for="sc in Object.keys(boxplotStats)"
-                :x1="boxplotStats[sc]['median_x']"
-                :x2="boxplotStats[sc]['median_x']"
-                :y1="boxplotStats[sc]['y1']"
-                :y2="boxplotStats[sc]['y2']"
-                stroke="black"
-                stroke-width="2"
-              />
+                  <!-- median line -->
+                  <line
+                    v-for="sc in Object.keys(boxplotStats)"
+                    :x1="boxplotStats[sc]['median_x']"
+                    :x2="boxplotStats[sc]['median_x']"
+                    :y1="boxplotStats[sc]['y1']"
+                    :y2="boxplotStats[sc]['y2']"
+                    stroke="black"
+                    stroke-width="2"
+                  />
 
-              <!-- x-axis at top -->
-              <!--
+                  <!-- x-axis at top -->
+                  <!--
               <g
                 v-xaxis="xAxis"
 		:transform="`translate(0, ${margins.top})`"
                 ></g> -->
-            </g>
-          </svg>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-sheet>
-  </template>
-  <span class="subtitle-1">
-    {{ outputVar.label + " 0 - " + this.maxValue }}
-  </span>
-</v-tooltip>
+                </g>
+              </svg>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-sheet>
+    </template>
+    <span class="subtitle-1">
+      {{ outputVar.label + ' 0 - ' + this.maxValue }}
+    </span>
+  </v-tooltip>
 </template>
 
 <script>
@@ -249,7 +253,6 @@ export default {
 
       this.maxValue = maxval;
       var rowHeight = this.height / this.cohorts.length;
-console.log("height = " + this.height + " rowHeight=" + rowHeight);
       this.updateStats_aux(af, 0, 2, 2, rowHeight, rowHeight, bpStats);
       this.boxplotStats = bpStats;
     },
