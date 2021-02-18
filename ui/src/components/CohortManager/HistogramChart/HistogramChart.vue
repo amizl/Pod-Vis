@@ -191,13 +191,6 @@
                 >Save {{ predef_radio }}</v-btn
               >
 
-              <!--
-	      <create-comparator-cohorts-btn-dialog
-		:dimension-name="variable.abbreviation"
-		:select-cohort-range="selectCohortRange"
-		:reset-selection="resetSelection"
-		/>
-	      -->
             </v-col>
           </v-row>
         </v-container>
@@ -1009,6 +1002,7 @@ export default {
           query_string: this.variable.abbreviation + ' ' + min + ' - ' + max,
           data: filtered_d,
           subject_ids: filtered_d.map(d => d.subject_id),
+          range: { 'min': r.min, 'max': r.max},
         };
 
         //            dimension: this.dimensionName,
@@ -1028,6 +1022,8 @@ export default {
         dimension: this.dimensionName,
         cohorts: this.getPredefCohorts(),
         name: this.predef_radio,
+        select_fn: this.selectCohortRange,
+        dimension_name: this.variable.abbreviation,
       });
     },
     savePredefs() {
@@ -1035,6 +1031,8 @@ export default {
         dimension: this.dimensionName,
         cohorts: this.getPredefCohorts(),
         name: this.predef_radio,
+        select_fn: this.selectCohortRange,
+        dimension_name: this.variable.abbreviation,
       });
     },
   },

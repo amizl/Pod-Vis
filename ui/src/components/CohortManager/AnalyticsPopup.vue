@@ -214,7 +214,7 @@
 	      <template v-slot:activator="{ on: tooltip }">
 		<v-btn
 		  class="primary white--text ma-0 px-2 mx-2"
-		  @click="dialog = !dialog"
+		  @click="saveCohorts"
 		  v-on="{ ...tooltip }"
 		  >
 		  Save {{name}} as {{cohorts.length}} cohorts
@@ -296,7 +296,15 @@ export default {
       type: Array,
       required: true,
     },
-  },
+    selectRangeFn: {
+      type: Function,
+      required: true,
+    },
+    cohortPrefix: {
+      type: String,
+      required: true,
+    },
+   },
   data() {
     return {
       highlight_by_pval: false,
@@ -381,6 +389,7 @@ export default {
       analyzeCohorts: actions.ANALYZE_COHORTS,
       setPvalThreshold: actions.SET_PVAL_THRESHOLD,
       setComparisonMeasure: actions.SET_COMPARISON_MEASURE,
+      saveCohort: actions.SAVE_COHORT,
     }),
     updatePval(newPval) {
       this.setPvalThreshold(newPval);
@@ -436,6 +445,15 @@ export default {
       }
       return 'black';
     },
+    async saveCohorts() {
+      var nCohorts = this.cohorts.length;
+      for (var c = nCohorts-1; c >= 0; c--) {
+        const cohort = this.cohorts[c];
+	this.selectRangeFn(cohort.range, 'current cohort');
+	await this.saveCohort({cohortName: this.cohortPrefix + cohort.label });
+      }
+      this.dialog = false;
+    }
   },
 };
 </script>

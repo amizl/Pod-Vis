@@ -150,6 +150,8 @@
       color-scheme="brewer5"
       :name="analyticsPopupName"
       :cohorts="analyticsPopupCohorts"
+      :selectRangeFn="analyticsPopupSelectRangeFn"
+      :cohortPrefix="analyticsPopupCohortPrefix"
     />
   </v-container>
 </template>
@@ -197,7 +199,9 @@ export default {
       getCollectionDescription: getCollectionDescription,
       helpMode: false,
       analyticsPopupName: 'Tertiles',
+      analyticsPopupCohortPrefix: '',
       analyticsPopupCohorts: [],
+      analyticsPopupSelectRangeFn: x => x,
     };
   },
   computed: {
@@ -362,6 +366,8 @@ export default {
     comparePredefinedRanges(ranges) {
       this.analyticsPopupCohorts = ranges.cohorts;
       this.analyticsPopupName = ranges.name;
+      this.analyticsPopupCohortPrefix = ranges.dimension_name + ' - ';
+      this.analyticsPopupSelectRangeFn = ranges.select_fn;
       this.$refs.apop.show(true);
     },
     savePredefinedRanges(ranges) {
