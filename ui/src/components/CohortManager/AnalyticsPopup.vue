@@ -192,7 +192,7 @@
 			:cohorts="cohorts"
 			:output-var="abbrev_to_var[props.item.abbreviation]"
 			:compare-by="comparisonMeasure"
-			class="pa-2">
+			class="ma-0 pa-0">
 		      </mini-boxplot>
                     </td>
                   </tr>
