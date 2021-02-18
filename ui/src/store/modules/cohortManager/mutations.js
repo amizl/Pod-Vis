@@ -229,6 +229,22 @@ export default {
     state[stateTypes.PVAL_THRESHOLD] = threshold;
   },
   /**
+   * Set ANOVA pvals
+   * @param {Object} state
+   * @param {Array} pvals Array of objects with a pval and its corresponding outcome measure.
+   */
+  [mutations.SET_ANOVA_PVALS](state, pvals) {
+    state[stateTypes.ANOVA_PVALS] = pvals;
+  },
+  /**
+   * Set ANOVA pvals request status
+   * @param {Object} state
+   * @param {status} either NULL, 'loading', or 'loaded'
+   */
+  [mutations.SET_ANOVA_PVALS_REQUEST_STATUS](state, status) {
+    state[stateTypes.ANOVA_PVALS_REQUEST_STATUS] = status;
+  },
+  /**
    * Set highlighted subset
    * @param {Object} state
    * @param {Array} New highlighted subset.
@@ -353,6 +369,13 @@ export default {
     state[stateTypes.PVALS] = [];
   },
   /**
+   * Reset ANOVA pvals back to original state.
+   * @param {Object} state
+   */
+  [mutations.RESET_ANOVA_PVALS](state) {
+    state[stateTypes.ANOVA_PVALS] = [];
+  },
+  /**
    * Reset pval threshold back to original state.
    * @param {Object} state
    */
@@ -381,5 +404,14 @@ export default {
     state[stateTypes.PVALS_REQUEST_NUM] =
       state[stateTypes.PVALS_REQUEST_NUM] + 1;
     callback(state[stateTypes.PVALS_REQUEST_NUM]);
+  },
+  /**
+   * Increment request number and return the result via callback.
+   * @param {Object} state
+   */
+  [mutations.INCREMENT_ANOVA_PVALS_REQUEST_NUM](state, { callback }) {
+    state[stateTypes.ANOVA_PVALS_REQUEST_NUM] =
+      state[stateTypes.ANOVA_PVALS_REQUEST_NUM] + 1;
+    callback(state[stateTypes.ANOVA_PVALS_REQUEST_NUM]);
   },
 };

@@ -376,6 +376,73 @@ export default {
       commit(mutations.INCREMENT_PVALS_REQUEST_NUM, { callback: cb });
     }
   },
+  async [actions.ANALYZE_COHORTS]({ commit, dispatch, state }, cohorts) {
+    let { outputVariables } = state;
+    const collection = state[stateTypes.COLLECTION];
+    const comparisonMeasure = state[stateTypes.COMPARISON_MEASURE];
+    // TODO - this mapping is already performed on the server side (more than once)
+    const m2f = {
+      'First Visit': 'firstVisit',
+      'Last Visit': 'lastVisit',
+      Change: 'change',
+      'Rate of Change': 'roc',
+    };
+    const comparisonField = m2f[comparisonMeasure];
+    // nothing to compare
+    if (cohorts.length == 0) {
+      // increment requestnum to ensure any previously-submitted request is ignored
+      var cb = function(reqnum) {};
+      commit(mutations.INCREMENT_ANOVA_PVALS_REQUEST_NUM, { callback: cb });
+      // Nothing is filtered
+      commit(mutations.SET_ANOVA_PVALS_REQUEST_STATUS, null);
+      commit(mutations.SET_ANOVA_PVALS, []);
+    } else {
+      commit(mutations.SET_ANOVA_PVALS_REQUEST_STATUS, 'loading');
+      // pass _all_ observation variables, not just the selected ones
+      const outputVars = [];
+      collection.observation_variables.forEach(v => {
+        v.children.forEach(c => {
+          outputVars.push(c);
+        });
+      });
+      outputVariables = outputVars;
+
+      const groups = cohorts.map(c => c.data);
+      const numGroups = groups.length;
+
+      // TODO - cancel superseded pending requests instead of just ignoring them
+      var cb = async function(reqnum) {
+        // wait ANOVA_PVALS_REQUEST_DELAY_SECS before sending request to ensure the filtered data isn't still changing
+        setTimeout(async function() {
+          if (state[stateTypes.ANOVA_PVALS_REQUEST_NUM] > reqnum) {
+            return;
+          }
+          try {
+            const input = {
+              numGroups,
+              groups,
+              outputVariables,
+              comparisonField,
+            };
+
+            const { data } = await axios.post(`/api/compute-anova`, input);
+
+            if (state[stateTypes.ANOVA_PVALS_REQUEST_NUM] > reqnum) {
+              //		      console.log("request " + reqnum + " is no longer current, ignoring return value");
+            } else {
+              //		      console.log("accepting request " + reqnum);
+              commit(mutations.SET_ANOVA_PVALS_REQUEST_STATUS, 'loaded');
+              commit(mutations.SET_ANOVA_PVALS, data.pvals);
+            }
+          } catch ({ response }) {
+            const notification = new ErrorNotification(response.data.error);
+            dispatch(notification.dispatch, notification, { root: true });
+          }
+        }, state[stateTypes.ANOVA_PVALS_REQUEST_DELAY_SECS] * 1000);
+      };
+      commit(mutations.INCREMENT_ANOVA_PVALS_REQUEST_NUM, { callback: cb });
+    }
+  },
   async [actions.SAVE_COHORT]({ commit, dispatch, state }, { cohortName }) {
     const {
       collection,
@@ -449,7 +516,7 @@ export default {
       const notification = new SuccessNotification(`Successfully deleted`);
       dispatch(notification.dispatch, notification, { root: true });
     } catch ({ response }) {
-      console.log('cohort not deletedd');
+      console.log('cohort not deleted');
       const notification = new ErrorNotification(response.data.error);
       dispatch(notification.dispatch, notification, { root: true });
     }

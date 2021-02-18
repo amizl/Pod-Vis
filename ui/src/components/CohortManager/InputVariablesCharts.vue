@@ -11,6 +11,8 @@
           :variable="inputVariable"
           @userResetInputVariable="userChangedVariable"
           @userChangedInputVariable="userChangedVariable"
+          @comparePredefinedRanges="comparePredefinedRanges"
+          @savePredefinedRanges="savePredefinedRanges"
         />
       </v-card>
     </v-card>
@@ -38,6 +40,12 @@ export default {
   methods: {
     userChangedVariable(v) {
       this.$emit('userChangedInputVariable', true);
+    },
+    comparePredefinedRanges(ranges) {
+      this.$emit('comparePredefinedRanges', ranges);
+    },
+    savePredefinedRanges(ranges) {
+      this.$emit('savePredefinedRanges', ranges);
     },
   },
 };

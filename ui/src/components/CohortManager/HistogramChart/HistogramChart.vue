@@ -222,7 +222,7 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import resize from 'vue-resize-directive';
 // Components
 import { colors } from '@/utils/colors';
-import CreateComparatorCohortsBtnDialog from '@/components/CohortManager/CreateComparatorCohortsBtnDialog';
+import { getCohortSubjectIds } from '@/utils/helpers';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -255,9 +255,7 @@ export default {
       // .call(g => g.select('.domain').remove());
     },
   },
-  components: {
-    CreateComparatorCohortsBtnDialog,
-  },
+  components: {},
   props: {
     id: {
       type: [Number, String],
@@ -967,11 +965,77 @@ export default {
         });
       }
     },
+    // return list of cohorts corresponding to the specified predefined ranges
+    getPredefCohorts() {
+      var ranges = null;
+      if (this.predef_radio == 'halves') {
+        ranges = [
+          { label: 'Bottom 1/2', min: 'min', max: [1, 2] },
+          { label: 'Top 1/2', min: [1, 2], max: 'max' },
+        ];
+      } else if (this.predef_radio == 'tertiles') {
+        ranges = [
+          { label: 'Bottom 1/3', min: 'min', max: [1, 3] },
+          { label: 'Middle 1/3', min: [1, 3], max: [2, 3] },
+          { label: 'Top 1/3', min: [2, 3], max: 'max' },
+        ];
+      } else if (this.predef_radio == 'quartiles') {
+        ranges = [
+          { label: '1st quartile', min: 'min', max: [1, 4] },
+          { label: '2nd quartile', min: [1, 4], max: [1, 2] },
+          { label: '3rd quartile', min: [1, 2], max: [3, 4] },
+          { label: '4th quartile', min: [3, 4], max: 'max' },
+        ];
+      }
+      var cohorts = [];
+      // TODO - set to this.data to include other filters
+      var rawData = this.unfilteredData;
+      var data = rawData.map(d => this.dimension.accessor(d));
+      let ext = extent(data);
+      let sorted_d = data.slice().sort((a, b) => a - b);
+
+      ranges.forEach(r => {
+        var min = this.getCohortRangeEndpoint(r.min, ext, sorted_d);
+        var max = this.getCohortRangeEndpoint(r.max, ext, sorted_d);
+
+        // apply filter to produce cohort
+        var filtered_d = rawData.filter(d => {
+          let dv = this.dimension.accessor(d);
+          return dv >= min && dv < max;
+        });
+
+        var cohort = {
+          label: r.label,
+          query_string: this.variable.abbreviation + ' ' + min + ' - ' + max,
+          data: filtered_d,
+          subject_ids: filtered_d.map(d => d.subject_id),
+        };
+
+        //            dimension: this.dimensionName,
+        //            filter: d =>
+        //            query: {
+        //              minValue,
+        //              maxValue,
+        //            },
+
+        cohorts.push(cohort);
+      });
+
+      return cohorts;
+    },
     comparePredefs() {
-      console.log('compare predefs called');
+      this.$emit('comparePredefinedRanges', {
+        dimension: this.dimensionName,
+        cohorts: this.getPredefCohorts(),
+        name: this.predef_radio,
+      });
     },
     savePredefs() {
-      console.log('save predefs called');
+      this.$emit('savePredefinedRanges', {
+        dimension: this.dimensionName,
+        cohorts: this.getPredefCohorts(),
+        name: this.predef_radio,
+      });
     },
   },
 };

@@ -13,6 +13,8 @@
           <input-variables-charts
             v-if="hasUserAddedInputVariables"
             @userChangedInputVariable="userChangedInputVariable"
+            @comparePredefinedRanges="comparePredefinedRanges"
+            @savePredefinedRanges="savePredefinedRanges"
           />
           <v-subheader
             v-else
@@ -74,6 +76,12 @@ export default {
     },
     userChangedInputVariable() {
       this.$emit('userChangedInputVariable', true);
+    },
+    comparePredefinedRanges(ranges) {
+      this.$emit('comparePredefinedRanges', ranges);
+    },
+    savePredefinedRanges(ranges) {
+      this.$emit('savePredefinedRanges', ranges);
     },
   },
 };

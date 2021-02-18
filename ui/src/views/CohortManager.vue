@@ -110,6 +110,8 @@
                 class="ma-0 pt-0"
                 @userSelectedInputVariables="userSelectedVariables"
                 @userChangedInputVariable="userChangedVariable"
+                @comparePredefinedRanges="comparePredefinedRanges"
+                @savePredefinedRanges="savePredefinedRanges"
               />
             </v-sheet>
           </v-col>
@@ -143,6 +145,12 @@
         </v-row>
       </v-container>
     </div>
+    <analytics-popup
+      ref="apop"
+      color-scheme="brewer5"
+      :name="analyticsPopupName"
+      :cohorts="analyticsPopupCohorts"
+    />
   </v-container>
 </template>
 
@@ -157,6 +165,7 @@ import {
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import ManageCohortsTable from '@/components/CohortManager/ManageCohortsTable.vue';
 import AnalyticsTable from '@/components/CohortManager/AnalyticsTable.vue';
+import AnalyticsPopup from '@/components/CohortManager/AnalyticsPopup.vue';
 import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
 
@@ -168,6 +177,7 @@ export default {
     OutputVariables,
     ManageCohortsTable,
     AnalyticsTable,
+    AnalyticsPopup,
   },
   props: {
     collectionId: {
@@ -186,6 +196,8 @@ export default {
       outHighlighted: false,
       getCollectionDescription: getCollectionDescription,
       helpMode: false,
+      analyticsPopupName: 'Tertiles',
+      analyticsPopupCohorts: [],
     };
   },
   computed: {
@@ -346,6 +358,14 @@ export default {
       this.isLoadingCohort = true;
       await this.setCohort(newCohort);
       this.isLoadingCohort = false;
+    },
+    comparePredefinedRanges(ranges) {
+      this.analyticsPopupCohorts = ranges.cohorts;
+      this.analyticsPopupName = ranges.name;
+      this.$refs.apop.show(true);
+    },
+    savePredefinedRanges(ranges) {
+      console.log('CohortManager - savePredefinedRanges');
     },
   },
 };

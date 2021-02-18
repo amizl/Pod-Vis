@@ -72,6 +72,8 @@
             :variable="variable"
             input-variable
             @userChangedVariable="userChangedInputVariable"
+            @comparePredefinedRanges="comparePredefinedRanges"
+            @savePredefinedRanges="savePredefinedRanges"
           />
           <ColumnChart
             v-else
@@ -222,6 +224,12 @@ export default {
       }
       this.dimension = dimensionName;
       this.addDimension(payload);
+    },
+    comparePredefinedRanges(ranges) {
+      this.$emit('comparePredefinedRanges', ranges);
+    },
+    savePredefinedRanges(ranges) {
+      this.$emit('savePredefinedRanges', ranges);
     },
   },
 };
