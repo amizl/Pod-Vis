@@ -65,7 +65,6 @@ export default {
   },
   methods: {
     ...mapActions('cohortManager', {
-      saveCohort: actions.SAVE_COHORT,
       deleteSelectedCohort: actions.DELETE_SELECTED_COHORT,
     }),
     async onDeleteCohort() {
