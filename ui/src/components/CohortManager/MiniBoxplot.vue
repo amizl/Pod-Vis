@@ -1,9 +1,11 @@
 <template>
-  <v-sheet color="white" class="rounded-lg shadow">
+<v-tooltip bottom color="primary">
+  <template v-slot:activator="{ on: tooltip }">
+  <v-sheet v-on="{ ...tooltip }" color="white" class="rounded-lg shadow ma-0 pa-0">
     <v-container ref="bp_container" fluid fill-width class="ma-0 pa-0">
       <v-row class="ma-0 pa-0">
-        <v-col cols="12" class="ma-0 pa-0">
-          <svg ref="boxplots" :width="width" :height="height">
+        <v-col cols="12" class="ma-0 pa-0" align="center" justify="center">
+          <svg ref="boxplots" :width="width" :height="height" class="mt-1">
             <g>
               <!-- endcap lines -->
               <line
@@ -68,6 +70,11 @@
       </v-row>
     </v-container>
   </v-sheet>
+  </template>
+  <span class="subtitle-1">
+    {{ outputVar.label + " 0 - " + this.maxValue }}
+  </span>
+</v-tooltip>
 </template>
 
 <script>
@@ -242,9 +249,8 @@ export default {
 
       this.maxValue = maxval;
       var rowHeight = this.height / this.cohorts.length;
-
-      this.updateStats_aux(af, 0, 3, 3, rowHeight, rowHeight, bpStats);
-
+console.log("height = " + this.height + " rowHeight=" + rowHeight);
+      this.updateStats_aux(af, 0, 2, 2, rowHeight, rowHeight, bpStats);
       this.boxplotStats = bpStats;
     },
   },
