@@ -283,7 +283,7 @@ export default {
     headers() {
       var headers = [
         {
-          text: 'Variable',
+          text: 'Scale',
           align: 'left',
           sortable: true,
           value: 'label',
@@ -304,7 +304,7 @@ export default {
           class: 'text-subtitle-1 font-weight-bold',
         },
         {
-          text: 'P Value',
+          text: 'p-Value',
           align: 'left',
           sortable: true,
           value: 'pval',
