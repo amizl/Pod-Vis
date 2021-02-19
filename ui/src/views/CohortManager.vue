@@ -150,8 +150,8 @@
       color-scheme="brewer5"
       :name="analyticsPopupName"
       :cohorts="analyticsPopupCohorts"
-      :selectRangeFn="analyticsPopupSelectRangeFn"
-      :cohortPrefix="analyticsPopupCohortPrefix"
+      :select-range-fn="analyticsPopupSelectRangeFn"
+      :cohort-prefix="analyticsPopupCohortPrefix"
     />
   </v-container>
 </template>
@@ -363,15 +363,22 @@ export default {
       await this.setCohort(newCohort);
       this.isLoadingCohort = false;
     },
-    comparePredefinedRanges(ranges) {
+    async comparePredefinedRanges(ranges) {
       this.analyticsPopupCohorts = ranges.cohorts;
       this.analyticsPopupName = ranges.name;
       this.analyticsPopupCohortPrefix = ranges.dimension_name + ' - ';
       this.analyticsPopupSelectRangeFn = ranges.select_fn;
       this.$refs.apop.show(true);
     },
-    savePredefinedRanges(ranges) {
-      console.log('CohortManager - savePredefinedRanges');
+    async savePredefinedRanges(ranges) {
+      this.analyticsPopupCohorts = ranges.cohorts;
+      this.analyticsPopupName = ranges.name;
+      this.analyticsPopupCohortPrefix = ranges.dimension_name + ' - ';
+      this.analyticsPopupSelectRangeFn = ranges.select_fn;
+      this.$refs.apop.saveCohorts(
+        ranges.cohorts,
+        this.analyticsPopupCohortPrefix
+      );
     },
   },
 };
