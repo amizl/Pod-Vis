@@ -443,10 +443,8 @@ export default {
       this.$emit('newCohort')
     },
     cohortSaved() {
-      console.log("ManageCohortsTable.cohortSaved called");
     },
     cohortDeleted() {
-      console.log("ManageCohortsTable.cohortDeleted called");
       if (this.selectedRow != null) this.selectedRow.select(false);
       this.$emit('newCohort')
     },
