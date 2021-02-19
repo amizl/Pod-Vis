@@ -214,7 +214,7 @@
 	      <template v-slot:activator="{ on: tooltip }">
 		<v-btn
 		  class="primary white--text ma-0 px-2 mx-2"
-		  @click="saveCohorts"
+		  @click="saveCohorts(cohorts, cohortPrefix)"
 		  v-on="{ ...tooltip }"
 		  >
 		  Save {{name}} as {{cohorts.length}} cohorts
@@ -326,6 +326,7 @@ export default {
       useLongScaleNames: state.USE_LONG_SCALE_NAMES,
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
+      inputVariables: state.INPUT_VARIABLES,
       outputVariables: state.OUTPUT_VARIABLES,
     }),
     headers() {
@@ -445,12 +446,21 @@ export default {
       }
       return 'black';
     },
-    async saveCohorts() {
-      var nCohorts = this.cohorts.length;
+    async saveCohorts(cohorts, cohortPrefix) {
+      var nCohorts = cohorts.length;
       for (var c = nCohorts-1; c >= 0; c--) {
-        const cohort = this.cohorts[c];
-	this.selectRangeFn(cohort.range, 'current cohort');
-	await this.saveCohort({cohortName: this.cohortPrefix + cohort.label });
+        const cohort = cohorts[c];
+	var queries = {};
+	queries[cohort.dimension] = [{"minValue": cohort.range.min * 1.0, "maxValue": cohort.range.max * 1.0}];
+	var args = {
+  	  name: cohortPrefix + cohort.label,
+          collection: this.collection,
+          queries: queries,
+          inputVariables: this.inputVariables,
+          outputVariables: this.outputVariables,
+          subjectIds: cohort.subject_ids,
+	};
+	await this.saveCohort(args);
       }
       this.dialog = false;
     }

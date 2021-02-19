@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     ...mapActions('cohortManager', {
-      saveCohort: actions.SAVE_COHORT,
+      saveSelectedCohort: actions.SAVE_SELECTED_COHORT,
     }),
     showing() {
       setTimeout(() => {
@@ -136,7 +136,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true;
         try {
-          await this.saveCohort({ cohortName });
+          await this.saveSelectedCohort({ cohortName });
           this.loading = false;
           this.dialog = false;
           this.$emit('cohortSaved', true);

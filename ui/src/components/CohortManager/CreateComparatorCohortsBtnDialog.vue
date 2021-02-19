@@ -248,7 +248,7 @@ export default {
   },
   methods: {
     ...mapActions('cohortManager', {
-      saveCohort: actions.SAVE_COHORT,
+      saveSelectedCohort: actions.SAVE_SELECTED_COHORT,
     }),
     showing() {
       this.$nextTick(function() {
@@ -295,7 +295,7 @@ export default {
           for (var c = 0; c < nCohorts; c++) {
             var cohort = cohorts[c];
             this.selectCohortRange(cohort.cohort, this.rangeType);
-            await this.saveCohort({ cohortName: cohort.name });
+            await this.saveSelectedCohort({ cohortName: cohort.name });
           }
 
           this.loading = false;

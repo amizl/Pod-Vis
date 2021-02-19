@@ -443,16 +443,15 @@ export default {
       commit(mutations.INCREMENT_ANOVA_PVALS_REQUEST_NUM, { callback: cb });
     }
   },
-  async [actions.SAVE_COHORT]({ commit, dispatch, state }, { cohortName }) {
+  async [actions.SAVE_COHORT]({ commit, dispatch, state }, args) {
     const {
+      name,
       collection,
       queries,
       inputVariables,
       outputVariables,
-      filteredData,
-    } = state;
-
-    const subjectsInCohort = filteredData.map(subject => subject.subject_id);
+      subjectIds,
+    } = args;
 
     const queriesMappedToVariables = getInputVariablesFromQueries(
       queries,
@@ -464,25 +463,41 @@ export default {
         queries: queriesMappedToVariables,
         input_variables: inputVariables,
         output_variables: outputVariables,
-        cohort_subjects: subjectsInCohort,
-        cohort_name: cohortName,
+        cohort_subjects: subjectIds,
+        cohort_name: name,
         collection_id: collection.id,
       });
-      var subj_ids = subjectsInCohort.map(s => s.id);
-      data.cohort.subject_ids = subj_ids;
+      data.cohort.subject_ids = subjectIds;
       commit(mutations.ADD_COHORT, data.cohort);
-
-      // Uncomment to reset all variables/filters after saving cohort:
-      //      dispatch(actions.SET_COHORT, { id: null });
-      //      commit(mutations.RESET_DIMENSIONS);
-      //      commit(mutations.RESET_QUERIES);
-      //      commit(mutations.RESET_PVALS);
       const notification = new SuccessNotification(`Cohort saved`);
       dispatch(notification.dispatch, notification, { root: true });
     } catch ({ response }) {
       const notification = new ErrorNotification(response.data.error);
       dispatch(notification.dispatch, notification, { root: true });
     }
+  },
+  async [actions.SAVE_SELECTED_COHORT](
+    { commit, dispatch, state },
+    { cohortName }
+  ) {
+    const {
+      collection,
+      queries,
+      inputVariables,
+      outputVariables,
+      filteredData,
+    } = state;
+    const subjectIds = filteredData.map(subject => subject.subject_id);
+    var args = {
+      name: cohortName,
+      collection: collection,
+      queries: queries,
+      inputVariables: inputVariables,
+      outputVariables: outputVariables,
+      subjectIds: subjectIds,
+    };
+
+    dispatch(actions.SAVE_COHORT, args);
   },
   async [actions.SET_COHORT]({ commit, dispatch, getters }, cohort) {
     commit(mutations.RESET_PVALS);

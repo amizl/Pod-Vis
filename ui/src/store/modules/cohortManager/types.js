@@ -113,6 +113,7 @@ export const actions = {
   ADD_QUERY: 'addQuery',
   RESET_ALL_STORE_DATA: 'resetAllStoreData',
   SAVE_COHORT: 'saveCohort',
+  SAVE_SELECTED_COHORT: 'saveSelectedCohort',
   CLEAR_ALL_FILTERS: 'clearAllFilters',
   DELETE_COHORT: 'deleteCohort',
   DELETE_SELECTED_COHORT: 'deleteSelectedCohort',

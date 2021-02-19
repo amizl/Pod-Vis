@@ -190,7 +190,6 @@
                 @click="savePredefs"
                 >Save {{ predef_radio }}</v-btn
               >
-
             </v-col>
           </v-row>
         </v-container>
@@ -297,7 +296,7 @@ export default {
       tfRangeMax: null,
       snapToGrid: true,
       tab: 'manual',
-      predef_radio: 'tertiles',
+      predef_radio: 'quartiles',
     };
   },
   computed: {
@@ -999,10 +998,11 @@ export default {
 
         var cohort = {
           label: r.label,
+          dimension: this.dimensionName,
           query_string: this.variable.abbreviation + ' ' + min + ' - ' + max,
           data: filtered_d,
           subject_ids: filtered_d.map(d => d.subject_id),
-          range: { 'min': r.min, 'max': r.max},
+          range: { min: min, max: max },
         };
 
         //            dimension: this.dimensionName,
@@ -1024,6 +1024,7 @@ export default {
         name: this.predef_radio,
         select_fn: this.selectCohortRange,
         dimension_name: this.variable.abbreviation,
+        input_variable: this.inputVariable,
       });
     },
     savePredefs() {
@@ -1033,6 +1034,7 @@ export default {
         name: this.predef_radio,
         select_fn: this.selectCohortRange,
         dimension_name: this.variable.abbreviation,
+        input_variable: this.inputVariable,
       });
     },
   },
