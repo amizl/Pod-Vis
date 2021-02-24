@@ -213,6 +213,7 @@ export default {
       const pvals = this.pairwiseTukeyHsdPvals[
         this.selectedOutcomeVariable.label
       ];
+      pvals.unique_groups.sort((x, y) => y - x);
       const groups = pvals.unique_groups;
       const ng = groups.length;
       let ind = 0;
@@ -220,7 +221,7 @@ export default {
         pd[groups[i]] = {};
         for (let j = i + 1; j < ng; j += 1) {
           pd[groups[i]][groups[j]] = pvals == null ? 'x' : pvals.pvals[ind];
-          ind += 1;
+  	  ind += 1;
         }
       }
       this.pval_dict = pd;

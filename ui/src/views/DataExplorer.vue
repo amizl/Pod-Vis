@@ -197,7 +197,8 @@ export default {
     if (!selectedCohorts || selectedCohorts.length === 0) {
       selectedCohorts = this.collectionCohorts;
     }
-    this.selectedCohorts = selectedCohorts;
+    var scc = [...selectedCohorts].sort((x, y) => y['id'] - x['id']);
+    this.selectedCohorts = scc;
 
     let ind = 0;
     let n_colors = this.colors['cohorts'].length;

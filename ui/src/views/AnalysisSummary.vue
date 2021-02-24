@@ -228,7 +228,10 @@ export default {
         }
       });
 
-      return cch;
+      // sort most recent first
+      // using id because resolution of date_generated isn't sufficiently high res
+      var scc = [...cch].sort((x, y) => y['id'] - x['id']);
+      return scc;
     },
   },
   watch: {
@@ -315,7 +318,8 @@ export default {
           }
         });
       }
-      return sc;
+      var scc = [...sc].sort((x, y) => y['id'] - x['id']);
+      return scc;
     },
     setCohortColors(cohorts) {
       let ind = 0;
@@ -352,8 +356,9 @@ export default {
     },
     async goto3p2() {
       var sc = this.tableCohortsSelected;
-      this.setCohortColors(sc);
-      this.setSelectedCohorts(sc);
+      var scc = [...sc].sort((x, y) => y['id'] - x['id']);
+      this.setCohortColors(scc);
+      this.setSelectedCohorts(scc);
     },
   },
 };
