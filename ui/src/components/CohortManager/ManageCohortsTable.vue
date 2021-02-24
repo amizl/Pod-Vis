@@ -103,7 +103,7 @@
 	<template v-slot:item.actions="{ item }">
           <td class="subtitle-1 text-xs-center">
 	    <!-- edit -->
-            <v-tooltip top color="primary">
+            <v-tooltip v-if="false" top color="primary">
               <template v-slot:activator="{ on: tooltip }">
 		<v-icon v-if="cohort && (item.id == cohort.id)" color="white" @click="editCohort(item)">edit</v-icon>
 		<v-icon v-else @click="editCohort(item)">edit</v-icon>
