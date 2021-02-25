@@ -86,7 +86,7 @@
         </template>
 
         <template v-slot:item.size="{ item }">
-          <td class="subtitle-1 text-xs-center align-center" align-center>
+          <td class="subtitle-1 text-xs-center align-center pa-0 ma-0" align-center>
 	    <span v-if="cohort && (item.id == cohort.id)" class="font-weight-bold">
 	      {{ item.subject_ids ? item.subject_ids.length : '?' }}
 	    </span>
@@ -101,7 +101,7 @@
         </template>
 
 	<template v-slot:item.actions="{ item }">
-          <td class="subtitle-1 text-xs-center">
+          <td class="subtitle-1 text-xs-center pa-0 ma-0">
 	    <!-- edit -->
             <v-tooltip v-if="false" top color="primary">
               <template v-slot:activator="{ on: tooltip }">
@@ -300,7 +300,7 @@ export default {
       hdrs.push({
         text: 'Subjects',
         value: 'size',
-        class: 'text-subtitle-1 font-weight-bold',
+        class: 'text-subtitle-1 font-weight-bold ma-0 pa-0',
       });
 
 //      hdrs.push({
@@ -312,7 +312,7 @@ export default {
       hdrs.push({
         text: 'Actions',
         value: 'actions',
-        class: 'text-subtitle-1 font-weight-bold',
+        class: 'text-subtitle-1 font-weight-bold ma-0 pa-0',
       });
 
       return hdrs;
