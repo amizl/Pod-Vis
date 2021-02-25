@@ -1,3 +1,6 @@
+1.0.4
+ -Add adjustable split panes to Cohort Manager. (#579)
+
 1.0.3 (February 24, 2021)
  -Add option to display full scale names (#562)
  -Limit histogram bins only if datatype is int (#558)
@@ -8,7 +11,7 @@
  -Redesign Cohort Manager with new panel that lists all cohorts (#569)
  -Add new dialog/wizard for creating predefined ranges (#570)
  -Remove 'Home Page' step from analysis tracker (#571)
-	
+
 1.0.2 (November 1, 2020)
  -Remove "all variables" checkbox from InputVariablesDialog (#552)
  -Change Analytics Panel defaults to "Last Visit" and p-val=0.05 (#554)

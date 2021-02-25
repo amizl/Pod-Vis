@@ -19,6 +19,7 @@
     "lodash": "^4.17.20",
     "lz-string": "^1.4.4",
     "sortablejs": "^1.12.0",
+    "splitpanes": "^2.3.6",
     "vue": "^2.6.12",
     "vue-resize-directive": "^1.2.0",
     "vue-router": "^3.4.9",

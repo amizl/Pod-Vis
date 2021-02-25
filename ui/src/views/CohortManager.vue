@@ -98,49 +98,65 @@
 
       <v-container fluid fill-width class="ma-0 pa-0 pt-2">
         <v-row class="ma-0 pa-0">
-          <v-col cols="8" class="ma-0 pa-0">
-            <v-sheet
-              color="white"
-              height="100%"
-              class="rounded-lg shadow pa-0 ma-0"
-            >
-              <input-variables
-                :expanded.sync="inExpanded"
-                :highlighted="inHighlighted"
-                class="ma-0 pt-0"
-                @userSelectedInputVariables="userSelectedVariables"
-                @userChangedInputVariable="userChangedVariable"
-                @comparePredefinedRanges="comparePredefinedRanges"
-                @savePredefinedRanges="savePredefinedRanges"
-              />
-            </v-sheet>
-          </v-col>
-          <v-col cols="4" class="ma-0 pa-0">
-            <manage-cohorts-table
-              class="ml-2"
-              :cohorts="collection_cohorts"
-              :collection-id="collectionId"
-              @selectedCohort="cohortSelected"
-              @newCohort="newCohort"
-            />
-          </v-col>
+          <v-col cols="12" class="ma-0 pa-0">
+
+	    <splitpanes class="default-theme">
+
+	      <pane size="65">
+		<v-sheet
+		  color="white"
+		  height="100%"
+		  class="rounded-lg shadow pa-0 ma-0 mr-1"
+		  >
+		  <input-variables
+                    :expanded.sync="inExpanded"
+                    :highlighted="inHighlighted"
+                    class="ma-0 pt-0"
+                    @userSelectedInputVariables="userSelectedVariables"
+                    @userChangedInputVariable="userChangedVariable"
+                    @comparePredefinedRanges="comparePredefinedRanges"
+                    @savePredefinedRanges="savePredefinedRanges"
+		    />
+		</v-sheet>
+	      </pane>
+
+	      <pane min-size="25" max-size="75" size="35">
+		<manage-cohorts-table
+		  class="ml-1"
+		  :cohorts="collection_cohorts"
+		  :collection-id="collectionId"
+		  @selectedCohort="cohortSelected"
+		  @newCohort="newCohort"
+		  />
+	      </pane>
+	    </splitpanes>
+
+	  </v-col>
         </v-row>
       </v-container>
 
       <v-container fluid fill-width class="ma-0 pa-0 pt-2">
         <v-row class="ma-0 pa-0">
-          <v-col cols="8" class="ma-0 pa-0">
-            <output-variables
-              :expanded.sync="outExpanded"
-              :highlighted="outHighlighted"
-              :disabled="true"
-              class="ma-0 pt-0"
-              @userSelectedOutputVariables="userSelectedVariables"
-              @userChangedOutputVariable="userChangedVariable"
-            />
-          </v-col>
-          <v-col cols="4" class="ma-0 pa-0">
-            <analytics-table class="ml-2" color-scheme="brewer5" />
+          <v-col cols="12" class="ma-0 pa-0">
+
+	    <splitpanes class="default-theme">
+
+	      <pane size="65">
+		<output-variables
+		  :expanded.sync="outExpanded"
+		  :highlighted="outHighlighted"
+		  :disabled="true"
+		  class="ma-0 pt-0 mr-1"
+		  @userSelectedOutputVariables="userSelectedVariables"
+		  @userChangedOutputVariable="userChangedVariable"
+		  />
+	      </pane>
+
+	      <pane min-size="25" max-size="75" size="35"> 
+		<analytics-table class="ml-1" color-scheme="brewer5" />
+	      </pane>
+	    </splitpanes>
+	    
           </v-col>
         </v-row>
       </v-container>
@@ -157,6 +173,8 @@
 </template>
 
 <script>
+import { Splitpanes, Pane } from 'splitpanes';
+import 'splitpanes/dist/splitpanes.css';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions, state, getters } from '@/store/modules/cohortManager/types';
 import {
@@ -180,6 +198,8 @@ export default {
     ManageCohortsTable,
     AnalyticsTable,
     AnalyticsPopup,
+    Splitpanes,
+    Pane
   },
   props: {
     collectionId: {
