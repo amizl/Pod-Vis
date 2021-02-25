@@ -45,6 +45,7 @@
                 >Comparing</v-toolbar-title
               >
 
+	      <div class="ma-0 pa-0">
               <v-tooltip bottom color="primary">
                 <template v-slot:activator="{ on: tooltip }">
                   <span v-on="{ ...tooltip }">
@@ -63,7 +64,9 @@
                   selected cohort
                 </span>
               </v-tooltip>
+	      </div>
 
+	      <div class="ma-0 pa-0">
               <v-tooltip bottom color="primary">
                 <template v-slot:activator="{ on: tooltip }">
                   <span v-on="{ ...tooltip }">
@@ -83,6 +86,7 @@
                   in remainder
                 </span>
               </v-tooltip>
+	      </div>
             </div>
           </v-col>
 
