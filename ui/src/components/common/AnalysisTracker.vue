@@ -288,9 +288,9 @@ export default {
       }
     },
     gotoDatasetManager() {
-      if (this.step == 2) {
+      if (this.step == 1) {
         // no-op
-      } else if (this.step > 2) {
+      } else if (this.step > 1) {
         this.displayConfirmationDialog(
           'Return to Dataset Manager?',
           'Are you sure you want to return to the Dataset Manager? ' +
@@ -302,9 +302,9 @@ export default {
       }
     },
     gotoCohortManager() {
-      if (this.step == 3) {
+      if (this.step == 2) {
         // no-op
-      } else if (this.step == 2 && this.substep == 2.4) {
+      } else if (this.step == 1 && this.substep == 1.4) {
         if (!this.dsCollection.has_visits_set) {
           this.displayErrorDialog(
             'First/Last Visits Not Selected',
@@ -315,7 +315,7 @@ export default {
         } else {
           this.$router.push(`cohorts?collection=${this.collectionId}`);
         }
-      } else if (this.step <= 2) {
+      } else if (this.step <= 1) {
         this.displayErrorDialog(
           'No Study Dataset',
           'A study dataset must be created before the Cohort Manager can be used. ' +
@@ -329,7 +329,7 @@ export default {
     gotoDataExplorer() {
       if (this.step == 4) {
         // no-op
-      } else if (this.step <= 2) {
+      } else if (this.step <= 1) {
         this.displayErrorDialog(
           'No Study Dataset',
           'A study dataset must be created before the Data Explorer can be used. ' +
@@ -341,12 +341,17 @@ export default {
       }
     },
     gotoSummaryMatrix() {
-      if (this.step <= 2) {
+      if (this.step <= 1) {
         this.displayErrorDialog(
           'No Study Dataset',
           'A study dataset must be created before the Summary Matrix can be viewed. ' +
             "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
             'link for an existing study dataset.'
+        );
+      } else if (this.collection_cohorts.length < 2) {
+        this.displayErrorDialog(
+          'Too Few Cohorts',
+          'At least two cohorts must be created before the Summary Matrix can be viewed. '
         );
       } else {
         this.$router.push(`summary?collection=${this.collectionId}`);
