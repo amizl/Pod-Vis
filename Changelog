@@ -1,5 +1,7 @@
 1.0.4
  -Add adjustable split panes to Cohort Manager. (#579)
+ -Fix Analysis Tracker navigation bugs. (#584)
+ -Make boxplots observe flip_axis attribute. (#586)
 
 1.0.3 (February 24, 2021)
  -Add option to display full scale names (#562)
