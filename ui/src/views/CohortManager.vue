@@ -99,16 +99,14 @@
       <v-container fluid fill-width class="ma-0 pa-0 pt-2">
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
-
-	    <splitpanes class="default-theme">
-
-	      <pane size="65">
-		<v-sheet
-		  color="white"
-		  height="100%"
-		  class="rounded-lg shadow pa-0 ma-0 mr-1"
-		  >
-		  <input-variables
+            <splitpanes class="default-theme">
+              <pane size="65">
+                <v-sheet
+                  color="white"
+                  height="100%"
+                  class="rounded-lg shadow pa-0 ma-0 mr-1"
+                >
+                  <input-variables
                     :expanded.sync="inExpanded"
                     :highlighted="inHighlighted"
                     class="ma-0 pt-0"
@@ -116,47 +114,43 @@
                     @userChangedInputVariable="userChangedVariable"
                     @comparePredefinedRanges="comparePredefinedRanges"
                     @savePredefinedRanges="savePredefinedRanges"
-		    />
-		</v-sheet>
-	      </pane>
+                  />
+                </v-sheet>
+              </pane>
 
-	      <pane min-size="25" max-size="75" size="35">
-		<manage-cohorts-table
-		  class="ml-1"
-		  :cohorts="collection_cohorts"
-		  :collection-id="collectionId"
-		  @selectedCohort="cohortSelected"
-		  @newCohort="newCohort"
-		  />
-	      </pane>
-	    </splitpanes>
-
-	  </v-col>
+              <pane min-size="25" max-size="75" size="35">
+                <manage-cohorts-table
+                  class="ml-1"
+                  :cohorts="collection_cohorts"
+                  :collection-id="collectionId"
+                  @selectedCohort="cohortSelected"
+                  @newCohort="newCohort"
+                />
+              </pane>
+            </splitpanes>
+          </v-col>
         </v-row>
       </v-container>
 
       <v-container fluid fill-width class="ma-0 pa-0 pt-2">
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
+            <splitpanes class="default-theme">
+              <pane size="65">
+                <output-variables
+                  :expanded.sync="outExpanded"
+                  :highlighted="outHighlighted"
+                  :disabled="true"
+                  class="ma-0 pt-0 mr-1"
+                  @userSelectedOutputVariables="userSelectedVariables"
+                  @userChangedOutputVariable="userChangedVariable"
+                />
+              </pane>
 
-	    <splitpanes class="default-theme">
-
-	      <pane size="65">
-		<output-variables
-		  :expanded.sync="outExpanded"
-		  :highlighted="outHighlighted"
-		  :disabled="true"
-		  class="ma-0 pt-0 mr-1"
-		  @userSelectedOutputVariables="userSelectedVariables"
-		  @userChangedOutputVariable="userChangedVariable"
-		  />
-	      </pane>
-
-	      <pane min-size="25" max-size="75" size="35"> 
-		<analytics-table class="ml-1" color-scheme="brewer5" />
-	      </pane>
-	    </splitpanes>
-	    
+              <pane min-size="25" max-size="75" size="35">
+                <analytics-table class="ml-1" color-scheme="brewer5" />
+              </pane>
+            </splitpanes>
           </v-col>
         </v-row>
       </v-container>
@@ -199,7 +193,7 @@ export default {
     AnalyticsTable,
     AnalyticsPopup,
     Splitpanes,
-    Pane
+    Pane,
   },
   props: {
     collectionId: {

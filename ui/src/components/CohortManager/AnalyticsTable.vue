@@ -45,48 +45,50 @@
                 >Comparing</v-toolbar-title
               >
 
-	      <div class="ma-0 pa-0">
-              <v-tooltip bottom color="primary">
-                <template v-slot:activator="{ on: tooltip }">
-                  <span v-on="{ ...tooltip }">
-                    <v-chip
-                      label
-                      color="primary"
-                      class="white--text title mr-2 mb-2"
-                      :style="'background: ' + colors['cohort']"
-                      >{{ cohortSize }}</v-chip
-                    >
-                    <span class="black--text text-body-1">Selected Cohort</span>
+              <div class="ma-0 pa-0">
+                <v-tooltip bottom color="primary">
+                  <template v-slot:activator="{ on: tooltip }">
+                    <span v-on="{ ...tooltip }">
+                      <v-chip
+                        label
+                        color="primary"
+                        class="white--text title mr-2 mb-2"
+                        :style="'background: ' + colors['cohort']"
+                        >{{ cohortSize }}</v-chip
+                      >
+                      <span class="black--text text-body-1"
+                        >Selected Cohort</span
+                      >
+                    </span>
+                  </template>
+                  <span class="subtitle-1">
+                    {{ cohortSize }} subject{{ cohortSize == 1 ? '' : 's' }} in
+                    selected cohort
                   </span>
-                </template>
-                <span class="subtitle-1">
-                  {{ cohortSize }} subject{{ cohortSize == 1 ? '' : 's' }} in
-                  selected cohort
-                </span>
-              </v-tooltip>
-	      </div>
+                </v-tooltip>
+              </div>
 
-	      <div class="ma-0 pa-0">
-              <v-tooltip bottom color="primary">
-                <template v-slot:activator="{ on: tooltip }">
-                  <span v-on="{ ...tooltip }">
-                    <v-chip
-                      label
-                      class="black--text title mr-2"
-                      :style="'background: ' + colors['population']"
-                      >{{ remainderSize }}</v-chip
-                    >
-                    <span class="black--text text-body-1">Remainder</span>
+              <div class="ma-0 pa-0">
+                <v-tooltip bottom color="primary">
+                  <template v-slot:activator="{ on: tooltip }">
+                    <span v-on="{ ...tooltip }">
+                      <v-chip
+                        label
+                        class="black--text title mr-2"
+                        :style="'background: ' + colors['population']"
+                        >{{ remainderSize }}</v-chip
+                      >
+                      <span class="black--text text-body-1">Remainder</span>
+                    </span>
+                  </template>
+                  <span class="subtitle-1">
+                    {{ remainderSize }} subject{{
+                      remainderSize == 1 ? '' : 's'
+                    }}
+                    in remainder
                   </span>
-                </template>
-                <span class="subtitle-1">
-                  {{ remainderSize }} subject{{
-                    remainderSize == 1 ? '' : 's'
-                  }}
-                  in remainder
-                </span>
-              </v-tooltip>
-	      </div>
+                </v-tooltip>
+              </div>
             </div>
           </v-col>
 
