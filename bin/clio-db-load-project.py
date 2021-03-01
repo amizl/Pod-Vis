@@ -552,6 +552,9 @@ def process_observation_ontology(cursor, conn, observation_ont_file, observation
                 entry_type = row['Entry Type']
                 observation_term = index
 
+                if (flip_axis != 0) and (flip_axis != 1):
+                    flip_axis = 0
+                
                 print("Processing observation term: {} flip axis: {} index: {}".format(observation_term, flip_axis, index))
 
                 # Make sure that the variable belongs to the observation_ontology table, else skip
@@ -1033,9 +1036,12 @@ def update_observation_ontology_term(cursor, observation_ont_id, term, abbreviat
 
     def print_diff():
         print("current database entry = " + str(oo))
+        flip_axis_str = 'None'
+        if flip_axis is not None:
+            flip_axis_str = str(int(flip_axis))
         print("update = { 'abbreviation': '" + abbreviation+ "', 'label': '" + term + "', 'description': '" + description +
               "', 'parent_id': "+ str(parent_id) +", 'value_type': '" + value_type.lower() + "', 'data_category': '" +
-              data_category + "', 'flip_axis': " + str(int(flip_axis)) + " }")
+              data_category + "', 'flip_axis': " + flip_axis_str + " }")
         
     # no change to ontology
     if not has_changes:
