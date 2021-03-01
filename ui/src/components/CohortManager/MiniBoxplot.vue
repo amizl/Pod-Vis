@@ -43,12 +43,17 @@
                   <!-- box -->
                   <rect
                     v-for="sc in Object.keys(boxplotStats)"
-                    :x="boxplotStats[sc]['q1_x']"
+                    :x="
+                      axisFlipped
+                        ? boxplotStats[sc]['q3_x']
+                        : boxplotStats[sc]['q1_x']
+                    "
                     :y="boxplotStats[sc]['y1']"
                     :width="boxplotStats[sc]['q1_q3_w']"
                     :height="boxplotStats[sc]['box_h']"
                     :fill="boxplotStats[sc]['color']"
-                    stroke="black"
+                    stroke="none"
+                    stroke-width="0.5"
                   />
 
                   <!-- median line -->
@@ -76,7 +81,12 @@
       </v-sheet>
     </template>
     <span class="subtitle-1">
-      {{ outputVar.label + ' 0 - ' + this.maxValue }}
+      {{
+        outputVar.label +
+          (this.axisFlipped
+            ? ' ' + this.maxValue + ' - 0'
+            : ' 0 - ' + this.maxValue)
+      }}
     </span>
   </v-tooltip>
 </template>
@@ -125,6 +135,11 @@ export default {
       type: String,
       required: true,
     },
+    doFlipAxis: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
@@ -132,6 +147,7 @@ export default {
       boxplotStats: {},
       boxplotStatsUpdated: false,
       maxValue: null,
+      axisFlipped: false,
     };
   },
   computed: {
@@ -139,7 +155,13 @@ export default {
       return axisTop(this.xScale);
     },
     xScale() {
-      var range = [0, this.width];
+      var range = null;
+      if (this.doFlipAxis) {
+        this.axisFlipped = this.outputVar && this.outputVar.flip_axis;
+        range = this.axisFlipped ? [this.width, 0] : [0, this.width];
+      } else {
+        range = [0, this.width];
+      }
       return scaleLinear()
         .domain([0, this.maxValue])
         .range(range);

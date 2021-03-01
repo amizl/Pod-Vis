@@ -115,7 +115,11 @@
                 <!-- box -->
                 <rect
                   v-for="sc in Object.keys(boxplotStats)"
-                  :x="boxplotStats[sc]['q1_x']"
+                  :x="
+                    axisFlipped
+                      ? boxplotStats[sc]['q3_x']
+                      : boxplotStats[sc]['q1_x']
+                  "
                   :y="boxplotStats[sc]['y1']"
                   :width="boxplotStats[sc]['q1_q3_w']"
                   :height="boxplotStats[sc]['box_h']"
@@ -131,7 +135,7 @@
                   :y1="boxplotStats[sc]['y1']"
                   :y2="boxplotStats[sc]['y2']"
                   stroke="black"
-                  stroke-width="2"
+                  stroke-width="3"
                 />
 
                 <!-- x-axis at top -->
@@ -200,6 +204,11 @@ export default {
       required: false,
       default: 10,
     },
+    doFlipAxis: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
@@ -215,6 +224,7 @@ export default {
       maxLabelLen: 20,
       firstVisit: null,
       lastVisit: null,
+      axisFlipped: false,
     };
   },
   computed: {
@@ -252,15 +262,21 @@ export default {
     },
     xScale() {
       var rt = this.width - this.margins.right;
+      var range = null;
 
       // take flip_axis into account:
-      //      var range =
-      //        this.selectedOutcomeVariable && this.selectedOutcomeVariable.flip_axis
-      //          ? [rt, this.margins.left]
-      //          : [this.margins.left, rt];
-
-      // or not:
-      var range = [this.margins.left, rt];
+      if (this.doFlipAxis) {
+        this.axisFlipped =
+          this.selectedOutcomeVariable &&
+          this.selectedOutcomeVariable.flip_axis;
+        range = this.axisFlipped
+          ? [rt, this.margins.left]
+          : [this.margins.left, rt];
+      }
+      // or don't:
+      else {
+        range = [this.margins.left, rt];
+      }
       return scaleLinear()
         .domain([0, this.maxValue])
         .range(range);
