@@ -1,4 +1,5 @@
 1.0.4
+ -Add new Help Mode to Cohort Manager. (#577)
  -Add adjustable split panes to Cohort Manager. (#579)
  -Fix Analysis Tracker navigation bugs. (#584)
  -Make boxplots observe flip_axis attribute. (#586)
