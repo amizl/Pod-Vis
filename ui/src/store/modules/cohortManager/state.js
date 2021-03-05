@@ -25,4 +25,5 @@ export default {
   [state.QUERIES]: {},
   [state.COMPARISON_MEASURE]: 'Last Visit',
   [state.USE_LONG_SCALE_NAMES]: false,
+  [state.HELP_MODE]: false,
 };

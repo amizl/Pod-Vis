@@ -586,4 +586,7 @@ export default {
   [actions.SET_USE_LONG_SCALE_NAMES]({ commit, dispatch }, useLong) {
     commit(mutations.SET_USE_LONG_SCALE_NAMES, useLong);
   },
+  [actions.SET_HELP_MODE]({ commit, dispatch }, helpMode) {
+    commit(mutations.SET_HELP_MODE, helpMode);
+  },
 };

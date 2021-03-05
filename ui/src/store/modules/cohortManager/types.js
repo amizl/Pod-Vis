@@ -24,6 +24,7 @@ export const state = {
   HIGHLIGHTED_SUBSET: 'highlightedSubset',
   COMPARISON_MEASURE: 'comparisonMeasure',
   USE_LONG_SCALE_NAMES: 'useLongScaleNames',
+  HELP_MODE: 'helpMode',
 };
 
 // Getters
@@ -89,6 +90,7 @@ export const mutations = {
   INCREMENT_ANOVA_PVALS_REQUEST_NUM: 'incrementAnovaPvalsRequestNum',
   SET_COMPARISON_MEASURE: 'setComparisonMeasure',
   SET_USE_LONG_SCALE_NAMES: 'setUseLongScaleNames',
+  SET_HELP_MODE: 'setHelpMode',
 };
 
 // Actions
@@ -124,4 +126,5 @@ export const actions = {
   RESET_HIGHLIGHTED_SUBSET: 'resetHighlightedSubset',
   SET_COMPARISON_MEASURE: 'setComparisonMeasure',
   SET_USE_LONG_SCALE_NAMES: 'setUseLongScaleNames',
+  SET_HELP_MODE: 'setHelpMode',
 };

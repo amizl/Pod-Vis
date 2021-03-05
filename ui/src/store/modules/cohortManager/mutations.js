@@ -268,7 +268,6 @@ export default {
   [mutations.SET_USE_LONG_SCALE_NAMES](state, useLong) {
     state[stateTypes.USE_LONG_SCALE_NAMES] = useLong;
   },
-
   /**
    * Set query for particular dimension.
    * @param {Object} state
@@ -413,5 +412,13 @@ export default {
     state[stateTypes.ANOVA_PVALS_REQUEST_NUM] =
       state[stateTypes.ANOVA_PVALS_REQUEST_NUM] + 1;
     callback(state[stateTypes.ANOVA_PVALS_REQUEST_NUM]);
+  },
+  /**
+   * Set help mode.
+   * @param {Object} state
+   * @param {Boolean} whether help mode is enabled.
+   */
+  [mutations.SET_HELP_MODE](state, helpMode) {
+    state[stateTypes.HELP_MODE] = helpMode;
   },
 };
