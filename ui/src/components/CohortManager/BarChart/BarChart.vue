@@ -1,7 +1,18 @@
 <template>
-  <v-container fluid fill-width>
+  <v-container fluid fill-width class="pa-0 ma-0">
     <v-row class="ma-0 pa-0">
       <v-col cols="12" class="ma-0 pa-0">
+        <v-chip
+          v-if="showHelpChip"
+          label
+          close
+          color="#4caf50"
+          class="font-weight-bold white--text pa-2 my-1"
+          @click:close="showHelpChip = false"
+          >Click on bar to toggle category inclusion OR use checkboxes
+          below.</v-chip
+        >
+
         <svg ref="chart" :width="width" :height="height">
           <g
             v-if="width && height"
@@ -162,6 +173,11 @@ export default {
       required: false,
       default: false,
     },
+    showFilterHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -185,6 +201,7 @@ export default {
       tab: 'cats',
       // category checkboxes
       cat_cbs: [],
+      showHelpChip: false,
     };
   },
   computed: {
@@ -300,6 +317,9 @@ export default {
           this.selectOrDeselectBar(k);
         }
       });
+    },
+    showFilterHelp(show) {
+      this.showHelpChip = show;
     },
   },
   created() {

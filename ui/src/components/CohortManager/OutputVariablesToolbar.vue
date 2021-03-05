@@ -67,6 +67,15 @@
         <v-icon v-else @click="expandClicked">expand_more</v-icon>
       </v-toolbar-items>
       -->
+            <v-chip
+              v-if="showHelpChip"
+              label
+              close
+              color="#4caf50"
+              class="font-weight-bold white--text pa-3 my-5"
+              @click:close="showHelpChip = false"
+              >Review the outcome graphs and analytics panel.</v-chip
+            >
           </v-card-title>
         </v-card>
       </v-col>
@@ -93,12 +102,23 @@ export default {
       type: Boolean,
       required: true,
     },
+    showReviewHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
       subset: 'cohort',
       colors: colors,
+      showHelpChip: false,
     };
+  },
+  watch: {
+    showReviewHelp(show) {
+      this.showHelpChip = show;
+    },
   },
   computed: {
     ...mapState('cohortManager', {

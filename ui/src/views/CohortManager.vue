@@ -43,7 +43,11 @@
       <v-tooltip bottom color="primary">
         <template v-slot:activator="{ on: tooltip }">
           <v-toolbar-items v-on="{ ...tooltip }">
-            <v-checkbox v-model="helpMode" dark class="mt-5"></v-checkbox>
+            <v-checkbox
+              v-model="helpModeCheckbox"
+              dark
+              class="mt-5"
+            ></v-checkbox>
             <span class="white--text font-weight-bold mt-5">Help Mode</span>
           </v-toolbar-items>
         </template>
@@ -87,7 +91,7 @@
       </v-row>
     </v-container>
 
-    <div v-else fill-width class="ma-0 pa-0">
+    <div v-else fill-width class="ma-0 pa-0" style="border 3px dotted green;">
       <analysis-tracker
         step="2"
         :substep.sync="substep"
@@ -96,64 +100,87 @@
         @createNew="createNew"
       ></analysis-tracker>
 
-      <v-container fluid fill-width class="ma-0 pa-0 pt-2">
-        <v-row class="ma-0 pa-0">
-          <v-col cols="12" class="ma-0 pa-0">
-            <splitpanes class="default-theme">
-              <pane size="65">
-                <v-sheet
-                  color="white"
-                  height="100%"
-                  class="rounded-lg shadow pa-0 ma-0 mr-1"
+      <v-card :class="allPanelsClass">
+        <v-container fluid fill-width class="pa-0 ma-0">
+          <v-row class="ma-0 pa-0">
+            <v-col cols="12" class="ma-0 pa-0">
+              <splitpanes class="default-theme">
+                <pane size="65" :style="inputVarsStyle" class="pb-1">
+                  <v-sheet
+                    color="white"
+                    height="100%"
+                    class="rounded-lg shadow pa-0 ma-0 mr-1"
+                  >
+                    <input-variables
+                      :expanded.sync="inExpanded"
+                      :highlighted="inHighlighted"
+                      :class="inputVarsClass"
+                      :show-add-help="helpMode && substep == '2.1'"
+                      :show-filter-help="helpMode && substep == '2.3'"
+                      @userSelectedInputVariables="userSelectedVariables"
+                      @userChangedInputVariable="userChangedVariable"
+                      @comparePredefinedRanges="comparePredefinedRanges"
+                      @savePredefinedRanges="savePredefinedRanges"
+                    >
+                    </input-variables>
+                  </v-sheet>
+                </pane>
+
+                <pane
+                  min-size="25"
+                  max-size="75"
+                  size="35"
+                  :style="manageCohortsStyle"
+                  class="pb-1"
                 >
-                  <input-variables
-                    :expanded.sync="inExpanded"
-                    :highlighted="inHighlighted"
-                    class="ma-0 pt-0"
-                    @userSelectedInputVariables="userSelectedVariables"
-                    @userChangedInputVariable="userChangedVariable"
-                    @comparePredefinedRanges="comparePredefinedRanges"
-                    @savePredefinedRanges="savePredefinedRanges"
+                  <manage-cohorts-table
+                    class="ml-1"
+                    :cohorts="collection_cohorts"
+                    :collection-id="collectionId"
+                    :show-new-help="helpMode && substep == '2.2'"
+                    :show-save-help="helpMode && substep == '2.4'"
+                    :show-next-help="helpMode && collection_cohorts.length >= 2"
+                    @selectedCohort="cohortSelected"
+                    @newCohort="newCohort"
                   />
-                </v-sheet>
-              </pane>
+                </pane>
+              </splitpanes>
+            </v-col>
+          </v-row>
+        </v-container>
 
-              <pane min-size="25" max-size="75" size="35">
-                <manage-cohorts-table
-                  class="ml-1"
-                  :cohorts="collection_cohorts"
-                  :collection-id="collectionId"
-                  @selectedCohort="cohortSelected"
-                  @newCohort="newCohort"
-                />
-              </pane>
-            </splitpanes>
-          </v-col>
-        </v-row>
-      </v-container>
+        <v-container fluid fill-width class="ma-0 pa-0 pt-1">
+          <v-row class="ma-0 pa-0">
+            <v-col cols="12" class="ma-0 pa-0">
+              <splitpanes class="default-theme">
+                <pane size="65" :style="outputVarsStyle">
+                  <output-variables
+                    :expanded.sync="outExpanded"
+                    :highlighted="outHighlighted"
+                    :disabled="true"
+                    :class="outputVarsClass"
+                    :show-add-help="helpMode && substep == 2.2"
+                    :show-review-help="helpMode && substep == 2.4"
+                    @userSelectedOutputVariables="userSelectedVariables"
+                    @userChangedOutputVariable="userChangedVariable"
+                  />
+                </pane>
 
-      <v-container fluid fill-width class="ma-0 pa-0 pt-2">
-        <v-row class="ma-0 pa-0">
-          <v-col cols="12" class="ma-0 pa-0">
-            <splitpanes class="default-theme">
-              <pane size="65">
-                <output-variables
-                  :expanded.sync="outExpanded"
-                  :highlighted="outHighlighted"
-                  :disabled="true"
-                  class="ma-0 pt-0 mr-1"
-                  @userSelectedOutputVariables="userSelectedVariables"
-                  @userChangedOutputVariable="userChangedVariable"
-                />
-              </pane>
+                <pane
+                  min-size="25"
+                  max-size="75"
+                  size="35"
+                  :style="analyticsTableStyle"
+                >
+                  <analytics-table class="ml-1" color-scheme="brewer5" />
+                </pane>
+              </splitpanes>
+            </v-col>
+          </v-row>
 
-              <pane min-size="25" max-size="75" size="35">
-                <analytics-table class="ml-1" color-scheme="brewer5" />
-              </pane>
-            </splitpanes>
-          </v-col>
-        </v-row>
-      </v-container>
+          <v-overlay absolute :value="helpMode && substep != 2.4"> </v-overlay>
+        </v-container>
+      </v-card>
     </div>
     <analytics-popup
       ref="apop"
@@ -163,6 +190,18 @@
       :select-range-fn="analyticsPopupSelectRangeFn"
       :cohort-prefix="analyticsPopupCohortPrefix"
     />
+    <v-snackbar
+      v-model="helpModeNotify"
+      color="#2a96f3"
+      bottom
+      multi-line
+      class="pb-5"
+    >
+      <v-icon class="mr-2">help_outline</v-icon>
+      <span class="font-weight-bold white--text subtitle-1">
+        Toggle the help mode at any time by using the checkbox at the top right.
+      </span>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -211,11 +250,12 @@ export default {
       inHighlighted: true,
       outHighlighted: false,
       getCollectionDescription: getCollectionDescription,
-      helpMode: false,
       analyticsPopupName: 'Tertiles',
       analyticsPopupCohortPrefix: '',
       analyticsPopupCohorts: [],
       analyticsPopupSelectRangeFn: x => x,
+      helpModeCheckbox: false,
+      helpModeNotify: false,
     };
   },
   computed: {
@@ -230,6 +270,7 @@ export default {
       outputVariables: state.OUTPUT_VARIABLES,
       filteredData: state.FILTERED_DATA,
       unfilteredData: state.UNFILTERED_DATA,
+      helpMode: state.HELP_MODE,
     }),
     // cohorts are collection-specific
     collection_cohorts() {
@@ -245,6 +286,52 @@ export default {
       // using id because resolution of date_generated isn't sufficiently high res
       var scc = [...cch].sort((x, y) => y['id'] - x['id']);
       return scc;
+    },
+    allPanelsClass() {
+      var cl = 'ma-0 pa-0 pt-2';
+      if (this.helpMode && this.substep == '2.4') {
+        cl = cl + ' help_mode';
+      }
+      return cl;
+    },
+    inputVarsClass() {
+      var cl = 'ma-0 pt-0';
+      if (this.helpMode && (this.substep == '2.1' || this.substep == '2.3')) {
+        cl = cl + ' help_mode';
+      }
+      return cl;
+    },
+    outputVarsClass() {
+      var cl = 'ma-0 pt-0 mr-1';
+      if (this.helpMode && this.substep == '2.2') {
+        cl = cl + ' help_mode';
+      }
+      return cl;
+    },
+    inputVarsStyle() {
+      if (this.helpMode && this.substep != '2.2') {
+        return 'z-index: 100;';
+      }
+      return 'z-index: auto';
+    },
+    manageCohortsStyle() {
+      // always show Manage Cohorts in Help Mode:
+      if (this.helpMode) {
+        return 'z-index: 100;';
+      }
+      return 'z-index: auto';
+    },
+    outputVarsStyle() {
+      if (this.helpMode && (this.substep == '2.2' || this.substep == '2.4')) {
+        return 'z-index: 100;';
+      }
+      return 'z-index: auto';
+    },
+    analyticsTableStyle() {
+      if (this.helpMode && this.substep == '2.4') {
+        return 'z-index: 100;';
+      }
+      return 'z-index: auto';
     },
   },
   watch: {
@@ -281,6 +368,12 @@ export default {
     unfilteredData(ufd) {
       this.updateSubstep();
     },
+    helpModeCheckbox(helpOn) {
+      if (helpOn != this.helpMode) this.setHelpMode(helpOn);
+    },
+    helpMode(helpOn) {
+      this.helpModeNotify = helpOn;
+    },
   },
   async created() {
     this.resetAllStoreData();
@@ -303,6 +396,7 @@ export default {
       setCohort: actions.SET_COHORT,
       setCohortNoReset: actions.SET_COHORT_NO_RESET,
       setUseLongScaleNames: actions.SET_USE_LONG_SCALE_NAMES,
+      setHelpMode: actions.SET_HELP_MODE,
     }),
     updateSubstep() {
       var n_iv = this.inputVariables.length;
@@ -328,7 +422,8 @@ export default {
       this.setCohortNoReset({ id: -1 });
     },
     cohortSaved(success) {
-      this.createNew(success);
+      console.log('CohortManager: cohortSaved success=' + success);
+      if (this.helpMode) this.createNew(success);
     },
     // create entirely new cohort resetting everything
     createNew(success) {
@@ -398,4 +493,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Help mode */
+.help_mode {
+  border: 7px solid #fceb3b !important;
+}
+</style>

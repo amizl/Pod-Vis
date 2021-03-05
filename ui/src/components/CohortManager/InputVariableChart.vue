@@ -61,6 +61,7 @@
             "
             :id="variable.id"
             :dimension-name="dimension"
+            :show-filter-help="showFilterHelp"
             show-selection
             bar-tooltip="Click to add or remove this value from the cohort filter"
             @userChangedVariable="userChangedInputVariable"
@@ -70,6 +71,7 @@
             :id="variable.id"
             :dimension-name="dimension"
             :variable="variable"
+            :show-filter-help="showFilterHelp"
             input-variable
             @userChangedVariable="userChangedInputVariable"
             @comparePredefinedRanges="comparePredefinedRanges"
@@ -79,6 +81,7 @@
             v-else
             :id="variable.id"
             :dimension-name="dimension"
+            :show-filter-help="showFilterHelp"
             show-selection
             @userChangedVariable="userChangedInputVariable"
           />
@@ -103,6 +106,11 @@ export default {
     variable: {
       type: Object,
       required: true,
+    },
+    showFilterHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   data() {

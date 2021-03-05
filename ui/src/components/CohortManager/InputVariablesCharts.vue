@@ -9,6 +9,7 @@
         <input-variable-chart
           :key="'ivc-' + inputVariable.id"
           :variable="inputVariable"
+          :show-filter-help="showFilterHelp"
           @userResetInputVariable="userChangedVariable"
           @userChangedInputVariable="userChangedVariable"
           @comparePredefinedRanges="comparePredefinedRanges"
@@ -31,6 +32,13 @@ export default {
   },
   components: {
     InputVariableChart,
+  },
+  props: {
+    showFilterHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   computed: {
     ...mapState('cohortManager', {

@@ -83,7 +83,10 @@
     <!-- substep trackers -->
     <v-stepper v-if="step === '1'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
-        <v-stepper-step :complete="substep !== '1.1' || step === '2'" step="1.1"
+        <v-stepper-step
+          :class="substepClass('1.1')"
+          :complete="substep !== '1.1' || step === '2'"
+          step="1.1"
           ><span class="subtitle-1">Choose Datasets</span>
           <span
             >Choose datasets and click "SELECT VARIABLES"</span
@@ -93,17 +96,24 @@
         <v-stepper-step
           :complete="substep === '1.3' || substep === '1.4' || step === '2'"
           step="1.2"
+          :class="substepClass('1.2')"
           ><span class="subtitle-1">Select Variables</span>
           <span
             >Select variables and click on "SAVE STUDY DATASET"</span
           ></v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="substep === '1.4' || step === '2'" step="1.3"
+        <v-stepper-step
+          :complete="substep === '1.4' || step === '2'"
+          step="1.3"
+          :class="substepClass('1.3')"
           ><span class="subtitle-1">Save Study Dataset</span></v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="step === '2'" step="1.4"
+        <v-stepper-step
+          :complete="step === '2'"
+          step="1.4"
+          :class="substepClass('1.4')"
           ><span class="subtitle-1"
             >Choose First & Last Visit</span
           ></v-stepper-step
@@ -116,6 +126,7 @@
         <v-stepper-step
           :complete="inputVariables.length > 0 || substep >= 2.4"
           step="2.1"
+          :class="substepClass('2.1')"
           ><span class="subtitle-1"
             >Choose predictor variables</span
           ></v-stepper-step
@@ -124,6 +135,7 @@
         <v-stepper-step
           :complete="outputVariables.length > 0 || substep >= 2.4"
           step="2.2"
+          :class="substepClass('2.2')"
           ><span class="subtitle-1"
             >Choose outcome variables</span
           ></v-stepper-step
@@ -134,10 +146,14 @@
             filteredData.length < unfilteredData.length || substep >= 2.4
           "
           step="2.3"
+          :class="substepClass('2.3')"
           >Apply filters to define cohorts</v-stepper-step
         >
         <v-divider></v-divider>
-        <v-stepper-step :complete="substep === '2.5'" step="2.4"
+        <v-stepper-step
+          :complete="substep === '2.5'"
+          step="2.4"
+          :class="substepClass('2.4')"
           ><span class="subtitle-1"
             >Review charts and analytics</span
           ></v-stepper-step
@@ -240,6 +256,7 @@ export default {
       unfilteredData: state.UNFILTERED_DATA,
       cohorts: state.COHORTS,
       collection: state.COLLECTION,
+      helpMode: state.HELP_MODE,
     }),
     ...mapState('dataSummary', {
       dsCollection: dsState.COLLECTION,
@@ -267,10 +284,17 @@ export default {
     },
     stepClass(step) {
       if (step === this.step) {
-        return 'tracker_step_highlight pb-2';
+        return 'tracker_step_highlight pa-3';
       } else {
-        return 'pb-2';
+        return 'pa-3';
       }
+    },
+    substepClass(substep) {
+      var cl = 'px-5';
+      if (this.helpMode && this.substep == substep) {
+        cl = cl + ' help_mode';
+      }
+      return cl;
     },
     // Transitions between major steps
     gotoHomepage() {

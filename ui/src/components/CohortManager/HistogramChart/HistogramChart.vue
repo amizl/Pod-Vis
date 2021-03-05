@@ -3,6 +3,16 @@
     <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
       <v-row class="pa-0 ma-0">
         <v-col cols="12" class="pa-0 ma-0">
+          <v-chip
+            v-if="showHelpChip"
+            label
+            close
+            color="#4caf50"
+            class="font-weight-bold white--text pa-2 my-1"
+            @click:close="showHelpChip = false"
+            >Click and drag to filter OR use ranges.</v-chip
+          >
+
           <v-checkbox
             v-model="snapToGrid"
             hide-details
@@ -269,6 +279,11 @@ export default {
       type: Object,
       required: false,
     },
+    showFilterHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -297,6 +312,7 @@ export default {
       snapToGrid: true,
       tab: 'manual',
       predef_radio: 'quartiles',
+      showHelpChip: false,
     };
   },
   computed: {
@@ -547,6 +563,9 @@ export default {
     },
     cohort(new_cohort) {
       this.updateRangeFromCohortQuery();
+    },
+    showFilterHelp(show) {
+      this.showHelpChip = show;
     },
   },
   created() {

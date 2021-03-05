@@ -134,6 +134,17 @@
       </v-data-table>
 
       <v-container fluid class="pb-2 px-1">
+        <v-row v-if="showNewHelpChip || showSaveHelpChip || showNextHelpChip" class="ma-0 pa-0 align-center">
+          <v-col cols="12" class="ma-0 pa-0" align="center">
+	    <v-chip v-if="showNewHelpChip" label close color="#4caf50" class="font-weight-bold white--text pa-2 my-1" @click:close="showNewHelpChip = false;"
+		    >Click NEW COHORT to start over (predictors and outcomes are removed)</v-chip>
+	    <v-chip v-if="showSaveHelpChip" label close color="#4caf50" class="font-weight-bold white--text pa-2 my-1" @click:close="showSaveHelpChip = false;"
+		    >After review, click SAVE COHORT to create a cohort.</v-chip>
+	    <v-chip v-if="showNextHelpChip" label close color="#4caf50" class="font-weight-bold white--text pa-2 my-1" @click:close="showNextHelpChip = false;"
+		    >Click COHORT ANALYSIS to proceed to the analysis step.</v-chip>
+         </v-col>
+        </v-row>
+
         <v-row class="ma-0 pa-0 align-center">
           <v-col cols="4" class="ma-0 pa-0" align="center">
 
@@ -265,6 +276,21 @@ export default {
       type: String,
       required: false,
     },
+    showNewHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showSaveHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showNextHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -274,6 +300,9 @@ export default {
       maxSelectedOverlap: null,
       analysisDialog: false,
       selectedRow: null,
+      showNewHelpChip: false,
+      showSaveHelpChip: false,
+      showNextHelpChip: false,
     };
   },
   computed: {
@@ -327,6 +356,15 @@ export default {
         this.maxSelectedOverlap = max_o;
         this.$emit('maxSelectedOverlap', max_o);
       }
+    },
+    showNewHelp(show) {
+      this.showNewHelpChip = show;
+    },
+    showSaveHelp(show) {
+      this.showSaveHelpChip = show;
+    },
+    showNextHelp(show) {
+      this.showNextHelpChip = show;
     },
   },
   created() {
@@ -442,7 +480,8 @@ export default {
       if (this.selectedRow != null) this.selectedRow.select(false);
       this.$emit('newCohort')
     },
-    cohortSaved() {
+    cohortSaved(success) {
+      this.$emit('newCohort', success)
     },
     cohortDeleted() {
       if (this.selectedRow != null) this.selectedRow.select(false);
