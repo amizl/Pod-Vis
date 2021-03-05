@@ -239,7 +239,11 @@ a.v-list__tile.primary span {
 }
 
 div.v-stepper__content {
-    padding: 10px 24px 10px;
+    padding: 10px;
+}
+
+div.v-stepper__step {
+    padding: 0px;
 }
 
 /* AnalysisTracker highlight style - green/silver/grey color scheme */
@@ -280,3 +284,10 @@ div.v-stepper__step--inactive span.v-stepper__step__step {
 }
 
 /* AnalysisTracker highlight style - END green/silver/grey color scheme */
+
+/* Help mode */
+.help_mode {
+  border: 7px solid #fceb3b !important;
+}
+
+
