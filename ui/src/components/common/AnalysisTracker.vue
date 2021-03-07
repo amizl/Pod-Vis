@@ -47,25 +47,6 @@
           step="3"
           :style="stepStyle('3')"
           :class="stepClass('3')"
-          @click.native="gotoSummaryMatrix()"
-        >
-          <v-tooltip color="primary" bottom>
-            <template v-slot:activator="{ on: tooltip }">
-              <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Summary&nbsp;Matrix</span
-              >
-            </template>
-            <span class="subtitle-1">{{ step_descr['3'] }}</span>
-          </v-tooltip>
-        </v-stepper-step>
-
-        <v-divider></v-divider>
-
-        <v-stepper-step
-          :complete="step > 4"
-          step="4"
-          :style="stepStyle('4')"
-          :class="stepClass('4')"
           @click.native="gotoDataExplorer()"
         >
           <v-tooltip color="primary" bottom>
@@ -74,7 +55,7 @@
                 >Analyze&nbsp;cohorts</span
               >
             </template>
-            <span class="subtitle-1">{{ step_descr['4'] }}</span>
+            <span class="subtitle-1">{{ step_descr['3'] }}</span>
           </v-tooltip>
         </v-stepper-step>
       </v-stepper-header>
@@ -163,19 +144,7 @@
 
     <v-stepper v-if="step === '3'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
-        <v-stepper-step step="3.1" :complete="substep == '3.2'"
-          >Choose cohorts to compare.</v-stepper-step
-        >
-        <v-divider></v-divider>
-        <v-stepper-step step="3.2"
-          >Select a scale from the Analytics panel.</v-stepper-step
-        >
-      </v-stepper-header>
-    </v-stepper>
-
-    <v-stepper v-if="step === '4'" :value="substep" model="substep">
-      <v-stepper-header class="tracker_step_highlight">
-        <v-stepper-step step="4.1"
+        <v-stepper-step step="3.1"
           >Select the cohorts and scale (i.e., outcome variable) to display in
           the Detailed View by using the Cohorts Included in Analysis table
           (top) and the Analytics panel (bottom left), respectively. Use the
@@ -185,6 +154,7 @@
         <v-divider></v-divider>
       </v-stepper-header>
     </v-stepper>
+
     <error-dialog
       :show="show_error_dialog"
       :error-title="error_title"
@@ -231,8 +201,7 @@ export default {
       step_descr: {
         '1': 'Create your study dataset',
         '2': 'Design your query: Choose predictors and outcomes',
-        '3': 'Compare cohorts in the Summary Matrix.',
-        '4': 'Analyze cohorts and variables in the Data Explorer.',
+        '3': 'Analyze cohorts and variables in the Data Explorer.',
       },
       expanded: true,
 
@@ -351,7 +320,7 @@ export default {
       }
     },
     gotoDataExplorer() {
-      if (this.step == 4) {
+      if (this.step == 3) {
         // no-op
       } else if (this.step <= 1) {
         this.displayErrorDialog(
@@ -360,25 +329,13 @@ export default {
             "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
             'link for an existing study dataset.'
         );
-      } else {
-        this.$router.push(`explore?collection=${this.collectionId}`);
-      }
-    },
-    gotoSummaryMatrix() {
-      if (this.step <= 1) {
-        this.displayErrorDialog(
-          'No Study Dataset',
-          'A study dataset must be created before the Summary Matrix can be viewed. ' +
-            "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
-            'link for an existing study dataset.'
-        );
       } else if (this.collection_cohorts.length < 2) {
         this.displayErrorDialog(
           'Too Few Cohorts',
-          'At least two cohorts must be created before the Summary Matrix can be viewed. '
+          'At least two cohorts must be created before proceeding to Analyze Cohorts.'
         );
       } else {
-        this.$router.push(`summary?collection=${this.collectionId}`);
+        this.$router.push(`explore?collection=${this.collectionId}`);
       }
     },
     // Cohort Manager sub-step transitions.

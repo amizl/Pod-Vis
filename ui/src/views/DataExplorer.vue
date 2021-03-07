@@ -50,50 +50,56 @@
             <v-row class="ma-0 pa-0 pt-2">
               <v-col cols="12" class="ma-0 pa-0">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
-                  <cohort-table
-                    :title="
-                      'Cohorts Included in Analysis (' +
-                        selectedCohorts.length +
-                        ' of ' +
-                        collectionCohorts.length +
-                        ')'
-                    "
-                    :cohorts="selectedCohorts"
-                    :select-cohorts="visibleCohorts"
-                    show-select
-                    show-colors
-                    report-max-overlap
-                    checkbox-tooltip="Show or hide this cohort in the Detailed View."
-                    @selectedCohorts="updateVisibleCohorts"
-                  />
+                  <v-container fluid fill-width class="ma-0 pa-0">
+                    <v-row class="ma-0 pa-0">
+                      <v-col cols="12" class="ma-0 pa-0">
+                        <cohort-table
+                          ref="cohortTable"
+                          :title="
+                            'ANALYZE COHORTS [' + selectedCohorts.length + ']'
+                          "
+                          :cohorts="selectedCohorts"
+                          :select-cohorts="visibleCohorts"
+                          :disable-pagination="false"
+                          show-select
+                          show-colors
+                          report-max-selected-overlap
+                          checkbox-tooltip="Check to include this cohort in the next analysis."
+                          @selectedCohorts="updateVisibleCohorts"
+                        />
+                      </v-col>
+                    </v-row>
+
+                    <v-row class="ma-0 pa-3">
+                      <v-col cols="12" class="ma-0 pa-0">
+                        <v-btn
+                          class="primary text--white ma-0 px-2 py-0"
+                          :disabled="visibleCohorts.length < 2"
+                          @click="analyzeCohortList(visibleCohorts)"
+                          ><v-icon large class="pr-2" color="white"
+                            >analytics</v-icon
+                          >
+                          Analyze
+                          {{
+                            visibleCohorts.length < 2
+                              ? ''
+                              : visibleCohorts.length
+                          }}
+                          Selected Cohorts</v-btn
+                        >
+                      </v-col>
+                    </v-row>
+                  </v-container>
                 </v-sheet>
               </v-col>
             </v-row>
 
             <v-row class="ma-0 pa-0 pt-2" min-height="400px">
-              <v-col :cols="expandAnalytics ? 5 : 3" class="ma-0 pa-0">
-                <v-sheet color="white" height="100%" class="rounded-lg shadow">
-                  <analytics-panel
-                    :selected-variable="detailedView"
-                    :show-category-icons="true"
-                    autoselect-first-variable
-                    :expanded="expandAnalytics"
-                    color-scheme="brewer5"
-                    @variableSelected="variableSelected"
-                    @expandClicked="analyticsExpandClicked"
-                  />
-                </v-sheet>
-              </v-col>
-
-              <v-col :cols="expandAnalytics ? 7 : 9" class="ma-0 pa-0 pl-2">
-                <v-sheet
-                  color="white"
-                  height="100%"
-                  min-height="400px"
-                  class="rounded-lg shadow"
-                >
-                  <detailed-view ref="dview" min-height="400px" />
-                </v-sheet>
+              <v-col cols="12" class="ma-0 pa-0">
+                <analysis-list
+                  :analyses="analyses"
+                  @deleteAnalysis="deleteAnalysis"
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -108,17 +114,15 @@ import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/dataExplorer/types';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import CohortTable from '@/components/common/CohortTable.vue';
-import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
-import DetailedView from '@/components/DataExplorer/DetailedView.vue';
+import AnalysisList from '@/components/DataExplorer/AnalysisList.vue';
 import { getCollectionDescription } from '@/utils/helpers';
 import { colors } from '@/utils/colors';
 
 export default {
   components: {
     AnalysisTracker,
-    AnalyticsPanel,
+    AnalysisList,
     CohortTable,
-    DetailedView,
   },
   props: {
     collectionId: {
@@ -151,8 +155,8 @@ export default {
       expandAnalytics: true,
       // TODO - assign stable color to each newly-created cohort (in CohortManager?)
       colors: colors,
-
       getCollectionDescription: getCollectionDescription,
+      analyses: [],
     };
   },
   computed: {
@@ -168,7 +172,7 @@ export default {
       var collectionId = this.collection.id;
       this.cohorts.forEach(c => {
         if (c.collection_id == collectionId) {
-          cc.push(c);
+          cc.unshift(c);
         }
       });
       return cc;
@@ -276,6 +280,16 @@ export default {
         });
       }
       return sc;
+    },
+    analyzeCohortList(cohorts) {
+      this.analyses.push({
+        cohorts: [...cohorts].sort((x, y) => y['id'] - x['id']),
+      });
+      // clear selection
+      this.$refs.cohortTable.deselectAll();
+    },
+    deleteAnalysis(anum) {
+      this.analyses.splice(anum, 1);
     },
   },
 };

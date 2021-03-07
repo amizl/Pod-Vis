@@ -4,7 +4,7 @@
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <v-sheet color="white" class="rounded-lg shadow">
-            <v-container fluid fill-width class="ma-0 pa-0">
+            <v-container v-if="showTitleBar" fluid fill-width class="ma-0 pa-0">
               <v-row class="ma-0 pa-0">
                 <v-col cols="12" class="ma-0 pa-0">
                   <v-card color="#eeeeee" class="pt-1">
@@ -178,6 +178,11 @@ export default {
       type: String,
       required: false,
       default: 'Analytics',
+    },
+    showTitleBar: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
     selectedVariable: {
       type: Object,

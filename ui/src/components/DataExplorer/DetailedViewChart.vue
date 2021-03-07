@@ -43,6 +43,11 @@ export default {
       type: Object,
       required: true,
     },
+    visibleCohorts: {
+      type: Array,
+      required: true,
+      default: [],
+    },
     lineStyle: {
       type: String,
       required: true,
@@ -116,7 +121,6 @@ export default {
       data: state.DATA,
       rawData: state.RAW_DATA,
       cohorts: state.COHORTS,
-      visibleCohorts: state.VISIBLE_COHORTS,
       collection: state.COLLECTION,
     }),
 

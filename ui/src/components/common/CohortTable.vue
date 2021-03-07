@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container fluid fill-width class="ma-0 pa-0">
+    <v-container v-if="showTitleBar" fluid fill-width class="ma-0 pa-0">
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <v-card color="#eeeeee" class="pt-1">
@@ -124,6 +124,11 @@ export default {
       type: String,
       required: false,
       default: 'Cohorts',
+    },
+    showTitleBar: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
     cohorts: {
       type: Array,
@@ -315,6 +320,9 @@ export default {
         }
       }
       return overlaps;
+    },
+    deselectAll() {
+      this.selected = [];
     },
   },
 };
