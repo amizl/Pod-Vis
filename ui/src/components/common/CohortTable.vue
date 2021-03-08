@@ -6,6 +6,53 @@
           <v-card color="#eeeeee" class="pt-1">
             <v-card-title class="primary--text pl-3 py-2"
               >{{ title }}
+
+              <v-divider vertical class="ml-4 mr-4"> </v-divider>
+
+              <v-tooltip bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <span v-on="{ ...tooltip }">
+                    <v-chip
+                      label
+                      color="primary"
+                      class="white--text title mr-2"
+                      >{{ cohorts.length }}</v-chip
+                    >
+                    <span class="black--text text-body-1"
+                      >Cohort{{ cohorts.length == 1 ? '' : 's' }}</span
+                    >
+                  </span>
+                </template>
+                <span class="subtitle-1">
+                  {{ cohorts.length }} Cohort{{
+                    cohorts.length == 1 ? '' : 's'
+                  }}
+                </span>
+              </v-tooltip>
+
+              <v-divider v-if="showSelect" vertical class="ml-4 mr-4">
+              </v-divider>
+
+              <v-tooltip v-if="showSelect" bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <span v-on="{ ...tooltip }">
+                    <v-chip
+                      label
+                      color="primary"
+                      class="white--text title mr-2"
+                      >{{ selected.length }}</v-chip
+                    >
+                    <span class="black--text text-body-1">Selected</span>
+                  </span>
+                </template>
+                <span class="subtitle-1">
+                  {{ selected.length }} Cohort{{
+                    selected.length == 1 ? '' : 's'
+                  }}
+                  selected
+                </span>
+              </v-tooltip>
+
               <v-spacer />
               <v-toolbar-items>
                 <v-icon v-if="expanded" @click="expanded = false"

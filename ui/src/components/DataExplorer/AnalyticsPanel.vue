@@ -11,15 +11,15 @@
                     <v-card-title class="primary--text pl-3 py-2"
                       >{{ title }} &nbsp;
 
-                      <v-tooltip v-if="anova_pvals_input" top color="primary">
+                      <v-tooltip v-if="anovaPvalsInput" top color="primary">
                         <template v-slot:activator="{ on: tooltip }">
                           <span v-on="{ ...tooltip }">{{
-                            '(' + anova_pvals_input.numGroups + ')'
+                            '(' + anovaPvalsInput.numGroups + ')'
                           }}</span>
                         </template>
                         <span
                           >Statistical analysis was performed with
-                          {{ anova_pvals_input.numGroups }} cohort(s).</span
+                          {{ anovaPvalsInput.numGroups }} cohort(s).</span
                         >
                       </v-tooltip>
 
@@ -174,6 +174,18 @@ import { colors } from '@/utils/colors';
 export default {
   components: {},
   props: {
+    anovaPvalsInput: {
+      type: Object,
+      required: true,
+    },
+    anovaPvals: {
+      type: Array,
+      required: false,
+    },
+    outcomeVariables: {
+      type: Array,
+      required: true,
+    },
     title: {
       type: String,
       required: false,
@@ -222,35 +234,7 @@ export default {
       ovars: [],
     };
   },
-  watch: {
-    anova_pvals() {
-      this.update_pvals();
-    },
-    outcomeVariables() {
-      this.update_pvals();
-    },
-  },
-  mounted() {
-    this.update_pvals();
-    if (this.autoselectFirstVariable && this.selectedVariable == null) {
-      if (this.outcomeVariables && this.outcomeVariables.length > 0) {
-        var vbest = this.outcomeVariables.sort(function(a, b) {
-          return a.p_value - b.p_value;
-        })[0];
-        this.$emit('variableSelected', vbest);
-      }
-    }
-    if (this.outcomeVariables && this.outcomeVariables.length > 0) {
-      this.ovars = this.outcomeVariables;
-    }
-  },
   computed: {
-    ...mapState('dataExplorer', {
-      outcomeVariables: state.OUTCOME_VARIABLES,
-      anova_pvals: state.ANOVA_PVALS,
-      anova_pvals_input: state.ANOVA_PVALS_INPUT,
-    }),
-
     headers() {
       var headers = [
         {
@@ -290,13 +274,35 @@ export default {
 
     pval_dict() {
       const pd = {};
-      if (this.anova_pvals != null) {
-        this.anova_pvals.forEach(a => {
+      if (this.anovaPvals != null) {
+        this.anovaPvals.forEach(a => {
           pd[a.label] = a;
         });
       }
       return pd;
     },
+  },
+  watch: {
+    anovaPvals() {
+      this.update_pvals();
+    },
+    outcomeVariables() {
+      this.update_pvals();
+    },
+  },
+  mounted() {
+    this.update_pvals();
+    if (this.autoselectFirstVariable && this.selectedVariable == null) {
+      if (this.outcomeVariables && this.outcomeVariables.length > 0) {
+        var vbest = this.outcomeVariables.sort(function(a, b) {
+          return a.p_value - b.p_value;
+        })[0];
+        this.$emit('variableSelected', vbest);
+      }
+    }
+    if (this.outcomeVariables && this.outcomeVariables.length > 0) {
+      this.ovars = this.outcomeVariables;
+    }
   },
   methods: {
     format_fval(fv) {

@@ -5,8 +5,76 @@
         <v-col cols="12" class="ma-0 pa-0">
           <v-card color="#eeeeee" class="pt-1">
             <v-card-title class="primary--text pl-3 py-2"
-              ><v-icon large class="pr-2" color="primary">analytics</v-icon>
+              ><v-icon x-large class="pr-2" color="primary">analytics</v-icon>
               {{ title }}
+
+              <v-divider vertical class="ml-4 mr-4"> </v-divider>
+
+              <v-tooltip bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <span v-on="{ ...tooltip }">
+                    <v-chip
+                      label
+                      color="primary"
+                      class="white--text title mr-2"
+                      >{{ analysis.cohorts.length }}</v-chip
+                    >
+                    <span class="black--text text-body-1"
+                      >Cohort{{ analysis.cohorts.length == 1 ? '' : 's' }}</span
+                    >
+                  </span>
+                </template>
+                <span class="subtitle-1">
+                  {{ analysis.cohorts.map(c => c.label).join(', ') }}
+                </span>
+              </v-tooltip>
+
+              <v-divider vertical class="ml-4 mr-4"> </v-divider>
+
+              <v-tooltip bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <span v-on="{ ...tooltip }">
+                    <v-chip
+                      label
+                      color="primary"
+                      class="white--text title mr-2"
+                      >{{ analysis.outcomeVariables.length }}</v-chip
+                    >
+                    <span class="black--text text-body-1"
+                      >Scale{{
+                        analysis.outcomeVariables.length == 1 ? '' : 's'
+                      }}</span
+                    >
+                  </span>
+                </template>
+                <span class="subtitle-1">
+                  {{
+                    analysis.outcomeVariables
+                      .map(ov => ov.abbreviation)
+                      .join(', ')
+                  }}
+                </span>
+              </v-tooltip>
+
+              <v-divider vertical class="ml-4 mr-4"> </v-divider>
+
+              <v-tooltip bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <span v-on="{ ...tooltip }">
+                    <span class="black--text text-body-1">Comparing: </span>
+                    <v-chip
+                      label
+                      color="primary"
+                      class="white--text title mr-2"
+                      >{{ analysis.input.comparisonFieldDescr }}</v-chip
+                    >
+                  </span>
+                </template>
+                <span class="subtitle-1">
+                  Comparing {{ analysis.input.comparisonFieldLongDescr }}
+                </span>
+              </v-tooltip>
+
               <v-spacer />
               <v-toolbar-items>
                 <v-icon color="primary" class="mx-4" @click="deleteAnalysis"
@@ -40,6 +108,9 @@
                     <v-tab-item key="analytics">
                       <analytics-panel
                         :selected-variable="detailedView"
+                        :anova-pvals="analysis.pvals"
+                        :anova-pvals-input="analysis.input"
+                        :outcome-variables="analysis.outcomeVariables"
                         :show-category-icons="true"
                         :show-title-bar="false"
                         autoselect-first-variable
@@ -56,7 +127,7 @@
                         :select-cohorts="visibleCohorts"
                         :outcome-var="detailedView"
                         :show-title-bar="false"
-                        report-max-selected-overlap
+                        report-max-overlap
                         show-select
                         show-colors
                         @selectedCohorts="updateVisibleCohorts"
@@ -184,6 +255,14 @@ export default {
     },
     deleteAnalysis() {
       this.$emit('deleteAnalysis');
+    },
+    getComparisonFieldDescription(cfield) {
+      const descrs = {
+        change: 'Change from first visit - last visit',
+        firstVisit: 'First visit',
+        lastVisit: 'Last visit',
+      };
+      return descrs[cfield];
     },
   },
 };

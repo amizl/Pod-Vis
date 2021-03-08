@@ -10,9 +10,7 @@
         <v-col class="ma-0 pa-0">
           <analysis
             :analysis="a"
-            :title="
-              'ANALYSIS #' + (anum + 1) + ' [' + a.cohorts.length + ' cohorts]'
-            "
+            :title="'ANALYSIS #' + a.index"
             @deleteAnalysis="deleteAnalysis(anum)"
           />
         </v-col>
