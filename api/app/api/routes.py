@@ -6,6 +6,7 @@ from . import api
 from .exceptions import ResourceNotFound, BadRequest
 from ..auth.exceptions import AuthFailure
 from .. import models
+import math
 import numpy as np
 import pandas as pd
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
@@ -953,14 +954,20 @@ def compute_anova():
             results = model.fit()
             converged = True
             if (not results.converged):
+                sys.stderr.write("GEE failed to converge,  pval=" + str(results.pvalues[1]) + "\n")
+                sys.stderr.flush()
                 converged = False
+
+            pval = results.pvalues[1]
+            if math.isnan(pval):
+                pval = None
                 
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
                               test_name="Nominal Generalized Estimation Equation model",
                               test_abbrev='NGEE',
                               converged=converged,
-                              pval=results.pvalues[1],
+                              pval=pval,
                               fval=None))
 
         # Longitudinal continuous/numeric variable
@@ -975,6 +982,10 @@ def compute_anova():
                 samples.append(sample)
             
             fval, pval = f_oneway(*samples)
+
+            if math.isnan(pval):
+                pval = None
+
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
                               test_name="1-Way ANOVA",
