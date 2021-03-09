@@ -36,7 +36,7 @@
                         >p &lt; {{ x }}</v-chip
                       >
                       <v-spacer v-if="expanded" />
-                      <v-toolbar-items>
+                      <v-toolbar-items v-if="showTitleBar">
                         <v-icon v-if="expanded" @click="expandClicked(false)"
                           >chevron_left</v-icon
                         >
