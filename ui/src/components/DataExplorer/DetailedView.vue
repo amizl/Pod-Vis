@@ -1,6 +1,12 @@
 <template>
   <div class="ma-0" min-height="400px" fill-height>
-    <v-container v-if="showTitleBar" fluid fill-width class="ma-0 pa-0">
+    <v-container
+      v-if="showTitleBar"
+      v-resize="onResize"
+      fluid
+      fill-width
+      class="ma-0 pa-0"
+    >
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <v-card color="#eeeeee" class="pt-1">
