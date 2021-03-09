@@ -60,6 +60,14 @@
               </v-subheader>
             </div>
 
+            <div
+              v-else-if="!cohorts || cohorts.length == 0"
+              class="display-1 primary--text text--lighten-5 pt-5 mt-5"
+              align="center"
+              >
+              NO COHORTS SELECTED
+            </div>
+
             <svg v-else ref="stackedbars" :width="width" :height="height">
               <g v-if="outcomeVar && outcomeVar.data_category == 'Categorical'">
                 <!-- labels -->
@@ -283,6 +291,12 @@ export default {
         if (nodesFound) {
           vm.graphDataUpdated = true;
         }
+      });
+    },
+    cohorts(nc) {
+      this.$nextTick(() => {
+        this.resizeChart();
+        this.updateGraphData();
       });
     },
   },
