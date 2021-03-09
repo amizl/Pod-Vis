@@ -92,6 +92,14 @@
               </v-subheader>
             </div>
 
+            <div
+              v-else-if="!cohorts || cohorts.length == 0"
+              class="display-1 primary--text text--lighten-5 pt-5 mt-5"
+              align="center"
+              >
+              NO COHORTS SELECTED
+            </div>
+
             <svg v-else ref="boxplots" :width="width" :height="height">
               <g v-if="outcomeVar && outcomeVar.data_category != 'Categorical'">
                 <!-- labels -->
@@ -99,7 +107,7 @@
                   v-for="sc in Object.keys(boxplotStats)"
                   :ref="sc"
                   :x="15"
-                  :y="boxplotStats[sc]['y_center']"
+                  :y="boxplotStats[sc]['y_center'] + (rowPad/2)"
                 >
                   {{ boxplotStats[sc].short_label }}
                 </text>
@@ -244,6 +252,25 @@ export default {
       required: false,
       default: true,
     },
+    maxCohorts: {
+      type: Number,
+      required: false,
+    },
+    rowHeight: {
+      type: Number,
+      required: false,
+      default: 100,
+    },
+    rowPad: {
+      type: Number,
+      required: false,
+      default: 12,
+    },
+    barPad: {
+      type: Number,
+      required: false,
+      default: 5,
+    },
   },
   data() {
     return {
@@ -253,13 +280,11 @@ export default {
       height: 0,
       boxplotStats: {},
       boxplotStatsUpdated: false,
-      rowHeight: 100,
-      rowPad: 15,
       maxValue: null,
-      maxLabelLen: 20,
       firstVisit: null,
       lastVisit: null,
       axisFlipped: false,
+      maxLabelLen: null,
     };
   },
   computed: {
@@ -274,22 +299,6 @@ export default {
     margins() {
       var leftMargin = this.maxLabelLen * this.labelPxPerChar;
       return { top: 40, bottom: 40, left: leftMargin, right: 20 };
-    },
-    // cohorts are collection-specific
-    collection_cohorts() {
-      const cch = [];
-      const cid = this.collection.id;
-      let ccnum = 0;
-
-      this.cohorts.forEach(e => {
-        if (e.collection_id === cid) {
-          e.index = ccnum;
-          ccnum += 1;
-          cch.push(e);
-        }
-      });
-
-      return cch;
     },
     xScale() {
       var rt = this.width - this.margins.right;
@@ -407,17 +416,12 @@ export default {
       }
 
       // compute height based on rowHeight
+      var nCohorts = this.cohorts.length;
+      if (this.maxCohorts && this.maxCohorts > nCohorts) nCohorts = this.maxCohorts;
       height =
-        this.rowHeight * this.cohorts.length +
+        this.rowHeight * nCohorts +
         this.margins.top +
         this.margins.bottom;
-
-      //      console.log(
-      //        'resizeChart() setting this.height = ' +
-      //          height +
-      //          ' this.width = ' +
-      //          width
-      //      );
       this.height = height;
       this.width = width;
     },
@@ -425,8 +429,6 @@ export default {
     updateStats_aux(
       visit,
       y_offset,
-      pad_top,
-      pad_bottom,
       row_height,
       row2row_dist,
       label_prefix,
@@ -435,6 +437,7 @@ export default {
       // compute boxplot stats for each cohort
       var x_offset = this.margins.left;
       var max_ll = this.maxLabelLen;
+
       this.cohorts.forEach(c => {
         const subjids = [];
         c.subject_ids.forEach(sid => {
@@ -466,7 +469,7 @@ export default {
         //         this.xScale(cmax) + " boxMin=" + boxMin + " boxMax=" + boxMax
         //        );
 
-        var box_h = row_height - (pad_top + pad_bottom);
+        var box_h = row_height;
         var bpKey = c.id + '' + visit;
         var shortLabelFn = function(label) {
           if (label.length > max_ll) {
@@ -482,9 +485,9 @@ export default {
           color: c.color,
           x: x_offset,
           y: y_offset,
-          y1: y_offset + pad_top,
-          y2: y_offset + row_height - pad_bottom,
-          y_center: y_offset + pad_top + box_h / 2.0,
+          y1: y_offset,
+          y2: y_offset + row_height,
+          y_center: y_offset + box_h / 2.0,
           min: cmin,
           max: cmax,
           min_x: this.xScale(cmin),
@@ -516,22 +519,21 @@ export default {
       this.maxValue = Math.max(firstMax, lastMax);
 
       var hrh = this.rowHeight / 2.0;
+      var hrp = this.rowPad / 2.0;
+      var hbp = this.barPad / 2.0;
+
       this.updateStats_aux(
         'firstVisit',
-        this.margins.top,
-        15,
-        5,
-        hrh,
+        this.margins.top + hrp,
+        hrh - hrp - hbp,
         this.rowHeight,
         this.firstVisit + ' | ',
         bpStats
       );
       this.updateStats_aux(
         'lastVisit',
-        this.margins.top + hrh,
-        5,
-        15,
-        hrh,
+        this.margins.top + hrh + hbp,
+        hrh - hrp - hbp,
         this.rowHeight,
         this.lastVisit + ' | ',
         bpStats
