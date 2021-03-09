@@ -169,9 +169,9 @@
                         "
                         ref="boxplots"
                         :cohorts="visibleCohorts"
-                        :max-cohorts="analysis.cohorts.length"
                         :show-title-bar="false"
                         :outcome-var="detailedView"
+                        :max-cohorts="analysis.cohorts.length"
                         :row-height="70"
                         :row-pad="12"
                         :bar-pad="5"
@@ -182,6 +182,10 @@
                         :cohorts="visibleCohorts"
                         :show-title-bar="false"
                         :outcome-var="detailedView"
+			:max-cohorts="analysis.cohorts.length"
+                        :row-height="70"
+                        :row-pad="12"
+                        :bar-pad="5"
                       />
                     </v-tab-item>
                   </v-tabs-items>

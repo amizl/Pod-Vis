@@ -201,6 +201,25 @@ export default {
       required: false,
       default: 10,
     },
+    maxCohorts: {
+      type: Number,
+      required: false,
+    },
+    rowHeight: {
+      type: Number,
+      required: false,
+      default: 100,
+    },
+    rowPad: {
+      type: Number,
+      required: false,
+      default: 12,
+    },
+    barPad: {
+      type: Number,
+      required: false,
+      default: 5,
+    },
   },
   data() {
     return {
@@ -212,8 +231,6 @@ export default {
       graphDataUpdated: false,
       graphRects: [],
       graphColorKey: [],
-      rowHeight: 100,
-      rowPad: 15,
       maxValue: null,
       maxLabelLen: 20,
       firstVisit: null,
@@ -363,10 +380,13 @@ export default {
       }
 
       // compute height based on rowHeight
+      var nCohorts = this.cohorts.length;
+      if (this.maxCohorts && this.maxCohorts > nCohorts) nCohorts = this.maxCohorts;
       height =
-        this.rowHeight * this.cohorts.length +
+        this.rowHeight * nCohorts +
         this.margins.top +
         this.margins.bottom;
+
       this.height = height;
       this.width = width;
     },
@@ -375,8 +395,6 @@ export default {
     updateGraphData_aux(
       visit,
       y_offset,
-      pad_top,
-      pad_bottom,
       row_height,
       row2row_dist,
       label_prefix,
@@ -410,7 +428,7 @@ export default {
           vm.maxValue = total;
         }
 
-        var box_h = row_height - (pad_top + pad_bottom);
+        var box_h = row_height;
         var gkey = c.id + '-' + visit;
 
         var shortLabelFn = function(label) {
@@ -444,9 +462,9 @@ export default {
               '%]';
             graphRects.push({
               x: x1,
-              y: y_offset + pad_top,
+              y: y_offset,
               w: w,
-              h: row_height - (pad_bottom + pad_top),
+              h: row_height,
               color: color,
               key: key,
               node: null,
@@ -463,9 +481,9 @@ export default {
           color: c.color,
           x: x_offset,
           y: y_offset,
-          y1: y_offset + pad_top,
-          y2: y_offset + row_height - pad_bottom,
-          y_center: y_offset + pad_top + box_h / 2,
+          y1: y_offset,
+          y2: y_offset,
+          y_center: y_offset + box_h / 2,
           box_h: box_h,
         };
         y_offset += row2row_dist;
@@ -506,12 +524,13 @@ export default {
         return cat2color[category];
       };
 
+      var hrp = this.rowPad / 2.0;
+      var hbp = this.barPad / 2.0;
+
       this.updateGraphData_aux(
         'firstVisit',
-        this.margins.top,
-        15,
-        5,
-        hrh,
+        this.margins.top + hrp,
+        hrh - hrp - hbp,
         this.rowHeight,
         this.firstVisit + ' | ',
         getBarColor,
@@ -520,10 +539,8 @@ export default {
       );
       this.updateGraphData_aux(
         'lastVisit',
-        this.margins.top + hrh,
-        5,
-        15,
-        hrh,
+        this.margins.top + hrh + hbp,
+        hrh - hrp - hbp,
         this.rowHeight,
         this.lastVisit + ' | ',
         getBarColor,
