@@ -75,6 +75,29 @@
                 </span>
               </v-tooltip>
 
+              <v-divider vertical class="ml-4 mr-4"> </v-divider>
+
+              <v-tooltip bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <span v-on="{ ...tooltip }">
+                    <span class="black--text text-body-1">Status: </span>
+                    <v-chip
+                      label
+                      :color="statusColor[analysis.status]"
+                      class="white--text title mr-2"
+                      >{{ analysis.status }}</v-chip
+                    >
+                  </span>
+                </template>
+                <span v-if="analysis.status == 'Failed'" class="subtitle-1">
+                  {{ analysis.error }}
+                </span>
+                <span v-else class="subtitle-1">
+                  {{ analysis.status }} at
+                  {{ analysis.statusTime | formatDate }}
+                </span>
+              </v-tooltip>
+
               <v-spacer />
               <v-toolbar-items>
                 <v-icon color="primary" class="mx-4" @click="deleteAnalysis"
@@ -182,7 +205,7 @@
                         :cohorts="visibleCohorts"
                         :show-title-bar="false"
                         :outcome-var="detailedView"
-			:max-cohorts="analysis.cohorts.length"
+                        :max-cohorts="analysis.cohorts.length"
                         :row-height="70"
                         :row-pad="12"
                         :bar-pad="5"
@@ -220,6 +243,12 @@ export default {
     Splitpanes,
     Pane,
   },
+  filters: {
+    formatDate(ts) {
+      // note that toISOString is going to give us UTC
+      return new Date(ts);
+    },
+  },
   props: {
     title: {
       type: String,
@@ -240,6 +269,15 @@ export default {
       leftTab: null,
       rightTab: null,
       visibleCohorts: [],
+      status: 'Submitted',
+      error: null,
+      statusTime: null,
+      statusColor: {
+        Submitted: 'primary',
+        Running: 'secondary',
+        Completed: 'success',
+        Failed: 'error',
+      },
     };
   },
   watch: {

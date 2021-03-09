@@ -317,7 +317,7 @@ export default {
       }
       return sc;
     },
-    async analyzeCohortList(cohorts) {
+    analyzeCohortList(cohorts) {
       var sortedCohorts = [...cohorts].sort((x, y) => y['id'] - x['id']);
 
       // union cohort outcome variables
@@ -360,31 +360,33 @@ export default {
       const comparisonFieldDescr = this.selectedComparisonMeasure.label;
       const comparisonFieldLongDescr = this.selectedComparisonMeasure.descr;
 
-      try {
-        const input = {
-          numGroups,
-          groups,
-          outputVariables,
-          comparisonField,
-          comparisonFieldDescr,
-        };
-        analysis.input = input;
-        const { data } = await axios.post(`/api/compute-anova`, input);
-        console.log(
-          'analysis request ' +
-            analysis.index +
-            ' returned, data.pvals=' +
-            data.pvals
-        );
-        analysis.pvals = data.pvals;
-      } catch (err) {
-        console.log(err);
-        //        const notification = new ErrorNotification(err);
-        //        dispatch(notification.dispatch, notification, { root: true });
-      }
+      analysis.input = {
+        numGroups,
+        groups,
+        outputVariables,
+        comparisonField,
+        comparisonFieldDescr,
+        comparisonFieldLongDescr,
+      };
+      analysis.status = 'Running';
+      analysis.statusTime = new Date().getTime();
 
-      this.analyses.push(analysis);
+      axios
+        .post(`/api/compute-anova`, analysis.input)
+        .then(function(response) {
+          const { data } = response;
+          analysis.pvals = data.pvals;
+          analysis.status = 'Completed';
+          analysis.statusTime = new Date().getTime();
+        })
+        .catch(function(err) {
+          analysis.status = 'Failed';
+          analysis.statusTime = new Date().getTime();
+          analysis.error = err;
+          console.log(err);
+        });
 
+      this.analyses.unshift(analysis);
       // clear cohort selection
       this.$refs.cohortTable.deselectAll();
     },
