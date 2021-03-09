@@ -96,8 +96,8 @@
       <v-container fluid fill-width class="ma-0 pa-0">
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
-            <splitpanes class="default-theme">
-              <pane size="45" min-size="30" max-size="60" class="pb-1">
+            <splitpanes class="default-theme" @resize="splitPaneResized">
+              <pane size="45" min-size="15" max-size="60" class="pb-1">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <v-tabs v-model="leftTab" light>
                     <v-tab key="analytics">Analytics/Scales</v-tab>
@@ -127,6 +127,7 @@
                         :select-cohorts="visibleCohorts"
                         :outcome-var="detailedView"
                         :show-title-bar="false"
+                        :expanded="expandAnalytics"
                         report-max-overlap
                         show-select
                         show-colors
@@ -166,12 +167,18 @@
                           detailedView &&
                             detailedView.data_category == 'Continuous'
                         "
+                        ref="boxplots"
                         :cohorts="visibleCohorts"
+                        :max-cohorts="analysis.cohorts.length"
                         :show-title-bar="false"
                         :outcome-var="detailedView"
+                        :row-height="70"
+                        :row-pad="12"
+                        :bar-pad="5"
                       />
                       <stacked-bars
                         v-else
+                        ref="stackedbars"
                         :cohorts="visibleCohorts"
                         :show-title-bar="false"
                         :outcome-var="detailedView"
@@ -237,6 +244,12 @@ export default {
         this.visibleCohorts = analysis.cohorts;
       }
     },
+    rightTab(rt) {
+      //console.log("rt=" + rt);
+      //if (rt == 0) {
+      //this.$refs.dview.onResize();
+      //}
+    },
   },
   created() {
     if (this.analysis != null) {
@@ -251,7 +264,12 @@ export default {
       this.expandAnalytics = nv;
     },
     updateVisibleCohorts(vc) {
-      this.visibleCohorts = vc;
+      // keep visibleCohorts sorted in the same order as cohorts
+      var vcids = {};
+      vc.forEach(c => {
+        vcids[c.id] = true;
+      });
+      this.visibleCohorts = this.analysis.cohorts.filter(c => vcids[c.id]);
     },
     deleteAnalysis() {
       this.$emit('deleteAnalysis');
@@ -263,6 +281,24 @@ export default {
         lastVisit: 'Last visit',
       };
       return descrs[cfield];
+    },
+    splitPaneResized(evt) {
+      var psize = evt[0].size;
+
+      this.expandAnalytics = psize > 30;
+
+      if (this.rightTab == 0) {
+        this.$refs.dview.onResize();
+      } else if (this.rightTab == 1) {
+        if (
+          this.detailedView &&
+          this.detailedView.data_category == 'Continuous'
+        ) {
+          this.$refs.boxplots.onResize();
+        } else {
+          this.$refs.stackedbars.onResize();
+        }
+      }
     },
   },
 };
