@@ -283,7 +283,7 @@ export default {
   watch: {
     analysis(a) {
       if (a != null) {
-        this.visibleCohorts = analysis.cohorts;
+        this.visibleCohorts = this.analysis.cohorts;
       }
     },
     rightTab(rt) {
