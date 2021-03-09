@@ -96,7 +96,7 @@
               v-else-if="!cohorts || cohorts.length == 0"
               class="display-1 primary--text text--lighten-5 pt-5 mt-5"
               align="center"
-              >
+            >
               NO COHORTS SELECTED
             </div>
 
@@ -107,7 +107,7 @@
                   v-for="sc in Object.keys(boxplotStats)"
                   :ref="sc"
                   :x="15"
-                  :y="boxplotStats[sc]['y_center'] + (rowPad/2)"
+                  :y="boxplotStats[sc]['y_center'] + rowPad / 2"
                 >
                   {{ boxplotStats[sc].short_label }}
                 </text>
@@ -417,11 +417,10 @@ export default {
 
       // compute height based on rowHeight
       var nCohorts = this.cohorts.length;
-      if (this.maxCohorts && this.maxCohorts > nCohorts) nCohorts = this.maxCohorts;
+      if (this.maxCohorts && this.maxCohorts > nCohorts)
+        nCohorts = this.maxCohorts;
       height =
-        this.rowHeight * nCohorts +
-        this.margins.top +
-        this.margins.bottom;
+        this.rowHeight * nCohorts + this.margins.top + this.margins.bottom;
       this.height = height;
       this.width = width;
     },

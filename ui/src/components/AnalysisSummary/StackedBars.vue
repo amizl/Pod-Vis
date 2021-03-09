@@ -64,7 +64,7 @@
               v-else-if="!cohorts || cohorts.length == 0"
               class="display-1 primary--text text--lighten-5 pt-5 mt-5"
               align="center"
-              >
+            >
               NO COHORTS SELECTED
             </div>
 
