@@ -381,11 +381,10 @@ export default {
 
       // compute height based on rowHeight
       var nCohorts = this.cohorts.length;
-      if (this.maxCohorts && this.maxCohorts > nCohorts) nCohorts = this.maxCohorts;
+      if (this.maxCohorts && this.maxCohorts > nCohorts)
+        nCohorts = this.maxCohorts;
       height =
-        this.rowHeight * nCohorts +
-        this.margins.top +
-        this.margins.bottom;
+        this.rowHeight * nCohorts + this.margins.top + this.margins.bottom;
 
       this.height = height;
       this.width = width;
