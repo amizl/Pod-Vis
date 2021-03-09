@@ -55,10 +55,10 @@
 
               <v-spacer />
               <v-toolbar-items>
-                <v-icon v-if="expanded" @click="expanded = false"
+                <v-icon v-if="expandedVert" @click="expandedVert = false"
                   >expand_less</v-icon
                 >
-                <v-icon v-else @click="expanded = true">expand_more</v-icon>
+                <v-icon v-else @click="expandedVert = true">expand_more</v-icon>
               </v-toolbar-items>
             </v-card-title>
           </v-card>
@@ -66,7 +66,7 @@
       </v-row>
     </v-container>
 
-    <v-sheet v-show="expanded" color="white" class="rounded-lg shadow">
+    <v-sheet v-show="expandedVert" color="white" class="rounded-lg shadow">
       <!-- no cohorts selected -->
       <v-container
         v-if="!cohorts || cohorts.length == 0"
@@ -216,11 +216,16 @@ export default {
       type: String,
       required: false,
     },
+    expanded: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
       selected: [],
-      expanded: true,
+      expandedVert: true,
       maxOverlap: null,
       maxSelectedOverlap: null,
     };
@@ -229,7 +234,7 @@ export default {
     headers() {
       var hdrs = [];
       hdrs.push({
-        text: 'Cohort Name',
+        text: 'Name',
         value: 'label',
         class: 'text-subtitle-1 font-weight-bold',
       });
@@ -242,17 +247,19 @@ export default {
         });
       }
 
-      hdrs.push({
-        text: 'Cohort Size',
-        value: 'size',
-        class: 'text-subtitle-1 font-weight-bold',
-      });
+      if (this.expanded) {
+        hdrs.push({
+          text: 'Size',
+          value: 'size',
+          class: 'text-subtitle-1 font-weight-bold',
+        });
 
-      hdrs.push({
-        text: 'Query',
-        value: 'query_string',
-        class: 'text-subtitle-1 font-weight-bold',
-      });
+        hdrs.push({
+          text: 'Query',
+          value: 'query_string',
+          class: 'text-subtitle-1 font-weight-bold',
+        });
+      }
 
       return hdrs;
     },
