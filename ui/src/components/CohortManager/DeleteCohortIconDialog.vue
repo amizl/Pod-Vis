@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-icon :color="selected ? 'white' : ''" @click="dialog = !dialog"
+    <v-icon :color="selected ? 'white' : ''" @click.stop="dialogClicked()"
       >delete</v-icon
     >
 
@@ -67,6 +67,9 @@ export default {
       } catch (err) {
         console.log('delete cohort failed, err=' + err);
       }
+    },
+    dialogClicked() {
+      this.dialog = !this.dialog;
     },
   },
 };
