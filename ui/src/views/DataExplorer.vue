@@ -50,50 +50,73 @@
             <v-row class="ma-0 pa-0 pt-2">
               <v-col cols="12" class="ma-0 pa-0">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
-                  <cohort-table
-                    :title="
-                      'Cohorts Included in Analysis (' +
-                        selectedCohorts.length +
-                        ' of ' +
-                        collectionCohorts.length +
-                        ')'
-                    "
-                    :cohorts="selectedCohorts"
-                    :select-cohorts="visibleCohorts"
-                    show-select
-                    show-colors
-                    report-max-overlap
-                    checkbox-tooltip="Show or hide this cohort in the Detailed View."
-                    @selectedCohorts="updateVisibleCohorts"
-                  />
+                  <v-container fluid fill-width class="ma-0 pa-0">
+                    <v-row class="ma-0 pa-0">
+                      <v-col cols="12" class="ma-0 pa-0">
+                        <cohort-table
+                          ref="cohortTable"
+                          title="ANALYZE COHORTS"
+                          :cohorts="selectedCohorts"
+                          :select-cohorts="visibleCohorts"
+                          :disable-pagination="false"
+                          show-select
+                          report-max-selected-overlap
+                          checkbox-tooltip="Check to include this cohort in the next analysis."
+                          @selectedCohorts="updateVisibleCohorts"
+                        />
+                      </v-col>
+                    </v-row>
+
+                    <v-row class="ma-0 pa-0">
+                      <v-col cols="12" class="ma-0 pa-0">
+                        <v-container fluid>
+                          <span
+                            class="primary--text subtitle-1 font-weight-bold mb-1"
+                            >Outcome Measure:</span
+                          ><v-radio-group
+                            v-model="selectedComparisonMeasure"
+                            hide-details
+                            row
+                            dense
+                            class="ma-0 pa-0"
+                          >
+                            <v-radio
+                              v-for="m in comparisonMeasures"
+                              :key="m.value"
+                              :label="m.label"
+                              :value="m"
+                            ></v-radio>
+                          </v-radio-group>
+                        </v-container>
+
+                        <v-btn
+                          class="primary text--white ma-0 px-2 py-0 mx-3 mb-2"
+                          :disabled="visibleCohorts.length < 2"
+                          @click="analyzeCohortList(visibleCohorts)"
+                          ><v-icon large class="pr-2" color="white"
+                            >analytics</v-icon
+                          >
+                          Analyze
+                          {{
+                            visibleCohorts.length < 2
+                              ? ''
+                              : visibleCohorts.length
+                          }}
+                          Selected Cohorts</v-btn
+                        >
+                      </v-col>
+                    </v-row>
+                  </v-container>
                 </v-sheet>
               </v-col>
             </v-row>
 
             <v-row class="ma-0 pa-0 pt-2" min-height="400px">
-              <v-col :cols="expandAnalytics ? 5 : 3" class="ma-0 pa-0">
-                <v-sheet color="white" height="100%" class="rounded-lg shadow">
-                  <analytics-panel
-                    :selected-variable="detailedView"
-                    :show-category-icons="true"
-                    autoselect-first-variable
-                    :expanded="expandAnalytics"
-                    color-scheme="brewer5"
-                    @variableSelected="variableSelected"
-                    @expandClicked="analyticsExpandClicked"
-                  />
-                </v-sheet>
-              </v-col>
-
-              <v-col :cols="expandAnalytics ? 7 : 9" class="ma-0 pa-0 pl-2">
-                <v-sheet
-                  color="white"
-                  height="100%"
-                  min-height="400px"
-                  class="rounded-lg shadow"
-                >
-                  <detailed-view ref="dview" min-height="400px" />
-                </v-sheet>
+              <v-col cols="12" class="ma-0 pa-0">
+                <analysis-list
+                  :analyses="analyses"
+                  @deleteAnalysis="deleteAnalysis"
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -104,21 +127,34 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/dataExplorer/types';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import CohortTable from '@/components/common/CohortTable.vue';
-import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
-import DetailedView from '@/components/DataExplorer/DetailedView.vue';
+import AnalysisList from '@/components/DataExplorer/AnalysisList.vue';
 import { getCollectionDescription } from '@/utils/helpers';
 import { colors } from '@/utils/colors';
+
+const COMPARISON_MEASURES = [
+  {
+    label: 'Change',
+    value: 'change',
+    descr: 'First visit - Last visit change',
+  },
+  {
+    label: 'First Visit',
+    value: 'firstVisit',
+    descr: 'First visit measurements',
+  },
+  { label: 'Last Visit', value: 'lastVisit', descr: 'Last visit measurements' },
+];
 
 export default {
   components: {
     AnalysisTracker,
-    AnalyticsPanel,
+    AnalysisList,
     CohortTable,
-    DetailedView,
   },
   props: {
     collectionId: {
@@ -151,13 +187,17 @@ export default {
       expandAnalytics: true,
       // TODO - assign stable color to each newly-created cohort (in CohortManager?)
       colors: colors,
-
       getCollectionDescription: getCollectionDescription,
+      analyses: [],
+      analysisNum: 0,
+      comparisonMeasures: COMPARISON_MEASURES,
+      selectedComparisonMeasure: COMPARISON_MEASURES[0],
     };
   },
   computed: {
     ...mapState('dataExplorer', {
       cohorts: state.COHORTS,
+      data: state.DATA,
       detailedView: state.DETAILED_VIEW,
       visibleCohorts: state.VISIBLE_COHORTS,
       collection: state.COLLECTION,
@@ -168,7 +208,7 @@ export default {
       var collectionId = this.collection.id;
       this.cohorts.forEach(c => {
         if (c.collection_id == collectionId) {
-          cc.push(c);
+          cc.unshift(c);
         }
       });
       return cc;
@@ -187,7 +227,7 @@ export default {
     await this.fetchData();
     await this.fetchCohorts();
 
-    // set outcome variables to union of cohorts' output variables
+    // set outcome variables to union of cohort output variables
     const varsAdded = {};
     const outcomeVars = [];
 
@@ -218,7 +258,7 @@ export default {
       });
 
     await this.setOutcomeVariables(outcomeVars);
-    await this.analyzeCohorts(this.selectedCohorts);
+    //    await this.analyzeCohorts(this.selectedCohorts);
 
     // initialize page with preselected variable in the highlight view
     if (
@@ -276,6 +316,84 @@ export default {
         });
       }
       return sc;
+    },
+    analyzeCohortList(cohorts) {
+      var sortedCohorts = [...cohorts].sort((x, y) => y['id'] - x['id']);
+
+      // union cohort outcome variables
+      const varsAdded = {};
+      const outputVariables = [];
+      sortedCohorts.forEach(c => {
+        const outputVars = c.output_variables;
+        outputVars.forEach(ov => {
+          const { id } = ov.observation_ontology;
+          if (!(id in varsAdded)) {
+            varsAdded[id] = 1;
+            ov.observation_ontology.is_longitudinal = this.collection.is_longitudinal;
+            outputVariables.push(ov.observation_ontology);
+          }
+        });
+      });
+
+      // run analysis
+      var analysis = {
+        index: ++this.analysisNum,
+        cohorts: sortedCohorts,
+        outcomeVariables: outputVariables,
+        pvals: null,
+      };
+
+      // create group of samples for each cohort:
+      const groups = [];
+      sortedCohorts.forEach(c => {
+        if (c.collection_id === this.collection.id) {
+          const subjids = [];
+          c.subject_ids.forEach(sid => {
+            subjids[sid] = 1;
+          });
+          const cohortData = this.data.filter(d => d.subject_id in subjids);
+          groups.push(cohortData);
+        }
+      });
+      const numGroups = groups.length;
+      const comparisonField = this.selectedComparisonMeasure.value;
+      const comparisonFieldDescr = this.selectedComparisonMeasure.label;
+      const comparisonFieldLongDescr = this.selectedComparisonMeasure.descr;
+
+      analysis.input = {
+        numGroups,
+        groups,
+        outputVariables,
+        comparisonField,
+        comparisonFieldDescr,
+        comparisonFieldLongDescr,
+      };
+      analysis.status = 'Running';
+      analysis.statusTime = new Date().getTime();
+
+      axios
+        .post(`/api/compute-anova`, analysis.input)
+        .then(function(response) {
+          const { data } = response;
+          analysis.pvals = data.pvals;
+          analysis.status = 'Completed';
+          analysis.statusTime = new Date().getTime();
+        })
+        .catch(function(err) {
+          analysis.status = 'Failed';
+          analysis.statusTime = new Date().getTime();
+          analysis.error = err;
+          console.log(err);
+        });
+
+      this.analyses.unshift(analysis);
+      // clear cohort selection
+      this.$refs.cohortTable.deselectAll();
+    },
+    deleteAnalysis(anum) {
+      var new_analyses = [...this.analyses];
+      new_analyses.splice(anum, 1);
+      this.analyses = new_analyses;
     },
   },
 };

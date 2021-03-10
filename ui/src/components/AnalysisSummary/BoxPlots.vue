@@ -1,6 +1,6 @@
 <template>
   <v-sheet color="white" class="rounded-lg shadow">
-    <v-container fluid fill-width class="ma-0 pa-0">
+    <v-container v-if="showTitleBar" fluid fill-width class="ma-0 pa-0">
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <v-container fluid fill-width class="ma-0 pa-0">
@@ -12,31 +12,57 @@
                   </v-card-title>
 
                   <v-card-title class="primary--text pa-0 pl-3">
-                    <v-tooltip
-                      v-if="selectedOutcomeVariable"
-                      bottom
-                      color="primary"
-                    >
+                    <v-tooltip v-if="outcomeVar" bottom color="primary">
                       <template v-slot:activator="{ on: tooltip }">
                         <img
                           :src="
-                            '/images/' +
-                              selectedOutcomeVariable.category +
-                              '-icon-128.png'
+                            '/images/' + outcomeVar.category + '-icon-128.png'
                           "
-                          :title="selectedOutcomeVariable.category"
+                          :title="outcomeVar.category"
                           style="height:1.75em"
                           class="ma-1"
                           v-on="{ ...tooltip }"
                         />
                       </template>
-                      <span>{{ selectedOutcomeVariable.category }}</span>
+                      <span>{{ outcomeVar.category }}</span>
                     </v-tooltip>
-                    <span v-if="selectedOutcomeVariable" class="subtitle-1">
-                      {{ selectedOutcomeVariable.label }}
+                    <span v-if="outcomeVar" class="subtitle-1">
+                      {{ outcomeVar.label }}
                     </span>
                   </v-card-title>
                 </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-container v-else fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-container fluid fill-width class="ma-0 pa-0">
+            <v-row class="ma-0 pa-0">
+              <v-col cols="12" class="ma-0 pa-0">
+                <v-card-title class="primary--text pa-0 pt-3 pl-2">
+                  <v-tooltip v-if="outcomeVar" bottom color="primary">
+                    <template v-slot:activator="{ on: tooltip }">
+                      <img
+                        :src="
+                          '/images/' + outcomeVar.category + '-icon-128.png'
+                        "
+                        :title="outcomeVar.category"
+                        style="height:1.75em"
+                        class="ma-1"
+                        v-on="{ ...tooltip }"
+                      />
+                    </template>
+                    <span>{{ outcomeVar.category }}</span>
+                  </v-tooltip>
+                  <span v-if="outcomeVar" class="subtitle-1">
+                    {{ outcomeVar.label }}
+                  </span>
+                </v-card-title>
               </v-col>
             </v-row>
           </v-container>
@@ -55,7 +81,7 @@
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
             <div
-              v-if="!selectedOutcomeVariable"
+              v-if="!outcomeVar"
               column
               align-center
               justify-center
@@ -66,19 +92,22 @@
               </v-subheader>
             </div>
 
+            <div
+              v-else-if="!cohorts || cohorts.length == 0"
+              class="display-1 primary--text text--lighten-5 pt-5 mt-5"
+              align="center"
+            >
+              NO COHORTS SELECTED
+            </div>
+
             <svg v-else ref="boxplots" :width="width" :height="height">
-              <g
-                v-if="
-                  selectedOutcomeVariable &&
-                    selectedOutcomeVariable.data_category != 'Categorical'
-                "
-              >
+              <g v-if="outcomeVar && outcomeVar.data_category != 'Categorical'">
                 <!-- labels -->
                 <text
                   v-for="sc in Object.keys(boxplotStats)"
                   :ref="sc"
                   :x="15"
-                  :y="boxplotStats[sc]['y_center']"
+                  :y="boxplotStats[sc]['y_center'] + rowPad / 2"
                 >
                   {{ boxplotStats[sc].short_label }}
                 </text>
@@ -168,7 +197,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { state } from '@/store/modules/analysisSummary/types';
 import { state as deState } from '@/store/modules/dataExplorer/types';
 import { min, max, ascending, quantile } from 'd3-array';
 import { axisTop, axisLeft, axisRight } from 'd3-axis';
@@ -189,6 +217,21 @@ export default {
     },
   },
   props: {
+    showTitleBar: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    cohorts: {
+      type: Array,
+      required: true,
+      default: [],
+    },
+    outcomeVar: {
+      type: Object,
+      required: true,
+      default: null,
+    },
     minHeight: {
       type: Number,
       required: false,
@@ -209,6 +252,25 @@ export default {
       required: false,
       default: true,
     },
+    maxCohorts: {
+      type: Number,
+      required: false,
+    },
+    rowHeight: {
+      type: Number,
+      required: false,
+      default: 100,
+    },
+    rowPad: {
+      type: Number,
+      required: false,
+      default: 12,
+    },
+    barPad: {
+      type: Number,
+      required: false,
+      default: 5,
+    },
   },
   data() {
     return {
@@ -218,20 +280,14 @@ export default {
       height: 0,
       boxplotStats: {},
       boxplotStatsUpdated: false,
-      rowHeight: 100,
-      rowPad: 15,
       maxValue: null,
-      maxLabelLen: 20,
       firstVisit: null,
       lastVisit: null,
       axisFlipped: false,
+      maxLabelLen: null,
     };
   },
   computed: {
-    ...mapState('analysisSummary', {
-      selectedCohorts: state.SELECTED_COHORTS,
-      selectedOutcomeVariable: state.SELECTED_OUTCOME_VARIABLE,
-    }),
     ...mapState('dataExplorer', {
       collection: deState.COLLECTION,
       data: deState.DATA,
@@ -244,31 +300,13 @@ export default {
       var leftMargin = this.maxLabelLen * this.labelPxPerChar;
       return { top: 40, bottom: 40, left: leftMargin, right: 20 };
     },
-    // cohorts are collection-specific
-    collection_cohorts() {
-      const cch = [];
-      const cid = this.collection.id;
-      let ccnum = 0;
-
-      this.selectedCohorts.forEach(e => {
-        if (e.collection_id === cid) {
-          e.index = ccnum;
-          ccnum += 1;
-          cch.push(e);
-        }
-      });
-
-      return cch;
-    },
     xScale() {
       var rt = this.width - this.margins.right;
       var range = null;
 
       // take flip_axis into account:
       if (this.doFlipAxis) {
-        this.axisFlipped =
-          this.selectedOutcomeVariable &&
-          this.selectedOutcomeVariable.flip_axis;
+        this.axisFlipped = this.outcomeVar && this.outcomeVar.flip_axis;
         range = this.axisFlipped
           ? [rt, this.margins.left]
           : [this.margins.left, rt];
@@ -283,7 +321,7 @@ export default {
     },
   },
   watch: {
-    selectedOutcomeVariable(ov) {
+    outcomeVar(ov) {
       this.updateVisits();
     },
     maxLabelLen(mll) {
@@ -310,6 +348,10 @@ export default {
         }
       });
     },
+    cohorts(nc) {
+      this.resizeChart();
+      this.updateVisits();
+    },
   },
   mounted() {
     this.boxplotStatsUpdated = false;
@@ -326,9 +368,9 @@ export default {
     },
     updateVisits() {
       var bp = this;
-      if (this.selectedOutcomeVariable == null) return;
+      if (this.outcomeVar == null) return;
       this.collection.observation_variables_list.forEach(v => {
-        if (v.ontology.id == bp.selectedOutcomeVariable.id) {
+        if (v.ontology.id == bp.outcomeVar.id) {
           if (v.first_visit_event != null) {
             bp.firstVisit = v.first_visit_event;
             bp.lastVisit = v.last_visit_event;
@@ -374,17 +416,11 @@ export default {
       }
 
       // compute height based on rowHeight
+      var nCohorts = this.cohorts.length;
+      if (this.maxCohorts && this.maxCohorts > nCohorts)
+        nCohorts = this.maxCohorts;
       height =
-        this.rowHeight * this.selectedCohorts.length +
-        this.margins.top +
-        this.margins.bottom;
-
-      //      console.log(
-      //        'resizeChart() setting this.height = ' +
-      //          height +
-      //          ' this.width = ' +
-      //          width
-      //      );
+        this.rowHeight * nCohorts + this.margins.top + this.margins.bottom;
       this.height = height;
       this.width = width;
     },
@@ -392,8 +428,6 @@ export default {
     updateStats_aux(
       visit,
       y_offset,
-      pad_top,
-      pad_bottom,
       row_height,
       row2row_dist,
       label_prefix,
@@ -402,14 +436,15 @@ export default {
       // compute boxplot stats for each cohort
       var x_offset = this.margins.left;
       var max_ll = this.maxLabelLen;
-      this.selectedCohorts.forEach(c => {
+
+      this.cohorts.forEach(c => {
         const subjids = [];
         c.subject_ids.forEach(sid => {
           subjids[sid] = 1;
         });
         const cohortData = this.data
           .filter(d => d.subject_id in subjids)
-          .map(x => x[this.selectedOutcomeVariable.id][visit])
+          .map(x => x[this.outcomeVar.id][visit])
           .sort(ascending);
 
         const cmin = min(cohortData);
@@ -433,7 +468,7 @@ export default {
         //         this.xScale(cmax) + " boxMin=" + boxMin + " boxMax=" + boxMax
         //        );
 
-        var box_h = row_height - (pad_top + pad_bottom);
+        var box_h = row_height;
         var bpKey = c.id + '' + visit;
         var shortLabelFn = function(label) {
           if (label.length > max_ll) {
@@ -449,9 +484,9 @@ export default {
           color: c.color,
           x: x_offset,
           y: y_offset,
-          y1: y_offset + pad_top,
-          y2: y_offset + row_height - pad_bottom,
-          y_center: y_offset + pad_top + box_h / 2.0,
+          y1: y_offset,
+          y2: y_offset + row_height,
+          y_center: y_offset + box_h / 2.0,
           min: cmin,
           max: cmax,
           min_x: this.xScale(cmin),
@@ -470,35 +505,34 @@ export default {
       });
     },
     updateStats() {
-      if (!this.selectedOutcomeVariable) return;
+      if (!this.outcomeVar) return;
 
       this.boxplotStats = {};
       var bpStats = {};
 
       // overall max value
-      var accFn = x => x[this.selectedOutcomeVariable.id];
+      var accFn = x => x[this.outcomeVar.id];
       var allData = this.data.map(x => accFn(x));
       const firstMax = max(allData, d => d.firstVisit);
       const lastMax = max(allData, d => d.lastVisit);
       this.maxValue = Math.max(firstMax, lastMax);
 
       var hrh = this.rowHeight / 2.0;
+      var hrp = this.rowPad / 2.0;
+      var hbp = this.barPad / 2.0;
+
       this.updateStats_aux(
         'firstVisit',
-        this.margins.top,
-        15,
-        5,
-        hrh,
+        this.margins.top + hrp,
+        hrh - hrp - hbp,
         this.rowHeight,
         this.firstVisit + ' | ',
         bpStats
       );
       this.updateStats_aux(
         'lastVisit',
-        this.margins.top + hrh,
-        5,
-        15,
-        hrh,
+        this.margins.top + hrh + hbp,
+        hrh - hrp - hbp,
         this.rowHeight,
         this.lastVisit + ' | ',
         bpStats

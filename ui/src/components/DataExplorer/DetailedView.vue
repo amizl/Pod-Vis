@@ -1,13 +1,17 @@
 <template>
   <div class="ma-0" min-height="400px" fill-height>
-    <v-container fluid fill-width class="ma-0 pa-0">
+    <v-container
+      v-if="showTitleBar"
+      v-resize="onResize"
+      fluid
+      fill-width
+      class="ma-0 pa-0"
+    >
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <v-card color="#eeeeee" class="pt-1">
             <v-card-title class="primary--text pl-3 py-2">
               Detailed View
-              <!-- <span v-if="detailedView" class="subtitle-1">
-                - {{ detailedView.label }}</span    > -->
             </v-card-title>
 
             <v-card-title class="primary--text pa-0 pl-3">
@@ -28,6 +32,30 @@
               </span>
             </v-card-title>
           </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-container v-else fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-card-title class="primary--text pa-0 pt-3 pl-2">
+            <v-tooltip v-if="detailedView" bottom color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <img
+                  :src="'/images/' + detailedView.category + '-icon-128.png'"
+                  :title="detailedView.category"
+                  style="height:1.75em"
+                  class="ma-1"
+                  v-on="{ ...tooltip }"
+                />
+              </template>
+              <span>{{ detailedView.category }}</span>
+            </v-tooltip>
+            <span v-if="detailedView" class="subtitle-1">
+              {{ detailedView.label }}
+            </span>
+          </v-card-title>
         </v-col>
       </v-row>
     </v-container>
@@ -120,6 +148,7 @@
             ref="dview_chart"
             :variable="detailedView"
             :dimension-name="detailedView.id"
+            :visible-cohorts="visibleCohorts"
             :line-style="line_style"
             :draw-mean="draw_mean"
             :draw-raw="draw_raw"
@@ -145,6 +174,23 @@ export default {
   components: {
     DetailedViewChart,
   },
+  props: {
+    detailedView: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+    showTitleBar: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    visibleCohorts: {
+      type: Array,
+      required: true,
+      default: () => [],
+    },
+  },
   data() {
     return {
       line_style: 'bezier',
@@ -159,9 +205,7 @@ export default {
   },
   computed: {
     ...mapState('dataExplorer', {
-      detailedView: state.DETAILED_VIEW,
       collection: state.COLLECTION,
-      visibleCohorts: state.VISIBLE_COHORTS,
     }),
     isDetailedViewCategorical() {
       return (

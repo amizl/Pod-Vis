@@ -1,17 +1,64 @@
 <template>
   <div>
-    <v-container fluid fill-width class="ma-0 pa-0">
+    <v-container v-if="showTitleBar" fluid fill-width class="ma-0 pa-0">
       <v-row class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <v-card color="#eeeeee" class="pt-1">
             <v-card-title class="primary--text pl-3 py-2"
               >{{ title }}
+
+              <v-divider vertical class="ml-4 mr-4"> </v-divider>
+
+              <v-tooltip bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <span v-on="{ ...tooltip }">
+                    <v-chip
+                      label
+                      color="primary"
+                      class="white--text title mr-2"
+                      >{{ cohorts.length }}</v-chip
+                    >
+                    <span class="black--text text-body-1"
+                      >Cohort{{ cohorts.length == 1 ? '' : 's' }}</span
+                    >
+                  </span>
+                </template>
+                <span class="subtitle-1">
+                  {{ cohorts.length }} Cohort{{
+                    cohorts.length == 1 ? '' : 's'
+                  }}
+                </span>
+              </v-tooltip>
+
+              <v-divider v-if="showSelect" vertical class="ml-4 mr-4">
+              </v-divider>
+
+              <v-tooltip v-if="showSelect" bottom color="primary">
+                <template v-slot:activator="{ on: tooltip }">
+                  <span v-on="{ ...tooltip }">
+                    <v-chip
+                      label
+                      color="primary"
+                      class="white--text title mr-2"
+                      >{{ selected.length }}</v-chip
+                    >
+                    <span class="black--text text-body-1">Selected</span>
+                  </span>
+                </template>
+                <span class="subtitle-1">
+                  {{ selected.length }} Cohort{{
+                    selected.length == 1 ? '' : 's'
+                  }}
+                  selected
+                </span>
+              </v-tooltip>
+
               <v-spacer />
               <v-toolbar-items>
-                <v-icon v-if="expanded" @click="expanded = false"
+                <v-icon v-if="expandedVert" @click="expandedVert = false"
                   >expand_less</v-icon
                 >
-                <v-icon v-else @click="expanded = true">expand_more</v-icon>
+                <v-icon v-else @click="expandedVert = true">expand_more</v-icon>
               </v-toolbar-items>
             </v-card-title>
           </v-card>
@@ -19,7 +66,7 @@
       </v-row>
     </v-container>
 
-    <v-sheet v-show="expanded" color="white" class="rounded-lg shadow">
+    <v-sheet v-show="expandedVert" color="white" class="rounded-lg shadow">
       <!-- no cohorts selected -->
       <v-container
         v-if="!cohorts || cohorts.length == 0"
@@ -125,6 +172,11 @@ export default {
       required: false,
       default: 'Cohorts',
     },
+    showTitleBar: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
     cohorts: {
       type: Array,
       required: true,
@@ -164,11 +216,16 @@ export default {
       type: String,
       required: false,
     },
+    expanded: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
       selected: [],
-      expanded: true,
+      expandedVert: true,
       maxOverlap: null,
       maxSelectedOverlap: null,
     };
@@ -177,7 +234,7 @@ export default {
     headers() {
       var hdrs = [];
       hdrs.push({
-        text: 'Cohort Name',
+        text: 'Name',
         value: 'label',
         class: 'text-subtitle-1 font-weight-bold',
       });
@@ -190,17 +247,19 @@ export default {
         });
       }
 
-      hdrs.push({
-        text: 'Cohort Size',
-        value: 'size',
-        class: 'text-subtitle-1 font-weight-bold',
-      });
+      if (this.expanded) {
+        hdrs.push({
+          text: 'Size',
+          value: 'size',
+          class: 'text-subtitle-1 font-weight-bold',
+        });
 
-      hdrs.push({
-        text: 'Query',
-        value: 'query_string',
-        class: 'text-subtitle-1 font-weight-bold',
-      });
+        hdrs.push({
+          text: 'Query',
+          value: 'query_string',
+          class: 'text-subtitle-1 font-weight-bold',
+        });
+      }
 
       return hdrs;
     },
@@ -315,6 +374,9 @@ export default {
         }
       }
       return overlaps;
+    },
+    deselectAll() {
+      this.selected = [];
     },
   },
 };
