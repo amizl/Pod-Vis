@@ -141,6 +141,7 @@
                     :show-save-help="helpMode && substep == '2.4'"
                     :show-next-help="helpMode && collection_cohorts.length >= 2"
                     @selectedCohort="cohortSelected"
+		    @savedCohort="cohortSaved"
                     @newCohort="newCohort"
                   />
                 </pane>
@@ -389,6 +390,7 @@ export default {
   },
   methods: {
     ...mapActions('cohortManager', {
+      clearAllFilters: actions.CLEAR_ALL_FILTERS,
       fetchCollection: actions.FETCH_COLLECTION,
       fetchCohorts: actions.FETCH_COHORTS,
       fetchData: actions.FETCH_DATA,
@@ -422,8 +424,10 @@ export default {
       this.setCohortNoReset({ id: -1 });
     },
     cohortSaved(success) {
-      console.log('CohortManager: cohortSaved success=' + success);
-      if (this.helpMode) this.createNew(success);
+      // reset all filters
+      this.clearAllFilters();
+      // return to "add filters" step
+      this.substep = '2.3';
     },
     // create entirely new cohort resetting everything
     createNew(success) {

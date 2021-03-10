@@ -481,7 +481,7 @@ export default {
       this.$emit('newCohort')
     },
     cohortSaved(success) {
-      this.$emit('newCohort', success)
+      this.$emit('savedCohort', success)
     },
     cohortDeleted() {
       if (this.selectedRow != null) this.selectedRow.select(false);
