@@ -38,6 +38,41 @@
       </v-row>
     </v-container>
 
+	  <v-container v-else fluid fill-width class="ma-0 pa-0">
+	    <v-row class="ma-0 pa-0">
+              <v-col cols="12" class="ma-0 pa-0">
+		<v-container fluid fill-width class="ma-0 pa-0">
+		  <v-row class="ma-0 pa-0">
+		    <v-col cols="12" class="ma-0 pa-0">
+                      <v-card-title class="primary--text pa-0 pt-3 pl-2">
+			<v-tooltip v-if="outcomeVar" bottom color="primary">
+			  <template v-slot:activator="{ on: tooltip }">
+			    <img
+                              :src="
+				    '/images/' + outcomeVar.category + '-icon-128.png'
+				    "
+                              :title="outcomeVar.category"
+                              style="height:1.75em"
+                              class="ma-1"
+                              v-on="{ ...tooltip }"
+			      />
+			  </template>
+			  <span>{{ outcomeVar.category }}</span>
+			</v-tooltip>
+			<span v-if="outcomeVar" class="subtitle-1">
+			  {{ outcomeVar.label }}
+			</span>
+                      </v-card-title>
+		    </v-col>
+		  </v-row>
+		</v-container>
+	      </v-col>
+	    </v-row>
+	  </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
+
     <v-sheet color="white" class="my-3 rounded-lg shadow">
       <v-container
         ref="bp_container"
