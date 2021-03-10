@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="openOutputVariableDialog" scrollable>
+  <v-dialog v-model="openOutputVariableDialog" max-width="80%" scrollable>
     <template v-slot:activator="{ on }">
       <v-btn text color="primary" class="title" v-on="on">
         <v-icon left dark large class="pr-2">add_circle</v-icon>
@@ -7,86 +7,81 @@
       </v-btn>
     </template>
     <v-card class="rounded-lg">
-      <v-card-title
-        class="title primary--text text--darken-3"
-        style="padding: 16px 16px 0px 16px;"
-      >
-        <div style="width: 100%; padding: 16px;">
-          Choose Outcome Variables
-          <v-switch
-            v-model="useLongScaleNamesSelect"
-            label="Use long scale names"
-            class="pa-0 ma-0"
-            hide-details
-          ></v-switch>
-        </div>
-        <div style="width: 100%;">
-          <v-data-table
-            key="ovd-header"
-            :items="this.outputVariables"
-            :headers="headers"
-            item-key="id"
-            hide-default-footer
-            dense
-            style="width: 100%;"
-            class="blue-grey lighten-5"
-          >
-            <template v-slot:item="props"> </template>
-          </v-data-table>
-
-          <v-data-table
-            :items="this.outputVariables"
-            :headers="headers"
-            item-key="id"
-            hide-default-footer
-            dense
-            style="width: 100%;"
-            class="blue-grey lighten-5"
-          >
-            <template v-slot:header.category="{ header }"> </template>
-            <template v-slot:header.label="{ header }"> </template>
-            <template v-slot:header.all="{ header }">
-              <v-simple-checkbox
-                v-if="showAllVarsCheckbox"
-                v-model="columnCheckboxes['all']"
-                hide-details
-                @input="columnCheckboxChange('all')"
-              />
-            </template>
-            <template v-slot:header.fv="{ header }">
-              <v-simple-checkbox
-                v-model="columnCheckboxes['firstVisit']"
-                hide-details
-                @input="columnCheckboxChange('firstVisit')"
-              />
-            </template>
-            <template v-slot:header.lv="{ header }">
-              <v-simple-checkbox
-                v-model="columnCheckboxes['lastVisit']"
-                hide-details
-                @input="columnCheckboxChange('lastVisit')"
-              />
-            </template>
-            <template v-slot:header.ch="{ header }">
-              <v-simple-checkbox
-                v-model="columnCheckboxes['change']"
-                hide-details
-                @input="columnCheckboxChange('change')"
-              />
-            </template>
-            <template v-slot:header.roc="{ header }">
-              <v-simple-checkbox
-                v-model="columnCheckboxes['ROC']"
-                hide-details
-                @input="columnCheckboxChange('ROC')"
-              />
-            </template>
-            <template v-slot:item="props"> </template>
-          </v-data-table>
-        </div>
+      <v-card-title class="title primary--text text--darken-3 px-4 py-2">
+        Choose Outcome Variables
+        <v-spacer></v-spacer>
+        <v-switch
+          v-model="useLongScaleNamesSelect"
+          label="Use long scale names"
+          class="pa-0 ma-0"
+          hide-details
+        ></v-switch>
       </v-card-title>
 
       <v-card-text style="padding: 0px 16px 16px 16px;">
+        <v-data-table
+          key="ovd-header"
+          :items="this.outputVariables"
+          :headers="headers"
+          item-key="id"
+          hide-default-footer
+          dense
+          style="width: 100%;"
+          class="blue-grey lighten-5 mt-3"
+        >
+          <template v-slot:item="props"> </template>
+        </v-data-table>
+
+        <v-data-table
+          :items="this.outputVariables"
+          :headers="headers"
+          item-key="id"
+          hide-default-footer
+          dense
+          style="width: 100%;"
+          class="blue-grey lighten-5"
+        >
+          <template v-slot:header.category="{ header }"> </template>
+          <template v-slot:header.label="{ header }"> </template>
+          <template v-slot:header.all="{ header }">
+            <v-simple-checkbox
+              v-if="showAllVarsCheckbox"
+              v-model="columnCheckboxes['all']"
+              hide-details
+              @input="columnCheckboxChange('all')"
+            />
+          </template>
+          <template v-slot:header.fv="{ header }">
+            <v-simple-checkbox
+              v-model="columnCheckboxes['firstVisit']"
+              hide-details
+              @input="columnCheckboxChange('firstVisit')"
+            />
+          </template>
+          <template v-slot:header.lv="{ header }">
+            <v-simple-checkbox
+              v-model="columnCheckboxes['lastVisit']"
+              hide-details
+              @input="columnCheckboxChange('lastVisit')"
+            />
+          </template>
+          <template v-slot:header.ch="{ header }">
+            <v-simple-checkbox
+              v-model="columnCheckboxes['change']"
+              hide-details
+              @input="columnCheckboxChange('change')"
+            />
+          </template>
+          <template v-slot:header.roc="{ header }">
+            <v-simple-checkbox
+              v-model="columnCheckboxes['ROC']"
+              hide-details
+              @input="columnCheckboxChange('ROC')"
+            />
+          </template>
+          <template v-slot:item="props"> </template>
+        </v-data-table>
+
         <v-data-table
           key="ovd"
           :headers="headers"
