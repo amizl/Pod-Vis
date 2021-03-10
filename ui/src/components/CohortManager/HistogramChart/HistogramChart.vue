@@ -172,18 +172,45 @@
                 <v-radio value="tertiles" label="Tertiles"></v-radio>
                 <v-radio value="quartiles" label="Quartiles"></v-radio>
               </v-radio-group>
+            </v-col>
+          </v-row>
 
-              <!--
-	      <v-select
-		v-model="selectedPopSubset"
-		:items="popSubsetItems"
-		item-text="label"
-		item-value="id"
-		label="Pre-Programmed Selections"
-		class="pa-0 ma-0"
-		return-object
-		></v-select> 
-	      -->
+          <v-row class="pa-0 ma-0">
+            <v-col
+              cols="6"
+              class="center-text pa-0 ma-0 font-weight-bold"
+              justify="start"
+            >
+              <v-select
+                v-model="selectedPopSubset"
+                :items="popSubsetItems"
+                item-text="label"
+                item-value="id"
+                label="select range"
+                class="pa-0 ma-0 mt-1"
+                return-object
+              ></v-select>
+            </v-col>
+            <v-col cols="2" class="pa-0 ma-0 ml-2" justify="start">
+              <v-text-field
+                v-model.number="tfRangeMin"
+                :error-messages="rangeMinErrors"
+                class="center-text pa-0 ma-0"
+                type="number"
+                @change="userChangedVariable"
+              ></v-text-field
+            ></v-col>
+            <v-col cols="1" class="pa-0 ma-0" align="center" justify="center">
+              -
+            </v-col>
+            <v-col cols="2" class="pa-0 ma-0">
+              <v-text-field
+                v-model.number="tfRangeMax"
+                :error-messages="rangeMaxErrors"
+                class="center-text pa-0 ma-0"
+                type="number"
+                @change="userChangedVariable"
+              ></v-text-field>
             </v-col>
           </v-row>
 
@@ -488,21 +515,22 @@ export default {
       let lower = this.min_value;
       let upper = this.max_value;
 
-      items.push({ label: 'top 1/2', min: median, max: upper });
-      items.push({ label: 'bottom 1/2', min: lower, max: median });
-
-      items.push({ label: 'top 1/3', min: thr2, max: upper });
-      items.push({ label: 'middle 1/3', min: thr1, max: thr2 });
-      items.push({ label: 'bottom 1/3', min: lower, max: thr1 });
-
-      items.push({ label: 'top 1/4', min: qtr3, max: upper });
-      items.push({ label: 'bottom 3/4', min: lower, max: qtr3 });
-      items.push({ label: 'bottom 1/4', min: lower, max: qtr1 });
-      items.push({ label: 'top 3/4', min: qtr1, max: upper });
-      items.forEach(i => {
-        i.label = i.label + ' of population [' + i.min + ' - ' + i.max + ']';
-      });
-
+      if (this.predef_radio == 'halves') {
+        items.push({ label: 'bottom 1/2', min: lower, max: median });
+        items.push({ label: 'top 1/2', min: median, max: upper });
+      } else if (this.predef_radio == 'tertiles') {
+        items.push({ label: 'bottom 1/3', min: lower, max: thr1 });
+        items.push({ label: 'middle 1/3', min: thr1, max: thr2 });
+        items.push({ label: 'top 1/3', min: thr2, max: upper });
+      } else if (this.predef_radio == 'quartiles') {
+        items.push({ label: '1st quartile', min: lower, max: qtr1 });
+        items.push({ label: '2nd quartile', min: qtr1, max: median });
+        items.push({ label: '3rd quartile', min: median, max: qtr3 });
+        items.push({ label: '4th quartile', min: qtr3, max: upper });
+      }
+      //      items.forEach(i => {
+      //        i.label = i.label + ' of population [' + i.min + ' - ' + i.max + ']';
+      //      });
       return items;
     },
     rangeItems() {
