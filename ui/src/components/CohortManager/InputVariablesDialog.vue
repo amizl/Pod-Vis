@@ -408,7 +408,7 @@ export default {
 
     // update state of column master checkboxes based on the current state
     updateColumnCheckboxes() {
-      var init = (this.inputVariables && (this.inputVariables.length > 0));
+      var init = this.inputVariables && this.inputVariables.length > 0;
       var cbStates = {
         all: init,
         firstVisit: init,

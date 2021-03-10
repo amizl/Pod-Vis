@@ -141,7 +141,7 @@
                     :show-save-help="helpMode && substep == '2.4'"
                     :show-next-help="helpMode && collection_cohorts.length >= 2"
                     @selectedCohort="cohortSelected"
-		    @savedCohort="cohortSaved"
+                    @savedCohort="cohortSaved"
                     @newCohort="newCohort"
                   />
                 </pane>
