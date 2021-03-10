@@ -361,6 +361,7 @@ export default {
           if (iv.outmSelected != ivSel) iv.outmSelected = ivSel;
         }
       });
+      this.updateColumnCheckboxes();
     },
   },
   async created() {
@@ -461,12 +462,13 @@ export default {
 
     // update state of column master checkboxes based on the current state
     updateColumnCheckboxes() {
+      var init = (this.outputVariables && (this.outputVariables.length > 0));
       var cbStates = {
-        all: true,
-        firstVisit: true,
-        lastVisit: true,
-        change: true,
-        ROC: true,
+        all: init,
+        firstVisit: init,
+        lastVisit: init,
+        change: init,
+        ROC: init,
       };
       this.outputVariables.forEach(v => {
         if (!v.outmSelected) {
