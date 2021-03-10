@@ -213,10 +213,10 @@ export default {
   },
   watch: {
     cohortData() {
-      this.updateCanvas();
+      this.$nextTick(() => this.updateCanvas());
     },
     highlightedSubset() {
-      this.updateCanvas();
+      this.$nextTick(() => this.updateCanvas());
     },
   },
   created() {},
@@ -243,14 +243,9 @@ export default {
       this.height = 300;
       this.width = 180;
     },
-    drawCurve({ firstVisitCoordinates, lastVisitCoordinates }, color, alpha) {
+    drawCurve({ firstVisitCoordinates, lastVisitCoordinates }) {
       const { context } = this;
-      context.lineWidth = 1;
-      context.strokeStyle = color;
-      context.globalAlpha = alpha;
-
       context.beginPath();
-      context.moveTo(firstVisitCoordinates.x, firstVisitCoordinates.y);
       context.bezierCurveTo(
         firstVisitCoordinates.x +
           (lastVisitCoordinates.x - firstVisitCoordinates.x) / 4,
@@ -264,19 +259,23 @@ export default {
       context.stroke();
     },
     drawUnfiltered() {
-      this.populationPaths.forEach(path =>
-        this.drawCurve(path, colors['population'], 1)
-      );
+      const { context } = this;
+      context.lineWidth = 1;
+      context.strokeStyle = colors['population'];
+      context.globalAlpha = 1;
+      this.populationPaths.forEach(path => this.drawCurve(path));
     },
     drawFiltered() {
+      const { context } = this;
+      context.lineWidth = 1;
+      context.globalAlpha = 0.45;
+
       if (this.highlightedSubset === 'cohort') {
-        this.cohortPaths.forEach(path =>
-          this.drawCurve(path, colors['cohort'], 0.45)
-        );
+        context.strokeStyle = colors['cohort'];
+        this.cohortPaths.forEach(path => this.drawCurve(path));
       } else {
-        this.nonCohortPaths.forEach(path =>
-          this.drawCurve(path, colors['nonCohort'], 0.45)
-        );
+        context.strokeStyle = colors['nonCohort'];
+        this.nonCohortPaths.forEach(path => this.drawCurve(path));
       }
     },
     updateCanvas() {
