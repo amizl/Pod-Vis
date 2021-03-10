@@ -1,6 +1,6 @@
 <template>
   </v-sheet>
-    <v-dialog v-model="dialog" width="600">
+    <v-dialog v-model="dialog" scrollable max-width="50%">
       <v-card class="rounded-lg" style="border: 3px solid #3f51b5;">
         <v-card-title color="white" class="ma-0 pa-2" primary-title>
           <span class="primary--text text--darken-3 title"
@@ -29,6 +29,9 @@
 	  
         </v-card-title>
 
+	<v-divider></v-divider>
+	
+	<v-card-text>
       <v-container fluid fill-width class="ma-2 pa-0 mx-2">
 
 	<!-- list of cohorts -->
@@ -205,11 +208,16 @@
 	    </div> -->
 	  </v-col>
 	</v-row>
+      </v-container>
+      </v-card-text>
+
+      <v-divider></v-divider>
 	
-	<!-- save & close buttons -->
-	<v-row class="ma-0 pa-0 mx-2">
-          <v-col cols="12" class="ma-0 pa-2" align="right">
-	    
+      <!-- save & close buttons -->
+      <v-card-actions>
+
+	<v-spacer></v-spacer>
+	
 	    <v-tooltip bottom color="primary">
 	      <template v-slot:activator="{ on: tooltip }">
 		<v-btn
@@ -238,10 +246,8 @@
 	      <span>Close without saving new cohorts</span>
 	    </v-tooltip>
 	    
-	  </v-col>
-	</v-row>
-      </v-container>
-
+      </v-card-actions>
+      
       </v-card>
     </v-dialog>
 </template>
