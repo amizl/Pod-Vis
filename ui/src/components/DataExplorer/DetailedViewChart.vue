@@ -1,5 +1,12 @@
 <template>
-  <v-container ref="dv_container" v-resize="onResize" fluid class="pa-0 ma-0">
+  <v-container
+    ref="dv_container"
+    v-resize="onResize"
+    fluid
+    fill-width
+    width="100%"
+    class="pa-0 ma-0"
+  >
     <v-row class="pa-0 ma-0">
       <v-col cols="12" class="pa-0 ma-0">
         <!-- Detailed View Chart -->
@@ -585,11 +592,14 @@ export default {
     },
 
     resizeChart() {
+      this.container = this.$refs.dv_container;
       if (this.container == null) {
         return;
       }
       var { width, height } = this.container.getBoundingClientRect();
-      //      console.log("resizeChart() client height = " + height + " width = " + width);
+      if (width == 0) {
+        return;
+      }
 
       // establish minimum size
       if (height < this.minHeight) {
@@ -599,7 +609,6 @@ export default {
         width = this.minWidth;
       }
 
-      //      console.log("resizeChart() setting this.height = " + height + " this.width = " + width);
       // HACK - needs to be fixed properly
       this.height = height - 7;
       this.width = width;

@@ -119,7 +119,11 @@
       <v-container fluid fill-width class="ma-0 pa-0">
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
-            <splitpanes class="default-theme" @resize="splitPaneResized">
+            <splitpanes
+              ref="splitter"
+              class="default-theme"
+              @resize="splitPaneResized"
+            >
               <pane size="45" min-size="15" max-size="60" class="pb-1">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <v-tabs v-model="leftTab" light>
@@ -287,10 +291,20 @@ export default {
       }
     },
     rightTab(rt) {
-      //console.log("rt=" + rt);
-      //if (rt == 0) {
-      //this.$refs.dview.onResize();
-      //}
+      // workaround for resize problem #596
+      if (rt == 0) {
+        const dv = this.$refs.dview;
+        setTimeout(async function() {
+          if (dv) dv.onResize();
+        }, 500);
+      } else if (rt == 1) {
+        const bp = this.$refs.boxplots;
+        const sb = this.$refs.stackedbars;
+        setTimeout(async function() {
+          if (bp) bp.onResize();
+          if (sb) sb.onResize();
+        }, 500);
+      }
     },
   },
   created() {
@@ -326,7 +340,6 @@ export default {
     },
     splitPaneResized(evt) {
       var psize = evt[0].size;
-
       this.expandAnalytics = psize > 30;
 
       if (this.rightTab == 0) {
@@ -336,9 +349,9 @@ export default {
           this.detailedView &&
           this.detailedView.data_category == 'Continuous'
         ) {
-          this.$refs.boxplots.onResize();
+          this.$nextTick(() => this.$refs.boxplots.onResize());
         } else {
-          this.$refs.stackedbars.onResize();
+          this.$nextTick(() => this.$refs.stackedbars.onResize());
         }
       }
     },
