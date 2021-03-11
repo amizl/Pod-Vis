@@ -60,6 +60,7 @@
                           :select-cohorts="visibleCohorts"
                           :disable-pagination="false"
                           show-select
+                          show-colors
                           report-max-selected-overlap
                           checkbox-tooltip="Check to include this cohort in the next analysis."
                           @selectedCohorts="updateVisibleCohorts"
@@ -191,7 +192,7 @@ export default {
       analyses: [],
       analysisNum: 0,
       comparisonMeasures: COMPARISON_MEASURES,
-      selectedComparisonMeasure: COMPARISON_MEASURES[0],
+      selectedComparisonMeasure: COMPARISON_MEASURES[2],
     };
   },
   computed: {
