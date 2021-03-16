@@ -1,8 +1,16 @@
-1.0.4
+1.0.4 
+ -Merge Data Explorer and Summary Matrix (#568)
  -Add new Help Mode to Cohort Manager. (#577)
  -Add adjustable split panes to Cohort Manager. (#579)
  -Fix Analysis Tracker navigation bugs. (#584)
  -Make boxplots observe flip_axis attribute. (#586)
+ -Return to step 2.3 after saving a cohort (#587)
+ -Add dropdown to predefined-ranges tab in histogram chart (#588)
+ -Fix bug clearing "All" checkboxes in input/output variable selection dialogs (#589)
+ -Always show Cancel/Save buttons in AnalyticsPopup (#590)
+ -Make all dialogs draggable (#591)
+ -Eliminate delay when deleting cohorts (#593)
+ -Fix component resize bug (#596)
 
 1.0.3 (February 24, 2021)
  -Add option to display full scale names (#562)
