@@ -335,7 +335,7 @@ export default {
           'At least two cohorts must be created before proceeding to Analyze Cohorts.'
         );
       } else {
-        this.$router.push(`explore?collection=${this.collectionId}`);
+        this.$emit('nextStep', true);
       }
     },
     // Cohort Manager sub-step transitions.

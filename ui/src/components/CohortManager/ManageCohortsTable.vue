@@ -134,32 +134,27 @@
       </v-data-table>
 
       <v-container fluid class="pb-2 px-1">
-        <v-row v-if="showNewHelpChip || showSaveHelpChip || showNextHelpChip" class="ma-0 pa-0 align-center">
+        <v-row v-if="showNewHelpChip || showSaveHelpChip" class="ma-0 pa-0 align-center">
           <v-col cols="12" class="ma-0 pa-0" align="center">
 	    <v-chip v-if="showNewHelpChip" label close color="#4caf50" class="font-weight-bold white--text pa-2 my-1" @click:close="showNewHelpChip = false;"
 		    >Click NEW COHORT to start over (predictors and outcomes are removed)</v-chip>
 	    <v-chip v-if="showSaveHelpChip" label close color="#4caf50" class="font-weight-bold white--text pa-2 my-1" @click:close="showSaveHelpChip = false;"
 		    >After review, click SAVE COHORT to create a cohort.</v-chip>
-	    <v-chip v-if="showNextHelpChip" label close color="#4caf50" class="font-weight-bold white--text pa-2 my-1" @click:close="showNextHelpChip = false;"
-		    >Click COHORT ANALYSIS to proceed to the analysis step.</v-chip>
          </v-col>
         </v-row>
 
         <v-row class="ma-0 pa-0 align-center">
-          <v-col cols="4" class="ma-0 pa-0" align="center">
+          <v-col cols="6" class="ma-0 pa-0" align="center">
 
 	    <v-btn class="primary text--white ma-0 px-2 py-0"
 		   @click="newCohort"
 		   >New Cohort</v-btn>
 	  </v-col>
 	  
-	  <v-col cols="4" class="ma-0 pa-0" align="center">
+	  <v-col cols="6" class="ma-0 pa-0" align="center">
 	    <save-cohort-btn-dialog :cohorts="cohorts" @cohortSaved="cohortSaved"></save-cohort-btn-dialog>
 	  </v-col>
 	  
-	  <v-col cols="4" class="ma-0 pa-0" align="center">
-	    <analysis-summary-btn-dialog :collection-id="collectionId"></analysis-summary-btn-dialog>
-	  </v-col>
 	</v-row>
       </v-container>
       
@@ -179,36 +174,6 @@
       </div>
     </v-sheet>
 
-    <v-dialog v-model="analysisDialog" width="500">
-      <v-card class="rounded-lg">
-        <v-card-title color="white" primary-title>
-          <v-icon color="primary">grid_on</v-icon>
-          <span class="primary--text text--darken-3 title pl-2"
-            >Proceed to Summary Matrix</span
-          >
-        </v-card-title>
-
-        <v-card-text class="primary primary--text text--lighten-5 pt-4">
-          Are you sure you want to leave the Cohort Manager and go to the
-          Summary Matrix?
-        </v-card-text>
-
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="analysisDialog = false">
-            <v-icon left>close</v-icon> No
-          </v-btn>
-          <v-btn
-            color="primary"
-            @click="routeToAnalysisSummary"
-          >
-            Yes</v-btn
-          >
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
   </div>
 </template>
 
@@ -219,13 +184,11 @@ import { actions, state, getters } from '@/store/modules/cohortManager/types';
 import { format } from 'd3-format';
 import DeleteCohortIconDialog from '@/components/CohortManager/DeleteCohortIconDialog.vue';
 import SaveCohortBtnDialog from '@/components/CohortManager/SaveCohortBtnDialog.vue';
-import AnalysisSummaryBtnDialog from '@/components/DataExplorer/AnalysisSummaryBtnDialog.vue';
 
 export default {
   components: {
     DeleteCohortIconDialog,
     SaveCohortBtnDialog,
-    AnalysisSummaryBtnDialog,
   },
   props: {
     title: {
@@ -286,11 +249,6 @@ export default {
       required: false,
       default: false,
     },
-    showNextHelp: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
   },
   data() {
     return {
@@ -298,11 +256,9 @@ export default {
       expanded: true,
       maxOverlap: null,
       maxSelectedOverlap: null,
-      analysisDialog: false,
       selectedRow: null,
       showNewHelpChip: false,
       showSaveHelpChip: false,
-      showNextHelpChip: false,
     };
   },
   computed: {
@@ -362,9 +318,6 @@ export default {
     },
     showSaveHelp(show) {
       this.showSaveHelpChip = show;
-    },
-    showNextHelp(show) {
-      this.showNextHelpChip = show;
     },
   },
   created() {

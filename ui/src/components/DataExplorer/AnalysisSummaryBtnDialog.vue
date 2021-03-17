@@ -3,7 +3,7 @@
     <v-tooltip bottom color="primary">
       <template v-slot:activator="{ on: tooltip }">
         <v-btn
-          class="primary text--white ma-0 px-2 py-0"
+          class="primary--text ma-0 px-2 py-0"
           :disabled="collection_cohorts.length < 2"
           @click="dialog = !dialog"
           v-on="{ ...tooltip }"

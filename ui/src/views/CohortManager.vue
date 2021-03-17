@@ -55,6 +55,22 @@
           {{ helpMode ? 'Disable' : 'Enable' }} help mode.
         </span>
       </v-tooltip>
+
+      <v-chip
+        v-if="showNextHelpChip"
+        label
+        close
+        color="#4caf50"
+        class="font-weight-bold white--text pa-2 my-1 mr-2 ml-4"
+        @click:close="showNextHelpChip = false"
+        >Click COHORT ANALYSIS to proceed to the analysis step.</v-chip
+      >
+
+      <analysis-summary-btn-dialog
+        ref="asum_btn"
+        :collection-id="collectionId"
+        class="ml-3"
+      ></analysis-summary-btn-dialog>
     </v-app-bar>
 
     <v-container
@@ -98,6 +114,7 @@
         :collection-id="collectionId"
         @createSimilar="createSimilar"
         @createNew="createNew"
+        @nextStep="nextStep"
       ></analysis-tracker>
 
       <v-card :class="allPanelsClass">
@@ -139,7 +156,6 @@
                     :collection-id="collectionId"
                     :show-new-help="helpMode && substep == '2.2'"
                     :show-save-help="helpMode && substep == '2.4'"
-                    :show-next-help="helpMode && collection_cohorts.length >= 2"
                     @selectedCohort="cohortSelected"
                     @savedCohort="cohortSaved"
                     @newCohort="newCohort"
@@ -222,6 +238,7 @@ import AnalyticsTable from '@/components/CohortManager/AnalyticsTable.vue';
 import AnalyticsPopup from '@/components/CohortManager/AnalyticsPopup.vue';
 import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
+import AnalysisSummaryBtnDialog from '@/components/DataExplorer/AnalysisSummaryBtnDialog.vue';
 
 export default {
   name: 'CohortManager',
@@ -234,6 +251,7 @@ export default {
     AnalyticsPopup,
     Splitpanes,
     Pane,
+    AnalysisSummaryBtnDialog,
   },
   props: {
     collectionId: {
@@ -257,6 +275,7 @@ export default {
       analyticsPopupSelectRangeFn: x => x,
       helpModeCheckbox: false,
       helpModeNotify: false,
+      showNextHelpChip: false,
     };
   },
   computed: {
@@ -334,6 +353,9 @@ export default {
       }
       return 'z-index: auto';
     },
+    showNextHelp() {
+      return this.helpMode && this.collection_cohorts.length >= 2;
+    },
   },
   watch: {
     substep() {
@@ -374,6 +396,9 @@ export default {
     },
     helpMode(helpOn) {
       this.helpModeNotify = helpOn;
+    },
+    showNextHelp(show) {
+      this.showNextHelpChip = show;
     },
   },
   async created() {
@@ -492,6 +517,9 @@ export default {
         ranges.cohorts,
         this.analyticsPopupCohortPrefix
       );
+    },
+    nextStep() {
+      this.$refs.asum_btn.dialog = true;
     },
   },
 };
