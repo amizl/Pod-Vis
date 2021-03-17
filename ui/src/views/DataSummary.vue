@@ -49,6 +49,8 @@
             >
             </visit-variables-toolbar>
 
+            <visit-times-table></visit-times-table>
+
             <bubble-chart
               :var-opacity="'0.3'"
               :collection-var-opacity="'0.8'"
@@ -57,8 +59,6 @@
             >
             </bubble-chart>
             <v-spacer></v-spacer>
-
-            <visit-times-table></visit-times-table>
           </v-sheet>
         </v-col>
       </v-row>
