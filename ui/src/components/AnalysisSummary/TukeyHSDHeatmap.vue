@@ -88,7 +88,7 @@
 			  {{ table_cell(c, props.item) }}
 			</div>
 		      </template>
-		      <span>{{ "Click to view " + c.label + " vs " + props.item.label + " in Data Explorer"}}</span>
+		      <span>{{ "Click to view " + c.label + " vs " + props.item.label + " in Data Analysis"}}</span>
 		    </v-tooltip>
                 </td>
 		</v-hover>

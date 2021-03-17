@@ -75,12 +75,12 @@
                   @click="routeToDataExplorer(props.item)"
                   v-on="{ ...tooltip }"
                 >
-                  <v-icon left small color="secondary">explore</v-icon> Analyze
-                  Cohorts
+                  <v-icon left small color="secondary">analytics</v-icon> Data
+                  Analysis
                 </v-btn>
               </template>
               <span class="subtitle-1"
-                >Analyze Cohorts in the Data Explorer.</span
+                >Analyze cohorts, predictor variables, and outcomes.</span
               >
             </v-tooltip>
 

@@ -23,9 +23,9 @@
           justify="start"
         >
           <v-app-bar app class="primary">
-            <v-icon color="white" large>explore</v-icon>
+            <v-icon color="white" large>analytics</v-icon>
             <v-toolbar-title class="white--text pl-3"
-              >Data Explorer
+              >Data Analysis
               <div class="subheading">
                 Dataset:
                 <v-tooltip bottom color="primary">
@@ -41,7 +41,7 @@
           </v-app-bar>
 
           <analysis-tracker
-            step="4"
+            step="3"
             :substep="substep"
             :collection-id="collectionId"
           ></analysis-tracker>
@@ -183,7 +183,6 @@ export default {
   data() {
     return {
       isLoading: false,
-      substep: '4.1',
       selectedCohorts: [],
       expandAnalytics: true,
       // TODO - assign stable color to each newly-created cohort (in CohortManager?)
@@ -213,6 +212,10 @@ export default {
         }
       });
       return cc;
+    },
+    substep() {
+      var ss = this.visibleCohorts.length > 1 ? '3.2' : '3.1';
+      return ss;
     },
   },
   watch: {

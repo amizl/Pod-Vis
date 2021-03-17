@@ -8,7 +8,7 @@
           @click="dialog = !dialog"
           v-on="{ ...tooltip }"
         >
-          <v-icon left>explore</v-icon>
+          <v-icon left>analytics</v-icon>
           Explore
         </v-btn>
       </template>

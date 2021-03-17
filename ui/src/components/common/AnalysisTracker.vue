@@ -52,7 +52,7 @@
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Analyze&nbsp;cohorts</span
+                >Data&nbsp;analysis</span
               >
             </template>
             <span class="subtitle-1">{{ step_descr['3'] }}</span>
@@ -144,14 +144,16 @@
 
     <v-stepper v-if="step === '3'" :value="substep" model="substep">
       <v-stepper-header class="tracker_step_highlight">
-        <v-stepper-step step="3.1"
-          >Select the cohorts and scale (i.e., outcome variable) to display in
-          the Detailed View by using the Cohorts Included in Analysis table
-          (top) and the Analytics panel (bottom left), respectively. Use the
-          checkboxes to control which cohorts appear in the Detailed View and
-          click on the desired scale in the Analytics panel.
+        <v-stepper-step
+          step="3.1"
+          :class="substepClass('3.1')"
+          :complete="substep === '3.2'"
+          ><span class="subtitle-1">Select two or more cohorts.</span>
         </v-stepper-step>
         <v-divider></v-divider>
+        <v-stepper-step step="3.2" :class="substepClass('3.2')"
+          ><span class="subtitle-1">Click on 'ANALYZE SELECTED COHORTS'</span>
+        </v-stepper-step>
       </v-stepper-header>
     </v-stepper>
 
@@ -201,7 +203,7 @@ export default {
       step_descr: {
         '1': 'Create your study dataset',
         '2': 'Design your query: Choose predictors and outcomes',
-        '3': 'Analyze cohorts and variables in the Data Explorer.',
+        '3': 'Analyze your data: Analyze cohorts and variables.',
       },
       expanded: true,
 
@@ -325,14 +327,14 @@ export default {
       } else if (this.step <= 1) {
         this.displayErrorDialog(
           'No Study Dataset',
-          'A study dataset must be created before the Data Explorer can be used. ' +
+          'A study dataset must be created before Data Analysis can be performed. ' +
             "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
             'link for an existing study dataset.'
         );
       } else if (this.collection_cohorts.length < 2) {
         this.displayErrorDialog(
           'Too Few Cohorts',
-          'At least two cohorts must be created before proceeding to Analyze Cohorts.'
+          'At least two cohorts must be created before proceeding to Data Analysis.'
         );
       } else {
         this.$emit('nextStep', true);
