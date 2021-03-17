@@ -429,10 +429,10 @@ export default {
       let ccl = this.colors['pvals']['1' + '-' + this.colorScheme][which];
       if (pval < 0.001) {
         ccl = this.colors['pvals']['0.001' + '-' + this.colorScheme][which];
-      } else if (pval < 0.05) {
-        ccl = this.colors['pvals']['0.05' + '-' + this.colorScheme][which];
       } else if (pval < 0.01) {
         ccl = this.colors['pvals']['0.01' + '-' + this.colorScheme][which];
+      } else if (pval < 0.05) {
+        ccl = this.colors['pvals']['0.05' + '-' + this.colorScheme][which];
       } else if (pval < 0.1) {
         ccl = this.colors['pvals']['0.1' + '-' + this.colorScheme][which];
       }
