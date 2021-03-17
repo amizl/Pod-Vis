@@ -52,7 +52,7 @@
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Data&nbsp;analytics</span
+                >Data&nbsp;Analytics</span
               >
             </template>
             <span class="subtitle-1">{{ step_descr['3'] }}</span>
