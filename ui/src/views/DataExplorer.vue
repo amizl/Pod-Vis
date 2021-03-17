@@ -25,7 +25,7 @@
           <v-app-bar app class="primary">
             <v-icon color="white" large>analytics</v-icon>
             <v-toolbar-title class="white--text pl-3"
-              >Data Analysis
+              >Data Analytics
               <div class="subheading">
                 Dataset:
                 <v-tooltip bottom color="primary">

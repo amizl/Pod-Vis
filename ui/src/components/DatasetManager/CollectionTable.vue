@@ -76,7 +76,7 @@
                   v-on="{ ...tooltip }"
                 >
                   <v-icon left small color="secondary">analytics</v-icon> Data
-                  Analysis
+                  Analytics
                 </v-btn>
               </template>
               <span class="subtitle-1"

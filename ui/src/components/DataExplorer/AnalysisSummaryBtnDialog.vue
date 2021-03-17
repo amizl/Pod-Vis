@@ -8,10 +8,10 @@
           @click="dialog = !dialog"
           v-on="{ ...tooltip }"
         >
-          Data Analysis
+          Data Analytics
         </v-btn>
       </template>
-      <span>Leave the Cohort Manager and proceed to Data Analysis.</span>
+      <span>Leave the Cohort Manager and proceed to Data Analytics.</span>
     </v-tooltip>
 
     <v-dialog v-model="dialog" width="500">
@@ -19,13 +19,13 @@
         <v-card-title color="white" primary-title>
           <v-icon color="primary">grid_on</v-icon>
           <span class="primary--text text--darken-3 title pl-2"
-            >Proceed to Data Analysis</span
+            >Proceed to Data Analytics</span
           >
         </v-card-title>
 
         <v-card-text class="primary primary--text text--lighten-5 pt-4">
           Are you sure you want to leave the Cohort Manager and proceed to Data
-          Analysis?
+          Analytics?
         </v-card-text>
 
         <v-divider></v-divider>

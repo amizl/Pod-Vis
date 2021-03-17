@@ -78,29 +78,29 @@
           />
           <!-- Cohort Mean -->
           <circle
-            v-if="typeof mean !== 'undefined'"
+            v-if="typeof meanX !== 'undefined'"
             r="7"
-            :cx="mean"
+            :cx="meanX"
             :cy="h"
             :fill="colors['cohort-circle-fill']"
             :stroke="colors['cohort-circle-stroke']"
             :stroke-width="colors['cohort-circle-stroke-width']"
             :fill-opacity="colors['cohort-circle-fill-opacity']"
           >
-            <title>Cohort mean value</title>
+            <title>Cohort Mean: {{mean}} Median: {{median}} Std Deviation: {{stddev}}</title>
           </circle>
           <!-- Population Mean -->
           <circle
-            v-if="typeof populationMean !== 'undefined'"
+            v-if="typeof populationMeanX !== 'undefined'"
             r="7"
-            :cx="populationMean"
+            :cx="populationMeanX"
             :cy="h"
             :fill="colors['population-circle-fill']"
             :stroke="colors['population-circle-stroke']"
             :stroke-width="colors['population-circle-stroke-width']"
             :fill-opacity="colors['population-circle-fill-opacity']"
-          >
-            <title>Population mean value</title>
+            >
+	    <title>Population Mean: {{populationMean}} Median: {{populationMedian}} Std Deviation: {{populationStddev}}</title>
           </circle>
           <g ref="brush" class="brush"></g>
         </g>
@@ -240,7 +240,7 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 import { state, getters, actions } from '@/store/modules/cohortManager/types';
 // D3 Modules
-import { extent, max, mean, histogram } from 'd3-array';
+import { extent, max, mean, median, deviation, histogram } from 'd3-array';
 import { brushX, brushSelection } from 'd3-brush';
 import { format } from 'd3-format';
 import { select, event } from 'd3-selection';
@@ -478,9 +478,27 @@ export default {
       return pmBins;
     },
     mean() {
-      return this.xScale(mean(this.filteredData.map(this.dimension.accessor)));
+      return format('.1~f')(mean(this.filteredData.map(this.dimension.accessor)));
+    },
+    median() {
+      return format('.1~f')(median(this.filteredData.map(this.dimension.accessor)));
+    },
+    stddev() {
+      return format('.1~f')(deviation(this.filteredData.map(this.dimension.accessor)));
     },
     populationMean() {
+      return format('.1~f')(mean(this.populationData));
+    },
+    populationMedian() {
+      return format('.1~f')(median(this.populationData));
+    },
+    populationStddev() {
+      return format('.1~f')(deviation(this.populationData));
+    },
+    meanX() {
+      return this.xScale(mean(this.filteredData.map(this.dimension.accessor)));
+    },
+    populationMeanX() {
       return this.xScale(mean(this.populationData));
     },
     yScale() {

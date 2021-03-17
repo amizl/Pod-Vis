@@ -20,7 +20,7 @@
       <v-card class="rounded-lg">
         <v-card-title class="title primary--text text--darken-3">
           <span class="primary--text title pl-2"
-            >Are you sure you want to leave Data Analysis and go to the Cohort
+            >Are you sure you want to leave Data Analytics and go to the Cohort
             Manager?</span
           >
         </v-card-title>

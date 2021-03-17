@@ -52,7 +52,7 @@
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }"
-                >Data&nbsp;analysis</span
+                >Data&nbsp;analytics</span
               >
             </template>
             <span class="subtitle-1">{{ step_descr['3'] }}</span>
@@ -327,14 +327,14 @@ export default {
       } else if (this.step <= 1) {
         this.displayErrorDialog(
           'No Study Dataset',
-          'A study dataset must be created before Data Analysis can be performed. ' +
+          'A study dataset must be created before Data Analytics can be performed. ' +
             "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
             'link for an existing study dataset.'
         );
       } else if (this.collection_cohorts.length < 2) {
         this.displayErrorDialog(
           'Too Few Cohorts',
-          'At least two cohorts must be created before proceeding to Data Analysis.'
+          'At least two cohorts must be created before proceeding to Data Analytics.'
         );
       } else {
         this.$emit('nextStep', true);
