@@ -27,7 +27,7 @@
                 </span>
               </template>
               <span class="subtitle-1">
-                {{ outputVariables.length }} output variable{{
+                {{ outputVariables.length }} outcome variable{{
                   outputVariables.length == 1 ? '' : 's'
                 }}
                 selected
