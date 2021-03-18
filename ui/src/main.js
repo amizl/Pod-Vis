@@ -8,6 +8,7 @@ import './assets/stylus/main.styl';
 import './assets/css/main.css';
 import store from './store';
 import router from './router';
+import VueGtag from 'vue-gtag';
 
 Vue.config.productionTip = false;
 
@@ -29,6 +30,14 @@ const getUserFromSession = authActions.GET_USER_FROM_SESSION;
     // No active user token. We don't do anything here because router
     // will deal with sending user to sign in page.
   } finally {
+    Vue.use(
+      VueGtag,
+      {
+          config: { id: "UA-190656717-1" }, // podvis-devel
+      },
+      router
+    );
+
     // Initialize...
     new Vue({
       vuetify,
