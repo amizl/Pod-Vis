@@ -19,27 +19,26 @@
         <v-card-title color="white" primary-title>
           <v-icon x-large color="primary">analytics</v-icon>
           <span class="primary--text text--darken-3 title pl-2"
-            >Proceed to Data Analytics</span
+            >Proceed to Data Analytics?</span
           >
         </v-card-title>
 
         <v-card-text class="primary primary--text text--lighten-5 pt-4">
-          Are you sure you want to leave the Cohort Manager and proceed to Data
-          Analytics?
+	  {{collection_cohorts.length}} cohort{{collection_cohorts.length == 1 ? "" : "s"}} created. Click "OK" to proceed to Data Analytics to compare cohorts OR "CANCEL" to continue creating cohorts.
         </v-card-text>
 
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="dialog = false">
-            <v-icon left>close</v-icon> No
+            <v-icon left>close</v-icon> Cancel
           </v-btn>
           <v-btn
             :loading="loading"
             color="primary"
             @click="routeToDataExplorer"
           >
-            Yes</v-btn
+            OK</v-btn
           >
         </v-card-actions>
       </v-card>
