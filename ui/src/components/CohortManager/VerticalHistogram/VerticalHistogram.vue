@@ -63,29 +63,29 @@
 
         <!-- Cohort Mean -->
         <circle
-          v-if="typeof mean !== 'undefined'"
+          v-if="typeof meanY !== 'undefined'"
           r="7"
           :cx="left ? w : 0"
-          :cy="mean"
+          :cy="meanY"
           :fill="colors['cohort-circle-fill']"
           :stroke="colors['cohort-circle-stroke']"
           :stroke-width="colors['cohort-circle-stroke-width']"
           :fill-opacity="colors['cohort-circle-fill-opacity']"
         >
-          <title>Cohort mean value</title>
+	  <title>Cohort Mean: {{mean}} Median: {{median}} Std Deviation: {{stddev}}</title>
         </circle>
         <!-- Population Mean -->
         <circle
-          v-if="typeof populationMean !== 'undefined'"
+          v-if="typeof populationMeanY !== 'undefined'"
           r="7"
           :cx="left ? w : 0"
-          :cy="populationMean"
+          :cy="populationMeanY"
           :fill="colors['population-circle-fill']"
           :stroke="colors['population-circle-stroke']"
           :stroke-width="colors['population-circle-stroke-width']"
           :fill-opacity="colors['population-circle-fill-opacity']"
         >
-          <title>Population mean value</title>
+	  <title>Population Mean: {{populationMean}} Median: {{populationMedian}} Std Deviation: {{populationStddev}}</title>
         </circle>
         <g ref="brush" class="brush"></g>
       </g>
@@ -111,10 +111,11 @@
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
 // D3 Modules
-import { extent, max, mean, histogram } from 'd3-array';
+import { extent, max, mean, median, deviation, histogram } from 'd3-array';
 import { brushY } from 'd3-brush';
 import { select, event } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
+import { format } from 'd3-format';
 import 'd3-transition';
 import { axisTop, axisLeft, axisRight } from 'd3-axis';
 // Directives
@@ -198,8 +199,8 @@ export default {
       populationData: [],
       selection: [],
       populationCounts: {},
-      mean: undefined,
-      populationMean: undefined,
+      meanY: undefined,
+      populationMeanY: undefined,
       colors: colors,
     };
   },
@@ -321,6 +322,24 @@ export default {
       const lastMax = max(this.unfilteredData, d => d.lastVisit);
       return Math.max(firstMax, lastMax);
     },
+    mean() {
+      return format('.1~f')(mean(this.filteredData.map(this.dimension.accessor)));
+    },
+    median() {
+      return format('.1~f')(median(this.filteredData.map(this.dimension.accessor)));
+    },
+    stddev() {
+      return format('.1~f')(deviation(this.filteredData.map(this.dimension.accessor)));
+    },
+    populationMean() {
+      return format('.1~f')(mean(this.populationData));
+    },
+    populationMedian() {
+      return format('.1~f')(median(this.populationData));
+    },
+    populationStddev() {
+      return format('.1~f')(deviation(this.populationData));
+    },
   },
   watch: {
     filteredData() {
@@ -329,7 +348,7 @@ export default {
         this.selected = [];
       }
       this.updateSelected();
-      this.updateMean();
+      this.updateMeanY();
     },
     selected(newSel) {
       // prevent loop
@@ -350,10 +369,10 @@ export default {
           }
         }
       }
-      this.updateMean();
+      this.updateMeanY();
     },
     populationData() {
-      this.updatePopulationMean();
+      this.updatePopulationMeanY();
     },
   },
   created() {
@@ -390,16 +409,16 @@ export default {
         this.selected = filtered.map(accFn);
       }
     },
-    updateMean() {
+    updateMeanY() {
       // current selection (if any) must be taken into account
       if (this.hasSelection()) {
-        this.mean = this.yScale(mean(this.selected));
+        this.meanY = this.yScale(mean(this.selected));
       } else {
-        this.mean = this.yScale(mean(this.data));
+        this.meanY = this.yScale(mean(this.data));
       }
     },
-    updatePopulationMean() {
-      this.populationMean = this.yScale(mean(this.populationData));
+    updatePopulationMeanY() {
+      this.populationMeanY = this.yScale(mean(this.populationData));
     },
     userChangedVariable() {
       this.$emit('userChangedVariable', this.dimensionName);
