@@ -63,7 +63,7 @@
         color="#4caf50"
         class="font-weight-bold white--text pa-2 my-1 mr-2 ml-4"
         @click:close="showNextHelpChip = false"
-        >Click COHORT ANALYSIS to proceed to the analysis step.</v-chip
+        >Click DATA ANALYTICS to proceed to the analysis step.</v-chip
       >
 
       <analysis-summary-btn-dialog
@@ -110,6 +110,7 @@
     <div v-else fill-width class="ma-0 pa-0" style="border 3px dotted green;">
       <analysis-tracker
         step="2"
+        class="pb-2"
         :substep.sync="substep"
         :collection-id="collectionId"
         @createSimilar="createSimilar"
@@ -133,7 +134,12 @@
                       :highlighted="inHighlighted"
                       :class="inputVarsClass"
                       :show-add-help="helpMode && substep == '2.1'"
-                      :show-filter-help="helpMode && substep == '2.3'"
+                      :show-filter-help="
+                        helpMode && substep == '2.3' && !hasFilters
+                      "
+                      :show-analytics-help="
+                        helpMode && substep == '2.3' && hasFilters
+                      "
                       @userSelectedInputVariables="userSelectedVariables"
                       @userChangedInputVariable="userChangedVariable"
                       @comparePredefinedRanges="comparePredefinedRanges"
@@ -155,7 +161,7 @@
                     :cohorts="collection_cohorts"
                     :collection-id="collectionId"
                     :show-new-help="helpMode && substep == '2.2'"
-                    :show-save-help="helpMode && substep == '2.4'"
+                    :show-save-help="helpMode && substep == '2.3' && hasFilters"
                     @selectedCohort="cohortSelected"
                     @savedCohort="cohortSaved"
                     @newCohort="newCohort"
@@ -177,7 +183,7 @@
                     :disabled="true"
                     :class="outputVarsClass"
                     :show-add-help="helpMode && substep == 2.2"
-                    :show-review-help="helpMode && substep == 2.4"
+                    :show-review-help="helpMode && substep == 2.3 && hasFilters"
                     @userSelectedOutputVariables="userSelectedVariables"
                     @userChangedOutputVariable="userChangedVariable"
                   />
@@ -189,13 +195,21 @@
                   size="35"
                   :style="analyticsTableStyle"
                 >
-                  <analytics-table class="ml-1" color-scheme="brewer5" />
+                  <analytics-table
+                    class="ml-1"
+                    color-scheme="brewer5"
+                    :show-review-help="helpMode && substep == 2.3 && hasFilters"
+                  />
                 </pane>
               </splitpanes>
             </v-col>
           </v-row>
 
-          <v-overlay absolute :value="helpMode && substep != 2.4"> </v-overlay>
+          <v-overlay
+            absolute
+            :value="helpMode && (substep != 2.3 || !this.hasFilters)"
+          >
+          </v-overlay>
         </v-container>
       </v-card>
     </div>
@@ -308,15 +322,18 @@ export default {
       return scc;
     },
     allPanelsClass() {
-      var cl = 'ma-0 pa-0 pt-2';
-      if (this.helpMode && this.substep == '2.4') {
+      var cl = 'ma-0 pa-0';
+      if (this.helpMode && this.substep == '2.3' && this.hasFilters) {
         cl = cl + ' help_mode';
       }
       return cl;
     },
     inputVarsClass() {
       var cl = 'ma-0 pt-0';
-      if (this.helpMode && (this.substep == '2.1' || this.substep == '2.3')) {
+      if (
+        this.helpMode &&
+        (this.substep == '2.1' || (this.substep == '2.3' && !this.hasFilters))
+      ) {
         cl = cl + ' help_mode';
       }
       return cl;
@@ -342,13 +359,16 @@ export default {
       return 'z-index: auto';
     },
     outputVarsStyle() {
-      if (this.helpMode && (this.substep == '2.2' || this.substep == '2.4')) {
+      if (
+        this.helpMode &&
+        (this.substep == '2.2' || (this.substep == '2.3' && this.hasFilters))
+      ) {
         return 'z-index: 100;';
       }
       return 'z-index: auto';
     },
     analyticsTableStyle() {
-      if (this.helpMode && this.substep == '2.4') {
+      if (this.helpMode && this.substep == '2.3' && this.hasFilters) {
         return 'z-index: 100;';
       }
       return 'z-index: auto';
@@ -356,27 +376,26 @@ export default {
     showNextHelp() {
       return this.helpMode && this.collection_cohorts.length >= 2;
     },
+    hasFilters() {
+      return this.filteredData.length < this.unfilteredData.length;
+    },
   },
   watch: {
     substep() {
       if (this.substep === '2.1') {
-        //        this.inExpanded = true;
-        //        this.outExpanded = false;
         this.inHighlighted = true;
         this.outHighlighted = false;
       } else if (this.substep === '2.2') {
-        //        this.inExpanded = false;
-        //        this.outExpanded = true;
         this.inHighlighted = false;
         this.outHighlighted = true;
       } else if (this.substep === '2.3') {
-        //        this.inExpanded = true;
-        //        this.outExpanded = true;
-        this.inHighlighted = true;
-        this.outHighlighted = false;
-      } else if (this.substep === '2.4') {
-        this.inHighlighted = false;
-        this.outHighlighted = false;
+        if (this.hasFilters) {
+          this.inHighlighted = false;
+          this.outHighlighted = false;
+        } else {
+          this.inHighlighted = true;
+          this.outHighlighted = false;
+        }
       }
     },
     inputVariables(iv) {
@@ -431,9 +450,7 @@ export default {
       var has_filters = this.filteredData.length < this.unfilteredData.length;
       var new_ss = this.substep;
 
-      if (n_iv > 0 && n_ov > 0 && has_filters) {
-        new_ss = '2.4';
-      } else if (n_iv > 0 && n_ov > 0) {
+      if (n_iv > 0 && n_ov > 0) {
         new_ss = '2.3';
       } else if (n_iv > 0) {
         new_ss = '2.2';

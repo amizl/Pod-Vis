@@ -5,7 +5,7 @@
         <v-card color="#eeeeee">
           <v-card-title class="primary--text pl-3 py-2">
             <input-variables-dialog
-	      ref="input_dialog"
+              ref="input_dialog"
               :show-all-vars-checkbox="false"
               @dialogOpened="opened"
               @userSelectedInputVariables="userSelectedInputVariables"
@@ -15,7 +15,10 @@
 
             <v-tooltip bottom color="primary">
               <template v-slot:activator="{ on: tooltip }">
-                <span v-on="{ ...tooltip }" v-on:click="$refs.input_dialog.openInputVariableDialog = true">
+                <span
+                  v-on="{ ...tooltip }"
+                  @click="$refs.input_dialog.openInputVariableDialog = true"
+                >
                   <v-chip
                     label
                     color="primary"

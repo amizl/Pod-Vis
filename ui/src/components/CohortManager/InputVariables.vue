@@ -27,6 +27,7 @@
           <input-variables-charts
             v-if="hasUserAddedInputVariables"
             :show-filter-help="showFilterHelp"
+            :show-analytics-help="showAnalyticsHelp"
             @userChangedInputVariable="userChangedInputVariable"
             @comparePredefinedRanges="comparePredefinedRanges"
             @savePredefinedRanges="savePredefinedRanges"
@@ -69,6 +70,11 @@ export default {
       default: false,
     },
     showFilterHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showAnalyticsHelp: {
       type: Boolean,
       required: false,
       default: false,

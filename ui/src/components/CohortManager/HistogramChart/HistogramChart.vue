@@ -87,7 +87,10 @@
             :stroke-width="colors['cohort-circle-stroke-width']"
             :fill-opacity="colors['cohort-circle-fill-opacity']"
           >
-            <title>Cohort Mean: {{mean}} Median: {{median}} Std Deviation: {{stddev}}</title>
+            <title>
+              Cohort Mean: {{ mean }} Median: {{ median }} Std Deviation:
+              {{ stddev }}
+            </title>
           </circle>
           <!-- Population Mean -->
           <circle
@@ -99,8 +102,11 @@
             :stroke="colors['population-circle-stroke']"
             :stroke-width="colors['population-circle-stroke-width']"
             :fill-opacity="colors['population-circle-fill-opacity']"
-            >
-	    <title>Population Mean: {{populationMean}} Median: {{populationMedian}} Std Deviation: {{populationStddev}}</title>
+          >
+            <title>
+              Population Mean: {{ populationMean }} Median:
+              {{ populationMedian }} Std Deviation: {{ populationStddev }}
+            </title>
           </circle>
           <g ref="brush" class="brush"></g>
         </g>
@@ -114,6 +120,15 @@
           :transform="`translate(${margin.left}, ${margin.top})`"
         ></g>
       </svg>
+      <v-chip
+        v-if="showAnalyticsHelpChip"
+        label
+        close
+        color="#4caf50"
+        class="font-weight-bold white--text pa-2 my-1 ml-2"
+        @click:close="showHelpChip = false"
+        >Hover over the blue circles to view statistics.</v-chip
+      >
     </div>
 
     <v-tabs v-if="inputVariable" v-model="tab">
@@ -311,6 +326,11 @@ export default {
       required: false,
       default: false,
     },
+    showAnalyticsHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -340,6 +360,7 @@ export default {
       tab: 'manual',
       predef_radio: 'quartiles',
       showHelpChip: false,
+      showAnalyticsHelpChip: false,
     };
   },
   computed: {
@@ -478,13 +499,19 @@ export default {
       return pmBins;
     },
     mean() {
-      return format('.1~f')(mean(this.filteredData.map(this.dimension.accessor)));
+      return format('.1~f')(
+        mean(this.filteredData.map(this.dimension.accessor))
+      );
     },
     median() {
-      return format('.1~f')(median(this.filteredData.map(this.dimension.accessor)));
+      return format('.1~f')(
+        median(this.filteredData.map(this.dimension.accessor))
+      );
     },
     stddev() {
-      return format('.1~f')(deviation(this.filteredData.map(this.dimension.accessor)));
+      return format('.1~f')(
+        deviation(this.filteredData.map(this.dimension.accessor))
+      );
     },
     populationMean() {
       return format('.1~f')(mean(this.populationData));
@@ -612,6 +639,9 @@ export default {
     },
     showFilterHelp(show) {
       this.showHelpChip = show;
+    },
+    showAnalyticsHelp(show) {
+      this.showAnalyticsHelpChip = show;
     },
   },
   created() {

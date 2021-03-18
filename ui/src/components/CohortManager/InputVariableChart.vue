@@ -72,6 +72,7 @@
             :dimension-name="dimension"
             :variable="variable"
             :show-filter-help="showFilterHelp"
+            :show-analytics-help="showAnalyticsHelp"
             input-variable
             @userChangedVariable="userChangedInputVariable"
             @comparePredefinedRanges="comparePredefinedRanges"
@@ -108,6 +109,11 @@ export default {
       required: true,
     },
     showFilterHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showAnalyticsHelp: {
       type: Boolean,
       required: false,
       default: false,

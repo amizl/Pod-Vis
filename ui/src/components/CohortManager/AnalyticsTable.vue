@@ -37,6 +37,20 @@
       </v-container>
 
       <v-container v-else fluid fill-height class="ma-0 pa-0">
+        <v-row v-if="showHelpChip" class="ma-0 pa-0 mt-2 ml-2">
+          <v-col cols="12" class="ma-0 pa-0">
+            <v-chip
+              v-if="showHelpChip"
+              label
+              close
+              color="#4caf50"
+              class="font-weight-bold white--text pa-3"
+              @click:close="showHelpChip = false"
+              >Review analytics for Selected Cohort vs. Remainder.</v-chip
+            >
+          </v-col>
+        </v-row>
+
         <v-row>
           <v-col cols="6" class="pb-0">
             <div class="ml-2">
@@ -264,6 +278,11 @@ export default {
       required: false,
       default: 'val100',
     },
+    showReviewHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -273,6 +292,7 @@ export default {
       expanded: true,
       selectedComparisonMeasure: 'Last Visit',
       colors: colors,
+      showHelpChip: false,
     };
   },
   computed: {
@@ -332,6 +352,9 @@ export default {
     },
     selectedComparisonMeasure(measure) {
       this.setComparisonMeasure(measure);
+    },
+    showReviewHelp(show) {
+      this.showHelpChip = show;
     },
   },
   created() {

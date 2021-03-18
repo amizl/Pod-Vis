@@ -5,7 +5,7 @@
         <v-card color="#eeeeee">
           <v-card-title class="primary--text pl-3 py-2">
             <output-variables-dialog
-	      ref="output_dialog"
+              ref="output_dialog"
               :show-all-vars-checkbox="true"
               @dialogOpened="opened"
               @userSelectedOutputVariables="userSelectedOutputVariables"
@@ -15,7 +15,10 @@
 
             <v-tooltip bottom color="primary">
               <template v-slot:activator="{ on: tooltip }">
-                <span v-on="{ ...tooltip }" v-on:click="$refs.output_dialog.openOutputVariableDialog = true">
+                <span
+                  v-on="{ ...tooltip }"
+                  @click="$refs.output_dialog.openOutputVariableDialog = true"
+                >
                   <v-chip
                     label
                     color="primary"
@@ -75,7 +78,7 @@
               color="#4caf50"
               class="font-weight-bold white--text pa-3 my-5"
               @click:close="showHelpChip = false"
-              >Review the outcome graphs and analytics panel.</v-chip
+              >Review outcome variables.</v-chip
             >
           </v-card-title>
         </v-card>

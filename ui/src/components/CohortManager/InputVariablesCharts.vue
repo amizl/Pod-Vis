@@ -10,6 +10,7 @@
           :key="'ivc-' + inputVariable.id"
           :variable="inputVariable"
           :show-filter-help="showFilterHelp"
+          :show-analytics-help="showAnalyticsHelp"
           @userResetInputVariable="userChangedVariable"
           @userChangedInputVariable="userChangedVariable"
           @comparePredefinedRanges="comparePredefinedRanges"
@@ -35,6 +36,11 @@ export default {
   },
   props: {
     showFilterHelp: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showAnalyticsHelp: {
       type: Boolean,
       required: false,
       default: false,

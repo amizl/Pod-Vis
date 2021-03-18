@@ -128,16 +128,11 @@
           "
           step="2.3"
           :class="substepClass('2.3')"
-          >Apply filters to define cohorts</v-stepper-step
-        >
-        <v-divider></v-divider>
-        <v-stepper-step
-          :complete="substep === '2.5'"
-          step="2.4"
-          :class="substepClass('2.4')"
-          ><span class="subtitle-1"
-            >Review charts and analytics</span
-          ></v-stepper-step
+          >{{
+            filteredData.length == unfilteredData.length
+              ? 'Apply filters to define cohorts'
+              : 'Filters applied; review charts and analytics'
+          }}</v-stepper-step
         >
       </v-stepper-header>
     </v-stepper>
@@ -369,20 +364,6 @@ export default {
           'At least one outcome variable must be selected before continuing to the next step.'
         );
       }
-    },
-    goto2p4() {
-      if (this.filteredData.length < this.unfilteredData.length) {
-        this.$emit('update:substep', '2.4');
-      } else {
-        this.displayErrorDialog(
-          'No Cohort Filters Defined',
-          'At least one filter must be added before continuing to the next step.'
-        );
-      }
-    },
-    goto2p5() {
-      // TODO - check that collection was saved
-      this.$emit('update:substep', '2.5');
     },
     displayErrorDialog(errorTitle, errorMsg) {
       this.error_title = errorTitle;
