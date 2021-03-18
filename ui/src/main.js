@@ -33,7 +33,7 @@ const getUserFromSession = authActions.GET_USER_FROM_SESSION;
     Vue.use(
       VueGtag,
       {
-        config: { id: 'UA-190656717-1' }, // podvis-devel
+        config: { id: 'G-JSHXRR5WWW' }, // podvis-devel
       },
       router
     );
