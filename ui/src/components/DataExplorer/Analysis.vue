@@ -127,11 +127,25 @@
               <pane size="45" min-size="15" max-size="60" class="pb-1">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <v-tabs v-model="leftTab" light>
-                    <v-tab key="analytics">Analytics/Scales</v-tab>
                     <v-tab key="cohorts">Input Cohorts</v-tab>
+                    <v-tab key="analytics">Analytics/Scales</v-tab>
                   </v-tabs>
 
                   <v-tabs-items v-model="leftTab" class="pt-3">
+                    <v-tab-item key="cohorts">
+                      <cohort-table
+                        :cohorts="analysis.cohorts"
+                        :select-cohorts="visibleCohorts"
+                        :outcome-var="detailedView"
+                        :show-title-bar="false"
+                        :expanded="expandAnalytics"
+                        report-max-overlap
+                        show-select
+                        show-colors
+                        @selectedCohorts="updateVisibleCohorts"
+                      />
+                    </v-tab-item>
+
                     <v-tab-item key="analytics">
                       <analytics-panel
                         :selected-variable="detailedView"
@@ -145,20 +159,6 @@
                         color-scheme="brewer5"
                         @variableSelected="variableSelected"
                         @expandClicked="analyticsExpandClicked"
-                      />
-                    </v-tab-item>
-
-                    <v-tab-item key="cohorts">
-                      <cohort-table
-                        :cohorts="analysis.cohorts"
-                        :select-cohorts="visibleCohorts"
-                        :outcome-var="detailedView"
-                        :show-title-bar="false"
-                        :expanded="expandAnalytics"
-                        report-max-overlap
-                        show-select
-                        show-colors
-                        @selectedCohorts="updateVisibleCohorts"
                       />
                     </v-tab-item>
                   </v-tabs-items>
