@@ -17,7 +17,7 @@
     <v-dialog v-model="dialog" width="500">
       <v-card class="rounded-lg">
         <v-card-title color="white" primary-title>
-          <v-icon color="primary">grid_on</v-icon>
+          <v-icon x-large color="primary">analytics</v-icon>
           <span class="primary--text text--darken-3 title pl-2"
             >Proceed to Data Analytics</span
           >

@@ -23,7 +23,7 @@
           justify="start"
         >
           <v-app-bar app class="primary">
-            <v-icon color="white" large>analytics</v-icon>
+            <v-icon color="white" x-large>analytics</v-icon>
             <v-toolbar-title class="white--text pl-3"
               >Data Analytics
               <div class="subheading">
