@@ -11,6 +11,10 @@
  -Make all dialogs draggable (#591)
  -Eliminate delay when deleting cohorts (#593)
  -Fix component resize bug (#596)
+ -Change default comparison measure to "Last Visit" in Data Analytics (#597)
+ -Move visit timeline above chart on Set Visits page (#599)
+ -Merge steps 2.3 and 2.4 in Cohort Manager (#598)
+ -Rename Analyze Cohorts to Data Analytics (#598)
 
 1.0.3 (February 24, 2021)
  -Add option to display full scale names (#562)
