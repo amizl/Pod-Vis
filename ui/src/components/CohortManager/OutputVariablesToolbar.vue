@@ -5,6 +5,7 @@
         <v-card color="#eeeeee">
           <v-card-title class="primary--text pl-3 py-2">
             <output-variables-dialog
+	      ref="output_dialog"
               :show-all-vars-checkbox="true"
               @dialogOpened="opened"
               @userSelectedOutputVariables="userSelectedOutputVariables"
@@ -14,7 +15,7 @@
 
             <v-tooltip bottom color="primary">
               <template v-slot:activator="{ on: tooltip }">
-                <span v-on="{ ...tooltip }">
+                <span v-on="{ ...tooltip }" v-on:click="$refs.output_dialog.openOutputVariableDialog = true">
                   <v-chip
                     label
                     color="primary"
