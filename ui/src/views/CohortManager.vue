@@ -420,6 +420,10 @@ export default {
       this.showNextHelpChip = show;
     },
   },
+  async mounted() {
+    // reset help mode to false
+    this.setHelpMode(false);
+  },
   async created() {
     this.resetAllStoreData();
     this.isLoading = true;
