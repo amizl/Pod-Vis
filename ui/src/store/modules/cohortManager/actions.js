@@ -303,6 +303,9 @@ export default {
       // Remove subjects within our filtered data sets from our unfiltered so
       // we can have separate samples
       var filteredDataSubjIds = {};
+      filteredData.map(d => {
+        filteredDataSubjIds[d.subject_id] = 1;
+      });
       var numFilteredSubjIds = Object.keys(filteredDataSubjIds).length;
 
       var unfilteredDataSubjIds = {};
@@ -321,7 +324,10 @@ export default {
       var numRemainderSubjIds = Object.keys(remainderDataSubjIds).length;
 
       // sanity check - unfiltered subjects should be split into two distinct groups
-      if (numRemainderSubjIds + numFilteredSubjIds !== numUnfilteredSubjIds) {
+      if (
+        numRemainderSubjIds + numFilteredSubjIds !== numUnfilteredSubjIds ||
+        numRemainderSubjIds == numUnfilteredSubjIds
+      ) {
         console.log(
           'ERROR - data filtering failed numFiltered=' +
             numFilteredSubjIds +
