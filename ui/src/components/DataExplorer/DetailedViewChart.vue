@@ -103,6 +103,11 @@ export default {
       required: false,
       default: 550,
     },
+    barGroupGapPercent: {
+      type: Number,
+      required: false,
+      default: 15,
+    },
   },
   data() {
     return {
@@ -323,11 +328,6 @@ export default {
       return scaleBand()
         .domain(tp)
         .range([hbw, this.computedWidth + hbw]);
-      //      }
-
-      //      return scaleBand()
-      //        .domain(tp)
-      //        .range([0, this.computedWidth]);
     },
     computedWidth() {
       const { left, right } = this.margin;
@@ -361,6 +361,14 @@ export default {
     },
     isCategorical() {
       return this.variable && this.variable.data_category == 'Categorical';
+    },
+    barGroupWidth() {
+      const tpts = this.timepoints;
+      const xds = this.xDimensionScale;
+      return xds(tpts[1]) - xds(tpts[0]);
+    },
+    barGroupGap() {
+      return this.barGroupWidth * (this.barGroupGapPercent / 100.0);
     },
   },
   watch: {
@@ -730,7 +738,7 @@ export default {
       const xds = this.xDimensionScale;
       const ds = this.dimensionScale;
       const slf = this;
-      const bw = xds(tpts[1]) - xds(tpts[0]) - 3;
+      const bw = this.barGroupWidth - this.barGroupGap;
       const hbw = bw / 2;
       const cbw = bw / cohorts.length;
       const y0 = ds(0);
@@ -1011,7 +1019,9 @@ export default {
       const barsWidth =
         this.xDimensionScale(tpts[1]) - this.xDimensionScale(tpts[0]) - 3;
       const nBars = selCohorts.length + (this.showPopulationCounts ? 1 : 0);
-      const barWidth = barsWidth / nBars;
+      const barGroupGap = this.barGroupGap;
+      const hbgg = barGroupGap / 2;
+      const barWidth = (barsWidth - this.barGroupGap) / nBars;
       const xscale = this.xDimensionScale;
       const xOffset = -(this.xDimensionScale.bandwidth() / 2);
 
@@ -1028,7 +1038,7 @@ export default {
         context.strokeStyle = 'white';
         context.globalAlpha = opacity;
         context.beginPath();
-        const x1 = xOffset + xscale(time) + barnum * barWidth;
+        const x1 = xOffset + xscale(time) + (barnum * barWidth) + hbgg;
         const x2 = x1 + barWidth;
         const y1 = yscale(startSubjCount);
         const y2 = yscale(endSubjCount);
