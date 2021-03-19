@@ -118,7 +118,7 @@ export default {
       initialHeight: 0,
       margin: { top: 20, right: 75, bottom: 150, left: 75 },
       tick_font: '15px sans-serif',
-      label_font: '20px sans-serif',
+      label_font: '18px sans-serif',
       colors: colors,
       maxSubjects: 0,
       maxTotalSubjects: 0,
@@ -1197,6 +1197,24 @@ export default {
           this.dimensionScale(d)
         );
       });
+
+      // y-axis label
+      var caption = null;
+      if (this.isCategorical) {
+        caption = this.showPercentages ? "percentage of subjects" : "number of subjects";
+      } else {
+        caption = this.variable.abbreviation;
+      }
+
+      const caption_y = (this.computedHeight) / 2.0;
+      this.context.save();
+      this.context.font = this.label_font;
+      this.context.translate(-this.margin.left + 18, caption_y);
+      this.context.rotate(-Math.PI/2);
+      this.context.textAlign = 'center';
+      this.context.fillText(caption, 0, 0);
+      this.context.restore();
+
     },
     drawRightAxis() {
       const tickCount = 10;
