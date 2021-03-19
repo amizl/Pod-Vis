@@ -24,7 +24,11 @@
         </v-card-title>
 
         <v-card-text class="primary primary--text text--lighten-5 pt-4">
-	  {{collection_cohorts.length}} cohort{{collection_cohorts.length == 1 ? "" : "s"}} created. Click "OK" to proceed to Data Analytics to compare cohorts OR "CANCEL" to continue creating cohorts.
+          {{ collection_cohorts.length }} cohort{{
+            collection_cohorts.length == 1 ? '' : 's'
+          }}
+          created. Click "OK" to proceed to Data Analytics to compare cohorts OR
+          "CANCEL" to continue creating cohorts.
         </v-card-text>
 
         <v-divider></v-divider>

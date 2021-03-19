@@ -1038,7 +1038,7 @@ export default {
         context.strokeStyle = 'white';
         context.globalAlpha = opacity;
         context.beginPath();
-        const x1 = xOffset + xscale(time) + (barnum * barWidth) + hbgg;
+        const x1 = xOffset + xscale(time) + barnum * barWidth + hbgg;
         const x2 = x1 + barWidth;
         const y1 = yscale(startSubjCount);
         const y2 = yscale(endSubjCount);
@@ -1201,20 +1201,21 @@ export default {
       // y-axis label
       var caption = null;
       if (this.isCategorical) {
-        caption = this.showPercentages ? "percentage of subjects" : "number of subjects";
+        caption = this.showPercentages
+          ? 'percentage of subjects'
+          : 'number of subjects';
       } else {
         caption = this.variable.abbreviation;
       }
 
-      const caption_y = (this.computedHeight) / 2.0;
+      const caption_y = this.computedHeight / 2.0;
       this.context.save();
       this.context.font = this.label_font;
       this.context.translate(-this.margin.left + 18, caption_y);
-      this.context.rotate(-Math.PI/2);
+      this.context.rotate(-Math.PI / 2);
       this.context.textAlign = 'center';
       this.context.fillText(caption, 0, 0);
       this.context.restore();
-
     },
     drawRightAxis() {
       const tickCount = 10;
