@@ -129,6 +129,7 @@
                   <v-tabs v-model="leftTab" light>
                     <v-tab key="cohorts">Input Cohorts</v-tab>
                     <v-tab key="analytics">Analytics/Scales</v-tab>
+                    <v-tab key="statistics">Cohort Statistics</v-tab>
                   </v-tabs>
 
                   <v-tabs-items v-model="leftTab" class="pt-3">
@@ -159,6 +160,16 @@
                         color-scheme="brewer5"
                         @variableSelected="variableSelected"
                         @expandClicked="analyticsExpandClicked"
+                      />
+                    </v-tab-item>
+
+                    <v-tab-item key="statistics">
+                      <summary-stats
+                        :outcome-variables="analysis.outcomeVariables"
+                        :cohorts="analysis.cohorts"
+                        :show-category-icons="true"
+                        :show-title-bar="false"
+                        :comparison-field="analysis.input.comparisonField"
                       />
                     </v-tab-item>
                   </v-tabs-items>
@@ -232,6 +243,7 @@ import 'splitpanes/dist/splitpanes.css';
 
 import CohortTable from '@/components/common/CohortTable.vue';
 import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
+import SummaryStats from '@/components/AnalysisSummary/SummaryStats.vue';
 import DetailedView from '@/components/DataExplorer/DetailedView.vue';
 import BoxPlots from '@/components/AnalysisSummary/BoxPlots.vue';
 import StackedBars from '@/components/AnalysisSummary/StackedBars.vue';
@@ -242,6 +254,7 @@ export default {
     AnalyticsPanel,
     BoxPlots,
     CohortTable,
+    SummaryStats,
     DetailedView,
     StackedBars,
     Splitpanes,
