@@ -165,6 +165,7 @@
 
                     <v-tab-item key="statistics">
                       <summary-stats
+                        :predictor-variables="analysis.predictorVariables"
                         :outcome-variables="analysis.outcomeVariables"
                         :cohorts="analysis.cohorts"
                         :show-category-icons="true"

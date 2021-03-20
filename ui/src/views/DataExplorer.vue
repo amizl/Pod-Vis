@@ -326,8 +326,18 @@ export default {
 
       // union cohort outcome variables
       const varsAdded = {};
+      const inputVariables = [];
       const outputVariables = [];
+
       sortedCohorts.forEach(c => {
+        const inputVars = c.input_variables;
+        inputVars.forEach(iv => {
+          const { id } = iv.subject_ontology;
+          if (!(id in varsAdded)) {
+            varsAdded[id] = 1;
+            inputVariables.push(iv.subject_ontology);
+          }
+        });
         const outputVars = c.output_variables;
         outputVars.forEach(ov => {
           const { id } = ov.observation_ontology;
@@ -343,6 +353,7 @@ export default {
       var analysis = {
         index: ++this.analysisNum,
         cohorts: sortedCohorts,
+        predictorVariables: inputVariables,
         outcomeVariables: outputVariables,
         pvals: null,
       };
