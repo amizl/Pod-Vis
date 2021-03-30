@@ -115,7 +115,7 @@
       </v-row>
     </v-container>
 
-    <v-sheet v-show="expanded" color="white" class="rounded-lg shadow pt-2">
+    <v-sheet :id="'vs-' + analysis.index" v-show="expanded" color="white" class="rounded-lg shadow pt-2">
       <v-container fluid fill-width class="ma-0 pa-0">
         <v-row class="ma-0 pa-0">
           <v-col cols="12" class="ma-0 pa-0">
