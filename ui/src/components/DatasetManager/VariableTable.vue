@@ -82,7 +82,7 @@ export default {
           class: 'text-subtitle-1 font-weight-bold',
         },
         {
-          text: 'Category',
+          text: 'Domain',
           value: 'category',
           sortable: true,
           class: 'text-subtitle-1 font-weight-bold',

@@ -148,7 +148,7 @@ export default {
       subject_counts: { all: 0 },
       headers: [
         {
-          text: 'Category',
+          text: 'Domain',
           value: 'category',
           sortable: true,
           class: 'text-subtitle-1 font-weight-bold',

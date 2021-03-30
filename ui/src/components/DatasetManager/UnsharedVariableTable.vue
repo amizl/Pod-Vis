@@ -70,7 +70,7 @@ export default {
       pagination: { sortBy: 'full_path', rowsPerPage: -1 },
       headers: [
         {
-          text: 'Category',
+          text: 'Domain',
           value: 'category',
           sortable: true,
         },

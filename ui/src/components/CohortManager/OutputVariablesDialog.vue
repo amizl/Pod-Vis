@@ -241,7 +241,7 @@ export default {
     openOutputVariableDialog: false,
     headers: [
       {
-        text: 'Category',
+        text: 'Domain',
         value: 'category',
         width: '20%',
         sortable: false,

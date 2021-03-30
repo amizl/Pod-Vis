@@ -103,7 +103,7 @@ export default {
           width: '1%',
         },
         {
-          text: 'Category',
+          text: 'Domain',
           value: 'category',
           sortable: true,
           class: 'text-subtitle-1 font-weight-bold',
