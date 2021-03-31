@@ -23,3 +23,4 @@ from .cohort_output_variable import CohortOutputVariable
 from .cohort_query import CohortQuery
 from .cohort import Cohort
 from .cohort_subject import CohortSubject
+from .user_tracking import UserTracking

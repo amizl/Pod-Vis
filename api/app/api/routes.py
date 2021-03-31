@@ -502,6 +502,8 @@ def create_collection():
             # This should never happen but just in case it does...
             raise BadRequest("Variable has unsupported type.")
 
+    log_event_aux(user.id, None, request.referrer, 'create_collection', 'create', label)
+        
     return jsonify({
         "success": True,
         "collection": collection.to_dict(include_studies=True, include_variables=True)
@@ -543,24 +545,31 @@ def set_collection_observation_variable_visits(collection_id):
 
     for ov in obs_vars:
         vv = vvh[ov.observation_ontology_id]
+        label = str(ov.observation_ontology_id) + " "
+        
         if 'first_visit_event' in vv:
             ov.first_visit_event = vv['first_visit_event']
+            label += "first_event=" + vv['first_visit_event'] + " "
         else:
             ov.first_visit_event = None
         if 'last_visit_event' in vv:
             ov.last_visit_event = vv['last_visit_event']
+            label += "last_event=" + vv['last_visit_event'] + " "
         else:
             ov.last_visit_event = None
         if 'first_visit_num' in vv:
             ov.first_visit_num = vv['first_visit_num']
+            label += "first_num=" + vv['first_visit_num'] + " "
         else:
             ov.first_visit_num = None
         if 'last_visit_num' in vv:
             ov.last_visit_num = vv['last_visit_num']
+            label += "last_num=" + vv['last_visit_num'] + " "
         else:
             ov.last_visit_num = None
             
         ov.save_to_db()
+        log_event_aux(user.id, None, request.referrer, 'set_variable_visit', 'set', label)
         
     return jsonify({
         "success": True,
@@ -662,6 +671,7 @@ def delete_collection(collection_id):
         raise AuthFailure('User not authorized to delete collection.')
 
     collection.delete_from_db()
+    log_event_aux(user.id, None, request.referrer, 'delete_collection', 'delete', collection.label)
 
     return jsonify(dict(success=True))
 
@@ -677,6 +687,7 @@ def delete_all_collections():
 
     for collection in collections:
         collection.delete_from_db()
+    log_event_aux(user.id, None, request.referrer, 'delete_all_collections', 'delete', None)
 
     return jsonify(dict(success=True))
 
@@ -799,7 +810,8 @@ def delete_all_cohorts():
 
     for cohort in cohorts:
         cohort.delete_from_db()
-
+    log_event_aux(user.id, None, request.referrer, 'delete_all_cohorts', 'delete', None)
+    
     return jsonify({
         "success": True,
     })
@@ -822,7 +834,8 @@ def delete_cohort(cohort_id):
         raise AuthFailure("Not authorized to delete this cohort.")
 
     cohort.delete_from_db()
-
+    log_event_aux(user.id, None, request.referrer, 'delete_cohort', 'delete', cohort.label)
+    
     return jsonify({
         "success": True,
     })
@@ -1323,7 +1336,8 @@ def create_cohort():
     # create cohort
     cohort = models.Cohort(user.id, cohort_name, collection.id, instantiation_type)
     cohort.save_to_db()
-
+    log_event_aux(user.id, None, request.referrer, 'create_cohort', 'create', cohort_name)
+        
     # Label checks need to be refactored into their own method
     for output_variable in output_variables:
         # If an output variable has children, then the entire outcome
@@ -1505,3 +1519,46 @@ def get_collection_time_between_visits(collection_id):
             "query_by": query_by,
             "times": avg_times,
         }), 201
+
+@api.route("/log", methods=["POST"])
+@jwt_required
+def log_event():
+    """Log event in user tracking table.
+
+    Params:
+        source_path
+        path
+        action
+        category
+        label
+    """
+    request_data = request.get_json()
+    source_path = request_data.get('sourcePath')
+    path = request_data.get('path')
+    action = request_data.get('action')
+    category = request_data.get('category')
+    label = request_data.get('label') 
+    user = get_current_user()
+
+    if path is None:
+        path = request.referrer
+    
+    success = log_event_aux(user.id, source_path, path, action, category, label)
+
+    return jsonify({
+        "success": success,
+    }), 201
+
+def log_event_aux(user_id, source_path, path, action, category, label):
+    # create log entry
+    log = models.UserTracking(user_id, source_path, path, action, category, label)
+
+    # if table not present then no logging will occur
+    try:
+        log.save_to_db()
+    except Exception as e:
+        sys.stderr.write("got exception " + str(e))
+        sys.stderr.flush()
+        return False
+
+    return True
