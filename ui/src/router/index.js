@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import { requireAuth, requireNotAuth } from './authGuards';
+import { logEvent } from '@/utils/logging';
 
 Vue.use(Router);
 
-export default new Router({
+const router =  new Router({
   mode: 'history',
   routes: [
     {
@@ -111,3 +112,10 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+    logEvent(from.fullPath, to.fullPath, 'pageview', 'navigation', to.name);
+    next();
+});
+
+export default router;
