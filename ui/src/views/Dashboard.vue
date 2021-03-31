@@ -60,12 +60,8 @@
 </template>
 
 <script>
-import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 
 export default {
-  components: {
-    AnalysisTracker,
-  },
   data() {
     return {
       selected_action: null,
