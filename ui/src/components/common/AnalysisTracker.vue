@@ -173,6 +173,7 @@ import { state, actions } from '@/store/modules/cohortManager/types';
 import { state as dsState } from '@/store/modules/dataSummary/types';
 import ErrorDialog from '@/components/common/ErrorDialog.vue';
 import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue';
+import { logEvent } from '@/utils/logging';
 
 export default {
   components: {
@@ -192,6 +193,14 @@ export default {
       type: Number,
       required: false,
     },
+  },
+  watch: {
+    substep(nss) {
+      logEvent(null, null, 'tracker_step', 'workflow_transition', nss);
+    },
+  },
+  mounted() {
+    logEvent(null, null, 'tracker_step', 'workflow_transition', this.substep);
   },
   data() {
     return {
