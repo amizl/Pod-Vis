@@ -142,9 +142,6 @@ export default {
         this.substep = '1.2';
       }
     },
-    collectionSaved() {
-      this.step = '2';
-    },
     updateNumSubjects(ns) {
       this.numSubjects = ns;
     },
