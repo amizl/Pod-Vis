@@ -591,6 +591,28 @@ CREATE TABLE `user_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `user_tracking`
+--
+
+DROP TABLE IF EXISTS `user_tracking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_tracking` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `source_path` varchar(255) NULL,
+  `path` varchar(255) NOT NULL,
+  `action` varchar(100) NOT NULL,
+  `event_category` varchar(100) NOT NULL,
+  `event_label` varchar(100) NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_tracking_user1_idx` (`user_id`),
+  CONSTRAINT `fk_user_tracking_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
