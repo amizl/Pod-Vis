@@ -1562,3 +1562,13 @@ def log_event_aux(user_id, source_path, path, action, category, label):
         return False
 
     return True
+
+@api.route("/log")
+@jwt_required
+def get_user_log():
+    user = get_current_user()
+    log_entries = models.UserTracking.find_all_by_user_id(user.id)
+    return jsonify({
+        "success": True,
+        "log": [log_entry.to_dict() for log_entry in log_entries]
+    })

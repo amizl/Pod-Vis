@@ -25,6 +25,10 @@ class UserTracking(db.Model):
         self.event_category = event_category
         self.event_label = event_label
 
+    @classmethod
+    def find_all_by_user_id(cls, user_id):
+        return cls.query.filter_by(user_id=user_id).all()
+
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
