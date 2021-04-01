@@ -606,7 +606,7 @@ CREATE TABLE `user_tracking` (
   `path` varchar(255) NOT NULL,
   `action` varchar(100) NOT NULL,
   `event_category` varchar(100) NOT NULL,
-  `event_label` varchar(100) NULL,
+  `event_label` varchar(4000) NULL,
   PRIMARY KEY (`id`),
   KEY `fk_user_tracking_user1_idx` (`user_id`),
   CONSTRAINT `fk_user_tracking_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
