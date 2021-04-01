@@ -245,6 +245,7 @@ import {
   getCollectionDescription,
   getLongScaleNameDefault,
 } from '@/utils/helpers';
+import { logEvent } from '@/utils/logging';
 
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import ManageCohortsTable from '@/components/CohortManager/ManageCohortsTable.vue';
@@ -415,6 +416,7 @@ export default {
     },
     helpMode(helpOn) {
       this.helpModeNotify = helpOn;
+      logEvent(this.$gtag, null, null, 'helpmode_' + (helpOn ? 'on' : 'off'), 'help', this.substep);
     },
     showNextHelp(show) {
       this.showNextHelpChip = show;

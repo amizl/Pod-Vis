@@ -190,6 +190,7 @@ import { actions, state, getters } from '@/store/modules/cohortManager/types';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { uniqBy } from 'lodash';
 import { sortScales } from '@/utils/helpers';
+import { logEvent } from '@/utils/logging';
 
 // traverse a list of variables and return the scale variables,
 // which are either at or adjacent to the leaves
@@ -299,6 +300,10 @@ export default {
       if (open) {
         this.$emit('dialogOpened', true);
       }
+      logEvent(this.$gtag, null, null, 'inputvars_' + (open ? 'open' : 'close'), 'click', null);
+    },
+    useLongScaleNames(useLong) {
+      logEvent(this.$gtag, null, null, 'uselongscales_' + (useLong ? 'on' : 'off'), 'click', null);
     },
     cohort(c) {
       this.updateInputVars();
@@ -324,6 +329,7 @@ export default {
           iv.inmSelected = iv.id in selectedVarsD;
         }
       });
+      logEvent(this.$gtag, null, null, 'inputvars_changed', 'click', v.map(iv => iv.abbreviation).join(","));
       this.updateColumnCheckboxes();
     },
   },
