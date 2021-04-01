@@ -114,7 +114,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  logEvent(from.fullPath, to.fullPath, 'pageview', 'navigation', to.name);
+  logEvent(null, from.fullPath, to.fullPath, 'pageview', 'navigation', to.name);
   next();
 });
 

@@ -228,11 +228,11 @@ export default {
   },
   watch: {
     substep(nss) {
-      logEvent(null, null, 'tracker_step', 'workflow_transition', nss);
+      logEvent(this.$gtag, null, null, 'tracker_step', 'workflow_transition', nss);
     },
   },
   mounted() {
-    logEvent(null, null, 'tracker_step', 'workflow_transition', this.substep);
+    logEvent(this.$gtag, null, null, 'tracker_step', 'workflow_transition', this.substep);
   },
   computed: {
     ...mapState('cohortManager', {
@@ -298,7 +298,7 @@ export default {
       }
     },
     gotoDatasetManager() {
-      logEvent(null, null, 'tracker_clicked', 'click', '1');
+      logEvent(this.$gtag, null, null, 'tracker_clicked', 'click', '1');
       if (this.step == 1) {
         // no-op
       } else if (this.step > 1) {
@@ -313,7 +313,7 @@ export default {
       }
     },
     gotoCohortManager() {
-      logEvent(null, null, 'tracker_clicked', 'click', '2');
+      logEvent(this.$gtag, null, null, 'tracker_clicked', 'click', '2');
       if (this.step == 2) {
         // no-op
       } else if (this.step == 1 && this.substep == 1.4) {
@@ -339,7 +339,7 @@ export default {
       }
     },
     gotoDataExplorer() {
-      logEvent(null, null, 'tracker_clicked', 'click', '3');
+      logEvent(this.$gtag, null, null, 'tracker_clicked', 'click', '3');
       if (this.step == 3) {
         // no-op
       } else if (this.step <= 1) {
@@ -359,7 +359,7 @@ export default {
       }
     },
     substepClicked(substep) {
-      logEvent(null, null, 'tracker_clicked', 'click', substep);
+      logEvent(this.$gtag, null, null, 'tracker_clicked', 'click', substep);
     },
     // Cohort Manager sub-step transitions.
     goto2p1() {
