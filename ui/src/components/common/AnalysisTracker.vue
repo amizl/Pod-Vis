@@ -68,6 +68,7 @@
           :class="substepClass('1.1')"
           :complete="substep !== '1.1' || step === '2'"
           step="1.1"
+          @click.native="substepClicked('1.1')"
           ><span class="subtitle-1">Choose Datasets</span>
           <span
             >Choose datasets and click "SELECT VARIABLES"</span
@@ -78,6 +79,7 @@
           :complete="substep === '1.3' || substep === '1.4' || step === '2'"
           step="1.2"
           :class="substepClass('1.2')"
+          @click.native="substepClicked('1.2')"
           ><span class="subtitle-1">Select Variables</span>
           <span
             >Select variables and click on "SAVE STUDY DATASET"</span
@@ -88,6 +90,7 @@
           :complete="substep === '1.4' || step === '2'"
           step="1.3"
           :class="substepClass('1.3')"
+          @click.native="substepClicked('1.3')"
           ><span class="subtitle-1">Save Study Dataset</span></v-stepper-step
         >
         <v-divider></v-divider>
@@ -95,6 +98,7 @@
           :complete="step === '2'"
           step="1.4"
           :class="substepClass('1.4')"
+          @click.native="substepClicked('1.4')"
           ><span class="subtitle-1"
             >Choose First & Last Visit</span
           ></v-stepper-step
@@ -108,6 +112,7 @@
           :complete="inputVariables.length > 0 || substep >= 2.4"
           step="2.1"
           :class="substepClass('2.1')"
+          @click.native="substepClicked('2.1')"
           ><span class="subtitle-1"
             >Choose predictor variables</span
           ></v-stepper-step
@@ -117,6 +122,7 @@
           :complete="outputVariables.length > 0 || substep >= 2.4"
           step="2.2"
           :class="substepClass('2.2')"
+          @click.native="substepClicked('2.2')"
           ><span class="subtitle-1"
             >Choose outcome variables</span
           ></v-stepper-step
@@ -128,6 +134,7 @@
           "
           step="2.3"
           :class="substepClass('2.3')"
+          @click.native="substepClicked('2.3')"
           >{{
             filteredData.length == unfilteredData.length
               ? 'Apply filters to define cohorts'
@@ -143,10 +150,14 @@
           step="3.1"
           :class="substepClass('3.1')"
           :complete="substep === '3.2'"
+          @click.native="substepClicked('3.1')"
           ><span class="subtitle-1">Select two or more cohorts.</span>
         </v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="3.2" :class="substepClass('3.2')"
+        <v-stepper-step
+          step="3.2"
+          :class="substepClass('3.2')"
+          @click.native="substepClicked('3.2')"
           ><span class="subtitle-1">Click on 'ANALYZE SELECTED COHORTS'</span>
         </v-stepper-step>
       </v-stepper-header>
@@ -194,14 +205,6 @@ export default {
       required: false,
     },
   },
-  watch: {
-    substep(nss) {
-      logEvent(null, null, 'tracker_step', 'workflow_transition', nss);
-    },
-  },
-  mounted() {
-    logEvent(null, null, 'tracker_step', 'workflow_transition', this.substep);
-  },
   data() {
     return {
       step_descr: {
@@ -222,6 +225,14 @@ export default {
       show_confirmation_dialog: false,
       target_uri: '',
     };
+  },
+  watch: {
+    substep(nss) {
+      logEvent(null, null, 'tracker_step', 'workflow_transition', nss);
+    },
+  },
+  mounted() {
+    logEvent(null, null, 'tracker_step', 'workflow_transition', this.substep);
   },
   computed: {
     ...mapState('cohortManager', {
@@ -287,6 +298,7 @@ export default {
       }
     },
     gotoDatasetManager() {
+      logEvent(null, null, 'tracker_clicked', 'click', '1');
       if (this.step == 1) {
         // no-op
       } else if (this.step > 1) {
@@ -301,6 +313,7 @@ export default {
       }
     },
     gotoCohortManager() {
+      logEvent(null, null, 'tracker_clicked', 'click', '2');
       if (this.step == 2) {
         // no-op
       } else if (this.step == 1 && this.substep == 1.4) {
@@ -326,6 +339,7 @@ export default {
       }
     },
     gotoDataExplorer() {
+      logEvent(null, null, 'tracker_clicked', 'click', '3');
       if (this.step == 3) {
         // no-op
       } else if (this.step <= 1) {
@@ -343,6 +357,9 @@ export default {
       } else {
         this.$emit('nextStep', true);
       }
+    },
+    substepClicked(substep) {
+      logEvent(null, null, 'tracker_clicked', 'click', substep);
     },
     // Cohort Manager sub-step transitions.
     goto2p1() {
