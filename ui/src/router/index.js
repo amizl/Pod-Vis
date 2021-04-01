@@ -5,7 +5,7 @@ import { logEvent } from '@/utils/logging';
 
 Vue.use(Router);
 
-const router =  new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -114,8 +114,8 @@ const router =  new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    logEvent(from.fullPath, to.fullPath, 'pageview', 'navigation', to.name);
-    next();
+  logEvent(from.fullPath, to.fullPath, 'pageview', 'navigation', to.name);
+  next();
 });
 
 export default router;

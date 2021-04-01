@@ -9,7 +9,7 @@
       <v-row class="ma-0 pa-0">
         <v-col class="ma-0 pa-0">
           <analysis
-	    :id="'analysis-' + a.index"
+            :id="'analysis-' + a.index"
             :analysis="a"
             :title="'ANALYSIS #' + a.index"
             @deleteAnalysis="deleteAnalysis(anum)"

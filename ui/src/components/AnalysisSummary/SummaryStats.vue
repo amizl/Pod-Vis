@@ -25,9 +25,12 @@
             <v-data-table
               :headers="headers"
               :items="
-                [{ 'abbreviation': 'Predictors' }, ...predictorVariables, { 'abbreviation': 'Outcomes' }, ...outcomeVariables].filter(
-                  v => v.data_category != 'Categorical'
-                )
+                [
+                  { abbreviation: 'Predictors' },
+                  ...predictorVariables,
+                  { abbreviation: 'Outcomes' },
+                  ...outcomeVariables,
+                ].filter(v => v.data_category != 'Categorical')
               "
               item-key="id"
               :disable-pagination="true"
@@ -40,7 +43,9 @@
                     <th colspan="1"></th>
                     <th v-for="c in cohorts" colspan="3">
                       <v-chip x-small :color="c.color" class="my-1 px-2" />
-                      <span class="subtitle-1 pl-2 font-weight-bold">{{ c.label }}</span>
+                      <span class="subtitle-1 pl-2 font-weight-bold">{{
+                        c.label
+                      }}</span>
                     </th>
                   </tr>
                 </thead>
@@ -49,7 +54,9 @@
               <template v-slot:item="v">
                 <tr>
                   <td>
-                    <span :class="getNameClass(v.item.abbreviation)">{{ v.item.abbreviation }}</span>
+                    <span :class="getNameClass(v.item.abbreviation)">{{
+                      v.item.abbreviation
+                    }}</span>
                   </td>
                   <template v-for="c in cohorts">
                     <td>{{ cohortMean(v.item, c) }}</td>
@@ -245,13 +252,13 @@ export default {
       return this.cohortStat(v, c, 'deviation');
     },
     getNameClass(n) {
-      var cls = "subtitle-1 font-weight-bold";
-      if ((n != 'Predictors') && (n != 'Outcomes')) {
-        cls = cls + " pl-3"
+      var cls = 'subtitle-1 font-weight-bold';
+      if (n != 'Predictors' && n != 'Outcomes') {
+        cls = cls + ' pl-3';
       }
       return cls;
-   },
-},
+    },
+  },
 };
 </script>
 
