@@ -49,7 +49,7 @@
 	
 	<v-row class="ma-0 pa-0">
 	  <v-col cols="12" class="ma-0 pa-0">
-	    <span class="primary--text title">Outcome Measure: <span class="black--text">{{ comparisonMeasure }}</span></span>
+	    <span class="primary--text title">Analysis Measure: <span class="black--text">{{ comparisonMeasure }}</span></span>
 	  </v-col>
 	</v-row>
 
@@ -338,7 +338,7 @@ export default {
     headers() {
       var headers = [
         {
-          text: 'Scale',
+          text: 'Variable',
           align: 'left',
           sortable: true,
           value: 'label',

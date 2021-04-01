@@ -73,7 +73,7 @@
                         <v-container fluid>
                           <span
                             class="primary--text subtitle-1 font-weight-bold mb-1"
-                            >Outcome Measure:</span
+                            >Analysis Measure:</span
                           ><v-radio-group
                             v-model="selectedComparisonMeasure"
                             hide-details

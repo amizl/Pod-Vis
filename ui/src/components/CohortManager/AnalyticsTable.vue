@@ -110,7 +110,7 @@
             <div v-if="collection.is_longitudinal" class="ml-2">
               <v-toolbar-title
                 class="primary--text subtitle-1 font-weight-bold mb-1"
-                >Outcome Measure</v-toolbar-title
+                >Analysis Measure</v-toolbar-title
               >
               <v-radio-group
                 v-model="selectedComparisonMeasure"
