@@ -12,7 +12,7 @@
         <v-spacer></v-spacer>
         <v-switch
           v-model="useLongScaleNamesSelect"
-          label="Use long scale names"
+          label="Use long variable names"
           class="pa-0 ma-0"
           hide-details
         ></v-switch>

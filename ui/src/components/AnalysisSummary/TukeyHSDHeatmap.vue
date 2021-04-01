@@ -110,7 +110,7 @@
           </div>
           <div v-else column align-center justify-center fill-width>
             <v-subheader class="title primary--text text--lighten-5">
-              <v-icon x-large color="primary lighten-5">arrow_left</v-icon>SELECT SCALE FROM ANALYTICS PANEL
+              <v-icon x-large color="primary lighten-5">arrow_left</v-icon>SELECT VARIABLE FROM ANALYTICS PANEL
             </v-subheader>
           </div>
         </v-col>

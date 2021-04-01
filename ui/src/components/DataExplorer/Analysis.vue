@@ -41,7 +41,7 @@
                       >{{ analysis.outcomeVariables.length }}</v-chip
                     >
                     <span class="black--text text-body-1"
-                      >Scale{{
+                      >Variable{{
                         analysis.outcomeVariables.length == 1 ? '' : 's'
                       }}</span
                     >
@@ -133,7 +133,7 @@
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <v-tabs v-model="leftTab" light>
                     <v-tab key="cohorts">Input Cohorts</v-tab>
-                    <v-tab key="analytics">Analytics/Scales</v-tab>
+                    <v-tab key="analytics">Analytics/Variables</v-tab>
                     <v-tab key="statistics">Cohort Statistics</v-tab>
                   </v-tabs>
 

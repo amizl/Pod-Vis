@@ -258,7 +258,7 @@ export default {
     headers() {
       var headers = [
         {
-          text: 'Scale',
+          text: 'Variable',
           value: 'label',
           class: 'text-subtitle-1 font-weight-bold',
         },

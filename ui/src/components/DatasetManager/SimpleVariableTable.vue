@@ -109,7 +109,7 @@ export default {
           class: 'text-subtitle-1 font-weight-bold',
         },
         {
-          text: 'Scale',
+          text: 'Variable',
           value: 'scale',
           sortable: true,
           class: 'text-subtitle-1 font-weight-bold',

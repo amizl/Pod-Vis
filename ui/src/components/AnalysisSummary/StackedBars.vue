@@ -91,7 +91,7 @@
               fill-width
             >
               <v-subheader class="title primary--text text--lighten-5">
-                NO SCALE SELECTED
+                NO VARIABLE SELECTED
               </v-subheader>
             </div>
 

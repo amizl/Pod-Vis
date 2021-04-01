@@ -75,7 +75,7 @@ export default {
           sortable: true,
         },
         {
-          text: 'Scale',
+          text: 'Variable',
           value: 'scale',
           sortable: true,
         },

@@ -309,7 +309,7 @@ export default {
     headers() {
       var headers = [
         {
-          text: 'Scale',
+          text: 'Variable',
           align: 'left',
           sortable: true,
           value: 'label',

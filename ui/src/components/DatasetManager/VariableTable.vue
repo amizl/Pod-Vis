@@ -88,7 +88,7 @@ export default {
           class: 'text-subtitle-1 font-weight-bold',
         },
         {
-          text: 'Scale',
+          text: 'Variable',
           value: 'abbreviation',
           sortable: true,
           class: 'text-subtitle-1 font-weight-bold',

@@ -129,7 +129,7 @@
                 <v-toolbar-items>
                   <v-switch
                     v-model="demoVarsUseLongNames"
-                    label="Use long scale names"
+                    label="Use long variable names"
                     class="pa-0 ma-0 pr-3"
                     hide-details
                   ></v-switch>
@@ -187,7 +187,7 @@
                 <v-toolbar-items>
                   <v-switch
                     v-model="obsVarsUseLongNames"
-                    label="Use long scale names"
+                    label="Use long variable names"
                     class="pa-0 ma-0 pr-3"
                     hide-details
                   ></v-switch>
