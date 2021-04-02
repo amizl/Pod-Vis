@@ -12,6 +12,18 @@
     disable-pagination
     hide-default-footer
   >
+    <!-- Add "All:" to select all checkbox -->
+    <template v-slot:header.data-table-select="{ on, props }">
+      <v-tooltip top color="primary">
+        <template v-slot:activator="{ on: tooltip }">
+          <span class="text-subtitle-1 font-weight-bold" v-on="{ ...tooltip }">
+            All: <v-simple-checkbox v-bind="props" v-on="on"
+          /></span>
+        </template>
+        <span>Click to select all datasets.</span>
+      </v-tooltip>
+    </template>
+
     <template v-slot:item.project_name="{ item }">
       <td class="subtitle-1 text-xs-left">{{ item.project_name }}</td>
     </template>

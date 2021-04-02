@@ -12,12 +12,21 @@
       hide-default-footer
       show-select
     >
-      <!-- Attempt to add 'Select All:' label to master checkbox. -->
-      <!--
-      <template v-slot:header.data-table-select="{ header }">
-        <span class="text-subtitle-1 font-weight-bold">Select All:</span>
+      <!-- Add "All:" to select all checkbox -->
+      <template v-slot:header.data-table-select="{ on, props }">
+        <v-tooltip top color="primary">
+          <template v-slot:activator="{ on: tooltip }">
+            <span
+              class="text-subtitle-1 font-weight-bold"
+              v-on="{ ...tooltip }"
+            >
+              All: <v-simple-checkbox v-bind="props" v-on="on"
+            /></span>
+          </template>
+          <span>Click to select all variables.</span>
+        </v-tooltip>
       </template>
-      -->
+
       <template
         v-for="ds in datasets"
         v-slot:[`header.${ds.study_name}`]="{ header }"

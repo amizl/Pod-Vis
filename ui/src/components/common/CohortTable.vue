@@ -97,6 +97,21 @@
         :hide-default-footer="disablePagination"
         dense
       >
+        <!-- Add "All:" to select all checkbox -->
+        <template v-slot:header.data-table-select="{ on, props }">
+          <v-tooltip top color="primary">
+            <template v-slot:activator="{ on: tooltip }">
+              <span
+                class="text-subtitle-1 font-weight-bold"
+                v-on="{ ...tooltip }"
+              >
+                All: <v-simple-checkbox v-bind="props" v-on="on"
+              /></span>
+            </template>
+            <span>Click to select all cohorts.</span>
+          </v-tooltip>
+        </template>
+
         <template v-slot:item.data-table-select="{ isSelected, select }">
           <td class="pa-0 ma-0" justify="center" align="center">
             <v-tooltip v-if="checkboxTooltip" bottom color="primary">
