@@ -300,10 +300,24 @@ export default {
       if (open) {
         this.$emit('dialogOpened', true);
       }
-      logEvent(this.$gtag, null, null, 'inputvars_' + (open ? 'open' : 'close'), 'click', null);
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'inputvars_' + (open ? 'open' : 'close'),
+        'click',
+        null
+      );
     },
     useLongScaleNames(useLong) {
-      logEvent(this.$gtag, null, null, 'uselongscales_' + (useLong ? 'on' : 'off'), 'click', null);
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'uselongscales_' + (useLong ? 'on' : 'off'),
+        'click',
+        null
+      );
     },
     cohort(c) {
       this.updateInputVars();
@@ -329,7 +343,14 @@ export default {
           iv.inmSelected = iv.id in selectedVarsD;
         }
       });
-      logEvent(this.$gtag, null, null, 'inputvars_changed', 'click', v.map(iv => iv.abbreviation).join(","));
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'inputvars_changed',
+        'click',
+        v.map(iv => iv.abbreviation).join(',')
+      );
       this.updateColumnCheckboxes();
     },
   },

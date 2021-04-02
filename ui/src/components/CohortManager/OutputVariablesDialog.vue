@@ -320,7 +320,14 @@ export default {
       if (open) {
         this.$emit('dialogOpened', true);
       }
-      logEvent(this.$gtag, null, null, 'outputvars_' + (open ? 'open' : 'close'), 'click', null);
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'outputvars_' + (open ? 'open' : 'close'),
+        'click',
+        null
+      );
     },
     cohort(c) {
       this.updateOutputVars();
@@ -358,7 +365,14 @@ export default {
           if (iv.outmSelected != ivSel) iv.outmSelected = ivSel;
         }
       });
-      logEvent(this.$gtag, null, null, 'outputvars_changed', 'click', newvars.map(iv => iv.abbreviation).join(","));
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'outputvars_changed',
+        'click',
+        newvars.map(iv => iv.abbreviation).join(',')
+      );
       this.updateColumnCheckboxes();
     },
   },

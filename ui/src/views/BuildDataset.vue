@@ -142,8 +142,7 @@ export default {
         this.substep = '1.2';
       }
     },
-    collectionSaved() {
-    },
+    collectionSaved() {},
     updateNumSubjects(ns) {
       this.numSubjects = ns;
     },

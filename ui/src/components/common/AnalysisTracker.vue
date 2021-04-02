@@ -228,11 +228,25 @@ export default {
   },
   watch: {
     substep(nss) {
-      logEvent(this.$gtag, null, null, 'tracker_step', 'workflow_transition', nss);
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'tracker_step',
+        'workflow_transition',
+        nss
+      );
     },
   },
   mounted() {
-    logEvent(this.$gtag, null, null, 'tracker_step', 'workflow_transition', this.substep);
+    logEvent(
+      this.$gtag,
+      null,
+      null,
+      'tracker_step',
+      'workflow_transition',
+      this.substep
+    );
   },
   computed: {
     ...mapState('cohortManager', {

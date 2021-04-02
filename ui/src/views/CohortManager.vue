@@ -416,7 +416,14 @@ export default {
     },
     helpMode(helpOn) {
       this.helpModeNotify = helpOn;
-      logEvent(this.$gtag, null, null, 'helpmode_' + (helpOn ? 'on' : 'off'), 'help', this.substep);
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'helpmode_' + (helpOn ? 'on' : 'off'),
+        'help',
+        this.substep
+      );
     },
     showNextHelp(show) {
       this.showNextHelpChip = show;
