@@ -1,4 +1,4 @@
-1.0.4 (April ?, 2021)
+1.0.4 (April 2, 2021)
  -Merge Data Explorer and Summary Matrix (#568)
  -Add new Help Mode to Cohort Manager. (#577)
  -Add adjustable split panes to Cohort Manager. (#579)
@@ -15,6 +15,7 @@
  -Move visit timeline above chart on Set Visits page (#599)
  -Merge steps 2.3 and 2.4 in Cohort Manager (#598)
  -Rename Analyze Cohorts to Data Analytics (#598)
+ -Cosmetic improvements to Detailed View graphs (#604,#605)
  -Rename 'Category' to 'Domain' (#609)
  -Add user_tracking table and logging code. (#567)
  -Rename "scale" to "variable" (#610)
