@@ -112,9 +112,6 @@ export default {
     colors: colors,
     useLongScaleNames: false,
   }),
-  created() {
-    this.useLongScaleNames = getLongScaleNameDefault(this.selectedDatasets);
-  },
   computed: {
     ...mapState('datasetManager', {
       selectedDatasets: state.SELECTED_DATASETS,
@@ -125,6 +122,9 @@ export default {
     variables() {
       return this.selected;
     },
+  },
+  created() {
+    this.useLongScaleNames = getLongScaleNameDefault(this.selectedDatasets);
   },
   methods: {
     ...mapActions('datasetManager', {

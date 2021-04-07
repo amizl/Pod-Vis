@@ -92,16 +92,16 @@
 
                         <v-btn
                           class="primary text--white ma-0 px-2 py-0 mx-3 mb-2"
-                          :disabled="visibleCohorts.length < 2"
+                          :disabled="!twoOrMoreCohortsSelected"
                           @click="analyzeCohortList(visibleCohorts)"
                           ><v-icon large class="pr-2" color="white"
                             >analytics</v-icon
                           >
                           Analyze
                           {{
-                            visibleCohorts.length < 2
-                              ? ''
-                              : visibleCohorts.length
+                            twoOrMoreCohortsSelected
+                              ? visibleCohorts.length
+                              : ''
                           }}
                           Selected Cohorts</v-btn
                         >
@@ -213,6 +213,9 @@ export default {
       });
       return cc;
     },
+    twoOrMoreCohortsSelected() {
+      return this.visibleCohorts.length >= 2;
+    },
     substep() {
       var ss = this.visibleCohorts.length > 1 ? '3.2' : '3.1';
       return ss;
@@ -220,7 +223,7 @@ export default {
   },
   watch: {
     // workaround to force DetailedViewChart resize when expandAnalytics toggled
-    expandAnalytics(expand) {
+    expandAnalytics() {
       this.$refs.dview.onResize();
     },
   },
@@ -398,7 +401,6 @@ export default {
           analysis.status = 'Failed';
           analysis.statusTime = new Date().getTime();
           analysis.error = err;
-          console.log(err);
         });
 
       this.analyses.unshift(analysis);

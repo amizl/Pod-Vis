@@ -38,37 +38,34 @@
       </v-row>
     </v-container>
 
-	  <v-container v-else fluid fill-width class="ma-0 pa-0">
-	    <v-row class="ma-0 pa-0">
+    <v-container v-else fluid fill-width class="ma-0 pa-0">
+      <v-row class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
+          <v-container fluid fill-width class="ma-0 pa-0">
+            <v-row class="ma-0 pa-0">
               <v-col cols="12" class="ma-0 pa-0">
-		<v-container fluid fill-width class="ma-0 pa-0">
-		  <v-row class="ma-0 pa-0">
-		    <v-col cols="12" class="ma-0 pa-0">
-                      <v-card-title class="primary--text pa-0 pt-3 pl-2">
-			<v-tooltip v-if="outcomeVar" bottom color="primary">
-			  <template v-slot:activator="{ on: tooltip }">
-			    <img
-                              :src="
-				    '/images/' + outcomeVar.category + '-icon-128.png'
-				    "
-                              :title="outcomeVar.category"
-                              style="height:1.75em"
-                              class="ma-1"
-                              v-on="{ ...tooltip }"
-			      />
-			  </template>
-			  <span>{{ outcomeVar.category }}</span>
-			</v-tooltip>
-			<span v-if="outcomeVar" class="subtitle-1">
-			  {{ outcomeVar.label }}
-			</span>
-                      </v-card-title>
-		    </v-col>
-		  </v-row>
-		</v-container>
-	      </v-col>
-	    </v-row>
-	  </v-container>
+                <v-card-title class="primary--text pa-0 pt-3 pl-2">
+                  <v-tooltip v-if="outcomeVar" bottom color="primary">
+                    <template v-slot:activator="{ on: tooltip }">
+                      <img
+                        :src="
+                          '/images/' + outcomeVar.category + '-icon-128.png'
+                        "
+                        :title="outcomeVar.category"
+                        style="height:1.75em"
+                        class="ma-1"
+                        v-on="{ ...tooltip }"
+                      />
+                    </template>
+                    <span>{{ outcomeVar.category }}</span>
+                  </v-tooltip>
+                  <span v-if="outcomeVar" class="subtitle-1">
+                    {{ outcomeVar.label }}
+                  </span>
+                </v-card-title>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-col>
       </v-row>
     </v-container>
@@ -107,7 +104,8 @@
               <g v-if="outcomeVar && outcomeVar.data_category == 'Categorical'">
                 <!-- labels -->
                 <text
-                  v-for="sc in Object.keys(graphData)"
+                  v-for="(sc, index) in Object.keys(graphData)"
+                  :key="`st-${index}`"
                   :ref="sc"
                   :x="15"
                   :y="graphData[sc]['y_center']"
@@ -118,6 +116,7 @@
                 <!-- bar graph rectangles -->
                 <rect
                   v-for="(gr, index) in graphRects"
+                  :key="`sbgr-${index}`"
                   :ref="gr.key"
                   :x="gr.x"
                   :y="gr.y"
@@ -130,6 +129,7 @@
                 <!-- color key -->
                 <rect
                   v-for="(gc, index) in graphColorKey"
+                  :key="`sck-${index}`"
                   :x="gc.x"
                   :y="gc.y"
                   :width="20"
@@ -140,6 +140,7 @@
                 <!-- labels -->
                 <text
                   v-for="(gc, index) in graphColorKey"
+                  :key="`sl-${index}`"
                   :x="gc.x + 35"
                   :y="gc.y + 15"
                 >
@@ -161,6 +162,7 @@
             <!-- tooltips for cohort + visit labels -->
             <v-tooltip
               v-for="(sc, index) in Object.keys(graphData)"
+              :key="`sltt-${index}`"
               top
               color="primary"
               :activator="graphData[sc]['node']"
@@ -171,6 +173,7 @@
             <!-- tooltips for bar graph rectangles -->
             <v-tooltip
               v-for="(gr, index) in graphRects"
+              :key="`sbgrtt-${index}`"
               top
               color="primary"
               :activator="gr['node']"
@@ -187,11 +190,10 @@
 <script>
 import { mapState } from 'vuex';
 import { state as deState } from '@/store/modules/dataExplorer/types';
-import { min, max, ascending, quantile } from 'd3-array';
-import { axisTop, axisLeft, axisRight } from 'd3-axis';
+import { axisTop } from 'd3-axis';
 import { format } from 'd3-format';
 import { scaleLinear } from 'd3-scale';
-import { select, event } from 'd3-selection';
+import { select } from 'd3-selection';
 import { colors } from '@/utils/colors';
 import 'd3-transition';
 
@@ -214,7 +216,7 @@ export default {
     cohorts: {
       type: Array,
       required: true,
-      default: [],
+      default: () => [],
     },
     outcomeVar: {
       type: Object,
@@ -239,6 +241,7 @@ export default {
     maxCohorts: {
       type: Number,
       required: false,
+      default: 1,
     },
     rowHeight: {
       type: Number,
@@ -310,10 +313,10 @@ export default {
     },
   },
   watch: {
-    outcomeVar(ov) {
+    outcomeVar() {
       this.updateVisits();
     },
-    maxLabelLen(mll) {
+    maxLabelLen() {
       // change in maxLabelLen means change in left margin
       this.$nextTick(() => {
         this.updateGraphData();
@@ -324,12 +327,12 @@ export default {
       var vm = this;
       var nodesFound = true;
       this.$nextTick(() => {
-        Object.keys(vm.graphData).forEach(k => {
+        Object.keys(gd).forEach(k => {
           var node = vm.$refs[k];
           if (node == null) {
             nodesFound = false;
           } else {
-            vm.graphData[k].node = node[0];
+            gd[k].node = node[0];
           }
         });
         vm.graphRects.forEach(gr => {
@@ -345,7 +348,7 @@ export default {
         }
       });
     },
-    cohorts(nc) {
+    cohorts() {
       this.$nextTick(() => {
         this.resizeChart();
         this.updateGraphData();
@@ -428,7 +431,7 @@ export default {
     // visit = firstVisit or lastVisit
     updateGraphData_aux(
       visit,
-      y_offset,
+      initial_y_offset,
       row_height,
       row2row_dist,
       label_prefix,
@@ -439,6 +442,7 @@ export default {
       var vm = this;
       var xScale = this.xScale;
       var x_offset = this.margins.left;
+      var y_offset = initial_y_offset;
       var max_ll = this.maxLabelLen;
       this.cohorts.forEach(c => {
         const subjids = [];

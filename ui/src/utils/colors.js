@@ -1,6 +1,6 @@
 // original - blue, yellow, green
 /*
-export let colors = {
+export const colors = {
   population: '#F8D580',
   'cohort-circle-fill': 'blue',
   'cohort-circle-fill-opacity': '0.8',
@@ -18,7 +18,7 @@ export let colors = {
 */
 // silver/grey
 /*
-export let colors = {
+export const colors = {
   'population': '#D1D3D4',
   'cohort-circle-fill': 'blue',
   'cohort-circle-fill-opacity': '0.8',
@@ -35,7 +35,7 @@ export let colors = {
 
 // silver/grey/"light blue"
 /*
-export let colors = {
+export const colors = {
   'population': '#8C99A5',
   'cohort-circle-fill': 'blue',
   'cohort-circle-fill-opacity': '0.8',
@@ -50,7 +50,7 @@ export let colors = {
 };
 */
 // grey/light blue
-export let colors = {
+export const colors = {
   cohort: '#3F51B5',
   'cohort-circle-fill': '#1B33B5',
   'cohort-circle-fill-opacity': '0.8',

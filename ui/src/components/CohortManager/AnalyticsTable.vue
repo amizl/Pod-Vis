@@ -133,7 +133,8 @@
             <div align="center">
               <div class="pa-1 py-4">
                 <v-chip
-                  v-for="pv in pval_thresholds"
+                  v-for="(pv, index) in pval_thresholds"
+                  :key="`pv-vc-${index}`"
                   :color="getPvalColor(pv)"
                   :class="
                     (colorScheme == 'brewer5' && pv == '0.001'

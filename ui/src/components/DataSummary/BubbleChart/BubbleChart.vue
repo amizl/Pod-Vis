@@ -17,6 +17,7 @@
       <v-col cols="12" class="ma-0 pa-0">
         <v-tooltip
           v-for="(cvt, index) in collectionVarTitles"
+          :key="`vtsa-${index}`"
           top
           color="primary"
           :activator="cvt['node']"
@@ -30,10 +31,11 @@
     <v-row v-if="canvasUpdated" class="ma-0 pa-0">
       <v-col cols="12" class="ma-0 pa-0">
         <v-tooltip
-          v-for="(scale, index) in Object.keys(rowCounts)"
+          v-for="(sv, index) in Object.keys(rowCounts)"
+          :key="`vtsa2-${index}`"
           top
           color="primary"
-          :activator="rowCounts[scale]['node']"
+          :activator="rowCounts[sv]['node']"
         >
           <span> {{ rowCounts[scale]['descr'] }} </span>
         </v-tooltip>
@@ -48,12 +50,8 @@ import { mapState, mapMutations } from 'vuex';
 import { state, actions } from '@/store/modules/dataSummary/types';
 // D3 Modules
 import * as d3 from 'd3';
-import { max } from 'd3-array';
 import { select } from 'd3-selection';
-import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale';
 import 'd3-transition';
-import { axisBottom, axisLeft } from 'd3-axis';
-import { schemeCategory10 } from 'd3-scale-chromatic';
 // Directives
 import resize from 'vue-resize-directive';
 import {
@@ -65,7 +63,6 @@ import {
 import {
   getObservationVariableIds,
   getObservationVariableAbbreviations,
-  getObservationVariableNames,
   getObservationVariableAbbreviationToName,
   getObservationVariableAbbreviationToDescription,
   sortVisitEvents,
@@ -603,7 +600,6 @@ export default {
       this.rowCounts = rowCounts;
       var rcFontSize = 16;
       var qrcfs = Math.floor(rcFontSize / 4);
-      var maxCountLen = String(maxCount).length;
 
       // row counts - color-coded background rectangles
       mysvg
@@ -723,21 +719,12 @@ export default {
         });
 
       // Draw border around a single cell - used to indicate a selection saved in the database
-      var highlightCell = function(
-        var_id,
-        var_name,
-        visit,
-        color,
-        opacity,
-        chart,
-        is_first
-      ) {
+      var highlightCell = function(var_id, var_name, visit, color, opacity) {
         var cx = x(visit) + margin.left;
         var cy = y(var_name);
 
         var g = mysvg.append('g');
-        var colRect = g
-          .append('rect')
+        g.append('rect')
           .attr('x', cx)
           .attr('y', cy)
           .attr('width', x.bandwidth())
@@ -778,11 +765,11 @@ export default {
         var max_x = margin.left + width - x.bandwidth();
         var xoffset = 0;
 
-        var start_drag_fn = function(d) {
+        var start_drag_fn = function() {
           xoffset = d3.event.x - d3.select(this).attr('x');
         };
 
-        var on_drag_fn = function(d) {
+        var on_drag_fn = function() {
           var new_x = d3.event.x - xoffset;
           if (new_x < min_x) {
             new_x = min_x;
@@ -791,9 +778,10 @@ export default {
             new_x = max_x;
           }
           // don't allow first visit to go past last visit
+          var lvx = null;
           if (is_first) {
             if (chart.lastVisits[var_id]) {
-              var lvx = x(chart.lastVisits[var_id]) + margin.left;
+              lvx = x(chart.lastVisits[var_id]) + margin.left;
               if (new_x > lvx - x_bw) {
                 new_x = lvx - x_bw;
               }
@@ -802,7 +790,7 @@ export default {
           // don't allow last visit to go past first visit
           else {
             if (chart.firstVisits[var_id]) {
-              var lvx = x(chart.firstVisits[var_id]) + margin.left;
+              lvx = x(chart.firstVisits[var_id]) + margin.left;
               if (new_x < lvx + x_bw) {
                 new_x = lvx + x_bw;
               }
@@ -811,7 +799,7 @@ export default {
           d3.select(this).attr('x', new_x);
         };
 
-        var drag_end_fn = function(d) {
+        var drag_end_fn = function() {
           // find nearest visit event/num and update/snap to grid
           var midpt = d3.select(this).attr('x') * 1.0 + x_hbw;
           var visitnum = Math.floor((midpt - min_x) / x_bw);
@@ -877,11 +865,11 @@ export default {
         var max_x = margin.left + width - x.bandwidth();
         var xoffset = 0;
 
-        var start_drag_fn = function(d) {
+        var start_drag_fn = function() {
           xoffset = d3.event.x - d3.select(this).attr('x');
         };
 
-        var on_drag_fn = function(d) {
+        var on_drag_fn = function() {
           var new_x = d3.event.x - xoffset;
           if (new_x < min_x) {
             new_x = min_x;
@@ -890,15 +878,16 @@ export default {
             new_x = max_x;
           }
           // don't allow first visit to go past first last visit
+          var lvx = null;
           if (is_first) {
-            var lvx = x(firstLastVisit) + margin.left;
+            lvx = x(firstLastVisit) + margin.left;
             if (new_x > lvx - x_bw) {
               new_x = lvx - x_bw;
             }
           }
           // don't allow last visit to go past last first visit
           else {
-            var lvx = x(lastFirstVisit) + margin.left;
+            lvx = x(lastFirstVisit) + margin.left;
             if (new_x < lvx + x_bw) {
               new_x = lvx + x_bw;
             }
@@ -908,7 +897,7 @@ export default {
           d3.select(colRect3.node()).attr('x', new_x);
         };
 
-        var drag_end_fn = function(d) {
+        var drag_end_fn = function() {
           // find nearest visit event/num and update/snap to grid
           var midpt = d3.select(this).attr('x') * 1.0 + x_hbw;
           var visitnum = Math.floor((midpt - min_x) / x_bw);
@@ -953,9 +942,7 @@ export default {
               varIdToName[ov['ontology']['id']],
               ov['first_' + vvl],
               colors['firstVisit'],
-              colors['firstVisit-opacity'],
-              this,
-              true
+              colors['firstVisit-opacity']
             );
           }
           if (ov['last_' + vvl]) {
@@ -964,9 +951,7 @@ export default {
               varIdToName[ov['ontology']['id']],
               ov['last_' + vvl],
               colors['lastVisit'],
-              colors['lastVisit-opacity'],
-              this,
-              false
+              colors['lastVisit-opacity']
             );
           }
         });

@@ -105,7 +105,7 @@
             </v-tooltip>
           </td>
         </tr>
-        <tr v-for="(cohort, index) in props.item.cohorts">
+        <tr v-for="(cohort, index) in props.item.cohorts" :key="`ctr-${index}`">
           <td colspan="3">cohort row</td>
         </tr>
       </template>
@@ -189,6 +189,7 @@ export default {
       } else if (this.showCollections === 'private') {
         return this.filterCollections(0);
       }
+      return null;
     },
   },
   mounted() {

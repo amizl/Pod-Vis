@@ -53,7 +53,7 @@ export default {
     visibleCohorts: {
       type: Array,
       required: true,
-      default: [],
+      default: () => [],
     },
     lineStyle: {
       type: String,
@@ -238,19 +238,14 @@ export default {
       const rd = this.showAllTimepoints ? this.rawData : this.getRawData(true);
       const timepoints = {};
       const xacc = this.xaccessor;
-      var numericEvents = true;
       rd.forEach(x => {
         var xa = xacc(x);
-        if (isNaN(xa)) {
-          numericEvents = false;
-        }
         timepoints[xa] = 1;
       });
       return sortVisitEvents(Object.keys(timepoints));
     },
     // mean and standard deviation for each timepoint and cohort
     timepointsMeanAndSD() {
-      const slf = this;
       const rd = this.getRawData(true);
       const cohorts = this.collectionCohorts;
       const xacc = this.xaccessor;
@@ -741,7 +736,6 @@ export default {
       const bw = this.barGroupWidth - this.barGroupGap;
       const hbw = bw / 2;
       const cbw = bw / cohorts.length;
-      const y0 = ds(0);
       this.categoryColorKey = [];
 
       // assign colors to categories
@@ -904,7 +898,6 @@ export default {
       const rd = this.getRawData(false);
       const selCohorts = this.selectedCohorts();
       const xacc = this.xaccessor;
-      const isCategorical = this.isCategorical;
 
       // map subject id to cohort(s)
       const subjId2Cohorts = {};
@@ -1092,10 +1085,9 @@ export default {
       );
     },
 
-    highlightFirstAndLastVisit(yscale) {
+    highlightFirstAndLastVisit() {
       var tpts = this.timepoints;
       var xscale = this.xDimensionScale;
-      var yscale = this.dimensionScale;
       var cheight = this.computedHeight + 30;
 
       const drawHighlight = function(
@@ -1223,7 +1215,6 @@ export default {
       const tickPadding = 3;
       const ticks = this.dimensionScale.ticks(tickCount);
       const tickFormat = this.dimensionScale.tickFormat(tickCount);
-      const { xmax } = this;
       const x0 = this.computedWidth + 0.5;
       // line along right side of figure
       this.context.beginPath();
@@ -1254,15 +1245,15 @@ export default {
       });
     },
     drawBottomAxis() {
-      let tickCount = 10;
+      //      let tickCount = 10;
       const tickSize = 6;
       const tickPadding = 4;
       const tp = this.timepoints;
       const { xmax } = this;
 
-      if (this.xaxis !== 'days') {
-        tickCount = tp.length;
-      }
+      //      if (this.xaxis !== 'days') {
+      //        tickCount = tp.length;
+      //      }
 
       const scale = this.xDimensionScale;
       var y0 = this.computedHeight;

@@ -30,36 +30,38 @@
           :opacity="getOpacity('population')"
         />
         <!-- Plot population minus selected cohort -->
-        <rect
-          v-for="(bin, i) in popMinusBins"
-          v-if="highlightedSubset === 'non-cohort'"
-          :key="`pop-minus-cohort-${i}`"
-          :x="getNonCohortX(left, bin)"
-          :y="variable.flip_axis ? yScale(bin.x0) : yScale(bin.x1)"
-          :height="
-            Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1 > 0
-              ? Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1
-              : 0
-          "
-          :width="getNonCohortWidth(left, bin)"
-          :fill="colors['nonCohort']"
-          :opacity="getOpacity('non-cohort')"
-        />
-        <rect
-          v-for="(bin, i) in bins"
-          v-if="highlightedSubset === 'cohort'"
-          :key="`cohort-${i}`"
-          :x="getCohortX(left, bin)"
-          :y="variable.flip_axis ? yScale(bin.x0) : yScale(bin.x1)"
-          :height="
-            Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1 > 0
-              ? Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1
-              : 0
-          "
-          :width="getCohortWidth(left, bin)"
-          :fill="colors['cohort']"
-          :opacity="getOpacity('cohort')"
-        />
+        <g v-if="highlightedSubset === 'non-cohort'">
+          <rect
+            v-for="(bin, i) in popMinusBins"
+            :key="`pop-minus-cohort-${i}`"
+            :x="getNonCohortX(left, bin)"
+            :y="variable.flip_axis ? yScale(bin.x0) : yScale(bin.x1)"
+            :height="
+              Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1 > 0
+                ? Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1
+                : 0
+            "
+            :width="getNonCohortWidth(left, bin)"
+            :fill="colors['nonCohort']"
+            :opacity="getOpacity('non-cohort')"
+          />
+        </g>
+        <g v-if="highlightedSubset === 'cohort'">
+          <rect
+            v-for="(bin, i) in bins"
+            :key="`cohort-${i}`"
+            :x="getCohortX(left, bin)"
+            :y="variable.flip_axis ? yScale(bin.x0) : yScale(bin.x1)"
+            :height="
+              Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1 > 0
+                ? Math.abs(yScale(bin.x0) - yScale(bin.x1)) - 1
+                : 0
+            "
+            :width="getCohortWidth(left, bin)"
+            :fill="colors['cohort']"
+            :opacity="getOpacity('cohort')"
+          />
+        </g>
 
         <!-- Cohort Mean -->
         <circle
@@ -204,7 +206,6 @@ export default {
       data: [],
       populationData: [],
       selection: [],
-      populationCounts: {},
       meanY: undefined,
       populationMeanY: undefined,
       colors: colors,
@@ -263,15 +264,17 @@ export default {
         .domain(this.yScale.domain())
         .thresholds(this.yScale.ticks(this.num_bins));
     },
-    popBins() {
-      const popBins = this.hist(this.populationData);
-      // cache bin counts
-      this.populationCounts = {};
+    populationCounts() {
+      var populationCounts = {};
+      var popBins = this.popBins;
       const pbLen = popBins.length;
       for (let i = 0; i < pbLen; i += 1) {
-        this.populationCounts[popBins[i].x0] = popBins[i].length;
+        populationCounts[popBins[i].x0] = popBins[i].length;
       }
-      return popBins;
+      return populationCounts;
+    },
+    popBins() {
+      return this.hist(this.populationData);
     },
     bins() {
       return this.hist(this.data);
@@ -677,7 +680,7 @@ export default {
       }
       return barWidth;
     },
-    getOpacity(subset) {
+    getOpacity() {
       return 1;
     },
     resizeChart() {

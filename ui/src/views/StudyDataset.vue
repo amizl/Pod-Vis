@@ -99,10 +99,15 @@
                 <v-col cols="12" class="ma-0 pa-0">
                   <v-card flat class="rounded-lg shadow">
                     <v-card-text>
-                      <p v-for="s in collection.studies">
-                        <span class="font-weight-bold">{{
-                          s.study.study_name
-                        }}</span>
+                      <p
+                        v-for="(s, index) in collection.studies"
+                        :key="`de-p-${index}`"
+                      >
+                        <span
+                          :key="`de-ps-${index}`"
+                          class="font-weight-bold"
+                          >{{ s.study.study_name }}</span
+                        >
                         - {{ s.study.description }}
                       </p>
                     </v-card-text>
@@ -251,8 +256,6 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/datasetManager/types';
-import axios from 'axios';
-import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import CohortTable from '@/components/common/CohortTable.vue';
 import SimpleVariableTable from '@/components/DatasetManager/SimpleVariableTable.vue';
 import { sortScales, getLongScaleNameDefault } from '@/utils/helpers';
@@ -266,7 +269,6 @@ export default {
   },
   components: {
     CohortTable,
-    LoadingSpinner,
     SimpleVariableTable,
   },
   props: {

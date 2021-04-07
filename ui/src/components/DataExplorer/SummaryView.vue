@@ -16,7 +16,8 @@
       <span>Variable:</span>
       <v-btn-toggle v-model="dview" class="pl-2" mandatory>
         <v-btn
-          v-for="v in outcomeVariables"
+          v-for="(v, index) in outcomeVariables"
+          :key="`ovb-${index}`"
           text
           color="primary"
           class="white--text"
@@ -39,6 +40,16 @@ export default {
       dview: null,
     };
   },
+  computed: {
+    ...mapState('dataExplorer', {
+      detailedView: state.DETAILED_VIEW,
+      outcomeVariables: state.OUTCOME_VARIABLES,
+      collection: state.COLLECTION,
+    }),
+    userAddedOutcomeVariables() {
+      return this.outcomeVariables.length > 0;
+    },
+  },
   watch: {
     dview(newval) {
       this.setDetailedView(newval);
@@ -52,16 +63,6 @@ export default {
     } else {
       this.dview = this.detailedView;
     }
-  },
-  computed: {
-    ...mapState('dataExplorer', {
-      detailedView: state.DETAILED_VIEW,
-      outcomeVariables: state.OUTCOME_VARIABLES,
-      collection: state.COLLECTION,
-    }),
-    userAddedOutcomeVariables() {
-      return this.outcomeVariables.length > 0;
-    },
   },
   methods: {
     ...mapActions('dataExplorer', {

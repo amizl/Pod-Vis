@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import { actions, getters } from '@/store/modules/cohortManager/types';
+import { mapActions } from 'vuex';
+import { actions } from '@/store/modules/cohortManager/types';
 
 // which store?
 export default {
@@ -65,7 +65,7 @@ export default {
         this.$emit('cohortDeleted', true);
         this.dialog = false;
       } catch (err) {
-        console.log('delete cohort failed, err=' + err);
+        //        console.log('delete cohort failed, err=' + err);
       }
     },
     dialogClicked() {

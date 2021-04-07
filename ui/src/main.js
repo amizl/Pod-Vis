@@ -2,13 +2,13 @@ import '@babel/polyfill';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import { actions as authActions } from '@/store/modules/auth/types';
 import Vue from 'vue';
+import VueGtag from 'vue-gtag';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import './assets/stylus/main.styl';
 import './assets/css/main.css';
 import store from './store';
 import router from './router';
-import VueGtag from 'vue-gtag';
 
 Vue.config.productionTip = false;
 
@@ -43,6 +43,24 @@ const getUserFromSession = authActions.GET_USER_FROM_SESSION;
       vuetify,
       store,
       router,
+      // catch all mouse clicks not intercepted by @click.native:
+      mounted: function() {
+        //        this.$el.addEventListener('click', this.onClickVue);
+      },
+      //      methods: {
+      //        onClickVue: function(e) {
+      //          console.log(
+      //            'onClickVue e.target=' +
+      //              e.target +
+      //              ' id=' +
+      //              e.target.id +
+      //              ' name=' +
+      //              e.target.name +
+      //              ' parent=' +
+      //              e.target.parentElement
+      //          );
+      //        },
+      //    },
       render: h => h(App),
     }).$mount('#app');
   }

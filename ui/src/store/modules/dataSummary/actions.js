@@ -1,16 +1,7 @@
 import axios from 'axios';
-import { nest } from 'd3-collection';
-import {
-  ErrorNotification,
-  SuccessNotification,
-} from '@/store/modules/notifications/notifications';
+import { ErrorNotification } from '@/store/modules/notifications/notifications';
 import { makeHierarchy, getObservationVariableIds } from '@/utils/helpers';
-import {
-  actions,
-  getters as getterTypes,
-  mutations,
-  state as stateTypes,
-} from './types';
+import { actions, mutations, state as stateTypes } from './types';
 
 export default {
   async [actions.FETCH_COLLECTION]({ commit, dispatch }, collectionId) {
@@ -174,7 +165,7 @@ export default {
     });
     commit(mutations.SET_LAST_VISITS, lastVisits);
   },
-  async [actions.FETCH_TIMES_BETWEEN_VISITS]({ commit, dispatch, state }) {
+  async [actions.FETCH_TIMES_BETWEEN_VISITS]({ commit, state }) {
     var collection = state[stateTypes.COLLECTION];
     var visitVariable = state[stateTypes.VISIT_VARIABLE];
     var firstVisits = state[stateTypes.FIRST_VISITS];
@@ -223,19 +214,18 @@ export default {
     }
   },
   async [actions.SAVE_FIRST_AND_LAST_VISITS](
-    { commit, dispatch, state },
+    { dispatch, state },
     { variableVisits }
   ) {
     const { collection } = state;
 
     try {
-      const { data } = await axios.post(
+      await axios.post(
         '/api/collections/' + collection.id + '/observation_visits',
         {
           variable_visits: variableVisits,
         }
       );
-      //      commit(mutations.ADD_COHORT, data.cohort);
     } catch ({ response }) {
       const notification = new ErrorNotification(response.data.error);
       dispatch(notification.dispatch, notification, { root: true });

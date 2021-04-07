@@ -46,68 +46,72 @@
             :fill="colors['population']"
             :opacity="getOpacity('population')"
           />
-          <rect
-            v-for="(bin, i) in popMinusBins"
-            v-if="highlightedSubset === 'non-cohort'"
-            :key="`pop-minus-cohort-${i}`"
-            :x="xScale(bin.x0)"
-            :y="getNonCohortY(bin)"
-            :width="
-              xScale(bin.x1) - xScale(bin.x0) - 1 > 0
-                ? xScale(bin.x1) - xScale(bin.x0) - 1
-                : 0
-            "
-            :height="getNonCohortHeight(bin)"
-            :fill="colors['nonCohort']"
-            :opacity="getOpacity('non-cohort')"
-          />
-          <rect
-            v-for="(bin, i) in bins"
-            v-if="highlightedSubset === 'cohort'"
-            :key="`cohort-${i}`"
-            :x="xScale(bin.x0)"
-            :y="getCohortY(bin)"
-            :width="
-              xScale(bin.x1) - xScale(bin.x0) - 1 > 0
-                ? xScale(bin.x1) - xScale(bin.x0) - 1
-                : 0
-            "
-            :height="getCohortHeight(bin)"
-            :fill="colors['cohort']"
-            :opacity="getOpacity('cohort')"
-          />
+          <g v-if="highlightedSubset === 'non-cohort'">
+            <rect
+              v-for="(bin, i) in popMinusBins"
+              :key="`pop-minus-cohort-${i}`"
+              :x="xScale(bin.x0)"
+              :y="getNonCohortY(bin)"
+              :width="
+                xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+                  ? xScale(bin.x1) - xScale(bin.x0) - 1
+                  : 0
+              "
+              :height="getNonCohortHeight(bin)"
+              :fill="colors['nonCohort']"
+              :opacity="getOpacity('non-cohort')"
+            />
+          </g>
+          <g v-if="highlightedSubset === 'cohort'">
+            <rect
+              v-for="(bin, i) in bins"
+              :key="`cohort-${i}`"
+              :x="xScale(bin.x0)"
+              :y="getCohortY(bin)"
+              :width="
+                xScale(bin.x1) - xScale(bin.x0) - 1 > 0
+                  ? xScale(bin.x1) - xScale(bin.x0) - 1
+                  : 0
+              "
+              :height="getCohortHeight(bin)"
+              :fill="colors['cohort']"
+              :opacity="getOpacity('cohort')"
+            />
+          </g>
           <!-- Cohort Mean -->
-          <circle
-            v-if="typeof meanX !== 'undefined'"
-            r="7"
-            :cx="meanX"
-            :cy="h"
-            :fill="colors['cohort-circle-fill']"
-            :stroke="colors['cohort-circle-stroke']"
-            :stroke-width="colors['cohort-circle-stroke-width']"
-            :fill-opacity="colors['cohort-circle-fill-opacity']"
-          >
-            <title>
-              Cohort Mean: {{ mean }} Median: {{ median }} Std Deviation:
-              {{ stddev }}
-            </title>
-          </circle>
+          <g v-if="typeof meanX !== 'undefined'">
+            <circle
+              r="7"
+              :cx="meanX"
+              :cy="h"
+              :fill="colors['cohort-circle-fill']"
+              :stroke="colors['cohort-circle-stroke']"
+              :stroke-width="colors['cohort-circle-stroke-width']"
+              :fill-opacity="colors['cohort-circle-fill-opacity']"
+            >
+              <title>
+                Cohort Mean: {{ mean }} Median: {{ median }} Std Deviation:
+                {{ stddev }}
+              </title>
+            </circle>
+          </g>
           <!-- Population Mean -->
-          <circle
-            v-if="typeof populationMeanX !== 'undefined'"
-            r="7"
-            :cx="populationMeanX"
-            :cy="h"
-            :fill="colors['population-circle-fill']"
-            :stroke="colors['population-circle-stroke']"
-            :stroke-width="colors['population-circle-stroke-width']"
-            :fill-opacity="colors['population-circle-fill-opacity']"
-          >
-            <title>
-              Population Mean: {{ populationMean }} Median:
-              {{ populationMedian }} Std Deviation: {{ populationStddev }}
-            </title>
-          </circle>
+          <g v-if="typeof populationMeanX !== 'undefined'">
+            <circle
+              r="7"
+              :cx="populationMeanX"
+              :cy="h"
+              :fill="colors['population-circle-fill']"
+              :stroke="colors['population-circle-stroke']"
+              :stroke-width="colors['population-circle-stroke-width']"
+              :fill-opacity="colors['population-circle-fill-opacity']"
+            >
+              <title>
+                Population Mean: {{ populationMean }} Median:
+                {{ populationMedian }} Std Deviation: {{ populationStddev }}
+              </title>
+            </circle>
+          </g>
           <g ref="brush" class="brush"></g>
         </g>
 
@@ -266,7 +270,6 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import resize from 'vue-resize-directive';
 // Components
 import { colors } from '@/utils/colors';
-import { getCohortSubjectIds } from '@/utils/helpers';
 
 /**
  * Takes an array of key, value counts from crossfilter groups
@@ -320,6 +323,7 @@ export default {
     variable: {
       type: Object,
       required: false,
+      default: null,
     },
     showFilterHelp: {
       type: Boolean,
@@ -350,7 +354,6 @@ export default {
       data: [],
       populationData: [],
       selection: [],
-      populationCounts: {},
       colors: colors,
       selectedRange: null,
       selectedPopSubset: null,
@@ -461,14 +464,16 @@ export default {
         .thresholds(this.xScale.ticks(this.num_bins));
     },
     popBins() {
-      const popBins = this.hist(this.populationData);
-      // cache bin counts
-      this.populationCounts = {};
+      return this.hist(this.populationData);
+    },
+    populationCounts() {
+      var populationCounts = {};
+      var popBins = this.popBins;
       const pbLen = popBins.length;
       for (let i = 0; i < pbLen; i += 1) {
-        this.populationCounts[popBins[i].x0] = popBins[i].length;
+        populationCounts[popBins[i].x0] = popBins[i].length;
       }
-      return popBins;
+      return populationCounts;
     },
     bins() {
       return this.hist(this.data);
@@ -548,9 +553,7 @@ export default {
     },
     popSubsetItems() {
       var items = [];
-      let ext = extent(this.populationData);
       let popData = this.populationData.slice().sort((a, b) => a - b);
-      let pdl = popData.length;
 
       let median = this.getGenMedian(popData, 1, 2);
       let qtr1 = this.getGenMedian(popData, 1, 4);
@@ -628,13 +631,13 @@ export default {
       this.selectRange(s);
       this.$emit('userChangedVariable', this.dimension);
     },
-    tfRangeMin(range_min) {
+    tfRangeMin() {
       this.updateSelectedRange();
     },
-    tfRangeMax(range_max) {
+    tfRangeMax() {
       this.updateSelectedRange();
     },
-    cohort(new_cohort) {
+    cohort() {
       this.updateRangeFromCohortQuery();
     },
     showFilterHelp(show) {
@@ -885,7 +888,7 @@ export default {
       }
       return barHeight;
     },
-    getOpacity(subset) {
+    getOpacity() {
       return 1;
     },
     resizeChart() {

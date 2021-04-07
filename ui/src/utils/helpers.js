@@ -27,7 +27,7 @@ export function getInputVariablesFromQueries(queries, inputVariables) {
 
   Object.keys(queries).forEach(variable => {
     var query = queries[variable];
-    var variable = inputVariables.find(inputVar => {
+    var iv = inputVariables.find(inputVar => {
       const { label, type } = inputVar;
       if (type === 'study' || type === 'subject') {
         return label === variable;
@@ -37,8 +37,8 @@ export function getInputVariablesFromQueries(queries, inputVariables) {
       const obsLabel = `${parentLabel} - ${label}`;
       return obsLabel === variable;
     });
-    if (variable) {
-      inputVars.push({ query: query, variable: variable });
+    if (iv) {
+      inputVars.push({ query: query, variable: iv });
     }
   });
 
@@ -272,12 +272,13 @@ export function getCollectionDescription(c) {
   var nsv = c.subject_variables.length;
   var nov = obs_vars.length;
   descr += ': ';
+  var nc = null;
 
   if (c.num_cohorts) {
-    var nc = c.num_cohorts;
+    nc = c.num_cohorts;
     descr += ' ' + nc + (nc == 1 ? 'cohort.' : ' cohorts.');
   } else if (c.cohorts) {
-    var nc = c.cohorts.length;
+    nc = c.cohorts.length;
     descr += ' ' + nc + (nc == 1 ? 'cohort.' : ' cohorts.');
   }
 
@@ -305,7 +306,7 @@ export function getCollectionDescription(c) {
 export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
   var numericEvents = true;
   var pseudoNumericEvents = true;
-  var pnRE = /^[A-Z]+(\-?[\d\.]+)$/i;
+  var pnRE = /^[A-Z]+(-?[\d.]+)$/i;
 
   unsorted_list.forEach(e => {
     var evt = event_accessor_fn(e);

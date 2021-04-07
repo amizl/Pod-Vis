@@ -179,12 +179,12 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex';
-import { state, actions } from '@/store/modules/cohortManager/types';
+import { mapState } from 'vuex';
+import { state } from '@/store/modules/cohortManager/types';
 import { state as dsState } from '@/store/modules/dataSummary/types';
 import ErrorDialog from '@/components/common/ErrorDialog.vue';
 import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue';
-import { logEvent } from '@/utils/logging';
+import logEvent from '@/utils/logging';
 
 export default {
   components: {
@@ -203,6 +203,7 @@ export default {
     collectionId: {
       type: Number,
       required: false,
+      default: -1,
     },
   },
   data() {
@@ -225,28 +226,6 @@ export default {
       show_confirmation_dialog: false,
       target_uri: '',
     };
-  },
-  watch: {
-    substep(nss) {
-      logEvent(
-        this.$gtag,
-        null,
-        null,
-        'tracker_step',
-        'workflow_transition',
-        nss
-      );
-    },
-  },
-  mounted() {
-    logEvent(
-      this.$gtag,
-      null,
-      null,
-      'tracker_step',
-      'workflow_transition',
-      this.substep
-    );
   },
   computed: {
     ...mapState('cohortManager', {
@@ -275,11 +254,33 @@ export default {
       return cch;
     },
   },
+  watch: {
+    substep(nss) {
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'tracker_step',
+        'workflow_transition',
+        nss
+      );
+    },
+  },
+  mounted() {
+    logEvent(
+      this.$gtag,
+      null,
+      null,
+      'tracker_step',
+      'workflow_transition',
+      this.substep
+    );
+  },
   methods: {
     stepTwo() {
       this.$router.push('/datasets');
     },
-    stepStyle(step) {
+    stepStyle() {
       return 'cursor: pointer;';
     },
     stepClass(step) {

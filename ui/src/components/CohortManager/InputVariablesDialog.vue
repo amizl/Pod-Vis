@@ -20,7 +20,7 @@
 
       <v-card-text style="padding: 0px 16px 16px 16px;">
         <v-data-table
-          :items="this.inputVariables"
+          :items="inputVariables"
           :headers="headers"
           item-key="id"
           hide-default-footer
@@ -32,7 +32,7 @@
         </v-data-table>
 
         <v-data-table
-          :items="this.inputVariables"
+          :items="inputVariables"
           :headers="headers"
           item-key="id"
           hide-default-footer
@@ -82,7 +82,7 @@
         </v-data-table>
 
         <v-data-table
-          :items="this.inputVariables"
+          :items="inputVariables"
           :headers="headers"
           item-key="id"
           hide-default-header
@@ -186,11 +186,10 @@
 </template>
 
 <script>
-import { actions, state, getters } from '@/store/modules/cohortManager/types';
-import { mapActions, mapState, mapGetters } from 'vuex';
-import { uniqBy } from 'lodash';
+import { actions, state } from '@/store/modules/cohortManager/types';
+import { mapActions, mapState } from 'vuex';
 import { sortScales } from '@/utils/helpers';
-import { logEvent } from '@/utils/logging';
+import logEvent from '@/utils/logging';
 
 // traverse a list of variables and return the scale variables,
 // which are either at or adjacent to the leaves
@@ -293,6 +292,22 @@ export default {
     propagateChanges: false,
     sortScales: sortScales,
   }),
+  computed: {
+    ...mapState('cohortManager', {
+      collection: state.COLLECTION,
+      vars: state.INPUT_VARIABLES,
+      cohort: state.COHORT,
+      useLongScaleNames: state.USE_LONG_SCALE_NAMES,
+    }),
+    useLongScaleNamesSelect: {
+      get() {
+        return this.useLongScaleNames;
+      },
+      set(value) {
+        this.setUseLongScaleNames(value);
+      },
+    },
+  },
   watch: {
     openInputVariableDialog(open) {
       // set flag to allow propagation of dialog changes back to UI
@@ -319,7 +334,7 @@ export default {
         null
       );
     },
-    cohort(c) {
+    cohort() {
       this.updateInputVars();
     },
     vars(v) {
@@ -352,22 +367,6 @@ export default {
         v.map(iv => iv.abbreviation).join(',')
       );
       this.updateColumnCheckboxes();
-    },
-  },
-  computed: {
-    ...mapState('cohortManager', {
-      collection: state.COLLECTION,
-      vars: state.INPUT_VARIABLES,
-      cohort: state.COHORT,
-      useLongScaleNames: state.USE_LONG_SCALE_NAMES,
-    }),
-    useLongScaleNamesSelect: {
-      get() {
-        return this.useLongScaleNames;
-      },
-      set(value) {
-        this.setUseLongScaleNames(value);
-      },
     },
   },
   async created() {
@@ -478,7 +477,7 @@ export default {
       this.$nextTick(() => this.updateSelectedVars());
     },
 
-    cbChange(cb) {
+    cbChange() {
       this.$nextTick(() => this.updateSelectedVars());
     },
   },

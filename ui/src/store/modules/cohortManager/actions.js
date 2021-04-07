@@ -289,7 +289,7 @@ export default {
       filteredData.length == 0
     ) {
       // increment requestnum to ensure any previously-submitted request is ignored
-      var cb = function(reqnum) {};
+      var cb = function() {};
       commit(mutations.INCREMENT_PVALS_REQUEST_NUM, { callback: cb });
       // Nothing is filtered
       commit(mutations.SET_PVALS_REQUEST_STATUS, null);
@@ -328,7 +328,7 @@ export default {
         numRemainderSubjIds + numFilteredSubjIds !== numUnfilteredSubjIds ||
         numRemainderSubjIds == numUnfilteredSubjIds
       ) {
-        console.log(
+        const notification = new ErrorNotification(
           'ERROR - data filtering failed numFiltered=' +
             numFilteredSubjIds +
             ' numUnfiltered=' +
@@ -336,6 +336,7 @@ export default {
             ' numRemainder=' +
             numRemainderSubjIds
         );
+        dispatch(notification.dispatch, notification, { root: true });
       }
 
       // pass _all_ observation variables, not just the selected ones
@@ -348,7 +349,7 @@ export default {
       outputVariables = outputVars;
 
       // TODO - cancel superseded pending requests instead of just ignoring them
-      var cb = async function(reqnum) {
+      cb = async function(reqnum) {
         // wait PVALS_REQUEST_DELAY_SECS before sending request to ensure the filtered data isn't still changing
         setTimeout(async function() {
           if (state[stateTypes.PVALS_REQUEST_NUM] > reqnum) {
@@ -397,7 +398,7 @@ export default {
     // nothing to compare
     if (cohorts.length == 0) {
       // increment requestnum to ensure any previously-submitted request is ignored
-      var cb = function(reqnum) {};
+      var cb = function() {};
       commit(mutations.INCREMENT_ANOVA_PVALS_REQUEST_NUM, { callback: cb });
       // Nothing is filtered
       commit(mutations.SET_ANOVA_PVALS_REQUEST_STATUS, null);
@@ -417,7 +418,7 @@ export default {
       const numGroups = groups.length;
 
       // TODO - cancel superseded pending requests instead of just ignoring them
-      var cb = async function(reqnum) {
+      cb = async function(reqnum) {
         // wait ANOVA_PVALS_REQUEST_DELAY_SECS before sending request to ensure the filtered data isn't still changing
         setTimeout(async function() {
           if (state[stateTypes.ANOVA_PVALS_REQUEST_NUM] > reqnum) {
@@ -449,7 +450,7 @@ export default {
       commit(mutations.INCREMENT_ANOVA_PVALS_REQUEST_NUM, { callback: cb });
     }
   },
-  async [actions.SAVE_COHORT]({ commit, dispatch, state }, args) {
+  async [actions.SAVE_COHORT]({ commit, dispatch }, args) {
     const {
       name,
       collection,
@@ -482,10 +483,7 @@ export default {
       dispatch(notification.dispatch, notification, { root: true });
     }
   },
-  async [actions.SAVE_SELECTED_COHORT](
-    { commit, dispatch, state },
-    { cohortName }
-  ) {
+  async [actions.SAVE_SELECTED_COHORT]({ dispatch, state }, { cohortName }) {
     const {
       collection,
       queries,
@@ -527,17 +525,16 @@ export default {
     ]);
     dispatch(actions.SET_OUTPUT_VARIABLES, outputVariables);
   },
-  async [actions.SET_COHORT_NO_RESET]({ commit, dispatch, getters }, cohort) {
+  async [actions.SET_COHORT_NO_RESET]({ commit }, cohort) {
     commit(mutations.SET_COHORT, cohort);
   },
-  async [actions.DELETE_COHORT]({ state, dispatch }, cohortId) {
+  async [actions.DELETE_COHORT]({ dispatch }, cohortId) {
     try {
       await axios.delete(`/api/cohorts/${cohortId}`);
       dispatch(actions.REMOVE_COHORT, cohortId);
       const notification = new SuccessNotification(`Successfully deleted`);
       dispatch(notification.dispatch, notification, { root: true });
     } catch ({ response }) {
-      console.log('cohort not deleted');
       const notification = new ErrorNotification(response.data.error);
       dispatch(notification.dispatch, notification, { root: true });
     }
@@ -589,10 +586,10 @@ export default {
     commit(mutations.SET_COMPARISON_MEASURE, measure);
     dispatch(actions.ANALYZE_FILTERED);
   },
-  [actions.SET_USE_LONG_SCALE_NAMES]({ commit, dispatch }, useLong) {
+  [actions.SET_USE_LONG_SCALE_NAMES]({ commit }, useLong) {
     commit(mutations.SET_USE_LONG_SCALE_NAMES, useLong);
   },
-  [actions.SET_HELP_MODE]({ commit, dispatch }, helpMode) {
+  [actions.SET_HELP_MODE]({ commit }, helpMode) {
     commit(mutations.SET_HELP_MODE, helpMode);
   },
 };

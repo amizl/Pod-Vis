@@ -8,21 +8,39 @@
               <v-col cols="12" class="ma-0 pa-0">
                 <v-card color="#eeeeee" class="pt-1">
                   <v-card-title class="primary--text pl-3 py-2"
-				>Cohort Comparison
+                    >Cohort Comparison
                     <v-spacer />
-		    <v-chip
-		      v-for="x in ['1', '0.1', '0.05', '0.01', '0.001']"
+                    <v-chip
+                      v-for="(x, index) in [
+                        '1',
+                        '0.1',
+                        '0.05',
+                        '0.01',
+                        '0.001',
+                      ]"
+                      :key="`vc-${index}`"
                       :color="colors['pvals'][x + '-' + colorScheme]['color']"
-		      :class="((colorScheme == 'brewer5') && (x == '0.001')) ? 'white--text' : ''"
-                      >p &lt; {{ x }}</v-chip>
-		  </v-card-title>
-		  <v-card-subtitle v-if="!selectedOutcomeVariable || (selectedOutcomeVariable.data_category != 'Categorical') " class="primary--text">
-		    Showing Tukey Range/HSD Test Results
-		  </v-card-subtitle>
+                      :class="
+                        colorScheme == 'brewer5' && x == '0.001'
+                          ? 'white--text'
+                          : ''
+                      "
+                      >p &lt; {{ x }}</v-chip
+                    >
+                  </v-card-title>
+                  <v-card-subtitle
+                    v-if="
+                      !selectedOutcomeVariable ||
+                        selectedOutcomeVariable.data_category != 'Categorical'
+                    "
+                    class="primary--text"
+                  >
+                    Showing Tukey Range/HSD Test Results
+                  </v-card-subtitle>
 
-		  <v-card-subtitle v-else class="primary--text">
-		    No pairwise cohort test available
-		  </v-card-subtitle>
+                  <v-card-subtitle v-else class="primary--text">
+                    No pairwise cohort test available
+                  </v-card-subtitle>
 
                   <v-card-title class="primary--text pa-0 pl-3">
                     <v-tooltip
@@ -45,7 +63,11 @@
                       </template>
                       <span>{{ selectedOutcomeVariable.category }}</span>
                     </v-tooltip>
-                    <span v-if="selectedOutcomeVariable" class="subtitle-1" v-html="selectedOutcomeVariable.label"></span>
+                    <span
+                      v-if="selectedOutcomeVariable"
+                      class="subtitle-1"
+                      v-html="selectedOutcomeVariable.label"
+                    ></span>
                   </v-card-title>
                 </v-card>
               </v-col>
@@ -56,47 +78,64 @@
 
       <v-row>
         <v-col cols="12">
-
-	  <v-data-table
-	    v-if="selectedOutcomeVariable && collection_cohorts.length > 2"
+          <v-data-table
+            v-if="selectedOutcomeVariable && collection_cohorts.length > 2"
             :headers="headers"
             :items="collection_cohorts"
             class="elevation-1"
-	    hide-default-header
+            hide-default-header
             hide-default-footer
             disable-pagination
-	    dense
+            dense
           >
             <template v-slot:item="props">
               <tr>
-
                 <td
                   v-for="c in collection_cohorts"
                   :key="c.id"
                   :class="'text-subtitle-1 ' + table_cell_class(c, props.item)"
                   align="center"
-		  :style="table_cell_style(c, props.item)"
-		  @mouseover="if (c.index < props.item.index) {highlight_cell(c, props.item);}"
-		  @mouseleave="unhighlight_cells()"
+                  :style="table_cell_style(c, props.item)"
+                  @mouseover="
+                    if (c.index < props.item.index) {
+                      highlight_cell(c, props.item);
+                    }
+                  "
+                  @mouseleave="unhighlight_cells()"
                 >
-		  <div v-if="c.index == props.item.index" :class="title_cell_class(c, props.item)">
-		    {{ c.label }}
-		  </div>
-                    <v-tooltip v-if="c.index < props.item.index" bottom color="primary">
-                      <template v-slot:activator="{ on: tooltip }">
-			<div class="pa-2 py-3" v-on="{ ...tooltip }" @click="table_cell_click(c, props.item)">
-			  {{ table_cell(c, props.item) }}
-			</div>
-		      </template>
-		      <span>{{ "Click to view " + c.label + " vs " + props.item.label + " in Data Analytics"}}</span>
-		    </v-tooltip>
+                  <div
+                    v-if="c.index == props.item.index"
+                    :class="title_cell_class(c, props.item)"
+                  >
+                    {{ c.label }}
+                  </div>
+                  <v-tooltip
+                    v-if="c.index < props.item.index"
+                    bottom
+                    color="primary"
+                  >
+                    <template v-slot:activator="{ on: tooltip }">
+                      <div
+                        class="pa-2 py-3"
+                        v-on="{ ...tooltip }"
+                        @click="table_cell_click(c, props.item)"
+                      >
+                        {{ table_cell(c, props.item) }}
+                      </div>
+                    </template>
+                    <span>{{
+                      'Click to view ' +
+                        c.label +
+                        ' vs ' +
+                        props.item.label +
+                        ' in Data Analytics'
+                    }}</span>
+                  </v-tooltip>
                 </td>
-		</v-hover>
-		
               </tr>
             </template>
           </v-data-table>
-	  
+
           <div
             v-else-if="collection_cohorts.length < 3"
             column
@@ -110,7 +149,8 @@
           </div>
           <div v-else column align-center justify-center fill-width>
             <v-subheader class="title primary--text text--lighten-5">
-              <v-icon x-large color="primary lighten-5">arrow_left</v-icon>SELECT VARIABLE FROM ANALYTICS PANEL
+              <v-icon x-large color="primary lighten-5">arrow_left</v-icon
+              >SELECT VARIABLE FROM ANALYTICS PANEL
             </v-subheader>
           </div>
         </v-col>
@@ -171,8 +211,7 @@ export default {
       return cch;
     },
     headers() {
-      const headers = [
-      ];
+      const headers = [];
       const cc = this.collection_cohorts;
       cc.forEach(c => {
         headers.push({
@@ -190,7 +229,7 @@ export default {
     },
   },
   watch: {
-    selectedOutcomeVariable(nv) {
+    selectedOutcomeVariable() {
       this.update_pval_dict();
     },
   },
@@ -204,9 +243,9 @@ export default {
         return;
       if (this.collection_cohorts.length < 3) return;
       if (!(this.selectedOutcomeVariable.label in this.pairwiseTukeyHsdPvals)) {
-//        console.log(
-//          'TukeyHSDHeatmap: no results found for ' + this.selectedOutcomeVariable.label
-//        );
+        //        console.log(
+        //          'TukeyHSDHeatmap: no results found for ' + this.selectedOutcomeVariable.label
+        //        );
         this.pval_dict = {};
         return;
       }
@@ -221,7 +260,7 @@ export default {
         pd[groups[i]] = {};
         for (let j = i + 1; j < ng; j += 1) {
           pd[groups[i]][groups[j]] = pvals == null ? 'x' : pvals.pvals[ind];
-  	  ind += 1;
+          ind += 1;
         }
       }
       this.pval_dict = pd;
@@ -229,7 +268,8 @@ export default {
     table_cell(cohort1, cohort2) {
       if (cohort1.index < cohort2.index) {
         const pd = this.pval_dict;
-        if (!(cohort1.id in pd) || !(cohort2.id in pd[cohort1.id])) return "View in Data Explorer";
+        if (!(cohort1.id in pd) || !(cohort2.id in pd[cohort1.id]))
+          return 'View in Data Explorer';
         const pval = pd[cohort1.id][cohort2.id];
         if (pval < 0.0001) {
           return 'p<0.0001';
@@ -241,7 +281,7 @@ export default {
     table_cell_aux(cohort1, cohort2, which) {
       const pd = this.pval_dict;
       if (!(cohort1.id in pd) || !(cohort2.id in pd[cohort1.id]))
-        return (which == 'color') ? '#FFFFFF' : '';
+        return which == 'color' ? '#FFFFFF' : '';
       const pval = pd[cohort1.id][cohort2.id];
       let ccl = this.colors['pvals']['1' + '-' + this.colorScheme][which];
       if (pval < 0.001) {
@@ -256,29 +296,34 @@ export default {
 
       return ccl;
     },
-   table_cell_color(cohort1, cohort2) {
-     return this.table_cell_aux(cohort1, cohort2, 'color');
-   },
-   table_cell_class(cohort1, cohort2) {
-     return this.table_cell_aux(cohort1, cohort2, 'class');
-   },
-   table_text_color(cohort1, cohort2) {
+    table_cell_color(cohort1, cohort2) {
+      return this.table_cell_aux(cohort1, cohort2, 'color');
+    },
+    table_cell_class(cohort1, cohort2) {
+      return this.table_cell_aux(cohort1, cohort2, 'class');
+    },
+    table_text_color(cohort1, cohort2) {
       const pd = this.pval_dict;
-      if ((cohort1.id in pd) && (cohort2.id in pd[cohort1.id])) {
+      if (cohort1.id in pd && cohort2.id in pd[cohort1.id]) {
         const pval = pd[cohort1.id][cohort2.id];
-	if (this.colorScheme == 'brewer5') {
-	  if (pval < 0.001) { return 'white'; }
+        if (this.colorScheme == 'brewer5') {
+          if (pval < 0.001) {
+            return 'white';
+          }
         }
       }
       return 'black';
     },
     table_cell_style(cohort1, cohort2) {
-      var style = {};		     
+      var style = {};
       style['color'] = this.table_text_color(cohort1, cohort2);
-      style['border'] = (((cohort1 == this.highlight_row) && (cohort2 == this.highlight_col)) ? 'border: 1px solid blue;' : 'border: 1px solid white;');
+      style['border'] =
+        cohort1 == this.highlight_row && cohort2 == this.highlight_col
+          ? 'border: 1px solid blue;'
+          : 'border: 1px solid white;';
       return style;
     },
-   table_cell_click(cohort1, cohort2) {
+    table_cell_click(cohort1, cohort2) {
       const cid = this.collection.id;
       var de_url =
         'explore?collection=' +
@@ -291,29 +336,29 @@ export default {
         [cohort1.id, cohort2.id].join(',');
       this.$router.push(de_url);
     },
-   highlight_cell(c1, c2) {
-     this.highlight_row = c1;
-     this.highlight_col = c2;
-   },
-   unhighlight_cells() {
-     this.highlight_row = null;
-     this.highlight_col = null;
-   },
-   title_cell_class(c1, c2) {
-     var cls = "font-weight-medium pa-2 py-3";
-     if ((this.highlight_row == c1) || (this.highlight_col == c2)) {
-       cls = cls + " accent white--text";
-     }
-     return cls;
-   },
- },
+    highlight_cell(c1, c2) {
+      this.highlight_row = c1;
+      this.highlight_col = c2;
+    },
+    unhighlight_cells() {
+      this.highlight_row = null;
+      this.highlight_col = null;
+    },
+    title_cell_class(c1, c2) {
+      var cls = 'font-weight-medium pa-2 py-3';
+      if (this.highlight_row == c1 || this.highlight_col == c2) {
+        cls = cls + ' accent white--text';
+      }
+      return cls;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 tbody {
-    tr:hover {
-	background-color: transparent !important;
-    }
+  tr:hover {
+    background-color: transparent !important;
+  }
 }
 </style>

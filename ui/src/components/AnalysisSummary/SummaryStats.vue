@@ -41,7 +41,7 @@
                 <thead>
                   <tr>
                     <th colspan="1"></th>
-                    <th v-for="c in cohorts" colspan="3">
+                    <th v-for="c in cohorts" :key="c.id" colspan="3">
                       <v-chip x-small :color="c.color" class="my-1 px-2" />
                       <span class="subtitle-1 pl-2 font-weight-bold">{{
                         c.label
@@ -59,9 +59,13 @@
                     }}</span>
                   </td>
                   <template v-for="c in cohorts">
-                    <td>{{ cohortMean(v.item, c) }}</td>
-                    <td>{{ cohortMedian(v.item, c) }}</td>
-                    <td>{{ cohortDeviation(v.item, c) }}</td>
+                    <td :key="'cmean-' + c.id">{{ cohortMean(v.item, c) }}</td>
+                    <td :key="'cmedian-' + c.id">
+                      {{ cohortMedian(v.item, c) }}
+                    </td>
+                    <td :key="'cdev-' + c.id">
+                      {{ cohortDeviation(v.item, c) }}
+                    </td>
                   </template>
                 </tr>
               </template>
@@ -76,7 +80,7 @@
 <script>
 import { mapState } from 'vuex';
 import { state as deState } from '@/store/modules/dataExplorer/types';
-import { min, max, mean, median, deviation } from 'd3-array';
+import { mean, median, deviation } from 'd3-array';
 import { format } from 'd3-format';
 import { colors } from '@/utils/colors';
 import 'd3-transition';
@@ -127,7 +131,7 @@ export default {
         value: 'abbreviation',
         sortable: false,
       });
-      this.cohorts.forEach(c => {
+      this.cohorts.forEach(() => {
         hdrs.push({
           text: 'Mean',
           value: 'mean',

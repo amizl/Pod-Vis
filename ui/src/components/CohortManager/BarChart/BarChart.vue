@@ -119,11 +119,10 @@ import { select } from 'd3-selection';
 import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale';
 import 'd3-transition';
 import { schemeCategory10 } from 'd3-scale-chromatic';
-// Directives
+
 import resize from 'vue-resize-directive';
-// Components
-import BarRect from './BarRect.vue';
 import { colors } from '@/utils/colors';
+import BarRect from './BarRect.vue';
 
 const PX_PER_LABEL_LINE = 15;
 const N_LABEL_LINES = 4;
@@ -275,7 +274,7 @@ export default {
         this.cat_cbs = [];
       }
     },
-    cohort(new_cohort) {
+    cohort() {
       this.updateSelectionFromCohortQuery();
     },
     selected(new_sel) {
@@ -386,8 +385,6 @@ export default {
         this.selected.push(key);
       }
 
-      const allBarsSelected =
-        this.selected.length === this.xScale.domain().length;
       if (this.selected.length) {
         this.addFilter({
           dimension: this.dimensionName,

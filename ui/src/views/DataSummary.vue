@@ -31,7 +31,7 @@
     <analysis-tracker
       step="1"
       :substep="substep"
-      :collection-id="this.collection.id"
+      :collection-id="collection.id"
     ></analysis-tracker>
 
     <v-container fluid fill-width class="ma-0 pa-0 pt-2">
@@ -74,10 +74,7 @@ import VisitVariablesToolbar from '@/components/DataSummary/VisitVariablesToolba
 import VisitTimesTable from '@/components/DataSummary/VisitTimesTable.vue';
 import BubbleChart from '@/components/DataSummary/BubbleChart/BubbleChart.vue';
 import SaveFirstLastVisitBtnDialog from '@/components/BuildDataset/SaveFirstLastVisitBtnDialog.vue';
-import {
-  getCollectionDescription,
-  getLongScaleNameDefault,
-} from '@/utils/helpers';
+import { getCollectionDescription } from '@/utils/helpers';
 
 export default {
   name: 'DataSummary',

@@ -1,6 +1,6 @@
 import { nest } from 'd3-collection';
+import { getInputVariablesFromQueries } from '@/utils/helpers';
 import { getters, state as stateTypes } from './types';
-import { makeHierarchy, getInputVariablesFromQueries } from '@/utils/helpers';
 
 export default {
   [getters.HAS_USER_FILTERED_INPUT_VARIABLES]: state => {
@@ -12,12 +12,9 @@ export default {
   [getters.HAS_USER_FILTERED_OUTPUT_VARIABLES]: state => {
     const queries = state[stateTypes.QUERIES];
     const inputVars = state[stateTypes.INPUT_VARIABLES];
-    const outputVars = state[stateTypes.OUTPUT_VARIABLES];
-
     var nQueries = Object.entries(queries).length;
     const q2m = getInputVariablesFromQueries(queries, inputVars);
     var nInputVarQueries = q2m.length;
-
     return nInputVarQueries < nQueries;
   },
   [getters.HAS_USER_SELECTED_COHORT]: state => {

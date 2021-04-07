@@ -1,4 +1,4 @@
-<template>
+?<template>
   <v-dialog v-model="openOutputVariableDialog" max-width="80%" scrollable>
     <template v-slot:activator="{ on }">
       <v-btn text color="primary" class="title" v-on="on">
@@ -21,7 +21,7 @@
       <v-card-text style="padding: 0px 16px 16px 16px;">
         <v-data-table
           key="ovd-header"
-          :items="this.outputVariables"
+          :items="outputVariables"
           :headers="headers"
           item-key="id"
           hide-default-footer
@@ -33,7 +33,7 @@
         </v-data-table>
 
         <v-data-table
-          :items="this.outputVariables"
+          :items="outputVariables"
           :headers="headers"
           item-key="id"
           hide-default-footer
@@ -85,7 +85,7 @@
         <v-data-table
           key="ovd"
           :headers="headers"
-          :items="this.outputVariables"
+          :items="outputVariables"
           item-key="id"
           hide-default-header
           hide-default-footer
@@ -188,11 +188,10 @@
 </template>
 
 <script>
-import { actions, state, getters } from '@/store/modules/cohortManager/types';
-import { mapActions, mapState, mapGetters } from 'vuex';
-import { uniqBy } from 'lodash';
+import { actions, state } from '@/store/modules/cohortManager/types';
+import { mapActions, mapState } from 'vuex';
 import { sortScales } from '@/utils/helpers';
-import { logEvent } from '@/utils/logging';
+import logEvent from '@/utils/logging';
 
 // traverse a list of variables and return the scale variables,
 // which are either at or adjacent to the leaves
@@ -312,7 +311,6 @@ export default {
       },
     },
   },
-
   watch: {
     openOutputVariableDialog(open) {
       // set flag to allow propagation of dialog changes back to UI
@@ -329,7 +327,7 @@ export default {
         null
       );
     },
-    cohort(c) {
+    cohort() {
       this.updateOutputVars();
     },
     vars(newvars) {
@@ -520,7 +518,7 @@ export default {
       this.$nextTick(() => this.updateSelectedVars());
     },
 
-    cbChange(cb) {
+    cbChange() {
       this.$nextTick(() => this.updateSelectedVars());
     },
   },

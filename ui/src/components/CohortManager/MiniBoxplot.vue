@@ -13,7 +13,8 @@
                 <g>
                   <!-- endcap lines -->
                   <line
-                    v-for="sc in Object.keys(boxplotStats)"
+                    v-for="(s, index) in Object.keys(boxplotStats)"
+                    :key="`s-el1-${index}`"
                     :x1="boxplotStats[sc]['min_x']"
                     :x2="boxplotStats[sc]['min_x']"
                     :y1="boxplotStats[sc]['y1']"
@@ -22,7 +23,8 @@
                   />
 
                   <line
-                    v-for="sc in Object.keys(boxplotStats)"
+                    v-for="(sc, index) in Object.keys(boxplotStats)"
+                    :key="`s-el2-${index}`"
                     :x1="boxplotStats[sc]['max_x']"
                     :x2="boxplotStats[sc]['max_x']"
                     :y1="boxplotStats[sc]['y1']"
@@ -32,7 +34,8 @@
 
                   <!-- center line -->
                   <line
-                    v-for="sc in Object.keys(boxplotStats)"
+                    v-for="(sc, index) in Object.keys(boxplotStats)"
+                    :key="`s-cl-${index}`"
                     :x1="boxplotStats[sc]['min_x']"
                     :x2="boxplotStats[sc]['max_x']"
                     :y1="boxplotStats[sc]['y_center']"
@@ -42,7 +45,8 @@
 
                   <!-- box -->
                   <rect
-                    v-for="sc in Object.keys(boxplotStats)"
+                    v-for="(sc, index) in Object.keys(boxplotStats)"
+                    :key="`s-b-${index}`"
                     :x="
                       axisFlipped
                         ? boxplotStats[sc]['q3_x']
@@ -58,7 +62,8 @@
 
                   <!-- median line -->
                   <line
-                    v-for="sc in Object.keys(boxplotStats)"
+                    v-for="(sc, index) in Object.keys(boxplotStats)"
+                    :key="`s-ml-${index}`"
                     :x1="boxplotStats[sc]['median_x']"
                     :x2="boxplotStats[sc]['median_x']"
                     :y1="boxplotStats[sc]['y1']"
@@ -83,23 +88,17 @@
     <span class="subtitle-1">
       {{
         outputVar.label +
-          (this.axisFlipped
-            ? ' ' + this.maxValue + ' - 0'
-            : ' 0 - ' + this.maxValue)
+          (axisFlipped ? ' ' + maxValue + ' - 0' : ' 0 - ' + maxValue)
       }}
     </span>
   </v-tooltip>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { state } from '@/store/modules/analysisSummary/types';
-import { state as deState } from '@/store/modules/dataExplorer/types';
 import { min, max, ascending, quantile } from 'd3-array';
-import { axisTop, axisLeft, axisRight } from 'd3-axis';
-import { format } from 'd3-format';
+import { axisTop } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
-import { select, event } from 'd3-selection';
+import { select } from 'd3-selection';
 import { colors } from '@/utils/colors';
 import 'd3-transition';
 
@@ -147,17 +146,18 @@ export default {
       boxplotStats: {},
       boxplotStatsUpdated: false,
       maxValue: null,
-      axisFlipped: false,
     };
   },
   computed: {
     xAxis() {
       return axisTop(this.xScale);
     },
+    axisFlipped() {
+      return this.outcomeVar && this.outcomeVar.flip_axis;
+    },
     xScale() {
       var range = null;
       if (this.doFlipAxis) {
-        this.axisFlipped = this.outputVar && this.outputVar.flip_axis;
         range = this.axisFlipped ? [this.width, 0] : [0, this.width];
       } else {
         range = [0, this.width];
@@ -172,12 +172,12 @@ export default {
       var vm = this;
       var nodesFound = true;
       this.$nextTick(() => {
-        Object.keys(vm.boxplotStats).forEach(k => {
+        Object.keys(bps).forEach(k => {
           var node = vm.$refs[k];
           if (node == null) {
             nodesFound = false;
           } else {
-            vm.boxplotStats[k].node = node[0];
+            bps[k].node = node[0];
           }
         });
         if (nodesFound) {
@@ -196,7 +196,7 @@ export default {
     // visit = firstVisit or lastVisit
     updateStats_aux(
       visit,
-      y_offset,
+      initial_y_offset,
       pad_top,
       pad_bottom,
       row_height,
@@ -205,6 +205,7 @@ export default {
     ) {
       // compute boxplot stats for each cohort
       var x_offset = 0;
+      var y_offset = initial_y_offset;
       var cnum = 1;
 
       this.cohorts.forEach(c => {

@@ -24,16 +24,26 @@
                       </v-tooltip>
 
                       <v-spacer />
-                      <v-chip
-                        v-for="x in ['1', '0.1', '0.05', '0.01', '0.001']"
-                        v-if="expanded"
-                        :color="colors['pvals'][x + '-' + colorScheme]['color']"
-                        :class="
-                          colorScheme == 'brewer5' && x == '0.001'
-                            ? 'white--text'
-                            : ''
-                        "
-                        >p &lt; {{ x }}</v-chip
+                      <span v-if="expanded">
+                        <v-chip
+                          v-for="(x, index) in [
+                            '1',
+                            '0.1',
+                            '0.05',
+                            '0.01',
+                            '0.001',
+                          ]"
+                          :key="`vc1-${index}`"
+                          :color="
+                            colors['pvals'][x + '-' + colorScheme]['color']
+                          "
+                          :class="
+                            colorScheme == 'brewer5' && x == '0.001'
+                              ? 'white--text'
+                              : ''
+                          "
+                          >p &lt; {{ x }}</v-chip
+                        ></span
                       >
                       <v-spacer v-if="expanded" />
                       <v-toolbar-items v-if="showTitleBar">
@@ -56,18 +66,20 @@
       <v-row v-if="!showTitleBar" class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0" align="center">
           <v-sheet color="white" class="rounded-lg shadow">
-            <v-chip
-              v-for="x in ['1', '0.1', '0.05', '0.01', '0.001']"
-              v-if="expanded"
-              :color="colors['pvals'][x + '-' + colorScheme]['color']"
-              :class="
-                'px-2 mx-1 ' +
-                  (colorScheme == 'brewer5' && x == '0.001'
-                    ? 'white--text'
-                    : '')
-              "
-              :style="'border: 2px solid black;'"
-              >p &lt; {{ x }}</v-chip
+            <span v-if="expanded">
+              <v-chip
+                v-for="(x, index) in ['1', '0.1', '0.05', '0.01', '0.001']"
+                :key="`vc2-${index}`"
+                :color="colors['pvals'][x + '-' + colorScheme]['color']"
+                :class="
+                  'px-2 mx-1 ' +
+                    (colorScheme == 'brewer5' && x == '0.001'
+                      ? 'white--text'
+                      : '')
+                "
+                :style="'border: 2px solid black;'"
+                >p &lt; {{ x }}</v-chip
+              ></span
             >
           </v-sheet>
         </v-col>
@@ -186,8 +198,6 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import { state } from '@/store/modules/dataExplorer/types';
 import { format } from 'd3-format';
 import { colors } from '@/utils/colors';
 
@@ -201,6 +211,7 @@ export default {
     anovaPvals: {
       type: Array,
       required: false,
+      default: () => [],
     },
     outcomeVariables: {
       type: Array,

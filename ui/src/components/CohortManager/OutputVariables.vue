@@ -79,17 +79,17 @@ export default {
       showHelpChip: false,
     };
   },
-  watch: {
-    showAddHelp(show) {
-      this.showHelpChip = show;
-    },
-  },
   computed: {
     ...mapState('cohortManager', {
       outputVariables: state.OUTPUT_VARIABLES,
     }),
     hasUserAddedOutputVariables() {
       return this.outputVariables.length > 0;
+    },
+  },
+  watch: {
+    showAddHelp(show) {
+      this.showHelpChip = show;
     },
   },
   methods: {

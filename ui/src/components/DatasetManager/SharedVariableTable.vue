@@ -28,11 +28,12 @@
       </template>
 
       <template
-        v-for="ds in datasets"
+        v-for="(ds, index) in datasets"
         v-slot:[`header.${ds.study_name}`]="{ header }"
       >
-        {{ header.dataset.study_name }} <br />
+        {{ header.dataset.study_name }} <br :key="`dsvc-br-${index}`" />
         <v-chip
+          :key="`dsvc-${index}`"
           :color="getNumSubjectsColor(getStudyCount(header.dataset.id))"
           :text-color="
             getNumSubjectsTextColor(getStudyCount(header.dataset.id))
@@ -414,7 +415,6 @@ export default {
      */
     countSubjectsByVisits(vars, which) {
       var subjCounts = { all: 0 };
-      var studyVarCounts = {};
       var subjs = this.subject_variable_visits['subjects'];
       var subjIds = Object.keys(subjs);
 

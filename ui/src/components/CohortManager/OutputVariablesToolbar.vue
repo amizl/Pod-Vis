@@ -119,16 +119,16 @@ export default {
       showHelpChip: false,
     };
   },
-  watch: {
-    showReviewHelp(show) {
-      this.showHelpChip = show;
-    },
-  },
   computed: {
     ...mapState('cohortManager', {
       highlighted_subset: state.HIGHLIGHTED_SUBSET,
       outputVariables: state.OUTPUT_VARIABLES,
     }),
+  },
+  watch: {
+    showReviewHelp(show) {
+      this.showHelpChip = show;
+    },
   },
   methods: {
     ...mapActions('cohortManager', {

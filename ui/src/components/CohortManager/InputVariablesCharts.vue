@@ -52,7 +52,7 @@ export default {
     }),
   },
   methods: {
-    userChangedVariable(v) {
+    userChangedVariable() {
       this.$emit('userChangedInputVariable', true);
     },
     comparePredefinedRanges(ranges) {

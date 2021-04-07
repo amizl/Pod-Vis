@@ -81,7 +81,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { mapState, mapActions } from 'vuex';
 import { state, actions } from '@/store/modules/dataSummary/types';
 import {
@@ -110,10 +109,6 @@ export default {
       getNumSubjectsTextColor: getNumSubjectsTextColor,
       useLongScaleNames: false,
     };
-  },
-  created() {
-    var datasets = this.collection.studies.map(d => d.study);
-    this.useLongScaleNames = getLongScaleNameDefault(datasets);
   },
   computed: {
     ...mapState('dataSummary', {
@@ -189,20 +184,24 @@ export default {
     hideUnselectedVars(newval) {
       this.$emit('hideUnselectedVars', newval);
     },
-    collectionSummaries(newval) {
+    collectionSummaries() {
       this.updateTimesBetweenVisits();
     },
-    firstVisits(newval) {
+    firstVisits() {
       this.updateEvents();
       this.updateTimesBetweenVisits();
     },
-    lastVisits(newval) {
+    lastVisits() {
       this.updateEvents();
       this.updateTimesBetweenVisits();
     },
     useLongScaleNames(newval) {
       this.$emit('useLongScaleNames', newval);
     },
+  },
+  created() {
+    var datasets = this.collection.studies.map(d => d.study);
+    this.useLongScaleNames = getLongScaleNameDefault(datasets);
   },
   mounted() {
     this.updateEvents();
@@ -252,7 +251,7 @@ export default {
       // possible last visit events - starting after the last firstVisit
       var firstVisitSeen = !this.firstVisit;
       this.lastVisitEvents = ['multiple'];
-      for (var i = 0; i < this.uniqueEvents.length; i++) {
+      for (i = 0; i < this.uniqueEvents.length; i++) {
         if (firstVisitSeen) {
           this.lastVisitEvents.push(this.uniqueEvents[i]);
         } else if (this.firstVisit && this.uniqueEvents[i] == lastFirstVisit) {

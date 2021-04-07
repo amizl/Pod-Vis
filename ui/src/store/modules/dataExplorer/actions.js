@@ -60,14 +60,13 @@ export default {
       commit(mutations.SET_COLLECTION, data.collection);
       dispatch(actions.SET_COHORT_SUBJECTS);
     } catch (err) {
-      console.log(err);
       const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     } finally {
       commit(mutations.SET_LOADING, false);
     }
   },
-  async [actions.CLEAR_DATA]({ commit, dispatch, state }) {
+  async [actions.CLEAR_DATA]({ commit }) {
     commit(mutations.SET_DATA, []);
     commit(mutations.SET_RAW_DATA, []);
   },
@@ -131,7 +130,6 @@ export default {
       commit(mutations.SET_DATA, wideData);
       commit(mutations.SET_RAW_DATA, data.raw_data);
     } catch (err) {
-      console.log(err);
       const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     } finally {
@@ -151,7 +149,6 @@ export default {
       const { data } = await axios.get('/api/cohorts');
       commit(mutations.SET_COHORTS, data.cohorts);
     } catch (err) {
-      console.log(err);
       const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     } finally {
@@ -212,7 +209,6 @@ export default {
       commit(mutations.SET_ANOVA_PVALS, data.pvals);
       commit(mutations.SET_ANOVA_PVALS_INPUT, input);
     } catch (err) {
-      console.log(err);
       const notification = new ErrorNotification(err);
       dispatch(notification.dispatch, notification, { root: true });
     }

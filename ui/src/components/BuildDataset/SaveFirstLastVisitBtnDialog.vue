@@ -19,7 +19,9 @@
 
         <v-card-text class="primary primary--text text--lighten-5 pt-4">
           <ul>
-            <li v-for="descr in varDescriptions">{{ descr }}</li>
+            <li v-for="(descr, index) in varDescriptions" :key="`vd-${index}`">
+              {{ descr }}
+            </li>
           </ul>
           <div class="pt-3">
             Study Population - {{ numSelectedSubjects }} subject(s)
@@ -56,6 +58,11 @@ export default {
       default: false,
     },
   },
+  data: () => ({
+    valid: true,
+    dialog: false,
+    loading: false,
+  }),
   computed: {
     ...mapState('dataSummary', {
       collection: state.COLLECTION,
@@ -111,11 +118,6 @@ export default {
       return descrs;
     },
   },
-  data: () => ({
-    valid: true,
-    dialog: false,
-    loading: false,
-  }),
   watch: {
     dialog() {
       this.$emit('dialogOpen', this.dialog);

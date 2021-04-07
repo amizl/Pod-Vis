@@ -200,7 +200,7 @@ export default {
     selectCohorts: {
       type: Array,
       required: false,
-      default: x => [],
+      default: () => [],
     },
     showSelect: {
       type: Boolean,
@@ -230,6 +230,7 @@ export default {
     checkboxTooltip: {
       type: String,
       required: false,
+      default: 'Check to select this cohort.',
     },
     expanded: {
       type: Boolean,

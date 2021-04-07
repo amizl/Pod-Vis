@@ -1,6 +1,6 @@
 <template>
   <v-sheet
-    :color="this.selectedOutcomeVariable != null ? 'rgb(236,177,212)' : 'white'"
+    :color="selectedOutcomeVariable != null ? 'rgb(236,177,212)' : 'white'"
     class="rounded-lg shadow"
   >
     <v-container fluid fill-width class="ma-0 pa-0">
@@ -181,7 +181,7 @@ export default {
     },
   },
   watch: {
-    selectedOutcomeVariable(nv) {
+    selectedOutcomeVariable() {
       this.update_pval_dict();
     },
   },
@@ -195,9 +195,6 @@ export default {
         return;
       if (this.collection_cohorts.length < 3) return;
       if (!(this.selectedOutcomeVariable.label in this.pairwiseTukeyHsdPvals)) {
-        console.log(
-          'No results found for ' + this.selectedOutcomeVariable.label
-        );
         this.pval_dict = {};
         return;
       }

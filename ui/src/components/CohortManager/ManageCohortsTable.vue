@@ -5,13 +5,16 @@
         <v-col cols="12" class="ma-0 pa-0">
           <v-card color="#eeeeee" class="pt-1">
             <v-card-title class="primary--text pl-3 py-2"
-			  >{{ title }}
-	      <v-chip label color="primary" class="white--text title mr-2 ml-4"
-		      >{{ cohorts ? cohorts.length : 0 }}</v-chip>
+              >{{ title }}
+              <v-chip
+                label
+                color="primary"
+                class="white--text title mr-2 ml-4"
+                >{{ cohorts ? cohorts.length : 0 }}</v-chip
+              >
 
               <v-spacer />
-              <v-toolbar-items>
-              </v-toolbar-items>
+              <v-toolbar-items> </v-toolbar-items>
             </v-card-title>
           </v-card>
         </v-col>
@@ -47,8 +50,8 @@
         :show-select="showSelect"
         :disable-pagination="disablePagination"
         :hide-default-footer="disablePagination"
-	class="cohorts"
-	dense
+        class="cohorts"
+        dense
         @click:row="rowClicked"
       >
         <template v-slot:item.data-table-select="{ isSelected, select }">
@@ -79,20 +82,30 @@
 
         <template v-slot:item.label="{ item }">
           <td class="subtitle-1 text-xs-left">
-	    <span v-if="cohort && (item.id == cohort.id)" class="font-weight-bold"">{{item.label}}</span>
+            <span
+              v-if="cohort && item.id == cohort.id"
+              class="font-weight-bold"
+              >{{ item.label }}</span
+            >
 
             <span v-else v-html="item.label"></span>
           </td>
         </template>
 
         <template v-slot:item.size="{ item }">
-          <td class="subtitle-1 text-xs-center align-center pa-0 ma-0" align-center>
-	    <span v-if="cohort && (item.id == cohort.id)" class="font-weight-bold">
-	      {{ item.subject_ids ? item.subject_ids.length : '?' }}
-	    </span>
-	    <span v-else>
-	      {{ item.subject_ids ? item.subject_ids.length : '?' }}
-	    </span>
+          <td
+            class="subtitle-1 text-xs-center align-center pa-0 ma-0"
+            align-center
+          >
+            <span
+              v-if="cohort && item.id == cohort.id"
+              class="font-weight-bold"
+            >
+              {{ item.subject_ids ? item.subject_ids.length : '?' }}
+            </span>
+            <span v-else>
+              {{ item.subject_ids ? item.subject_ids.length : '?' }}
+            </span>
           </td>
         </template>
 
@@ -100,32 +113,34 @@
           <td class="subtitle-1 text-xs-left">{{ item.query_string }}</td>
         </template>
 
-	<template v-slot:item.actions="{ item }">
+        <template v-slot:item.actions="{ item }">
           <td class="subtitle-1 text-xs-center pa-0 ma-0">
-	    <!-- edit -->
+            <!-- edit -->
             <v-tooltip v-if="false" top color="primary">
               <template v-slot:activator="{ on: tooltip }">
-		<v-icon v-if="cohort && (item.id == cohort.id)" color="white" @click="editCohort(item)">edit</v-icon>
-		<v-icon v-else @click="editCohort(item)">edit</v-icon>
+                <v-icon
+                  v-if="cohort && item.id == cohort.id"
+                  color="white"
+                  @click="editCohort(item)"
+                  >edit</v-icon
+                >
+                <v-icon v-else @click="editCohort(item)">edit</v-icon>
               </template>
-              <span class="subtitle-1"
-                    >Edit cohort
-                }}
-	      </span>
+              <span class="subtitle-1">Edit cohort }} </span>
             </v-tooltip>
 
-	    <!--delete -->
+            <!--delete -->
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on: tooltip }">
-		<delete-cohort-icon-dialog :cohort="item" :selected="cohort && (item.id == cohort.id)" @cohortDeleted="cohortDeleted"></delete-cohort-icon-dialog>
+                <delete-cohort-icon-dialog
+                  :cohort="item"
+                  :selected="cohort && item.id == cohort.id"
+                  @cohortDeleted="cohortDeleted"
+                ></delete-cohort-icon-dialog>
               </template>
-              <span class="subtitle-1"
-                    >Delete cohort
-                }}
-	      </span>
+              <span class="subtitle-1">Delete cohort }} </span>
             </v-tooltip>
-
-	  </td>
+          </td>
         </template>
 
         <template v-slot:item.color="{ item }">
@@ -134,30 +149,49 @@
       </v-data-table>
 
       <v-container fluid class="pb-2 px-1">
-        <v-row v-if="showNewHelpChip || showSaveHelpChip" class="ma-0 pa-0 align-center">
+        <v-row
+          v-if="showNewHelpChip || showSaveHelpChip"
+          class="ma-0 pa-0 align-center"
+        >
           <v-col cols="12" class="ma-0 pa-0" align="center">
-	    <v-chip v-if="showNewHelpChip" label close color="#4caf50" class="font-weight-bold white--text pa-2 my-1" @click:close="showNewHelpChip = false;"
-		    >Click NEW COHORT to start over (predictors and outcomes are removed)</v-chip>
-	    <v-chip v-if="showSaveHelpChip" label close color="#4caf50" class="font-weight-bold white--text pa-2 my-1" @click:close="showSaveHelpChip = false;"
-		    >After review, click SAVE COHORT to create a cohort.</v-chip>
-         </v-col>
+            <v-chip
+              v-if="showNewHelpChip"
+              label
+              close
+              color="#4caf50"
+              class="font-weight-bold white--text pa-2 my-1"
+              @click:close="showNewHelpChip = false"
+              >Click NEW COHORT to start over (predictors and outcomes are
+              removed)</v-chip
+            >
+            <v-chip
+              v-if="showSaveHelpChip"
+              label
+              close
+              color="#4caf50"
+              class="font-weight-bold white--text pa-2 my-1"
+              @click:close="showSaveHelpChip = false"
+              >After review, click SAVE COHORT to create a cohort.</v-chip
+            >
+          </v-col>
         </v-row>
 
         <v-row class="ma-0 pa-0 align-center">
           <v-col cols="6" class="ma-0 pa-0" align="center">
+            <v-btn class="primary text--white ma-0 px-2 py-0" @click="newCohort"
+              >New Cohort</v-btn
+            >
+          </v-col>
 
-	    <v-btn class="primary text--white ma-0 px-2 py-0"
-		   @click="newCohort"
-		   >New Cohort</v-btn>
-	  </v-col>
-	  
-	  <v-col cols="6" class="ma-0 pa-0" align="center">
-	    <save-cohort-btn-dialog :cohorts="cohorts" @cohortSaved="cohortSaved"></save-cohort-btn-dialog>
-	  </v-col>
-	  
-	</v-row>
+          <v-col cols="6" class="ma-0 pa-0" align="center">
+            <save-cohort-btn-dialog
+              :cohorts="cohorts"
+              @cohortSaved="cohortSaved"
+            ></save-cohort-btn-dialog>
+          </v-col>
+        </v-row>
       </v-container>
-      
+
       <div
         v-if="reportMaxOverlap || reportMaxSelectedOverlap"
         class="ma-0 pa-3"
@@ -173,13 +207,12 @@
         </div>
       </div>
     </v-sheet>
-
   </div>
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex';
-import { actions, state, getters } from '@/store/modules/cohortManager/types';
+import { mapState } from 'vuex';
+import { state } from '@/store/modules/cohortManager/types';
 
 import { format } from 'd3-format';
 import DeleteCohortIconDialog from '@/components/CohortManager/DeleteCohortIconDialog.vue';
@@ -208,7 +241,7 @@ export default {
     selectCohorts: {
       type: Array,
       required: false,
-      default: x => [],
+      default: () => [],
     },
     showSelect: {
       type: Boolean,
@@ -238,6 +271,7 @@ export default {
     checkboxTooltip: {
       type: String,
       required: false,
+      default: 'Check to select this cohort.',
     },
     showNewHelp: {
       type: Boolean,
@@ -288,11 +322,11 @@ export default {
         class: 'text-subtitle-1 font-weight-bold ma-0 pa-0',
       });
 
-//      hdrs.push({
-//        text: 'Query',
-//        value: 'query_string',
-//        class: 'text-subtitle-1 font-weight-bold',
-//      });
+      //      hdrs.push({
+      //        text: 'Query',
+      //        value: 'query_string',
+      //        class: 'text-subtitle-1 font-weight-bold',
+      //      });
 
       hdrs.push({
         text: 'Actions',
@@ -426,19 +460,19 @@ export default {
       row.select(true);
       this.selectedRow = row;
     },
-    editCohort(cohort) {
-      console.log("editCohort called on " + cohort);
-    },
+    //    editCohort(cohort) {
+    // TODO
+    //    },
     newCohort() {
       if (this.selectedRow != null) this.selectedRow.select(false);
-      this.$emit('newCohort')
+      this.$emit('newCohort');
     },
     cohortSaved(success) {
-      this.$emit('savedCohort', success)
+      this.$emit('savedCohort', success);
     },
     cohortDeleted() {
       if (this.selectedRow != null) this.selectedRow.select(false);
-      this.$emit('newCohort')
+      this.$emit('newCohort');
     },
     routeToAnalysisSummary() {
       this.$router.push(`summary?collection=${this.collectionId}`);

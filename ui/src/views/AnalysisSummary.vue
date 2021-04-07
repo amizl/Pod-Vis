@@ -331,29 +331,6 @@ export default {
         ind += 1;
       });
     },
-    async updateCohortIds() {
-      await this.analyzeCohortsDE(selCohorts);
-
-      // set outcome variables to union of cohorts' output variables
-      const varsAdded = {};
-      const outcomeVars = [];
-      this.selectedCohorts.forEach(c => {
-        const outputVars = c.output_variables;
-        outputVars.forEach(ov => {
-          const { id } = ov.observation_ontology;
-          if (!(id in varsAdded)) {
-            varsAdded[id] = 1;
-            outcomeVars.push(ov.observation_ontology);
-          }
-        });
-      });
-      await this.setOutcomeVariables(outcomeVars);
-      await this.analyzeCohorts({
-        collection: this.collection,
-        cohorts: this.selectedCohorts,
-        data: this.data,
-      });
-    },
     async goto3p2() {
       var sc = this.tableCohortsSelected;
       var scc = [...sc].sort((x, y) => y['id'] - x['id']);

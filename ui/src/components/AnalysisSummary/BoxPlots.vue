@@ -1,4 +1,4 @@
-<template>
+><template>
   <v-sheet color="white" class="rounded-lg shadow">
     <v-container v-if="showTitleBar" fluid fill-width class="ma-0 pa-0">
       <v-row class="ma-0 pa-0">
@@ -104,7 +104,8 @@
               <g v-if="outcomeVar && outcomeVar.data_category != 'Categorical'">
                 <!-- labels -->
                 <text
-                  v-for="sc in Object.keys(boxplotStats)"
+                  v-for="(sc, index) in Object.keys(boxplotStats)"
+                  :key="`s-lbl-${index}`"
                   :ref="sc"
                   :x="15"
                   :y="boxplotStats[sc]['y_center'] + rowPad / 2"
@@ -114,7 +115,8 @@
 
                 <!-- endcap lines -->
                 <line
-                  v-for="sc in Object.keys(boxplotStats)"
+                  v-for="(sc, index) in Object.keys(boxplotStats)"
+                  :key="`s-ecl-${index}`"
                   :x1="boxplotStats[sc]['min_x']"
                   :x2="boxplotStats[sc]['min_x']"
                   :y1="boxplotStats[sc]['y1']"
@@ -123,7 +125,8 @@
                 />
 
                 <line
-                  v-for="sc in Object.keys(boxplotStats)"
+                  v-for="(sc, index) in Object.keys(boxplotStats)"
+                  :key="`s-l-${index}`"
                   :x1="boxplotStats[sc]['max_x']"
                   :x2="boxplotStats[sc]['max_x']"
                   :y1="boxplotStats[sc]['y1']"
@@ -133,7 +136,8 @@
 
                 <!-- center line -->
                 <line
-                  v-for="sc in Object.keys(boxplotStats)"
+                  v-for="(sc, index) in Object.keys(boxplotStats)"
+                  :key="`s-cl-${index}`"
                   :x1="boxplotStats[sc]['min_x']"
                   :x2="boxplotStats[sc]['max_x']"
                   :y1="boxplotStats[sc]['y_center']"
@@ -143,7 +147,8 @@
 
                 <!-- box -->
                 <rect
-                  v-for="sc in Object.keys(boxplotStats)"
+                  v-for="(sc, index) in Object.keys(boxplotStats)"
+                  :key="`s-b-${index}`"
                   :x="
                     axisFlipped
                       ? boxplotStats[sc]['q3_x']
@@ -158,7 +163,8 @@
 
                 <!-- median line -->
                 <line
-                  v-for="sc in Object.keys(boxplotStats)"
+                  v-for="(sc, index) in Object.keys(boxplotStats)"
+                  :key="`s-ml-${index}`"
                   :x1="boxplotStats[sc]['median_x']"
                   :x2="boxplotStats[sc]['median_x']"
                   :y1="boxplotStats[sc]['y1']"
@@ -182,6 +188,7 @@
           <v-col cols="12" class="ma-0 pa-0">
             <v-tooltip
               v-for="(sc, index) in Object.keys(boxplotStats)"
+              :key="`s-tt-${index}`"
               top
               color="primary"
               :activator="boxplotStats[sc]['node']"
@@ -199,10 +206,9 @@
 import { mapState } from 'vuex';
 import { state as deState } from '@/store/modules/dataExplorer/types';
 import { min, max, ascending, quantile } from 'd3-array';
-import { axisTop, axisLeft, axisRight } from 'd3-axis';
-import { format } from 'd3-format';
+import { axisTop } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
-import { select, event } from 'd3-selection';
+import { select } from 'd3-selection';
 import { colors } from '@/utils/colors';
 import 'd3-transition';
 
@@ -225,7 +231,7 @@ export default {
     cohorts: {
       type: Array,
       required: true,
-      default: [],
+      default: () => [],
     },
     outcomeVar: {
       type: Object,
@@ -255,6 +261,7 @@ export default {
     maxCohorts: {
       type: Number,
       required: false,
+      default: 1,
     },
     rowHeight: {
       type: Number,
@@ -283,7 +290,6 @@ export default {
       maxValue: null,
       firstVisit: null,
       lastVisit: null,
-      axisFlipped: false,
       maxLabelLen: null,
     };
   },
@@ -300,13 +306,15 @@ export default {
       var leftMargin = this.maxLabelLen * this.labelPxPerChar;
       return { top: 40, bottom: 40, left: leftMargin, right: 20 };
     },
+    axisFlipped() {
+      return this.outcomeVar && this.outcomeVar.flip_axis;
+    },
     xScale() {
       var rt = this.width - this.margins.right;
       var range = null;
 
       // take flip_axis into account:
       if (this.doFlipAxis) {
-        this.axisFlipped = this.outcomeVar && this.outcomeVar.flip_axis;
         range = this.axisFlipped
           ? [rt, this.margins.left]
           : [this.margins.left, rt];
@@ -321,10 +329,10 @@ export default {
     },
   },
   watch: {
-    outcomeVar(ov) {
+    outcomeVar() {
       this.updateVisits();
     },
-    maxLabelLen(mll) {
+    maxLabelLen() {
       // change in maxLabelLen means change in left margin
       this.$nextTick(() => {
         this.updateStats();
@@ -335,12 +343,12 @@ export default {
       var vm = this;
       var nodesFound = true;
       this.$nextTick(() => {
-        Object.keys(vm.boxplotStats).forEach(k => {
+        Object.keys(bps).forEach(k => {
           var node = vm.$refs[k];
           if (node == null) {
             nodesFound = false;
           } else {
-            vm.boxplotStats[k].node = node[0];
+            bps[k].node = node[0];
           }
         });
         if (nodesFound) {
@@ -348,7 +356,7 @@ export default {
         }
       });
     },
-    cohorts(nc) {
+    cohorts() {
       this.resizeChart();
       this.updateVisits();
     },
@@ -427,7 +435,7 @@ export default {
     // visit = firstVisit or lastVisit
     updateStats_aux(
       visit,
-      y_offset,
+      initial_y_offset,
       row_height,
       row2row_dist,
       label_prefix,
@@ -435,6 +443,7 @@ export default {
     ) {
       // compute boxplot stats for each cohort
       var x_offset = this.margins.left;
+      var y_offset = initial_y_offset;
       var max_ll = this.maxLabelLen;
 
       this.cohorts.forEach(c => {

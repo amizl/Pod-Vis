@@ -253,7 +253,6 @@ import SummaryStats from '@/components/AnalysisSummary/SummaryStats.vue';
 import DetailedView from '@/components/DataExplorer/DetailedView.vue';
 import BoxPlots from '@/components/AnalysisSummary/BoxPlots.vue';
 import StackedBars from '@/components/AnalysisSummary/StackedBars.vue';
-import { colors } from '@/utils/colors';
 
 export default {
   components: {
@@ -281,7 +280,7 @@ export default {
     analysis: {
       type: Object,
       required: true,
-      default: {},
+      default: () => {},
     },
   },
   data() {

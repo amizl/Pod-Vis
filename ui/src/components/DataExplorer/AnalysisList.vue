@@ -1,7 +1,8 @@
 <template>
   <div>
     <v-container
-      v-for="(a, anum) in analyses"
+      v-for="(a, index) in analyses"
+      :key="`vca-${index}`"
       fluid
       fill-width
       class="ma-0 pa-0 my-3"
@@ -12,7 +13,7 @@
             :id="'analysis-' + a.index"
             :analysis="a"
             :title="'ANALYSIS #' + a.index"
-            @deleteAnalysis="deleteAnalysis(anum)"
+            @deleteAnalysis="deleteAnalysis(index)"
           />
         </v-col>
       </v-row>
@@ -21,11 +22,7 @@
 </template>
 
 <script>
-import CohortTable from '@/components/common/CohortTable.vue';
 import Analysis from '@/components/DataExplorer/Analysis.vue';
-import AnalyticsPanel from '@/components/DataExplorer/AnalyticsPanel.vue';
-import DetailedView from '@/components/DataExplorer/DetailedView.vue';
-import { colors } from '@/utils/colors';
 
 export default {
   components: {
@@ -35,7 +32,7 @@ export default {
     analyses: {
       type: Array,
       required: false,
-      default: [],
+      default: () => [],
     },
   },
   data() {

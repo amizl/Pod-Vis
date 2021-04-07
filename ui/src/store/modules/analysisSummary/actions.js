@@ -58,8 +58,7 @@ export default {
       });
       commit(mutations.SET_PAIRWISE_TUKEY_HSD_PVALS, data.results);
     } catch ({ response }) {
-      console.log(err);
-      const notification = new ErrorNotification(err);
+      const notification = new ErrorNotification(response.data.error);
       dispatch(notification.dispatch, notification, { root: true });
     }
   },

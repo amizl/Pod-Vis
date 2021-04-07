@@ -207,7 +207,7 @@
 
           <v-overlay
             absolute
-            :value="helpMode && (substep != 2.3 || !this.hasFilters)"
+            :value="helpMode && (substep != 2.3 || !hasFilters)"
           >
           </v-overlay>
         </v-container>
@@ -245,7 +245,7 @@ import {
   getCollectionDescription,
   getLongScaleNameDefault,
 } from '@/utils/helpers';
-import { logEvent } from '@/utils/logging';
+import logEvent from '@/utils/logging';
 
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import ManageCohortsTable from '@/components/CohortManager/ManageCohortsTable.vue';
@@ -399,16 +399,16 @@ export default {
         }
       }
     },
-    inputVariables(iv) {
+    inputVariables() {
       this.updateSubstep();
     },
-    outputVariables(ov) {
+    outputVariables() {
       this.updateSubstep();
     },
-    filteredData(fd) {
+    filteredData() {
       this.updateSubstep();
     },
-    unfilteredData(ufd) {
+    unfilteredData() {
       this.updateSubstep();
     },
     helpModeCheckbox(helpOn) {
@@ -460,7 +460,6 @@ export default {
     updateSubstep() {
       var n_iv = this.inputVariables.length;
       var n_ov = this.outputVariables.length;
-      var has_filters = this.filteredData.length < this.unfilteredData.length;
       var new_ss = this.substep;
 
       if (n_iv > 0 && n_ov > 0) {
@@ -479,27 +478,33 @@ export default {
       this.setCohortNoReset({ id: -1 });
     },
     cohortSaved(success) {
-      // reset all filters
-      this.clearAllFilters();
-      // return to "add filters" step
-      this.substep = '2.3';
+      if (success) {
+        // reset all filters
+        this.clearAllFilters();
+        // return to "add filters" step
+        this.substep = '2.3';
+      }
     },
     // create entirely new cohort resetting everything
     createNew(success) {
-      // return to "choose predictor variables" step
-      this.setNewCohort({ id: null });
-      this.substep = '2.1';
+      if (success) {
+        // return to "choose predictor variables" step
+        this.setNewCohort({ id: null });
+        this.substep = '2.1';
+      }
     },
     // create new cohort similar to the most-recently-created one
     createSimilar(success) {
-      var ncc = this.collection_cohorts.length;
-      // load last cohort in the list
-      if (ncc > 0) {
-        var last_cohort = this.collection_cohorts[ncc - 1];
-        this.setNewCohort(last_cohort);
+      if (success) {
+        var ncc = this.collection_cohorts.length;
+        // load last cohort in the list
+        if (ncc > 0) {
+          var last_cohort = this.collection_cohorts[ncc - 1];
+          this.setNewCohort(last_cohort);
+        }
+        // return to "add filters" step
+        this.substep = '2.3';
       }
-      // return to "add filters" step
-      this.substep = '2.3';
     },
     cohortSelected(newCohort) {
       if (newCohort == this.cohort) {
@@ -522,11 +527,6 @@ export default {
       this.substep = '2.1';
     },
     async setNewCohort(newCohort) {
-      if (this.isLoadingCohort) {
-        console.log(
-          'WARNING - setNewCohort called when cohort load in progress'
-        );
-      }
       this.isLoadingCohort = true;
       await this.setCohort(newCohort);
       this.isLoadingCohort = false;

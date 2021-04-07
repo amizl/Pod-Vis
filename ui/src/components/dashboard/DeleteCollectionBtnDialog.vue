@@ -11,9 +11,7 @@
           <v-icon color="white" left>delete</v-icon>DELETE
         </v-btn>
       </template>
-      <span class="subtitle-1"
-        >Delete Study Dataset {{ this.collectionName }}</span
-      >
+      <span class="subtitle-1">Delete Study Dataset {{ collectionName }}</span>
     </v-tooltip>
 
     <v-dialog v-model="dialog" width="500">
@@ -21,7 +19,7 @@
         <v-card-title color="white" primary-title>
           <v-icon color="primary">delete</v-icon>
           <span class="primary--text text--darken-3 title pl-2"
-            >Delete Study Dataset {{ this.collectionName }}
+            >Delete Study Dataset {{ collectionName }}
           </span>
         </v-card-title>
 

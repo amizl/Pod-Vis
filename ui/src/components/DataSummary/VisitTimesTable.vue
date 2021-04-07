@@ -35,10 +35,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { mapState, mapMutations } from 'vuex';
-import { state, actions } from '@/store/modules/dataSummary/types';
-import { colors } from '@/utils/colors';
+import { mapState } from 'vuex';
+import { state } from '@/store/modules/dataSummary/types';
 import { format } from 'd3-format';
 
 export default {

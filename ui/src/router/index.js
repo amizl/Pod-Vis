@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import logEvent from '@/utils/logging';
 import { requireAuth, requireNotAuth } from './authGuards';
-import { logEvent } from '@/utils/logging';
 
 Vue.use(Router);
 

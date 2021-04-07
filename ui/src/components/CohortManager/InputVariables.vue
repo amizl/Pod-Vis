@@ -87,11 +87,6 @@ export default {
       showHelpChip: false,
     };
   },
-  watch: {
-    showAddHelp(show) {
-      this.showHelpChip = show;
-    },
-  },
   computed: {
     ...mapState('cohortManager', {
       inputVariables: state.INPUT_VARIABLES,
@@ -99,6 +94,11 @@ export default {
     }),
     hasUserAddedInputVariables() {
       return this.inputVariables.length > 0;
+    },
+  },
+  watch: {
+    showAddHelp(show) {
+      this.showHelpChip = show;
     },
   },
   methods: {

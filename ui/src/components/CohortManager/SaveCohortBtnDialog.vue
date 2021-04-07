@@ -85,7 +85,7 @@ export default {
     },
     cohorts: {
       type: Array,
-      default: [],
+      default: () => [],
     },
   },
   data: () => ({
