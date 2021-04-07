@@ -1158,8 +1158,8 @@ export default {
       // "best"/"worst"
       if (!this.isCategorical) {
         // default = higher value corresponds to worse outcome/more severe disease progression
-        var lmin = this.variable.flip_axis ? "worst" : "best";
-        var lmax = this.variable.flip_axis ? "best" : "worst";
+        var lmin = this.variable.flip_axis ? 'worst' : 'best';
+        var lmax = this.variable.flip_axis ? 'best' : 'worst';
         this.context.save();
         this.context.font = this.label_font;
         this.context.fillText(lmin, x, this.dimensionScale(this.yAxisRangeMin));
