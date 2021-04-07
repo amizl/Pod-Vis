@@ -116,7 +116,7 @@ export default {
       height: 0,
       initialWidth: 0,
       initialHeight: 0,
-      margin: { top: 20, right: 75, bottom: 150, left: 75 },
+      margin: { top: 20, right: 100, bottom: 150, left: 100 },
       tick_font: '15px sans-serif',
       label_font: '18px sans-serif',
       colors: colors,
@@ -1154,6 +1154,20 @@ export default {
       this.context.fillStyle = 'black';
     },
 
+    drawOutcomeSeverityLabels(x) {
+      // "best"/"worst"
+      if (!this.isCategorical) {
+        // default = higher value corresponds to worse outcome/more severe disease progression
+        var lmin = this.variable.flip_axis ? "worst" : "best";
+        var lmax = this.variable.flip_axis ? "best" : "worst";
+        this.context.save();
+        this.context.font = this.label_font;
+        this.context.fillText(lmin, x, this.dimensionScale(this.yAxisRangeMin));
+        this.context.fillText(lmax, x, this.dimensionScale(this.yAxisRangeMax));
+        this.context.restore();
+      }
+    },
+
     drawLeftAxis() {
       const tickCount = 10;
       const tickSize = 6;
@@ -1190,7 +1204,10 @@ export default {
         );
       });
 
-      // y-axis label
+      // y-axis labels
+      this.drawOutcomeSeverityLabels(-35);
+
+      // y-axis caption caption
       var caption = null;
       if (this.isCategorical) {
         caption = this.showPercentages
@@ -1243,6 +1260,9 @@ export default {
           this.dimensionScale(d)
         );
       });
+
+      // "best"/"worst"
+      this.drawOutcomeSeverityLabels(x0 + 35);
     },
     drawBottomAxis() {
       //      let tickCount = 10;
@@ -1310,11 +1330,11 @@ export default {
       this.drawBottomAxis();
     },
     updateCanvas() {
-      // TODO - adding 50 is a workaround to account for the right-hand axis, which is outside of the computed area
+      // TODO - adding X is a workaround to account for the right-hand axis, which is outside of the computed area
       this.context.clearRect(
         0,
         0,
-        this.computedWidth + this.margin.left + 50,
+        this.computedWidth + this.margin.left + 100,
         this.computedHeight + this.margin.bottom + this.margin.top
       );
       if (this.cohortsHaveSubjects()) {
