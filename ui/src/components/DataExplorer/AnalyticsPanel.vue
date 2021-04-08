@@ -323,19 +323,26 @@ export default {
   },
   mounted() {
     this.update_pvals();
-    if (this.autoselectFirstVariable && this.selectedVariable == null) {
-      if (this.outcomeVariables && this.outcomeVariables.length > 0) {
-        var vbest = this.outcomeVariables.sort(function(a, b) {
-          return a.p_value - b.p_value;
-        })[0];
-        this.$emit('variableSelected', vbest);
-      }
-    }
-    if (this.outcomeVariables && this.outcomeVariables.length > 0) {
-      this.ovars = this.outcomeVariables;
-    }
+    this.autoselect_first_var();
   },
   methods: {
+    autoselect_first_var() {
+      if (this.autoselectFirstVariable && this.selectedVariable == null) {
+        if (
+          this.outcomeVariables &&
+          this.outcomeVariables.length > 0 &&
+          Object.keys(this.pval_dict).length > 0
+        ) {
+          var vbest = this.outcomeVariables.sort(function(a, b) {
+            return a.p_value - b.p_value;
+          });
+          this.$emit('variableSelected', vbest[0]);
+        }
+      }
+      if (this.outcomeVariables && this.outcomeVariables.length > 0) {
+        this.ovars = this.outcomeVariables;
+      }
+    },
     format_fval(fv) {
       if (fv == null) {
         return '-';

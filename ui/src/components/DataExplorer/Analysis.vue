@@ -138,7 +138,7 @@
                   </v-tabs>
 
                   <v-tabs-items v-model="leftTab" class="pt-3">
-                    <v-tab-item key="cohorts">
+                    <v-tab-item key="cohorts" :eager="true">
                       <cohort-table
                         :cohorts="analysis.cohorts"
                         :select-cohorts="visibleCohorts"
@@ -152,8 +152,9 @@
                       />
                     </v-tab-item>
 
-                    <v-tab-item key="analytics">
+                    <v-tab-item key="analytics" :eager="true">
                       <analytics-panel
+                        ref="apanel"
                         :selected-variable="detailedView"
                         :anova-pvals="analysis.pvals"
                         :anova-pvals-input="analysis.input"
@@ -168,7 +169,7 @@
                       />
                     </v-tab-item>
 
-                    <v-tab-item key="statistics">
+                    <v-tab-item key="statistics" :eager="true">
                       <summary-stats
                         :predictor-variables="analysis.predictorVariables"
                         :outcome-variables="analysis.outcomeVariables"
@@ -195,7 +196,7 @@
                   </v-tabs>
 
                   <v-tabs-items v-model="rightTab">
-                    <v-tab-item key="lview">
+                    <v-tab-item key="lview" :eager="true">
                       <detailed-view
                         ref="dview"
                         :detailed-view="detailedView"
@@ -306,6 +307,11 @@ export default {
     analysis(a) {
       if (a != null) {
         this.visibleCohorts = this.analysis.cohorts;
+      }
+    },
+    'analysis.status': function(newVal) {
+      if (newVal == 'Completed') {
+        this.$nextTick(() => this.$refs.apanel.autoselect_first_var());
       }
     },
     rightTab(rt) {

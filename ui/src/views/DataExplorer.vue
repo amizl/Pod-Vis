@@ -394,13 +394,13 @@ export default {
         .then(function(response) {
           const { data } = response;
           analysis.pvals = data.pvals;
-          analysis.status = 'Completed';
           analysis.statusTime = new Date().getTime();
+          analysis.status = 'Completed';
         })
         .catch(function(err) {
-          analysis.status = 'Failed';
           analysis.statusTime = new Date().getTime();
           analysis.error = err;
+          analysis.status = 'Failed';
         });
 
       this.analyses.unshift(analysis);
