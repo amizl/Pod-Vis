@@ -719,13 +719,16 @@ export default {
       var xoffset = init_xoffset;
       var yoffset = this.computedHeight + 125;
 
-      this.visibleCohorts.forEach(ch => { 
+      this.visibleCohorts.forEach(ch => {
         this.context.fillStyle = ch.color;
         this.context.fillRect(xoffset, yoffset, 20, 20);
         this.context.fillStyle = 'black';
         this.context.fillText(ch.label, xoffset + 30, yoffset + 10);
         // new line guesstimate
-        if ((xoffset + ch.label.length * fm * 2) > (this.computedWidth + this.margin.right)) {
+        if (
+          xoffset + ch.label.length * fm * 2 >
+          this.computedWidth + this.margin.right
+        ) {
           xoffset = init_xoffset;
           yoffset += fm * 2;
         } else {
