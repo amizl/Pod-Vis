@@ -706,6 +706,36 @@ export default {
       context.globalAlpha = 1;
     },
 
+    drawCohortColorKey() {
+      var vm = this;
+      vm.context.save();
+
+      this.context.textAlign = 'left';
+      this.context.textBaseline = 'middle';
+      this.context.strokeStyle = 'black';
+
+      const init_xoffset = -this.margin.left + 20;
+      const fm = 12;
+      var xoffset = init_xoffset;
+      var yoffset = this.computedHeight + 125;
+
+      this.visibleCohorts.forEach(ch => { 
+        this.context.fillStyle = ch.color;
+        this.context.fillRect(xoffset, yoffset, 20, 20);
+        this.context.fillStyle = 'black';
+        this.context.fillText(ch.label, xoffset + 30, yoffset + 10);
+        // new line guesstimate
+        if ((xoffset + ch.label.length * fm * 2) > (this.computedWidth + this.margin.right)) {
+          xoffset = init_xoffset;
+          yoffset += fm * 2;
+        } else {
+          xoffset += ch.label.length * fm;
+        }
+      });
+
+      vm.context.restore();
+    },
+
     drawCategoryColorKey() {
       var vm = this;
       vm.context.save();
@@ -1347,6 +1377,8 @@ export default {
         this.drawAxes();
         if (this.isCategorical) {
           this.drawCategoryColorKey();
+        } else {
+          this.drawCohortColorKey();
         }
         this.drawSubjectCounts();
         if (this.showFirstLastVisit) {

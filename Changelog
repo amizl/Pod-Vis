@@ -1,4 +1,4 @@
-1.0.4 (April 2, 2021)
+1.0.4 (April 8, 2021)
  -Merge Data Explorer and Summary Matrix (#568)
  -Add new Help Mode to Cohort Manager. (#577)
  -Add adjustable split panes to Cohort Manager. (#579)
@@ -20,6 +20,9 @@
  -Add user_tracking table and logging code. (#567)
  -Rename "scale" to "variable" (#610)
  -Rename "outcome measure" to "analysis measure" (#611)
+ -Add "best"/"worst" labels to detailed view in Data Analytics (#613)
+ -Add explicit "All" label to select-all checkboxes (#551)
+ -Add color legend to Data Analytics Detailed View (#223)
 
 1.0.3 (February 24, 2021)
  -Add option to display full scale names (#562)
