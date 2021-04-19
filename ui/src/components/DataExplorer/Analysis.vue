@@ -254,6 +254,7 @@ import SummaryStats from '@/components/AnalysisSummary/SummaryStats.vue';
 import DetailedView from '@/components/DataExplorer/DetailedView.vue';
 import BoxPlots from '@/components/AnalysisSummary/BoxPlots.vue';
 import StackedBars from '@/components/AnalysisSummary/StackedBars.vue';
+import logEvent from '@/utils/logging';
 
 export default {
   components: {
@@ -314,6 +315,16 @@ export default {
         this.$nextTick(() => this.$refs.apanel.autoselect_first_var());
       }
     },
+    leftTab(lt) {
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'left_tab_changeto_' + lt,
+        'analysis',
+        "analysis #" + this.analysis.index + " ",
+      );
+    },
     rightTab(rt) {
       // workaround for resize problem #596
       if (rt == 0) {
@@ -329,6 +340,15 @@ export default {
           if (sb) sb.onResize();
         }, 500);
       }
+
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'right_tab_changeto_' + rt,
+        'analysis',
+        "analysis #" + this.analysis.index + " ",
+      );
     },
   },
   created() {

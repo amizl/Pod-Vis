@@ -136,6 +136,7 @@ import CohortTable from '@/components/common/CohortTable.vue';
 import AnalysisList from '@/components/DataExplorer/AnalysisList.vue';
 import { getCollectionDescription } from '@/utils/helpers';
 import { colors } from '@/utils/colors';
+import logEvent from '@/utils/logging';
 
 const COMPARISON_MEASURES = [
   {
@@ -324,6 +325,16 @@ export default {
       }
       return sc;
     },
+    logAnalysisStatusChange(analysis) {
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'analysis_status_change',
+        'analysis',
+        "analysis #" + analysis.index + " " + analysis.status,
+      );
+    },
     analyzeCohortList(cohorts) {
       var sortedCohorts = [...cohorts].sort((x, y) => y['id'] - x['id']);
 
@@ -386,8 +397,22 @@ export default {
         comparisonFieldDescr,
         comparisonFieldLongDescr,
       };
+
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'new_analysis',
+        'analysis',
+        "analysis #" + analysis.index +
+          " measure=" + analysis.input.comparisonFieldDescr +
+          " cohorts=" + analysis.cohorts.map(c => c.label).join(","),
+      );
+
       analysis.status = 'Running';
       analysis.statusTime = new Date().getTime();
+      this.logAnalysisStatusChange(analysis);
+      var vm = this;
 
       axios
         .post(`/api/compute-anova`, analysis.input)
@@ -396,11 +421,13 @@ export default {
           analysis.pvals = data.pvals;
           analysis.statusTime = new Date().getTime();
           analysis.status = 'Completed';
+          vm.logAnalysisStatusChange(analysis);
         })
         .catch(function(err) {
           analysis.statusTime = new Date().getTime();
           analysis.error = err;
           analysis.status = 'Failed';
+          vm.logAnalysisStatusChange(analysis);
         });
 
       this.analyses.unshift(analysis);
@@ -408,6 +435,14 @@ export default {
       this.$refs.cohortTable.deselectAll();
     },
     deleteAnalysis(anum) {
+      logEvent(
+        this.$gtag,
+        null,
+        null,
+        'analysis_deleted',
+        'analysis',
+        "analysis #" + this.analyses[anum].index,
+      );
       var new_analyses = [...this.analyses];
       new_analyses.splice(anum, 1);
       this.analyses = new_analyses;
