@@ -322,7 +322,7 @@ export default {
         null,
         'left_tab_changeto_' + lt,
         'analysis',
-        "analysis #" + this.analysis.index + " ",
+        'analysis #' + this.analysis.index + ' '
       );
     },
     rightTab(rt) {
@@ -347,7 +347,7 @@ export default {
         null,
         'right_tab_changeto_' + rt,
         'analysis',
-        "analysis #" + this.analysis.index + " ",
+        'analysis #' + this.analysis.index + ' '
       );
     },
   },

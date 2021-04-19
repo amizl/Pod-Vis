@@ -332,7 +332,7 @@ export default {
         null,
         'analysis_status_change',
         'analysis',
-        "analysis #" + analysis.index + " " + analysis.status,
+        'analysis #' + analysis.index + ' ' + analysis.status
       );
     },
     analyzeCohortList(cohorts) {
@@ -404,9 +404,12 @@ export default {
         null,
         'new_analysis',
         'analysis',
-        "analysis #" + analysis.index +
-          " measure=" + analysis.input.comparisonFieldDescr +
-          " cohorts=" + analysis.cohorts.map(c => c.label).join(","),
+        'analysis #' +
+          analysis.index +
+          ' measure=' +
+          analysis.input.comparisonFieldDescr +
+          ' cohorts=' +
+          analysis.cohorts.map(c => c.label).join(',')
       );
 
       analysis.status = 'Running';
@@ -441,7 +444,7 @@ export default {
         null,
         'analysis_deleted',
         'analysis',
-        "analysis #" + this.analyses[anum].index,
+        'analysis #' + this.analyses[anum].index
       );
       var new_analyses = [...this.analyses];
       new_analyses.splice(anum, 1);
