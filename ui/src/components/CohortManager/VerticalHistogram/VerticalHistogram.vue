@@ -305,10 +305,10 @@ export default {
       return pmBins;
     },
     xScale() {
-      const yScale = scaleLinear()
+      const xScale = scaleLinear()
         .domain([0, max(this.popBins, d => d.length)])
         .range(this.left ? [this.w, 0] : [0, this.w]);
-      return yScale;
+      return xScale;
     },
     xAxis() {
       return axisTop(this.xScale);
