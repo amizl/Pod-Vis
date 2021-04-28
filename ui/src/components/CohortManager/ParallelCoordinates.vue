@@ -50,7 +50,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import { state, actions } from '@/store/modules/cohortManager/types';
-import { scalePoint, scaleLinear } from 'd3-scale';
+import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { min, max } from 'd3-array';
 import { colors } from '@/utils/colors';
