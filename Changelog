@@ -1,5 +1,6 @@
 1.0.5
  -Track analyses and analysis panel tab changes in Data Analytics
+ -Fix uneven spacing in spaghetti plots (#614)
 
 1.0.4 (April 8, 2021)
  -Merge Data Explorer and Summary Matrix (#568)

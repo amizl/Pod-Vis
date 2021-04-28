@@ -1,17 +1,18 @@
 <template>
-  <v-container fluid fill-height class="ma-0 pa-0">
+  <v-container fluid fill-height class="ma-0 pa-0" style="max-width: 425px;">
     <v-row class="ma-0 pa-0">
-      <v-col cols="4" class="ma-0 pa-0" align="center">
-        Visit: {{ firstVisitLabel }}
-      </v-col>
-      <v-col cols="4" class="ma-0 pa-0"> </v-col>
-      <v-col cols="4" class="ma-0 pa-0" align="center">
-        Visit: {{ lastVisitLabel }}
+      <v-col cols="12" class="ma-0 pa-0">
+        <div style="width: 280px; float: left;">
+          Visit: {{ firstVisitLabel }}
+        </div>
+        <div>
+          <p class="text-left">Visit: {{ lastVisitLabel }}</p>
+        </div>
       </v-col>
     </v-row>
 
     <v-row class="ma-0 pa-0">
-      <v-col cols="4" class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0">
         <!-- First Visit histogram -->
         <VerticalHistogram
           :id="`firstVisit-${dimensionName}`"
@@ -22,20 +23,16 @@
           :variable="variable"
           @userChangedVariable="userChangedVariable"
         />
-      </v-col>
-      <v-col cols="4" class="ma-0 pa-0">
+
         <!-- Parallel Coordinates -->
         <canvas
           ref="canvas"
           :width="computedWidth"
           :height="computedHeight"
-          :style="
-            'padding: 0px; margin: 0px;' + ' margin-top: ' + margin.top + 'px;'
-          "
+          :style="'padding: 0px; margin: 0px;'"
         >
         </canvas>
-      </v-col>
-      <v-col cols="4" class="ma-0 pa-0">
+
         <!-- Last visit histogram -->
         <VerticalHistogram
           :id="`lastVisit-${dimensionName}`"
@@ -95,7 +92,8 @@ export default {
     return {
       width: 0,
       height: 0,
-      margin: { top: 20, right: 25, bottom: 10, left: 25 },
+      margin: { top: 20, right: 0, bottom: 10, left: 0 },
+      mounted: false,
     };
   },
   computed: {
@@ -188,26 +186,17 @@ export default {
       return width - left - right;
     },
     computedHeight() {
-      const { top, bottom } = this.margin;
       const { height } = this;
-      return height - top - bottom;
-    },
-    xDimensionScale() {
-      return scalePoint()
-        .domain(['First Visit', 'Last Visit'])
-        .range([0, this.computedWidth]);
+      return height;
     },
     dimensionScale() {
       const scale = scaleLinear()
-        .domain([
-          this.minValueBetweenDimensions,
-          this.maxValueBetweenDimensions,
-        ])
-        .range(
+        .domain(
           this.variable.flip_axis
-            ? [0, this.computedHeight]
-            : [this.computedHeight, 0]
-        );
+            ? [this.minValueBetweenDimensions, this.maxValueBetweenDimensions]
+            : [this.maxValueBetweenDimensions, this.minValueBetweenDimensions]
+        )
+        .range([this.margin.top, this.computedHeight - this.margin.bottom]);
       return scale;
     },
   },
@@ -229,6 +218,7 @@ export default {
 
     // Resize chart so we have parent dimensions (width/height)
     this.resizeChart();
+    this.mounted = true;
 
     this.$nextTick(() => this.updateCanvas());
   },
@@ -241,11 +231,15 @@ export default {
     },
     resizeChart() {
       this.height = 300;
-      this.width = 180;
+      this.width = 140;
+    },
+    xDimensionScale(visit) {
+      return visit == 'First Visit' ? 0 : this.computedWidth;
     },
     drawCurve({ firstVisitCoordinates, lastVisitCoordinates }) {
       const { context } = this;
       context.beginPath();
+      context.moveTo(firstVisitCoordinates.x, firstVisitCoordinates.y);
       context.bezierCurveTo(
         firstVisitCoordinates.x +
           (lastVisitCoordinates.x - firstVisitCoordinates.x) / 4,
@@ -279,6 +273,7 @@ export default {
       }
     },
     updateCanvas() {
+      if (!this.mounted) return;
       this.context.clearRect(0, 0, this.width, this.height);
       this.drawUnfiltered();
       this.drawFiltered();
