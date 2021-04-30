@@ -724,15 +724,17 @@ export default {
         this.context.fillRect(xoffset, yoffset, 20, 20);
         this.context.fillStyle = 'black';
         this.context.fillText(ch.label, xoffset + 30, yoffset + 10);
+        var label_width = (ch.label.length < 10) ? ch.label.length * fm * 2 : ch.label.length * fm;
+
         // new line guesstimate
         if (
-          xoffset + ch.label.length * fm * 2 >
+          xoffset + label_width * 2 >
           this.computedWidth + this.margin.right
         ) {
           xoffset = init_xoffset;
           yoffset += fm * 2;
         } else {
-          xoffset += ch.label.length * fm;
+          xoffset += label_width;
         }
       });
 
