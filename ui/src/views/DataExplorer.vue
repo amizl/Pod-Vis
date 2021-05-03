@@ -346,19 +346,30 @@ export default {
       sortedCohorts.forEach(c => {
         const inputVars = c.input_variables;
         inputVars.forEach(iv => {
-          const { id } = iv.subject_ontology;
-          if (!(id in varsAdded)) {
-            varsAdded[id] = 1;
-            inputVariables.push(iv.subject_ontology);
+          if (iv.subject_ontology != null) {
+            const { id } = iv.subject_ontology;
+            if (!(id in varsAdded)) {
+              varsAdded[id] = 1;
+              inputVariables.push(iv.subject_ontology);
+            }
+          } else {
+            const { id } = iv.observation_ontology;
+            var key = id + ':' + iv.dimension_label;
+            if (!(key in varsAdded)) {
+              varsAdded[key] = 1;
+              inputVariables.push(iv);
+            }
           }
         });
         const outputVars = c.output_variables;
         outputVars.forEach(ov => {
-          const { id } = ov.observation_ontology;
-          if (!(id in varsAdded)) {
-            varsAdded[id] = 1;
-            ov.observation_ontology.is_longitudinal = this.collection.is_longitudinal;
-            outputVariables.push(ov.observation_ontology);
+          if (ov.observation_ontology != null) {
+            const { id } = ov.observation_ontology;
+            if (!(id in varsAdded)) {
+              varsAdded[id] = 1;
+              ov.observation_ontology.is_longitudinal = this.collection.is_longitudinal;
+              outputVariables.push(ov.observation_ontology);
+            }
           }
         });
       });

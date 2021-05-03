@@ -55,7 +55,7 @@
                 <tr>
                   <td>
                     <span :class="getNameClass(v.item.abbreviation)">{{
-                      v.item.abbreviation
+                      getVariableName(v.item)
                     }}</span>
                   </td>
                   <template v-for="c in cohorts">
@@ -117,6 +117,13 @@ export default {
     return {
       colors: colors,
       cohortStats: {},
+      dimension2field: {
+        left_y_axis: 'firstVisit',
+        right_y_axis: 'lastVisit',
+        change: 'change',
+        roc: 'roc',
+      },
+      var2visits: {},
     };
   },
   computed: {
@@ -156,6 +163,9 @@ export default {
     cohorts() {
       this.updateCohortStats();
     },
+    collection(new_collection) {
+      this.updateVisits(new_collection);
+    },
     outcomeVariables() {
       this.updateCohortStats();
     },
@@ -164,6 +174,7 @@ export default {
     },
   },
   mounted() {
+    this.updateVisits(this.collection);
     this.updateCohortStats();
   },
   methods: {
@@ -180,7 +191,6 @@ export default {
       this.cohorts.forEach(c => {
         cohortSubjs[c.id] = {};
         var subjIds = c.subject_ids;
-        //        console.log("cohort " + c.label + " has " + subjIds.length + " subject(s)");
         subjIds.forEach(sid => {
           cohortSubjs[c.id][sid] = 1;
         });
@@ -195,17 +205,23 @@ export default {
             if (!(c.id in cohortData)) cohortData[c.id] = {};
 
             this.predictorVariables.forEach(pv => {
-              if (
+              // outcome variable dimension used as input variable
+              if ('dimension_label' in pv) {
+                var ont_id = pv.observation_ontology.id;
+                var key = ont_id + ':' + pv.dimension_label;
+                if (!(key in cohortData[c.id])) cohortData[c.id][key] = [];
+                cohortData[c.id][key].push(
+                  d[ont_id][this.dimension2field[pv.dimension_label]]
+                );
+              }
+              // subject variable used as input variable
+              else if (
                 !('observation_ontology' in pv) ||
                 pv.observation_ontology == null
               ) {
-                var ont_id = pv.id;
-                if (!(ont_id in cohortData[c.id]))
-                  cohortData[c.id][ont_id] = [];
-                cohortData[c.id][ont_id].push(d[pv.label]);
-              } else {
-                if (!(pv.id in cohortData[c.id])) cohortData[c.id][pv.id] = [];
-                cohortData[c.id][pv.id].push(d[pv.id][this.comparisonField]);
+                var oo_id = pv.id;
+                if (!(oo_id in cohortData[c.id])) cohortData[c.id][oo_id] = [];
+                cohortData[c.id][oo_id].push(d[pv.label]);
               }
             });
 
@@ -224,14 +240,15 @@ export default {
           ...this.outcomeVariables,
         ].filter(v => v.data_category != 'Categorical');
         allVars.forEach(ov => {
-          this.cohortStats[c.id][ov.id] = {};
-          var cdata = cohortData[c.id][ov.id];
-          //          console.log("c=" + c.label + " v=" + ov.label + " visit=" + this.comparisonField + " data=" + cdata);
-          this.cohortStats[c.id][ov.id]['mean'] = format('.1~f')(mean(cdata));
-          this.cohortStats[c.id][ov.id]['median'] = format('.1~f')(
-            median(cdata)
-          );
-          this.cohortStats[c.id][ov.id]['deviation'] = format('.1~f')(
+          var key =
+            'dimension_label' in ov
+              ? ov.observation_ontology.id + ':' + ov.dimension_label
+              : ov.id;
+          this.cohortStats[c.id][key] = {};
+          var cdata = cohortData[c.id][key];
+          this.cohortStats[c.id][key]['mean'] = format('.1~f')(mean(cdata));
+          this.cohortStats[c.id][key]['median'] = format('.1~f')(median(cdata));
+          this.cohortStats[c.id][key]['deviation'] = format('.1~f')(
             deviation(cdata)
           );
         });
@@ -241,10 +258,16 @@ export default {
       if (v.abbreviation == 'Predictors' || v.abbreviation == 'Outcomes') {
         return '';
       }
-      if (!(c.id in this.cohortStats) || !(v.id in this.cohortStats[c.id])) {
-        return '-';
+      if (c.id in this.cohortStats) {
+        var cs = this.cohortStats[c.id];
+        if (v.id in cs) {
+          return cs[v.id][stat];
+        } else if ('dimension_label' in v) {
+          var key = v.observation_ontology.id + ':' + v['dimension_label'];
+          return cs[key][stat];
+        }
       }
-      return this.cohortStats[c.id][v.id][stat];
+      return '-';
     },
     cohortMean(v, c) {
       return this.cohortStat(v, c, 'mean');
@@ -261,6 +284,34 @@ export default {
         cls = cls + ' pl-3';
       }
       return cls;
+    },
+    updateVisits(collection) {
+      // build mapping from observation input variable to visit names
+      this.var2visits = {};
+
+      collection.observation_variables_list.forEach(ov => {
+        var ov_id = ov.ontology.id;
+        this.var2visits[ov_id] = {};
+
+        if (ov['first_visit_event']) {
+          this.var2visits[ov_id]['firstVisit'] = ov['first_visit_event'];
+          this.var2visits[ov_id]['lastVisit'] = ov['last_visit_event'];
+        } else {
+          this.var2visits[ov_id]['firstVisit'] = ov['first_visit_num'];
+          this.var2visits[ov_id]['lastVisit'] = ov['last_visit_num'];
+        }
+      });
+    },
+    getVariableName(v) {
+      if ('abbreviation' in v) return v.abbreviation;
+      var field = this.dimension2field[v.dimension_label];
+      var vv = this.var2visits[v.observation_ontology.id];
+      if (vv == null)
+        return v.observation_ontology.abbreviation + ' - ' + field;
+      if (field in vv) {
+        field = this.var2visits[v.observation_ontology.id][field];
+      }
+      return v.observation_ontology.abbreviation + ' - ' + field;
     },
   },
 };
