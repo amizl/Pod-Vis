@@ -13,7 +13,7 @@
                 <g>
                   <!-- endcap lines -->
                   <line
-                    v-for="(s, index) in Object.keys(boxplotStats)"
+                    v-for="(sc, index) in Object.keys(boxplotStats)"
                     :key="`s-el1-${index}`"
                     :x1="boxplotStats[sc]['min_x']"
                     :x2="boxplotStats[sc]['min_x']"
