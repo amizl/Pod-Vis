@@ -146,13 +146,13 @@ export const colors = {
   // Brewer 9 class qualitative - darker colors
   cohorts: [
     '#e41a1c',
-    '#377eb8',
+    '#cab2d6', // substituted for blue / #377eb8
     '#4daf4a',
     '#984ea3',
     '#ff7f00',
     '#33ff33',
     '#a65628',
-    '#f781bf',
+    '#fdbf6f',    // substituted for pink / #f781bf
     '#999999',
   ],
 
@@ -161,10 +161,10 @@ export const colors = {
     '#8dd3c7',
     '#bebada',
     '#fb8072',
-    '#80b1d3',
+    '#80b1d3', // light blue
     '#fdb462',
     '#b3de69',
-    '#fccde5',
+    '#fccde5', // light pink
     '#d9d9d9',
     '#ffffb3',
   ],
