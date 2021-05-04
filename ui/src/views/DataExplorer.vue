@@ -253,8 +253,16 @@ export default {
 
     // additional color palettes for male/female cohorts - these will be checked in order
     var palettes = [
-      { 'regex': new RegExp('female', 'i'), 'colors': ['#f781bf', '#fddaec', '#fb9a99', '#fccde5'], 'ind': 0 },
-      { 'regex': new RegExp('male', 'i'), 'colors': ['#1f78b4', '#80b1d3', '#b3cde3', '#a6cee3'], 'ind': 0 },
+      {
+        regex: new RegExp('female', 'i'),
+        colors: ['#f781bf', '#fddaec', '#fb9a99', '#fccde5'],
+        ind: 0,
+      },
+      {
+        regex: new RegExp('male', 'i'),
+        colors: ['#1f78b4', '#80b1d3', '#b3cde3', '#a6cee3'],
+        ind: 0,
+      },
     ];
 
     this.selectedCohorts
@@ -262,12 +270,12 @@ export default {
       .forEach(c => {
         var matched = false;
         palettes.forEach(p => {
-          if (!matched && (c.label.match(p['regex']))) {
+          if (!matched && c.label.match(p['regex'])) {
             var nc = p['colors'].length;
-            c.color = p['colors'][p['ind'] % nc]
+            c.color = p['colors'][p['ind'] % nc];
             p['ind'] += 1;
             matched = true;
-          } 
+          }
         });
         if (!matched) {
           c.color = this.colors['cohorts'][ind % n_colors];

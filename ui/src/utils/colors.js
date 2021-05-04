@@ -152,7 +152,7 @@ export const colors = {
     '#ff7f00',
     '#33ff33',
     '#a65628',
-    '#fdbf6f',    // substituted for pink / #f781bf
+    '#fdbf6f', // substituted for pink / #f781bf
     '#999999',
   ],
 
