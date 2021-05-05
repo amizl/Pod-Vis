@@ -1,5 +1,6 @@
 1.0.6
- -Added optional subsampling mechanism to spaghetti plots (#615)
+ -Add optional subsampling mechanism to spaghetti plots (#615)
+ -Clear cohort selection in Cohort Manager when user updates filters. (#617)
 
 1.0.5 (May 4, 2021)
  -Track analyses and analysis panel tab changes in Data Analytics
