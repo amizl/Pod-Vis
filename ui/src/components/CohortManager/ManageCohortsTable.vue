@@ -347,6 +347,12 @@ export default {
         this.$emit('maxSelectedOverlap', max_o);
       }
     },
+    cohort(nc) {
+      // reset selection
+      if (nc.id == -1) {
+        this.selected = [];
+      }
+    },
     showNewHelp(show) {
       this.showNewHelpChip = show;
     },
