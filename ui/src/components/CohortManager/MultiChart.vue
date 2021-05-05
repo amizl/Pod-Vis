@@ -17,6 +17,8 @@
           :first-visit-label="firstVisitLabel"
           :last-visit-label="lastVisitLabel"
           @userChangedVariable="userChangedVariable"
+	  :use-subsampling="false"
+	  :subsampling-min="1000"
         />
       </v-col>
     </v-row>
