@@ -44,6 +44,20 @@
         />
       </v-col>
     </v-row>
+
+    <v-row v-if="useSubsampling && (unfilteredData.length >= subsamplingMin)" class="ma-0 pa-0">
+      <v-col cols="12" class="ma-0 pa-0">
+        <v-slider
+          v-model="subsample_choice"
+          label="Subsampling:"
+          step="1"
+          max="5"
+          ticks="always"
+          :tick-size="4"
+          :tick-labels="['1%', '5%', '10%', '20%', '50%', '100%']"
+        ></v-slider>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -87,6 +101,16 @@ export default {
       required: false,
       default: 'Last Visit',
     },
+    useSubsampling: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    subsamplingMin: {
+      type: Number,
+      required: false,
+      default: 500,
+    },
   },
   data() {
     return {
@@ -94,6 +118,7 @@ export default {
       height: 0,
       margin: { top: 20, right: 0, bottom: 10, left: 0 },
       mounted: false,
+      subsample_choice: 0,
     };
   },
   computed: {
@@ -109,6 +134,20 @@ export default {
     cohortData() {
       return this.filteredData.map(d => d[this.dimensionName]);
     },
+    subsamplePopulationData() {
+      return this.useSubsampling && (this.unfilteredData.length >= this.subsamplingMin);
+    },
+    subsampleCohortData() {
+      return this.useSubsampling && (this.unfilteredData.length >= this.subsamplingMin);
+    },
+    subsampledPopulationData() {
+      return this.subsample(this.unfilteredData).map(
+        d => d[this.dimensionName]
+      );
+    },
+    subsampledCohortData() {
+      return this.subsample(this.filteredData).map(d => d[this.dimensionName]);
+    },
     nonCohortData() {
       var cohortSubIds = {};
       this.filteredData.forEach(d => {
@@ -123,7 +162,10 @@ export default {
       return nonCohortData.map(d => d[this.dimensionName]);
     },
     populationPaths() {
-      return this.populationData.map(d => {
+      var data = this.subsamplePopulationData
+        ? this.subsampledPopulationData
+        : this.populationData;
+      return data.map(d => {
         const firstVisitCoordinates = {
           x: this.xDimensionScale('First Visit'),
           y: this.dimensionScale(d.firstVisit),
@@ -139,7 +181,10 @@ export default {
       });
     },
     cohortPaths() {
-      return this.cohortData.map(d => {
+      var data = this.subsampleCohortData
+        ? this.subsampledCohortData
+        : this.cohortData;
+      return data.map(d => {
         const firstVisitCoordinates = {
           x: this.xDimensionScale('First Visit'),
           y: this.dimensionScale(d.firstVisit),
@@ -207,6 +252,9 @@ export default {
     highlightedSubset() {
       this.$nextTick(() => this.updateCanvas());
     },
+    subsample_choice() {
+      this.$nextTick(() => this.updateCanvas());
+    },
   },
   created() {},
   mounted() {
@@ -232,6 +280,20 @@ export default {
     resizeChart() {
       this.height = 300;
       this.width = 140;
+    },
+    //    cluster(data) {
+    //      var clustered = [];
+    // TODO
+    //      return clustered;
+    //    },
+    subsample(old) {
+      var sampled = [];
+      var delta = [100, 20, 10, 5, 2, 1][this.subsample_choice];
+      if (delta == 1) return old;
+      for (var i = 0; i < old.length; i += delta) {
+        sampled.push(old[i]);
+      }
+      return sampled;
     },
     xDimensionScale(visit) {
       return visit == 'First Visit' ? 0 : this.computedWidth;
@@ -275,7 +337,9 @@ export default {
     updateCanvas() {
       if (!this.mounted) return;
       this.context.clearRect(0, 0, this.width, this.height);
-      this.drawUnfiltered();
+      if (this.unfilteredData.length > this.filteredData.length) {
+        this.drawUnfiltered();
+      }
       this.drawFiltered();
     },
   },
