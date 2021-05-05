@@ -45,7 +45,10 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="useSubsampling && (unfilteredData.length >= subsamplingMin)" class="ma-0 pa-0">
+    <v-row
+      v-if="useSubsampling && unfilteredData.length >= subsamplingMin"
+      class="ma-0 pa-0"
+    >
       <v-col cols="12" class="ma-0 pa-0">
         <v-slider
           v-model="subsample_choice"
@@ -135,10 +138,14 @@ export default {
       return this.filteredData.map(d => d[this.dimensionName]);
     },
     subsamplePopulationData() {
-      return this.useSubsampling && (this.unfilteredData.length >= this.subsamplingMin);
+      return (
+        this.useSubsampling && this.unfilteredData.length >= this.subsamplingMin
+      );
     },
     subsampleCohortData() {
-      return this.useSubsampling && (this.unfilteredData.length >= this.subsamplingMin);
+      return (
+        this.useSubsampling && this.unfilteredData.length >= this.subsamplingMin
+      );
     },
     subsampledPopulationData() {
       return this.subsample(this.unfilteredData).map(
