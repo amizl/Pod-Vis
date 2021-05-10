@@ -202,6 +202,10 @@
                       class="text-subtitle-1 text-xs-right"
                     >
                       <mini-boxplot
+                        v-if="
+                          abbrev_to_var[props.item.abbreviation]
+                            .data_category == 'Continuous'
+                        "
                         :width="150"
                         :height="14 * cohorts.length"
                         :cohorts="cohorts"
@@ -210,6 +214,17 @@
                         class="ma-0 pa-0"
                       >
                       </mini-boxplot>
+
+                      <mini-stacked-bars
+                        v-else
+                        :width="150"
+                        :height="14 * cohorts.length"
+                        :cohorts="cohorts"
+                        :output-var="abbrev_to_var[props.item.abbreviation]"
+                        :compare-by="comparisonMeasure"
+                        class="ma-0 pa-0"
+                      >
+                      </mini-stacked-bars>
                     </td>
                   </tr>
                 </template>
@@ -266,10 +281,12 @@ import { state, actions } from '@/store/modules/cohortManager/types';
 import { format } from 'd3-format';
 import { colors } from '@/utils/colors';
 import MiniBoxplot from '@/components/CohortManager/MiniBoxplot.vue';
+import MiniStackedBars from '@/components/CohortManager/MiniStackedBars.vue';
 
 export default {
   components: {
     MiniBoxplot,
+    MiniStackedBars,
   },
   filters: {
     formatFValue(fv) {
