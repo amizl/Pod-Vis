@@ -168,7 +168,7 @@
                             {{ props.item.fval | formatFValue }}
                           </div>
                         </template>
-                        <span>1-way ANOVA F-Statistic</span>
+                        <span>{{ props.item.test_name }} F-Statistic</span>
                       </v-tooltip>
 
                       <v-tooltip v-else bottom color="primary">
@@ -194,7 +194,7 @@
                             {{ props.item.pval | formatPValue }}
                           </div>
                         </template>
-                        <span>1-way ANOVA P-Value</span>
+                        <span>{{ props.item.test_name }} P-Value</span>
                       </v-tooltip>
                     </td>
                     <td
