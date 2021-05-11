@@ -1045,8 +1045,10 @@ def compute_anova():
                               error=err))
 
             
-        # Longitudinal continuous/numeric variable
-        elif output_variable['is_longitudinal']:
+        # Continuous/numeric variable, either longitudinal or cross-sectional
+        elif output_variable['is_longitudinal'] or (output_variable['data_category'] == 'Continuous'):
+            if not output_variable['is_longitudinal']:
+                comparison_field = 'value'
             samples = []
             for g in groups:
                 sample = []
