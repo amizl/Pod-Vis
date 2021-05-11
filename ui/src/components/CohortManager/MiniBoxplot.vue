@@ -215,7 +215,6 @@ export default {
 
         const cmin = min(cohortData);
         const cmax = max(cohortData);
-
         var q1 = quantile(cohortData, 0.25);
         var median = quantile(cohortData, 0.5);
         var q3 = quantile(cohortData, 0.75);
@@ -259,10 +258,10 @@ export default {
       const m2f = {
         'First Visit': 'firstVisit',
         'Last Visit': 'lastVisit',
-        Change: 'change',
+        'Change': 'change',
         'Rate of Change': 'roc',
       };
-      const af = m2f[this.compareBy];
+      const af = this.outputVar.is_longitudinal ? m2f[this.compareBy] : 'value';
       var maxval = null;
 
       // overall max value
