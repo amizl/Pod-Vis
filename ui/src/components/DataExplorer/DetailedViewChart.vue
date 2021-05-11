@@ -778,6 +778,7 @@ export default {
 
       // assign colors to categories
       // TODO - copied from StackedBars.vue
+      const fm = 17;
       var cindex = 0;
       var ncolors = this.colors['bar_graphs'].length;
       var ck_xoffset = 0;
@@ -793,7 +794,11 @@ export default {
             x: ck_xoffset,
             y: slf.computedHeight + 130,
           });
-          ck_xoffset += category.length * 17;
+          var label_width =
+            category.length <= 6
+              ? category.length * fm * 2
+              : category.length * fm;
+          ck_xoffset += label_width;
         }
         return cat2color[category];
       };
