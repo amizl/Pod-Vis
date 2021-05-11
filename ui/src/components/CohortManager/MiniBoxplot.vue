@@ -258,7 +258,7 @@ export default {
       const m2f = {
         'First Visit': 'firstVisit',
         'Last Visit': 'lastVisit',
-        'Change': 'change',
+        Change: 'change',
         'Rate of Change': 'roc',
       };
       const af = this.outputVar.is_longitudinal ? m2f[this.compareBy] : 'value';

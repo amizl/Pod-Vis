@@ -197,9 +197,7 @@
                         <span>{{ props.item.test_name }} P-Value</span>
                       </v-tooltip>
                     </td>
-                    <td
-                      class="text-subtitle-1 text-xs-right"
-                    >
+                    <td class="text-subtitle-1 text-xs-right">
                       <mini-boxplot
                         v-if="
                           abbrev_to_var[props.item.abbreviation]
