@@ -54,7 +54,7 @@
 
           <v-divider class="mx-3 my-2"></v-divider>
 
-          <v-row class="ma-0 pa-0">
+          <v-row v-if="collection.is_longitudinal" class="ma-0 pa-0">
             <v-col cols="12" class="ma-0 pa-0">
               <span class="primary--text title"
                 >Analysis Measure:
@@ -198,7 +198,6 @@
                       </v-tooltip>
                     </td>
                     <td
-                      v-if="!props.item.error"
                       class="text-subtitle-1 text-xs-right"
                     >
                       <mini-boxplot
@@ -377,7 +376,7 @@ export default {
         //          class: 'text-subtitle-1 font-weight-bold',
         //        },
         {
-          text: 'F-Statistic',
+          text: this.collection.is_longitudinal ? 'F-Statistic' : 'Chi2',
           align: 'left',
           sortable: true,
           value: 'fval',
