@@ -70,7 +70,7 @@
 
                     <v-row class="ma-0 pa-0">
                       <v-col cols="12" class="ma-0 pa-0">
-                        <v-container fluid>
+                        <v-container fluid v-if="collection.is_longitudinal">
                           <span
                             class="primary--text subtitle-1 font-weight-bold mb-1"
                             >Analysis Measure:</span
@@ -408,6 +408,7 @@ export default {
         predictorVariables: inputVariables,
         outcomeVariables: outputVariables,
         pvals: null,
+        collection: this.collection,
       };
 
       // create group of samples for each cohort:

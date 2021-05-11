@@ -112,6 +112,11 @@ export default {
       type: String,
       required: true,
     },
+    isLongitudinal: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
@@ -225,9 +230,10 @@ export default {
               }
             });
 
+            var cfield = this.is_longitudinal ? this.comparisonField : 'value';
             this.outcomeVariables.forEach(ov => {
               if (!(ov.id in cohortData[c.id])) cohortData[c.id][ov.id] = [];
-              cohortData[c.id][ov.id].push(d[ov.id][this.comparisonField]);
+              cohortData[c.id][ov.id].push(d[ov.id][cfield]);
             });
           }
         });

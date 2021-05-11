@@ -58,7 +58,7 @@
 
               <v-divider vertical class="ml-4 mr-4"> </v-divider>
 
-              <v-tooltip bottom color="primary">
+              <v-tooltip bottom color="primary" v-if="analysis.collection.is_longitudinal">
                 <template v-slot:activator="{ on: tooltip }">
                   <span v-on="{ ...tooltip }">
                     <span class="black--text text-body-1">Comparing: </span>
@@ -177,6 +177,7 @@
                         :show-category-icons="true"
                         :show-title-bar="false"
                         :comparison-field="analysis.input.comparisonField"
+			:is-longitudinal="analysis.collection.is_longitudinal"
                       />
                     </v-tab-item>
                   </v-tabs-items>
