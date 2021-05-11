@@ -934,7 +934,7 @@ def compute_anova():
             variable_abbreviation = output_variable.get("abbreviation")
         
         # Longitudinal categorical variable
-        if (output_variable['data_category'] == 'Categorical') and output_variable['is_longitudinal']:
+        if (output_variable['data_category'] == 'Categorical') and output_variable['is_longitudinal'] and (comparison_field == 'change'):
             # TODO - code repeated from compute_mannwhitneyu
             data = [];
             variable_id = str(output_variable['id'])
@@ -983,6 +983,68 @@ def compute_anova():
                               pval=pval,
                               fval=None))
 
+        # Non-longitudinal categorical variable - use chi-square test
+        elif (output_variable['data_category'] == 'Categorical') and ((not output_variable['is_longitudinal'] or (comparison_field != "change"))):
+            all_categories = {}
+            group_counts = []
+            err = None
+            
+            gnum = 1
+            for g in groups:
+                gcounts = {}
+                for subj in g:
+                    snum = subj.get('subject_id')
+                    sv = None
+                    if (output_variable['is_longitudinal']):
+                        sv = subj.get(variable_id).get(comparison_field)
+                    else:
+                        sv = subj.get(variable_id).get('value')
+
+                    all_categories[sv] = True
+
+                    if sv not in gcounts:
+                        gcounts[sv] = 0
+                    gcounts[sv] += 1
+
+                group_counts.append(gcounts)
+                gnum += 1
+
+            def get_count(n, d):
+                if n in d:
+                    return d[n]
+                return 0
+
+            counts_lt5 = 0
+            counts_list = []
+            ngc = len(group_counts)
+            for i in range(0, ngc):
+                counts_list.append([])
+            
+            for c in all_categories.keys():
+                for i in range(0, ngc):
+                    cc = get_count(c, group_counts[i])
+                    counts_list[i].append(cc)
+                    if cc < 5:
+                        counts_lt5 += 1
+
+            if counts_lt5 > 0:
+                err = "Cell frequencies < 5"
+                    
+            obs = np.array(counts_list)
+            g, p, dof, expctd = chi2_contingency(obs)
+
+            pvals.append(dict(label=variable_label,
+                              abbreviation=variable_abbreviation,
+                              test_name="Pearson's chi-squared test",
+                              test_abbrev='PCS',
+                              pval=p,
+                              effect_size=None,
+                              effect_size_descr=None,
+                              chi2=g,
+                              dof=dof,
+                              error=err))
+
+            
         # Longitudinal continuous/numeric variable
         elif output_variable['is_longitudinal']:
             samples = []
@@ -1214,7 +1276,7 @@ def compute_mannwhitneyu():
 
             if counts_lt5 > 0:
                 err = "Cell frequencies < 5"
-                    
+
             obs = np.array([fcounts, ucounts])
             g, p, dof, expctd = chi2_contingency(obs)
 
