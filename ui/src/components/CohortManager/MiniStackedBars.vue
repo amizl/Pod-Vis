@@ -226,11 +226,13 @@ export default {
 
         c.data.forEach(x => {
           var xv = x[this.outputVar.id][af];
-          if (!(xv in counts)) {
-            counts[xv] = 0;
+          if (xv != null) {
+            if (!(xv in counts)) {
+              counts[xv] = 0;
+            }
+            counts[xv] += 1;
+            total += 1;
           }
-          counts[xv] += 1;
-          total += 1;
         });
         if (vm.maxValue == null || total > vm.maxValue) {
           vm.maxValue = total;
