@@ -28,7 +28,11 @@ import { state } from '@/store/modules/dataExplorer/types';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
 import { min, max, mean, deviation } from 'd3-array';
-import { sortByVisitEvent, sortVisitEvents } from '@/utils/helpers';
+import {
+  sortByVisitEvent,
+  sortVisitEvents,
+  getLabelWidth,
+} from '@/utils/helpers';
 import { colors } from '@/utils/colors';
 
 export default {
@@ -778,7 +782,6 @@ export default {
 
       // assign colors to categories
       // TODO - copied from StackedBars.vue
-      const fm = 17;
       var cindex = 0;
       var ncolors = this.colors['bar_graphs'].length;
       var ck_xoffset = 0;
@@ -794,11 +797,7 @@ export default {
             x: ck_xoffset,
             y: slf.computedHeight + 130,
           });
-          var label_width =
-            category.length <= 6
-              ? category.length * fm * 2
-              : category.length * fm;
-          ck_xoffset += label_width;
+          ck_xoffset += getLabelWidth(category);
         }
         return cat2color[category];
       };

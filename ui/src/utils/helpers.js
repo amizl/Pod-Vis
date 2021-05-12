@@ -419,3 +419,15 @@ export function getLongScaleNameDefault(datasets) {
   });
   return useLong;
 }
+
+export function getLabelWidth(label) {
+  const fm = 17;
+  if (label.length <= 3) {
+    return label.length * fm * 2.2;
+  } else if (label.length <= 6) {
+    return label.length * fm * 1.4;
+  } else if (label.length >= 15) {
+    return label.length * fm * 0.8;
+  }
+  return label.length * fm;
+}

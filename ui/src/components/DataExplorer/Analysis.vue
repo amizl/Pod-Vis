@@ -58,7 +58,11 @@
 
               <v-divider vertical class="ml-4 mr-4"> </v-divider>
 
-              <v-tooltip bottom color="primary" v-if="analysis.collection.is_longitudinal">
+              <v-tooltip
+                v-if="analysis.collection.is_longitudinal"
+                bottom
+                color="primary"
+              >
                 <template v-slot:activator="{ on: tooltip }">
                   <span v-on="{ ...tooltip }">
                     <span class="black--text text-body-1">Comparing: </span>
@@ -177,7 +181,7 @@
                         :show-category-icons="true"
                         :show-title-bar="false"
                         :comparison-field="analysis.input.comparisonField"
-			:is-longitudinal="analysis.collection.is_longitudinal"
+                        :is-longitudinal="analysis.collection.is_longitudinal"
                       />
                     </v-tab-item>
                   </v-tabs-items>
@@ -218,7 +222,9 @@
                         :show-title-bar="false"
                         :outcome-var="detailedView"
                         :max-cohorts="analysis.cohorts.length"
-                        :row-height="70"
+                        :row-height="
+                          detailedView && detailedView.is_longitudinal ? 70 : 35
+                        "
                         :row-pad="12"
                         :bar-pad="5"
                       />
@@ -229,7 +235,9 @@
                         :show-title-bar="false"
                         :outcome-var="detailedView"
                         :max-cohorts="analysis.cohorts.length"
-                        :row-height="70"
+                        :row-height="
+                          detailedView && detailedView.is_longitudinal ? 70 : 35
+                        "
                         :row-pad="12"
                         :bar-pad="5"
                       />

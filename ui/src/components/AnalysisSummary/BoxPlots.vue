@@ -522,30 +522,47 @@ export default {
       // overall max value
       var accFn = x => x[this.outcomeVar.id];
       var allData = this.data.map(x => accFn(x));
-      const firstMax = max(allData, d => d.firstVisit);
-      const lastMax = max(allData, d => d.lastVisit);
-      this.maxValue = Math.max(firstMax, lastMax);
+      if (this.outcomeVar.is_longitudinal) {
+        const firstMax = max(allData, d => d.firstVisit);
+        const lastMax = max(allData, d => d.lastVisit);
+        this.maxValue = Math.max(firstMax, lastMax);
+      } else {
+        this.maxValue = max(allData, d => d.value);
+      }
 
       var hrh = this.rowHeight / 2.0;
       var hrp = this.rowPad / 2.0;
       var hbp = this.barPad / 2.0;
 
-      this.updateStats_aux(
-        'firstVisit',
-        this.margins.top + hrp,
-        hrh - hrp - hbp,
-        this.rowHeight,
-        this.firstVisit + ' | ',
-        bpStats
-      );
-      this.updateStats_aux(
-        'lastVisit',
-        this.margins.top + hrh + hbp,
-        hrh - hrp - hbp,
-        this.rowHeight,
-        this.lastVisit + ' | ',
-        bpStats
-      );
+      if (this.outcomeVar.is_longitudinal) {
+        this.updateStats_aux(
+          'firstVisit',
+          this.margins.top + hrp,
+          hrh - hrp - hbp,
+          this.rowHeight,
+          this.firstVisit + ' | ',
+          bpStats
+        );
+        this.updateStats_aux(
+          'lastVisit',
+          this.margins.top + hrh + hbp,
+          hrh - hrp - hbp,
+          this.rowHeight,
+          this.lastVisit + ' | ',
+          bpStats
+        );
+      }
+      // cross-sectional data
+      else {
+        this.updateStats_aux(
+          'value',
+          this.margins.top + hbp + hrh / 4,
+          this.rowHeight - hrp - hbp,
+          this.rowHeight,
+          '',
+          bpStats
+        );
+      }
       this.boxplotStats = bpStats;
       this.updateMaxLabelLen();
     },

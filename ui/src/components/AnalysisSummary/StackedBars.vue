@@ -195,6 +195,7 @@ import { format } from 'd3-format';
 import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { colors } from '@/utils/colors';
+import { getLabelWidth } from '@/utils/helpers';
 import 'd3-transition';
 
 export default {
@@ -286,7 +287,7 @@ export default {
     },
     margins() {
       var leftMargin = this.maxLabelLen * this.labelPxPerChar;
-      return { top: 80, bottom: 40, left: leftMargin, right: 20 };
+      return { top: 20, bottom: 150, left: leftMargin, right: 20 };
     },
     // cohorts are collection-specific
     collection_cohorts() {
@@ -456,11 +457,13 @@ export default {
         var counts = {};
         var total = 0;
         cohortData.forEach(x => {
-          if (!(x in counts)) {
-            counts[x] = 0;
+          if (x != null) {
+            if (!(x in counts)) {
+              counts[x] = 0;
+            }
+            counts[x] += 1;
+            total += 1;
           }
-          counts[x] += 1;
-          total += 1;
         });
         if (vm.maxValue == null || total > vm.maxValue) {
           vm.maxValue = total;
@@ -546,6 +549,7 @@ export default {
       var ncolors = this.colors['bar_graphs'].length;
       var cat2color = {};
       var ck_xoffset = 20;
+      var ck_yoffset = vm.height - 110;
       var getBarColor = function(category) {
         // assign color to new category, add entry to color key
         if (!(category in cat2color)) {
@@ -555,9 +559,18 @@ export default {
             label: category,
             color: cat2color[category],
             x: ck_xoffset,
-            y: 20,
+            y: ck_yoffset,
           });
-          ck_xoffset += category.length * 15;
+
+          // new line guesstimate
+          var label_width = getLabelWidth(category);
+
+          if (ck_xoffset + label_width > vm.width - vm.margins.right - 20) {
+            ck_xoffset = 20;
+            ck_yoffset += 35;
+          } else {
+            ck_xoffset += label_width;
+          }
         }
         return cat2color[category];
       };
@@ -565,26 +578,41 @@ export default {
       var hrp = this.rowPad / 2.0;
       var hbp = this.barPad / 2.0;
 
-      this.updateGraphData_aux(
-        'firstVisit',
-        this.margins.top + hrp,
-        hrh - hrp - hbp,
-        this.rowHeight,
-        this.firstVisit + ' | ',
-        getBarColor,
-        gData,
-        gRects
-      );
-      this.updateGraphData_aux(
-        'lastVisit',
-        this.margins.top + hrh + hbp,
-        hrh - hrp - hbp,
-        this.rowHeight,
-        this.lastVisit + ' | ',
-        getBarColor,
-        gData,
-        gRects
-      );
+      if (this.outcomeVar.is_longitudinal) {
+        this.updateGraphData_aux(
+          'firstVisit',
+          this.margins.top + hrp,
+          hrh - hrp - hbp,
+          this.rowHeight,
+          this.firstVisit + ' | ',
+          getBarColor,
+          gData,
+          gRects
+        );
+        this.updateGraphData_aux(
+          'lastVisit',
+          this.margins.top + hrh + hbp,
+          hrh - hrp - hbp,
+          this.rowHeight,
+          this.lastVisit + ' | ',
+          getBarColor,
+          gData,
+          gRects
+        );
+      }
+      // cross-sectional data
+      else {
+        this.updateGraphData_aux(
+          'value',
+          this.margins.top + hbp + hrh / 4,
+          this.rowHeight - hrp - hbp,
+          this.rowHeight,
+          '',
+          getBarColor,
+          gData,
+          gRects
+        );
+      }
       this.graphData = gData;
       this.graphRects = gRects;
       this.updateMaxLabelLen();
