@@ -28,13 +28,14 @@ def create_tokens(identity):
 # This function is called whenever a protected endpoint is accessed,
 # and returns an object based on the tokens identity.
 # This is called after the token is verified.
-@jwt.user_loader_callback_loader
-def user_loader_callback(identity):
+@jwt.user_lookup_loader
+def user_loader_callback(_jwt_header, jwt_data):
+    identity = jwt_data["sub"]
     user = models.User.find_by_id(identity)
     return user if user else None
 
 # Override the error returned to the user if the
 # user_loader_callback returns None.
-@jwt.user_loader_error_loader
+@jwt.user_lookup_error_loader
 def custom_user_loader_error(identity):
     raise AuthFailure(f"No user was found by ID: {identity}.")

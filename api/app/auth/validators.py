@@ -18,18 +18,18 @@ class SignUpSchema(Schema):
 def validate_sign_in(func):
     """Validate sign in form data."""
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def sign_in_wrapper(*args, **kwargs):
         request_data = request.get_json()
         data = SignInSchema().load(request_data)
         email = data.get("email")
         password = data.get("password")
         return func(email, password)
-    return wrapper
+    return sign_in_wrapper
 
 def validate_sign_up(func):
     """"Valdate sign up form data."""
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def sign_up_wrapper(*args, **kwargs):
         request_data = request.get_json()
         data = SignUpSchema().load(request_data)
         email = data.get("email")
@@ -37,4 +37,4 @@ def validate_sign_up(func):
         institution = data.get("institution")
         name = data.get("name")
         return func(email, password, institution, name)
-    return wrapper
+    return sign_up_wrapper

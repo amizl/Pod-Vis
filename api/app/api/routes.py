@@ -436,7 +436,7 @@ def get_project(project_id):
     })
 
 @api.route("/collections", methods=["POST"])
-@jwt_required
+@jwt_required()
 def create_collection():
     """Create new collection.
 
@@ -510,7 +510,7 @@ def create_collection():
     }), 201
 
 @api.route("/collections/<int:collection_id>/observation_visits", methods=["POST"])
-@jwt_required
+@jwt_required()
 def set_collection_observation_variable_visits(collection_id):
     """Set first/last visit for observation variable(s).
 
@@ -576,7 +576,7 @@ def set_collection_observation_variable_visits(collection_id):
     }), 201
 
 @api.route("/collections")
-@jwt_required
+@jwt_required()
 def get_collections():
     """Get user's collections and any public collections.
 
@@ -622,7 +622,7 @@ def get_collections():
     })
 
 @api.route("/collections/<int:collection_id>")
-@jwt_required
+@jwt_required()
 def get_collection(collection_id):
     """Get the user's collection."""
     user = get_current_user()
@@ -659,7 +659,7 @@ def get_collection(collection_id):
     return jsonify(dict(success=True, collection=collection_d))
 
 @api.route("/collections/<int:collection_id>", methods=["DELETE"])
-@jwt_required
+@jwt_required()
 def delete_collection(collection_id):
     """Delete the user's collection."""
     user = get_current_user()
@@ -676,7 +676,7 @@ def delete_collection(collection_id):
     return jsonify(dict(success=True))
 
 @api.route("/collections", methods=["DELETE"])
-@jwt_required
+@jwt_required()
 def delete_all_collections():
     """Delete all of user's collections."""
     user = get_current_user()
@@ -692,7 +692,7 @@ def delete_all_collections():
     return jsonify(dict(success=True))
 
 @api.route("/cohorts")
-@jwt_required
+@jwt_required()
 def get_all_cohorts():
     """Get all of user's cohorts.
 
@@ -739,7 +739,7 @@ def get_all_cohorts():
     })
 
 @api.route("/cohorts/<int:cohort_id>")
-@jwt_required
+@jwt_required()
 def get_cohort(cohort_id):
     """Get a user's cohort.
 
@@ -768,7 +768,7 @@ def get_cohort(cohort_id):
 
 
 # @api.route('/cohorts', methods=["POST"])
-# @jwt_required
+# @jwt_required()
 # def create_cohort():
 #     """Create new cohort.
 
@@ -795,7 +795,7 @@ def get_cohort(cohort_id):
 #     }), 201
 
 @api.route('/cohorts', methods=["DELETE"])
-@jwt_required
+@jwt_required()
 def delete_all_cohorts():
     """Delete all of user's cohorts.
 
@@ -817,7 +817,7 @@ def delete_all_cohorts():
     })
 
 @api.route('/cohorts/<int:cohort_id>', methods=["DELETE"])
-@jwt_required
+@jwt_required()
 def delete_cohort(cohort_id):
     """Delete user's cohort.
 
@@ -841,7 +841,7 @@ def delete_cohort(cohort_id):
     })
 
 @api.route('/collections/<int:collection_id>/observations/<int:observation_id>/roc')
-@jwt_required
+@jwt_required()
 def compute_roc_for_observation(collection_id, observation_id):
     user = get_current_user()
     collection = models.Collection.find_by_id(collection_id)
@@ -864,7 +864,7 @@ def compute_roc_for_observation(collection_id, observation_id):
 
 
 @api.route('/cohort-manager')
-@jwt_required
+@jwt_required()
 def fetch_data_for_cohort_manager():
     """Fetch data from studies and variables included in a collection"""
     user = get_current_user()
@@ -886,7 +886,7 @@ def fetch_data_for_cohort_manager():
 
 
 @api.route('/demo-parcoords')
-@jwt_required
+@jwt_required()
 def demo_parcoords():
     """Fetch data from studies and variables included in a collection"""
     user = get_current_user()
@@ -1371,7 +1371,7 @@ def compute_mannwhitneyu():
     })
 
 @api.route('/cohorts', methods=['POST'])
-@jwt_required
+@jwt_required()
 def create_cohort():
     """Create cohort"""
 
@@ -1528,7 +1528,7 @@ def create_cohort():
 
 # Method to retrieve all collection observation summaries
 @api.route("/collections/obs_summaries/<int:collection_id>")
-@jwt_required
+@jwt_required()
 def get_collection_obs_summary_by_event(collection_id):
     """Get the user's collection observation summary."""
     obs_summaries = models.Collection.get_all_visit_summaries(collection_id)
@@ -1543,7 +1543,7 @@ def get_collection_obs_summary_by_event(collection_id):
 
 # Method to calculate average time between events
 @api.route("/collections/time_between_visits/<int:collection_id>")
-@jwt_required
+@jwt_required()
 def get_collection_time_between_visits(collection_id):
     query_by = request.args.get("query_by")
 
@@ -1585,7 +1585,7 @@ def get_collection_time_between_visits(collection_id):
         }), 201
 
 @api.route("/log", methods=["POST"])
-@jwt_required
+@jwt_required()
 def log_event():
     """Log event in user tracking table.
 
@@ -1628,7 +1628,7 @@ def log_event_aux(user_id, source_path, path, action, category, label):
     return True
 
 @api.route("/log")
-@jwt_required
+@jwt_required()
 def get_user_log():
     user = get_current_user()
     log_entries = models.UserTracking.find_all_by_user_id(user.id)
