@@ -37,7 +37,7 @@
           color="primary"
           :activator="rowCounts[sv]['node']"
         >
-          <span> {{ rowCounts[scale]['descr'] }} </span>
+          <span> {{ rowCounts[scale] ? rowCounts[scale]['descr'] : '' }} </span>
         </v-tooltip>
       </v-col>
     </v-row>
