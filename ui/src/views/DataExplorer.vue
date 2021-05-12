@@ -70,7 +70,7 @@
 
                     <v-row class="ma-0 pa-0">
                       <v-col cols="12" class="ma-0 pa-0">
-                        <v-container fluid v-if="collection.is_longitudinal">
+                        <v-container v-if="collection.is_longitudinal" fluid>
                           <span
                             class="primary--text subtitle-1 font-weight-bold mb-1"
                             >Analysis Measure:</span
