@@ -226,24 +226,17 @@ export default {
       subsample_choice: 2,
       min_cluster_size: 1,
       cluster_choice: 'Change/baseline',
-      //      cluster_choice: 'Change/baseline [>3SD,>1SD,+-1SD,<-1SD,<-3SD]',
-      //      cluster_choices: [
-      //        'Change/baseline [>3SD,>1SD,+-1SD,<-1SD,<-3SD]',
-      //        'Change [>3SD,>1SD,+-1SD,<-1SD,<-3SD]',
-      //        'First Visit [>3SD,>1SD,+-1SD,<-1SD,<-3SD]',
-      //        'Last Visit [>3SD,>1SD,+-1SD,<-1SD,<-3SD]',
-      //      ],
       cluster_choices: [
         'Change/baseline',
         'Change',
         'First Visit',
         'Last Visit',
       ],
-      cluster_style_choice: 'Average (width=num_subjects)',
+      cluster_style_choice: 'Average +/- 1 SD',
       cluster_style_choices: [
-        'Average (width=num_subjects)',
+        'Average (width=n_subjects)',
         'Average +/- 1 SD',
-        'Include all subjects',
+        'Average + all subjects',
       ],
       num_clusters: 0,
       num_clusters_displayed: 0,
@@ -532,6 +525,8 @@ export default {
           );
         };
 
+        var fv_ymin, fv_ymax, lv_ymin, lv_ymax;
+
         // OPTION 1: draw line around average with thickness determined by number of subjects
         if (this.cluster_style_choice == this.cluster_style_choices[0]) {
           context.beginPath();
@@ -544,35 +539,37 @@ export default {
         // OPTION 2: draw average line +/- 1 SD
         else if (this.cluster_style_choice == this.cluster_style_choices[1]) {
           // +1 SD
-          var fv_y1 = this.dimensionScale(c['avg_f'] + c['deviation_f']);
-          var lv_y1 = this.dimensionScale(c['avg_l'] + c['deviation_l']);
+          fv_ymax = this.dimensionScale(c['avg_f'] + c['deviation_f']);
+          lv_ymax = this.dimensionScale(c['avg_l'] + c['deviation_l']);
 
           // -1 SD
-          var fv_y2 = this.dimensionScale(c['avg_f'] - c['deviation_f']);
-          var lv_y2 = this.dimensionScale(c['avg_l'] - c['deviation_l']);
+          fv_ymin = this.dimensionScale(c['avg_f'] - c['deviation_f']);
+          lv_ymin = this.dimensionScale(c['avg_l'] - c['deviation_l']);
 
           context.lineWidth = 1;
 
           // fill area from +1 SD to -1 SD
           context.beginPath();
-          context.moveTo(fv_x, fv_y1);
-          bcurve(context, fv_x, fv_y1, lv_x, lv_y1);
-          context.lineTo(lv_x, lv_y2);
-          bcurve(context, lv_x, lv_y2, fv_x, fv_y2);
-          context.lineTo(fv_x, fv_y1);
-          context.fillStyle = 'rgb(208,208,208,0.5)';
+          context.moveTo(fv_x, fv_ymax);
+          bcurve(context, fv_x, fv_ymax, lv_x, lv_ymax);
+          context.lineTo(lv_x, lv_ymin);
+          bcurve(context, lv_x, lv_ymin, fv_x, fv_ymin);
+          context.lineTo(fv_x, fv_ymax);
+          context.fillStyle = 'rgb(208,208,208,0.3)';
           context.fill();
+
+          context.strokeStyle = ccol;
 
           // +1 SD
           context.beginPath();
-          context.moveTo(fv_x, fv_y1);
-          bcurve(context, fv_x, fv_y1, lv_x, lv_y1);
+          context.moveTo(fv_x, fv_ymax);
+          bcurve(context, fv_x, fv_ymax, lv_x, lv_ymax);
           context.stroke();
 
           // -1 SD
           context.beginPath();
-          context.moveTo(fv_x, fv_y2);
-          bcurve(context, fv_x, fv_y2, lv_x, lv_y2);
+          context.moveTo(fv_x, fv_ymin);
+          bcurve(context, fv_x, fv_ymin, lv_x, lv_ymin);
           context.stroke();
 
           // average, width = num clusters
@@ -582,12 +579,15 @@ export default {
           bcurve(context, fv_x, fv_y, lv_x, lv_y);
           context.stroke();
         }
-        // OPTION 3: draw entire area around min/max, use opacity to indicate number of subjects
+        // OPTION 3: draw average line plus entire area around min/max
         else if (this.cluster_style_choice == this.cluster_style_choices[2]) {
-          var fv_ymin = this.dimensionScale(c['min_f']);
-          var fv_ymax = this.dimensionScale(c['max_f']);
-          var lv_ymin = this.dimensionScale(c['min_l']);
-          var lv_ymax = this.dimensionScale(c['max_l']);
+          // max
+          fv_ymax = this.dimensionScale(c['max_f']);
+          lv_ymax = this.dimensionScale(c['max_l']);
+
+          // min
+          fv_ymin = this.dimensionScale(c['min_f']);
+          lv_ymin = this.dimensionScale(c['min_l']);
 
           context.beginPath();
           context.strokeStyle = '#000';
@@ -617,10 +617,11 @@ export default {
             fv_ymin
           );
 
-          context.fillStyle = 'rgb(' + col.join(',') + ',' + '0.5' + ')';
+          context.fillStyle = 'rgb(208,208,208,0.3)';
           context.fill();
 
           // trace outlines
+          context.strokeStyle = ccol;
           context.beginPath();
           context.moveTo(fv_x, fv_ymax);
           context.bezierCurveTo(
@@ -640,6 +641,13 @@ export default {
             fv_x,
             fv_ymin
           );
+          context.stroke();
+
+          // average, width = num clusters
+          context.lineWidth = (c['data'].length / ns) * ht * 0.1;
+          context.beginPath();
+          context.moveTo(fv_x, fv_y);
+          bcurve(context, fv_x, fv_y, lv_x, lv_y);
           context.stroke();
         }
       });
