@@ -196,12 +196,20 @@
                   class="rounded-lg shadow"
                 >
                   <v-tabs v-model="rightTab" light>
-                    <v-tab key="lview">Detailed View</v-tab>
+                    <v-tab
+                      key="lview"
+                      :disabled="!analysis.collection.is_longitudinal"
+                      >Detailed View</v-tab
+                    >
                     <v-tab key="boxplots">Boxplots/Bar graphs</v-tab>
                   </v-tabs>
 
                   <v-tabs-items v-model="rightTab">
-                    <v-tab-item key="lview" :eager="true">
+                    <v-tab-item
+                      key="lview"
+                      :disabled="!analysis.collection.is_longitudinal"
+                      :eager="true"
+                    >
                       <detailed-view
                         ref="dview"
                         :detailed-view="detailedView"
@@ -223,7 +231,7 @@
                         :outcome-var="detailedView"
                         :max-cohorts="analysis.cohorts.length"
                         :row-height="
-                          detailedView && detailedView.is_longitudinal ? 70 : 35
+                          analysis.collection.is_longitudinal ? 70 : 35
                         "
                         :row-pad="12"
                         :bar-pad="5"
@@ -236,7 +244,7 @@
                         :outcome-var="detailedView"
                         :max-cohorts="analysis.cohorts.length"
                         :row-height="
-                          detailedView && detailedView.is_longitudinal ? 70 : 35
+                          analysis.collection.is_longitudinal ? 70 : 35
                         "
                         :row-pad="12"
                         :bar-pad="5"
@@ -396,7 +404,9 @@ export default {
       this.expandAnalytics = psize > 30;
 
       if (this.rightTab == 0) {
-        this.$refs.dview.onResize();
+        if (this.$refs.dview) {
+          this.$refs.dview.onResize();
+        }
       } else if (this.rightTab == 1) {
         if (
           this.detailedView &&

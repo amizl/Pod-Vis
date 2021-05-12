@@ -221,8 +221,7 @@ export default {
     },
     outcomeVar: {
       type: Object,
-      required: true,
-      default: null,
+      required: false,
     },
     minHeight: {
       type: Number,
