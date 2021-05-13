@@ -1,9 +1,10 @@
-1.0.6
+1.0.6 (May 13, 2021)
  -Add optional subsampling mechanism to spaghetti plots (#615)
  -Clear cohort selection in Cohort Manager when user updates filters. (#617)
  -Support categorical variables in Analytics Popup. (#623)
  -Support cross-sectional studies on Data Analytics page. (#625)
- -Updated to Flask-JWT-Extended v4.0.0+
+ -Update to Flask-JWT-Extended v4.0.0+
+ -Add support for clustering to Cohort Manager (#103)
 
 1.0.5 (May 4, 2021)
  -Track analyses and analysis panel tab changes in Data Analytics

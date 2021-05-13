@@ -159,6 +159,30 @@
                 class="pt-4"
               >
               </v-slider>
+
+              <v-divider class="mt-2 mb-2"></v-divider>
+
+              <v-simple-table class="pa-0 ma-0">
+                <thead>
+                  <tr>
+                    <th>Cluster</th>
+                    <th>Size</th>
+                    <th>Visible</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(c, index) in clusters"
+                    :key="`cl-${index}`"
+                    @mouseover="clusterHover(c)"
+                    @mouseleave="clusterUnhover(c)"
+                  >
+                    <td>{{ c.label }}</td>
+                    <td>{{ c.data.length }}</td>
+                    <td><v-icon v-if="c.displayed">done</v-icon></td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -225,12 +249,12 @@ export default {
       subsample_labels: ['1%', '5%', '10%', '20%', '50%'],
       subsample_choice: 2,
       min_cluster_size: 1,
-      cluster_choice: 'Change/baseline',
+      cluster_choice: 'Change/baseline 5',
       cluster_choices: [
-        'Change/baseline',
-        'Change',
-        'First Visit',
-        'Last Visit',
+        'Change/baseline 5',
+        'Change 5',
+        'First Visit 5',
+        'Last Visit 5',
       ],
       cluster_style_choice: 'Average +/- 1 SD',
       cluster_style_choices: [
@@ -240,6 +264,8 @@ export default {
       ],
       num_clusters: 0,
       num_clusters_displayed: 0,
+      clusters: [],
+      clusters_cache: {},
     };
   },
   computed: {
@@ -480,8 +506,7 @@ export default {
       }
     },
     drawPopulationClusters() {
-      var pclust = this.computeFiveClusters(this.unfilteredData);
-      this.num_clusters_displayed = pclust.length;
+      var pclust = this.getClusters();
 
       var popColor = colors['population'];
       var cohortColor = colors['cohort'];
@@ -501,7 +526,15 @@ export default {
       var ht = this.computedHeight - this.margin.bottom;
       var ns = this.unfilteredData.length;
 
-      pclust.forEach(c => {
+      // filter and sort clusters - highlighted cluster last
+      var dclust = pclust.filter(c => c.displayed);
+      var sclust = dclust.sort((x, y) => {
+        var xs = x.data.length - (x.highlight ? ns : 0);
+        var ys = y.data.length - (y.highlight ? ns : 0);
+        return ys - xs;
+      });
+
+      sclust.forEach(c => {
         var fv_y = this.dimensionScale(c['avg_f']);
         var lv_y = this.dimensionScale(c['avg_l']);
 
@@ -512,7 +545,11 @@ export default {
           pc[1] + cf * pcd[1],
           pc[2] + cf * pcd[2],
         ];
+
         var ccol = 'rgb(' + col.join(',') + ',0.7)';
+        if (c.highlight) {
+          ccol = 'rgb(255,0,0,0.9)';
+        }
 
         var bcurve = function(context, fv_x, fv_y, lv_x, lv_y) {
           context.bezierCurveTo(
@@ -555,7 +592,9 @@ export default {
           context.lineTo(lv_x, lv_ymin);
           bcurve(context, lv_x, lv_ymin, fv_x, fv_ymin);
           context.lineTo(fv_x, fv_ymax);
-          context.fillStyle = 'rgb(208,208,208,0.3)';
+          context.fillStyle = c.highlight
+            ? 'rgb(208,208,208,0.6)'
+            : 'rgb(208,208,208,0.3)';
           context.fill();
 
           context.strokeStyle = ccol;
@@ -654,7 +693,6 @@ export default {
     },
     updateCanvas() {
       if (!this.mounted) return;
-
       this.context.clearRect(0, 0, this.width, this.height);
       // individual subjects
       if (this.show_raw_data) {
@@ -711,10 +749,32 @@ export default {
 
         c['deviation_f'] = deviation(fv_values);
         c['deviation_l'] = deviation(lv_values);
-
-        //        console.log('avg_f=' + c['avg_f'] + ' mean_f=' + mean(fv_values));
-        //        console.log('avg_l=' + c['avg_l'] + ' mean_l=' + mean(lv_values));
       });
+    },
+    getClusters() {
+      var clusters = null;
+
+      // check cache
+      var ckey = this.cluster_choice + ':' + this.dimensionName;
+      if (!(ckey in this.clusters_cache)) {
+        clusters = this.computeFiveClusters(this.unfilteredData);
+        this._updateClusters(clusters);
+        this.clusters_cache[ckey] = clusters;
+      }
+
+      clusters = this.clusters_cache[ckey];
+      this.clusters = clusters;
+      this.num_clusters = clusters.length;
+      var n_displayed = 0;
+
+      // filter by length
+      clusters.forEach(c => {
+        c.displayed = c.data.length >= this.min_cluster_size;
+        if (c.displayed) n_displayed += 1;
+      });
+
+      this.num_clusters_displayed = n_displayed;
+      return clusters;
     },
     // compute five clusters: >3 SD,1-3 SD,-1 - +1 SD,-1 - -3 SD,< 3 SD
     computeFiveClusters(data) {
@@ -749,11 +809,11 @@ export default {
       var m1sd = mn - dev;
 
       var clusters = [
-        { data: [] }, // +3 SD or more
-        { data: [] }, // +1 - +3 SD
-        { data: [] }, // +1 - -1 SD
-        { data: [] }, // -1 - -3 SD
-        { data: [] }, // -3 SD or more
+        { label: '> 3 SD', data: [] }, // +3 SD or more
+        { label: '> 1 SD', data: [] }, // +1 - +3 SD
+        { label: '+/- 1 SD', data: [] }, // +1 - -1 SD
+        { label: '< -1 SD', data: [] }, // -1 - -3 SD
+        { label: '< -3 SD', data: [] }, // -3 SD or more
       ];
 
       data.forEach(d => {
@@ -771,12 +831,6 @@ export default {
         }
       });
 
-      // don't count zero size clusters
-      clusters = clusters.filter(c => c.data.length > 0);
-
-      this.num_clusters = clusters.length;
-      clusters = clusters.filter(c => c.data.length >= this.min_cluster_size);
-      this._updateClusters(clusters);
       return clusters;
     },
     // deprecated - this is clustering subjects by last visit proximity only
@@ -865,6 +919,14 @@ export default {
     },
     subsampleClicked(e) {
       e.cancelBubble = true;
+    },
+    clusterHover(c) {
+      c.highlight = true;
+      this.$nextTick(() => this.updateCanvas());
+    },
+    clusterUnhover(c) {
+      c.highlight = false;
+      this.$nextTick(() => this.updateCanvas());
     },
   },
 };
