@@ -1,63 +1,63 @@
-Observations
-ApoE Genotype
-MDS_UPDRS_1
-MDS_UPDRS_2
-MDS_UPDRS_3
-MDS_UPDRS_Total
-MOCA
-MSEADL
-SNCA - rs356181
-SNCA - rs3910105
-Abeta 42
-BentonJudgment
-DVT_Delayed_Recall
-DVT_Retention
-DVT_Total_Recall
-ESS_Score
-ESS_State
-GDS
-GDS_Score
-LNS_Total_Raw
-REM_RBD_Score
-REM_RBD_State
-SCOPA-AUT
-SDM
-STAI
-SemanticFluency
-CSF Hemoglobin
-BentonJudgment-Change
-DVT_Delayed_Recall-Change
-DVT_Retention-Change
-DVT_Total_Recall-Change
-ESS_Score-Change
-GDS_Score-Change
-LNS_Total_Raw-Change
-MDS_UPDRS_1-Change
-MDS_UPDRS_2-Change
-MDS_UPDRS_3-Change
-MDS_UPDRS_Total-Change
-MOCA-Change
-MSEADL-Change
-REM_RBD_Score-Change
-SCOPA-AUT-Change
-SDM-Change
-STAI-Change
-SemanticFluency-Change
-BentonJudgment-ROC
-DVT_Delayed_Recall-ROC
-DVT_Retention-ROC
-DVT_Total_Recall-ROC
-ESS_Score-ROC
-GDS_Score-ROC
-LNS_Total_Raw-ROC
-MDS_UPDRS_1-ROC
-MDS_UPDRS_2-ROC
-MDS_UPDRS_3-ROC
-MDS_UPDRS_Total-ROC
-MOCA-ROC
-MSEADL-ROC
-REM_RBD_Score-ROC
-SCOPA-AUT-ROC
-SDM-ROC
-STAI-ROC
-SemanticFluency-ROC
+Testname,Label,Description
+ApoE Genotype,Apolipoprotein E Genotype,"The ApoE genotype is a genetic risk factor for dementia, Alzheimer's disease, and cardiovascular disease. It includes three alleles (e2, e3, e4) that are located on chromosome 19q3."
+MoCA,Montreal Cognitive Assessment,"The MoCA is a cognitive screening test designed to detect mild cognitive impairment and dementia. It assesses different cognitivedomains including attention and concentration, executive functions, visuospatial skills, memory, language, abstraction, calculations, and orientation."
+SNCA-rs356181,Synuclein Alpha Polymorphism- rs356181,"The alpha-synuclein gene (SNCA) is responsible for encoding alpha-synuclein, and is associated with the risk of Parkinson's disease. The protein alpha-synuclein is the major component of the Lewy body, an intraneuronal inclusion body that is the pathological hallmark of PD."
+SNCA-rs3910105,Synuclein Alpha Polymorphism- rs3910105,"The alpha-synuclein gene (SNCA) is responsible for encoding alpha-synuclein and is associated with the risk of Parkinson's disease. The protein alpha-synuclein is the major component of the Lewy body, an intraneuronal inclusion body that is the pathological hallmark of PD. SNCA-rs3910105 has been shown to have an effect on the availability of the dopamine transporter (DAT)."
+Benton JOLO,Benton Judgment of Line Orientation,Benton JOLO is a standardized test of visuospatial skills associated with functioning of the parietal lobe in the brain's right hemisphere. The test measures a person's ability to match the angle and orientation of lines in space. Subjects are asked to match two angled lines to a set of 11 lines that are arranged in a semicircle.
+CSF-Abeta-42,Cerebrospinal fluid beta-amyloid 1&mdash;42,The cerebrospinal fluid level of &beta;-amyloid 1&mdash;42 (A&beta;42) is a biomarker and altered levels of A&beta;42 are associated with future conversion to dementia due to Alzheimer's disease pathology.
+ESS Score,Epworth Sleepiness Scale Score,"The ESS is a self-reported measure of daytime sleepiness- the propensity to fall asleep during common daily activities. Subjects use a 4-point scale to rate their chances of dozing off while engaged in 8 common daytime activities (e.g. watching television, sitting and talking to someone, sitting and reading). Scores from 0 to 10 is normal daytime sleepiness, 11-12 is mild excessive daytime sleepiness, 13-15 moderate excessive daytime sleepiness, and 16-24 severe excessive daytime sleepiness. ESS Score displays the continuous data."
+ESS State,Epworth Sleepiness Scale State,"The ESS is a self-reported measure of daytime sleepiness- the propensity to fall asleep during common daily activities. Subjects use a 4-point scale to rate their chances of dozing off while engaged in 8 common daytime activities (e.g. watching television, sitting and talking to someone, sitting and reading). Scores from 0 to 10 is normal daytime sleepiness, 11-12 is mild excessive daytime sleepiness, 13-15 moderate excessive daytime sleepiness, and 16-24 severe excessive daytime sleepiness. EES State categorizes study subjects into 2 groups: Sleepy and Not Sleepy."
+GDS Score,Geriatric Depression Scale Score,"The GDS is a screening test that is used to identify symptoms of depression in older adults. The scale is a 30-item, self-report instrument that uses a ""Yes/No"" format. One point is assigned to each answer and the cumulative score is rated on a scoring grid. The grid sets a range of 0-9 as ""normal"", 10-19 as ""mildly depressed"", and 20-30 as ""severely depressed"". GDS Score displays the continuous data."
+GDS State,Geriatric Depression State,"The GDS is a screening test that is used to identify symptoms of depression in older adults. The scale is a 30-item, self-report instrument that uses a ""Yes/No"" format. One point is assigned to each answer and the cumulative score is rated on a scoring grid. The grid sets a range of 0-9 as ""normal"", 10-19 as ""mildly depressed"", and 20-30 as ""severely depressed"". GDS State categorizes study subjects into 2 groups: Depressed and Not Depressed."
+HVLT-DR,Hopkins Verbal Learning Test- Delayed Recall,"The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall."
+HVLT-R,Hopkins Verbal Learning Test- Retention,"The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall."
+HVLT-TR,Hopkins Verbal Learning Test- Total Recall,"The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall."
+LNS,Letter-Number Sequencing,"LNS is a brief, standardized measure of executive function that measures verbal and visuospatial working memory, as well as processing speed. The participant must first say the numbers in ascending order and then the letters in alphabetical order. LNS is a subtest of the Wechsler Adult Intelligence Scale."
+MDS-UPDRS I,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part I,"MDS-UPDRS Part I assesses Nonmotor experiences of daily living (13 items) including cognition, hallucinations, depression, apathy, sleep, lightheadedness, urinary problems, constipation and fatigue."
+MDS-UPDRS II,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part II,"MDS-UPDRS Part II assesses Motor experiences of daily living (13 items) including problems with speech, drooling, eating, dressing, hygiene, handwriting, tremor and walking."
+MDS-UPDRS III,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part III,"MDS-UPDRS Part III is an assessment of the Motor Examination (18 items) performed by the clinician including problemswith facial expression, speech, tremor, rigidity, rapid repetitive movements (hands, arms, feet, legs), chair rising, posture, gait and balance."
+MDS-UPDRS Total,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Total,"The UPDRS is the most commonly used scale for the clinical study of Parkinson's disease. In 2007, the Movement Disorder Society published a revision of the UPDRS, known as the MDS-UPDRS. The modified UPDRS retains the four-part structure. The revised subscales are titled: Part I: Nonmotor experiences of daily living (13 items), Part II: Motor experiences of daily living (13 items), Part III: Motor examination (18 items), and Part IV: Motor complications (6 items). The Total score comprises Parts I-III."
+RBDQ Score,Rapid Eye Movement (REM) Sleep Behavior Disorder Screening Questionnaire,"The RBDQ assesses symptoms of REM Sleep Behavior Disorder including the frequency and content of dreams, andtheir relationship to nocturnal movements and behaviors, self-injuries and injuries of the bed-partner, nocturnal vocalizations,sudden limb movements and complex movements during sleep, nocturnal awakenings, and disturbed sleep in general. The RBDQ is aself-rated instrument consisting of 10 yes-no questions. RBDQ Score displays the continuous RBDQ data from the study population."
+RBDQ State,Rapid Eye Movement (REM) Sleep Behavior Disorder Screening Questionnaire State,"The RBDQ assesses symptoms of REM Sleep Behavior Disorder including the frequency and content of dreams, andtheir relationship to nocturnal movements and behaviors, self-injuries and injuries of the bed-partner, nocturnal vocalizations,sudden limb movements and complex movements during sleep, nocturnal awakenings, and disturbed sleep in general. The RBDQ is aself-rated instrument consisting of 10 yes-no questions. RBDQ State uses a validated cut-off to categorize subjects into 2 groupswith and without REM sleep behavior disorder. "
+SCOPA-AUT,Scales for Outcomes in Parkinson's disease - Autonomic Dysfunction,"The SCOPA-AUT evaluates autonomic symptoms in Parkinson's disease and other neurodegenerative conditions.The scale is self-completed and consists of 25 items assessing the following domains: gastrointestinal (7), urinary (6),cardiovascular (3), thermoregulatory (4), pupillomotor (1), and sexual (2 items for men and 2 items for women)."
+SDM,Symbol Digit Modalities,"SDM measures attention, perceptual speed, motor speed, and visual scanning. It consists of digit-symbol pairs followed by a list of digits. Under each digit the subject should write down the corresponding symbol as fast as possible. The number of correct symbols within the allowed time is measured."
+SF,Semantic Fluency,"SF measures verbal fluency. The semantic (or category) fluency task consists of verbally naming as many words from a single category as possible in sixty seconds. Typically, semantic fluency is scored by counting the number of correct unique semantic category items produced."
+STAI,State-Trait Anxiety Inventory,"The STAI is a self-reported measure of levels of state and trait anxiety, based on two 20-item subscales. State anxiety is defined as a transient emotional status resulting from situational stress. Trait anxiety is a predisposition to react with anxiety in stressful situations."
+SE ADL Scale,Schwab & England Activities of Daily Living Scale,"The SE ADL Scale is a clinician rating of the patient's daily function. The clinician rates performanceof daily activities from 0% to 100% with 10% intervals, where 100% is ""Completely independent. . .Unaware of difficulty"" and0% is ""Vegetative functions...Bedridden."" "
+CSF-Hemoglobin,Cerebrospinal fluid hemoglobin,"The cerebrospinal fluid level of hemoglobin is analyzed to evaluate the quality of CSF collection,to use as an index of the degree of blood contamination, and to control for the possible effect of hemolysis on theCSF &alpha;-synuclein level."
+Benton JOLO-Change,Benton Judgment of Line Orientation,Benton JOLO is a standardized test of visuospatial skills associated with functioning of the parietal lobe in the brain's right hemisphere. The test measures a person's ability to match the angle and orientation of lines in space. Subjects are asked to match two angled lines to a set of 11 lines that are arranged in a semicircle.
+ESS Score-Change,Epworth Sleepiness Scale Score,"The ESS is a self-reported measure of daytime sleepiness- the propensity to fall asleep during common daily activities. Subjects use a 4-point scale to rate their chances of dozing off while engaged in 8 common daytime activities (e.g. watching television, sitting and talking to someone, sitting and reading). Scores from 0 to 10 is normal daytime sleepiness, 11-12 is mild excessive daytime sleepiness, 13-15 moderate excessive daytime sleepiness, and 16-24 severe excessive daytime sleepiness. ESS Score displays the continuous data."
+GDS Score-Change,Geriatric Depression Scale Score,"The GDS is a screening test that is used to identify symptoms of depression in older adults. The scale is a 30-item, self-report instrument that uses a ""Yes/No"" format. One point is assigned to each answer and the cumulative score is rated on a scoring grid. The grid sets a range of 0-9 as ""normal"", 10-19 as ""mildly depressed"", and 20-30 as ""severely depressed"". GDS Score displays the continuous data."
+HVLT-DR-Change,Hopkins Verbal Learning Test- Delayed Recall,"The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall."
+HVLT-R-Change,Hopkins Verbal Learning Test- Retention,"The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall."
+HVLT-TR-Change,Hopkins Verbal Learning Test- Total Recall,"The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall."
+LNS-Change,Letter-Number Sequencing,"LNS is a brief, standardized measure of executive function that measures verbal and visuospatial working memory, as well as processing speed. The participant must first say the numbers in ascending order and then the letters in alphabetical order. LNS is a subtest of the Wechsler Adult Intelligence Scale."
+MDS-UPDRS I-Change,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part I,"MDS-UPDRS Part I assesses Nonmotor experiences of daily living (13 items) including cognition, hallucinations, depression, apathy, sleep, lightheadedness, urinary problems, constipation and fatigue."
+MDS-UPDRS II-Change,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part II,"MDS-UPDRS Part II assesses Motor experiences of daily living (13 items) including problems with speech, drooling, eating, dressing, hygiene, handwriting, tremor and walking."
+MDS-UPDRS III-Change,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part III,"MDS-UPDRS Part III is an assessment of the Motor Examination (18 items) performed by the clinician including problemswith facial expression, speech, tremor, rigidity, rapid repetitive movements (hands, arms, feet, legs), chair rising, posture, gait and balance."
+MDS-UPDRS Total-Change,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Total,"The UPDRS is the most commonly used scale for the clinical study of Parkinson's disease. In 2007, the Movement Disorder Society published a revision of the UPDRS, known as the MDS-UPDRS. The modified UPDRS retains the four-part structure. The revised subscales are titled: Part I: Nonmotor experiences of daily living (13 items), Part II: Motor experiences of daily living (13 items), Part III: Motor examination (18 items), and Part IV: Motor complications (6 items). The Total score comprises Parts I-III."
+MoCA-Change,Montreal Cognitive Assessment,"The MoCA is a cognitive screening test designed to detect mild cognitive impairment and dementia. It assesses different cognitivedomains including attention and concentration, executive functions, visuospatial skills, memory, language, abstraction, calculations, and orientation."
+RBDQ Score-Change,Rapid Eye Movement (REM) Sleep Behavior Disorder Screening Questionnaire,"The RBDQ assesses symptoms of REM Sleep Behavior Disorder including the frequency and content of dreams, andtheir relationship to nocturnal movements and behaviors, self-injuries and injuries of the bed-partner, nocturnal vocalizations,sudden limb movements and complex movements during sleep, nocturnal awakenings, and disturbed sleep in general. The RBDQ is aself-rated instrument consisting of 10 yes-no questions. RBDQ Score displays the continuous RBDQ data from the study population."
+SCOPA-AUT-Change,Scales for Outcomes in Parkinson's disease - Autonomic Dysfunction,"The SCOPA-AUT evaluates autonomic symptoms in Parkinson's disease and other neurodegenerative conditions.The scale is self-completed and consists of 25 items assessing the following domains: gastrointestinal (7), urinary (6),cardiovascular (3), thermoregulatory (4), pupillomotor (1), and sexual (2 items for men and 2 items for women)."
+SDM-Change,Symbol Digit Modalities,"SDM measures attention, perceptual speed, motor speed, and visual scanning. It consists of digit-symbol pairs followed by a list of digits. Under each digit the subject should write down the corresponding symbol as fast as possible. The number of correct symbols within the allowed time is measured."
+SF-Change,Semantic Fluency,"SF measures verbal fluency. The semantic (or category) fluency task consists of verbally naming as many words from a single category as possible in sixty seconds. Typically, semantic fluency is scored by counting the number of correct unique semantic category items produced."
+STAI-Change,State-Trait Anxiety Inventory,"The STAI is a self-reported measure of levels of state and trait anxiety, based on two 20-item subscales. State anxiety is defined as a transient emotional status resulting from situational stress. Trait anxiety is a predisposition to react with anxiety in stressful situations."
+SE ADL Scale-Change,Schwab & England Activities of Daily Living Scale,"The SE ADL Scale is a clinician rating of the patient's daily function. The clinician rates performanceof daily activities from 0% to 100% with 10% intervals, where 100% is ""Completely independent. . .Unaware of difficulty"" and0% is ""Vegetative functions...Bedridden."" "
+Benton JOLO-ROC,Benton Judgment of Line Orientation,Benton JOLO is a standardized test of visuospatial skills associated with functioning of the parietal lobe in the brain's right hemisphere. The test measures a person's ability to match the angle and orientation of lines in space. Subjects are asked to match two angled lines to a set of 11 lines that are arranged in a semicircle.
+ESS Score-ROC,Epworth Sleepiness Scale Score,"The ESS is a self-reported measure of daytime sleepiness- the propensity to fall asleep during common daily activities. Subjects use a 4-point scale to rate their chances of dozing off while engaged in 8 common daytime activities (e.g. watching television, sitting and talking to someone, sitting and reading). Scores from 0 to 10 is normal daytime sleepiness, 11-12 is mild excessive daytime sleepiness, 13-15 moderate excessive daytime sleepiness, and 16-24 severe excessive daytime sleepiness. ESS Score displays the continuous data."
+GDS Score-ROC,Geriatric Depression Scale Score,"The GDS is a screening test that is used to identify symptoms of depression in older adults. The scale is a 30-item, self-report instrument that uses a ""Yes/No"" format. One point is assigned to each answer and the cumulative score is rated on a scoring grid. The grid sets a range of 0-9 as ""normal"", 10-19 as ""mildly depressed"", and 20-30 as ""severely depressed"". GDS Score displays the continuous data."
+HVLT-DR-ROC,Hopkins Verbal Learning Test- Delayed Recall,"The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall."
+HVLT-R-ROC,Hopkins Verbal Learning Test- Retention,"The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall."
+HVLT-TR-ROC,Hopkins Verbal Learning Test- Total Recall,"The HVLT is a screening test for memory impairment. The test consists of three trials of free recall of a 12-item, semantically categorized list, followed by yes/no recognition. Three different scores are generated: Retention, Delayed Recall, and Total Recall."
+LNS-ROC,Letter-Number Sequencing,"LNS is a brief, standardized measure of executive function that measures verbal and visuospatial working memory, as well as processing speed. The participant must first say the numbers in ascending order and then the letters in alphabetical order. LNS is a subtest of the Wechsler Adult Intelligence Scale."
+MDS-UPDRS I-ROC,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part I,"MDS-UPDRS Part I assesses Nonmotor experiences of daily living (13 items) including cognition, hallucinations, depression, apathy, sleep, lightheadedness, urinary problems, constipation and fatigue."
+MDS-UPDRS II-ROC,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part II,"MDS-UPDRS Part II assesses Motor experiences of daily living (13 items) including problems with speech, drooling, eating, dressing, hygiene, handwriting, tremor and walking."
+MDS-UPDRS III-ROC,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Part III,"MDS-UPDRS Part III is an assessment of the Motor Examination (18 items) performed by the clinician including problemswith facial expression, speech, tremor, rigidity, rapid repetitive movements (hands, arms, feet, legs), chair rising, posture, gait and balance."
+MDS-UPDRS Total-ROC,Movement Disorder Society-Unified Parkinson's Disease Rating Scale Total,"The UPDRS is the most commonly used scale for the clinical study of Parkinson's disease. In 2007, the Movement Disorder Society published a revision of the UPDRS, known as the MDS-UPDRS. The modified UPDRS retains the four-part structure. The revised subscales are titled: Part I: Nonmotor experiences of daily living (13 items), Part II: Motor experiences of daily living (13 items), Part III: Motor examination (18 items), and Part IV: Motor complications (6 items). The Total score comprises Parts I-III."
+MoCA-ROC,Montreal Cognitive Assessment,"The MoCA is a cognitive screening test designed to detect mild cognitive impairment and dementia. It assesses different cognitivedomains including attention and concentration, executive functions, visuospatial skills, memory, language, abstraction, calculations, and orientation."
+RBDQ Score-ROC,Rapid Eye Movement (REM) Sleep Behavior Disorder Screening Questionnaire,"The RBDQ assesses symptoms of REM Sleep Behavior Disorder including the frequency and content of dreams, andtheir relationship to nocturnal movements and behaviors, self-injuries and injuries of the bed-partner, nocturnal vocalizations,sudden limb movements and complex movements during sleep, nocturnal awakenings, and disturbed sleep in general. The RBDQ is aself-rated instrument consisting of 10 yes-no questions. RBDQ Score displays the continuous RBDQ data from the study population."
+SCOPA-AUT-ROC,Scales for Outcomes in Parkinson's disease - Autonomic Dysfunction,"The SCOPA-AUT evaluates autonomic symptoms in Parkinson's disease and other neurodegenerative conditions.The scale is self-completed and consists of 25 items assessing the following domains: gastrointestinal (7), urinary (6),cardiovascular (3), thermoregulatory (4), pupillomotor (1), and sexual (2 items for men and 2 items for women)."
+SDM-ROC,Symbol Digit Modalities,"SDM measures attention, perceptual speed, motor speed, and visual scanning. It consists of digit-symbol pairs followed by a list of digits. Under each digit the subject should write down the corresponding symbol as fast as possible. The number of correct symbols within the allowed time is measured."
+SF-ROC,Semantic Fluency,"SF measures verbal fluency. The semantic (or category) fluency task consists of verbally naming as many words from a single category as possible in sixty seconds. Typically, semantic fluency is scored by counting the number of correct unique semantic category items produced."
+STAI-ROC,State-Trait Anxiety Inventory,"The STAI is a self-reported measure of levels of state and trait anxiety, based on two 20-item subscales. State anxiety is defined as a transient emotional status resulting from situational stress. Trait anxiety is a predisposition to react with anxiety in stressful situations."
+SE ADL Scale-ROC,Schwab & England Activities of Daily Living Scale,"The SE ADL Scale is a clinician rating of the patient's daily function. The clinician rates performanceof daily activities from 0% to 100% with 10% intervals, where 100% is ""Completely independent. . .Unaware of difficulty"" and0% is ""Vegetative functions...Bedridden."" "
