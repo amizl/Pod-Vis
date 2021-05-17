@@ -564,12 +564,16 @@ export default {
 
         var fv_ymin, fv_ymax, lv_ymin, lv_ymax;
 
+        // set line width based on number of subjects in cluster
+        var ns_lwidth = (c['data'].length / ns) * ht * 0.1;
+        if (ns_lwidth < 1) ns_lwidth = 1;
+
         // OPTION 1: draw line around average with thickness determined by number of subjects
         if (this.cluster_style_choice == this.cluster_style_choices[0]) {
           context.beginPath();
           context.moveTo(fv_x, fv_y);
           bcurve(context, fv_x, fv_y, lv_x, lv_y);
-          context.lineWidth = (c['data'].length / ns) * ht * 0.1;
+          context.lineWidth = ns_lwidth;
           context.strokeStyle = ccol;
           context.stroke();
         }
@@ -612,7 +616,7 @@ export default {
           context.stroke();
 
           // average, width = num clusters
-          context.lineWidth = (c['data'].length / ns) * ht * 0.1;
+          context.lineWidth = ns_lwidth;
           context.beginPath();
           context.moveTo(fv_x, fv_y);
           bcurve(context, fv_x, fv_y, lv_x, lv_y);
@@ -683,7 +687,7 @@ export default {
           context.stroke();
 
           // average, width = num clusters
-          context.lineWidth = (c['data'].length / ns) * ht * 0.1;
+          context.lineWidth = ns_lwidth;
           context.beginPath();
           context.moveTo(fv_x, fv_y);
           bcurve(context, fv_x, fv_y, lv_x, lv_y);
@@ -782,11 +786,11 @@ export default {
       var val_fn = null;
 
       if (this.cluster_choice == this.cluster_choices[0]) {
-	  val_fn = function(d) {
-	  if (d[dname]['firstVisit'] == 0) {
-	   return d[dname]['change'] / d[dname]['firstVisit'];
-  	  } else {
-	   return d[dname]['change'] / d[dname]['firstVisit'];
+        val_fn = function(d) {
+          if (d[dname]['firstVisit'] == 0) {
+            return d[dname]['change'] / d[dname]['firstVisit'];
+          } else {
+            return d[dname]['change'] / d[dname]['firstVisit'];
           }
         };
       } else if (this.cluster_choice == this.cluster_choices[1]) {
