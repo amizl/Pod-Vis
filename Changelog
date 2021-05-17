@@ -1,3 +1,6 @@
+1.0.7
+ -Address division by zero problem when clustering on Change/Baseline
+
 1.0.6 (May 13, 2021)
  -Add optional subsampling mechanism to spaghetti plots (#615)
  -Clear cohort selection in Cohort Manager when user updates filters. (#617)
