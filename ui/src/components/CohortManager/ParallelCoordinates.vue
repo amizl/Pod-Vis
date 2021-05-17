@@ -782,8 +782,12 @@ export default {
       var val_fn = null;
 
       if (this.cluster_choice == this.cluster_choices[0]) {
-        val_fn = function(d) {
-          return d[dname]['change'] / d[dname]['firstVisit'];
+	  val_fn = function(d) {
+	  if (d[dname]['firstVisit'] == 0) {
+	   return d[dname]['change'] / d[dname]['firstVisit'];
+  	  } else {
+	   return d[dname]['change'] / d[dname]['firstVisit'];
+          }
         };
       } else if (this.cluster_choice == this.cluster_choices[1]) {
         val_fn = function(d) {
@@ -799,7 +803,7 @@ export default {
         };
       }
 
-      var values = data.map(d => val_fn(d));
+      var values = data.map(d => val_fn(d)).filter(n => isFinite(n));
       var mn = mean(values);
       var dev = deviation(values);
 
@@ -826,7 +830,7 @@ export default {
           this._addToCluster(clusters[2], d);
         } else if (val >= m3sd) {
           this._addToCluster(clusters[3], d);
-        } else {
+        } else if (isFinite(val)) {
           this._addToCluster(clusters[4], d);
         }
       });
