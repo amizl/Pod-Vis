@@ -1,11 +1,11 @@
-Observations
-Study
-Race
-Birthdate
-Sex
-Age At Enrollment
-Disease Status
-Age At Diagnosis
-Disease Duration
-Enroll Date
-Diagnosis Date
+SubjectVar,Label,Description
+Study,Study,The original/uploaded dataset.
+Race,Race,"Subject race: either 'Asian', 'Black', 'White', 'Other', or 'Multi'."
+Birthdate,Birthdate,Subject birthdate.
+Sex,Sex,"Binary gender, either 'Male' or 'Female'."
+Age At Enrollment,Age At Enrollment,Subject age at study enrollment.
+Status,Disease Status,Primary disease status - either 'Affected' or 'Unaffected'.
+Age At Diagnosis,Age At Diagnosis,Subject age at primary disease diagnosis.
+Disease Duration,Disease Duration,Time in days from date of diagnosis to date of study enrollment.
+Enroll Date,Enroll Date,Date on which subject enrolled in the study.
+Diagnosis Date,Diagnosis Date,Date of subject's primary disease diagnosis.
