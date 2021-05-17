@@ -507,6 +507,7 @@ export default {
     },
     drawPopulationClusters() {
       var pclust = this.getClusters();
+      this._updateClusters(pclust);
 
       var popColor = colors['population'];
       var cohortColor = colors['cohort'];
@@ -727,9 +728,22 @@ export default {
       if (!('max_l' in cluster) || l > cluster['max_l']) cluster['max_l'] = l;
       cluster['sum_l'] += d[this.dimensionName]['lastVisit'];
     },
+    _initClusters(clusters) {
+      var dname = this.dimensionName;
+
+      clusters.forEach(c => {
+        c['avg_f'] = c['sum_f'] / c['data'].length;
+        c['avg_l'] = c['sum_l'] / c['data'].length;
+
+        var fv_values = c['data'].map(d => d[dname]['firstVisit']);
+        var lv_values = c['data'].map(d => d[dname]['lastVisit']);
+
+        c['deviation_f'] = deviation(fv_values);
+        c['deviation_l'] = deviation(lv_values);
+      });
+    },
     _updateClusters(clusters) {
       var fd = this.filteredData;
-      var dname = this.dimensionName;
 
       // index subjects in filteredData
       var fsh = {};
@@ -738,8 +752,6 @@ export default {
       });
 
       clusters.forEach(c => {
-        c['avg_f'] = c['sum_f'] / c['data'].length;
-        c['avg_l'] = c['sum_l'] / c['data'].length;
         c['num_in_cohort'] = 0;
         c['data'].forEach(d => {
           if (d['subject_id'] in fsh) {
@@ -747,12 +759,6 @@ export default {
           }
         });
         c['cohort_frac'] = c['num_in_cohort'] / c['data'].length;
-
-        var fv_values = c['data'].map(d => d[dname]['firstVisit']);
-        var lv_values = c['data'].map(d => d[dname]['lastVisit']);
-
-        c['deviation_f'] = deviation(fv_values);
-        c['deviation_l'] = deviation(lv_values);
       });
     },
     getClusters() {
@@ -762,7 +768,7 @@ export default {
       var ckey = this.cluster_choice + ':' + this.dimensionName;
       if (!(ckey in this.clusters_cache)) {
         clusters = this.computeFiveClusters(this.unfilteredData);
-        this._updateClusters(clusters);
+        this._initClusters(clusters);
         this.clusters_cache[ckey] = clusters;
       }
 
