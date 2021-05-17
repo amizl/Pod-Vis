@@ -1,5 +1,6 @@
 1.0.7
- -Address division by zero problem when clustering on Change/Baseline
+ -Address division by zero problem when clustering on Change/Baseline.
+ -Set minimum line width for small clusters in Cohort Manager. (#628)
 
 1.0.6 (May 13, 2021)
  -Add optional subsampling mechanism to spaghetti plots (#615)
