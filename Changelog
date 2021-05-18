@@ -2,6 +2,7 @@
  -Address division by zero problem when clustering on Change/Baseline.
  -Set minimum line width for small clusters in Cohort Manager. (#628)
  -Update cluster colors when cohort changs. (#627)
+ -Update initial default database with PPMI 7/13/2020 v3 dataset.
 
 1.0.6 (May 13, 2021)
  -Add optional subsampling mechanism to spaghetti plots (#615)
