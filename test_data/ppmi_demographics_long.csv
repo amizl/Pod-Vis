@@ -1,9 +1,9 @@
 SubjectNum,SubjectVar,Value
-3400,Study,Parkinson's Disease
-3407,Study,Parkinson's Disease
-3100,Study,Healthy Control
-3001,Study,Parkinson's Disease
-5005,Study,Unknown
+3400,Study,Parkinson's Disease Demo Dataset
+3407,Study,Parkinson's Disease Demo Dataset
+3100,Study,Healthy Control Demo Dataset
+3001,Study,Parkinson's Disease Demo Dataset
+5005,Study,Unknown Demo Dataset
 3400,Race,White
 3407,Race,White
 3100,Race,White
