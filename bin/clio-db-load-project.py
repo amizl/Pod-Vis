@@ -36,6 +36,7 @@ def main():
                         help='Path to directory where the input files are located' )
     parser.add_argument('-m', '--mapping_file', type=str, required=True,
                         help='Path to the column names to field mapping file' )
+    parser.add_argument('-D', '--database', type=str, required=False, default='cliovis', help='MySQL database to load.' )
     parser.add_argument('-u', '--user', type=str, required=True, help='MySQL user name' )
     parser.add_argument('-o', '--update_ontologies', dest='update_ontologies', required=False, default=False, action='store_true',
                         help='Whether to allow updates to subject and observation ontologies.' )
@@ -48,7 +49,7 @@ def main():
     try:
         conn = mysql.connector.connect(user=args.user, password=args.password,
                                        host='127.0.0.1',
-                                       db='cliovis')
+                                       db=args.database)
         cursor = conn.cursor()
 
         if conn.is_connected():
