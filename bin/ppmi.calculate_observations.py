@@ -554,6 +554,40 @@ def process_mds_updrs_3(filename):
                             errors="raise")
     return df
 
+# Calculate the TD/PIGD Ratio using the UPDRS II & III scales
+def calculate_td_pigd_ratio(updrs2_filename, updrs3_filename):
+    # Read the UPDRS2 input as a pandas dataframe
+    updrs2_df = pd.read_csv(updrs2_filename)
+    # updrs2_df['MDS_UPDRS_2'] = updrs2_df.loc[:, ["NP2SPCH","NP2SWAL","NP2EAT"]].sum(axis=1, skipna = False) 
+    updrs2_df = updrs2_df.loc[:, ["PATNO", "EVENT_ID", "INFODT", "NP2SPCH","NP2SWAL","NP2EAT"]]
+
+    # Read the UPDRS3 input as a pandas frame 
+    updrs3_df = pd.read_csv(updrs3_filename)
+    updrs3_df = updrs3_df.loc[:, ["PATNO", "EVENT_ID", "INFODT", "NP3PTRMR","NP3PTRML","NP3KTRMR","NP3KTRML","NP3RTARU",
+                                    "NP3RTALU","NP3RTARL", "NP3RTALL","NP3RTALJ","NP3RTCON","NP3GAIT","NP3FRZGT","NP3PSTBL"]]
+
+    merged_df = pd.merge(updrs2_df, updrs3_df, on=["PATNO", "EVENT_ID", "INFODT"])    
+    # pp.pprint(merged_df.columns)
+    # pp.pprint(merged_df)
+    # pp.pprint(merged_df.loc[:, ['NP2SWAL', 'NP2EAT', 'NP3GAIT', 'NP3FRZGT', 'NP3PSTBL']])
+
+    # calculate the TD score
+    merged_df["PIGD"] = merged_df.loc[:, ['NP2SWAL', 'NP2EAT', 'NP3GAIT', 'NP3FRZGT', 'NP3PSTBL']].mean(axis = 1, skipna = False)
+    merged_df["TD"] = merged_df.loc[:, ['NP2SPCH', 'NP3PTRMR', 'NP3PTRML', 'NP3KTRMR', 'NP3KTRML', 'NP3RTARU', 'NP3RTALU', 
+                                    'NP3RTARL', 'NP3RTALL', 'NP3RTALJ', 'NP3RTCON']].mean(axis = 1, skipna = False)
+
+    # index = merged_df.index[merged_df['TD'].notnull() & merged_df['PIGD'].notnull()].tolist()
+    # pp.pprint(index)
+    merged_df['TD_PIGD_RATIO'] = round(merged_df['TD']/merged_df['PIGD'], 2)
+    merged_df['TD_PIGD_RATIO'] = np.where(merged_df.TD_PIGD_RATIO == np.Inf, None, merged_df.TD_PIGD_RATIO)
+    merged_df = merged_df.loc[:, ["PATNO", "EVENT_ID", "INFODT", "TD", "PIGD", 'TD_PIGD_RATIO']] 
+
+    merged_df = merged_df.rename(columns={"PATNO": "SubjectNum", 
+                            "EVENT_ID": "VisitCode", 
+                            "INFODT": "VisitDate"}, 
+                            errors="raise")
+    return merged_df
+
 def process_moca(filename):
     # Read the input as a pandas dataframe
     df = pd.read_csv(filename)
@@ -997,6 +1031,12 @@ def main():
     df_all_vars = df_all_vars.merge(df_mds_updrs.loc[:, df_mds_updrs.columns.intersection(labels)], how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
     df_all_vars_sorted = df_all_vars.sort_values(by = ['SubjectNum', 'VisitCode', 'VisitDate'])
     # pp.pprint(df_all_vars_sorted)
+
+    # calculate the TD/PIGD ratio
+    updrs2_filename = os.path.join(args.input_dir, scale_file_map['MDS-UPDRS2'])
+    updrs3_filename = os.path.join(args.input_dir, scale_file_map['MDS-UPDRS3'])
+    df_td_pigd_ratio = calculate_td_pigd_ratio(updrs2_filename, updrs3_filename)
+    df_all_vars = df_all_vars.merge(df_td_pigd_ratio, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
 
     # Merge MOCA
     df_all_vars = df_all_vars.merge(df_moca, how="outer", on = ['SubjectNum', 'VisitCode', 'VisitDate'])
