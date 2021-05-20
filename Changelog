@@ -1,3 +1,6 @@
+1.0.8
+ -Add option to create 3 clusters instead of 5. (#630)
+
 1.0.7 (May 19, 2021)
  -Address division by zero problem when clustering on Change/Baseline.
  -Set minimum line width for small clusters in Cohort Manager. (#628)

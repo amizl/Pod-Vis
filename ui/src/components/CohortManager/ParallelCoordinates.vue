@@ -255,6 +255,10 @@ export default {
         'Change 5',
         'First Visit 5',
         'Last Visit 5',
+        'Change/baseline 3',
+        'Change 3',
+        'First Visit 3',
+        'Last Visit 3',
       ],
       cluster_style_choice: 'Average +/- 1 SD',
       cluster_style_choices: [
@@ -767,7 +771,7 @@ export default {
       // check cache
       var ckey = this.cluster_choice + ':' + this.dimensionName;
       if (!(ckey in this.clusters_cache)) {
-        clusters = this.computeFiveClusters(this.unfilteredData);
+        clusters = this.computeClusters(this.unfilteredData);
         this._initClusters(clusters);
         this.clusters_cache[ckey] = clusters;
       }
@@ -786,12 +790,14 @@ export default {
       this.num_clusters_displayed = n_displayed;
       return clusters;
     },
+
     // compute five clusters: >3 SD,1-3 SD,-1 - +1 SD,-1 - -3 SD,< 3 SD
-    computeFiveClusters(data) {
+    // or three clusters: > 1 SD, -1 - +1 SD, < -1 SD
+    computeClusters(data) {
       var dname = this.dimensionName;
       var val_fn = null;
 
-      if (this.cluster_choice == this.cluster_choices[0]) {
+      if (this.cluster_choice.match(/Change\/baseline/)) {
         val_fn = function(d) {
           if (d[dname]['firstVisit'] == 0) {
             return d[dname]['change'] / d[dname]['firstVisit'];
@@ -799,15 +805,15 @@ export default {
             return d[dname]['change'] / d[dname]['firstVisit'];
           }
         };
-      } else if (this.cluster_choice == this.cluster_choices[1]) {
+      } else if (this.cluster_choice.match(/Change/)) {
         val_fn = function(d) {
           return d[dname]['change'];
         };
-      } else if (this.cluster_choice == this.cluster_choices[2]) {
+      } else if (this.cluster_choice.match(/First Visit/)) {
         val_fn = function(d) {
           return d[dname]['firstVisit'];
         };
-      } else if (this.cluster_choice == this.cluster_choices[3]) {
+      } else if (this.cluster_choice.match(/Last Visit/)) {
         val_fn = function(d) {
           return d[dname]['lastVisit'];
         };
@@ -821,29 +827,50 @@ export default {
       var m3sd = mn - 3 * dev;
       var p1sd = mn + dev;
       var m1sd = mn - dev;
+      var clusters = null;
 
-      var clusters = [
-        { label: '> 3 SD', data: [] }, // +3 SD or more
-        { label: '> 1 SD', data: [] }, // +1 - +3 SD
-        { label: '+/- 1 SD', data: [] }, // +1 - -1 SD
-        { label: '< -1 SD', data: [] }, // -1 - -3 SD
-        { label: '< -3 SD', data: [] }, // -3 SD or more
-      ];
+      // 5 clusters
+      if (this.cluster_choice.match(/ 5$/)) {
+        clusters = [
+          { label: '> 3 SD', data: [] }, // +3 SD or more
+          { label: '> 1 SD', data: [] }, // +1 - +3 SD
+          { label: '+/- 1 SD', data: [] }, // +1 - -1 SD
+          { label: '< -1 SD', data: [] }, // -1 - -3 SD
+          { label: '< -3 SD', data: [] }, // -3 SD or more
+        ];
 
-      data.forEach(d => {
-        var val = val_fn(d);
-        if (val > p3sd) {
-          this._addToCluster(clusters[0], d);
-        } else if (val > p1sd) {
-          this._addToCluster(clusters[1], d);
-        } else if (val >= m1sd) {
-          this._addToCluster(clusters[2], d);
-        } else if (val >= m3sd) {
-          this._addToCluster(clusters[3], d);
-        } else if (isFinite(val)) {
-          this._addToCluster(clusters[4], d);
-        }
-      });
+        data.forEach(d => {
+          var val = val_fn(d);
+          if (val >= p3sd) {
+            this._addToCluster(clusters[0], d);
+          } else if (val >= p1sd) {
+            this._addToCluster(clusters[1], d);
+          } else if (val >= m1sd) {
+            this._addToCluster(clusters[2], d);
+          } else if (val >= m3sd) {
+            this._addToCluster(clusters[3], d);
+          } else if (isFinite(val)) {
+            this._addToCluster(clusters[4], d);
+          }
+        });
+      } else {
+        clusters = [
+          { label: '> 1 SD', data: [] }, // +1 SD or more
+          { label: '+/- 1 SD', data: [] }, // +1 - -1 SD
+          { label: '< -1 SD', data: [] }, // -1 SD or less
+        ];
+
+        data.forEach(d => {
+          var val = val_fn(d);
+          if (val >= p1sd) {
+            this._addToCluster(clusters[0], d);
+          } else if (val >= m1sd) {
+            this._addToCluster(clusters[1], d);
+          } else if (isFinite(val)) {
+            this._addToCluster(clusters[2], d);
+          }
+        });
+      }
 
       return clusters;
     },
