@@ -253,6 +253,28 @@ of daily activities from 0% to 100% with 10% intervals, where 100% is "Completel
 to use as an index of the degree of blood contamination, and to control for the possible effect of hemolysis on the
 CSF &alpha;-synuclein level.""",
     },
+    {
+        'abbrev': 'TD',
+        'name': "Tremor-Dominant PD subtype",
+        'descr': """Tremor-Dominant (TD) Parkinson's Disease is a subtype of Parkinson's Disease in which patients 
+experience tremor more than any other motor feature. The TD score is computed from certain subtests in  MDS-UPDRS II 
+and MDS-UPDRS III.""",
+    },
+    {
+        'abbrev': 'PIGD',
+        'name': "Postural Instability and Gait Difficulty PD Subtype",
+        'descr': """Postural Instability and Gait Difficulty (PIGD) Parkinson's Disease is a subtype of Parkinson's 
+Disease characterized by slow movement, muscle stiffness, postural instability, and gait difficulty. Also known as 
+the akinetic-rigid subtype. The PIGD score is computed from certain subtests in  MDS-UPDRS II and MDS-UPDRS III.""",
+    },
+    {
+        'abbrev': 'TD_PIGD_RATIO',
+        'name': "TD/PIGD Parkinson's Ratio",
+        'descr': """Ratio of the TD (Tremor-Dominant) Parkinson's Disease score and the PIGD (Postural Instability and 
+Gait Difficulty) Parkinson's Disease score. Patients can be classified as TD, PIGD, or mixed-type depending on the
+value of this ratio with e.g., a ratio of 1.5 or above corresponding to TD, a ratio below 1 corresponding to PIGD,
+and anything else considered to be mixed-type or indeterminate.""",
+    },
 ]
 
 scale_file_map = {'Semantic Fluency' : "Semantic_Fluency.csv",
@@ -901,7 +923,7 @@ def add_scale_metadata(df):
         if base_testname in smd_index:
             return smd_index[base_testname][which].replace('\n', '')
         else:
-            sys.stderr.write("FATAL - couldn't find metadata entry for " + testname)
+            sys.stderr.write("FATAL - couldn't find metadata entry for " + testname + "\n")
             sys.stderr.flush()
             sys.exit(1)
 
@@ -1180,17 +1202,18 @@ def main():
     # Print a table of visit information
     filename = "ppmi_visit_info.csv"
     df_unique_sub_visits.to_csv(os.path.join(args.output_dir, filename), index = False)
-
+        
     # Print a table of unique tests in the data by combining the tests in the summary as well as observation
     # data frames
     unique_obs = df_all_obs.Testname.unique()
     unique_summary_obs = df_grouped_tests_summary.Testname.unique()
     unique_all_obs = np.concatenate([unique_obs, unique_summary_obs])
-
     df_unique_obs = pd.DataFrame({"Testname": unique_all_obs})
+    pp.pprint(df_unique_obs)
+    
     # add scale metadata
     df_unique_obs = add_scale_metadata(df_unique_obs)
-
+    
     pp.pprint(df_unique_obs)
     filename = "ppmi_unique_obs.csv"
     df_unique_obs.to_csv(os.path.join(args.output_dir, filename), index = False)
