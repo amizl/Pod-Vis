@@ -257,7 +257,7 @@ CSF &alpha;-synuclein level.""",
         'abbrev': 'TD',
         'name': "Tremor-Dominant PD subtype",
         'descr': """Tremor-Dominant (TD) Parkinson's Disease is a subtype of Parkinson's Disease in which patients 
-experience tremor more than any other motor feature. The TD score is computed from certain subtests in  MDS-UPDRS II 
+experience tremor more than any other motor feature. The TD score is computed from certain subtests in MDS-UPDRS II 
 and MDS-UPDRS III.""",
     },
     {
@@ -265,7 +265,7 @@ and MDS-UPDRS III.""",
         'name': "Postural Instability and Gait Difficulty PD Subtype",
         'descr': """Postural Instability and Gait Difficulty (PIGD) Parkinson's Disease is a subtype of Parkinson's 
 Disease characterized by slow movement, muscle stiffness, postural instability, and gait difficulty. Also known as 
-the akinetic-rigid subtype. The PIGD score is computed from certain subtests in  MDS-UPDRS II and MDS-UPDRS III.""",
+the akinetic-rigid subtype. The PIGD score is computed from certain subtests in MDS-UPDRS II and MDS-UPDRS III.""",
     },
     {
         'abbrev': 'TD_PIGD_RATIO',
