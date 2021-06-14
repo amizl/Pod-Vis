@@ -39,9 +39,15 @@
           <v-sheet color="white" height="100%" class="rounded-lg shadow">
             <v-card color="#eeeeee" class="pt-1">
               <v-card-title class="primary--text pl-3 py-2"
-			    >Shared Variables
-		<v-spacer />
-		<v-chip color="purple" text-color="white" class="mr-1" :disabled="!useAutomatedAnalysisMode">Auto</v-chip>
+                >Shared Variables
+                <v-spacer />
+                <v-chip
+                  color="purple"
+                  text-color="white"
+                  class="mr-1"
+                  :disabled="!useAutomatedAnalysisMode"
+                  >Auto</v-chip
+                >
                 <v-switch
                   v-model="useAutomatedAnalysisMode"
                   label="Enable automated analysis mode"
@@ -67,7 +73,7 @@
               selectable
               :use-more-accurate-subject-counts="true"
               :use-long-scale-names="useLongScaleNames"
-	      :use-automated-analysis-mode="useAutomatedAnalysisMode"
+              :use-automated-analysis-mode="useAutomatedAnalysisMode"
               @nSubjects="updateNumSubjects"
               @nObservationVars="updateNumObservationVars"
               @nSubjectVars="updateNumSubjectVars"

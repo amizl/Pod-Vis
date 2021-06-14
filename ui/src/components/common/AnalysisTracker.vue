@@ -63,7 +63,11 @@
 
     <!-- substep trackers -->
     <!-- step 1 - automated analysis mode -->
-    <v-stepper v-if="step === '1' && automatedAnalysisMode" :value="substep" model="substep">
+    <v-stepper
+      v-if="step === '1' && automatedAnalysisMode"
+      :value="substep"
+      model="substep"
+    >
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step
           :class="substepClass('1.1')"
@@ -83,13 +87,19 @@
           @click.native="substepClicked('1.2')"
           ><span class="subtitle-1">Select Variables</span>
           <span
-            >Select predictor and output variables and click on "BEGIN AUTOMATED ANALYSIS"</span
-          ></v-stepper-step>
+            >Select predictor and output variables and click on "BEGIN AUTOMATED
+            ANALYSIS"</span
+          ></v-stepper-step
+        >
       </v-stepper-header>
     </v-stepper>
 
     <!-- step 1 - manual analysis mode -->
-    <v-stepper v-if="step === '1' && !automatedAnalysisMode" :value="substep" model="substep">
+    <v-stepper
+      v-if="step === '1' && !automatedAnalysisMode"
+      :value="substep"
+      model="substep"
+    >
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step
           :class="substepClass('1.1')"

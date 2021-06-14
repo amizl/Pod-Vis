@@ -14,7 +14,7 @@
     >
       <!-- Add "All:" to select all checkbox -->
       <template v-slot:header.data-table-select="{ on, props }">
-        <v-tooltip top color="primary"  v-if="!useAutomatedAnalysisMode">
+        <v-tooltip v-if="!useAutomatedAnalysisMode" top color="primary">
           <template v-slot:activator="{ on: tooltip }">
             <span
               class="text-subtitle-1 font-weight-bold"
@@ -26,35 +26,40 @@
           <span>Click to select all variables.</span>
         </v-tooltip>
 
-        <v-tooltip top color="primary"  v-else>
+        <v-tooltip v-else top color="primary">
           <template v-slot:activator="{ on: tooltip }">
             <span
               class="text-subtitle-1 font-weight-bold"
               v-on="{ ...tooltip }"
             >
-	      Predictors
+              Predictors
             </span>
           </template>
-          <span>Select all variables to use as predictors in the automated analysis.</span>
+          <span
+            >Select all variables to use as predictors in the automated
+            analysis.</span
+          >
         </v-tooltip>
-
       </template>
 
       <!-- Header tooltips -->
-      <template v-slot:header.output="{ header }"">
-	<v-tooltip top color="primary">
-	  <template v-slot:activator="{ on: tooltip }">
+      <template v-slot:header.output="{ header }">
+        <v-tooltip top color="primary">
+          <template v-slot:activator="{ on: tooltip }">
             <span
               class="text-subtitle-1 font-weight-bold"
               v-on="{ ...tooltip }"
             >
-	      Outputs 
+              Outputs
             </span>
-	  </template>
-          <span>Select all variables to use as outputs in the automated analysis.</span>
-	</v-tooltip>
+          </template>
+          <span
+            >Select all variables to use as outputs in the automated
+            analysis.</span
+          >
+        </v-tooltip>
       </template>
-      
+
       <template
         v-for="(ds, index) in datasets"
         v-slot:[`header.${ds.study_name}`]="{ header }"
@@ -191,31 +196,44 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      isLoading: true,
+      selected: [],
+      variables: [],
+      subject_variables: {},
+      subject_variable_visits: {},
+      study_variable_counts: {},
+      subject_counts: { all: 0 },
+      colors: colors,
+      // auto-analysis
+      selected_inputs: {},
+      selected_outputs: {},
+    };
+  },
   computed: {
     headers() {
       var hdrs = [];
       if (this.useAutomatedAnalysisMode) {
-        hdrs.push(
-          {
-            text: 'Outputs',
-            value: 'output',
-            sortable: false,
-            class: 'text-subtitle-1 font-weight-bold',
-          });
-      }
-      hdrs.push(
-        {
-         text: 'Domain',
-         value: 'category',
-         sortable: true,
-         class: 'text-subtitle-1 font-weight-bold',
-       });
-       hdrs.push({
-         text: 'Variable',
-          value: 'scale',
-          sortable: true,
+        hdrs.push({
+          text: 'Outputs',
+          value: 'output',
+          sortable: false,
           class: 'text-subtitle-1 font-weight-bold',
-       });
+        });
+      }
+      hdrs.push({
+        text: 'Domain',
+        value: 'category',
+        sortable: true,
+        class: 'text-subtitle-1 font-weight-bold',
+      });
+      hdrs.push({
+        text: 'Variable',
+        value: 'scale',
+        sortable: true,
+        class: 'text-subtitle-1 font-weight-bold',
+      });
 
       // append the dataset study names as headers so
       // we can see study variable distributions as
@@ -233,30 +251,14 @@ export default {
       return hdrs;
     },
   },
-  data() {
-     return {
-      isLoading: true,
-      selected: [],
-      variables: [],
-      subject_variables: {},
-      subject_variable_visits: {},
-      study_variable_counts: {},
-      subject_counts: { all: 0 },
-      colors: colors,
-      // auto-analysis
-      selected_inputs: {},
-      selected_outputs: {},
-    };
-  },
   watch: {
-   /**
+    /**
      * When the table updates the selected array,
      * we want to notify our parent by emitting the
      * input event. That way its v-model and keep
      * its prop in sync.
      */
     selected(value) {
-console.log("selected=" + value.map(v => v.abbreviation));
       if (this.selectable) this.$emit('input', value);
 
       // track number of selected subject and observation_variables
@@ -327,7 +329,7 @@ console.log("selected=" + value.map(v => v.abbreviation));
     });
 
     this.variables = sortScales([...this.variables, ...attributes]);
-//this.variables.map(v => { v.isSelectedInput});
+    //this.variables.map(v => { v.isSelectedInput});
     this.isLoading = false;
   },
   methods: {
@@ -568,16 +570,13 @@ console.log("selected=" + value.map(v => v.abbreviation));
       return counts;
     },
     inputCheckboxChange(props, evt) {
-console.log("input props=" + Object.keys(props));
-console.log("input cb change cb=" + props.item.id + " isSelectedInput=" + props.isSelectedInput);
       var sel = props.item.isSelectedInput;
       if (sel) {
         this.selected_inputs[props.item.id] = true;
         // already selected as output var
         if (props.item.id in this.selected_outputs) {
-console.log("output var already selected, deselecting it props.isSelectedOutput = " + props.isSelectedOutput);
           delete props.item.isSelectedOutput;
-  	  delete this.selected_outputs[props.item.id];
+          delete this.selected_outputs[props.item.id];
         } else {
           props.select(evt);
         }
@@ -585,28 +584,27 @@ console.log("output var already selected, deselecting it props.isSelectedOutput 
         delete this.selected_inputs[props.item.id];
         props.select(evt);
       }
-      console.log("selected inputs = " + Object.keys(this.selected_inputs));
-      console.log("selected outputs = " + Object.keys(this.selected_outputs));
+      //      console.log('selected inputs = ' + Object.keys(this.selected_inputs));
+      //      console.log('selected outputs = ' + Object.keys(this.selected_outputs));
     },
     outputCheckboxChange(props, evt) {
-console.log("output props=" + Object.keys(props));
       var sel = props.item.isSelectedOutput;
       if (sel) {
         this.selected_outputs[props.item.id] = true;
         // already selected as output var
         if (props.item.id in this.selected_inputs) {
           delete props.item.isSelectedInput;
-  	  delete this.selected_inputs[props.item.id];
+          delete this.selected_inputs[props.item.id];
         } else {
-           props.select(evt);
+          props.select(evt);
         }
       } else {
         delete this.selected_outputs[props.item.id];
         if (!(props.item.id in this.selected_inputs)) props.select(evt);
       }
-      console.log("props.isSelectedOutput=" + props.isSelectedOutput);
-      console.log("selected inputs = " + Object.keys(this.selected_inputs));
-      console.log("selected outputs = " + Object.keys(this.selected_outputs));
+      //      console.log('props.isSelectedOutput=' + props.isSelectedOutput);
+      //      console.log('selected inputs = ' + Object.keys(this.selected_inputs));
+      //      console.log('selected outputs = ' + Object.keys(this.selected_outputs));
     },
   },
 };
