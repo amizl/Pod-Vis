@@ -30,6 +30,7 @@
     <analysis-tracker
       :step.sync="step"
       :substep.sync="substep"
+      :automated-analysis-mode="useAutomatedAnalysisMode"
     ></analysis-tracker>
 
     <v-container fluid fill-width class="ma-0 pa-0 pt-2">
@@ -38,12 +39,19 @@
           <v-sheet color="white" height="100%" class="rounded-lg shadow">
             <v-card color="#eeeeee" class="pt-1">
               <v-card-title class="primary--text pl-3 py-2"
-                >Shared Variables
-                <v-spacer />
+			    >Shared Variables
+		<v-spacer />
+		<v-chip color="purple" text-color="white" class="mr-1" :disabled="!useAutomatedAnalysisMode">Auto</v-chip>
+                <v-switch
+                  v-model="useAutomatedAnalysisMode"
+                  label="Enable automated analysis mode"
+                  class="pa-0 ma-0"
+                  hide-details
+                ></v-switch>
                 <v-switch
                   v-model="useLongScaleNames"
                   label="Use long variable names"
-                  class="pa-0 ma-0"
+                  class="pa-0 ma-0 pl-3"
                   hide-details
                 ></v-switch>
               </v-card-title>
@@ -59,6 +67,7 @@
               selectable
               :use-more-accurate-subject-counts="true"
               :use-long-scale-names="useLongScaleNames"
+	      :use-automated-analysis-mode="useAutomatedAnalysisMode"
               @nSubjects="updateNumSubjects"
               @nObservationVars="updateNumObservationVars"
               @nSubjectVars="updateNumSubjectVars"
@@ -110,6 +119,7 @@ export default {
     numObservationVars: 0,
     numSubjectVars: 0,
     colors: colors,
+    useAutomatedAnalysisMode: false,
     useLongScaleNames: false,
   }),
   computed: {
