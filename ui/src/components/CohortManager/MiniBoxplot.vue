@@ -88,7 +88,9 @@
     <span class="subtitle-1">
       {{
         outputVar.label +
-          (axisFlipped ? ' ' + maxValue + ' - ' + minValue : ' ' + minValue + ' - ' + maxValue)
+          (axisFlipped
+            ? ' ' + maxValue + ' - ' + minValue
+            : ' ' + minValue + ' - ' + maxValue)
       }}
     </span>
   </v-tooltip>

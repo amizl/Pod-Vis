@@ -1099,7 +1099,7 @@ export default {
         // apply filter to produce cohort
         var filtered_d = rawData.filter(d => {
           let dv = this.dimension.accessor(d);
-          if (r.max == 'max') { 
+          if (r.max == 'max') {
             return dv >= min && dv <= max;
           } else {
             return dv >= min && dv < max;
