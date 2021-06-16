@@ -1,4 +1,4 @@
-<template>
+><template>
   <div>
     <v-container v-if="inputVariable" fill-width class="pa-0 mx-3">
       <v-row class="pa-0 ma-0">
@@ -381,11 +381,11 @@ export default {
     }),
     rangeMinErrors() {
       if (this.tfRangeMin) {
-        if (this.tfRangeMin < this.min_value) {
-          return ['Minimum is ' + this.min_value];
+        if (this.tfRangeMin < this.padded_min_value) {
+          return ['Minimum is ' + this.padded_min_value];
         }
-        if (this.tfRangeMin > this.max_value) {
-          return ['Maximum is ' + this.max_value];
+        if (this.tfRangeMin > this.padded_max_value) {
+          return ['Maximum is ' + this.padded_max_value];
         }
         if (this.tfRangeMax && this.tfRangeMin > this.tfRangeMax) {
           return ['Minimum is greater than maximum'];
@@ -395,11 +395,11 @@ export default {
     },
     rangeMaxErrors() {
       if (this.tfRangeMax) {
-        if (this.tfRangeMax < this.min_value) {
-          return ['Minimum is ' + this.min_value];
+        if (this.tfRangeMax < this.padded_min_value) {
+          return ['Minimum is ' + this.padded_min_value];
         }
-        if (this.tfRangeMax > this.max_value) {
-          return ['Maximum is ' + this.max_value];
+        if (this.tfRangeMax > this.padded_max_value) {
+          return ['Maximum is ' + this.padded_max_value];
         }
         if (this.tfRangeMin && this.tfRangeMin > this.tfRangeMax) {
           return ['Maximum is less than minimum'];
@@ -418,6 +418,10 @@ export default {
     },
     min_value() {
       var ext = extent(this.populationData);
+      return ext[0];
+    },
+    padded_min_value() {
+      var ext = extent(this.populationData);
       var range = ext[1] - ext[0];
       // round to nearest int
       if (range >= 10) {
@@ -426,8 +430,12 @@ export default {
         return ext[0] - 0.5;
       }
     },
-    // padded maximum value
     max_value() {
+      var ext = extent(this.populationData);
+      return ext[1];
+    },
+    // padded maximum value
+    padded_max_value() {
       var ext = extent(this.populationData);
       var range = ext[1] - ext[0];
       // round up to nearest int
@@ -560,8 +568,8 @@ export default {
       let qtr3 = this.getGenMedian(popData, 3, 4);
       let thr1 = this.getGenMedian(popData, 1, 3);
       let thr2 = this.getGenMedian(popData, 2, 3);
-      let lower = this.min_value;
-      let upper = this.max_value;
+      let lower = this.padded_min_value;
+      let upper = this.padded_max_value;
 
       if (this.predef_radio == 'halves') {
         items.push({ label: 'bottom 1/2', min: lower, max: median });
@@ -591,7 +599,7 @@ export default {
       let one_third = (ext[1] - ext[0]) / 3.0;
       let thr1 = Math.round(ext[0] + one_third);
       let thr2 = Math.round(ext[1] - one_third);
-      let upper = this.max_value;
+      let upper = this.padded_max_value;
 
       items.push({ label: 'top 1/2', min: mid, max: upper });
       items.push({ label: 'bottom 1/2', min: ext[0], max: mid });
@@ -768,8 +776,8 @@ export default {
       if (last_bin.x0 == last_bin.x1) {
         last_bin = this.bins[this.bins.length - 2];
       }
-      if (invertedHigh >= this.max_value) {
-        invertedHigh = this.max_value;
+      if (invertedHigh >= this.padded_max_value) {
+        invertedHigh = this.padded_max_value;
       }
 
       invertedLow = fmt(invertedLow);
@@ -925,7 +933,7 @@ export default {
       if (ep == 'min') {
         return ext[0];
       } else if (ep == 'max') {
-        return this.max_value;
+        return ext[1];
       } else {
         return this.getGenMedian(data, ep[0], ep[1]);
       }
@@ -1011,10 +1019,10 @@ export default {
       var tfMin = Number(this.tfRangeMin);
       var tfMax = Number(this.tfRangeMax);
 
-      if (tfMax > this.max_value) {
+      if (tfMax > this.padded_max_value) {
         return;
       }
-      if (tfMin < this.min_value) {
+      if (tfMin < this.padded_min_value) {
         return;
       }
 
@@ -1078,7 +1086,7 @@ export default {
         ];
       }
       var cohorts = [];
-      // TODO - set to this.data to include other filters
+      // NOTE - set to this.data to include any other extant filters
       var rawData = this.unfilteredData;
       var data = rawData.map(d => this.dimension.accessor(d));
       let ext = extent(data);
@@ -1091,7 +1099,11 @@ export default {
         // apply filter to produce cohort
         var filtered_d = rawData.filter(d => {
           let dv = this.dimension.accessor(d);
-          return dv >= min && dv < max;
+          if (r.max == 'max') { 
+            return dv >= min && dv <= max;
+          } else {
+            return dv >= min && dv < max;
+          }
         });
 
         var cohort = {
