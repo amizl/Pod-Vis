@@ -1,7 +1,7 @@
 1.0.8
  -Add option to create 3 clusters instead of 5. (#630)
  -Add TD/PIGD ratio calculation to ppmi.calculate_observations.py
- -Handle negative values in analytics popup. (#635)
+ -Handle negative values in boxplots. (#635, #636)
 
 1.0.7 (May 19, 2021)
  -Address division by zero problem when clustering on Change/Baseline.
