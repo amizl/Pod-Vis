@@ -930,10 +930,11 @@ export default {
       });
     },
     getCohortRangeEndpoint(ep, ext, data) {
+      // fudge endpoints - 0.1 because the database uses decimal(11,2) in cohort_query.min/max_value
       if (ep == 'min') {
-        return ext[0];
+        return ext[0] - 0.01;
       } else if (ep == 'max') {
-        return ext[1];
+        return ext[1] + 0.01;
       } else {
         return this.getGenMedian(data, ep[0], ep[1]);
       }
@@ -1099,11 +1100,7 @@ export default {
         // apply filter to produce cohort
         var filtered_d = rawData.filter(d => {
           let dv = this.dimension.accessor(d);
-          if (r.max == 'max') {
-            return dv >= min && dv <= max;
-          } else {
-            return dv >= min && dv < max;
-          }
+          return dv >= min && dv < max;
         });
 
         var cohort = {
