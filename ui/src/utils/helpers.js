@@ -54,6 +54,7 @@ export function getCohortSubjectIds(data, c) {
     right_y_axis: 'lastVisit',
     change: 'change',
     roc: 'roc',
+    value: 'value',
   };
 
   // group queries by variable - categorical vars must be treated differently
@@ -62,11 +63,16 @@ export function getCohortSubjectIds(data, c) {
     let v_id;
     let accessor;
     let dim;
-    let dim_label = null;
+    let dim_label = 'value';
 
     if (q.input_variable.subject_ontology === undefined) {
       v_id = q.input_variable.observation_ontology.id;
-      dim_label = q.input_variable.dimension_label;
+      if (
+        'dimension_label' in q.input_variable &&
+        q.input_variable.dimension_label != ''
+      ) {
+        dim_label = q.input_variable.dimension_label;
+      }
       const subfield = dimension2field[dim_label];
       accessor = function(d) {
         return d[q.input_variable.observation_ontology.id][subfield];
