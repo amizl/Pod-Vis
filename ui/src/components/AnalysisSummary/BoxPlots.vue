@@ -287,6 +287,7 @@ export default {
       height: 0,
       boxplotStats: {},
       boxplotStatsUpdated: false,
+      minValue: null,
       maxValue: null,
       firstVisit: null,
       lastVisit: null,
@@ -324,7 +325,7 @@ export default {
         range = [this.margins.left, rt];
       }
       return scaleLinear()
-        .domain([0, this.maxValue])
+        .domain([this.minValue, this.maxValue])
         .range(range);
     },
   },
@@ -519,14 +520,18 @@ export default {
       this.boxplotStats = {};
       var bpStats = {};
 
-      // overall max value
+      // overall min, max value
       var accFn = x => x[this.outcomeVar.id];
       var allData = this.data.map(x => accFn(x));
       if (this.outcomeVar.is_longitudinal) {
+        const firstMin = min(allData, d => d.firstVisit);
+        const lastMin = min(allData, d => d.lastVisit);
+        this.minValue = Math.min(firstMin, lastMin);
         const firstMax = max(allData, d => d.firstVisit);
         const lastMax = max(allData, d => d.lastVisit);
         this.maxValue = Math.max(firstMax, lastMax);
       } else {
+        this.minValue = min(allData, d => d.value);
         this.maxValue = max(allData, d => d.value);
       }
 

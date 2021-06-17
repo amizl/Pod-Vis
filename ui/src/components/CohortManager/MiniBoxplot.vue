@@ -88,7 +88,9 @@
     <span class="subtitle-1">
       {{
         outputVar.label +
-          (axisFlipped ? ' ' + maxValue + ' - 0' : ' 0 - ' + maxValue)
+          (axisFlipped
+            ? ' ' + maxValue + ' - ' + minValue
+            : ' ' + minValue + ' - ' + maxValue)
       }}
     </span>
   </v-tooltip>
@@ -145,6 +147,7 @@ export default {
       colors: colors,
       boxplotStats: {},
       boxplotStatsUpdated: false,
+      minValue: null,
       maxValue: null,
     };
   },
@@ -163,7 +166,7 @@ export default {
         range = [0, this.width];
       }
       return scaleLinear()
-        .domain([0, this.maxValue])
+        .domain([this.minValue, this.maxValue])
         .range(range);
     },
   },
@@ -221,7 +224,6 @@ export default {
         var interQuantileRange = q3 - q1;
         var boxMin = q1 - 1.5 * interQuantileRange;
         var boxMax = q3 + 1.5 * interQuantileRange;
-
         var box_h = row_height - (pad_top + pad_bottom);
         var bpKey = cnum + '' + visit;
         ++cnum;
@@ -262,17 +264,22 @@ export default {
         'Rate of Change': 'roc',
       };
       const af = this.outputVar.is_longitudinal ? m2f[this.compareBy] : 'value';
+      var minval = null;
       var maxval = null;
 
       // overall max value
       var accFn = x => x[this.outputVar.id];
       this.cohorts.forEach(c => {
+        const cmin = min(c.data, d => accFn(d)[af]);
+        if (minval == null || cmin < minval) {
+          minval = cmin;
+        }
         const cmax = max(c.data, d => accFn(d)[af]);
         if (maxval == null || cmax > maxval) {
           maxval = cmax;
         }
       });
-
+      this.minValue = minval;
       this.maxValue = maxval;
       var rowHeight = this.height / this.cohorts.length;
       this.updateStats_aux(af, 0, 2, 2, rowHeight, rowHeight, bpStats);
