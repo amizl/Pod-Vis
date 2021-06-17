@@ -48,8 +48,8 @@ export default {
             } else if (dimLabel === 'right_y_axis') {
               newLabel = `${observationLabel} - Last Visit`;
             } else {
-		newLabel = observationLabel;
-	    }
+              newLabel = observationLabel;
+            }
             return newLabel === dimensionName;
           }
           return inputVariable.subject_ontology.label === dimensionName;
