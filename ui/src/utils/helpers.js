@@ -34,7 +34,7 @@ export function getInputVariablesFromQueries(queries, inputVariables) {
       }
       // type is 'observation'
       const { parentLabel } = inputVar;
-      const obsLabel = `${parentLabel} - ${label}`;
+      const obsLabel = parentLabel ? `${parentLabel} - ${label}` : label;
       return obsLabel === variable;
     });
     if (iv) {
