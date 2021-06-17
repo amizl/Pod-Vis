@@ -47,7 +47,9 @@ export default {
               newLabel = `${observationLabel} - First Visit`;
             } else if (dimLabel === 'right_y_axis') {
               newLabel = `${observationLabel} - Last Visit`;
-            }
+            } else {
+		newLabel = observationLabel;
+	    }
             return newLabel === dimensionName;
           }
           return inputVariable.subject_ontology.label === dimensionName;
@@ -83,10 +85,12 @@ export default {
             let dimension = '';
             let label = '';
 
-            if ('dimension_label' in variable) {
+            if (
+              'dimension_label' in variable &&
+              variable.dimension_label != ''
+            ) {
               dimLabel = variable.dimension_label;
             }
-
             if (dimLabel === 'left_y_axis') {
               dimension = 'firstVisit';
               label = 'First Visit';
