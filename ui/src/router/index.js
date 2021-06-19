@@ -25,6 +25,8 @@ const router = new Router({
       beforeEnter: requireAuth,
       props: route => ({
         collectionId: +route.query.collection,
+        aaPredictors: route.query.aa_predictors,
+        aaOutputs: route.query.aa_outputs,
       }),
     },
     {
