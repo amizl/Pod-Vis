@@ -1,6 +1,6 @@
 <template>
   <v-container fluid fill-width class="ma-0 pa-2">
-    <v-app-bar app class="primary">
+    <v-app-bar app :class="useAutomatedAnalysisMode ? 'purple' : 'primary'">
       <v-icon color="white" large>library_add</v-icon>
       <v-toolbar-title class="white--text pl-3"
         >Create New Study Dataset - Select Variables
@@ -9,6 +9,13 @@
 
       <v-spacer></v-spacer>
 
+      <v-chip
+        v-if="useAutomatedAnalysisMode"
+        color="white"
+        text-color="purple"
+        :disabled="!useAutomatedAnalysisMode"
+        >Auto Mode ON</v-chip
+      >
       <v-chip
         :color="getNumSubjectsColor(numSubjects)"
         :text-color="getNumSubjectsTextColor(numSubjects)"
@@ -22,6 +29,9 @@
         :num-subjects-selected="numSubjects"
         :num-observation-vars-selected="numObservationVars"
         :num-subject-vars-selected="numSubjectVars"
+        :automated-analysis-mode="useAutomatedAnalysisMode"
+        :automated-analysis-predictor-vars="automatedAnalysisInputs"
+        :automated-analysis-output-vars="automatedAnalysisOutputs"
         @dialogOpen="dialogOpened"
         @collectionSaved="collectionSaved"
       />
@@ -77,6 +87,8 @@
               @nSubjects="updateNumSubjects"
               @nObservationVars="updateNumObservationVars"
               @nSubjectVars="updateNumSubjectVars"
+              @autoAnalysisInputs="updateAutoAnalysisInputs"
+              @autoAnalysisOutputs="updateAutoAnalysisOutputs"
             />
           </v-sheet>
         </v-col>
@@ -125,8 +137,10 @@ export default {
     numObservationVars: 0,
     numSubjectVars: 0,
     colors: colors,
-    useAutomatedAnalysisMode: false,
     useLongScaleNames: false,
+    useAutomatedAnalysisMode: false,
+    automatedAnalysisInputs: [],
+    automatedAnalysisOutputs: [],
   }),
   computed: {
     ...mapState('datasetManager', {
@@ -167,6 +181,12 @@ export default {
     },
     updateNumSubjectVars(ns) {
       this.numSubjectVars = ns;
+    },
+    updateAutoAnalysisInputs(ips) {
+      this.automatedAnalysisInputs = ips;
+    },
+    updateAutoAnalysisOutputs(ops) {
+      this.automatedAnalysisOutputs = ops;
     },
   },
 };

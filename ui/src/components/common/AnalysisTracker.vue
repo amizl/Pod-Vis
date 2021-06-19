@@ -87,7 +87,7 @@
           @click.native="substepClicked('1.2')"
           ><span class="subtitle-1">Select Variables</span>
           <span
-            >Select predictor and output variables and click on "BEGIN AUTOMATED
+            >Select predictor and output variables and click on "BEGIN
             ANALYSIS"</span
           ></v-stepper-step
         >

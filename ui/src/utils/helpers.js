@@ -437,3 +437,103 @@ export function getLabelWidth(label) {
   }
   return label.length * fm;
 }
+
+/**
+ * Given a list of [variable_id, first_index, last_index], generate a set of subject counts
+ * using the data in subject_variable_visits.
+ *
+ * subject_variable_visits - value returne by /api/studies/subject_variable_visits
+ * which - either 'event' or 'num'
+ */
+export function countSubjectsByVisits(subject_variable_visits, vars, which) {
+  var subjCounts = { all: 0 };
+  var subjs = subject_variable_visits['subjects'];
+  var subjIds = Object.keys(subjs);
+
+  subjIds.forEach(sid => {
+    var s = subjs[sid];
+    var include_subj = true;
+    var study_ids = Object.keys(s);
+    study_ids.forEach(study_id => {
+      if (!(study_id in subjCounts)) {
+        subjCounts[study_id] = 0;
+      }
+      vars.forEach(v => {
+        if (!(v[0] in s[study_id])) {
+          include_subj = false;
+        } else if (typeof s[study_id][v[0]] != 'number') {
+          var vstring = s[study_id][v[0]][which];
+          if (vstring.charAt(v[1]) == '0' || vstring.charAt(v[2]) == '0') {
+            include_subj = false;
+          }
+        }
+      });
+    });
+    if (vars.length > 0 && include_subj) {
+      subjCounts['all'] += 1;
+      study_ids.forEach(study_id => {
+        subjCounts[study_id] += 1;
+      });
+    }
+  });
+  return subjCounts;
+}
+
+/**
+ * Estimate the maximum number of subjects that could be obtained with the selected
+ * set of variables, returning the first and last visit selections that would produce
+ * that results..
+ *
+ * subject_variable_visits - value returne by /api/studies/subject_variable_visits
+ * var_ids - list of observation variable ids
+ * which - either 'event' or 'num'
+ */
+export function estimateMaxSubjects(subject_variable_visits, var_ids, which) {
+  var subjs = subject_variable_visits['subjects'];
+  var subjIds = Object.keys(subjs);
+  var visits = subject_variable_visits['visits'][which];
+  var n_visits = visits.length;
+
+  // simple heuristic based on selecting the two visits from each variable with the most subjects
+  var vars = [];
+
+  var_ids.forEach(vid => {
+    // get visit counts for variable vid
+    var visitCounts = [];
+
+    subjIds.forEach(sid => {
+      var s = subjs[sid];
+      var study_ids = Object.keys(s);
+      study_ids.forEach(study_id => {
+        if (vid in s[study_id] && typeof s[study_id][vid] != 'number') {
+          var vstring = s[study_id][vid][which];
+          for (var vis = 0; vis < n_visits; ++vis) {
+            if (!(vis in visitCounts))
+              visitCounts[vis] = { index: vis, count: 0 };
+            if (vstring.charAt(vis) == '1') {
+              visitCounts[vis]['count'] += 1;
+            }
+          }
+        }
+      });
+    });
+
+    // heuristic - sort by size and pick the top two, then sort by index
+    visitCounts.sort((a, b) => b['count'] - a['count']);
+    var first_index = 0;
+    var last_index = 0;
+
+    if (visitCounts.length > 1) {
+      if (visitCounts[0]['index'] < visitCounts[1]['index']) {
+        first_index = visitCounts[0]['index'];
+        last_index = visitCounts[1]['index'];
+      } else {
+        first_index = visitCounts[1]['index'];
+        last_index = visitCounts[0]['index'];
+      }
+    }
+    vars.push([vid, first_index, last_index]);
+  });
+  var counts = countSubjectsByVisits(subject_variable_visits, vars, which);
+  return { counts: counts, visits: vars };
+}

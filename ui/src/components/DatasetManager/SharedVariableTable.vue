@@ -168,7 +168,7 @@ import {
   getNumSubjectsColor,
   getNumSubjectsTextColor,
 } from '@/utils/colors';
-import { sortScales } from '@/utils/helpers';
+import { sortScales, estimateMaxSubjects } from '@/utils/helpers';
 
 export default {
   components: {
@@ -207,8 +207,10 @@ export default {
       subject_counts: { all: 0 },
       colors: colors,
       // auto-analysis
-      selected_inputs: {},
-      selected_outputs: {},
+      auto_analysis_inputs: {},
+      auto_analysis_inputs_list: [],
+      auto_analysis_outputs: {},
+      auto_analysis_outputs_list: [],
     };
   },
   computed: {
@@ -276,7 +278,12 @@ export default {
       var selectedIds = value.map(v => v.id);
       if (this.useMoreAccurateSubjectCounts) {
         // TODO - check visit_num also and return the higher of the two
-        this.subject_counts = this.estimateMaxSubjects(selectedIds, 'event');
+        var ems = estimateMaxSubjects(
+          this.subject_variable_visits,
+          selectedIds,
+          'event'
+        );
+        this.subject_counts = ems['counts'];
       } else {
         this.subject_counts = this.countSubjects(selectedIds);
       }
@@ -287,6 +294,12 @@ export default {
     },
     useAutomatedAnalysisMode(aam) {
       if (aam) this.selected = [];
+    },
+    auto_analysis_inputs_list(ipl) {
+      this.$emit('autoAnalysisInputs', ipl);
+    },
+    auto_analysis_outputs_list(opl) {
+      this.$emit('autoAnalysisOutputs', opl);
     },
   },
   async created() {
@@ -473,138 +486,46 @@ export default {
       });
       return nSubjects;
     },
-
-    /**
-     * Given a list of [variable_id, first_index, last_index], generate a set of subject counts
-     * using the data in subject_variable_visits.
-     *
-     * which - either 'event' or 'num'
-     */
-    countSubjectsByVisits(vars, which) {
-      var subjCounts = { all: 0 };
-      var subjs = this.subject_variable_visits['subjects'];
-      var subjIds = Object.keys(subjs);
-
-      subjIds.forEach(sid => {
-        var s = subjs[sid];
-        var include_subj = true;
-        var study_ids = Object.keys(s);
-        study_ids.forEach(study_id => {
-          if (!(study_id in subjCounts)) {
-            subjCounts[study_id] = 0;
-          }
-          vars.forEach(v => {
-            if (!(v[0] in s[study_id])) {
-              include_subj = false;
-            } else if (typeof s[study_id][v[0]] != 'number') {
-              var vstring = s[study_id][v[0]][which];
-              if (vstring.charAt(v[1]) == '0' || vstring.charAt(v[2]) == '0') {
-                include_subj = false;
-              }
-            }
-          });
-        });
-        if (vars.length > 0 && include_subj) {
-          subjCounts['all'] += 1;
-          study_ids.forEach(study_id => {
-            subjCounts[study_id] += 1;
-          });
-        }
-      });
-      return subjCounts;
-    },
-
-    /**
-     * Determine the maximum number of subjects that could be obtained with the selected
-     * set of variables, assuming optimal first/last visit selection.
-     *
-     * which - either 'event' or 'num'
-     */
-    estimateMaxSubjects(var_ids, which) {
-      var subjs = this.subject_variable_visits['subjects'];
-      var subjIds = Object.keys(subjs);
-      var visits = this.subject_variable_visits['visits'][which];
-      var n_visits = visits.length;
-
-      // simple heuristic based on selecting the two visits from each variable with the most subjects
-      var vars = [];
-
-      var_ids.forEach(vid => {
-        // get visit counts for variable vid
-        var visitCounts = [];
-
-        subjIds.forEach(sid => {
-          var s = subjs[sid];
-          var study_ids = Object.keys(s);
-          study_ids.forEach(study_id => {
-            if (vid in s[study_id] && typeof s[study_id][vid] != 'number') {
-              var vstring = s[study_id][vid][which];
-              for (var vis = 0; vis < n_visits; ++vis) {
-                if (!(vis in visitCounts))
-                  visitCounts[vis] = { index: vis, count: 0 };
-                if (vstring.charAt(vis) == '1') {
-                  visitCounts[vis]['count'] += 1;
-                }
-              }
-            }
-          });
-        });
-
-        // heuristic - sort by size and pick the top two, then sort by index
-        visitCounts.sort((a, b) => b['count'] - a['count']);
-        var first_index = 0;
-        var last_index = 0;
-
-        if (visitCounts.length > 1) {
-          if (visitCounts[0]['index'] < visitCounts[1]['index']) {
-            first_index = visitCounts[0]['index'];
-            last_index = visitCounts[1]['index'];
-          } else {
-            first_index = visitCounts[1]['index'];
-            last_index = visitCounts[0]['index'];
-          }
-        }
-        vars.push([vid, first_index, last_index]);
-      });
-      var counts = this.countSubjectsByVisits(vars, which);
-      return counts;
-    },
     inputCheckboxChange(props, evt) {
       var sel = props.item.isSelectedInput;
       if (sel) {
-        this.selected_inputs[props.item.id] = true;
+        this.auto_analysis_inputs[props.item.id] = true;
         // already selected as output var
-        if (props.item.id in this.selected_outputs) {
+        if (props.item.id in this.auto_analysis_outputs) {
           delete props.item.isSelectedOutput;
-          delete this.selected_outputs[props.item.id];
+          delete this.auto_analysis_outputs[props.item.id];
         } else {
           props.select(evt);
         }
       } else {
-        delete this.selected_inputs[props.item.id];
+        delete this.auto_analysis_inputs[props.item.id];
         props.select(evt);
       }
-      //      console.log('selected inputs = ' + Object.keys(this.selected_inputs));
-      //      console.log('selected outputs = ' + Object.keys(this.selected_outputs));
+      this.auto_analysis_inputs_list = Object.keys(this.auto_analysis_inputs);
+      this.auto_analysis_outputs_list = Object.keys(this.auto_analysis_outputs);
+      //      console.log('selected inputs = ' + Object.keys(this.auto_analysis_inputs));
+      //      console.log('selected outputs = ' + Object.keys(this.auto_analysis_outputs));
     },
     outputCheckboxChange(props, evt) {
       var sel = props.item.isSelectedOutput;
       if (sel) {
-        this.selected_outputs[props.item.id] = true;
+        this.auto_analysis_outputs[props.item.id] = true;
         // already selected as output var
-        if (props.item.id in this.selected_inputs) {
+        if (props.item.id in this.auto_analysis_inputs) {
           delete props.item.isSelectedInput;
-          delete this.selected_inputs[props.item.id];
+          delete this.auto_analysis_inputs[props.item.id];
         } else {
           props.select(evt);
         }
       } else {
-        delete this.selected_outputs[props.item.id];
-        if (!(props.item.id in this.selected_inputs)) props.select(evt);
+        delete this.auto_analysis_outputs[props.item.id];
+        if (!(props.item.id in this.auto_analysis_inputs)) props.select(evt);
       }
+      this.auto_analysis_inputs_list = Object.keys(this.auto_analysis_inputs);
+      this.auto_analysis_outputs_list = Object.keys(this.auto_analysis_outputs);
       //      console.log('props.isSelectedOutput=' + props.isSelectedOutput);
-      //      console.log('selected inputs = ' + Object.keys(this.selected_inputs));
-      //      console.log('selected outputs = ' + Object.keys(this.selected_outputs));
+      //      console.log('selected inputs = ' + Object.keys(this.auto_analysis_inputs));
+      //      console.log('selected outputs = ' + Object.keys(this.auto_analysis_outputs));
     },
   },
 };
