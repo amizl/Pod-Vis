@@ -127,8 +127,7 @@ export default {
     ...mapActions('dataSummary', {
       saveFirstAndLastVisits: actions.SAVE_FIRST_AND_LAST_VISITS,
     }),
-    async onSaveFirstLastVisit() {
-      this.loading = true;
+    async saveVisits() {
       var variableVisits = [];
       var cvIds = getObservationVariableIds(this.collection);
       var firstVisits = this.firstVisits;
@@ -145,17 +144,16 @@ export default {
         variableVisits.push(vv);
       });
 
-      try {
-        this.saveFirstAndLastVisits({
-          variableVisits,
-        });
-
-        this.loading = false;
-        // move on to the cohort manager
-        this.$router.push(`/cohorts?collection=${this.collection.id}`);
-      } catch (err) {
-        this.loading = false;
-      }
+      this.saveFirstAndLastVisits({
+        variableVisits,
+      });
+    },
+    async onSaveFirstLastVisit() {
+      this.loading = true;
+      this.saveVisits();
+      this.loading = false;
+      // move on to the cohort manager
+      this.$router.push(`/cohorts?collection=${this.collection.id}`);
     },
   },
 };

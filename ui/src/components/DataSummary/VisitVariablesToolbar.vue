@@ -187,13 +187,19 @@ export default {
     collectionSummaries() {
       this.updateTimesBetweenVisits();
     },
-    firstVisits() {
-      this.updateEvents();
-      this.updateTimesBetweenVisits();
+    firstVisits: {
+      handler() {
+        this.updateEvents();
+        this.updateTimesBetweenVisits();
+      },
+      deep: true,
     },
-    lastVisits() {
-      this.updateEvents();
-      this.updateTimesBetweenVisits();
+    lastVisits: {
+      handler() {
+        this.updateEvents();
+        this.updateTimesBetweenVisits();
+      },
+      deep: true,
     },
     useLongScaleNames(newval) {
       this.$emit('useLongScaleNames', newval);
