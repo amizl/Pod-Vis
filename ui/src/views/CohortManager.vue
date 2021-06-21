@@ -139,7 +139,7 @@
                     class="rounded-lg shadow pa-0 ma-0 mr-1"
                   >
                     <input-variables
-		      ref="input_vars"
+                      ref="input_vars"
                       :expanded.sync="inExpanded"
                       :highlighted="inHighlighted"
                       :class="inputVarsClass"
@@ -188,7 +188,7 @@
               <splitpanes class="default-theme">
                 <pane size="65" :style="outputVarsStyle">
                   <output-variables
-		    ref="output_vars"
+                    ref="output_vars"
                     :expanded.sync="outExpanded"
                     :highlighted="outHighlighted"
                     :disabled="true"
@@ -231,13 +231,8 @@
       :cohorts="analyticsPopupCohorts"
       :select-range-fn="analyticsPopupSelectRangeFn"
       :cohort-prefix="analyticsPopupCohortPrefix"
-     />
-    <v-dialog
-      v-model="aaDialog"
-      persistent
-      scrollable
-      max-width="40%"
-      >
+    />
+    <v-dialog v-model="aaDialog" persistent scrollable max-width="40%">
       <v-card class="rounded-lg" style="border: 3px solid #3f51b5;">
         <v-card-title color="white" class="ma-0 pa-2" primary-title>
           <span class="primary--text text--darken-3 title"
@@ -254,9 +249,7 @@
               :key="`prog-${i}`"
               :disabled="i > aaProgress"
             >
-              <v-list-item-content>
-                {{ s.title }}
-              </v-list-item-content>
+              <v-list-item-content> {{ s.title }} </v-list-item-content>
               <v-list-item-avatar>
                 <v-icon v-if="i < aaProgress">done</v-icon>
               </v-list-item-avatar>
@@ -274,7 +267,6 @@
             </v-btn> -->
         </v-card-actions>
       </v-card>
-
     </v-dialog>
     <v-snackbar
       v-model="helpModeNotify"
@@ -297,8 +289,8 @@ import 'splitpanes/dist/splitpanes.css';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { actions, state, getters } from '@/store/modules/cohortManager/types';
 import {
-getCollectionDescription,
-getLongScaleNameDefault,
+  getCollectionDescription,
+  getLongScaleNameDefault,
 } from '@/utils/helpers';
 import logEvent from '@/utils/logging';
 
@@ -311,91 +303,90 @@ import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
 import AnalysisSummaryBtnDialog from '@/components/DataExplorer/AnalysisSummaryBtnDialog.vue';
 
 var aaSteps = [
-{ title: 'Loading data' },
-{ title: 'Adding predictor variables' },
-{ title: 'Adding outcome variables' },
-{ title: 'Creating cohorts' },
-{ title: 'Advancing to Data Analytics' },
+  { title: 'Loading data' },
+  { title: 'Adding predictor variables' },
+  { title: 'Adding outcome variables' },
+  { title: 'Creating cohorts' },
+  { title: 'Advancing to Data Analytics' },
 ];
 
 export default {
-name: 'CohortManager',
-components: {
-AnalysisTracker,
-InputVariables,
-OutputVariables,
-ManageCohortsTable,
-AnalyticsTable,
-AnalyticsPopup,
-Splitpanes,
-Pane,
-AnalysisSummaryBtnDialog,
-},
-props: {
-collectionId: {
-type: Number,
-required: true,
-},
-aaPredictors: {
-type: Array,
-default: () => [],
-},
-aaOutputs: {
-type: Array,
-default: () => [],
-},
-},
-data() {
-return {
-isLoading: false,
-isLoadingCohort: false,
-substep: '2.1',
-inExpanded: true,
-outExpanded: false,
-inHighlighted: true,
-outHighlighted: false,
-getCollectionDescription: getCollectionDescription,
-analyticsPopupName: 'Tertiles',
-analyticsPopupCohortPrefix: '',
-analyticsPopupCohorts: [],
-analyticsPopupSelectRangeFn: x => x,
-helpModeCheckbox: false,
-helpModeNotify: false,
-showNextHelpChip: false,
-aaDialog: false,
-aaProgress: 0,
-aaLastUpdate: null,
-aaMinStepTime: 1,
-aaSteps: aaSteps,
-};
-},
-computed: {
+  name: 'CohortManager',
+  components: {
+    AnalysisTracker,
+    InputVariables,
+    OutputVariables,
+    ManageCohortsTable,
+    AnalyticsTable,
+    AnalyticsPopup,
+    Splitpanes,
+    Pane,
+    AnalysisSummaryBtnDialog,
+  },
+  props: {
+    collectionId: {
+      type: Number,
+      required: true,
+    },
+    aaPredictors: {
+      type: Array,
+      default: () => [],
+    },
+    aaOutputs: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  data() {
+    return {
+      isLoading: false,
+      isLoadingCohort: false,
+      substep: '2.1',
+      inExpanded: true,
+      outExpanded: false,
+      inHighlighted: true,
+      outHighlighted: false,
+      getCollectionDescription: getCollectionDescription,
+      analyticsPopupName: 'Tertiles',
+      analyticsPopupCohortPrefix: '',
+      analyticsPopupCohorts: [],
+      analyticsPopupSelectRangeFn: x => x,
+      helpModeCheckbox: false,
+      helpModeNotify: false,
+      showNextHelpChip: false,
+      aaDialog: false,
+      aaProgress: 0,
+      aaLastUpdate: null,
+      aaMinStepTime: 1,
+      aaSteps: aaSteps,
+    };
+  },
+  computed: {
+    ...mapGetters('cohortManager', {
+      hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
+    }),
+    ...mapState('cohortManager', {
+      collection: state.COLLECTION,
+      cohort: state.COHORT,
+      cohorts: state.COHORTS,
+      inputVariables: state.INPUT_VARIABLES,
+      outputVariables: state.OUTPUT_VARIABLES,
+      filteredData: state.FILTERED_DATA,
+      unfilteredData: state.UNFILTERED_DATA,
+      helpMode: state.HELP_MODE,
+    }),
+    // cohorts are collection-specific
+    collection_cohorts() {
+      const cch = [];
+      const cid = this.collection.id;
 
-...mapGetters('cohortManager', {
-hasUserSelectedCohort: getters.HAS_USER_SELECTED_COHORT,
-}),
-...mapState('cohortManager', {
-collection: state.COLLECTION,
-cohort: state.COHORT,
-cohorts: state.COHORTS,
-inputVariables: state.INPUT_VARIABLES,
-outputVariables: state.OUTPUT_VARIABLES,
-filteredData: state.FILTERED_DATA,
-unfilteredData: state.UNFILTERED_DATA,
-helpMode: state.HELP_MODE,
-}),
-// cohorts are collection-specific
-collection_cohorts() {
-const cch = [];
-const cid = this.collection.id;
-
-this.cohorts.forEach(e => {
-if (e.collection_id === cid) {
-cch.push(e);
-}
-});
-// sort most recent first
-// using id because resolution of date_generated isn't sufficiently high res
+      this.cohorts.forEach(e => {
+        if (e.collection_id === cid) {
+          cch.push(e);
+        }
+      });
+      // sort most recent first
+      // using id because resolution of date_generated isn't sufficiently high res
       var scc = [...cch].sort((x, y) => y['id'] - x['id']);
       return scc;
     },
@@ -663,9 +654,13 @@ cch.push(e);
       await this.updateAutomatedAnalysisProgress(0);
 
       var aa_ph = {};
-      this.aaPredictors.map(vid => { aa_ph[vid] = true;});
+      this.aaPredictors.map(vid => {
+        aa_ph[vid] = true;
+      });
       var aa_oh = {};
-      this.aaOutputs.map(vid => { aa_oh[vid] = true;});
+      this.aaOutputs.map(vid => {
+        aa_oh[vid] = true;
+      });
 
       // ** add predictor variables
       await this.updateAutomatedAnalysisProgress(1);
@@ -675,7 +670,12 @@ cch.push(e);
       await this.sleep(this.aaMinStepTime * 1000);
 
       // select input vars
-      ivd.inputVariables.forEach(v => { if (v.id in aa_ph) {  v.inmSelected = true; ivd.masterCbChange(v); }});
+      ivd.inputVariables.forEach(v => {
+        if (v.id in aa_ph) {
+          v.inmSelected = true;
+          ivd.masterCbChange(v);
+        }
+      });
       await this.sleep(this.aaMinStepTime * 1000);
 
       // close input vars dialog
@@ -692,7 +692,12 @@ cch.push(e);
       await this.sleep(this.aaMinStepTime * 1000);
 
       // select output vars
-      ovd.outputVariables.forEach(v => { if (v.id in aa_oh) { v.outmSelected = true; ovd.masterCbChange(v); }});
+      ovd.outputVariables.forEach(v => {
+        if (v.id in aa_oh) {
+          v.outmSelected = true;
+          ovd.masterCbChange(v);
+        }
+      });
       await this.sleep(this.aaMinStepTime * 1000);
 
       // close output vars dialog
@@ -707,17 +712,17 @@ cch.push(e);
       var col_charts = [];
 
       ivd.inputVariables.forEach(v => {
-        if (ivc.$refs["ivc-" + v.id]) {
-          if ('hist_chart' in ivc.$refs["ivc-" + v.id][0].$refs) { 
-            var hc = ivc.$refs["ivc-" + v.id][0].$refs.hist_chart;
+        if (ivc.$refs['ivc-' + v.id]) {
+          if ('hist_chart' in ivc.$refs['ivc-' + v.id][0].$refs) {
+            var hc = ivc.$refs['ivc-' + v.id][0].$refs.hist_chart;
             hc.tab = 'predef';
             hc.predef_radio = 'quartiles';
             hist_charts.push(hc);
-          } else if ('col_chart' in ivc.$refs["ivc-" + v.id][0].$refs) { 
-            var cc = ivc.$refs["ivc-" + v.id][0].$refs.col_chart;
+          } else if ('col_chart' in ivc.$refs['ivc-' + v.id][0].$refs) {
+            var cc = ivc.$refs['ivc-' + v.id][0].$refs.col_chart;
             cc.sortedData.forEach(cat => {
-              var queries = {}
-              queries[cc.dimensionName] = [ { value: cat.key } ];
+              var queries = {};
+              queries[cc.dimensionName] = [{ value: cat.key }];
 
               var filtered_d = this.unfilteredData.filter(d => {
                 let dv = cc.dimension.accessor(d);
@@ -725,7 +730,7 @@ cch.push(e);
               });
 
               var args = {
-                name: cc.dimensionName + " - " + cat.key,
+                name: cc.dimensionName + ' - ' + cat.key,
                 collection: this.collection,
                 queries: queries,
                 inputVariables: this.inputVariables,
@@ -739,13 +744,13 @@ cch.push(e);
       });
 
       // hist_charts
-      for (var i = 0;i < hist_charts.length; ++i) {
+      for (var i = 0; i < hist_charts.length; ++i) {
         await hist_charts[i].savePredefs();
         await this.sleep(this.aaMinStepTime * 1000);
       }
 
       // col_charts
-      for (i = 0;i < col_charts.length; ++i) {
+      for (i = 0; i < col_charts.length; ++i) {
         await this.saveCohort(col_charts[i]);
         await this.sleep(this.aaMinStepTime * 1000);
       }
@@ -761,7 +766,7 @@ cch.push(e);
 
       await this.updateAutomatedAnalysisProgress(5);
       this.$router.push({ name: 'dataExplorer', query: query });
-    }
+    },
   },
 };
 </script>
@@ -769,6 +774,6 @@ cch.push(e);
 <style scoped>
 /* Help mode */
 .help_mode {
-    border: 7px solid #fceb3b !important;
+  border: 7px solid #fceb3b !important;
 }
 </style>

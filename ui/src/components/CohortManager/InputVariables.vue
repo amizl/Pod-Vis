@@ -27,7 +27,7 @@
 
           <input-variables-charts
             v-if="hasUserAddedInputVariables"
-	    ref="input_charts"
+            ref="input_charts"
             :show-filter-help="showFilterHelp"
             :show-analytics-help="showAnalyticsHelp"
             @userChangedInputVariable="userChangedInputVariable"

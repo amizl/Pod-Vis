@@ -6,8 +6,8 @@ import { requireAuth, requireNotAuth } from './authGuards';
 Vue.use(Router);
 
 function forceArray(a) {
-    if (a == null || Array.isArray(a)) return a;
-    return [a];
+  if (a == null || Array.isArray(a)) return a;
+  return [a];
 }
 
 const router = new Router({
