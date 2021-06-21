@@ -54,6 +54,7 @@
           </div>
 
           <ColumnChart
+	    ref="col_chart"
             v-else-if="
               (!variable.is_longitudinal &&
                 variable.data_category === 'Categorical') ||
@@ -67,6 +68,7 @@
             @userChangedVariable="userChangedInputVariable"
           />
           <HistogramChart
+	    ref="hist_chart"
             v-else-if="variable.data_category !== 'Categorical'"
             :id="variable.id"
             :dimension-name="dimension"

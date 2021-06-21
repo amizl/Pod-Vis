@@ -7,6 +7,7 @@
         :class="index > 0 ? 'ml-2 pb-1' : 'pb-1'"
       >
         <input-variable-chart
+	  :ref="'ivc-' + inputVariable.id"
           :key="'ivc-' + inputVariable.id"
           :variable="inputVariable"
           :show-filter-help="showFilterHelp"

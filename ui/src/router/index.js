@@ -5,6 +5,11 @@ import { requireAuth, requireNotAuth } from './authGuards';
 
 Vue.use(Router);
 
+function forceArray(a) {
+    if (a == null || Array.isArray(a)) return a;
+    return [a];
+}
+
 const router = new Router({
   mode: 'history',
   routes: [
@@ -42,6 +47,8 @@ const router = new Router({
       beforeEnter: requireAuth,
       props: route => ({
         collectionId: +route.query.collection,
+        aaPredictors: route.query.aa_predictors,
+        aaOutputs: forceArray(route.query.aa_outputs),
       }),
     },
     {
@@ -54,6 +61,8 @@ const router = new Router({
         variableId: +route.query.variable,
         cohortIds: route.query.cohorts,
         visibleCohortIds: route.query.visibleCohorts,
+        aaPredictors: route.query.aa_predictors,
+        aaOutputs: route.query.aa_outputs,
       }),
     },
     {

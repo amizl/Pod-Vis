@@ -185,7 +185,7 @@ export default {
       aaDialog: false,
       aaProgress: 0,
       aaLastUpdate: null,
-      aaMinStepTime: 2,
+      aaMinStepTime: 1,
       aaSteps: aaSteps,
     };
   },
@@ -203,7 +203,7 @@ export default {
   async created() {
     this.isLoading = true;
     if (this.useAutomatedAnalysisMode) {
-      this.dialog = true;
+      this.aaDialog = true;
       this.aaProgress = 0;
     }
     await this.fetchCollection(this.collectionId);
@@ -249,7 +249,6 @@ export default {
       this.aaLastUpdate = Date.now();
     },
     async doAutomatedAnalysis() {
-      this.aaDialog = true;
       await this.updateAutomatedAnalysisProgress(0);
 
       // get subject visit info
@@ -284,6 +283,7 @@ export default {
 
       // continue to Cohort Manager
       await this.updateAutomatedAnalysisProgress(3);
+      await this.updateAutomatedAnalysisProgress(4);
       var query = { collection: this.collection.id };
       if (this.useAutomatedAnalysisMode) {
         query['aa_predictors'] = this.aaPredictors;

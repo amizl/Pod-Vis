@@ -1,6 +1,7 @@
 <template>
   <v-sheet color="white" height="100%" class="rounded-lg shadow pa-0 ma-0">
     <input-variables-toolbar
+      ref="input_toolbar"
       :expanded="expanded"
       :highlighted="highlighted"
       class="ma-0 pa-0"
@@ -26,6 +27,7 @@
 
           <input-variables-charts
             v-if="hasUserAddedInputVariables"
+	    ref="input_charts"
             :show-filter-help="showFilterHelp"
             :show-analytics-help="showAnalyticsHelp"
             @userChangedInputVariable="userChangedInputVariable"

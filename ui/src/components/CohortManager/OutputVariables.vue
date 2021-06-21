@@ -1,6 +1,7 @@
 <template>
   <v-sheet color="white" height="100%" class="rounded-lg shadow pa-0 ma-0">
     <output-variables-toolbar
+      ref="output_toolbar"
       :expanded="expanded"
       :highlighted="highlighted"
       :show-review-help="showReviewHelp"
