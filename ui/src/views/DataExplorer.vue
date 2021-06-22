@@ -143,7 +143,7 @@
       <v-card class="rounded-lg" style="border: 3px solid #3f51b5;">
         <v-card-title color="white" class="ma-0 pa-2" primary-title>
           <span class="primary--text text--darken-3 title"
-            >Automated Analysis Mode: Create Cohorts</span
+            >Automated Analysis Mode: Run Analyses</span
           >
         </v-card-title>
 
