@@ -3,12 +3,17 @@
     <v-btn
       :disabled="
         numSubjectsSelected === 0 ||
-          numSubjectVarsSelected + numObservationVarsSelected === 0
+          numSubjectVarsSelected + numObservationVarsSelected === 0 ||
+          (automatedAnalysisMode &&
+            (automatedAnalysisPredictorVars.length == 0 ||
+              automatedAnalysisOutputVars.length == 0))
       "
       color="primary--text"
       @click="dialog = !dialog"
     >
-      <v-icon left>save</v-icon> SAVE STUDY DATASET
+      <v-icon left>save</v-icon
+      ><span v-if="!automatedAnalysisMode">SAVE STUDY DATASET</span
+      ><span v-else>BEGIN ANALYSIS</span>
     </v-btn>
     <!-- SAVE COLLECTION FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
@@ -63,7 +68,6 @@
 import { mapActions } from 'vuex';
 import { actions } from '@/store/modules/datasetManager/types';
 
-// which store?
 export default {
   props: {
     variables: {
@@ -85,6 +89,18 @@ export default {
     numSubjectVarsSelected: {
       type: Number,
       default: 0,
+    },
+    automatedAnalysisMode: {
+      type: Boolean,
+      default: false,
+    },
+    automatedAnalysisPredictorVars: {
+      type: Array,
+      default: () => [],
+    },
+    automatedAnalysisOutputVars: {
+      type: Array,
+      default: () => [],
     },
   },
   data: () => ({
@@ -127,8 +143,12 @@ export default {
           });
           this.$emit('collectionSaved');
           this.loading = false;
-          //          this.$router.push(`/cohorts?collection=${newCollection.id}`);
-          this.$router.push(`/data_summary?collection=${newCollection.id}`);
+          var query = { collection: newCollection.id };
+          if (this.automatedAnalysisMode) {
+            query['aa_predictors'] = this.automatedAnalysisPredictorVars;
+            query['aa_outputs'] = this.automatedAnalysisOutputVars;
+          }
+          this.$router.push({ name: 'dataSummary', query: query });
         } catch (err) {
           this.loading = false;
         }

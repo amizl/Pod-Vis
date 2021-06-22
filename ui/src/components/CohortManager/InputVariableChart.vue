@@ -60,6 +60,7 @@
                 variable.type === 'study'
             "
             :id="variable.id"
+            ref="col_chart"
             :dimension-name="dimension"
             :show-filter-help="showFilterHelp"
             show-selection
@@ -69,6 +70,7 @@
           <HistogramChart
             v-else-if="variable.data_category !== 'Categorical'"
             :id="variable.id"
+            ref="hist_chart"
             :dimension-name="dimension"
             :variable="variable"
             :show-filter-help="showFilterHelp"

@@ -211,11 +211,17 @@ export default {
       this.lastVisitHandle = null;
       this.updateCanvas();
     },
-    firstVisits() {
-      this.updateCanvas();
+    firstVisits: {
+      handler() {
+        this.updateCanvas();
+      },
+      deep: true,
     },
-    lastVisits() {
-      this.updateCanvas();
+    lastVisits: {
+      handler() {
+        this.updateCanvas();
+      },
+      deep: true,
     },
     useLongScaleNames() {
       this.updateCanvas();

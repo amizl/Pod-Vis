@@ -62,7 +62,44 @@
     </v-stepper>
 
     <!-- substep trackers -->
-    <v-stepper v-if="step === '1'" :value="substep" model="substep">
+    <!-- step 1 - automated analysis mode -->
+    <v-stepper
+      v-if="step === '1' && automatedAnalysisMode"
+      :value="substep"
+      model="substep"
+    >
+      <v-stepper-header class="tracker_step_highlight">
+        <v-stepper-step
+          :class="substepClass('1.1')"
+          :complete="substep !== '1.1' || step === '2'"
+          step="1.1"
+          @click.native="substepClicked('1.1')"
+          ><span class="subtitle-1">Choose Datasets</span>
+          <span
+            >Choose datasets and click "SELECT VARIABLES"</span
+          ></v-stepper-step
+        >
+        <v-divider></v-divider>
+        <v-stepper-step
+          :complete="substep === '1.3' || substep === '1.4' || step === '2'"
+          step="1.2"
+          :class="substepClass('1.2')"
+          @click.native="substepClicked('1.2')"
+          ><span class="subtitle-1">Select Variables</span>
+          <span
+            >Select predictor and output variables and click on "BEGIN
+            ANALYSIS"</span
+          ></v-stepper-step
+        >
+      </v-stepper-header>
+    </v-stepper>
+
+    <!-- step 1 - manual analysis mode -->
+    <v-stepper
+      v-if="step === '1' && !automatedAnalysisMode"
+      :value="substep"
+      model="substep"
+    >
       <v-stepper-header class="tracker_step_highlight">
         <v-stepper-step
           :class="substepClass('1.1')"
@@ -204,6 +241,10 @@ export default {
       type: Number,
       required: false,
       default: -1,
+    },
+    automatedAnalysisMode: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

@@ -22,7 +22,10 @@
           center="start"
           justify="start"
         >
-          <v-app-bar app class="primary">
+          <v-app-bar
+            app
+            :class="useAutomatedAnalysisMode ? 'purple' : 'primary'"
+          >
             <v-icon color="white" x-large>analytics</v-icon>
             <v-toolbar-title class="white--text pl-3"
               >Data Analytics
@@ -38,6 +41,17 @@
                 </v-tooltip>
               </div>
             </v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-chip
+              v-if="useAutomatedAnalysisMode"
+              color="white"
+              text-color="purple"
+              class="mr-1"
+              :disabled="!useAutomatedAnalysisMode"
+              >Auto Mode ON</v-chip
+            >
           </v-app-bar>
 
           <analysis-tracker
@@ -124,6 +138,44 @@
         </v-container>
       </v-col>
     </v-row>
+
+    <v-dialog v-model="aaDialog" persistent scrollable max-width="40%">
+      <v-card class="rounded-lg" style="border: 3px solid #3f51b5;">
+        <v-card-title color="white" class="ma-0 pa-2" primary-title>
+          <span class="primary--text text--darken-3 title"
+            >Automated Analysis Mode: Run Analyses</span
+          >
+        </v-card-title>
+
+        <v-divider></v-divider>
+
+        <v-card-text class="py-4">
+          <v-list>
+            <v-list-item
+              v-for="(s, i) in aaSteps"
+              :key="`prog-${i}`"
+              :disabled="i > aaProgress"
+            >
+              <v-list-item-content> {{ s.title }} </v-list-item-content>
+              <v-list-item-avatar>
+                <v-icon v-if="i < aaProgress">done</v-icon>
+              </v-list-item-avatar>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            :disabled="aaProgress < 3"
+            class="primary white--text ma-0 px-2 mx-2"
+            @click="aaDialog = false"
+          >
+            OK
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -150,6 +202,12 @@ const COMPARISON_MEASURES = [
     descr: 'First visit measurements',
   },
   { label: 'Last Visit', value: 'lastVisit', descr: 'Last visit measurements' },
+];
+
+var aaSteps = [
+  { title: 'Loading cohorts' },
+  { title: 'Running analyses' },
+  { title: 'Done' },
 ];
 
 export default {
@@ -180,6 +238,14 @@ export default {
       required: false,
       default: undefined,
     },
+    aaPredictors: {
+      type: Array,
+      default: () => [],
+    },
+    aaOutputs: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -193,6 +259,11 @@ export default {
       analysisNum: 0,
       comparisonMeasures: COMPARISON_MEASURES,
       selectedComparisonMeasure: COMPARISON_MEASURES[2],
+      aaDialog: false,
+      aaProgress: 0,
+      aaLastUpdate: null,
+      aaMinStepTime: 1,
+      aaSteps: aaSteps,
     };
   },
   computed: {
@@ -221,6 +292,9 @@ export default {
       var ss = this.visibleCohorts.length > 1 ? '3.2' : '3.1';
       return ss;
     },
+    useAutomatedAnalysisMode() {
+      return this.aaPredictors.length + this.aaOutputs.length > 0;
+    },
   },
   watch: {
     // workaround to force DetailedViewChart resize when expandAnalytics toggled
@@ -230,6 +304,10 @@ export default {
   },
   async created() {
     this.isLoading = true;
+    if (this.useAutomatedAnalysisMode) {
+      this.aaDialog = true;
+      this.aaProgress = 0;
+    }
     await this.clearData();
     await this.fetchCollection(this.collectionId);
     await this.fetchData();
@@ -315,6 +393,10 @@ export default {
     var vc = this.getCohortsFromIdList(this.visibleCohortIds);
     this.setVisibleCohorts(vc);
     this.isLoading = false;
+
+    if (this.useAutomatedAnalysisMode) {
+      this.doAutomatedAnalysis();
+    }
   },
   methods: {
     ...mapActions('dataExplorer', {
@@ -488,6 +570,54 @@ export default {
       var new_analyses = [...this.analyses];
       new_analyses.splice(anum, 1);
       this.analyses = new_analyses;
+    },
+    // TODO - copied from DataSummary
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    async updateAutomatedAnalysisProgress(progress) {
+      var ts = Date.now();
+      if (this.aaLastUpdate == null) {
+        this.aaProgress = progress;
+      } else {
+        var diff = (ts - this.aaLastUpdate) / 1000.0;
+        if (diff < this.aaMinStepTime) {
+          var remaining = this.aaMinStepTime - diff;
+          await this.sleep(remaining * 1000);
+        }
+        this.aaProgress = progress;
+      }
+      this.aaLastUpdate = Date.now();
+    },
+    async doAutomatedAnalysis() {
+      await this.updateAutomatedAnalysisProgress(1);
+
+      // group cohorts by input var
+      var ivc = {};
+      var ct = this.$refs.cohortTable;
+      ct.cohorts.forEach(c => {
+        var ivs = c.input_variables.filter(v =>
+          c.label.startsWith(v.subject_ontology.abbreviation + ' - ')
+        );
+        if (ivs.length == 1) {
+          var key = ivs[0].subject_ontology.abbreviation;
+          if (!(key in ivc)) {
+            ivc[key] = [];
+          }
+          ivc[key].push(c);
+        }
+      });
+
+      var keys = Object.keys(ivc);
+      for (var i = 0; i < keys.length; ++i) {
+        var cohorts = ivc[keys[i]];
+        //     console.log("analyzing " + keys[i]);
+        this.analyzeCohortList(cohorts);
+        await this.sleep(this.aaMinStepTime * 1000);
+      }
+
+      await this.updateAutomatedAnalysisProgress(2);
+      await this.updateAutomatedAnalysisProgress(3);
     },
   },
 };

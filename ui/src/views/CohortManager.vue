@@ -6,7 +6,7 @@
   </v-container>
 
   <v-container v-else fluid fill-width class="ma-0 pa-2">
-    <v-app-bar app class="primary">
+    <v-app-bar app :class="useAutomatedAnalysisMode ? 'purple' : 'primary'">
       <v-icon color="white" large>group_add</v-icon>
       <v-toolbar-title class="white--text pl-3"
         >Cohort Manager
@@ -39,6 +39,15 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
+
+      <v-chip
+        v-if="useAutomatedAnalysisMode"
+        color="white"
+        text-color="purple"
+        class="mr-1"
+        :disabled="!useAutomatedAnalysisMode"
+        >Auto Mode ON</v-chip
+      >
 
       <v-tooltip bottom color="primary">
         <template v-slot:activator="{ on: tooltip }">
@@ -130,6 +139,7 @@
                     class="rounded-lg shadow pa-0 ma-0 mr-1"
                   >
                     <input-variables
+                      ref="input_vars"
                       :expanded.sync="inExpanded"
                       :highlighted="inHighlighted"
                       :class="inputVarsClass"
@@ -178,6 +188,7 @@
               <splitpanes class="default-theme">
                 <pane size="65" :style="outputVarsStyle">
                   <output-variables
+                    ref="output_vars"
                     :expanded.sync="outExpanded"
                     :highlighted="outHighlighted"
                     :disabled="true"
@@ -221,6 +232,42 @@
       :select-range-fn="analyticsPopupSelectRangeFn"
       :cohort-prefix="analyticsPopupCohortPrefix"
     />
+    <v-dialog v-model="aaDialog" persistent scrollable max-width="40%">
+      <v-card class="rounded-lg" style="border: 3px solid #3f51b5;">
+        <v-card-title color="white" class="ma-0 pa-2" primary-title>
+          <span class="primary--text text--darken-3 title"
+            >Automated Analysis Mode: Create Cohorts</span
+          >
+        </v-card-title>
+
+        <v-divider></v-divider>
+
+        <v-card-text class="py-4">
+          <v-list>
+            <v-list-item
+              v-for="(s, i) in aaSteps"
+              :key="`prog-${i}`"
+              :disabled="i > aaProgress"
+            >
+              <v-list-item-content> {{ s.title }} </v-list-item-content>
+              <v-list-item-avatar>
+                <v-icon v-if="i < aaProgress">done</v-icon>
+              </v-list-item-avatar>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <!--            <v-btn
+              class="primary white--text ma-0 px-2 mx-2"
+              @click=""
+            >
+              OK
+            </v-btn> -->
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-snackbar
       v-model="helpModeNotify"
       color="#2a96f3"
@@ -255,6 +302,14 @@ import InputVariables from '@/components/CohortManager/InputVariables.vue';
 import OutputVariables from '@/components/CohortManager/OutputVariables.vue';
 import AnalysisSummaryBtnDialog from '@/components/DataExplorer/AnalysisSummaryBtnDialog.vue';
 
+var aaSteps = [
+  { title: 'Loading data' },
+  { title: 'Adding predictor variables' },
+  { title: 'Adding outcome variables' },
+  { title: 'Creating cohorts' },
+  { title: 'Advancing to Data Analytics' },
+];
+
 export default {
   name: 'CohortManager',
   components: {
@@ -272,6 +327,14 @@ export default {
     collectionId: {
       type: Number,
       required: true,
+    },
+    aaPredictors: {
+      type: Array,
+      default: () => [],
+    },
+    aaOutputs: {
+      type: Array,
+      default: () => [],
     },
   },
   data() {
@@ -291,6 +354,11 @@ export default {
       helpModeCheckbox: false,
       helpModeNotify: false,
       showNextHelpChip: false,
+      aaDialog: false,
+      aaProgress: 0,
+      aaLastUpdate: null,
+      aaMinStepTime: 1,
+      aaSteps: aaSteps,
     };
   },
   computed: {
@@ -380,6 +448,9 @@ export default {
     hasFilters() {
       return this.filteredData.length < this.unfilteredData.length;
     },
+    useAutomatedAnalysisMode() {
+      return this.aaPredictors.length + this.aaOutputs.length > 0;
+    },
   },
   watch: {
     substep() {
@@ -434,6 +505,10 @@ export default {
     this.setHelpMode(false);
   },
   async created() {
+    if (this.useAutomatedAnalysisMode) {
+      this.aaDialog = true;
+      this.aaProgress = 0;
+    }
     this.resetAllStoreData();
     this.isLoading = true;
     await this.fetchCollection(this.collectionId);
@@ -444,6 +519,9 @@ export default {
     var useLongScaleNames = getLongScaleNameDefault(datasets);
     this.setUseLongScaleNames(useLongScaleNames);
     this.isLoading = false;
+    if (this.useAutomatedAnalysisMode) {
+      this.doAutomatedAnalysis();
+    }
   },
   methods: {
     ...mapActions('cohortManager', {
@@ -456,6 +534,9 @@ export default {
       setCohortNoReset: actions.SET_COHORT_NO_RESET,
       setUseLongScaleNames: actions.SET_USE_LONG_SCALE_NAMES,
       setHelpMode: actions.SET_HELP_MODE,
+      setInputVariables: actions.SET_INPUT_VARIABLES,
+      setOutputVariables: actions.SET_OUTPUT_VARIABLES,
+      saveCohort: actions.SAVE_COHORT,
     }),
     updateSubstep() {
       var n_iv = this.inputVariables.length;
@@ -550,6 +631,141 @@ export default {
     },
     nextStep() {
       this.$refs.asum_btn.dialog = true;
+    },
+    // TODO - copied from DataSummary
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    async updateAutomatedAnalysisProgress(progress) {
+      var ts = Date.now();
+      if (this.aaLastUpdate == null) {
+        this.aaProgress = progress;
+      } else {
+        var diff = (ts - this.aaLastUpdate) / 1000.0;
+        if (diff < this.aaMinStepTime) {
+          var remaining = this.aaMinStepTime - diff;
+          await this.sleep(remaining * 1000);
+        }
+        this.aaProgress = progress;
+      }
+      this.aaLastUpdate = Date.now();
+    },
+    async doAutomatedAnalysis() {
+      await this.updateAutomatedAnalysisProgress(0);
+
+      var aa_ph = {};
+      this.aaPredictors.map(vid => {
+        aa_ph[vid] = true;
+      });
+      var aa_oh = {};
+      this.aaOutputs.map(vid => {
+        aa_oh[vid] = true;
+      });
+
+      // ** add predictor variables
+      await this.updateAutomatedAnalysisProgress(1);
+      var ivd = this.$refs.input_vars.$refs.input_toolbar.$refs.input_dialog;
+      // open input vars dialog
+      ivd.openInputVariableDialog = true;
+      await this.sleep(this.aaMinStepTime * 1000);
+
+      // select input vars
+      ivd.inputVariables.forEach(v => {
+        if (v.id in aa_ph) {
+          v.inmSelected = true;
+          ivd.masterCbChange(v);
+        }
+      });
+      await this.sleep(this.aaMinStepTime * 1000);
+
+      // close input vars dialog
+      ivd.openInputVariableDialog = false;
+
+      await this.updateAutomatedAnalysisProgress(2);
+      await this.sleep(this.aaMinStepTime * 1000);
+
+      // ** add outcome variables
+      var ovd = this.$refs.output_vars.$refs.output_toolbar.$refs.output_dialog;
+
+      // open output vars dialog
+      ovd.openOutputVariableDialog = true;
+      await this.sleep(this.aaMinStepTime * 1000);
+
+      // select output vars
+      ovd.outputVariables.forEach(v => {
+        if (v.id in aa_oh) {
+          v.outmSelected = true;
+          ovd.masterCbChange(v);
+        }
+      });
+      await this.sleep(this.aaMinStepTime * 1000);
+
+      // close output vars dialog
+      ovd.openOutputVariableDialog = false;
+
+      await this.updateAutomatedAnalysisProgress(3);
+      await this.sleep(this.aaMinStepTime * 1000);
+
+      // create cohorts for each predictor variable
+      var ivc = this.$refs.input_vars.$refs.input_charts;
+      var hist_charts = [];
+      var col_charts = [];
+
+      ivd.inputVariables.forEach(v => {
+        if (ivc.$refs['ivc-' + v.id]) {
+          if ('hist_chart' in ivc.$refs['ivc-' + v.id][0].$refs) {
+            var hc = ivc.$refs['ivc-' + v.id][0].$refs.hist_chart;
+            hc.tab = 'predef';
+            hc.predef_radio = 'quartiles';
+            hist_charts.push(hc);
+          } else if ('col_chart' in ivc.$refs['ivc-' + v.id][0].$refs) {
+            var cc = ivc.$refs['ivc-' + v.id][0].$refs.col_chart;
+            cc.sortedData.forEach(cat => {
+              var queries = {};
+              queries[cc.dimensionName] = [{ value: cat.key }];
+
+              var filtered_d = this.unfilteredData.filter(d => {
+                let dv = cc.dimension.accessor(d);
+                return dv == cat.key;
+              });
+
+              var args = {
+                name: cc.dimensionName + ' - ' + cat.key,
+                collection: this.collection,
+                queries: queries,
+                inputVariables: this.inputVariables,
+                outputVariables: this.outputVariables,
+                subjectIds: filtered_d.map(d => d.subject_id),
+              };
+              col_charts.push(args);
+            });
+          }
+        }
+      });
+
+      // hist_charts
+      for (var i = 0; i < hist_charts.length; ++i) {
+        await hist_charts[i].savePredefs();
+        await this.sleep(this.aaMinStepTime * 1000);
+      }
+
+      // col_charts
+      for (i = 0; i < col_charts.length; ++i) {
+        await this.saveCohort(col_charts[i]);
+        await this.sleep(this.aaMinStepTime * 1000);
+      }
+
+      await this.updateAutomatedAnalysisProgress(4);
+
+      // go to data analytics
+      var query = { collection: this.collection.id };
+      if (this.useAutomatedAnalysisMode) {
+        query['aa_predictors'] = this.aaPredictors;
+        query['aa_outputs'] = this.aaOutputs;
+      }
+
+      await this.updateAutomatedAnalysisProgress(5);
+      this.$router.push({ name: 'dataExplorer', query: query });
     },
   },
 };
