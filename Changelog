@@ -3,6 +3,7 @@
  -Add TD/PIGD ratio calculation to ppmi.calculate_observations.py
  -Handle negative values in boxplots. (#635, #636)
  -Fix issues saving/loading cohorts with cross-sectional observation vars as predictors. (#637, #638)
+ -Initial implementation of Automated Analysis mode (#283)
 
 1.0.7 (May 19, 2021)
  -Address division by zero problem when clustering on Change/Baseline.
