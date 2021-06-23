@@ -118,12 +118,13 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <!--            <v-btn
-              class="primary white--text ma-0 px-2 mx-2"
-              @click=""
+          <v-btn
+            :disabled="aaProgress < 3"
+            class="primary white--text ma-0 px-2 mx-2"
+            @click="aaToCohortManager()"
             >
-              OK
-            </v-btn> -->
+            OK
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -149,7 +150,7 @@ var aaSteps = [
   { title: 'Loading visit data' },
   { title: 'Setting first and last visits' },
   { title: 'Saving first and last visits' },
-  { title: 'Advancing to Cohort Manager' },
+  { title: 'Done' },
 ];
 
 export default {
@@ -281,9 +282,11 @@ export default {
       await this.updateAutomatedAnalysisProgress(2);
       await this.$refs.save_visits.saveVisits();
 
-      // continue to Cohort Manager
       await this.updateAutomatedAnalysisProgress(3);
       await this.updateAutomatedAnalysisProgress(4);
+   },
+   // continue to Cohort Manager
+   aaToCohortManager() {
       var query = { collection: this.collection.id };
       if (this.useAutomatedAnalysisMode) {
         query['aa_predictors'] = this.aaPredictors;
