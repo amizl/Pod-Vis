@@ -55,7 +55,7 @@ class Study(db.Model):
         """
         connection = db.engine.connect()
         query = text("""
-        SELECT parent.label as parent_label, so.label, so.id, so.abbreviation, so.description, COUNT(DISTINCT s.study_id) AS n_studies
+        SELECT parent.label as parent_label, so.label, so.id, so.abbreviation, so.value_type, so.data_category, so.description, COUNT(DISTINCT s.study_id) AS n_studies
         FROM subject s
         JOIN subject_attribute sa ON sa.subject_id = s.id
         JOIN subject_ontology so ON so.id = sa.subject_ontology_id
@@ -75,6 +75,8 @@ class Study(db.Model):
             "category": row.parent_label if row.parent_label else None,
             "scale": row.label,
             "abbreviation": row.abbreviation,
+            "value_type": row.value_type,
+            "data_category": row.data_category,
             "description": row.description,
             "id": row.id,
         } for row in result_proxy]
