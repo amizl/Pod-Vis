@@ -91,6 +91,34 @@
             ></v-checkbox>
           </td>
           <td v-if="useAutomatedAnalysisMode">
+            <!-- continuous subject variable -->
+            <v-select
+              v-if="
+                props.item.isSelectedInput &&
+                  props.item.data_category == 'Continuous' &&
+                  props.item.value_type != 'date'
+              "
+              v-model="props.item.aaRanges"
+              :items="['quartiles', 'tertiles', 'halves']"
+              label="compare"
+              class="pa-0 ma-0 pt-3"
+              dense
+            ></v-select>
+            <!-- categorical subject variable -->
+            <v-select
+              v-if="
+                props.item.isSelectedInput &&
+                  (props.item.data_category == 'Categorical' ||
+                    props.item.data_category == 'Ordinal')
+              "
+              v-model="props.item.aaMinCatSize"
+              :items="[1, 5, 10, 20, 50]"
+              label="minimum category size"
+              class="pa-0 ma-0 pt-3"
+              dense
+            ></v-select>
+          </td>
+          <td v-if="useAutomatedAnalysisMode">
             <v-checkbox
               v-model="props.item.isSelectedOutput"
               @change="outputCheckboxChange(props, $event)"
@@ -218,6 +246,12 @@ export default {
       var hdrs = [];
       if (this.useAutomatedAnalysisMode) {
         hdrs.push({
+          text: '',
+          value: '',
+          sortable: false,
+          class: 'text-subtitle-1 font-weight-bold',
+        });
+        hdrs.push({
           text: 'Outputs',
           value: 'output',
           sortable: false,
@@ -337,12 +371,9 @@ export default {
     attributes.forEach(variable => {
       variable.type = 'subject';
       variable.full_path = variable.category + '/' + variable.scale;
-      // TODO - retrieve data_category from database
-      variable.data_category = 'Unknown';
     });
 
     this.variables = sortScales([...this.variables, ...attributes]);
-    //this.variables.map(v => { v.isSelectedInput});
     this.isLoading = false;
   },
   methods: {
@@ -490,7 +521,18 @@ export default {
       var sel = props.item.isSelectedInput;
       if (sel) {
         this.auto_analysis_inputs[props.item.id] = true;
-        // already selected as output var
+        if (
+          props.item.data_category == 'Continuous' &&
+          props.item.value_type != 'date'
+        ) {
+          props.item.aaRanges = 'quartiles';
+        } else if (
+          props.item.data_category == 'Categorical' ||
+          props.item.data_category == 'Ordinal'
+        ) {
+          props.item.aaMinCatSize = 5;
+        }
+        // already selected as output varp
         if (props.item.id in this.auto_analysis_outputs) {
           delete props.item.isSelectedOutput;
           delete this.auto_analysis_outputs[props.item.id];
