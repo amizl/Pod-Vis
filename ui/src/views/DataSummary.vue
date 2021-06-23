@@ -122,7 +122,7 @@
             :disabled="aaProgress < 3"
             class="primary white--text ma-0 px-2 mx-2"
             @click="aaToCohortManager()"
-            >
+          >
             OK
           </v-btn>
         </v-card-actions>
@@ -284,9 +284,9 @@ export default {
 
       await this.updateAutomatedAnalysisProgress(3);
       await this.updateAutomatedAnalysisProgress(4);
-   },
-   // continue to Cohort Manager
-   aaToCohortManager() {
+    },
+    // continue to Cohort Manager
+    aaToCohortManager() {
       var query = { collection: this.collection.id };
       if (this.useAutomatedAnalysisMode) {
         query['aa_predictors'] = this.aaPredictors;

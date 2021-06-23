@@ -249,17 +249,16 @@
               :key="`prog-${i}`"
               :disabled="i > aaProgress"
             >
-
               <v-list-item-content>
-		{{ s.title }}
-		<v-list v-if="s.title == 'Creating cohorts' && aaCohorts.length > 0">
-		  <v-list-item v-for="(c, i) in aaCohorts">
-		    <v-list-item-content>
-		      {{ c }}
-		      </v-list-item-content>
-		  </v-list-item>
-		</v-list>
-	      </v-list-item-content>
+                {{ s.title }}
+                <v-list
+                  v-if="s.title == 'Creating cohorts' && aaCohorts.length > 0"
+                >
+                  <v-list-item v-for="(c, i) in aaCohorts" :key="`aac-${i}`">
+                    <v-list-item-content> {{ c }} </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-list-item-content>
               <v-list-item-avatar>
                 <v-icon v-if="i < aaProgress">done</v-icon>
               </v-list-item-avatar>
@@ -273,7 +272,7 @@
             :disabled="aaProgress < 4"
             class="primary white--text ma-0 px-2 mx-2"
             @click="aaToDataAnalytics()"
-            >
+          >
             OK
           </v-btn>
         </v-card-actions>
@@ -732,7 +731,7 @@ export default {
             hist_charts.push(hc);
           } else if ('col_chart' in ivc.$refs['ivc-' + v.id][0].$refs) {
             var cc = ivc.$refs['ivc-' + v.id][0].$refs.col_chart;
-            var cch = { 'chart': cc, 'cohorts': []};
+            var cch = { chart: cc, cohorts: [] };
             col_charts.push(cch);
 
             cc.sortedData.forEach(cat => {
@@ -760,7 +759,9 @@ export default {
 
       // hist_charts
       for (var i = 0; i < hist_charts.length; ++i) {
-        this.aaCohorts.push(hist_charts[i].dimensionName + " - " + hist_charts[i].predef_radio);
+        this.aaCohorts.push(
+          hist_charts[i].dimensionName + ' - ' + hist_charts[i].predef_radio
+        );
         await hist_charts[i].savePredefs();
         await this.sleep(this.aaMinStepTime * 1000);
       }
@@ -769,8 +770,10 @@ export default {
       for (i = 0; i < col_charts.length; ++i) {
         var cc = col_charts[i];
         var nc = cc['cohorts'].length;
-        this.aaCohorts.push(cc['chart'].dimensionName + " - " + nc + " cohorts");
-        for (var j = 0;j < nc; ++j) {
+        this.aaCohorts.push(
+          cc['chart'].dimensionName + ' - ' + nc + ' cohorts'
+        );
+        for (var j = 0; j < nc; ++j) {
           await this.saveCohort(cc['cohorts'][j]);
           await this.sleep(this.aaMinStepTime * 1000);
         }
