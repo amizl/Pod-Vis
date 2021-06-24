@@ -145,11 +145,46 @@ export default {
           this.loading = false;
           var query = { collection: newCollection.id };
           if (this.automatedAnalysisMode) {
-            query['aa_predictors'] = this.automatedAnalysisPredictorVars;
-            query['aa_outputs'] = this.automatedAnalysisOutputVars;
+            query['aa_predictors'] = this.automatedAnalysisPredictorVars.map(
+              v => v.id
+            );
+            query['aa_outputs'] = this.automatedAnalysisOutputVars.map(
+              v => v.id
+            );
+            // encode predictor prefs
+            // e.g., aaRanges=quartiles|22,23||tertiles|17,18
+            // aaMCS=1|22,23||5|17,18
+            const d1 = '|';
+            const d2 = '||';
+            var pph = {};
+            this.automatedAnalysisPredictorVars.map(v => {
+              var key = null;
+              if ('aaRanges' in v) {
+                key = v.aaRanges;
+              } else if ('aaMinCatSize' in v) {
+                key = v.aaMinCatSize;
+              }
+              if (!(key in pph)) {
+                pph[key] = [];
+              }
+              pph[key].push(v.id);
+            });
+            query['aa_ranges'] = ['quartiles', 'tertiles', 'halves']
+              .filter(r => r in pph)
+              .map(r => {
+                return r + d1 + pph[r].join(',');
+              })
+              .join(d2);
+            query['aa_mcs'] = [1, 5, 10, 20, 50]
+              .filter(r => r in pph)
+              .map(r => {
+                return r + d1 + pph[r].join(',');
+              })
+              .join(d2);
           }
           this.$router.push({ name: 'dataSummary', query: query });
         } catch (err) {
+//          console.log('caught error ' + err);
           this.loading = false;
         }
       }

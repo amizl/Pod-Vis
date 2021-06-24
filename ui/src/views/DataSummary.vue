@@ -175,6 +175,12 @@ export default {
       type: Array,
       default: () => [],
     },
+    aaRanges: {
+      type: String,
+    },
+    aaMCS: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -291,6 +297,8 @@ export default {
       if (this.useAutomatedAnalysisMode) {
         query['aa_predictors'] = this.aaPredictors;
         query['aa_outputs'] = this.aaOutputs;
+        query['aa_ranges'] = this.aaRanges;
+        query['aa_mcs'] = this.aaMCS;
       }
       this.$router.push({ name: 'cohortManager', query: query });
     },

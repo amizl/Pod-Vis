@@ -346,6 +346,12 @@ export default {
       type: Array,
       default: () => [],
     },
+    aaRanges: {
+      type: String,
+    },
+    aaMCS: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -717,6 +723,25 @@ export default {
       await this.updateAutomatedAnalysisProgress(3);
       await this.sleep(this.aaMinStepTime * 1000);
 
+      // unpack aaRanges, aaMCS
+      // TODO - copied from SaveCollectionBtnDialog
+      const d1 = '|';
+      const d2 = '||';
+      const vranges = {};
+      this.aaRanges.split(d2).map(r => {
+        var [k, v] = r.split(d1);
+        v.split(',').map(vid => {
+          vranges[vid] = k;
+        });
+      });
+      const vmcs = {};
+      this.aaMCS.split(d2).map(r => {
+        var [k, v] = r.split(d1);
+        v.split(',').map(vid => {
+          vmcs[vid] = k;
+        });
+      });
+
       // create cohorts for each predictor variable
       var ivc = this.$refs.input_vars.$refs.input_charts;
       var hist_charts = [];
@@ -727,12 +752,20 @@ export default {
           if ('hist_chart' in ivc.$refs['ivc-' + v.id][0].$refs) {
             var hc = ivc.$refs['ivc-' + v.id][0].$refs.hist_chart;
             hc.tab = 'predef';
-            hc.predef_radio = 'quartiles';
+            if (v.id in vranges) {
+              hc.predef_radio = vranges[v.id];
+            } else {
+              hc.predef_radio = 'quartiles';
+            }
             hist_charts.push(hc);
           } else if ('col_chart' in ivc.$refs['ivc-' + v.id][0].$refs) {
             var cc = ivc.$refs['ivc-' + v.id][0].$refs.col_chart;
             var cch = { chart: cc, cohorts: [] };
             col_charts.push(cch);
+            var mcs = 1;
+            if (v.id in vmcs) {
+              mcs = vmcs[v.id];
+            }
 
             cc.sortedData.forEach(cat => {
               var queries = {};
@@ -750,6 +783,7 @@ export default {
                 inputVariables: this.inputVariables,
                 outputVariables: this.outputVariables,
                 subjectIds: filtered_d.map(d => d.subject_id),
+                minCatSize: mcs,
               };
               cch['cohorts'].push(args);
             });

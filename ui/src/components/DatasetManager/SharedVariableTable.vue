@@ -520,7 +520,7 @@ export default {
     inputCheckboxChange(props, evt) {
       var sel = props.item.isSelectedInput;
       if (sel) {
-        this.auto_analysis_inputs[props.item.id] = true;
+        this.auto_analysis_inputs[props.item.id] = props.item;
         if (
           props.item.data_category == 'Continuous' &&
           props.item.value_type != 'date'
@@ -532,7 +532,7 @@ export default {
         ) {
           props.item.aaMinCatSize = 5;
         }
-        // already selected as output varp
+        // already selected as output var
         if (props.item.id in this.auto_analysis_outputs) {
           delete props.item.isSelectedOutput;
           delete this.auto_analysis_outputs[props.item.id];
@@ -543,15 +543,15 @@ export default {
         delete this.auto_analysis_inputs[props.item.id];
         props.select(evt);
       }
-      this.auto_analysis_inputs_list = Object.keys(this.auto_analysis_inputs);
-      this.auto_analysis_outputs_list = Object.keys(this.auto_analysis_outputs);
-      //      console.log('selected inputs = ' + Object.keys(this.auto_analysis_inputs));
-      //      console.log('selected outputs = ' + Object.keys(this.auto_analysis_outputs));
+      this.auto_analysis_inputs_list = Object.values(this.auto_analysis_inputs);
+      this.auto_analysis_outputs_list = Object.values(
+        this.auto_analysis_outputs
+      );
     },
     outputCheckboxChange(props, evt) {
       var sel = props.item.isSelectedOutput;
       if (sel) {
-        this.auto_analysis_outputs[props.item.id] = true;
+        this.auto_analysis_outputs[props.item.id] = props.item;
         // already selected as output var
         if (props.item.id in this.auto_analysis_inputs) {
           delete props.item.isSelectedInput;
@@ -563,11 +563,10 @@ export default {
         delete this.auto_analysis_outputs[props.item.id];
         if (!(props.item.id in this.auto_analysis_inputs)) props.select(evt);
       }
-      this.auto_analysis_inputs_list = Object.keys(this.auto_analysis_inputs);
-      this.auto_analysis_outputs_list = Object.keys(this.auto_analysis_outputs);
-      //      console.log('props.isSelectedOutput=' + props.isSelectedOutput);
-      //      console.log('selected inputs = ' + Object.keys(this.auto_analysis_inputs));
-      //      console.log('selected outputs = ' + Object.keys(this.auto_analysis_outputs));
+      this.auto_analysis_inputs_list = Object.values(this.auto_analysis_inputs);
+      this.auto_analysis_outputs_list = Object.values(
+        this.auto_analysis_outputs
+      );
     },
   },
 };
