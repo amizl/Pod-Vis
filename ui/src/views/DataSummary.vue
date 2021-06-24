@@ -177,9 +177,11 @@ export default {
     },
     aaRanges: {
       type: String,
+      default: '',
     },
     aaMCS: {
       type: String,
+      default: '',
     },
   },
   data() {

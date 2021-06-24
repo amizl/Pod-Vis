@@ -254,7 +254,7 @@
                 <v-list
                   v-if="s.title == 'Creating cohorts' && aaCohorts.length > 0"
                 >
-                  <v-list-item v-for="(c, i) in aaCohorts" :key="`aac-${i}`">
+                  <v-list-item v-for="(c, ci) in aaCohorts" :key="`aac-${ci}`">
                     <v-list-item-content> {{ c }} </v-list-item-content>
                   </v-list-item>
                 </v-list>
@@ -348,9 +348,11 @@ export default {
     },
     aaRanges: {
       type: String,
+      default: '',
     },
     aaMCS: {
       type: String,
+      default: '',
     },
   },
   data() {
