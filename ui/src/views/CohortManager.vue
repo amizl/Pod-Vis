@@ -762,31 +762,73 @@ export default {
             var cc = ivc.$refs['ivc-' + v.id][0].$refs.col_chart;
             var cch = { chart: cc, cohorts: [] };
             col_charts.push(cch);
+
+            // minimum category size - all smaller categories will be merged into 'Other'
             var mcs = 1;
             if (v.id in vmcs) {
               mcs = vmcs[v.id];
             }
 
-            cc.sortedData.forEach(cat => {
+            // group data by category
+            var cat2d = {};
+            var cat2c = {};
+            this.unfilteredData.map(d => {
+              let dv = cc.dimension.accessor(d);
+              if (!(dv in cat2d)) {
+                cat2d[dv] = [];
+                cat2c[dv] = 0;
+              }
+              cat2d[dv].push(d);
+              cat2c[dv] += 1;
+            });
+
+            var s_args = {
+              collection: this.collection,
+              inputVariables: this.inputVariables,
+              outputVariables: this.outputVariables,
+              minCatSize: mcs,
+            };
+
+            // merge smaller categories
+            var small_cats = [];
+            Object.keys(cat2d).forEach(cat => {
+              var ct = cat2c[cat];
+              if (ct < mcs) {
+                small_cats.push(cat);
+              }
+              // make single category cohort
+              else {
+                var queries = {};
+                queries[cc.dimensionName] = [{ value: cat }];
+                var args = {
+                  name: cc.dimensionName + ' - ' + cat,
+                  queries: queries,
+                  subjectIds: cat2d[cat].map(d => d.subject_id),
+                  ...s_args,
+                };
+                cch['cohorts'].push(args);
+              }
+            });
+
+            // create multi-category 'Other' category if needed
+            if (small_cats.length > 0) {
               var queries = {};
-              queries[cc.dimensionName] = [{ value: cat.key }];
-
-              var filtered_d = this.unfilteredData.filter(d => {
-                let dv = cc.dimension.accessor(d);
-                return dv == cat.key;
+              queries[cc.dimensionName] = small_cats.map(c => {
+                return { value: c };
               });
-
+              var subjIds = [];
+              small_cats.map(c => {
+                cat2d[c].map(d => subjIds.push(d.subject_id));
+              });
               var args = {
-                name: cc.dimensionName + ' - ' + cat.key,
-                collection: this.collection,
+                name:
+                  cc.dimensionName + ' - Other [' + small_cats.join(',') + ']',
                 queries: queries,
-                inputVariables: this.inputVariables,
-                outputVariables: this.outputVariables,
-                subjectIds: filtered_d.map(d => d.subject_id),
-                minCatSize: mcs,
+                subjectIds: subjIds,
+                ...s_args,
               };
               cch['cohorts'].push(args);
-            });
+            }
           }
         }
       });
