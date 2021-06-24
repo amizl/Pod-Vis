@@ -1,9 +1,10 @@
-1.0.8
+1.0.8 (June 24, 2021)
  -Add option to create 3 clusters instead of 5. (#630)
  -Add TD/PIGD ratio calculation to ppmi.calculate_observations.py
  -Handle negative values in boxplots. (#635, #636)
  -Fix issues saving/loading cohorts with cross-sectional observation vars as predictors. (#637, #638)
  -Initial implementation of Automated Analysis mode (#283)
+ -Fix cohort statistics for continuous cross-sectional observation variables used as predictors. (#642)
 
 1.0.7 (May 19, 2021)
  -Address division by zero problem when clustering on Change/Baseline.

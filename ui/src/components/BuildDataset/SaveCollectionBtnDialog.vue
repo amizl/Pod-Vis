@@ -184,7 +184,7 @@ export default {
           }
           this.$router.push({ name: 'dataSummary', query: query });
         } catch (err) {
-//          console.log('caught error ' + err);
+          //          console.log('caught error ' + err);
           this.loading = false;
         }
       }

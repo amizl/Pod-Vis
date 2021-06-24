@@ -1,6 +1,6 @@
 {
   "name": "podvis",
-  "version": "1.0.8a1",
+  "version": "1.0.8",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
