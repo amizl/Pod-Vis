@@ -127,6 +127,7 @@ export default {
         right_y_axis: 'lastVisit',
         change: 'change',
         roc: 'roc',
+        '': 'value',
       },
       var2visits: {},
     };
