@@ -314,11 +314,11 @@ export default {
       var field = this.dimension2field[v.dimension_label];
       var vv = this.var2visits[v.observation_ontology.id];
       if (vv == null)
-        return v.observation_ontology.abbreviation + ' - ' + field;
+        return field == 'value' ? v.observation_ontology.abbreviation : v.observation_ontology.abbreviation + ' - ' + field;
       if (field in vv) {
         field = this.var2visits[v.observation_ontology.id][field];
       }
-      return v.observation_ontology.abbreviation + ' - ' + field;
+      return field == 'value' ? v.observation_ontology.abbreviation : v.observation_ontology.abbreviation + ' - ' + field;
     },
   },
 };
