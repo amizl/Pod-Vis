@@ -150,7 +150,7 @@ export default {
     },
     async onSaveFirstLastVisit() {
       this.loading = true;
-      this.saveVisits();
+      await this.saveVisits();
       this.loading = false;
       // move on to the cohort manager
       this.$router.push(`/cohorts?collection=${this.collection.id}`);
