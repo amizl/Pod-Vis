@@ -2,7 +2,7 @@
   <div>
     <v-container
       v-for="(a, index) in analyses"
-      :key="`vca-${index}`"
+      :key="`vca-${a.index}`"
       fluid
       fill-width
       class="ma-0 pa-0 my-3"
@@ -31,7 +31,7 @@ export default {
   props: {
     analyses: {
       type: Array,
-      required: false,
+      requirEd: false,
       default: () => [],
     },
   },
