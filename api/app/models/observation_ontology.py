@@ -103,6 +103,36 @@ class ObservationOntology(db.Model):
 
         connection.close()
         return get_scale_category
+
+    def get_summary_data(self):
+        connection = db.engine.connect()
+        summary_data = []
+        
+        query = text("""
+            SELECT st.study_name,
+                sv.visit_event,
+                oo.abbreviation,
+                avg(o.value) as average,
+                count(distinct s.id) as n_subjects
+            FROM observation_ontology oo,
+                observation o,
+                subject_visit sv,
+                subject s,
+                study st
+            WHERE oo.id = (:oo_id)
+            AND oo.id = o.observation_ontology_id
+            AND o.subject_visit_id = sv.id
+            AND sv.subject_id = s.id
+            AND s.study_id = st.id
+            GROUP BY st.study_name, sv.visit_event, oo.abbreviation
+            ORDER BY st.study_name, sv.visit_event, oo.abbreviation
+        """)
+
+        for row in connection.execute(query, oo_id=self.id).fetchall():
+            summary_data.append(dict(row))
+
+        connection.close()
+        return summary_data
     
     def save_to_db(self):
         """Save to database."""

@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, make_response
 from flask_jwt_extended import jwt_required, get_current_user
 from scipy.stats import mannwhitneyu, f_oneway, chi2_contingency, ttest_ind
 from functools import reduce
@@ -1636,3 +1636,35 @@ def get_user_log():
         "success": True,
         "log": [log_entry.to_dict() for log_entry in log_entries]
     })
+
+# Method to retrieve summary data for a single scale/variable, grouped by study and visit
+@api.route("/summary_data/<int:observation_ontology_id>")
+@jwt_required()
+def get_summary_data_by_visit(observation_ontology_id):
+    format = request.args.get("format")
+    
+    oo = models.ObservationOntology.find_by_id(observation_ontology_id)
+
+    if not oo:
+        raise ResourceNotFound("ObservationOntology not found.")
+
+    summary_data = oo.get_summary_data()
+
+    # format = tab-delimited
+    if format == 'tsv':
+        fields = ['abbreviation', 'study_name', 'visit_event', 'n_subjects', 'average']
+        tsv = ""
+        tsv = tsv + "\t".join(fields) + "\n"
+        for sd in summary_data:
+            tsv = tsv + "\t".join([str(sd[f]) for f in fields]) + "\n"
+        res = make_response(tsv, 200)
+        res.mimetype = "text/plain"
+        return res
+
+    # format = JSON (default)
+    else:
+        return jsonify({
+            "success": True,
+            "data": summary_data,
+        }), 201
+
