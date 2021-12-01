@@ -1,3 +1,7 @@
+1.0.9 (? 2021)
+ -Rename "inputs" to "predictors" in automated analysis mode.
+ -Add support for observation vars as predictors in automated analysis mode. (#641)
+
 1.0.8 (June 24, 2021)
  -Add option to create 3 clusters instead of 5. (#630)
  -Add TD/PIGD ratio calculation to ppmi.calculate_observations.py
