@@ -605,12 +605,20 @@ export default {
       // group cohorts by input var
       var ivc = {};
       var ct = this.$refs.cohortTable;
+      let get_ont_abbrev = function(v) {
+        if (v.subject_ontology) {
+  	  return v.subject_ontology.abbreviation;
+	} else {
+  	  return v.observation_ontology.abbreviation;
+        }
+      };
+
       ct.cohorts.forEach(c => {
         var ivs = c.input_variables.filter(v =>
-          c.label.startsWith(v.subject_ontology.abbreviation + ' - ')
+          c.label.startsWith(get_ont_abbrev(v) + ' - ')
         );
         if (ivs.length == 1) {
-          var key = ivs[0].subject_ontology.abbreviation;
+          var key = get_ont_abbrev(ivs[0]);
           if (!(key in ivc)) {
             ivc[key] = [];
           }
