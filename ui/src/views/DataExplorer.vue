@@ -607,9 +607,9 @@ export default {
       var ct = this.$refs.cohortTable;
       let get_ont_abbrev = function(v) {
         if (v.subject_ontology) {
-  	  return v.subject_ontology.abbreviation;
-	} else {
-  	  return v.observation_ontology.abbreviation;
+          return v.subject_ontology.abbreviation;
+        } else {
+          return v.observation_ontology.abbreviation;
         }
       };
 
