@@ -707,7 +707,7 @@ export default {
         if (v.id in aa_ph) {
           // longitudinal variable - need to select only first, last, change, or ROC
           if (v.id in vmwo) {
-            let child_id = vmwo[v.id] + "-" + v.id;
+            let child_id = vmwo[v.id] + '-' + v.id;
             v.children.forEach(c => {
               if (c.id == child_id) {
                 c.inSelected = true;
@@ -754,16 +754,16 @@ export default {
 
       // unpack aaRanges, aaMCS
       const vranges = {};
-      if (this.aaRanges != "") {
+      if (this.aaRanges != '') {
         this.aaRanges.split(d2).map(r => {
           var [k, v] = r.split(d1);
           v.split(',').map(vid => {
             vranges[vid] = k;
-         });
+          });
         });
       }
       const vmcs = {};
-      if (this.aaMCS != "") {
+      if (this.aaMCS != '') {
         this.aaMCS.split(d2).map(r => {
           var [k, v] = r.split(d1);
           v.split(',').map(vid => {
@@ -781,7 +781,7 @@ export default {
         // 'ivc-393' for predictor vs 'ivc-lastVisit-393' for outcome as predictor
         let vc_id = 'ivc-' + v.id;
         if (v.id in vmwo) {
-          vc_id = 'ivc-' + vmwo[v.id] + "-" + v.id;
+          vc_id = 'ivc-' + vmwo[v.id] + '-' + v.id;
         }
 
         if (ivc.$refs[vc_id]) {

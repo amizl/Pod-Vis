@@ -185,7 +185,12 @@ export default {
                 return r + d1 + pph[r].join(',');
               })
               .join(d2);
-            query['aa_which_outcomes'] = ['firstVisit', 'lastVisit', 'change', 'ROC']
+            query['aa_which_outcomes'] = [
+              'firstVisit',
+              'lastVisit',
+              'change',
+              'ROC',
+            ]
               .filter(r => r in pph)
               .map(r => {
                 return r + d1 + pph[r].join(',');

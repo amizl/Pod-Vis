@@ -91,22 +91,22 @@
             ></v-checkbox>
           </td>
           <td v-if="useAutomatedAnalysisMode">
-	    <!-- longitudinal outcome variable -->
+            <!-- longitudinal outcome variable -->
             <v-select
               v-if="
                 isLongitudinal &&
-                props.item.isSelectedInput &&
-		props.item.type == 'observation'
+                  props.item.isSelectedInput &&
+                  props.item.type == 'observation'
               "
               v-model="props.item.aaWhichOutcome"
               :items="getOutcomeVarVisitChoices(props.item)"
               item-text="name"
-	      item-value="id"
+              item-value="id"
               label="value to use"
               class="pa-0 ma-0 pt-3"
               dense
             ></v-select>
-	    
+
             <!-- continuous subject variable -->
             <v-select
               v-if="
@@ -589,12 +589,12 @@ export default {
     },
     getOutcomeVarVisitChoices(v) {
       let choices = [
-        {'id': 'firstVisit', 'name': 'First Visit'},
-        {'id': 'lastVisit', 'name': 'Last Visit'},
+        { id: 'firstVisit', name: 'First Visit' },
+        { id: 'lastVisit', name: 'Last Visit' },
       ];
       if (v.data_category == 'Continuous') {
-        choices.push({'id': 'change', 'name': 'Change'});
-        choices.push({'id': 'roc', 'name': 'Rate of Change'});
+        choices.push({ id: 'change', name: 'Change' });
+        choices.push({ id: 'roc', name: 'Rate of Change' });
       }
       return choices;
     },
