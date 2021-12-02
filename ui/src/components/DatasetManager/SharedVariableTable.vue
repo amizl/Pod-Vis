@@ -91,6 +91,22 @@
             ></v-checkbox>
           </td>
           <td v-if="useAutomatedAnalysisMode">
+	    <!-- longitudinal outcome variable -->
+            <v-select
+              v-if="
+                isLongitudinal &&
+                props.item.isSelectedInput &&
+		props.item.type == 'observation'
+              "
+              v-model="props.item.aaWhichOutcome"
+              :items="getOutcomeVarVisitChoices(props.item)"
+              item-text="name"
+	      item-value="id"
+              label="value to use"
+              class="pa-0 ma-0 pt-3"
+              dense
+            ></v-select>
+	    
             <!-- continuous subject variable -->
             <v-select
               v-if="
@@ -242,6 +258,15 @@ export default {
     };
   },
   computed: {
+    isLongitudinal() {
+      var is_longitudinal = true;
+      this.datasets.forEach(d => {
+        if (!d.longitudinal) {
+          is_longitudinal = false;
+        }
+      });
+      return is_longitudinal;
+    },
     headers() {
       var hdrs = [];
       if (this.useAutomatedAnalysisMode) {
@@ -379,15 +404,6 @@ export default {
   methods: {
     getNumSubjectsColor,
     getNumSubjectsTextColor,
-    isLongitudinal() {
-      var is_longitudinal = true;
-      this.datasets.forEach(d => {
-        if (!d.i_longitudinal) {
-          is_longitudinal = false;
-        }
-      });
-      return is_longitudinal;
-    },
     /**
      * If dataset id is an array of ids, we want to
      * call the API endpoint that gets their intersecting
@@ -427,7 +443,7 @@ export default {
       var svars = this.useMoreAccurateSubjectCounts
         ? this.subject_variable_visits['subjects']
         : this.subject_variables;
-      var nvisits = this.isLongitudinal() ? 2 : 1;
+      var nvisits = this.isLongitudinal ? 2 : 1;
 
       const subj_ids = Object.keys(svars);
       subj_ids.forEach(subj_id => {
@@ -532,6 +548,9 @@ export default {
         ) {
           props.item.aaMinCatSize = 5;
         }
+        if (this.isLongitudinal && props.item.type == 'observation') {
+          props.item.aaWhichOutcome = 'firstVisit';
+        }
         // already selected as output var
         if (props.item.id in this.auto_analysis_outputs) {
           delete props.item.isSelectedOutput;
@@ -567,6 +586,17 @@ export default {
       this.auto_analysis_outputs_list = Object.values(
         this.auto_analysis_outputs
       );
+    },
+    getOutcomeVarVisitChoices(v) {
+      let choices = [
+        {'id': 'firstVisit', 'name': 'First Visit'},
+        {'id': 'lastVisit', 'name': 'Last Visit'},
+      ];
+      if (v.data_category == 'Continuous') {
+        choices.push({'id': 'change', 'name': 'Change'});
+        choices.push({'id': 'roc', 'name': 'Rate of Change'});
+      }
+      return choices;
     },
   },
 };

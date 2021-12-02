@@ -354,6 +354,10 @@ export default {
       type: String,
       default: '',
     },
+    aaWhichOutcomes: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -680,6 +684,16 @@ export default {
       this.aaOutputs.map(vid => {
         aa_oh[vid] = true;
       });
+      // unpack aaWhichOutcomes
+      const d1 = '|';
+      const d2 = '||';
+      const vmwo = {};
+      this.aaWhichOutcomes.split(d2).map(r => {
+        var [k, v] = r.split(d1);
+        v.split(',').map(vid => {
+          vmwo[vid] = k;
+        });
+      });
 
       // ** add predictor variables
       await this.updateAutomatedAnalysisProgress(1);
@@ -691,8 +705,21 @@ export default {
       // select input vars
       ivd.inputVariables.forEach(v => {
         if (v.id in aa_ph) {
-          v.inmSelected = true;
-          ivd.masterCbChange(v);
+          // longitudinal variable - need to select only first, last, change, or ROC
+          if (v.id in vmwo) {
+            let child_id = vmwo[v.id] + "-" + v.id;
+            v.children.forEach(c => {
+              if (c.id == child_id) {
+                c.inSelected = true;
+                ivd.cbChange(c);
+              }
+            });
+          }
+          // select all
+          else {
+            v.inmSelected = true;
+            ivd.masterCbChange(v);
+          }
         }
       });
       await this.sleep(this.aaMinStepTime * 2000);
@@ -726,23 +753,24 @@ export default {
       await this.sleep(this.aaMinStepTime * 1000);
 
       // unpack aaRanges, aaMCS
-      // TODO - copied from SaveCollectionBtnDialog
-      const d1 = '|';
-      const d2 = '||';
       const vranges = {};
-      this.aaRanges.split(d2).map(r => {
-        var [k, v] = r.split(d1);
-        v.split(',').map(vid => {
-          vranges[vid] = k;
+      if (this.aaRanges != "") {
+        this.aaRanges.split(d2).map(r => {
+          var [k, v] = r.split(d1);
+          v.split(',').map(vid => {
+            vranges[vid] = k;
+         });
         });
-      });
+      }
       const vmcs = {};
-      this.aaMCS.split(d2).map(r => {
-        var [k, v] = r.split(d1);
-        v.split(',').map(vid => {
-          vmcs[vid] = k;
+      if (this.aaMCS != "") {
+        this.aaMCS.split(d2).map(r => {
+          var [k, v] = r.split(d1);
+          v.split(',').map(vid => {
+            vmcs[vid] = k;
+          });
         });
-      });
+      }
 
       // create cohorts for each predictor variable
       var ivc = this.$refs.input_vars.$refs.input_charts;
@@ -750,9 +778,15 @@ export default {
       var col_charts = [];
 
       ivd.inputVariables.forEach(v => {
-        if (ivc.$refs['ivc-' + v.id]) {
-          if ('hist_chart' in ivc.$refs['ivc-' + v.id][0].$refs) {
-            var hc = ivc.$refs['ivc-' + v.id][0].$refs.hist_chart;
+        // 'ivc-393' for predictor vs 'ivc-lastVisit-393' for outcome as predictor
+        let vc_id = 'ivc-' + v.id;
+        if (v.id in vmwo) {
+          vc_id = 'ivc-' + vmwo[v.id] + "-" + v.id;
+        }
+
+        if (ivc.$refs[vc_id]) {
+          if ('hist_chart' in ivc.$refs[vc_id][0].$refs) {
+            var hc = ivc.$refs[vc_id][0].$refs.hist_chart;
             hc.tab = 'predef';
             if (v.id in vranges) {
               hc.predef_radio = vranges[v.id];
@@ -760,8 +794,8 @@ export default {
               hc.predef_radio = 'quartiles';
             }
             hist_charts.push(hc);
-          } else if ('col_chart' in ivc.$refs['ivc-' + v.id][0].$refs) {
-            var cc = ivc.$refs['ivc-' + v.id][0].$refs.col_chart;
+          } else if ('col_chart' in ivc.$refs[vc_id][0].$refs) {
+            var cc = ivc.$refs[vc_id][0].$refs.col_chart;
             var cch = { chart: cc, cohorts: [] };
             col_charts.push(cch);
 

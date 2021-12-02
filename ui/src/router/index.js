@@ -34,6 +34,7 @@ const router = new Router({
         aaOutputs: route.query.aa_outputs,
         aaRanges: route.query.aa_ranges,
         aaMCS: route.query.aa_mcs,
+        aaWhichOutcomes: route.query.aa_which_outcomes,
       }),
     },
     {
@@ -53,6 +54,7 @@ const router = new Router({
         aaOutputs: forceArray(route.query.aa_outputs),
         aaRanges: route.query.aa_ranges,
         aaMCS: route.query.aa_mcs,
+        aaWhichOutcomes: route.query.aa_which_outcomes,
       }),
     },
     {

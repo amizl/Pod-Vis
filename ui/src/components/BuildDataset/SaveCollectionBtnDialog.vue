@@ -152,8 +152,9 @@ export default {
               v => v.id
             );
             // encode predictor prefs
-            // e.g., aaRanges=quartiles|22,23||tertiles|17,18
-            // aaMCS=1|22,23||5|17,18
+            // e.g., aaRanges=quartiles|22,23||tertiles|17,18 - ranges
+            // aaMCS=1|22,23||5|17,18 - min category sizes
+            // aaWhichOutcomes=firstVisit|9,10||ROC|11,12
             const d1 = '|';
             const d2 = '||';
             var pph = {};
@@ -163,6 +164,9 @@ export default {
                 key = v.aaRanges;
               } else if ('aaMinCatSize' in v) {
                 key = v.aaMinCatSize;
+              }
+              if ('aaWhichOutcome' in v) {
+                key = v.aaWhichOutcome;
               }
               if (!(key in pph)) {
                 pph[key] = [];
@@ -176,6 +180,12 @@ export default {
               })
               .join(d2);
             query['aa_mcs'] = [1, 5, 10, 20, 50]
+              .filter(r => r in pph)
+              .map(r => {
+                return r + d1 + pph[r].join(',');
+              })
+              .join(d2);
+            query['aa_which_outcomes'] = ['firstVisit', 'lastVisit', 'change', 'ROC']
               .filter(r => r in pph)
               .map(r => {
                 return r + d1 + pph[r].join(',');

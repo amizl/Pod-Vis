@@ -183,6 +183,10 @@ export default {
       type: String,
       default: '',
     },
+    aaWhichOutcomes: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -301,6 +305,7 @@ export default {
         query['aa_outputs'] = this.aaOutputs;
         query['aa_ranges'] = this.aaRanges;
         query['aa_mcs'] = this.aaMCS;
+        query['aa_which_outcomes'] = this.aaWhichOutcomes;
       }
       this.$router.push({ name: 'cohortManager', query: query });
     },
