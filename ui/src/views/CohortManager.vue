@@ -688,12 +688,14 @@ export default {
       const d1 = '|';
       const d2 = '||';
       const vmwo = {};
-      this.aaWhichOutcomes.split(d2).map(r => {
-        var [k, v] = r.split(d1);
-        v.split(',').map(vid => {
-          vmwo[vid] = k;
+      if (this.aaWhichOutcomes != '') {
+        this.aaWhichOutcomes.split(d2).map(r => {
+          var [k, v] = r.split(d1);
+          v.split(',').map(vid => {
+            vmwo[vid] = k;
+          });
         });
-      });
+      }
 
       // ** add predictor variables
       await this.updateAutomatedAnalysisProgress(1);
