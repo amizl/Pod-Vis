@@ -158,20 +158,21 @@ export default {
             const d1 = '|';
             const d2 = '||';
             var pph = {};
+            var addkey = function(i, k) {
+              if (!(k in pph)) {
+                pph[k] = [];
+              }
+              pph[k].push(i);
+            };
             this.automatedAnalysisPredictorVars.map(v => {
-              var key = null;
               if ('aaRanges' in v) {
-                key = v.aaRanges;
+                addkey(v.id, v.aaRanges);
               } else if ('aaMinCatSize' in v) {
-                key = v.aaMinCatSize;
+                addkey(v.id, v.aaMinCatSize);
               }
               if ('aaWhichOutcome' in v) {
-                key = v.aaWhichOutcome;
+                addkey(v.id, v.aaWhichOutcome);
               }
-              if (!(key in pph)) {
-                pph[key] = [];
-              }
-              pph[key].push(v.id);
             });
             query['aa_ranges'] = ['quartiles', 'tertiles', 'halves']
               .filter(r => r in pph)
@@ -199,7 +200,6 @@ export default {
           }
           this.$router.push({ name: 'dataSummary', query: query });
         } catch (err) {
-          //          console.log('caught error ' + err);
           this.loading = false;
         }
       }
