@@ -50,11 +50,11 @@
               class="text-subtitle-1 font-weight-bold"
               v-on="{ ...tooltip }"
             >
-              Outputs
+              Outcomes
             </span>
           </template>
           <span
-            >Select all variables to use as outputs in the automated
+            >Select all variables to use as outcome variables in the automated
             analysis.</span
           >
         </v-tooltip>
@@ -277,7 +277,7 @@ export default {
           class: 'text-subtitle-1 font-weight-bold',
         });
         hdrs.push({
-          text: 'Outputs',
+          text: 'Outcomes',
           value: 'output',
           sortable: false,
           class: 'text-subtitle-1 font-weight-bold',

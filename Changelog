@@ -1,6 +1,7 @@
 1.0.10
  -Fix issue with automated analysis mode freezing on Cohort Manager/create cohorts step. (#648)
  -Fix issue with automated analysis mode ignoring halves/tertiles/quartiles selection. (#647)
+ -Rename "output" to "outcome" in automated analysis mode. (#649)
 
 1.0.9 (December 3, 2021)
  -Rename "inputs" to "predictors" in automated analysis mode.
