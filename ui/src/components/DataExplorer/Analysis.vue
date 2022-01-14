@@ -20,7 +20,9 @@
                       >{{ analysis.cohorts.length }}</v-chip
                     >
                     <span class="black--text text-body-1"
-                      >Study group{{ analysis.cohorts.length == 1 ? '' : 's' }}</span
+                      >Study group{{
+                        analysis.cohorts.length == 1 ? '' : 's'
+                      }}</span
                     >
                   </span>
                 </template>

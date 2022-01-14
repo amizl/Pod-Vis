@@ -27,8 +27,8 @@
           {{ collection_cohorts.length }} cohort{{
             collection_cohorts.length == 1 ? '' : 's'
           }}
-          created. Click "OK" to proceed to Data Analytics to compare study groups OR
-          "CANCEL" to continue creating study groups.
+          created. Click "OK" to proceed to Data Analytics to compare study
+          groups OR "CANCEL" to continue creating study groups.
         </v-card-text>
 
         <v-divider></v-divider>

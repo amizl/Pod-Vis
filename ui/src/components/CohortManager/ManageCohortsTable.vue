@@ -171,7 +171,8 @@
               color="#4caf50"
               class="font-weight-bold white--text pa-2 my-1"
               @click:close="showSaveHelpChip = false"
-              >After review, click SAVE STUDY GROUP to create a study group.</v-chip
+              >After review, click SAVE STUDY GROUP to create a study
+              group.</v-chip
             >
           </v-col>
         </v-row>

@@ -33,7 +33,9 @@
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }">{{
-                step > 2 ? 'Study&nbsp;groups&nbsp;created' : 'Select&nbsp;study&nbsp;groups'
+                step > 2
+                  ? 'Study&nbsp;groups&nbsp;created'
+                  : 'Select&nbsp;study&nbsp;groups'
               }}</span>
             </template>
             <span class="subtitle-1">{{ step_descr['2'] }}</span>
@@ -195,7 +197,9 @@
           step="3.2"
           :class="substepClass('3.2')"
           @click.native="substepClicked('3.2')"
-          ><span class="subtitle-1">Click on 'ANALYZE SELECTED STUDY GROUPS'</span>
+          ><span class="subtitle-1"
+            >Click on 'ANALYZE SELECTED STUDY GROUPS'</span
+          >
         </v-stepper-step>
       </v-stepper-header>
     </v-stepper>

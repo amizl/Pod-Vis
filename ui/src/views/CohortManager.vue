@@ -92,8 +92,8 @@
         <v-col cols="12" class="ma-0 pa-0">
           <v-sheet color="white" height="100%" class="rounded-lg shadow">
             <span
-              >ERROR - First/Last Visits must be set in order to use the Study Group
-	      Selector:<br clear="both"
+              >ERROR - First/Last Visits must be set in order to use the Study
+              Group Selector:<br clear="both"
             /></span>
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on }">
@@ -252,7 +252,9 @@
               <v-list-item-content>
                 {{ s.title }}
                 <v-list
-                  v-if="s.title == 'Creating study groups' && aaCohorts.length > 0"
+                  v-if="
+                    s.title == 'Creating study groups' && aaCohorts.length > 0
+                  "
                 >
                   <v-list-item v-for="(c, ci) in aaCohorts" :key="`aac-${ci}`">
                     <v-list-item-content> {{ c }} </v-list-item-content>

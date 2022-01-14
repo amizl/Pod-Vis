@@ -629,7 +629,9 @@ export default {
       var keys = Object.keys(ivc);
       for (var i = 0; i < keys.length; ++i) {
         var cohorts = ivc[keys[i]];
-        this.aaAnalyses.push(keys[i] + ' - ' + cohorts.length + ' study groups');
+        this.aaAnalyses.push(
+          keys[i] + ' - ' + cohorts.length + ' study groups'
+        );
         this.analyzeCohortList(cohorts);
         await this.sleep(this.aaMinStepTime * 1000);
       }

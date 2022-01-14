@@ -61,8 +61,8 @@
                 >Launch Study Group Selector to add/remove Study Groups ({{
                   props.item.num_cohorts
                 }}
-                study group{{ props.item.num_cohorts > 1 ? 's' : '' }} created so
-                far)</span
+                study group{{ props.item.num_cohorts > 1 ? 's' : '' }} created
+                so far)</span
               >
             </v-tooltip>
 
