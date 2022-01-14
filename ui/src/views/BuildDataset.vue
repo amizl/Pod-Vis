@@ -1,6 +1,6 @@
 <template>
   <v-container fluid fill-width class="ma-0 pa-2">
-    <v-app-bar app :class="useAutomatedAnalysisMode ? 'purple' : 'primary'">
+    <v-app-bar app class="primary">
       <v-icon color="white" large>library_add</v-icon>
       <v-toolbar-title class="white--text pl-3"
         >Create New Study Dataset - Select Variables
@@ -11,8 +11,8 @@
 
       <v-chip
         v-if="useAutomatedAnalysisMode"
-        color="white"
-        text-color="purple"
+        color="yellow"
+        text-color="black"
         :disabled="!useAutomatedAnalysisMode"
         >Auto Mode ON</v-chip
       >
@@ -52,7 +52,7 @@
                 >Shared Variables
                 <v-spacer />
                 <v-chip
-                  color="purple"
+                  color="primary"
                   text-color="white"
                   class="mr-1"
                   :disabled="!useAutomatedAnalysisMode"

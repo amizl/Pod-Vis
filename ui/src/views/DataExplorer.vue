@@ -24,7 +24,7 @@
         >
           <v-app-bar
             app
-            :class="useAutomatedAnalysisMode ? 'purple' : 'primary'"
+            class="primary"
           >
             <v-icon color="white" x-large>analytics</v-icon>
             <v-toolbar-title class="white--text pl-3"
@@ -46,8 +46,8 @@
 
             <v-chip
               v-if="useAutomatedAnalysisMode"
-              color="white"
-              text-color="purple"
+              color="yellow"
+              text-color="black"
               class="mr-1"
               :disabled="!useAutomatedAnalysisMode"
               >Auto Mode ON</v-chip

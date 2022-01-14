@@ -6,7 +6,7 @@
   </v-container>
 
   <div v-else fluid fill-width class="ma-0 pa-2">
-    <v-app-bar app :class="useAutomatedAnalysisMode ? 'purple' : 'primary'">
+    <v-app-bar app class="primary">
       <v-icon color="white" large>library_add</v-icon>
       <v-toolbar-title class="white--text pl-2"
         >Create New Study Dataset - Choose First & Last Visit
@@ -26,8 +26,8 @@
 
       <v-chip
         v-if="useAutomatedAnalysisMode"
-        color="white"
-        text-color="purple"
+        color="yellow"
+        text-color="black"
         class="mr-1"
         :disabled="!useAutomatedAnalysisMode"
         >Auto Mode ON</v-chip
