@@ -299,7 +299,7 @@ export default {
       await this.updateAutomatedAnalysisProgress(4);
       if (!this.aaDialogOKButton) {
         await this.sleep(2000);
-        this.aaToCohortManager()
+        this.aaToCohortManager();
       }
     },
     // continue to Cohort Manager

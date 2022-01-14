@@ -900,7 +900,7 @@ export default {
       await this.updateAutomatedAnalysisProgress(5);
       if (!this.aaDialogOKButton) {
         await this.sleep(2000);
-        this.aaToDataAnalytics()
+        this.aaToDataAnalytics();
       }
     },
     // go to data analytics
