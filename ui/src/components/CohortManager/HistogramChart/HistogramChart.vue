@@ -30,7 +30,7 @@
           <title v-if="hasSelection()">
             Click outside the selected area to remove the filter.
           </title>
-          <title v-else>Click and drag to add a cohort filter.</title>
+          <title v-else>Click and drag to add a study group filter.</title>
           <!-- Population bars are first so they will hide under cohort bars -->
           <rect
             v-for="(bin, i) in popBins"
@@ -90,7 +90,7 @@
               :fill-opacity="colors['cohort-circle-fill-opacity']"
             >
               <title>
-                Cohort Mean: {{ mean }} Median: {{ median }} Std Deviation:
+                Study Group Mean: {{ mean }} Median: {{ median }} Std Deviation:
                 {{ stddev }}
               </title>
             </circle>

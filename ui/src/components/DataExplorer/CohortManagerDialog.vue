@@ -13,15 +13,15 @@
           Cohorts
         </v-btn>
       </template>
-      <span>Launch Cohort Manager to add/remove Cohorts</span>
+      <span>Launch Study Group Selector to add/remove Study Groups</span>
     </v-tooltip>
 
     <v-dialog v-model="dialog" width="500">
       <v-card class="rounded-lg">
         <v-card-title class="title primary--text text--darken-3">
           <span class="primary--text title pl-2"
-            >Are you sure you want to leave Data Analytics and go to the Cohort
-            Manager?</span
+            >Are you sure you want to leave Data Analytics and go to the Study
+            Group Selector?</span
           >
         </v-card-title>
         <v-divider></v-divider>

@@ -69,14 +69,14 @@
                       <v-col cols="12" class="ma-0 pa-0">
                         <cohort-table
                           ref="cohortTable"
-                          title="ANALYZE COHORTS"
+                          title="ANALYZE STUDY GROUPS"
                           :cohorts="selectedCohorts"
                           :select-cohorts="visibleCohorts"
                           :disable-pagination="false"
                           show-select
                           show-colors
                           report-max-selected-overlap
-                          checkbox-tooltip="Check to include this cohort in the next analysis."
+                          checkbox-tooltip="Check to include this study group in the next analysis."
                           @selectedCohorts="updateVisibleCohorts"
                         />
                       </v-col>
@@ -117,7 +117,7 @@
                               ? visibleCohorts.length
                               : ''
                           }}
-                          Selected Cohorts</v-btn
+                          Selected Study Groups</v-btn
                         >
                       </v-col>
                     </v-row>
@@ -214,7 +214,7 @@ const COMPARISON_MEASURES = [
 ];
 
 var aaSteps = [
-  { title: 'Loading cohorts' },
+  { title: 'Loading Study Groups' },
   { title: 'Running analyses' },
   { title: 'Done' },
 ];
@@ -629,7 +629,7 @@ export default {
       var keys = Object.keys(ivc);
       for (var i = 0; i < keys.length; ++i) {
         var cohorts = ivc[keys[i]];
-        this.aaAnalyses.push(keys[i] + ' - ' + cohorts.length + ' cohorts');
+        this.aaAnalyses.push(keys[i] + ' - ' + cohorts.length + ' study groups');
         this.analyzeCohortList(cohorts);
         await this.sleep(this.aaMinStepTime * 1000);
       }

@@ -19,12 +19,12 @@
                       >{{ cohorts.length }}</v-chip
                     >
                     <span class="black--text text-body-1"
-                      >Cohort{{ cohorts.length == 1 ? '' : 's' }}</span
+                      >Study group{{ cohorts.length == 1 ? '' : 's' }}</span
                     >
                   </span>
                 </template>
                 <span class="subtitle-1">
-                  {{ cohorts.length }} Cohort{{
+                  {{ cohorts.length }} Study group{{
                     cohorts.length == 1 ? '' : 's'
                   }}
                 </span>
@@ -46,7 +46,7 @@
                   </span>
                 </template>
                 <span class="subtitle-1">
-                  {{ selected.length }} Cohort{{
+                  {{ selected.length }} Study group{{
                     selected.length == 1 ? '' : 's'
                   }}
                   selected
@@ -78,7 +78,7 @@
           <v-col cols="12" class="ma-0 pa-0">
             <div column align-center justify-center fill-width class="py-3">
               <v-subheader class="title primary--text text--lighten-5">
-                No cohorts selected.
+                No study groups selected.
               </v-subheader>
             </div>
           </v-col>
@@ -108,7 +108,7 @@
                 All: <v-simple-checkbox v-bind="props" v-on="on"
               /></span>
             </template>
-            <span>Click to select all cohorts.</span>
+            <span>Click to select all study groups.</span>
           </v-tooltip>
         </template>
 
@@ -185,7 +185,7 @@ export default {
     title: {
       type: String,
       required: false,
-      default: 'Cohorts',
+      default: 'Study Groups',
     },
     showTitleBar: {
       type: Boolean,
@@ -230,7 +230,7 @@ export default {
     checkboxTooltip: {
       type: String,
       required: false,
-      default: 'Check to select this cohort.',
+      default: 'Check to select this study group.',
     },
     expanded: {
       type: Boolean,
@@ -355,11 +355,11 @@ export default {
               plural_subject +
               ' (' +
               format('.1f')(a_pct) +
-              "%) from cohort '" +
+              "%) from study group '" +
               cohorts[i].label +
               "' " +
               plural_is +
-              " also in cohort '" +
+              " also in study group '" +
               cohorts[j].label +
               "'";
           } else {
@@ -370,11 +370,11 @@ export default {
               plural_subject +
               ' (' +
               format('.1f')(b_pct) +
-              "%) from cohort '" +
+              "%) from study group '" +
               cohorts[j].label +
               "' " +
               plural_is +
-              " also in cohort '" +
+              " also in study group '" +
               cohorts[i].label +
               "'";
           }

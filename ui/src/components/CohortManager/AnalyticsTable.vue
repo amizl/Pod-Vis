@@ -46,7 +46,7 @@
               color="#4caf50"
               class="font-weight-bold white--text pa-3"
               @click:close="showHelpChip = false"
-              >Review analytics for Selected Cohort vs. Remainder.</v-chip
+              >Review analytics for Selected Study Group vs. Remainder.</v-chip
             >
           </v-col>
         </v-row>
@@ -71,13 +71,13 @@
                         >{{ cohortSize }}</v-chip
                       >
                       <span class="black--text text-body-1"
-                        >Selected Cohort</span
+                        >Selected&nbsp;Study&nbsp;Group</span
                       >
                     </span>
                   </template>
                   <span class="subtitle-1">
                     {{ cohortSize }} subject{{ cohortSize == 1 ? '' : 's' }} in
-                    selected cohort
+                    selected study group
                   </span>
                 </v-tooltip>
               </div>

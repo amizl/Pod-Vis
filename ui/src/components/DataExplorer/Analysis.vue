@@ -20,7 +20,7 @@
                       >{{ analysis.cohorts.length }}</v-chip
                     >
                     <span class="black--text text-body-1"
-                      >Cohort{{ analysis.cohorts.length == 1 ? '' : 's' }}</span
+                      >Study group{{ analysis.cohorts.length == 1 ? '' : 's' }}</span
                     >
                   </span>
                 </template>
@@ -136,9 +136,9 @@
               <pane size="45" min-size="15" max-size="60" class="pb-1">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <v-tabs v-model="leftTab" light>
-                    <v-tab key="cohorts">Input Cohorts</v-tab>
+                    <v-tab key="cohorts">Input Study Groups</v-tab>
                     <v-tab key="analytics">Analytics/Variables</v-tab>
-                    <v-tab key="statistics">Cohort Statistics</v-tab>
+                    <v-tab key="statistics">Statistics</v-tab>
                   </v-tabs>
 
                   <v-tabs-items v-model="leftTab" class="pt-3">
@@ -294,7 +294,7 @@ export default {
     title: {
       type: String,
       required: false,
-      default: 'Cohorts',
+      default: 'Study Groups',
     },
     analysis: {
       type: Object,

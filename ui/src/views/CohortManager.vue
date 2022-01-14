@@ -9,7 +9,7 @@
     <v-app-bar app :class="useAutomatedAnalysisMode ? 'purple' : 'primary'">
       <v-icon color="white" large>group_add</v-icon>
       <v-toolbar-title class="white--text pl-3"
-        >Cohort Manager
+        >Study Group Selector
 
         <div class="subtitle-1">
           Dataset:
@@ -23,7 +23,7 @@
           </v-tooltip>
 
           <span class="ml-3">
-            Selected Cohort:
+            Selected Study Group:
             <v-tooltip bottom color="primary">
               <template v-slot:activator="{ on: tooltip }">
                 <span v-on="{ ...tooltip }">{{
@@ -92,8 +92,8 @@
         <v-col cols="12" class="ma-0 pa-0">
           <v-sheet color="white" height="100%" class="rounded-lg shadow">
             <span
-              >ERROR - First/Last Visits must be set in order to use the Cohort
-              Manager:<br clear="both"
+              >ERROR - First/Last Visits must be set in order to use the Study Group
+	      Selector:<br clear="both"
             /></span>
             <v-tooltip top color="primary">
               <template v-slot:activator="{ on }">
@@ -236,7 +236,7 @@
       <v-card class="rounded-lg" style="border: 3px solid #3f51b5;">
         <v-card-title color="white" class="ma-0 pa-2" primary-title>
           <span class="primary--text text--darken-3 title"
-            >Automated Analysis Mode: Create Cohorts</span
+            >Automated Analysis Mode: Create Study Groups</span
           >
         </v-card-title>
 
@@ -252,7 +252,7 @@
               <v-list-item-content>
                 {{ s.title }}
                 <v-list
-                  v-if="s.title == 'Creating cohorts' && aaCohorts.length > 0"
+                  v-if="s.title == 'Creating study groups' && aaCohorts.length > 0"
                 >
                   <v-list-item v-for="(c, ci) in aaCohorts" :key="`aac-${ci}`">
                     <v-list-item-content> {{ c }} </v-list-item-content>
@@ -316,12 +316,12 @@ var aaSteps = [
   { title: 'Loading data' },
   { title: 'Adding predictor variables' },
   { title: 'Adding outcome variables' },
-  { title: 'Creating cohorts' },
+  { title: 'Creating study groups' },
   { title: 'Done' },
 ];
 
 export default {
-  name: 'CohortManager',
+  name: 'StudyGroupManager',
   components: {
     AnalysisTracker,
     InputVariables,
@@ -885,7 +885,7 @@ export default {
         var cc = col_charts[i];
         var nc = cc['cohorts'].length;
         this.aaCohorts.push(
-          cc['chart'].dimensionName + ' - ' + nc + ' cohorts'
+          cc['chart'].dimensionName + ' - ' + nc + ' study groups'
         );
         for (var j = 0; j < nc; ++j) {
           await this.saveCohort(cc['cohorts'][j]);

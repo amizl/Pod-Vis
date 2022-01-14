@@ -476,7 +476,7 @@ export default {
       });
       data.cohort.subject_ids = subjectIds;
       commit(mutations.ADD_COHORT, data.cohort);
-      const notification = new SuccessNotification(`Cohort saved`);
+      const notification = new SuccessNotification(`Study group saved`);
       dispatch(notification.dispatch, notification, { root: true });
     } catch ({ response }) {
       const notification = new ErrorNotification(response.data.error);

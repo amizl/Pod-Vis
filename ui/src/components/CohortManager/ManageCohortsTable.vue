@@ -33,7 +33,7 @@
           <v-col cols="12" class="ma-0 pa-0">
             <div column align-center justify-center fill-width class="py-3">
               <v-subheader class="title primary--text text--lighten-5">
-                No cohorts
+                No study groups
               </v-subheader>
             </div>
           </v-col>
@@ -126,7 +126,7 @@
                 >
                 <v-icon v-else @click="editCohort(item)">edit</v-icon>
               </template>
-              <span class="subtitle-1">Edit cohort }} </span>
+              <span class="subtitle-1">Edit study group }} </span>
             </v-tooltip>
 
             <!--delete -->
@@ -138,7 +138,7 @@
                   @cohortDeleted="cohortDeleted"
                 ></delete-cohort-icon-dialog>
               </template>
-              <span class="subtitle-1">Delete cohort }} </span>
+              <span class="subtitle-1">Delete study group }} </span>
             </v-tooltip>
           </td>
         </template>
@@ -161,7 +161,7 @@
               color="#4caf50"
               class="font-weight-bold white--text pa-2 my-1"
               @click:close="showNewHelpChip = false"
-              >Click NEW COHORT to start over (predictors and outcomes are
+              >Click NEW STUDY GROUP to start over (predictors and outcomes are
               removed)</v-chip
             >
             <v-chip
@@ -171,7 +171,7 @@
               color="#4caf50"
               class="font-weight-bold white--text pa-2 my-1"
               @click:close="showSaveHelpChip = false"
-              >After review, click SAVE COHORT to create a cohort.</v-chip
+              >After review, click SAVE STUDY GROUP to create a study group.</v-chip
             >
           </v-col>
         </v-row>
@@ -179,7 +179,7 @@
         <v-row class="ma-0 pa-0 align-center">
           <v-col cols="6" class="ma-0 pa-0" align="center">
             <v-btn class="primary text--white ma-0 px-2 py-0" @click="newCohort"
-              >New Cohort</v-btn
+              >New Study Group</v-btn
             >
           </v-col>
 
@@ -227,7 +227,7 @@ export default {
     title: {
       type: String,
       required: false,
-      default: 'MANAGE COHORTS',
+      default: 'STUDY GROUPS SELECTED',
     },
     cohorts: {
       type: Array,
@@ -303,7 +303,7 @@ export default {
     headers() {
       var hdrs = [];
       hdrs.push({
-        text: 'Cohort Name',
+        text: 'Study Group Name',
         value: 'label',
         class: 'text-subtitle-1 font-weight-bold',
       });

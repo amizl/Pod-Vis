@@ -19,7 +19,7 @@
       <v-card class="rounded-lg">
         <v-card-title class="title primary--text text--darken-3">
           <span class="primary--text title pl-2"
-            >Are you sure you want to leave the Cohort Manager and go to the
+            >Are you sure you want to leave the Study Group Selector and go to the
             Data Explorer?</span
           >
         </v-card-title>

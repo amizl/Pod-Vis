@@ -5,7 +5,7 @@
       color="error"
       @click="dialog = !dialog"
     >
-      <v-icon left>delete</v-icon> DELETE COHORT
+      <v-icon left>delete</v-icon> DELETE STUDY GROUP
     </v-btn>
     <!-- DELETE COHORT FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
@@ -13,12 +13,12 @@
         <v-card-title color="white" primary-title>
           <v-icon color="primary">delete</v-icon>
           <span class="primary--text text--darken-3 title pl-2"
-            >Delete Cohort</span
+            >Delete Study Group</span
           >
         </v-card-title>
 
         <v-card-text class="primary primary--text text--lighten-5 pt-4">
-          Are you sure you want to delete this cohort?
+          Are you sure you want to delete this study group?
         </v-card-text>
 
         <v-divider></v-divider>
@@ -28,7 +28,7 @@
             <v-icon left>close</v-icon> Cancel
           </v-btn>
           <v-btn :loading="loading" color="error" @click="onDeleteCohort">
-            <v-icon color="" left>delete</v-icon> Delete Cohort</v-btn
+            <v-icon color="" left>delete</v-icon> Delete Study Group</v-btn
           >
         </v-card-actions>
       </v-card>

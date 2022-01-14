@@ -11,7 +11,7 @@
           Data Analytics
         </v-btn>
       </template>
-      <span>Leave the Cohort Manager and proceed to Data Analytics.</span>
+      <span>Leave the Study Group Selector and proceed to Data Analytics.</span>
     </v-tooltip>
 
     <v-dialog v-model="dialog" width="500">
@@ -27,8 +27,8 @@
           {{ collection_cohorts.length }} cohort{{
             collection_cohorts.length == 1 ? '' : 's'
           }}
-          created. Click "OK" to proceed to Data Analytics to compare cohorts OR
-          "CANCEL" to continue creating cohorts.
+          created. Click "OK" to proceed to Data Analytics to compare study groups OR
+          "CANCEL" to continue creating study groups.
         </v-card-text>
 
         <v-divider></v-divider>

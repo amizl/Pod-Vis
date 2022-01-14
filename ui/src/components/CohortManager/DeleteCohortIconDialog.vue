@@ -10,12 +10,12 @@
         <v-card-title color="white" primary-title>
           <v-icon color="primary">delete</v-icon>
           <span class="primary--text text--darken-3 title pl-2"
-            >Delete Cohort</span
+            >Delete Study Group</span
           >
         </v-card-title>
 
         <v-card-text class="primary primary--text text--lighten-5 pt-4">
-          Are you sure you want to delete cohort<br />
+          Are you sure you want to delete study group<br />
           '{{ cohort.label }}'?
         </v-card-text>
 
@@ -26,7 +26,7 @@
             <v-icon left>close</v-icon> Cancel
           </v-btn>
           <v-btn color="error" @click="onDeleteCohort">
-            <v-icon left>delete</v-icon> Delete Cohort</v-btn
+            <v-icon left>delete</v-icon> Delete Study Group</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -65,7 +65,7 @@ export default {
         this.$emit('cohortDeleted', true);
         this.dialog = false;
       } catch (err) {
-        //        console.log('delete cohort failed, err=' + err);
+        //        console.log('delete study group failed, err=' + err);
       }
     },
     dialogClicked() {

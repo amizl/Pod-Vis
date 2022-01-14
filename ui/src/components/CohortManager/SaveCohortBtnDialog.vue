@@ -5,7 +5,7 @@
       :disabled="!hasUserFilteredInputVariables"
       @click="dialog = !dialog"
     >
-      Save Cohort
+      Save Study Group
     </v-btn>
     <!-- SAVE COLLECTION FORM DIALOG -->
     <v-dialog v-model="dialog" width="500">
@@ -13,7 +13,7 @@
         <v-card-title color="white" primary-title>
           <v-icon color="primary">save</v-icon>
           <span class="primary--text text--darken-3 title pl-2"
-            >Save Cohort</span
+            >Save Study Group</span
           >
         </v-card-title>
 
@@ -23,7 +23,7 @@
             class="red--text text--lighten-4 title pl-2 py-4"
           >
             WARNING:<br clear="both" />Outcome variable filters will not be
-            saved with the cohort unless they are moved to the PREDICTOR
+            saved with the study group unless they are moved to the PREDICTOR
             VARIABLES section.<br clear="both" />
           </div>
 
@@ -37,13 +37,13 @@
               ref="vtf"
               v-model="cohortName"
               :rules="[
-                () => !!cohortName || 'Cohort name is required.',
+                () => !!cohortName || 'Study group name is required.',
                 () =>
                   !cohortNames.includes(cohortName) ||
-                  'A cohort with that name already exists.',
+                  'A study group with that name already exists.',
               ]"
               prepend-inner-icon="table_chart"
-              label="Please name your cohort."
+              label="Please name your study group."
               filled
               text
               background-color="grey lighten-4"
@@ -60,7 +60,7 @@
             <v-icon left>close</v-icon> Cancel
           </v-btn>
           <v-btn :loading="loading" color="primary" @click="onSaveCohort">
-            <v-icon left>save</v-icon> Save Cohort</v-btn
+            <v-icon left>save</v-icon> Save Study Group</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -115,8 +115,8 @@ export default {
     },
     cohort(newCohort) {
       if (
-        newCohort.label != 'Choose Cohort' &&
-        newCohort.label != 'New Cohort'
+        newCohort.label != 'Choose Study Group' &&
+        newCohort.label != 'New Study Group'
       ) {
         this.cohortName = newCohort.label;
       }

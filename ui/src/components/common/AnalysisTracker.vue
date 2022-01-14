@@ -33,7 +33,7 @@
           <v-tooltip color="primary" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <span class="subtitle-1" align="center" v-on="{ ...tooltip }">{{
-                step > 2 ? 'Cohorts&nbsp;created' : 'Manage&nbsp;cohorts'
+                step > 2 ? 'Study&nbsp;groups&nbsp;created' : 'Select&nbsp;study&nbsp;groups'
               }}</span>
             </template>
             <span class="subtitle-1">{{ step_descr['2'] }}</span>
@@ -174,7 +174,7 @@
           @click.native="substepClicked('2.3')"
           >{{
             filteredData.length == unfilteredData.length
-              ? 'Apply filters to define cohorts'
+              ? 'Apply filters to select study group'
               : 'Filters applied; review charts and analytics'
           }}</v-stepper-step
         >
@@ -188,14 +188,14 @@
           :class="substepClass('3.1')"
           :complete="substep === '3.2'"
           @click.native="substepClicked('3.1')"
-          ><span class="subtitle-1">Select two or more cohorts.</span>
+          ><span class="subtitle-1">Select two or more study groups.</span>
         </v-stepper-step>
         <v-divider></v-divider>
         <v-stepper-step
           step="3.2"
           :class="substepClass('3.2')"
           @click.native="substepClicked('3.2')"
-          ><span class="subtitle-1">Click on 'ANALYZE SELECTED COHORTS'</span>
+          ><span class="subtitle-1">Click on 'ANALYZE SELECTED STUDY GROUPS'</span>
         </v-stepper-step>
       </v-stepper-header>
     </v-stepper>
@@ -252,7 +252,7 @@ export default {
       step_descr: {
         '1': 'Create your study dataset',
         '2': 'Design your query: Choose predictors and outcomes',
-        '3': 'Analyze your data: Analyze cohorts and variables.',
+        '3': 'Analyze your data: Analyze study groups and variables.',
       },
       expanded: true,
 
@@ -376,8 +376,8 @@ export default {
         if (!this.dsCollection.has_visits_set) {
           this.displayErrorDialog(
             'First/Last Visits Not Selected',
-            'First and last visits must be selected before the Cohort Manager can be used. ' +
-              "Please finish selecting the first and last visits or return to the home page and use the 'Add Cohorts' " +
+            'First and last visits must be selected before the Study Group Selector can be used. ' +
+              "Please finish selecting the first and last visits or return to the home page and use the 'Add Study Groups' " +
               'link for an existing study dataset.'
           );
         } else {
@@ -386,8 +386,8 @@ export default {
       } else if (this.step <= 1) {
         this.displayErrorDialog(
           'No Study Dataset',
-          'A study dataset must be created before the Cohort Manager can be used. ' +
-            "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
+          'A study dataset must be created before the Study Group Selector can be used. ' +
+            "Please either create a new study dataset first, or return to the home page and use the 'Add Study Groups' " +
             'link for an existing study dataset.'
         );
       } else {
@@ -402,13 +402,13 @@ export default {
         this.displayErrorDialog(
           'No Study Dataset',
           'A study dataset must be created before Data Analytics can be performed. ' +
-            "Please either create a new study dataset first, or return to the home page and use the 'Add Cohorts' " +
+            "Please either create a new study dataset first, or return to the home page and use the 'Add Study Groups' " +
             'link for an existing study dataset.'
         );
       } else if (this.collection_cohorts.length < 2) {
         this.displayErrorDialog(
-          'Too Few Cohorts',
-          'At least two cohorts must be created before proceeding to Data Analytics.'
+          'Too Few Study Groups',
+          'At least two study groups must be created before proceeding to Data Analytics.'
         );
       } else {
         this.$emit('nextStep', true);

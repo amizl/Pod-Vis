@@ -48,14 +48,14 @@
                     :style="'background: ' + colors['cohort']"
                     >{{ animatedNumber }}</v-chip
                   >
-                  <span class="black--text text-body-1">Cohort</span>
+                  <span class="black--text text-body-1">Study Group</span>
                 </span>
               </template>
               <span class="subtitle-1">
                 {{ animatedNumber }} subject{{
                   animatedNumber == 1 ? '' : 's'
                 }}
-                in selected cohort
+                in selected study group
               </span>
             </v-tooltip>
 

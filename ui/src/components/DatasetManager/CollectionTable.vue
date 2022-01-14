@@ -54,14 +54,14 @@
                   v-on="{ ...tooltip }"
                 >
                   <v-icon left small color="secondary">group_add</v-icon> Add
-                  Cohorts ({{ props.item.num_cohorts }})
+                  Study Groups ({{ props.item.num_cohorts }})
                 </v-btn>
               </template>
               <span class="subtitle-1"
-                >Launch Cohort Manager to add/remove Cohorts ({{
+                >Launch Study Group Selector to add/remove Study Groups ({{
                   props.item.num_cohorts
                 }}
-                cohort{{ props.item.num_cohorts > 1 ? 's' : '' }} created so
+                study group{{ props.item.num_cohorts > 1 ? 's' : '' }} created so
                 far)</span
               >
             </v-tooltip>
@@ -80,7 +80,7 @@
                 </v-btn>
               </template>
               <span class="subtitle-1"
-                >Analyze cohorts, predictor variables, and outcomes.</span
+                >Analyze study groups, predictor variables, and outcomes.</span
               >
             </v-tooltip>
 
@@ -106,7 +106,7 @@
           </td>
         </tr>
         <tr v-for="(cohort, index) in props.item.cohorts" :key="`ctr-${index}`">
-          <td colspan="3">cohort row</td>
+          <td colspan="3">study group row</td>
         </tr>
       </template>
       <template v-slot:no-data>
