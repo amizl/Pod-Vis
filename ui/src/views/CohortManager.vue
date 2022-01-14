@@ -548,7 +548,9 @@ export default {
     if (this.useAutomatedAnalysisMode) {
       this.doAutomatedAnalysis();
     } else if (this.collection_cohorts.length > 0) {
-      this.cohortSelected(this.collection_cohorts[this.collection_cohorts.length - 1]);
+      this.cohortSelected(
+        this.collection_cohorts[this.collection_cohorts.length - 1]
+      );
     }
   },
   methods: {
