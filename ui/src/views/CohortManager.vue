@@ -268,7 +268,7 @@
           </v-list>
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-actions v-if="aaDialogOKButton">
           <v-spacer></v-spacer>
           <v-btn
             :disabled="aaProgress < 4"
@@ -379,6 +379,7 @@ export default {
       helpModeNotify: false,
       showNextHelpChip: false,
       aaDialog: false,
+      aaDialogOKButton: false,
       aaProgress: 0,
       aaLastUpdate: null,
       aaMinStepTime: 1,
@@ -897,6 +898,10 @@ export default {
 
       await this.updateAutomatedAnalysisProgress(4);
       await this.updateAutomatedAnalysisProgress(5);
+      if (!this.aaDialogOKButton) {
+        await this.sleep(2000);
+        this.aaToDataAnalytics()
+      }
     },
     // go to data analytics
     aaToDataAnalytics() {

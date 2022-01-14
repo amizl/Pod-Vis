@@ -170,7 +170,7 @@
           </v-list>
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-actions v-if="aaDialogOKButton">
           <v-spacer></v-spacer>
           <v-btn
             :disabled="aaProgress < 3"
@@ -266,6 +266,7 @@ export default {
       comparisonMeasures: COMPARISON_MEASURES,
       selectedComparisonMeasure: COMPARISON_MEASURES[2],
       aaDialog: false,
+      aaDialogOKButton: false,
       aaProgress: 0,
       aaLastUpdate: null,
       aaMinStepTime: 1,
@@ -635,6 +636,10 @@ export default {
 
       await this.updateAutomatedAnalysisProgress(2);
       await this.updateAutomatedAnalysisProgress(3);
+      if (!this.aaDialogOKButton) {
+        await this.sleep(2000);
+        this.aaDialog = false;
+      }
     },
   },
 };

@@ -116,7 +116,7 @@
           </v-list>
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-actions v-if="aaDialogOKButton">
           <v-spacer></v-spacer>
           <v-btn
             :disabled="aaProgress < 3"
@@ -196,6 +196,7 @@ export default {
       getCollectionDescription: getCollectionDescription,
       useLongScaleNames: false,
       aaDialog: false,
+      aaDialogOKButton: false,
       aaProgress: 0,
       aaLastUpdate: null,
       aaMinStepTime: 1,
@@ -296,6 +297,10 @@ export default {
 
       await this.updateAutomatedAnalysisProgress(3);
       await this.updateAutomatedAnalysisProgress(4);
+      if (!this.aaDialogOKButton) {
+        await this.sleep(2000);
+        this.aaToCohortManager()
+      }
     },
     // continue to Cohort Manager
     aaToCohortManager() {
