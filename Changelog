@@ -5,6 +5,7 @@
  -Rename "cohort" to "study group". (#650)
  -Remove purple title bar for automated analysis mode, use yellow highlight on "Auto" instead. (#654)
  -Remove requirement for user to click "OK" after each page of automated analysis. (#655)
+ -Automatically load/select most recently-added study group when returning to Study Group Selector. (#657)
 
 1.0.9 (December 3, 2021)
  -Rename "inputs" to "predictors" in automated analysis mode.
