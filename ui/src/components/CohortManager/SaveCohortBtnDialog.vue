@@ -2,7 +2,7 @@
   <div>
     <v-btn
       class="primary text--white ma-0 px-2 py-0"
-      :disabled="!hasUserFilteredInputVariables"
+      :disabled="!hasUserFilteredInputVariables || outputVariables.length == 0"
       @click="dialog = !dialog"
     >
       Save Study Group
@@ -97,6 +97,8 @@ export default {
   computed: {
     ...mapState('cohortManager', {
       cohort: state.COHORT,
+      inputVariables: state.INPUT_VARIABLES,
+      outputVariables: state.OUTPUT_VARIABLES,
     }),
     ...mapGetters('cohortManager', {
       hasUserFilteredInputVariables: getters.HAS_USER_FILTERED_INPUT_VARIABLES,
