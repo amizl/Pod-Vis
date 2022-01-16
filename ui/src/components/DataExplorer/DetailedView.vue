@@ -28,7 +28,7 @@
                 <span>{{ detailedView.category }}</span>
               </v-tooltip>
               <span v-if="detailedView" class="subtitle-1">
-                {{ detailedView.label }}
+                {{ detailedView.abbreviation }}
               </span>
             </v-card-title>
           </v-card>
@@ -52,9 +52,16 @@
               </template>
               <span>{{ detailedView.category }}</span>
             </v-tooltip>
-            <span v-if="detailedView" class="subtitle-1">
-              {{ detailedView.label }}
-            </span>
+
+            <v-tooltip v-if="detailedView" top color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <span v-on="{ ...tooltip }">
+                  {{ detailedView.abbreviation }}
+                </span>
+              </template>
+              <span v-html="detailedView.label"></span>
+            </v-tooltip>
+	    
           </v-card-title>
         </v-col>
       </v-row>

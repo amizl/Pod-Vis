@@ -7,6 +7,7 @@
  -Remove requirement for user to click "OK" after each page of automated analysis. (#655)
  -Automatically load/select most recently-added study group when returning to Study Group Selector. (#657)
  -Don't allow user to save study groups with no outcome variables. (#658)
+ -Change boxplot outcome variable label to be identical to the list on the left. (#662)
 
 1.0.9 (December 3, 2021)
  -Rename "inputs" to "predictors" in automated analysis mode.
