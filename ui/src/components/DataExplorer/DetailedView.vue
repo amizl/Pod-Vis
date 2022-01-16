@@ -61,7 +61,6 @@
               </template>
               <span v-html="detailedView.label"></span>
             </v-tooltip>
-	    
           </v-card-title>
         </v-col>
       </v-row>

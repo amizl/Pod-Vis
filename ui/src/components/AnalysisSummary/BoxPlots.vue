@@ -60,15 +60,14 @@
                     <span>{{ outcomeVar.category }}</span>
                   </v-tooltip>
 
-		  <v-tooltip v-if="outcomeVar" top color="primary">
-		    <template v-slot:activator="{ on: tooltip }">
+                  <v-tooltip v-if="outcomeVar" top color="primary">
+                    <template v-slot:activator="{ on: tooltip }">
                       <span v-on="{ ...tooltip }">
-			{{ outcomeVar.abbreviation }}
+                        {{ outcomeVar.abbreviation }}
                       </span>
-		    </template>
-		    <span v-html="outcomeVar.label"></span>
-		  </v-tooltip>
-
+                    </template>
+                    <span v-html="outcomeVar.label"></span>
+                  </v-tooltip>
                 </v-card-title>
               </v-col>
             </v-row>
