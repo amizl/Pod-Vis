@@ -59,8 +59,19 @@
                     }}</span>
                   </td>
                   <template v-for="c in cohorts">
-                    <td :key="'cmean-' + c.id"><span v-if="v.item.abbreviation == 'Predictors' || v.item.abbreviation == 'Outcomes'"></span>
-		      <span v-else>{{ cohortMean(v.item, c) + "&nbsp;&#177;" +  cohortDeviation(v.item, c) }}</span></td>
+                    <td :key="'cmean-' + c.id">
+                      <span
+                        v-if="
+                          v.item.abbreviation == 'Predictors' ||
+                            v.item.abbreviation == 'Outcomes'
+                        "
+                      ></span>
+                      <span v-else>{{
+                        cohortMean(v.item, c) +
+                          '&nbsp;&#177;' +
+                          cohortDeviation(v.item, c)
+                      }}</span>
+                    </td>
                   </template>
                 </tr>
               </template>
