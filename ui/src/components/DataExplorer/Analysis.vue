@@ -199,7 +199,9 @@
                 >
                   <v-tabs v-model="rightTab" light>
                     <v-tab key="boxplots">
-                      <span>Boxplots/Bar graphs</span>
+                      <span v-if="detailedView && detailedView.data_category == 'Continuous'">Boxplots</span>
+		      <span v-else-if="detailedView && detailedView.data_category != 'Continuous'">Bar graphs</span>
+		      <span v-else>Boxplots/Bar graphs</span>
                     </v-tab>
                     <v-tab
                       key="lview"
