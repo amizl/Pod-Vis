@@ -248,8 +248,8 @@ export default {
       draw_clusters: false,
       subsample_labels: ['1%', '5%', '10%', '20%', '50%'],
       subsample_choice: 2,
-      min_cluster_size: 1,
-      cluster_choice: 'Change/baseline 5',
+      min_cluster_size: 10,
+      cluster_choice: 'Last Visit 5',
       cluster_choices: [
         'Change/baseline 5',
         'Change 5',
