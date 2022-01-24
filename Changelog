@@ -1,4 +1,4 @@
-1.0.10
+1.0.10 (January 24, 2022)
  -Fix issue with automated analysis mode freezing on Cohort Manager/create cohorts step. (#648)
  -Fix issue with automated analysis mode ignoring halves/tertiles/quartiles selection. (#647)
  -Rename "output" to "outcome" in automated analysis mode. (#649)
@@ -8,6 +8,9 @@
  -Automatically load/select most recently-added study group when returning to Study Group Selector. (#657)
  -Don't allow user to save study groups with no outcome variables. (#658)
  -Change boxplot outcome variable label to be identical to the list on the left. (#662)
+ -Change tab names in Data Analytics analysis panels. (#663)
+ -Change Cohort Manager clustering defaults. (#664)
+ -Display mean +/- SD in study group data tables. (#667)
 
 1.0.9 (December 3, 2021)
  -Rename "inputs" to "predictors" in automated analysis mode.

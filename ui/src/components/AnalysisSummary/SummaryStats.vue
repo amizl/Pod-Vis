@@ -41,7 +41,7 @@
                 <thead>
                   <tr>
                     <th colspan="1"></th>
-                    <th v-for="c in cohorts" :key="c.id" colspan="3">
+                    <th v-for="c in cohorts" :key="c.id" colspan="1">
                       <v-chip x-small :color="c.color" class="my-1 px-2" />
                       <span class="subtitle-1 pl-2 font-weight-bold">{{
                         c.label
@@ -59,13 +59,8 @@
                     }}</span>
                   </td>
                   <template v-for="c in cohorts">
-                    <td :key="'cmean-' + c.id">{{ cohortMean(v.item, c) }}</td>
-                    <td :key="'cmedian-' + c.id">
-                      {{ cohortMedian(v.item, c) }}
-                    </td>
-                    <td :key="'cdev-' + c.id">
-                      {{ cohortDeviation(v.item, c) }}
-                    </td>
+                    <td :key="'cmean-' + c.id"><span v-if="v.item.abbreviation == 'Predictors' || v.item.abbreviation == 'Outcomes'"></span>
+		      <span v-else>{{ cohortMean(v.item, c) + "&nbsp;&#177;" +  cohortDeviation(v.item, c) }}</span></td>
                   </template>
                 </tr>
               </template>
@@ -146,18 +141,8 @@ export default {
       });
       this.cohorts.forEach(() => {
         hdrs.push({
-          text: 'Mean',
+          text: 'Mean +/- SD',
           value: 'mean',
-          sortable: false,
-        });
-        hdrs.push({
-          text: 'Median',
-          value: 'median',
-          sortable: false,
-        });
-        hdrs.push({
-          text: 'Deviation',
-          value: 'deviation',
           sortable: false,
         });
       });
