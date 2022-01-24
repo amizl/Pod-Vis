@@ -138,9 +138,9 @@
               <pane size="45" min-size="15" max-size="60" class="pb-1">
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <v-tabs v-model="leftTab" light>
-                    <v-tab key="cohorts">Input Study Groups</v-tab>
-                    <v-tab key="analytics">Analytics/Variables</v-tab>
-                    <v-tab key="statistics">Statistics</v-tab>
+                    <v-tab key="cohorts">Predictors</v-tab>
+                    <v-tab key="analytics">Outcome Variables/Analytics</v-tab>
+                    <v-tab key="statistics">Study Group Data Tables</v-tab>
                   </v-tabs>
 
                   <v-tabs-items v-model="leftTab" class="pt-3">
@@ -198,30 +198,18 @@
                   class="rounded-lg shadow"
                 >
                   <v-tabs v-model="rightTab" light>
+                    <v-tab key="boxplots">
+		      <span>Boxplots/Bar graphs</span>
+		    </v-tab>
                     <v-tab
                       key="lview"
                       :disabled="!analysis.collection.is_longitudinal"
-                      >Detailed View</v-tab
+                      >Longitudinal Graphs</v-tab
                     >
-                    <v-tab key="boxplots">Boxplots/Bar graphs</v-tab>
                   </v-tabs>
 
                   <v-tabs-items v-model="rightTab">
-                    <v-tab-item
-                      key="lview"
-                      :disabled="!analysis.collection.is_longitudinal"
-                      :eager="true"
-                    >
-                      <detailed-view
-                        ref="dview"
-                        :detailed-view="detailedView"
-                        :visible-cohorts="visibleCohorts"
-                        :show-title-bar="false"
-                        min-height="400px"
-                      />
-                    </v-tab-item>
-
-                    <v-tab-item key="boxplots">
+		    <v-tab-item key="boxplots">
                       <box-plots
                         v-if="
                           detailedView &&
@@ -252,6 +240,21 @@
                         :bar-pad="5"
                       />
                     </v-tab-item>
+
+                    <v-tab-item
+                      key="lview"
+                      :disabled="!analysis.collection.is_longitudinal"
+                      :eager="true"
+                    >
+                      <detailed-view
+                        ref="dview"
+                        :detailed-view="detailedView"
+                        :visible-cohorts="visibleCohorts"
+                        :show-title-bar="false"
+                        min-height="400px"
+                      />
+                    </v-tab-item>
+
                   </v-tabs-items>
                 </v-sheet>
               </pane>
@@ -346,12 +349,12 @@ export default {
     },
     rightTab(rt) {
       // workaround for resize problem #596
-      if (rt == 0) {
+      if (rt == 1) {
         const dv = this.$refs.dview;
         setTimeout(async function() {
           if (dv) dv.onResize();
         }, 500);
-      } else if (rt == 1) {
+      } else if (rt == 0) {
         const bp = this.$refs.boxplots;
         const sb = this.$refs.stackedbars;
         setTimeout(async function() {
