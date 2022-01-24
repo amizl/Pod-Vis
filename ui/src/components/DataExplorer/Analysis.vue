@@ -199,8 +199,8 @@
                 >
                   <v-tabs v-model="rightTab" light>
                     <v-tab key="boxplots">
-		      <span>Boxplots/Bar graphs</span>
-		    </v-tab>
+                      <span>Boxplots/Bar graphs</span>
+                    </v-tab>
                     <v-tab
                       key="lview"
                       :disabled="!analysis.collection.is_longitudinal"
@@ -209,7 +209,7 @@
                   </v-tabs>
 
                   <v-tabs-items v-model="rightTab">
-		    <v-tab-item key="boxplots">
+                    <v-tab-item key="boxplots">
                       <box-plots
                         v-if="
                           detailedView &&
@@ -254,7 +254,6 @@
                         min-height="400px"
                       />
                     </v-tab-item>
-
                   </v-tabs-items>
                 </v-sheet>
               </pane>
