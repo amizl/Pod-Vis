@@ -1339,6 +1339,8 @@ def compute_mannwhitneyu():
                 f = (np.mean(filtered_sample) - np.mean(unfiltered_sample)) / np.sqrt(((nx-1)*np.std(filtered_sample, ddof=1) ** 2 + (ny-1)*np.std(unfiltered_sample, ddof=1) ** 2) / dof)
             except ValueError as ve:
                 err = str(ve)
+            except Exception as e:
+                err = str(e)
                 
             pvals.append(dict(label=variable_label,
                               abbreviation=variable_abbreviation,
