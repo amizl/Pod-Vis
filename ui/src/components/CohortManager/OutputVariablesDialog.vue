@@ -422,7 +422,7 @@ export default {
         }
       });
       if (this.propagateChanges) {
-        let oVars = selectedOutputVars.sort(this.scaleSortFn);
+        let oVars = selectedOutputVars.sort();
         // First Visit, Change, etc
         const dimensions = oVars.filter(variable => !variable.children);
         // Parent measures

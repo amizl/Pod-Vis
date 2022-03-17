@@ -405,7 +405,7 @@ export default {
         }
       });
       if (this.propagateChanges) {
-        this.setInputVariables(selectedInputVars.sort(this.scaleSortFn));
+        this.setInputVariables(selectedInputVars.sort());
         this.$emit('userSelectedInputVariables', true);
       }
       this.updateColumnCheckboxes();
