@@ -33,8 +33,8 @@ export function getInputVariablesFromQueries(queries, inputVariables) {
         return label === variable;
       }
       // type is 'observation'
-      const { parentLabel } = inputVar;
-      const obsLabel = parentLabel ? `${parentLabel} - ${label}` : label;
+      const { parentLabel, is_longitudinal } = inputVar;
+      const obsLabel = (parentLabel && is_longitudinal) ? `${parentLabel} - ${label}` : label;
       return obsLabel === variable;
     });
     if (iv) {
