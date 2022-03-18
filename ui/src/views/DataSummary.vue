@@ -52,7 +52,7 @@
           <v-sheet
             color="white"
             height="100%"
-            class="rounded-lg shadow ma-0 pa-0"
+            class="rounded-lg shadow ma-0 pa-0 pb-2"
           >
             <visit-variables-toolbar
               class="ma-0 pa-0"
@@ -72,10 +72,115 @@
             >
             </bubble-chart>
             <v-spacer></v-spacer>
+
+            <v-tooltip top color="primary">
+              <template v-slot:activator="{ on: tooltip }">
+                <v-btn
+                  class="primary text--white ma-0 ml-2 px-2 py-0"
+                  v-on="{ ...tooltip }"
+                  @click="autoSetVisits"
+                  >Auto Set</v-btn
+                >
+              </template>
+              <span class="subtitle-1"
+                >Automatically set first and last visit for all variables.</span
+              >
+            </v-tooltip>
           </v-sheet>
         </v-col>
       </v-row>
     </v-container>
+
+    <v-dialog
+      v-model="autoSetDialog"
+      persistent
+      scrollable
+      max-width="50%"
+      min-height="50%"
+    >
+      <v-card class="rounded-lg" style="border: 3px solid #3f51b5;">
+        <v-card-title color="white" class="ma-0 pa-2" primary-title>
+          <span class="primary--text text--darken-3 title"
+            >Auto Set Visits</span
+          >
+        </v-card-title>
+
+        <v-divider></v-divider>
+
+        <v-card-text class="py-4">
+          <v-list>
+            <v-list-item v-for="(s, i) in autoSetSteps" :key="`as-${i}`">
+              <v-list-item-content> {{ s.title }} </v-list-item-content>
+              <v-list-item-avatar>
+                <v-icon v-if="i < autoSetSteps.length - 1">done</v-icon>
+              </v-list-item-avatar>
+            </v-list-item>
+          </v-list>
+
+          <v-container v-if="autoSetEstMaxStudySize">
+            <v-row>
+              <v-col>
+                <v-slider
+                  v-model="autoSetMinStudySize"
+                  label="Minimum study population size"
+                  step="1"
+                  thumb-label="always"
+                  min="1"
+                  :max="autoSetEstMaxStudySize"
+                  class="pt-3"
+                >
+                </v-slider>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col>
+                <!--
+                <v-chip
+                  class="title"
+                  :color="colors['firstVisit']"
+                  >First Visit(s): </v-chip>
+
+		<v-chip
+                  class="title ml-3"
+		  :color="colors['lastVisit']"
+                  >Last Visit(s): </v-chip>
+-->
+                <v-chip
+                  class="title ml-3"
+                  :color="getNumSubjectsColor(numSelectedSubjects)"
+                  :text-color="getNumSubjectsTextColor(numSelectedSubjects)"
+                  >Study Population - {{ numSelectedSubjects }}</v-chip
+                >
+
+                <v-chip class="title ml-3" color="deep-orange lighten-4"
+                  >Average Elapsed Time -
+                </v-chip>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            class="primary white--text ma-0 px-2 mx-2"
+            :disabled="!autoSetEstMaxStudySize"
+            @click="doAutoSet(autoSetMinStudySize)"
+          >
+            SET VISITS
+          </v-btn>
+
+          <v-btn
+            class="primary white--text ma-0 px-2 mx-2"
+            :disabled="!autoSetEnableCloseDialog"
+            @click="autoSetDialog = false"
+          >
+            DONE
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-dialog
       v-model="aaDialog"
@@ -141,9 +246,15 @@ import VisitTimesTable from '@/components/DataSummary/VisitTimesTable.vue';
 import BubbleChart from '@/components/DataSummary/BubbleChart/BubbleChart.vue';
 import SaveFirstLastVisitBtnDialog from '@/components/BuildDataset/SaveFirstLastVisitBtnDialog.vue';
 import {
+  colors,
+  getNumSubjectsColor,
+  getNumSubjectsTextColor,
+} from '@/utils/colors';
+import {
   getObservationVariableIds,
   getCollectionDescription,
   estimateMaxSubjects,
+  estimateMaxVisits,
 } from '@/utils/helpers';
 
 var aaSteps = [
@@ -197,10 +308,21 @@ export default {
       useLongScaleNames: false,
       aaDialog: false,
       aaDialogOKButton: false,
+      // auto-set feature
+      autoSetDialog: false,
+      autoSetEnableCloseDialog: false,
+      autoSetEnableSetButton: false,
+      autoSetSteps: [],
+      autoSetEstMaxStudySize: null,
+      autoSetMinStudySize: 1,
       aaProgress: 0,
       aaLastUpdate: null,
       aaMinStepTime: 1,
       aaSteps: aaSteps,
+      subject_variable_visits: null,
+      colors: colors,
+      getNumSubjectsColor: getNumSubjectsColor,
+      getNumSubjectsTextColor: getNumSubjectsTextColor,
     };
   },
   computed: {
@@ -209,6 +331,8 @@ export default {
       collection_summaries: state.COLLECTION_SUMMARIES,
       firstVisits: state.FIRST_VISITS,
       lastVisits: state.LAST_VISITS,
+      numSelectedSubjects: state.NUM_SELECTED_SUBJECTS,
+      timesBetweenVisits: state.TIMES_BETWEEN_VISITS,
     }),
     useAutomatedAnalysisMode() {
       return this.aaPredictors.length + this.aaOutputs.length > 0;
@@ -313,6 +437,62 @@ export default {
         query['aa_which_outcomes'] = this.aaWhichOutcomes;
       }
       this.$router.push({ name: 'cohortManager', query: query });
+    },
+    async doAutoSet(min_size) {
+      var varIds = getObservationVariableIds(this.collection);
+      var emv = estimateMaxVisits(
+        this.subject_variable_visits,
+        varIds,
+        'event',
+        min_size
+      );
+
+      // set first and last visits
+      var events = this.subject_variable_visits['visits']['event'];
+
+      emv['visits'].forEach(vis => {
+        this.firstVisits[vis[0]] = events[vis[1]]['visit_event'];
+        this.lastVisits[vis[0]] = events[vis[2]]['visit_event'];
+      });
+
+      // move visit handles to agree with consensus
+      this.$refs.bubble_chart.setVisitHandle(true);
+      this.$refs.bubble_chart.setVisitHandle(false);
+      //      let study_count = emv['counts']['all'];
+      //      this.autoSetSteps.push({ 'title': "Study population for auto-selected first/last visit with size >= " + min_size + ": " + study_count });
+      this.autoSetEnableCloseDialog = true;
+    },
+    async autoSetVisits() {
+      this.autoSetSteps = [];
+      this.autoSetDialog = true;
+
+      // get subject visit info
+      if (!this.subject_variable_visits) {
+        this.autoSetSteps.push({ title: 'Loading full subject visit data' });
+        const { data: subjVarVisits } = await this.fetchSubjectVariableVisits();
+        this.subject_variable_visits = subjVarVisits['visits'];
+      }
+
+      //      let n_subjects = Object.keys(this.subject_variable_visits['subjects'])
+      //        .length;
+      //      this.autoSetSteps.push({ 'title': "Total number of subjects: " + n_subjects });
+
+      // run standard routine to get estimate of the max possible study dataset size
+      var varIds = getObservationVariableIds(this.collection);
+      var ems = estimateMaxSubjects(
+        this.subject_variable_visits,
+        varIds,
+        'event'
+      );
+
+      this.autoSetSteps.push({
+        title:
+          'Estimated maximum study population size for selected variables: ' +
+          ems['counts']['all'],
+      });
+
+      this.autoSetMinStudySize = ems['counts']['all'];
+      this.autoSetEstMaxStudySize = ems['counts']['all'];
     },
   },
 };

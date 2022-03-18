@@ -442,13 +442,25 @@ export function getLabelWidth(label) {
  * Given a list of [variable_id, first_index, last_index], generate a set of subject counts
  * using the data in subject_variable_visits.
  *
- * subject_variable_visits - value returne by /api/studies/subject_variable_visits
+ * subject_variable_visits - value returned by /api/studies/subject_variable_visits
  * which - either 'event' or 'num'
  */
 export function countSubjectsByVisits(subject_variable_visits, vars, which) {
   var subjCounts = { all: 0 };
   var subjs = subject_variable_visits['subjects'];
   var subjIds = Object.keys(subjs);
+
+  // subjs:
+  // "subjects": {
+  //   <subj_id>: {
+  //    "25": 1,     <- subject_ontology
+  //    "26": 1,
+  //    "361": {     <- observation_ontology
+  //  	"event": "100000000000000000000",
+  //           "num": "000000000010000000"
+  //            },
+  //   }
+  // }
 
   subjIds.forEach(sid => {
     var s = subjs[sid];
@@ -482,9 +494,9 @@ export function countSubjectsByVisits(subject_variable_visits, vars, which) {
 /**
  * Estimate the maximum number of subjects that could be obtained with the selected
  * set of variables, returning the first and last visit selections that would produce
- * that results..
+ * the estimated result.
  *
- * subject_variable_visits - value returne by /api/studies/subject_variable_visits
+ * subject_variable_visits - value returned by /api/studies/subject_variable_visits
  * var_ids - list of observation variable ids
  * which - either 'event' or 'num'
  */
@@ -535,5 +547,94 @@ export function estimateMaxSubjects(subject_variable_visits, var_ids, which) {
     vars.push([vid, first_index, last_index]);
   });
   var counts = countSubjectsByVisits(subject_variable_visits, vars, which);
+  return { counts: counts, visits: vars };
+}
+
+/**
+ * Variant of estimateMaxSubjects that tries to maximize the time between first
+ * and last visit.
+ *
+ * subject_variable_visits - value returned by /api/studies/subject_variable_visits
+ * var_ids - list of observation variable ids
+ * which - either 'event' or 'num'
+ * min_subjects - minimum number of subjects to return
+ */
+export function estimateMaxVisits(
+  subject_variable_visits,
+  var_ids,
+  which,
+  min_subjects
+) {
+  var subjs = subject_variable_visits['subjects'];
+  var subjIds = Object.keys(subjs);
+  var visits = subject_variable_visits['visits'][which];
+  var n_visits = visits.length;
+
+  var vars = [];
+
+  var_ids.forEach(vid => {
+    // get visit counts for variable vid
+    var visitCounts = [];
+
+    subjIds.forEach(sid => {
+      var s = subjs[sid];
+      var study_ids = Object.keys(s);
+      study_ids.forEach(study_id => {
+        if (vid in s[study_id] && typeof s[study_id][vid] != 'number') {
+          var vstring = s[study_id][vid][which];
+          for (var vis = 0; vis < n_visits; ++vis) {
+            if (!(vis in visitCounts))
+              visitCounts[vis] = { index: vis, count: 0 };
+            if (vstring.charAt(vis) == '1') {
+              visitCounts[vis]['count'] += 1;
+            }
+          }
+        }
+      });
+    });
+
+    visitCounts.sort((a, b) => b['count'] - a['count']);
+    var first_index = 0;
+    var last_index = 0;
+
+    // make the first visit the one with the most subjects
+    if (visitCounts.length > 1) {
+      if (visitCounts[0]['index'] < visitCounts[1]['index']) {
+        first_index = visitCounts[0]['index'];
+      } else {
+        first_index = visitCounts[1]['index'];
+      }
+      last_index = n_visits - 1;
+    }
+    vars.push([vid, first_index, last_index]);
+  });
+
+  // move last index backwards until we exceed the desired threshold or
+  // hit the first index in at least one variable
+  let done = false;
+  var counts = null;
+
+  while (!done) {
+    counts = countSubjectsByVisits(subject_variable_visits, vars, which);
+    // halt if desired threshold exceeded
+    if (counts['all'] >= min_subjects) {
+      done = true;
+      break;
+    }
+
+    let last_index = vars[0][2];
+    let new_vars = [];
+    vars.forEach(v => {
+      let nv = [v[0], v[1], last_index - 1];
+      new_vars.push(nv);
+
+      // halt when first + last coincide
+      if (nv[2] == nv[1]) {
+        done = true;
+      }
+    });
+    if (!done) vars = new_vars;
+  }
+  counts = countSubjectsByVisits(subject_variable_visits, vars, which);
   return { counts: counts, visits: vars };
 }
