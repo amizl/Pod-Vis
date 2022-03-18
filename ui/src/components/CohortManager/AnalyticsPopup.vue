@@ -248,10 +248,10 @@
               @click="saveCohorts(cohorts, cohortPrefix)"
               v-on="{ ...tooltip }"
             >
-              Save {{ name }} as {{ cohorts.length }} cohorts
+              Save {{ name }} as {{ cohorts.length }} study groups
             </v-btn>
           </template>
-          <span>Save cohorts</span>
+          <span>Save study groups</span>
         </v-tooltip>
 
         <v-tooltip bottom color="primary">
@@ -265,7 +265,7 @@
               Close
             </v-btn>
           </template>
-          <span>Close without saving new cohorts</span>
+          <span>Close without saving new study groups</span>
         </v-tooltip>
       </v-card-actions>
     </v-card>
@@ -313,7 +313,7 @@ export default {
     name: {
       type: String,
       required: false,
-      default: 'Cohorts',
+      default: 'Study Groups',
     },
     colorScheme: {
       type: String,
