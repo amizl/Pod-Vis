@@ -128,7 +128,7 @@
                   thumb-label="always"
                   min="1"
                   :max="autoSetEstMaxStudySize"
-		  @change="doAutoSet(autoSetMinStudySize)"
+                  @change="doAutoSet(autoSetMinStudySize)"
                 >
                 </v-slider>
               </v-col>
@@ -138,7 +138,7 @@
                   v-model.number="autoSetMinStudySize"
                   class="center-text pa-0 ma-0"
                   type="number"
-		  @change="doAutoSet(autoSetMinStudySize)"
+                  @change="doAutoSet(autoSetMinStudySize)"
                 ></v-text-field>
               </v-col>
             </v-row>
