@@ -119,7 +119,7 @@
 
           <v-container v-if="autoSetEstMaxStudySize">
             <v-row>
-              <v-col>
+              <v-col cols="10">
                 <v-slider
                   v-model="autoSetMinStudySize"
                   label="Minimum study population size"
@@ -130,6 +130,14 @@
                   class="pt-3"
                 >
                 </v-slider>
+	      </v-col>
+
+	      <v-col cols="2">
+		<v-text-field
+                  v-model.number="autoSetMinStudySize"
+                  class="center-text pa-0 ma-0"
+                  type="number"
+		  ></v-text-field>
               </v-col>
             </v-row>
 
