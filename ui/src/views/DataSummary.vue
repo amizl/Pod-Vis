@@ -122,22 +122,24 @@
               <v-col cols="10">
                 <v-slider
                   v-model="autoSetMinStudySize"
+                  class="pt-3"
                   label="Minimum study population size"
                   step="1"
                   thumb-label="always"
                   min="1"
                   :max="autoSetEstMaxStudySize"
-                  class="pt-3"
+		  @change="doAutoSet(autoSetMinStudySize)"
                 >
                 </v-slider>
-	      </v-col>
+              </v-col>
 
-	      <v-col cols="2">
-		<v-text-field
+              <v-col cols="2">
+                <v-text-field
                   v-model.number="autoSetMinStudySize"
                   class="center-text pa-0 ma-0"
                   type="number"
-		  ></v-text-field>
+		  @change="doAutoSet(autoSetMinStudySize)"
+                ></v-text-field>
               </v-col>
             </v-row>
 
@@ -171,14 +173,6 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            class="primary white--text ma-0 px-2 mx-2"
-            :disabled="!autoSetEstMaxStudySize"
-            @click="doAutoSet(autoSetMinStudySize)"
-          >
-            SET VISITS
-          </v-btn>
-
           <v-btn
             class="primary white--text ma-0 px-2 mx-2"
             :disabled="!autoSetEnableCloseDialog"
