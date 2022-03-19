@@ -317,6 +317,7 @@ export default {
       autoSetSteps: [],
       autoSetEstMaxStudySize: null,
       autoSetMinStudySize: 1,
+      autoSetDefaultFrac: 0.7,
       aaProgress: 0,
       aaLastUpdate: null,
       aaMinStepTime: 1,
@@ -397,7 +398,7 @@ export default {
 
       await this.updateAutomatedAnalysisProgress(1);
 
-      // compute first/last visits
+      // run standard routine to get estimate of the max possible study dataset size
       var varIds = getObservationVariableIds(this.collection);
       var ems = estimateMaxSubjects(
         this.subject_variable_visits,
@@ -405,6 +406,17 @@ export default {
         'event'
       );
 
+      // compute minimum number of subjects as fraction of total
+      var minSubjects = this.autoSetDefaultFrac * ems['counts']['all'];
+
+      // run calculation again
+      ems = estimateMaxVisits(
+        this.subject_variable_visits,
+        varIds,
+        'event',
+        minSubjects
+      );
+		   
       // set first and last visits
       var events = this.subject_variable_visits['visits']['event'];
 
