@@ -155,7 +155,18 @@
         </template>
 
         <template v-slot:item.color="{ item }">
-          <v-chip small :color="item.color" class="my-1" />
+	  <v-tooltip top color="primary">
+            <template v-slot:activator="{ on: tooltip }">
+              <v-chip
+		small
+		class="my-1"
+		v-on="{ ...tooltip }"
+		:color="item.color"
+		@click="openColorPickerDialog(item)"
+		/>
+	    </template>
+            <span>Click to change color for study group '{{item.label}}'</span>
+          </v-tooltip>
         </template>
       </v-data-table>
 
@@ -174,7 +185,47 @@
         </div>
       </div>
     </v-sheet>
+    
+    <v-dialog
+      v-model="colorPickerDialog"
+      persistent
+      max-width="30%"
+      >
+      <v-card class="rounded-lg" style="border: 3px solid #3f51b5;">
+        <v-card-title color="white" class="ma-0 pa-2" primary-title>
+          <span class="primary--text text--darken-3 title"
+		>Choose color for study group "{{ colorPickerCohort ? colorPickerCohort.label : '' }}"</span
+	>
+        </v-card-title>
+
+        <v-divider></v-divider>
+
+        <v-card-text class="py-4">
+	  <v-color-picker v-model="colorPickerColor" @update:color="colorChange">
+	    </v-color-picker>
+
+	</v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn text color="red lighten-2" @click="closeColorPickerDialog(true)">
+            <v-icon left>close</v-icon> Cancel
+          </v-btn>
+
+	  <v-btn
+            class="primary white--text ma-0 px-2 mx-2"
+            @click="closeColorPickerDialog(false)"
+          >
+            OK
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+	
+    </v-dialog>
+
   </div>
+
 </template>
 
 <script>
@@ -244,6 +295,10 @@ export default {
       expandedVert: true,
       maxOverlap: null,
       maxSelectedOverlap: null,
+      colorPickerDialog: false,
+      colorPickerCohort: null,
+      colorPickerOriginalColor: null,
+      colorPickerColor: null,
     };
   },
   computed: {
@@ -393,6 +448,22 @@ export default {
     },
     deselectAll() {
       this.selected = [];
+    },
+    openColorPickerDialog(cohort) {
+      this.colorPickerCohort = cohort;
+      this.colorPickerOriginalColor = cohort.color;
+      this.colorPickerColor = cohort.color;
+      this.colorPickerDialog = true;
+    },
+    closeColorPickerDialog(cancel) {
+      if (cancel) {
+        this.colorPickerColor = this.colorPickerOriginalColor;
+        this.colorChange();
+      }
+      this.colorPickerDialog = false;
+    },
+    colorChange() {
+      this.$emit('cohortColorChange', { 'cohort': this.colorPickerCohort, 'color': this.colorPickerColor });
     },
   },
 };

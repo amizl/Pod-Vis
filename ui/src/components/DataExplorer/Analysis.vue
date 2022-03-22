@@ -155,6 +155,7 @@
                         show-select
                         show-colors
                         @selectedCohorts="updateVisibleCohorts"
+                        @cohortColorChange="updateCohortColor"
                       />
                     </v-tab-item>
 
@@ -435,6 +436,10 @@ export default {
           this.$nextTick(() => this.$refs.stackedbars.onResize());
         }
       }
+    },
+    updateCohortColor(cc) {
+      // propagate event
+      this.$emit('cohortColorChange', { 'cohort': cc['cohort'], 'color': cc['color'] });
     },
   },
 };

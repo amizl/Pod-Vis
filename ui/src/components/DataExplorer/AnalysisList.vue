@@ -14,6 +14,7 @@
             :analysis="a"
             :title="'ANALYSIS #' + a.index"
             @deleteAnalysis="deleteAnalysis(index)"
+            @cohortColorChange="updateCohortColor"
           />
         </v-col>
       </v-row>
@@ -43,6 +44,10 @@ export default {
   methods: {
     deleteAnalysis(anum) {
       this.$emit('deleteAnalysis', anum);
+    },
+    updateCohortColor(cc) {
+      // propagate event
+      this.$emit('cohortColorChange', { 'cohort': cc['cohort'], 'color': cc['color'] });
     },
   },
 };

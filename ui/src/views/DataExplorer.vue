@@ -75,6 +75,7 @@
                           report-max-selected-overlap
                           checkbox-tooltip="Check to include this study group in the next analysis."
                           @selectedCohorts="updateVisibleCohorts"
+                          @cohortColorChange="updateCohortColor"
                         />
                       </v-col>
                     </v-row>
@@ -128,6 +129,7 @@
                 <analysis-list
                   :analyses="analyses"
                   @deleteAnalysis="deleteAnalysis"
+                  @cohortColorChange="updateCohortColor"
                 />
               </v-col>
             </v-row>
@@ -425,6 +427,28 @@ export default {
     },
     updateVisibleCohorts(vc) {
       this.setVisibleCohorts(vc);
+    },
+    updateCohortColorInArray(a, cc) {
+      let i = 0;
+      let cnum = null;
+      a.forEach(c => {
+        if (c.id == cc['cohort'].id) {
+          cnum = i;
+        }
+        i += 1;
+      });
+      if (cnum != null) {
+        a[cnum]['color'] = cc['color'];
+        // force update
+        a.splice(cnum, 1, a[cnum]);
+      }
+    },
+    updateCohortColor(cc) {
+      this.updateCohortColorInArray(this.selectedCohorts, cc);
+      let self = this;
+      this.analyses.forEach(an => {
+        self.updateCohortColorInArray(an.cohorts, cc);
+      });
     },
     getCohortsFromIdList(idList) {
       var sc = [];
