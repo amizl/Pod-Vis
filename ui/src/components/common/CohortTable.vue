@@ -269,6 +269,7 @@
 <script>
 import { format } from 'd3-format';
 import { scaleLinear } from 'd3-scale';
+import { color } from 'd3-color';
 
 export default {
   props: {
@@ -336,7 +337,7 @@ export default {
       maxSelectedOverlap: null,
       colorPickerDialog: false,
       colorPickerCohort: null,
-      colorPickerOriginalColor: null,
+      colorPickerOriginalColors: null,
       colorPickerColor: null,
       colorPickerColor2: null,
       colorPickerApplyToSelected: false,
@@ -493,15 +494,26 @@ export default {
     openColorPickerDialog(cohort) {
       this.colorPickerApplyToSelected = false;
       this.colorPickerCohort = cohort;
-      this.colorPickerOriginalColor = cohort.color;
       this.colorPickerColor = cohort.color;
       this.colorPickerColor2 = cohort.color;
+      // save color assignments for all study groups
+      this.colorPickerOriginalColors = {};
+      this.selected.forEach(sg => {
+        this.colorPickerOriginalColors[sg.id] = sg.color;
+      });
       this.colorPickerDialog = true;
     },
     closeColorPickerDialog(cancel) {
       if (cancel) {
-        this.colorPickerColor = this.colorPickerOriginalColor;
-        this.colorChange();
+        // restore original colors
+        this.selected.forEach(sg => {
+          if (sg.color != this.colorPickerOriginalColors[sg.id]) {
+            this.$emit('cohortColorChange', {
+              cohort: sg,
+              color: this.colorPickerOriginalColors[sg.id],
+            });
+          }
+        });
       }
       this.colorPickerDialog = false;
     },
@@ -511,11 +523,12 @@ export default {
         let n_groups = this.selected.length;
         let colorGrad = scaleLinear()
           .domain([1, n_groups])
-          .range([this.colorPickerColor, this.colorPickerColor2]);
+          .range([this.colorPickerColor2, this.colorPickerColor]);
         for (let g = 0; g < n_groups; ++g) {
+          let col = color(colorGrad(g + 1)).formatHex();
           this.$emit('cohortColorChange', {
             cohort: this.selected[g],
-            color: colorGrad(g + 1),
+            color: col,
           });
         }
       }
