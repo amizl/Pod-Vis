@@ -191,10 +191,14 @@
     <v-dialog v-model="colorPickerDialog" persistent width="unset">
       <v-card class="rounded-lg" style="border: 3px solid #3f51b5;">
         <v-card-title color="white" class="ma-0 pa-2" primary-title>
-          <span v-if="colorPickerApplyToSelected" class="primary--text text--darken-3 title"
-		>Choose color gradient for {{ selected.length }} selected study groups</span
-		   >
-	  <span v-else class="primary--text text--darken-3 title">Choose color for study group "{{
+          <span
+            v-if="colorPickerApplyToSelected"
+            class="primary--text text--darken-3 title"
+            >Choose color gradient for {{ selected.length }} selected study
+            groups</span
+          >
+          <span v-else class="primary--text text--darken-3 title"
+            >Choose color for study group "{{
               colorPickerCohort ? colorPickerCohort.label : ''
             }}"</span
           >
@@ -203,39 +207,40 @@
         <v-divider></v-divider>
 
         <v-card-text class="py-4">
-	  <v-container>
-	    <v-row>
-	      <v-col :cols="colorPickerApplyToSelected ? 6 : 12">
-		<span v-if="colorPickerApplyToSelected">start color:</span>
-		<span v-else>select color:</span>
-	        <v-color-picker
-		  v-model="colorPickerColor"
-		  @update:color="colorChange"
-		  >
-		</v-color-picker>
-	      </v-col>
+          <v-container>
+            <v-row>
+              <v-col :cols="colorPickerApplyToSelected ? 6 : 12">
+                <span v-if="colorPickerApplyToSelected">start color:</span>
+                <span v-else>select color:</span>
+                <v-color-picker
+                  v-model="colorPickerColor"
+                  @update:color="colorChange"
+                >
+                </v-color-picker>
+              </v-col>
 
-	      <v-col cols="6">
-		<span v-if="colorPickerApplyToSelected">end color:</span>
-		<v-color-picker
-		  v-if="colorPickerApplyToSelected"
-		  v-model="colorPickerColor2"
-		  @update:color="colorChange"
-		  >
-		</v-color-picker>
-	      </v-col>
+              <v-col cols="6">
+                <span v-if="colorPickerApplyToSelected">end color:</span>
+                <v-color-picker
+                  v-if="colorPickerApplyToSelected"
+                  v-model="colorPickerColor2"
+                  @update:color="colorChange"
+                >
+                </v-color-picker>
+              </v-col>
+            </v-row>
+          </v-container>
 
-	    </v-row>
-	  </v-container>
-	  
           <v-checkbox
             v-if="selected.length > 1"
-	    v-model="colorPickerApplyToSelected"
-	    :label='"Apply color gradient to all " + selected.length + " selected study groups"'
+            v-model="colorPickerApplyToSelected"
+            :label="
+              'Apply color gradient to all ' +
+                selected.length +
+                ' selected study groups'
+            "
             class="pa-0 ma-0"
-            />
-	  </v-list>
-	  
+          />
         </v-card-text>
 
         <v-card-actions>
@@ -504,13 +509,15 @@ export default {
       // multiple study group change
       if (this.colorPickerApplyToSelected) {
         let n_groups = this.selected.length;
-        let colorGrad = scaleLinear().domain([1,n_groups]).range([this.colorPickerColor, this.colorPickerColor2]);
-        for(let g = 0;g < n_groups; ++g) {
+        let colorGrad = scaleLinear()
+          .domain([1, n_groups])
+          .range([this.colorPickerColor, this.colorPickerColor2]);
+        for (let g = 0; g < n_groups; ++g) {
           this.$emit('cohortColorChange', {
             cohort: this.selected[g],
-            color: colorGrad(g+1),
+            color: colorGrad(g + 1),
           });
-	}
+        }
       }
       // single study group change
       else {
