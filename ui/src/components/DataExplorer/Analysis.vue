@@ -351,6 +351,12 @@ export default {
         this.$nextTick(() => this.$refs.apanel.autoselect_first_var());
       }
     },
+    'analysis.cohorts': function() {
+      // propagate change to child components
+      if (this.visibleCohorts.length > 0) {
+        this.visibleCohorts.splice(0, 1, this.visibleCohorts[0]);
+      }
+    },
     leftTab(lt) {
       logEvent(
         this.$gtag,
