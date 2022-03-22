@@ -47,7 +47,10 @@ export default {
     },
     updateCohortColor(cc) {
       // propagate event
-      this.$emit('cohortColorChange', { 'cohort': cc['cohort'], 'color': cc['color'] });
+      this.$emit('cohortColorChange', {
+        cohort: cc['cohort'],
+        color: cc['color'],
+      });
     },
   },
 };

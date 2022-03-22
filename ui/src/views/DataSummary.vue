@@ -416,7 +416,7 @@ export default {
         'event',
         minSubjects
       );
-		   
+
       // set first and last visits
       var events = this.subject_variable_visits['visits']['event'];
 
