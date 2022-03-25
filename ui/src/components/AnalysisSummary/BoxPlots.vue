@@ -107,6 +107,38 @@
             </div>
 
             <svg v-else ref="boxplots" :width="width" :height="height">
+              <defs>
+                <pattern
+                  v-for="(p, index) in patterns"
+                  :id="p['id']"
+                  :key="'p-' + p['id'] + '-' + index"
+                  patternUnits="userSpaceOnUse"
+                  width="25"
+                  height="25"
+                  :patternTransform="p['transform']"
+                >
+                  <g v-html="p['pattern']" />
+                </pattern>
+
+                <mask
+                  v-for="(p, index) in patterns"
+                  :id="p['id'] + '-m'"
+                  :key="'bpm-' + index"
+                  x="0"
+                  y="0"
+                  width="1"
+                  height="1"
+                >
+                  <rect
+                    x="0"
+                    y="0"
+                    width="1000"
+                    height="1000"
+                    :fill="'url(#' + p['id'] + ')'"
+                  />
+                </mask>
+              </defs>
+
               <g v-if="outcomeVar && outcomeVar.data_category != 'Categorical'">
                 <!-- labels -->
                 <text
@@ -167,6 +199,24 @@
                   stroke="black"
                 />
 
+                <!-- pattern overlay -->
+                <rect
+                  v-for="(sc, index) in Object.keys(boxplotStats).filter(
+                    k => boxplotStats[k]['pattern']
+                  )"
+                  :key="`s-b-po-${index}`"
+                  :x="
+                    axisFlipped
+                      ? boxplotStats[sc]['q3_x']
+                      : boxplotStats[sc]['q1_x']
+                  "
+                  :y="boxplotStats[sc]['y1']"
+                  :width="boxplotStats[sc]['q1_q3_w']"
+                  :height="boxplotStats[sc]['box_h']"
+                  :fill="'url(#' + boxplotStats[sc]['pattern']['id'] + ')'"
+                  opacity="0.25"
+                />
+
                 <!-- median line -->
                 <line
                   v-for="(sc, index) in Object.keys(boxplotStats)"
@@ -216,6 +266,7 @@ import { axisTop } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
 import { colors } from '@/utils/colors';
+import { patterns } from '@/utils/patterns';
 import 'd3-transition';
 
 export default {
@@ -288,6 +339,7 @@ export default {
   data() {
     return {
       colors: colors,
+      patterns: patterns,
       container: null,
       width: 0,
       height: 0,
@@ -498,6 +550,7 @@ export default {
           short_label: shortLabelFn(label_prefix + c.label),
           node: null,
           color: c.color,
+          pattern: c.pattern,
           x: x_offset,
           y: y_offset,
           y1: y_offset,

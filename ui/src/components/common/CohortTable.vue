@@ -157,16 +157,67 @@
         <template v-slot:item.color="{ item }">
           <v-tooltip top color="primary">
             <template v-slot:activator="{ on: tooltip }">
-              <v-chip
+              <svg
+                width="50"
+                height="25"
+                class="mt-1"
+                v-on="{ ...tooltip }"
+                @click="openColorPickerDialog(item)"
+              >
+                <defs v-if="item['pattern'] != null">
+                  <pattern
+                    :id="item['pattern']['id']"
+                    patternUnits="userSpaceOnUse"
+                    width="25"
+                    height="25"
+                    :patternTransform="item['pattern']['transform']"
+                  >
+                    <g v-html="item['pattern']['pattern']" />
+                  </pattern>
+                </defs>
+
+                <g>
+                  <rect
+                    x="0"
+                    y="0"
+                    rx="0"
+                    ry="0"
+                    border-radius="0%"
+                    width="50px"
+                    height="25px"
+                    :fill="item['color']"
+                    stroke="black"
+                  />
+                  <rect
+                    v-if="item['pattern'] != null"
+                    x="0"
+                    y="0"
+                    rx="0"
+                    ry="0"
+                    border-radius="0%"
+                    width="50"
+                    height="25"
+                    :fill="'url(#' + item['pattern']['id'] + ')'"
+                    opacity="0.25"
+                  />
+                </g>
+              </svg>
+
+              <!--
+	      <v-chip
+		v-else
                 small
                 class="my-1"
                 :color="item.color"
                 v-on="{ ...tooltip }"
                 @click="openColorPickerDialog(item)"
               />
+-->
             </template>
             <span
-              >Click to change color for study group '{{ item.label }}'</span
+              >Click to change color/pattern for study group '{{
+                item.label
+              }}'</span
             >
           </v-tooltip>
         </template>
@@ -214,19 +265,85 @@
                 <span v-else>select color:</span>
                 <v-color-picker
                   v-model="colorPickerColor"
+                  class="pt-2"
                   @update:color="colorChange"
                 >
                 </v-color-picker>
               </v-col>
 
-              <v-col cols="6">
-                <span v-if="colorPickerApplyToSelected">end color:</span>
+              <v-col v-if="colorPickerApplyToSelected" cols="6">
+                <span>end color:</span>
                 <v-color-picker
-                  v-if="colorPickerApplyToSelected"
                   v-model="colorPickerColor2"
+                  class="pt-2"
                   @update:color="colorChange"
                 >
                 </v-color-picker>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="12">
+                <span>select fill pattern:</span>
+                <v-list class="pt-2">
+                  <v-list-item-group v-model="colorPickerSelectedPatternInd">
+                    <v-list-item
+                      v-for="(p, index) in patterns"
+                      :key="'sfp-' + index"
+                      class="pa-0 ma-0"
+                      height="25"
+                    >
+                      <v-list-item-avatar
+                        rounded="0"
+                        height="25"
+                        class="pa-0 ma-0 ml-2"
+                      >
+                        <svg width="50" height="25">
+                          <defs>
+                            <pattern
+                              :id="p['id']"
+                              patternUnits="userSpaceOnUse"
+                              width="25"
+                              height="25"
+                              :patternTransform="p['transform']"
+                            >
+                              <g v-html="p['pattern']" />
+                            </pattern>
+                          </defs>
+
+                          <g>
+                            <rect
+                              x="0"
+                              y="0"
+                              rx="0"
+                              ry="0"
+                              border-radius="0%"
+                              width="50"
+                              height="25"
+                              :fill="colorPickerColor"
+                              stroke="black"
+                            />
+                            <rect
+                              x="0"
+                              y="0"
+                              rx="0"
+                              ry="0"
+                              border-radius="0%"
+                              width="50"
+                              height="25"
+                              :fill="'url(#' + p['id'] + ')'"
+                              opacity="0.25"
+                            />
+                          </g>
+                        </svg>
+                      </v-list-item-avatar>
+
+                      <v-list-item-content class="pa-0 ma-0 ml-2">
+                        <v-list-item-title> {{ p.id }} </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list-item-group>
+                </v-list>
               </v-col>
             </v-row>
           </v-container>
@@ -270,6 +387,7 @@
 import { format } from 'd3-format';
 import { scaleLinear } from 'd3-scale';
 import { color } from 'd3-color';
+import { patterns } from '@/utils/patterns';
 
 export default {
   props: {
@@ -337,10 +455,12 @@ export default {
       maxSelectedOverlap: null,
       colorPickerDialog: false,
       colorPickerCohort: null,
-      colorPickerOriginalColors: null,
+      colorPickerOriginalColorsAndPatterns: null,
       colorPickerColor: null,
       colorPickerColor2: null,
       colorPickerApplyToSelected: false,
+      patterns: patterns,
+      colorPickerSelectedPatternInd: null,
     };
   },
   computed: {
@@ -376,6 +496,20 @@ export default {
 
       return hdrs;
     },
+    sortedSelectedCohorts() {
+      let sel = this.selected;
+      let sel_ids = {};
+      sel.forEach(c => {
+        sel_ids[c['id']] = 1;
+      });
+      let sel_sorted = [];
+      this.cohorts.forEach(c => {
+        if (c.id in sel_ids) {
+          sel_sorted.push(c);
+        }
+      });
+      return sel_sorted;
+    },
   },
   watch: {
     selected(nsel) {
@@ -385,6 +519,17 @@ export default {
         var max_o = this.computeMaxOverlap(nsel);
         this.maxSelectedOverlap = max_o;
         this.$emit('maxSelectedOverlap', max_o);
+      }
+    },
+    colorPickerSelectedPatternInd() {
+      this.colorChange();
+    },
+    colorPickerApplyToSelected(nv) {
+      if (nv) {
+        let ssel = this.sortedSelectedCohorts;
+        this.colorPickerColor = ssel[0].color;
+        this.colorPickerColor2 = ssel[ssel.length - 1].color;
+        this.colorPickerSelectedPatternInd = null;
       }
     },
   },
@@ -496,21 +641,39 @@ export default {
       this.colorPickerCohort = cohort;
       this.colorPickerColor = cohort.color;
       this.colorPickerColor2 = cohort.color;
+      this.colorPickerSelectedPatternInd = cohort.pattern
+        ? cohort.pattern.ind
+        : 0;
+
       // save color assignments for all study groups
-      this.colorPickerOriginalColors = {};
-      this.selected.forEach(sg => {
-        this.colorPickerOriginalColors[sg.id] = sg.color;
+      this.colorPickerOriginalColorsAndPatterns = {};
+      this.cohorts.forEach(sg => {
+        this.colorPickerOriginalColorsAndPatterns[sg.id] = {
+          color: sg.color,
+          pattern: sg.pattern,
+        };
       });
       this.colorPickerDialog = true;
     },
     closeColorPickerDialog(cancel) {
       if (cancel) {
-        // restore original colors
-        this.selected.forEach(sg => {
-          if (sg.color != this.colorPickerOriginalColors[sg.id]) {
+        // restore original colors/patterns
+        this.cohorts.forEach(sg => {
+          if (
+            sg.color !=
+              this.colorPickerOriginalColorsAndPatterns[sg.id]['color'] ||
+            (sg.pattern &&
+              sg.pattern.ind !=
+                this.colorPickerOriginalColorsAndPatterns[sg.id]['pattern'][
+                  'ind'
+                ])
+          ) {
             this.$emit('cohortColorChange', {
               cohort: sg,
-              color: this.colorPickerOriginalColors[sg.id],
+              color: this.colorPickerOriginalColorsAndPatterns[sg.id]['color'],
+              pattern: this.colorPickerOriginalColorsAndPatterns[sg.id][
+                'pattern'
+              ],
             });
           }
         });
@@ -520,16 +683,26 @@ export default {
     colorChange() {
       // multiple study group change
       if (this.colorPickerApplyToSelected) {
-        let n_groups = this.selected.length;
+        // apply consecutive patterns in the order the cohorts appear in the original list
+        let ssel = this.sortedSelectedCohorts;
+        let n_cohorts = ssel.length;
+        let n_patterns = this.patterns.length;
         let colorGrad = scaleLinear()
-          .domain([1, n_groups])
-          .range([this.colorPickerColor2, this.colorPickerColor]);
-        for (let g = 0; g < n_groups; ++g) {
+          .domain([1, n_cohorts])
+          .range([this.colorPickerColor, this.colorPickerColor2]);
+
+        for (let g = 0; g < n_cohorts; ++g) {
           let col = color(colorGrad(g + 1)).formatHex();
-          this.$emit('cohortColorChange', {
-            cohort: this.selected[g],
+          let cevt = {
+            cohort: ssel[g],
             color: col,
-          });
+          };
+          if (this.colorPickerSelectedPatternInd != null) {
+            cevt['pattern'] = this.patterns[
+              (this.colorPickerSelectedPatternInd + g) % n_patterns
+            ];
+          }
+          this.$emit('cohortColorChange', cevt);
         }
       }
       // single study group change
@@ -537,6 +710,10 @@ export default {
         this.$emit('cohortColorChange', {
           cohort: this.colorPickerCohort,
           color: this.colorPickerColor,
+          pattern:
+            this.colorPickerSelectedPatternInd != null
+              ? this.patterns[this.colorPickerSelectedPatternInd]
+              : null,
         });
       }
     },
@@ -552,5 +729,10 @@ tbody {
   tr:hover {
     background-color: transparent !important;
   }
+}
+
+.v-list {
+  height: 200px;
+  overflow-y: auto;
 }
 </style>

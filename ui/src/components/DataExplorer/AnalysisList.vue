@@ -50,6 +50,7 @@ export default {
       this.$emit('cohortColorChange', {
         cohort: cc['cohort'],
         color: cc['color'],
+        pattern: cc['pattern'],
       });
     },
   },

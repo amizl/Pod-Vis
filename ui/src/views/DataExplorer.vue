@@ -439,6 +439,9 @@ export default {
       });
       if (cnum != null) {
         a[cnum]['color'] = cc['color'];
+        if ('pattern' in cc) {
+          a[cnum]['pattern'] = cc['pattern'];
+        }
         // force update
         a.splice(cnum, 1, a[cnum]);
       }

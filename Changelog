@@ -1,8 +1,9 @@
-1.0.11 (March ??, 2022)
+1.0.11 (March/April ??, 2022)
  -Fix issue with predictor/outcome dialogs not updating when Study Group Manager autoloads last study group.
  -Rename cohort" to "study group" in Cohort Manager Analytics Popup. (#716)
  -Fix issue saving outcome variable filters in cross-sectional studies. (#712)
- -Allow user to customize study group colors in Data Analytics. (#651)
+ -Allow user to customize study group colors and patterns in Data Analytics. (#651)
+ -Make scrollbars always visible on Macs.
 
 1.0.10 (January 24, 2022)
  -Fix issue with automated analysis mode freezing on Cohort Manager/create cohorts step. (#648)
