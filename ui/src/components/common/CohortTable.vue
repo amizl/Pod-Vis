@@ -164,18 +164,6 @@
                 v-on="{ ...tooltip }"
                 @click="openColorPickerDialog(item)"
               >
-                <defs v-if="item['pattern'] != null">
-                  <pattern
-                    :id="item['pattern']['id']"
-                    patternUnits="userSpaceOnUse"
-                    width="25"
-                    height="25"
-                    :patternTransform="item['pattern']['transform']"
-                  >
-                    <g v-html="item['pattern']['pattern']" />
-                  </pattern>
-                </defs>
-
                 <g>
                   <rect
                     x="0"
@@ -203,16 +191,6 @@
                 </g>
               </svg>
 
-              <!--
-	      <v-chip
-		v-else
-                small
-                class="my-1"
-                :color="item.color"
-                v-on="{ ...tooltip }"
-                @click="openColorPickerDialog(item)"
-              />
--->
             </template>
             <span
               >Click to change color/pattern for study group '{{
@@ -299,18 +277,6 @@
                         class="pa-0 ma-0 ml-2"
                       >
                         <svg width="40" height="25">
-                          <defs>
-                            <pattern
-                              :id="p['id']"
-                              patternUnits="userSpaceOnUse"
-                              width="25"
-                              height="25"
-                              :patternTransform="p['transform']"
-                            >
-                              <g v-html="p['pattern']" />
-                            </pattern>
-                          </defs>
-
                           <g>
                             <rect
                               x="0"
@@ -659,7 +625,7 @@ export default {
       if (cancel) {
         // restore original colors/patterns
         this.cohorts.forEach(sg => {
-          if (
+         if (
             sg.color !=
               this.colorPickerOriginalColorsAndPatterns[sg.id]['color'] ||
             (sg.pattern &&

@@ -1,4 +1,4 @@
-><template>
+<template>
   <v-sheet color="white" class="rounded-lg shadow">
     <v-container v-if="showTitleBar" fluid fill-width class="ma-0 pa-0">
       <v-row class="ma-0 pa-0">
@@ -107,38 +107,6 @@
             </div>
 
             <svg v-else ref="boxplots" :width="width" :height="height">
-              <defs>
-                <pattern
-                  v-for="(p, index) in patterns"
-                  :id="p['id']"
-                  :key="'p-' + p['id'] + '-' + index"
-                  patternUnits="userSpaceOnUse"
-                  width="25"
-                  height="25"
-                  :patternTransform="p['transform']"
-                >
-                  <g v-html="p['pattern']" />
-                </pattern>
-
-                <mask
-                  v-for="(p, index) in patterns"
-                  :id="p['id'] + '-m'"
-                  :key="'bpm-' + index"
-                  x="0"
-                  y="0"
-                  width="1"
-                  height="1"
-                >
-                  <rect
-                    x="0"
-                    y="0"
-                    width="1000"
-                    height="1000"
-                    :fill="'url(#' + p['id'] + ')'"
-                  />
-                </mask>
-              </defs>
-
               <g v-if="outcomeVar && outcomeVar.data_category != 'Categorical'">
                 <!-- labels -->
                 <text
