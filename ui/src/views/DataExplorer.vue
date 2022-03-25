@@ -57,34 +57,30 @@
             :collection-id="collectionId"
           ></analysis-tracker>
 
-
-
-	  <!-- define patterns -->
-	  <svg width="1" height="1" class="pa-0 ma-0">
-	    <defs>
-	      <pattern v-for="(p, index) in patterns"
-		       :key="'dep-' + index"
-		       :id="p['id']"
-		       patternUnits="userSpaceOnUse"
-		       width="25"
-		       height="25"
-		       :patternTransform="p['transform']"
-		       >
+          <!-- define patterns -->
+          <svg width="1" height="1" class="pa-0 ma-0">
+            <defs>
+              <pattern
+                v-for="(p, index) in patterns"
+                :id="p['id']"
+                :key="'dep-' + index"
+                patternUnits="userSpaceOnUse"
+                width="25"
+                height="25"
+                :patternTransform="p['transform']"
+              >
                 <g v-html="p['pattern']" />
               </pattern>
-	    </defs>
-	  </svg>
-	  
+            </defs>
+          </svg>
+
           <v-container fluid fill-width class="ma-0 pa-0 pt-0">
             <v-row class="ma-0 pa-0 pt-0">
               <v-col cols="12" class="ma-0 pa-0">
-		
                 <v-sheet color="white" height="100%" class="rounded-lg shadow">
                   <v-container fluid fill-width class="ma-0 pa-0">
                     <v-row class="ma-0 pa-0">
                       <v-col cols="12" class="ma-0 pa-0">
-
-			
                         <cohort-table
                           ref="cohortTable"
                           title="ANALYZE STUDY GROUPS"

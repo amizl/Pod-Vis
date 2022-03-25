@@ -190,7 +190,6 @@
                   />
                 </g>
               </svg>
-
             </template>
             <span
               >Click to change color/pattern for study group '{{
@@ -625,7 +624,7 @@ export default {
       if (cancel) {
         // restore original colors/patterns
         this.cohorts.forEach(sg => {
-         if (
+          if (
             sg.color !=
               this.colorPickerOriginalColorsAndPatterns[sg.id]['color'] ||
             (sg.pattern &&
