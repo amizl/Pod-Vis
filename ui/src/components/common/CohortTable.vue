@@ -183,8 +183,8 @@
                     rx="0"
                     ry="0"
                     border-radius="0%"
-                    width="50px"
-                    height="25px"
+                    width="50"
+                    height="25"
                     :fill="item['color']"
                     stroke="black"
                   />
@@ -298,7 +298,7 @@
                         height="25"
                         class="pa-0 ma-0 ml-2"
                       >
-                        <svg width="50" height="25">
+                        <svg width="40" height="25">
                           <defs>
                             <pattern
                               :id="p['id']"
@@ -318,7 +318,7 @@
                               rx="0"
                               ry="0"
                               border-radius="0%"
-                              width="50"
+                              width="40"
                               height="25"
                               :fill="colorPickerColor"
                               stroke="black"
@@ -329,7 +329,7 @@
                               rx="0"
                               ry="0"
                               border-radius="0%"
-                              width="50"
+                              width="40"
                               height="25"
                               :fill="'url(#' + p['id'] + ')'"
                               opacity="0.25"
