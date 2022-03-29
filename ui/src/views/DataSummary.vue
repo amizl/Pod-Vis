@@ -1,4 +1,4 @@
-<template>
+><template>
   <v-container v-if="isLoading" fluid fill-height class="ma-0 pa-2">
     <v-row class="ma-0 pa-0">
       <v-col cols="12" class="ma-0 pa-0"> <loading-spinner /> </v-col>
@@ -79,7 +79,7 @@
                   class="primary text--white ma-0 ml-2 px-2 py-0"
                   v-on="{ ...tooltip }"
                   @click="autoSetVisits"
-                  >Auto Set</v-btn
+                  >Auto Set Visits</v-btn
                 >
               </template>
               <span class="subtitle-1"
@@ -143,6 +143,12 @@
               </v-col>
             </v-row>
 
+            <v-row class="ma-0 pa-0">
+              <v-col cols="12"  class="ma-0 pa-0">
+		Move the slider above until the study population size and average elapsed time (from the selected first visit to last visit) shown below are acceptable and then click on "SET VISITS":
+	      </v-col>
+	    </v-row>
+	    
             <v-row>
               <v-col>
                 <v-chip
@@ -153,7 +159,8 @@
                 >
 
                 <v-chip class="title ml-3" color="deep-orange lighten-4"
-                  >Average Elapsed Time - {{ avgTimeBetweenVisits | formatTime }}
+                  >Average Elapsed Time -
+                  {{ avgTimeBetweenVisits | formatTime }}
                 </v-chip>
               </v-col>
             </v-row>
@@ -165,7 +172,7 @@
           <v-btn
             class="primary white--text ma-0 px-2 mx-2"
             :disabled="!autoSetEnableCloseDialog"
-            @click="autoSetDialog = false"
+            @click="closeAutoSetDialog()"
           >
             SET VISITS
           </v-btn>
@@ -265,6 +272,17 @@ export default {
     BubbleChart,
     SaveFirstLastVisitBtnDialog,
   },
+  filters: {
+    formatTime(tsecs) {
+      var tdays = tsecs / (3600 * 24);
+      var tyears = tdays / 365.25;
+      if (tdays <= 60) {
+        return format('.1f')(tdays) + ' days';
+      } else {
+        return format('.1f')(tyears) + ' year(s)';
+      }
+    },
+  },
   props: {
     collectionId: {
       type: Number,
@@ -289,17 +307,6 @@ export default {
     aaWhichOutcomes: {
       type: String,
       default: '',
-    },
-  },
-  filters: {
-    formatTime(tsecs) {
-      var tdays = tsecs / (3600 * 24);
-      var tyears = tdays / 365.25;
-      if (tdays <= 60) {
-        return format('.1f')(tdays) + ' days';
-      } else {
-        return format('.1f')(tyears) + ' year(s)';
-      }
     },
   },
   data() {
@@ -340,7 +347,7 @@ export default {
           }
         });
       }
-    }
+    },
   },
   computed: {
     ...mapState('dataSummary', {
@@ -365,7 +372,7 @@ export default {
     await this.fetchCollectionSummaries(this.collectionId);
     this.isLoading = false;
     if (this.useAutomatedAnalysisMode) {
-      this.doAutomatedAnalysis();
+      this.doAutomatedAnalysisPreVisits();
     }
   },
   methods: {
@@ -403,46 +410,18 @@ export default {
       }
       this.aaLastUpdate = Date.now();
     },
-    async doAutomatedAnalysis() {
+    // automated analysis mode before first/last visits have been set
+    async doAutomatedAnalysisPreVisits() {
       await this.updateAutomatedAnalysisProgress(0);
-
       // get subject visit info
       const { data: subjVarVisits } = await this.fetchSubjectVariableVisits();
       this.subject_variable_visits = subjVarVisits['visits'];
-
       await this.updateAutomatedAnalysisProgress(1);
-
-      // run standard routine to get estimate of the max possible study dataset size
-      var varIds = getObservationVariableIds(this.collection);
-      var ems = estimateMaxSubjects(
-        this.subject_variable_visits,
-        varIds,
-        'event'
-      );
-
-      // compute minimum number of subjects as fraction of total
-      var minSubjects = this.autoSetDefaultFrac * ems['counts']['all'];
-
-      // run calculation again
-      ems = estimateMaxVisits(
-        this.subject_variable_visits,
-        varIds,
-        'event',
-        minSubjects
-      );
-
-      // set first and last visits
-      var events = this.subject_variable_visits['visits']['event'];
-
-      ems['visits'].forEach(vis => {
-        this.firstVisits[vis[0]] = events[vis[1]]['visit_event'];
-        this.lastVisits[vis[0]] = events[vis[2]]['visit_event'];
-      });
-
-      // move visit handles to agree with consensus
-      this.$refs.bubble_chart.setVisitHandle(true);
-      this.$refs.bubble_chart.setVisitHandle(false);
-
+      this.aaDialog = false;
+      await this.autoSetVisits();
+    },
+    // automated analysis mode after first/last visits have been set
+    async doAutomatedAnalysisPostVisits() {
       // save first and last visits
       await this.updateAutomatedAnalysisProgress(2);
       await this.$refs.save_visits.saveVisits();
@@ -511,16 +490,32 @@ export default {
 
       this.autoSetSteps.push({
         title:
-          'Estimated maximum study population size for selected variables: ' +
+          'Estimated maximum study population size for the selected variables: ' +
           ems['counts']['all'],
       });
 
-      this.autoSetMinStudySize = ems['counts']['all'];
       this.autoSetEstMaxStudySize = ems['counts']['all'];
 
+      // compute minimum number of subjects as fraction of total
+      var defaultMinSubjects = Math.round(this.autoSetDefaultFrac * ems['counts']['all']);
+
       this.autoSetSteps.push({
-        title: 'Select desired minimum study population size: '
+        title: 'Setting minimum study population size to ' + (this.autoSetDefaultFrac * 100) + '% of estimated maximum: ' + defaultMinSubjects,
       });
+      this.autoSetMinStudySize = defaultMinSubjects;
+      this.doAutoSet(defaultMinSubjects);
+
+      this.autoSetSteps.push({
+        title: 'Select desired minimum study population size: ',
+      });
+    },
+    async closeAutoSetDialog() {
+      this.autoSetDialog = false;
+      // continue with automated analysis mode
+      if (this.useAutomatedAnalysisMode) {
+        this.aaDialog = true;
+        this.doAutomatedAnalysisPostVisits();
+      }
     },
   },
 };

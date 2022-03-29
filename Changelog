@@ -4,6 +4,7 @@
  -Fix issue saving outcome variable filters in cross-sectional studies. (#712)
  -Allow user to customize study group colors and patterns in Data Analytics. (#651)
  -Make scrollbars always visible on Macs.
+ -Allow user to set first/last visits in automated mode using new auto-set wizard. (#640)
 
 1.0.10 (January 24, 2022)
  -Fix issue with automated analysis mode freezing on Cohort Manager/create cohorts step. (#648)
