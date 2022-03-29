@@ -3,7 +3,7 @@
     <v-data-table
       v-if="timesBetweenVisits"
       :headers="headers"
-      :items="timesBetweenVisits"
+      :items="timesBetweenVisits.filter(t => t['study_name'] != '_all')"
       dense
       hide-default-footer
       disable-pagination

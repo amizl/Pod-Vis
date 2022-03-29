@@ -777,10 +777,12 @@ class Collection(db.Model):
 
         connection = db.engine.connect()
 
+        n_obs_vars = len(obs_var_ids)
         n_groups = len(groups)
         # subjects indexed by id
         subjects = {}
         subj2study = {}
+        group_times = []
         
         for fl in groups:
             query = text("""
@@ -812,7 +814,7 @@ class Collection(db.Model):
                                               obs_vars=groups[fl],
                                               n_obs_vars=len(groups[fl])
             ).fetchall()
-
+            
             for row in result_proxy:
                 if row.id not in subj2study:
                     subj2study[row.id] = { 'id': row.study_id, 'name': row.study_name }
@@ -822,16 +824,16 @@ class Collection(db.Model):
                     subjects[row.id][fl] = row.average_time
                 else:
                     subjects[row.id] = { 'id': row.id, 'n_groups': 1, fl: row.average_time }
-
-#        sys.stderr.write("found " + str(len(subj_ids.keys())) + " subject(s)" + "\n")
-#        sys.stderr.flush()
-
+            
         # group subjects by study
         studies = {}
+        total_n_subjects = 0
+
         for sid in subjects:
             subj = subjects[sid]
             if subj['n_groups'] < n_groups:
                 continue
+            total_n_subjects += 1
             study = subj2study[sid]
             if study['id'] in studies:
                 studies[study['id']]['n_subjects'] += 1
@@ -850,10 +852,13 @@ class Collection(db.Model):
                     st[fl] = subj[fl]
                    
         result = []
+        overall_avg_time = 0
+
         for study_id in studies:
             st = studies[study_id]
             is_first = True
             for fl in groups:
+                avg_time_secs = int(st[fl] / st['n_subjects'] )
                 result.append({
                     "study_id": study_id,
                     "study_name": st['name'],
@@ -865,6 +870,17 @@ class Collection(db.Model):
                     "avg_time_secs": int(st[fl] / st['n_subjects'] )
                 })
                 is_first = False
-
+                overall_avg_time += avg_time_secs * (float(st['n_subjects']) / total_n_subjects) * (float(len(groups[fl])) / n_obs_vars)
+                
+        # overall summary
+        result.append({
+                    "study_id": -1,
+                    "study_name": '_all',
+                    "is_first": False,
+                    "n_subjects": total_n_subjects,
+                    "n_variables": n_obs_vars,
+                    "avg_time_secs": int(overall_avg_time)
+                })
+                
         return result
 

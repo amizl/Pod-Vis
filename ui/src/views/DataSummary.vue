@@ -101,7 +101,7 @@
       <v-card class="rounded-lg" style="border: 3px solid #3f51b5;">
         <v-card-title color="white" class="ma-0 pa-2" primary-title>
           <span class="primary--text text--darken-3 title"
-            >Auto Set Visits</span
+            >Automatically Set First & Last Visits</span
           >
         </v-card-title>
 
@@ -145,17 +145,6 @@
 
             <v-row>
               <v-col>
-                <!--
-                <v-chip
-                  class="title"
-                  :color="colors['firstVisit']"
-                  >First Visit(s): </v-chip>
-
-		<v-chip
-                  class="title ml-3"
-		  :color="colors['lastVisit']"
-                  >Last Visit(s): </v-chip>
--->
                 <v-chip
                   class="title ml-3"
                   :color="getNumSubjectsColor(numSelectedSubjects)"
@@ -164,7 +153,7 @@
                 >
 
                 <v-chip class="title ml-3" color="deep-orange lighten-4"
-                  >Average Elapsed Time -
+                  >Average Elapsed Time - {{ avgTimeBetweenVisits | formatTime }}
                 </v-chip>
               </v-col>
             </v-row>
@@ -178,7 +167,7 @@
             :disabled="!autoSetEnableCloseDialog"
             @click="autoSetDialog = false"
           >
-            DONE
+            SET VISITS
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -242,6 +231,7 @@
 import axios from 'axios';
 import { mapActions, mapState } from 'vuex';
 import { actions, state } from '@/store/modules/dataSummary/types';
+import { format } from 'd3-format';
 import AnalysisTracker from '@/components/common/AnalysisTracker.vue';
 import VisitVariablesToolbar from '@/components/DataSummary/VisitVariablesToolbar.vue';
 import VisitTimesTable from '@/components/DataSummary/VisitTimesTable.vue';
@@ -301,6 +291,17 @@ export default {
       default: '',
     },
   },
+  filters: {
+    formatTime(tsecs) {
+      var tdays = tsecs / (3600 * 24);
+      var tyears = tdays / 365.25;
+      if (tdays <= 60) {
+        return format('.1f')(tdays) + ' days';
+      } else {
+        return format('.1f')(tyears) + ' year(s)';
+      }
+    },
+  },
   data() {
     return {
       isLoading: false,
@@ -326,7 +327,20 @@ export default {
       colors: colors,
       getNumSubjectsColor: getNumSubjectsColor,
       getNumSubjectsTextColor: getNumSubjectsTextColor,
+      avgTimeBetweenVisits: null,
     };
+  },
+  watch: {
+    timesBetweenVisits(tbv) {
+      if (tbv != null) {
+        let self = this;
+        tbv.forEach(t => {
+          if (t['study_name'] == '_all') {
+            self.avgTimeBetweenVisits = t['avg_time_secs'];
+          }
+        });
+      }
+    }
   },
   computed: {
     ...mapState('dataSummary', {
@@ -482,14 +496,10 @@ export default {
 
       // get subject visit info
       if (!this.subject_variable_visits) {
-        this.autoSetSteps.push({ title: 'Loading full subject visit data' });
+        this.autoSetSteps.push({ title: 'Loading subject visit data' });
         const { data: subjVarVisits } = await this.fetchSubjectVariableVisits();
         this.subject_variable_visits = subjVarVisits['visits'];
       }
-
-      //      let n_subjects = Object.keys(this.subject_variable_visits['subjects'])
-      //        .length;
-      //      this.autoSetSteps.push({ 'title': "Total number of subjects: " + n_subjects });
 
       // run standard routine to get estimate of the max possible study dataset size
       var varIds = getObservationVariableIds(this.collection);
@@ -507,6 +517,10 @@ export default {
 
       this.autoSetMinStudySize = ems['counts']['all'];
       this.autoSetEstMaxStudySize = ems['counts']['all'];
+
+      this.autoSetSteps.push({
+        title: 'Select desired minimum study population size: '
+      });
     },
   },
 };
