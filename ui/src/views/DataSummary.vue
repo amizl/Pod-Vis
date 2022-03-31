@@ -139,16 +139,20 @@
                   class="center-text pa-0 ma-0"
                   type="number"
                   @change="doAutoSet(autoSetMinStudySize)"
-                ></v-text-field> ({{Math.round((autoSetMinStudySize/autoSetEstMaxStudySize) * 100)}}%)
+                ></v-text-field>
+                ({{
+                  Math.round(
+                    (autoSetMinStudySize / autoSetEstMaxStudySize) * 100
+                  )
+                }}%)
               </v-col>
             </v-row>
 
             <v-row class="ma-0 pa-0 pt-4">
               <v-col cols="12" class="ma-0 pa-0">
-                Move the slider until the study population size and
-                average elapsed time (from the selected first visit to last
-                visit) shown below are acceptable and then click on "SET
-                VISITS":
+                Move the slider until the study population size and average
+                elapsed time (from the selected first visit to last visit) shown
+                below are acceptable and then click on "SET VISITS":
               </v-col>
             </v-row>
 
@@ -509,7 +513,8 @@ export default {
           'Set default minimum study population size to ' +
           this.autoSetDefaultFrac * 100 +
           '% of estimated maximum (' +
-          defaultMinSubjects + ')',
+          defaultMinSubjects +
+          ')',
       });
       this.autoSetMinStudySize = defaultMinSubjects;
       this.doAutoSet(defaultMinSubjects);
