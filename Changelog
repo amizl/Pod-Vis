@@ -1,4 +1,4 @@
-1.0.11 (March/April ??, 2022)
+1.0.11 (March 31, 2022)
  -Fix issue with predictor/outcome dialogs not updating when Study Group Manager autoloads last study group.
  -Rename cohort" to "study group" in Cohort Manager Analytics Popup. (#716)
  -Fix issue saving outcome variable filters in cross-sectional studies. (#712)

@@ -139,16 +139,19 @@
                   class="center-text pa-0 ma-0"
                   type="number"
                   @change="doAutoSet(autoSetMinStudySize)"
-                ></v-text-field>
+                ></v-text-field> ({{Math.round((autoSetMinStudySize/autoSetEstMaxStudySize) * 100)}}%)
               </v-col>
             </v-row>
 
-            <v-row class="ma-0 pa-0">
-              <v-col cols="12"  class="ma-0 pa-0">
-		Move the slider above until the study population size and average elapsed time (from the selected first visit to last visit) shown below are acceptable and then click on "SET VISITS":
-	      </v-col>
-	    </v-row>
-	    
+            <v-row class="ma-0 pa-0 pt-4">
+              <v-col cols="12" class="ma-0 pa-0">
+                Move the slider until the study population size and
+                average elapsed time (from the selected first visit to last
+                visit) shown below are acceptable and then click on "SET
+                VISITS":
+              </v-col>
+            </v-row>
+
             <v-row>
               <v-col>
                 <v-chip
@@ -497,10 +500,16 @@ export default {
       this.autoSetEstMaxStudySize = ems['counts']['all'];
 
       // compute minimum number of subjects as fraction of total
-      var defaultMinSubjects = Math.round(this.autoSetDefaultFrac * ems['counts']['all']);
+      var defaultMinSubjects = Math.round(
+        this.autoSetDefaultFrac * ems['counts']['all']
+      );
 
       this.autoSetSteps.push({
-        title: 'Setting minimum study population size to ' + (this.autoSetDefaultFrac * 100) + '% of estimated maximum: ' + defaultMinSubjects,
+        title:
+          'Set default minimum study population size to ' +
+          this.autoSetDefaultFrac * 100 +
+          '% of estimated maximum (' +
+          defaultMinSubjects + ')',
       });
       this.autoSetMinStudySize = defaultMinSubjects;
       this.doAutoSet(defaultMinSubjects);
