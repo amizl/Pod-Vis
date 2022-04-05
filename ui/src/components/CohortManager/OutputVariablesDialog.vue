@@ -447,7 +447,7 @@ export default {
         const measures_list = Object.keys(measures).map(function(k) {
           return measures[k];
         });
-        this.setOutputVariables(measures_list);
+        this.setOutputVariables(sortScales(measures_list));
         this.$emit('userSelectedOutputVariables', true);
       }
       this.updateColumnCheckboxes();
