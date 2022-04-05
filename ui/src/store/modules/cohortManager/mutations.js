@@ -421,4 +421,12 @@ export default {
   [mutations.SET_HELP_MODE](state, helpMode) {
     state[stateTypes.HELP_MODE] = helpMode;
   },
+   /**
+   * Set sort mode.
+   * @param {Object} state
+   * @param {Boolean} whether help mode is enabled.
+   */
+    [mutations.SET_SORT](state, sort) {
+      state[stateTypes.SORT] = sort;
+    },
 };

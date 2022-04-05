@@ -25,6 +25,8 @@ export const state = {
   COMPARISON_MEASURE: 'comparisonMeasure',
   USE_LONG_SCALE_NAMES: 'useLongScaleNames',
   HELP_MODE: 'helpMode',
+  SORT:'sort',
+
 };
 
 // Getters
@@ -91,6 +93,7 @@ export const mutations = {
   SET_COMPARISON_MEASURE: 'setComparisonMeasure',
   SET_USE_LONG_SCALE_NAMES: 'setUseLongScaleNames',
   SET_HELP_MODE: 'setHelpMode',
+  SET_SORT:'setSort',
 };
 
 // Actions
@@ -127,4 +130,6 @@ export const actions = {
   SET_COMPARISON_MEASURE: 'setComparisonMeasure',
   SET_USE_LONG_SCALE_NAMES: 'setUseLongScaleNames',
   SET_HELP_MODE: 'setHelpMode',
+  SET_SORT:'setSort',
+
 };

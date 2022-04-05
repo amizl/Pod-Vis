@@ -5,7 +5,27 @@
         <v-icon left dark large class="pr-2">add_circle</v-icon>
         Choose Predictor Variables
       </v-btn>
+      <!--added by **ami-->
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="primary" dark v-bind="attrs" v-on="on">
+            Order by
+          </v-btn>
+        </template>
+        <v-list>
+          <!-- by ** ami  -->
+          <v-list-item v-for="(item, index) in items" :key="index">
+            <!--<v-list-item-title v-on:click="setSort(item.title=='Domain')">{{item.title}} </v-list-item-title> -->
+            <v-list-item-title v-on:click="setSort(item.title)"
+              >{{ item.title }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+      <!--end of v-menu added by **ami-->
     </template>
+
     <v-card class="rounded-lg">
       <v-card-title class="title primary--text text--darken-3 px-4 py-2">
         Choose Predictor Variables
@@ -186,10 +206,10 @@
 </template>
 
 <script>
-import { actions, state } from '@/store/modules/cohortManager/types';
-import { mapActions, mapState } from 'vuex';
-import { sortScales } from '@/utils/helpers';
-import logEvent from '@/utils/logging';
+import { actions, state } from "@/store/modules/cohortManager/types";
+import { mapActions, mapState } from "vuex";
+import { sortScales } from "@/utils/helpers";
+import logEvent from "@/utils/logging";
 
 // traverse a list of variables and return the scale variables,
 // which are either at or adjacent to the leaves
@@ -199,7 +219,7 @@ var getScaleVars = function(scaleVars, vars) {
   vars.forEach(v => {
     if (v.children && v.children.length > 0) {
       // check whether the children are 'first visit', 'last visit', etc.
-      if (v.children[0].label !== 'First Visit') {
+      if (v.children[0].label !== "First Visit") {
         getScaleVars(scaleVars, v.children);
         return;
       } else {
@@ -219,85 +239,93 @@ export default {
   props: {
     search: {
       type: String,
-      default: '',
+      default: ""
     },
     showAllVarsCheckbox: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data: () => ({
+    items: [
+      { title: "Alphabetical" },
+      { title: "Variable" },
+      { title: "Selection" },
+      { title: "Domain" },    
+    ],
+
     // checkboxes to select all items in a column
     columnCheckboxes: {
       all: false,
       firstVisit: false,
       lastVisit: false,
       change: false,
-      ROC: false,
+      ROC: false
     },
-    searchVariable: '',
+    searchVariable: "",
     openInputVariableDialog: false,
     headers: [
       {
-        text: 'Domain',
-        value: 'category',
-        width: '20%',
+        text: "Domain",
+        value: "category",
+        width: "20%",
         sortable: false,
-        class: 'text-subtitle-1 font-weight-bold',
+        class: "text-subtitle-1 font-weight-bold"
       },
       {
-        text: 'Variable',
-        value: 'label',
-        width: '20%',
+        text: "Variable",
+        value: "label",
+        width: "20%",
         sortable: false,
-        class: 'text-subtitle-1 font-weight-bold',
+        class: "text-subtitle-1 font-weight-bold"
       },
       {
-        text: 'All',
-        value: 'all',
-        width: '12%',
+        text: "All",
+        value: "all",
+        width: "12%",
         sortable: false,
-        class: 'text-subtitle-1 font-weight-bold',
+        class: "text-subtitle-1 font-weight-bold"
       },
       {
-        text: 'First Visit',
-        value: 'fv',
-        width: '12%',
+        text: "First Visit",
+        value: "fv",
+        width: "12%",
         sortable: false,
-        class: 'text-subtitle-1 font-weight-bold',
+        class: "text-subtitle-1 font-weight-bold"
       },
       {
-        text: 'Last Visit',
-        value: 'lv',
-        width: '12%',
+        text: "Last Visit",
+        value: "lv",
+        width: "12%",
         sortable: false,
-        class: 'text-subtitle-1 font-weight-bold',
+        class: "text-subtitle-1 font-weight-bold"
       },
       {
-        text: 'Change',
-        value: 'ch',
-        width: '12%',
+        text: "Change",
+        value: "ch",
+        width: "12%",
         sortable: false,
-        class: 'text-subtitle-1 font-weight-bold',
+        class: "text-subtitle-1 font-weight-bold"
       },
       {
-        text: 'Rate of Change',
-        value: 'roc',
-        width: '12%',
+        text: "Rate of Change",
+        value: "roc",
+        width: "12%",
         sortable: false,
-        class: 'text-subtitle-1 font-weight-bold',
-      },
+        class: "text-subtitle-1 font-weight-bold"
+      }
     ],
     inputVariables: [],
     propagateChanges: false,
-    sortScales: sortScales,
+    sortScales: sortScales
   }),
   computed: {
-    ...mapState('cohortManager', {
+    ...mapState("cohortManager", {
       collection: state.COLLECTION,
       vars: state.INPUT_VARIABLES,
       cohort: state.COHORT,
       useLongScaleNames: state.USE_LONG_SCALE_NAMES,
+      sort: state.SORT,
     }),
     useLongScaleNamesSelect: {
       get() {
@@ -305,22 +333,22 @@ export default {
       },
       set(value) {
         this.setUseLongScaleNames(value);
-      },
-    },
+      }
+    }
   },
   watch: {
     openInputVariableDialog(open) {
       // set flag to allow propagation of dialog changes back to UI
       this.propagateChanges = open;
       if (open) {
-        this.$emit('dialogOpened', true);
+        this.$emit("dialogOpened", true);
       }
       logEvent(
         this.$gtag,
         null,
         null,
-        'inputvars_' + (open ? 'open' : 'close'),
-        'click',
+        "inputvars_" + (open ? "open" : "close"),
+        "click",
         null
       );
     },
@@ -329,8 +357,8 @@ export default {
         this.$gtag,
         null,
         null,
-        'uselongscales_' + (useLong ? 'on' : 'off'),
-        'click',
+        "uselongscales_" + (useLong ? "on" : "off"),
+        "click",
         null
       );
     },
@@ -362,21 +390,22 @@ export default {
         this.$gtag,
         null,
         null,
-        'inputvars_changed',
-        'click',
-        v.map(iv => iv.abbreviation).join(',')
+        "inputvars_changed",
+        "click",
+        v.map(iv => iv.abbreviation).join(",")
       );
       this.updateColumnCheckboxes();
-    },
+    }
   },
   async created() {
     this.updateInputVars();
     this.useLongScaleNamesSelect = this.useLongScaleNames;
   },
   methods: {
-    ...mapActions('cohortManager', {
+    ...mapActions("cohortManager", {
       setInputVariables: actions.SET_INPUT_VARIABLES,
       setUseLongScaleNames: actions.SET_USE_LONG_SCALE_NAMES,
+      setSort: actions.SET_SORT,
     }),
     updateInputVars() {
       let vars = [];
@@ -393,8 +422,8 @@ export default {
             if (cv.inSelected) {
               selectedInputVars.push(cv);
             } else if (
-              cv.data_category != 'Categorical' ||
-              (cv.label != 'Change' && cv.label != 'Rate of Change')
+              cv.data_category != "Categorical" ||
+              (cv.label != "Change" && cv.label != "Rate of Change")
             ) {
               allSelected = false;
             }
@@ -405,21 +434,21 @@ export default {
         }
       });
       if (this.propagateChanges) {
-        this.setInputVariables(sortScales(selectedInputVars));
-        this.$emit('userSelectedInputVariables', true);
+        this.setInputVariables(sortScales(selectedInputVars)); //marked by Ami , add this.sort as a parameter for sorting
+        this.$emit("userSelectedInputVariables", true);
       }
       this.updateColumnCheckboxes();
     },
 
     // column master checkbox clicked
     columnCheckboxChange(which) {
-      var cn = ['firstVisit', 'lastVisit', 'change', 'ROC'].findIndex(
+      var cn = ["firstVisit", "lastVisit", "change", "ROC"].findIndex(
         x => x == which
       );
       var vm = this;
       this.inputVariables.forEach(v => {
-        if (which == 'all') {
-          v.inmSelected = vm.columnCheckboxes['all'];
+        if (which == "all") {
+          v.inmSelected = vm.columnCheckboxes["all"];
           vm.masterCbChange(v);
         } else if (cn != -1 && v.children && v.children.length > cn) {
           v.children[cn].inSelected = vm.columnCheckboxes[which];
@@ -436,14 +465,14 @@ export default {
         firstVisit: init,
         lastVisit: init,
         change: init,
-        ROC: init,
+        ROC: init
       };
       this.inputVariables.forEach(v => {
         if (!v.inmSelected) {
-          cbStates['all'] = false;
+          cbStates["all"] = false;
         }
         var i = 0;
-        ['firstVisit', 'lastVisit', 'change', 'ROC'].forEach(m => {
+        ["firstVisit", "lastVisit", "change", "ROC"].forEach(m => {
           if (
             v.children &&
             v.children.length > i &&
@@ -467,8 +496,8 @@ export default {
       if (v.children) {
         v.children.forEach(c => {
           if (
-            c.data_category != 'Categorical' ||
-            (c.label != 'Change' && c.label != 'Rate of Change')
+            c.data_category != "Categorical" ||
+            (c.label != "Change" && c.label != "Rate of Change")
           ) {
             c.inSelected = v.inmSelected;
           }
@@ -479,8 +508,8 @@ export default {
 
     cbChange() {
       this.$nextTick(() => this.updateSelectedVars());
-    },
-  },
+    }
+  }
 };
 </script>
 

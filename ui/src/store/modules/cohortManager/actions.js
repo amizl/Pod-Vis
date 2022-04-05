@@ -592,4 +592,7 @@ export default {
   [actions.SET_HELP_MODE]({ commit }, helpMode) {
     commit(mutations.SET_HELP_MODE, helpMode);
   },
+  [actions.SET_SORT]({ commit }, sort) {
+    commit(mutations.SET_SORT, sort);
+  },
 };

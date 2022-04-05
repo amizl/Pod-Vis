@@ -26,4 +26,5 @@ export default {
   [state.COMPARISON_MEASURE]: 'Last Visit',
   [state.USE_LONG_SCALE_NAMES]: false,
   [state.HELP_MODE]: false,
+  [state.SORT]:'Alphabetical',
 };
