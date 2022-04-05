@@ -434,7 +434,7 @@ export default {
         }
       });
       if (this.propagateChanges) {
-        this.setInputVariables(sortScales(selectedInputVars)); //marked by Ami , add this.sort as a parameter for sorting
+        this.setInputVariables(sortScales(selectedInputVars,this.sort)); //marked by Ami , add this.sort as a parameter for sorting
         this.$emit("userSelectedInputVariables", true);
       }
       this.updateColumnCheckboxes();

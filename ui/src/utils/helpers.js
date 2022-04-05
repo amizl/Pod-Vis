@@ -1,5 +1,5 @@
-import { uniqBy } from 'lodash';
-import crossfilter from 'crossfilter2';
+import { uniqBy } from "lodash";
+import crossfilter from "crossfilter2";
 
 export function makeHierarchy(data) {
   const ontologies = data.map(obs => obs.ontology);
@@ -11,14 +11,14 @@ export function makeHierarchy(data) {
 
   const parents = uniqBy(
     ontologies.map(ontology => (ontology.parent ? ontology.parent : ontology)),
-    'label'
+    "label"
   );
 
   return parents.map(parent => ({
     ...parent,
     children: ontologies.filter(
       ontology => ontology.parent && ontology.parent.label === parent.label
-    ),
+    )
   }));
 }
 
@@ -29,7 +29,7 @@ export function getInputVariablesFromQueries(queries, inputVariables) {
     var query = queries[variable];
     var iv = inputVariables.find(inputVar => {
       const { label, type } = inputVar;
-      if (type === 'study' || type === 'subject') {
+      if (type === "study" || type === "subject") {
         return label === variable;
       }
       // type is 'observation'
@@ -51,11 +51,11 @@ export function getCohortSubjectIds(data, c) {
   const xf = crossfilter(data);
 
   const dimension2field = {
-    left_y_axis: 'firstVisit',
-    right_y_axis: 'lastVisit',
-    change: 'change',
-    roc: 'roc',
-    value: 'value',
+    left_y_axis: "firstVisit",
+    right_y_axis: "lastVisit",
+    change: "change",
+    roc: "roc",
+    value: "value"
   };
 
   // group queries by variable - categorical vars must be treated differently
@@ -64,13 +64,13 @@ export function getCohortSubjectIds(data, c) {
     let v_id;
     let accessor;
     let dim;
-    let dim_label = 'value';
+    let dim_label = "value";
 
     if (q.input_variable.subject_ontology === undefined) {
       v_id = q.input_variable.observation_ontology.id;
       if (
-        'dimension_label' in q.input_variable &&
-        q.input_variable.dimension_label != ''
+        "dimension_label" in q.input_variable &&
+        q.input_variable.dimension_label != ""
       ) {
         dim_label = q.input_variable.dimension_label;
       }
@@ -83,7 +83,7 @@ export function getCohortSubjectIds(data, c) {
       v_id = q.input_variable.subject_ontology.id;
       const lbl = q.input_variable.subject_ontology.label;
       // special case for study/dataset
-      if (lbl === 'Study' || lbl === 'Dataset') {
+      if (lbl === "Study" || lbl === "Dataset") {
         accessor = function(d) {
           return d.study.study_name;
         };
@@ -97,25 +97,25 @@ export function getCohortSubjectIds(data, c) {
 
     var vkey = v_id;
     if (dim_label != null) {
-      vkey += ':' + dim_label;
+      vkey += ":" + dim_label;
     }
     if (!(vkey in var2qs)) {
       var2qs[vkey] = { accessor: accessor, dim: dim, queries: [] };
     }
-    var2qs[vkey]['queries'].push(q);
+    var2qs[vkey]["queries"].push(q);
   });
 
   Object.keys(var2qs).forEach(k => {
     var v = var2qs[k];
     var filterFn = null;
-    var nq = v['queries'].length;
-    if (nq == 0) throw new Error('No queries for variable ' + k);
+    var nq = v["queries"].length;
+    if (nq == 0) throw new Error("No queries for variable " + k);
 
     // currently only categorical variables should have multiple queries
     if (nq > 1) {
       filterFn = function(d) {
         var any_matches = false;
-        v['queries'].forEach(q => {
+        v["queries"].forEach(q => {
           if (d === q.value) {
             any_matches = true;
           }
@@ -123,7 +123,7 @@ export function getCohortSubjectIds(data, c) {
         return any_matches;
       };
     } else {
-      var q = v['queries'][0];
+      var q = v["queries"][0];
       if (q.value !== undefined && q.value !== null) {
         filterFn = function(d) {
           return d === q.value;
@@ -137,7 +137,7 @@ export function getCohortSubjectIds(data, c) {
         throw new Error(`Unsupported query ${q}`);
       }
     }
-    v['dim'].filterFunction(filterFn);
+    v["dim"].filterFunction(filterFn);
   });
 
   const filt = xf.allFiltered();
@@ -155,7 +155,7 @@ export function getObservationVariableAbbreviations(c) {
   var getCollectionVarAbbreviations = function(vars) {
     vars.forEach(v => {
       if (v.children && v.children.length > 0) {
-        if (v.children[0].label === 'First Visit') {
+        if (v.children[0].label === "First Visit") {
           collectionVarAbbreviations[v.abbreviation] = true;
         } else {
           getCollectionVarAbbreviations(v.children);
@@ -173,7 +173,7 @@ export function getObservationVariableAbbreviationToName(c) {
   var getCollectionVarAbbreviations = function(vars) {
     vars.forEach(v => {
       if (v.children && v.children.length > 0) {
-        if (v.children[0].label === 'First Visit') {
+        if (v.children[0].label === "First Visit") {
           collectionVarAbbreviations[v.abbreviation] = v.label;
         } else {
           getCollectionVarAbbreviations(v.children);
@@ -191,7 +191,7 @@ export function getObservationVariableAbbreviationToDescription(c) {
   var getCollectionVarAbbreviations = function(vars) {
     vars.forEach(v => {
       if (v.children && v.children.length > 0) {
-        if (v.children[0].label === 'First Visit') {
+        if (v.children[0].label === "First Visit") {
           collectionVarAbbreviations[v.abbreviation] = v.description;
         } else {
           getCollectionVarAbbreviations(v.children);
@@ -209,7 +209,7 @@ export function getObservationVariableNames(c) {
   var getCollectionVarNames = function(vars) {
     vars.forEach(v => {
       if (v.children && v.children.length > 0) {
-        if (v.children[0].label === 'First Visit') {
+        if (v.children[0].label === "First Visit") {
           collectionVarNames[v.label] = true;
         } else {
           getCollectionVarNames(v.children);
@@ -227,7 +227,7 @@ export function getObservationVariableIds(c) {
   var getCollectionVarIds = function(vars) {
     vars.forEach(v => {
       if (v.children && v.children.length > 0) {
-        if (v.children[0].label === 'First Visit') {
+        if (v.children[0].label === "First Visit") {
           collectionVarIds[v.id] = true;
         } else {
           getCollectionVarIds(v.children);
@@ -249,10 +249,10 @@ export function getCollectionVisitCounts(c, which) {
 
   obs_vars.forEach(ov => {
     var evt = null;
-    if (ov[which + '_visit_event'] != null) {
-      evt = ov[which + '_visit_event'];
-    } else if (ov[which + '_visit_num'] != null) {
-      evt = ov[which + '_visit_num'];
+    if (ov[which + "_visit_event"] != null) {
+      evt = ov[which + "_visit_event"];
+    } else if (ov[which + "_visit_num"] != null) {
+      evt = ov[which + "_visit_num"];
     }
 
     if (!(evt in ch)) {
@@ -278,32 +278,32 @@ export function getCollectionDescription(c) {
     : c.observation_variables;
   var nsv = c.subject_variables.length;
   var nov = obs_vars.length;
-  descr += ': ';
+  descr += ": ";
   var nc = null;
 
   if (c.num_cohorts) {
     nc = c.num_cohorts;
-    descr += ' ' + nc + (nc == 1 ? 'cohort.' : ' cohorts.');
+    descr += " " + nc + (nc == 1 ? "cohort." : " cohorts.");
   } else if (c.cohorts) {
     nc = c.cohorts.length;
-    descr += ' ' + nc + (nc == 1 ? 'cohort.' : ' cohorts.');
+    descr += " " + nc + (nc == 1 ? "cohort." : " cohorts.");
   }
 
-  descr += ' ' + (nsv + nov) + ' variables ';
+  descr += " " + (nsv + nov) + " variables ";
 
   var nd = c.studies.length;
   descr +=
-    'from ' + nd + ' uploaded ' + (nd == 1 ? 'dataset' : 'datasets') + ' [';
-  descr += c.studies.map(s => s.study.study_name).join(',');
-  descr += ']';
+    "from " + nd + " uploaded " + (nd == 1 ? "dataset" : "datasets") + " [";
+  descr += c.studies.map(s => s.study.study_name).join(",");
+  descr += "]";
 
   if (c.has_visits_set) {
-    var fvs = getCollectionVisitCounts(c, 'first');
-    var lvs = getCollectionVisitCounts(c, 'last');
+    var fvs = getCollectionVisitCounts(c, "first");
+    var lvs = getCollectionVisitCounts(c, "last");
     descr +=
-      ' First Visits: ' + fvs.map(v => v.visit + '[' + v.count + ']').join(',');
+      " First Visits: " + fvs.map(v => v.visit + "[" + v.count + "]").join(",");
     descr +=
-      ' Last Visits: ' + lvs.map(v => v.visit + '[' + v.count + ']').join(',');
+      " Last Visits: " + lvs.map(v => v.visit + "[" + v.count + "]").join(",");
   }
 
   return descr;
@@ -317,7 +317,7 @@ export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
 
   unsorted_list.forEach(e => {
     var evt = event_accessor_fn(e);
-    if (typeof evt == 'string' && !evt.match(pnRE)) {
+    if (typeof evt == "string" && !evt.match(pnRE)) {
       pseudoNumericEvents = false;
     }
     if (isNaN(evt)) {
@@ -344,30 +344,30 @@ export function sortByVisitEvent(unsorted_list, event_accessor_fn) {
 
   // sort alphabetically but put PPMI and EMA events in the correct order
   var uniqueEvents = [
-    'Pre',
-    '3 mo',
-    '6 mo',
-    'SC',
-    'BL',
-    'U01',
-    'V01',
-    'V02',
-    'V03',
-    'V04',
-    'V05',
-    'V06',
-    'V07',
-    'V08',
-    'V09',
-    'V10',
-    'V11',
-    'V12',
-    'V13',
-    'V14',
-    'V15',
-    'V16',
-    'PW',
-    'ST',
+    "Pre",
+    "3 mo",
+    "6 mo",
+    "SC",
+    "BL",
+    "U01",
+    "V01",
+    "V02",
+    "V03",
+    "V04",
+    "V05",
+    "V06",
+    "V07",
+    "V08",
+    "V09",
+    "V10",
+    "V11",
+    "V12",
+    "V13",
+    "V14",
+    "V15",
+    "V16",
+    "PW",
+    "ST"
   ];
 
   var evtIdx = {};
@@ -397,23 +397,39 @@ export function sortVisitEvents(events) {
   return sortByVisitEvent(events, acc_fn);
 }
 
-export function scaleSortFn(sa, sb) {
-  var a = sa.ontology ? sa.ontology : sa;
-  var b = sb.ontology ? sb.ontology : sb;
-  // subject variables before observation, then sorted by category and scale name
-  if (a.type == 'subject' && b.type == 'observation') return -1;
-  if (a.type == 'observation' && b.type == 'subject') return 1;
-  if (a.category < b.category) return -1;
-  if (a.category > b.category) return 1;
-  if (a.label < b.label) return -1;
-  if (a.label > b.label) return 1;
-  if (a.scale < b.scale) return -1;
-  if (a.scale > b.scale) return 1;
-  return 0;
+export function scaleSortFn(sort) {
+  return function(sa, sb) {
+    var a = sa.ontology ? sa.ontology : sa;
+    var b = sb.ontology ? sb.ontology : sb;
+   
+    console.log("***THIS IS SORT ", sort);
+    if (sort == "Selection") {
+      console.log("***THIS IS SORT BY SELECTION*** ", sort);
+      if (a.type == "subject" && b.type == "observation") return 1;
+      if (a.type == "observation" && b.type == "subject") return -1;
+      if (a.category < b.category) return -1;
+      if (a.category > b.category) return 1;
+      if (a.label < b.label) return -1;
+      if (a.label > b.label) return 1;
+      if (a.scale < b.scale) return -1;
+      if (a.scale > b.scale) return 1;
+      return 0;
+    } else {
+      if (a.type == "subject" && b.type == "observation") return -1;
+      if (a.type == "observation" && b.type == "subject") return 1;
+      if (a.category > b.category) return -1;
+      if (a.category < b.category) return 1;
+      if (a.label < b.label) return -1;
+      if (a.label > b.label) return 1;
+      if (a.scale < b.scale) return -1;
+      if (a.scale > b.scale) return 1;
+      return 0;
+    }
+  };
 }
 
-export function sortScales(scales) {
-  return scales.sort(scaleSortFn);
+export function sortScales(scales,sort) {
+  return scales.sort(scaleSortFn(sort));
 }
 
 export function getLongScaleNameDefault(datasets) {
@@ -448,7 +464,7 @@ export function getLabelWidth(label) {
  */
 export function countSubjectsByVisits(subject_variable_visits, vars, which) {
   var subjCounts = { all: 0 };
-  var subjs = subject_variable_visits['subjects'];
+  var subjs = subject_variable_visits["subjects"];
   var subjIds = Object.keys(subjs);
 
   // subjs:
@@ -474,16 +490,16 @@ export function countSubjectsByVisits(subject_variable_visits, vars, which) {
       vars.forEach(v => {
         if (!(v[0] in s[study_id])) {
           include_subj = false;
-        } else if (typeof s[study_id][v[0]] != 'number') {
+        } else if (typeof s[study_id][v[0]] != "number") {
           var vstring = s[study_id][v[0]][which];
-          if (vstring.charAt(v[1]) == '0' || vstring.charAt(v[2]) == '0') {
+          if (vstring.charAt(v[1]) == "0" || vstring.charAt(v[2]) == "0") {
             include_subj = false;
           }
         }
       });
     });
     if (vars.length > 0 && include_subj) {
-      subjCounts['all'] += 1;
+      subjCounts["all"] += 1;
       study_ids.forEach(study_id => {
         subjCounts[study_id] += 1;
       });
@@ -502,9 +518,9 @@ export function countSubjectsByVisits(subject_variable_visits, vars, which) {
  * which - either 'event' or 'num'
  */
 export function estimateMaxSubjects(subject_variable_visits, var_ids, which) {
-  var subjs = subject_variable_visits['subjects'];
+  var subjs = subject_variable_visits["subjects"];
   var subjIds = Object.keys(subjs);
-  var visits = subject_variable_visits['visits'][which];
+  var visits = subject_variable_visits["visits"][which];
   var n_visits = visits.length;
 
   // simple heuristic based on selecting the two visits from each variable with the most subjects
@@ -518,13 +534,13 @@ export function estimateMaxSubjects(subject_variable_visits, var_ids, which) {
       var s = subjs[sid];
       var study_ids = Object.keys(s);
       study_ids.forEach(study_id => {
-        if (vid in s[study_id] && typeof s[study_id][vid] != 'number') {
+        if (vid in s[study_id] && typeof s[study_id][vid] != "number") {
           var vstring = s[study_id][vid][which];
           for (var vis = 0; vis < n_visits; ++vis) {
             if (!(vis in visitCounts))
               visitCounts[vis] = { index: vis, count: 0 };
-            if (vstring.charAt(vis) == '1') {
-              visitCounts[vis]['count'] += 1;
+            if (vstring.charAt(vis) == "1") {
+              visitCounts[vis]["count"] += 1;
             }
           }
         }
@@ -532,17 +548,17 @@ export function estimateMaxSubjects(subject_variable_visits, var_ids, which) {
     });
 
     // heuristic - sort by size and pick the top two, then sort by index
-    visitCounts.sort((a, b) => b['count'] - a['count']);
+    visitCounts.sort((a, b) => b["count"] - a["count"]);
     var first_index = 0;
     var last_index = 0;
 
     if (visitCounts.length > 1) {
-      if (visitCounts[0]['index'] < visitCounts[1]['index']) {
-        first_index = visitCounts[0]['index'];
-        last_index = visitCounts[1]['index'];
+      if (visitCounts[0]["index"] < visitCounts[1]["index"]) {
+        first_index = visitCounts[0]["index"];
+        last_index = visitCounts[1]["index"];
       } else {
-        first_index = visitCounts[1]['index'];
-        last_index = visitCounts[0]['index'];
+        first_index = visitCounts[1]["index"];
+        last_index = visitCounts[0]["index"];
       }
     }
     vars.push([vid, first_index, last_index]);
@@ -566,9 +582,9 @@ export function estimateMaxVisits(
   which,
   min_subjects
 ) {
-  var subjs = subject_variable_visits['subjects'];
+  var subjs = subject_variable_visits["subjects"];
   var subjIds = Object.keys(subjs);
-  var visits = subject_variable_visits['visits'][which];
+  var visits = subject_variable_visits["visits"][which];
   var n_visits = visits.length;
 
   var vars = [];
@@ -581,29 +597,29 @@ export function estimateMaxVisits(
       var s = subjs[sid];
       var study_ids = Object.keys(s);
       study_ids.forEach(study_id => {
-        if (vid in s[study_id] && typeof s[study_id][vid] != 'number') {
+        if (vid in s[study_id] && typeof s[study_id][vid] != "number") {
           var vstring = s[study_id][vid][which];
           for (var vis = 0; vis < n_visits; ++vis) {
             if (!(vis in visitCounts))
               visitCounts[vis] = { index: vis, count: 0 };
-            if (vstring.charAt(vis) == '1') {
-              visitCounts[vis]['count'] += 1;
+            if (vstring.charAt(vis) == "1") {
+              visitCounts[vis]["count"] += 1;
             }
           }
         }
       });
     });
 
-    visitCounts.sort((a, b) => b['count'] - a['count']);
+    visitCounts.sort((a, b) => b["count"] - a["count"]);
     var first_index = 0;
     var last_index = 0;
 
     // make the first visit the one with the most subjects
     if (visitCounts.length > 1) {
-      if (visitCounts[0]['index'] < visitCounts[1]['index']) {
-        first_index = visitCounts[0]['index'];
+      if (visitCounts[0]["index"] < visitCounts[1]["index"]) {
+        first_index = visitCounts[0]["index"];
       } else {
-        first_index = visitCounts[1]['index'];
+        first_index = visitCounts[1]["index"];
       }
       last_index = n_visits - 1;
     }
@@ -618,7 +634,7 @@ export function estimateMaxVisits(
   while (!done) {
     counts = countSubjectsByVisits(subject_variable_visits, vars, which);
     // halt if desired threshold exceeded
-    if (counts['all'] >= min_subjects) {
+    if (counts["all"] >= min_subjects) {
       done = true;
       break;
     }

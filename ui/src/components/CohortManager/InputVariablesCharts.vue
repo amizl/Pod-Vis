@@ -1,8 +1,7 @@
 <template>
   <div class="xscrollable px-2">
     <v-card class="d-flex flex-row pb-1">
-        <v-card
-      
+      <v-card
         v-for="(inputVariable, index) in reorderVariables(newTitle, [
           ...inputVariables
         ])"
@@ -32,7 +31,7 @@ import InputVariableChart from "@/components/CohortManager/InputVariableChart.vu
 import resize from "vue-resize-directive";
 
 export default {
-    data: () => ({
+  data: () => ({
     //orderedInputVariables: this.$store.state.INPUT_VARIABLES,
     items: [
       { title: "Alphabetical" },
@@ -68,26 +67,48 @@ export default {
     })
   },
   methods: {
-    reorderVariables: function(title, inputVariables) {
-      console.log(
-        this.sort +
-          " test " +
-          title +
-          " " +
-          [...inputVariables].map(v => v.label)
-      );
+    reorderVariables: function(newTitle, inputVariables) {
+      newTitle = this.sort;
       //**ami  */
       if (this.sort == "Alphabetical") {
         console.log("sorting by Alphabetical");
+        console.log(
+          this.sort +
+            " test " +
+            newTitle +
+            " " +
+            [...inputVariables].map(v => v.category)
+        );
         return inputVariables;
       } else if (this.sort == "Domain") {
         console.log("sorting by Domain");
+        console.log(
+          this.sort +
+            " test " +
+            newTitle +
+            " " +
+            [...inputVariables].map(v => v.category).reverse()
+        );
         return inputVariables.reverse();
       } else if (this.sort == "Variable") {
         console.log("sorting by Variable");
+        console.log(
+          this.sort +
+            " test " +
+            newTitle +
+            " " +
+            [...inputVariables].map(v => v.category)
+        );
         return inputVariables.sort();
       } else if (this.sort == "Selection") {
         console.log("sorting by Selection");
+        console.log(
+          this.sort +
+            " test " +
+            newTitle +
+            " " +
+            [...inputVariables].map(v => v.category)
+        );
         return inputVariables.reverse();
       }
     },
