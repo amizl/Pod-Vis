@@ -79,18 +79,18 @@ export default {
   },
   watch: {
     reOrderVariables(newTitle, inputVariables) {
-        this.$emit("userSelectedInputVariables", true);
+        this.$emit("reOrderVariables");
     }
   },
   methods: {
     reOrderVariables: function(newTitle, inputVariables) {
       console.log("calling reorderVariables",inputVariables.length);
-      let tmpArry=[]
-      tmpArry.push(inputVariables[2]);
-      tmpArry.push(inputVariables[1]);
-      tmpArry.push(inputVariables[3]);
-      tmpArry.push(inputVariables[0]);
-      inputVariables=tmpArry;
+      // let tmpArry=[]
+      // tmpArry.push(inputVariables[2]);
+      // tmpArry.push(inputVariables[1]);
+      // tmpArry.push(inputVariables[3]);
+      // tmpArry.push(inputVariables[0]);
+      // inputVariables=tmpArry;
       return inputVariables;
       /*
       newTitle = this.sort;
