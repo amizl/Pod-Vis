@@ -248,9 +248,8 @@ export default {
   },
   data: () => ({
     items: [
-      { title: "Alphabetical" },
+      { title: "Category" },
       { title: "Variable" },
-      { title: "Selection" },
       { title: "Domain" },    
     ],
 
@@ -435,7 +434,7 @@ export default {
         }
       });
       if (this.propagateChanges) {
-        this.setInputVariables(sortScales(selectedInputVars,this.sort)); //marked by Ami , add this.sort as a parameter for sorting
+        this.setInputVariables(sortScales(selectedInputVars));//back to original form //marked by Ami , add this.sort as a parameter for sorting
         this.$emit("userSelectedInputVariables", true);
       }
       this.updateColumnCheckboxes();

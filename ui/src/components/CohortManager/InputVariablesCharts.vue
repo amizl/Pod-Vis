@@ -1,18 +1,11 @@
 <template>
   <div class="xscrollable px-2">
     <v-card class="d-flex flex-row pb-1">
-      <!-- 
-           <v-card
-        v-for="(inputVariable, index) in reOrderVariables(newTitle, [...inputVariables])"
-        :key="'ivcc-' + inputVariable.id"
-        :class="index > 0 ? 'ml-2 pb-1' : 'pb-1'"
-      >
-      -->
+      
       <!--
       <div>computed sort -- {{ this.sort }} --</div>
-
       <div>store sort {{ $store.state.cohortManager.sort }}</div>
--->
+      -->
       <v-card
         v-for="(inputVariable, index) in reOrderVariables(this.sort, [
           ...inputVariables
@@ -45,14 +38,9 @@ import resize from "vue-resize-directive";
 export default {
   data: () => ({
     //orderedInputVariables: this.$store.state.INPUT_VARIABLES,
-    items: [
-      { title: "Alphabetical" },
-      { title: "Variable" },
-      { title: "Selection" },
-      { title: "Domain" }
-    ],
+    items: [{ title: "Type" }, { title: "Variable" }, { title: "Domain" }]
     // sort: false,
-   // newTitle: null
+    // newTitle: null
   }),
   directives: {
     resize
@@ -78,13 +66,16 @@ export default {
       sort: state.SORT
     })
   },
-  watch: {
-    reOrderVariables(newTitle, inputVariables) {
-      this.$emit("reOrderVariables");
-    }
-  },
+
+  
   methods: {
     reOrderVariables: function(newTitle, inputVariables) {
+      function getLabel(v) {
+        if ("parentLabel" in v) {
+          return v.parentLabel;
+        }
+        return v.label;
+      }
       console.log(newTitle, "calling reorderVariables", inputVariables);
       // let tmpArry=[]
       // tmpArry.push(inputVariables[2]);
@@ -92,7 +83,8 @@ export default {
       // tmpArry.push(inputVariables[3]);
       // tmpArry.push(inputVariables[0]);
       // inputVariables=tmpArry;
-      if (newTitle == "Selection") {
+      if (newTitle == "Domain") {
+        
         inputVariables.sort(function(a, b) {
           if (a.category > b.category) return -1;
           if (a.category < b.category) return 1;
@@ -100,69 +92,21 @@ export default {
         });
         return inputVariables;
       }
-      if (newTitle == "Domain") {
-        inputVariables.sort(function(a, b) {
-          if (a.label > b.label) return -1; // <
-          if (a.label < b.label) return 1; // >
-          return 0;
-        });
-        return inputVariables;
-      }
       if (newTitle == "Variable") {
+        
         inputVariables.sort(function(a, b) {
-          if (a.data_category < b.data_category) return -1; // <
-          if (a.data_category > b.data_category) return 1; // >
-          return 0;
+          
+          if (getLabel(a) < getLabel(b) ) return -1; // <
+          if (getLabel(a) > getLabel(b)) return 1; // >
+
+         
         });
         return inputVariables;
-      } else {
-        return inputVariables;
       }
-      /*
-      newTitle = this.sort;
-      
-      if (this.sort == "Alphabetical") {
-        console.log("sorting by Alphabetical");
-        console.log(
-          this.sort +
-            " test " +
-            newTitle +
-            " " +
-            [...inputVariables].map(v => v.category)
-        );
-        return inputVariables;
-      } else if (this.sort == "Domain") {
-        console.log("sorting by Domain");
-        console.log(
-          this.sort +
-            " test " +
-            newTitle +
-            " " +
-            [...inputVariables].map(v => v.category).reverse()
-        );
-        return inputVariables.reverse();
-      } else if (this.sort == "Variable") {
-        console.log("sorting by Variable");
-        console.log(
-          this.sort +
-            " test " +
-            newTitle +
-            " " +
-            [...inputVariables].map(v => v.category)
-        );
-        return inputVariables.sort();
-      } else if (this.sort == "Selection") {
-        console.log("sorting by Selection");
-        console.log(
-          this.sort +
-            " test " +
-            newTitle +
-            " " +
-            [...inputVariables].map(v => v.category)
-        );
-        return inputVariables.reverse();
+    
+      else {
+        return inputVariables; // by Type
       }
-      */
     },
     userChangedVariable() {
       this.$emit("userChangedInputVariable", true);

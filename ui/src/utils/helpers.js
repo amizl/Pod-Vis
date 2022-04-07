@@ -396,53 +396,23 @@ export function sortVisitEvents(events) {
   var acc_fn = x => x;
   return sortByVisitEvent(events, acc_fn);
 }
-
-export function scaleSortFn(sort) {
-  return function(sa, sb) {
-    var a = sa.ontology ? sa.ontology : sa;
-    var b = sb.ontology ? sb.ontology : sb;
-   
-    console.log("***THIS IS SORT ", sort);
-    if (sort == "Selection") {
-      console.log("***THIS IS SORT BY SELECTION*** ", sort);
-      if (a.type == "subject" && b.type == "observation") return 1;
-      if (a.type == "observation" && b.type == "subject") return -1;
-      if (a.category < b.category) return -1;
-      if (a.category > b.category) return 1;
-      if (a.label < b.label) return -1;
-      if (a.label > b.label) return 1;
-      if (a.scale < b.scale) return -1;
-      if (a.scale > b.scale) return 1;
-      return 0;
-    }
-    else if(sort == "Domain") {
-      console.log("***THIS IS SORT BY SELECTION*** ", sort);
-      if (a.type == "subject" && b.type == "observation") return -1; //1
-      if (a.type == "observation" && b.type == "subject") return 1; // -1
-      if (a.category < b.category) return -1;
-      if (a.category > b.category) return 1;
-      if (a.label > b.label) return -1; // < 
-      if (a.label < b.label) return 1;  // >
-      if (a.scale < b.scale) return -1;
-      if (a.scale > b.scale) return 1;
-      return 0;
-    }
-     else {
-      if (a.type == "subject" && b.type == "observation") return -1;
-      if (a.type == "observation" && b.type == "subject") return 1;
-      if (a.category > b.category) return -1;
-      if (a.category < b.category) return 1;
-      if (a.label < b.label) return -1;
-      if (a.label > b.label) return 1;
-      if (a.scale < b.scale) return -1;
-      if (a.scale > b.scale) return 1;
-      return 0;
-    }
-  };
+export function scaleSortFn(sa, sb) {
+  var a = sa.ontology ? sa.ontology : sa;
+  var b = sb.ontology ? sb.ontology : sb;
+  // subject variables before observation, then sorted by category and scale name
+  if (a.type == 'subject' && b.type == 'observation') return -1;
+  if (a.type == 'observation' && b.type == 'subject') return 1;
+  if (a.category < b.category) return -1;
+  if (a.category > b.category) return 1;
+  if (a.label < b.label) return -1;
+  if (a.label > b.label) return 1;
+  if (a.scale < b.scale) return -1;
+  if (a.scale > b.scale) return 1;
+  return 0;
 }
 
-export function sortScales(scales,sort) {
-  return scales.sort(scaleSortFn(sort));
+export function sortScales(scales) {
+  return scales.sort(scaleSortFn);
 }
 
 export function getLongScaleNameDefault(datasets) {
