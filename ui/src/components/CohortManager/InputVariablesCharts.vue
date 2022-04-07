@@ -1,8 +1,19 @@
 <template>
   <div class="xscrollable px-2">
     <v-card class="d-flex flex-row pb-1">
+      <!-- 
+           <v-card
+        v-for="(inputVariable, index) in reOrderVariables(newTitle, [...inputVariables])"
+        :key="'ivcc-' + inputVariable.id"
+        :class="index > 0 ? 'ml-2 pb-1' : 'pb-1'"
+      >
+      -->
+      <div>computed sort -- {{ this.sort }} --</div>
+
+      <div>store sort {{ $store.state.cohortManager.sort }}</div>
+
       <v-card
-        v-for="(inputVariable, index) in reorderVariables(newTitle, [
+        v-for="(inputVariable, index) in reOrderVariables(newTitle, [
           ...inputVariables
         ])"
         :key="'ivcc-' + inputVariable.id"
@@ -66,10 +77,24 @@ export default {
       sort: state.SORT
     })
   },
+  watch: {
+    reOrderVariables(newTitle, inputVariables) {
+        this.$emit("userSelectedInputVariables", true);
+    }
+  },
   methods: {
-    reorderVariables: function(newTitle, inputVariables) {
+    reOrderVariables: function(newTitle, inputVariables) {
+      console.log("calling reorderVariables",inputVariables.length);
+      let tmpArry=[]
+      tmpArry.push(inputVariables[2]);
+      tmpArry.push(inputVariables[1]);
+      tmpArry.push(inputVariables[3]);
+      tmpArry.push(inputVariables[0]);
+      inputVariables=tmpArry;
+      return inputVariables;
+      /*
       newTitle = this.sort;
-      //**ami  */
+      
       if (this.sort == "Alphabetical") {
         console.log("sorting by Alphabetical");
         console.log(
@@ -111,6 +136,7 @@ export default {
         );
         return inputVariables.reverse();
       }
+      */
     },
     userChangedVariable() {
       this.$emit("userChangedInputVariable", true);

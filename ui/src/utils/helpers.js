@@ -414,7 +414,20 @@ export function scaleSortFn(sort) {
       if (a.scale < b.scale) return -1;
       if (a.scale > b.scale) return 1;
       return 0;
-    } else {
+    }
+    else if(sort == "Domain") {
+      console.log("***THIS IS SORT BY SELECTION*** ", sort);
+      if (a.type == "subject" && b.type == "observation") return -1; //1
+      if (a.type == "observation" && b.type == "subject") return 1; // -1
+      if (a.category < b.category) return -1;
+      if (a.category > b.category) return 1;
+      if (a.label > b.label) return -1; // < 
+      if (a.label < b.label) return 1;  // >
+      if (a.scale < b.scale) return -1;
+      if (a.scale > b.scale) return 1;
+      return 0;
+    }
+     else {
       if (a.type == "subject" && b.type == "observation") return -1;
       if (a.type == "observation" && b.type == "subject") return 1;
       if (a.category > b.category) return -1;

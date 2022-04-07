@@ -402,6 +402,7 @@ export default {
     this.useLongScaleNamesSelect = this.useLongScaleNames;
   },
   methods: {
+  
     ...mapActions("cohortManager", {
       setInputVariables: actions.SET_INPUT_VARIABLES,
       setUseLongScaleNames: actions.SET_USE_LONG_SCALE_NAMES,
