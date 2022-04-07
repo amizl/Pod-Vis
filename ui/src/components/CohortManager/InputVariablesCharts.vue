@@ -8,12 +8,13 @@
         :class="index > 0 ? 'ml-2 pb-1' : 'pb-1'"
       >
       -->
+      <!--
       <div>computed sort -- {{ this.sort }} --</div>
 
       <div>store sort {{ $store.state.cohortManager.sort }}</div>
-
+-->
       <v-card
-        v-for="(inputVariable, index) in reOrderVariables(newTitle, [
+        v-for="(inputVariable, index) in reOrderVariables(this.sort, [
           ...inputVariables
         ])"
         :key="'ivcc-' + inputVariable.id"
@@ -51,7 +52,7 @@ export default {
       { title: "Domain" }
     ],
     // sort: false,
-    newTitle: null
+   // newTitle: null
   }),
   directives: {
     resize
@@ -79,19 +80,44 @@ export default {
   },
   watch: {
     reOrderVariables(newTitle, inputVariables) {
-        this.$emit("reOrderVariables");
+      this.$emit("reOrderVariables");
     }
   },
   methods: {
     reOrderVariables: function(newTitle, inputVariables) {
-      console.log("calling reorderVariables",inputVariables.length);
+      console.log(newTitle, "calling reorderVariables", inputVariables);
       // let tmpArry=[]
       // tmpArry.push(inputVariables[2]);
       // tmpArry.push(inputVariables[1]);
       // tmpArry.push(inputVariables[3]);
       // tmpArry.push(inputVariables[0]);
       // inputVariables=tmpArry;
-      return inputVariables;
+      if (newTitle == "Selection") {
+        inputVariables.sort(function(a, b) {
+          if (a.category > b.category) return -1;
+          if (a.category < b.category) return 1;
+          return 0;
+        });
+        return inputVariables;
+      }
+      if (newTitle == "Domain") {
+        inputVariables.sort(function(a, b) {
+          if (a.label > b.label) return -1; // <
+          if (a.label < b.label) return 1; // >
+          return 0;
+        });
+        return inputVariables;
+      }
+      if (newTitle == "Variable") {
+        inputVariables.sort(function(a, b) {
+          if (a.data_category < b.data_category) return -1; // <
+          if (a.data_category > b.data_category) return 1; // >
+          return 0;
+        });
+        return inputVariables;
+      } else {
+        return inputVariables;
+      }
       /*
       newTitle = this.sort;
       
