@@ -38,7 +38,7 @@ import resize from "vue-resize-directive";
 export default {
   data: () => ({
     //orderedInputVariables: this.$store.state.INPUT_VARIABLES,
-    items: [{ title: "Type" }, { title: "Variable" }, { title: "Domain" }]
+    //items: [{ title: "Type" }, { title: "Variable" }, { title: "Domain" }]
     // sort: false,
     // newTitle: null
   }),
